@@ -36,6 +36,15 @@ parameter MEM_DQS_WIDTH = MEM_DQ_WIDTH/8;
  
 parameter MEM_ROW_WIDTH = 15;
 
+///////////////////////////test ppll sync case///////////////////////////
+
+    
+// 1 step rst_clk phase adjust changes 2 / 128 ppll fast clk phase. the ppll fast clk frequency is twice the otput frequecey of ppll.
+parameter real OUT_SYNC_DLY = (500.0 / ACTUAL_RATE) * (123.0 / 128.0); 
+
+ 
+////////////////////////////////////////////////////////////////////
+
 reg pll_refclk_in;
 reg free_clk;
 reg ddr_rstn;
@@ -266,6 +275,18 @@ begin
         $display("%t TRAINING ERROR, error_state is %h ",$time,u_ddr.I_ips_ddr_top.u_ddrphy_top.ddrphy_calib_top.ddrphy_main_ctrl.error_status);
     #10000;
     $finish;
+end
+
+wire b0_gate;
+wire b1_gate;
+assign b1_gate = ddr3_test_top_tb.u_ddr.I_ips_ddr_top.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[1];
+assign #OUT_SYNC_DLY b0_gate =  b1_gate;
+
+
+initial 
+begin    
+    force ddr3_test_top_tb.u_ddr.I_ips_ddr_top.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll.clkoutphy_gate = b0_gate;
+//    force ddr3_test_top_tb.u_ddr.I_ips_ddr_top.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[2].ddrphy_ppll.clkoutphy_gate = b0_gate;
 end
 
 endmodule

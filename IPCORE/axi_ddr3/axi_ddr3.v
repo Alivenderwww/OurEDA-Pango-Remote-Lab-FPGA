@@ -33,7 +33,7 @@ module axi_ddr3 #(
   parameter AXI_DATA_WIDTH     = 8*MEM_DQ_WIDTH  ,
 `endif
 
-  parameter DEVICE_ID            = 0         
+  parameter DEVICE_ID            = 1         
 
 
   )(                                                              
