@@ -77,7 +77,7 @@ always @(*) begin
             //触发条件1 为存入了大于32x(8x16)bit的数据，表现为almost_full被拉高。跳转至WRITE_ST_TRANS_ADDR以直接发送WRITE_ADDR等地址线
             //触发条件2 为"收到过"WR_DATA_LAST. 说明与上级模块的数据传输已经结束。跳转至WRITE_ST_AFTER，先补齐位宽再跳转至WRITE_ST_TRANS_ADDR。
             if(almost_full) nt_wr_st <= WRITE_ST_TRANS_ADDR;
-            else if(WR_DATA_LAST || flag_data_recv_over) nt_wr_st <= WRITE_ST_AFTER;
+            else if(flag_data_recv_over) nt_wr_st <= WRITE_ST_AFTER;
             else nt_wr_st <= WRITE_ST_WAIT;
         end
         WRITE_ST_TRANS_ADDR: nt_wr_st <= (WRITE_ADDR_READY && WRITE_ADDR_VALID)?(WRITE_ST_TRANS_DATA):(WRITE_ST_TRANS_ADDR);
@@ -95,7 +95,7 @@ always @(posedge clk) cu_wr_st <= nt_wr_st;
 
 always @(posedge clk) begin
     if(rst || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
-    else if(WR_DATA_LAST) flag_data_recv_over <= 1;
+    else if(WR_DATA_READY && WR_DATA_VALID && WR_DATA_LAST) flag_data_recv_over <= 1;
     else flag_data_recv_over <= flag_data_recv_over;
 end
 
