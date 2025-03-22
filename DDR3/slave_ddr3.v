@@ -6,7 +6,7 @@ module slave_ddr3 (
     input  wire        BUS_CLK          ,
     input  wire        BUS_RST          ,
 
-    input wire [27:0]  BUS_WR_ADDR      , //写地址
+    input wire [31:0]  BUS_WR_ADDR      , //写地址
     input wire [ 7:0]  BUS_WR_LEN       , //写突发长度，实际长度为WR_LEN+1
     input wire         BUS_WR_ADDR_VALID, //写地址通道有效
     output wire        BUS_WR_ADDR_READY, //写地址通道准备
@@ -17,7 +17,7 @@ module slave_ddr3 (
     output wire        BUS_WR_DATA_READY, //写数据准备
     input  wire        BUS_WR_DATA_LAST , //最后一个写数据标志位
      
-    input wire [27:0]  BUS_RD_ADDR      , //读地址
+    input wire [31:0]  BUS_RD_ADDR      , //读地址
     input wire [ 7:0]  BUS_RD_LEN       , //读突发长度，实际长度为WR_LEN+1
     input wire         BUS_RD_ADDR_VALID, //读地址通道有效
     output wire        BUS_RD_ADDR_READY, //读地址通道准备
@@ -84,6 +84,11 @@ wire        SLAVE_RD_DATA_LAST ;
 wire        SLAVE_RD_DATA_READY;
 wire        SLAVE_RD_DATA_VALID;
 
+wire [27:0] BUS_WR_ADDR_I;
+wire [27:0] BUS_RD_ADDR_I;
+assign BUS_WR_ADDR_I = BUS_WR_ADDR[27:0];
+assign BUS_RD_ADDR_I = BUS_RD_ADDR[27:0];
+
 /*
 首先地址要对齐，低3位始终为0
 如果要读写中间的，需要转换一下STRB
@@ -101,7 +106,7 @@ slave_axi_async u_slave_axi_async(
     .BUS_CLK             (BUS_CLK             ),
     .SLAVE_CLK           (SLAVE_CLK           ),
     .rst                 (BUS_RST             ),
-    .BUS_WR_ADDR         (BUS_WR_ADDR         ),
+    .BUS_WR_ADDR         (BUS_WR_ADDR_I       ),
     .BUS_WR_LEN          (BUS_WR_LEN          ),
     .BUS_WR_ADDR_VALID   (BUS_WR_ADDR_VALID   ),
     .BUS_WR_ADDR_READY   (BUS_WR_ADDR_READY   ),
@@ -110,7 +115,7 @@ slave_axi_async u_slave_axi_async(
     .BUS_WR_DATA_VALID   (BUS_WR_DATA_VALID   ),
     .BUS_WR_DATA_READY   (BUS_WR_DATA_READY   ),
     .BUS_WR_DATA_LAST    (BUS_WR_DATA_LAST    ),
-    .BUS_RD_ADDR         (BUS_RD_ADDR         ),
+    .BUS_RD_ADDR         (BUS_RD_ADDR_I       ),
     .BUS_RD_LEN          (BUS_RD_LEN          ),
     .BUS_RD_ADDR_VALID   (BUS_RD_ADDR_VALID   ),
     .BUS_RD_ADDR_READY   (BUS_RD_ADDR_READY   ),
