@@ -112,7 +112,7 @@ module ddr3 (
     odt
 );
 
-`include "C:/_Project/Verilog_AXI4/mem/ddr3_parameters.vh"
+`include "ddr3_parameters.vh"
 
     parameter check_strict_mrbits = 1;
     parameter check_strict_timing = 1;

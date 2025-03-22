@@ -84,19 +84,19 @@ AXI协议只能做到主机到从机通信，即主机向从机申请数据传�
 写/读数据通道：VALID拉高后，读取从机返回ID，确定主机，建立传输通道。主机或从机把数据发给另一方，一次传输结束。在建立传输后不允许改变主从机。
 **/
 
+/**************************写地址通道接口**********************/
 reg [27:0] BUS_WR_ADDR      ;
 reg [ 7:0] BUS_WR_LEN       ;
 reg [ 1:0] BUS_WR_ID        ;
+wire[ 3:0] BUS_WR_ID_S      ;
 reg        BUS_WR_ADDR_VALID;
 reg        BUS_WR_ADDR_READY;
 reg [ 1:0] cu_master_wr_addr_id, nt_master_wr_addr_id;
-reg [ 1:0] cu_master_rd_addr_id, nt_master_rd_addr_id;
-reg [ 1:0] cu_master_wr_data_id, nt_master_wr_data_id;
-reg [ 1:0] cu_master_rd_data_id, nt_master_rd_data_id;
+assign BUS_WR_ID_S = {cu_master_wr_addr_id,BUS_WR_ID};
 
-//主机-写地址通道接口
+//主机
 always @(*) begin
-    if((BUS_WR_ADDR_VALID == 0)||(BUS_WR_ADDR_VALID == 1 && BUS_WR_ADDR_READY == 1))begin //下一时刻可以更改主从机选通
+    if((~BUS_WR_ADDR_VALID)||(BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY))begin //传输下一时刻关闭，可以更改主从机选通
              if(M0_WR_ADDR_VALID) nt_master_wr_addr_id <= 2'd0;
         else if(M1_WR_ADDR_VALID) nt_master_wr_addr_id <= 2'd1;
         else if(M2_WR_ADDR_VALID) nt_master_wr_addr_id <= 2'd2;
@@ -136,10 +136,39 @@ always @(*) begin
         end
     endcase
 end
-
-//主机-读地址通道接口
+//从机
 always @(*) begin
-    if((BUS_RD_ADDR_VALID == 0)||(BUS_RD_ADDR_VALID == 1 && BUS_RD_ADDR_READY == 1))begin //下一时刻可以更改主从机选通
+    if(BUS_WR_ADDR >= S0_START_ADDR && BUS_WR_ADDR <= S0_END_ADDR) begin
+        BUS_WR_ADDR_READY <= S0_WR_ADDR_READY;
+        S0_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
+    end else if(BUS_WR_ADDR >= S1_START_ADDR && BUS_WR_ADDR <= S1_END_ADDR) begin
+        BUS_WR_ADDR_READY <= S1_WR_ADDR_READY;
+        S1_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
+    end else begin
+        BUS_WR_ADDR_READY <= S0_WR_ADDR_READY;
+        S0_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
+    end
+    //通用接口
+    S0_WR_ADDR <= BUS_WR_ADDR;
+    S0_WR_LEN  <= BUS_WR_LEN ;
+    S0_WR_ID   <= BUS_WR_ID_S;
+    S1_WR_ADDR <= BUS_WR_ADDR;
+    S1_WR_LEN  <= BUS_WR_LEN ;
+    S1_WR_ID   <= BUS_WR_ID_S;
+end
+
+/**************************读地址通道接口**********************/
+reg [27:0] BUS_RD_ADDR      ;
+reg [ 7:0] BUS_RD_LEN       ;
+reg [ 1:0] BUS_RD_ID        ;
+wire[ 3:0] BUS_RD_ID_S      ;
+reg        BUS_RD_ADDR_VALID;
+reg        BUS_RD_ADDR_READY;
+reg [ 1:0] cu_master_rd_addr_id, nt_master_rd_addr_id;
+assign BUS_RD_ID_S = {cu_master_rd_addr_id,BUS_RD_ID};
+//主机
+always @(*) begin
+    if((~BUS_RD_ADDR_VALID)||(BUS_RD_ADDR_VALID && BUS_RD_ADDR_READY))begin //下一时刻可以更改主从机选通
              if(M0_RD_ADDR_VALID) nt_master_rd_addr_id <= 2'd0;
         else if(M1_RD_ADDR_VALID) nt_master_rd_addr_id <= 2'd1;
         else if(M2_RD_ADDR_VALID) nt_master_rd_addr_id <= 2'd2;
@@ -179,20 +208,115 @@ always @(*) begin
         end
     endcase
 end
-
-//从机-写地址通道接口
+//从机
 always @(*) begin
-    if(BUS_WR_ADDR >= S0_START_ADDR && BUS_WR_ADDR <= S0_END_ADDR) begin
-        BUS_WR_ADDR_READY <= S0_WR_ADDR_READY;
-        S0_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
-    end else if(BUS_WR_ADDR >= S1_START_ADDR && BUS_WR_ADDR <= S1_END_ADDR) begin
-        BUS_WR_ADDR_READY <= S1_WR_ADDR_READY;
-        S1_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
+    if(BUS_RD_ADDR >= S0_START_ADDR && BUS_RD_ADDR <= S0_END_ADDR) begin
+        BUS_RD_ADDR_READY <= S0_RD_ADDR_READY;
+        S0_RD_ADDR_VALID  <= BUS_RD_ADDR_VALID;
+        S1_RD_ADDR_VALID  <= 0;
+    end else if(BUS_RD_ADDR >= S1_START_ADDR && BUS_RD_ADDR <= S1_END_ADDR) begin
+        BUS_RD_ADDR_READY <= S1_RD_ADDR_READY;
+        S0_RD_ADDR_VALID  <= 0;
+        S1_RD_ADDR_VALID  <= BUS_RD_ADDR_VALID;
     end else begin
-        BUS_WR_ADDR_READY <= S1_WR_ADDR_READY;
-        S1_WR_ADDR_VALID  <= BUS_WR_ADDR_VALID;
+        BUS_RD_ADDR_READY <= S0_RD_ADDR_READY;
+        S0_RD_ADDR_VALID  <= BUS_RD_ADDR_VALID;
+        S1_RD_ADDR_VALID  <= 0;
     end
+    //通用接口
+    S0_RD_ADDR <= BUS_RD_ADDR;
+    S0_RD_LEN  <= BUS_RD_LEN ;
+    S0_RD_ID   <= BUS_RD_ID_S;
+    S1_RD_ADDR <= BUS_RD_ADDR;
+    S1_RD_LEN  <= BUS_RD_LEN ;
+    S1_RD_ID   <= BUS_RD_ID_S;
 end
 
+
+/**************************写数据通道接口**********************/
+reg [31:0] BUS_WR_DATA      ;
+reg [ 3:0] BUS_WR_STRB      ;
+reg [ 3:0] BUS_WR_BACK_ID   ;
+wire[ 1:0] BUS_WR_BACK_ID_M ;
+reg        BUS_WR_DATA_VALID;
+reg        BUS_WR_DATA_READY;
+reg        BUS_WR_DATA_LAST ;
+reg [ 1:0] cu_master_wr_data_id, nt_master_wr_data_id;
+assign BUS_WR_BACK_ID_M = BUS_WR_BACK_ID[1:0];
+reg wr_data_lock;
+always @(posedge clk) begin
+    
+end
+//主机
+always @(*) begin
+    if((~BUS_WR_DATA_VALID)||(BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST))begin //下一时刻可以更改主从机选通
+             if(M0_WR_DATA_VALID) nt_master_wr_data_id <= 2'd0;
+        else if(M1_WR_DATA_VALID) nt_master_wr_data_id <= 2'd1;
+        else if(M2_WR_DATA_VALID) nt_master_wr_data_id <= 2'd2;
+        else if(M3_WR_DATA_VALID) nt_master_wr_data_id <= 2'd3;
+        else                      nt_master_wr_data_id <= 2'd0;
+    end else                      nt_master_wr_data_id <= cu_master_wr_data_id;//传输尚未结束，不允许更改主从机选通
+end
+always @(posedge clk) begin
+    if(BUS_RST) cu_master_wr_data_id <= 2'd0;
+    else cu_master_wr_data_id <= nt_master_wr_data_id;
+end
+always @(*) begin
+    case (cu_master_wr_data_id)
+        2'd0: begin
+            BUS_WR_DATA       <= M0_WR_DATA      ;
+            BUS_WR_LEN        <= M0_WR_LEN       ;
+            BUS_WR_ID         <= M0_WR_ID        ;
+            BUS_WR_DATA_VALID <= M0_WR_DATA_VALID;
+        end
+        2'd1: begin
+            BUS_WR_DATA       <= M1_WR_DATA      ;
+            BUS_WR_LEN        <= M1_WR_LEN       ;
+            BUS_WR_ID         <= M1_WR_ID        ;
+            BUS_WR_DATA_VALID <= M1_WR_DATA_VALID;
+        end
+        2'd2: begin
+            BUS_WR_DATA       <= M2_WR_DATA      ;
+            BUS_WR_LEN        <= M2_WR_LEN       ;
+            BUS_WR_ID         <= M2_WR_ID        ;
+            BUS_WR_DATA_VALID <= M2_WR_DATA_VALID;
+        end
+        2'd3: begin
+            BUS_WR_DATA       <= M3_WR_DATA      ;
+            BUS_WR_LEN        <= M3_WR_LEN       ;
+            BUS_WR_ID         <= M3_WR_ID        ;
+            BUS_WR_DATA_VALID <= M3_WR_DATA_VALID;
+        end
+    endcase
+end
+//从机
+always @(*) begin
+    if(BUS_WR_DATA >= S0_START_DATA && BUS_WR_DATA <= S0_END_DATA) begin
+        BUS_WR_DATA_READY <= S0_WR_DATA_READY;
+        S0_WR_DATA_VALID  <= BUS_WR_DATA_VALID;
+    end else if(BUS_WR_DATA >= S1_START_DATA && BUS_WR_DATA <= S1_END_DATA) begin
+        BUS_WR_DATA_READY <= S1_WR_DATA_READY;
+        S1_WR_DATA_VALID  <= BUS_WR_DATA_VALID;
+    end else begin
+        BUS_WR_DATA_READY <= S0_WR_DATA_READY;
+        S0_WR_DATA_VALID  <= BUS_WR_DATA_VALID;
+    end
+    //通用接口
+    S0_WR_DATA <= BUS_WR_DATA;
+    S0_WR_LEN  <= BUS_WR_LEN ;
+    S0_WR_ID   <= BUS_WR_ID_S;
+    S1_WR_DATA <= BUS_WR_DATA;
+    S1_WR_LEN  <= BUS_WR_LEN ;
+    S1_WR_ID   <= BUS_WR_ID_S;
+end
+
+
+
+
+
+
+
+
+reg [ 1:0] cu_master_rd_data_id, nt_master_rd_data_id;
 
 endmodule
