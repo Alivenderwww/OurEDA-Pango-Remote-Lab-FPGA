@@ -54,7 +54,7 @@
 # vmap pciegen2 ./../../pangu_sim_libraries/pciegen2 
 # Modifying modelsim.ini
 # Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
-# Start time: 11:11:32 on Mar 22,2025
+# Start time: 12:04:17 on Mar 22,2025
 # vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
 # -- Compiling module ddr3_read
 # -- Compiling module slave_ddr3
@@ -62,7 +62,6 @@
 # -- Compiling module ddr3_top
 # -- Compiling module slave_axi_async
 # -- Compiling module ddr3
-# -- Compiling package ddr3_read_v_unit
 # -- Compiling module ddr3_slave_tb
 # -- Compiling module ipm2l_fifo_ctrl_v1_1_fifo_ddr3_read
 # -- Compiling module ipm2l_sdpram_v1_10_fifo_ddr3_read
@@ -98,11 +97,11 @@
 # 
 # Top level modules:
 # 	ddr3_slave_tb
-# End time: 11:11:38 on Mar 22,2025, Elapsed time: 0:00:06
+# End time: 12:04:23 on Mar 22,2025, Elapsed time: 0:00:06
 # Errors: 0, Warnings: 0
 # ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
 # vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 ddr3_slave_tb usim.GTP_GRS 
-# Start time: 11:11:38 on Mar 22,2025
+# Start time: 12:04:23 on Mar 22,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
@@ -287,7 +286,6 @@
 # ** Note: (vopt-143) Recognized 1 FSM in module "ddr3_read(fast)".
 # ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=179.
 # Loading sv_std.std
-# Loading work.ddr3_read_v_unit(fast)
 # Loading work.ddr3_slave_tb(fast)
 # Loading work.slave_ddr3(fast)
 # Loading work.slave_axi_async(fast)
@@ -492,9 +490,9 @@
 add wave -position end sim:/ddr3_slave_tb/*
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Alivender  Hostname: DESKTOP-73784OM  ProcessID: 16268
-#           Attempting to use alternate WLF file "./wlftdz1820".
+#           Attempting to use alternate WLF file "./wlftfx3n1b".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftdz1820
+#           Using alternate file: ./wlftfx3n1b
 run -all
 # IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
 # IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
@@ -753,7 +751,287 @@ run -all
 # ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 844435200.0 ps INFO: Load Mode 1 Write Levelization = Disabled
 # ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 844435200.0 ps INFO: Load Mode 1 TDQS Enable = Disabled
 # ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 844435200.0 ps INFO: Load Mode 1 Qoff = Enabled
-# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 844495150.0 ps INFO: Precharge Power Down Enter
-# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 844495200.0 ps INFO: Precharge Power Down Enter
-# End time: 11:19:01 on Mar 22,2025, Elapsed time: 0:07:23
-# Errors: 0, Warnings: 245
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 844685150.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 844685200.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 845015150.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 845015200.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 845345150.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 845345200.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 845675150.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 845675200.0 ps INFO: Refresh  
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846005150.0 ps INFO: Activate  bank 0 row 0000
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846005200.0 ps INFO: Activate  bank 0 row 0000
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846035150.0 ps INFO: Write     bank 0 col 000, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846035200.0 ps INFO: Write     bank 0 col 000, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846045150.0 ps INFO: Write     bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846045200.0 ps INFO: Write     bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.main: at time 846052650.0 ps INFO: Sync On Die Termination Rtt_NOM =         60 Ohm
+# ddr3_slave_tb.i_mem[1].mem_core.main: at time 846052700.0 ps INFO: Sync On Die Termination Rtt_NOM =         60 Ohm
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846055150.0 ps INFO: Write     bank 0 col 010, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846055200.0 ps INFO: Write     bank 0 col 010, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846058900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000000 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846058950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000000 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846060150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000001 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846060200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000001 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846061400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000002 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846061450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000002 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846062650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000003 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846062700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000003 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846063900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000004 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846063950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000004 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846065150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000005 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846065200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000005 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846066400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000006 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846066450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000006 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846067650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000007 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846067700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000007 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846068900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846068950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846070150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846070200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846071400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846071450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846072650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846072700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846073900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846073950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846075150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846075200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846076400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846076450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846077650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846077700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846078900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000010 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846078950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000010 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846080150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000011 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846080200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000011 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846081400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000012 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846081450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000012 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846082650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000013 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846082700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000013 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846083900.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000014 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846083950.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000014 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846085150.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000015 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846085200.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000015 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846086400.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000016 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846086450.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000016 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846087650.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000017 data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846087700.0 ps INFO: WRITE @ DQS= bank = 0 row = 0000 col = 00000017 data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846115150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846115200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.main: at time 846122650.0 ps INFO: Sync On Die Termination Rtt_NOM =          0 Ohm
+# ddr3_slave_tb.i_mem[1].mem_core.main: at time 846122700.0 ps INFO: Sync On Die Termination Rtt_NOM =          0 Ohm
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846138900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846138950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846140150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846140200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846141400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846141450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846142650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846142700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846143900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846143950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846145150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846145200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846146400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846146450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846147650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846147700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846415150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846415200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846438900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846438950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846440150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846440200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846441400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846441450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846442650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846442700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846443900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846443950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846445150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846445200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846446400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846446450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846447650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846447700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 846715150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 846715200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846738900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846738950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846740150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846740200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846741400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846741450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846742650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846742700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846743900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846743950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846745150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846745200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846746400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846746450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 846747650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 846747700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 847015150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 847015200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847038900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847038950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847040150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847040200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847041400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847041450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847042650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847042700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847043900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847043950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847045150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847045200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847046400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847046450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847047650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847047700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 847315150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 847315200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847338900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847338950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847340150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847340200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847341400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847341450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847342650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847342700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847343900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847343950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847345150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847345200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847346400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847346450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847347650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847347700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 847615150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 847615200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847638900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847638950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847640150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847640200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847641400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847641450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847642650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847642700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847643900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847643950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847645150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847645200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847646400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847646450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847647650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847647700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 847915150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 847915200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847938900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847938950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847940150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847940200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847941400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847941450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847942650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847942700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847943900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847943950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847945150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847945200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847946400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847946450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 847947650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 847947700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 848215150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 848215200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848238900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848238950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848240150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848240200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848241400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848241450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848242650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848242700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848243900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848243950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848245150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848245200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848246400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848246450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848247650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848247700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 848515150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 848515200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848538900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848538950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848540150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848540200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848541400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848541450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848542650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848542700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848543900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848543950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848545150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848545200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848546400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848546450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848547650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848547700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 848815150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 848815200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848838900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848838950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848840150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848840200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848841400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848841450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848842650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848842700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848843900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848843950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848845150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848845200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848846400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848846450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 848847650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 848847700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 849115150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 849115200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849138900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849138950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849140150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849140200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849141400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849141450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849142650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849142700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849143900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849143950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849145150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849145200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849146400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849146450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849147650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849147700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.cmd_task: at time 849415150.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[1].mem_core.cmd_task: at time 849415200.0 ps INFO: Read      bank 0 col 008, auto precharge 0
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849438900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849438950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000008 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849440150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849440200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 00000009 data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849441400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849441450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000a data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849442650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849442700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000b data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849443900.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849443950.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000c data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849445150.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849445200.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000d data = 0000
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849446400.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849446450.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000e data = ffff
+# ddr3_slave_tb.i_mem[0].mem_core.data_task: at time 849447650.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff
+# ddr3_slave_tb.i_mem[1].mem_core.data_task: at time 849447700.0 ps INFO: READ @ DQS= bank = 0 row = 0000 col = 0000000f data = ffff

@@ -34,7 +34,7 @@ module  axi_ddr3_ddrphy_top  #(
   
   parameter MEM_DM_WIDTH         =  4     ,
 
-  parameter DEVICE_ID            = 1      ,
+  parameter DEVICE_ID            = 0      ,
   
   parameter MEM_DQS_WIDTH        =  4 
            
@@ -287,7 +287,7 @@ localparam T500US         = (510*1000*1000 / DFI_CLK_PERIOD);
 localparam T400NS         = 410*1000 / DFI_CLK_PERIOD;
 
 
-localparam RST_GPLL_PHASE_EN = 1;
+localparam RST_GPLL_PHASE_EN = 0;
 
 localparam SCAN_RST_CLK_WINDOW = 1'b0;
 

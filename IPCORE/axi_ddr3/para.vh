@@ -32,5 +32,3 @@
 `define A14_EN
 
 `define A14_DQS_EN
-
-`define DEVICE_100H_EN

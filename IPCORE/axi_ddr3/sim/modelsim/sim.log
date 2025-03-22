@@ -1,6 +1,6 @@
 # ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
 # vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -lib work ddr3_test_top_tb -l sim.log 
-# Start time: 11:51:49 on Mar 21,2025
+# Start time: 13:21:12 on Mar 17,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/ip/system_ip/ips2l_hmic_s/ips2l_hmic_eval/ips2l_hmic_s-1.15/../../../../../arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: C:/pango/PDS_2022.2-SP6.4/ip/system_ip/ips2l_hmic_s/ips2l_hmic_eval/ips2l_hmic_s-1.15/../../../../../arch/vendor/pango/verilog/simulation/modelsim10.2c/oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/ip/system_ip/ips2l_hmic_s/ips2l_hmic_eval/ips2l_hmic_s-1.15/../../../../../arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: C:/pango/PDS_2022.2-SP6.4/ip/system_ip/ips2l_hmic_s/ips2l_hmic_eval/ips2l_hmic_s-1.15/../../../../../arch/vendor/pango/verilog/simulation/modelsim10.2c/oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
@@ -365,11 +365,5 @@
 #    Time: 0 fs  Iteration: 0  Process: /ddr3_test_top_tb/#INITIAL#254 File: ./../../example_design/bench/ddr3_tb/ddr3_test_top_tb.v Line: 257
 # 60000.0 ps simulation start... 
 # 60000.0 ps Reset sequence start... 
-# 25107000.0 ps Reset sequence complete ... 
-# 25107000.0 ps Mem ddrphy training start ... 
-# ddr3_test_top_tb.i_mem[0].mem_core.reset at time 27236752.0 ps WARNING: 200 us is required before RST_N goes inactive.
-# ddr3_test_top_tb.i_mem[1].mem_core.reset at time 27236802.0 ps WARNING: 200 us is required before RST_N goes inactive.
-# Break key hit
-# Simulation stop requested.
-# End time: 11:52:19 on Mar 21,2025, Elapsed time: 0:00:30
+# End time: 13:32:28 on Mar 17,2025, Elapsed time: 0:11:16
 # Errors: 2, Warnings: 221

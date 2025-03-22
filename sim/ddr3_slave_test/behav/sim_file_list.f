@@ -3,8 +3,7 @@
 ../../../DDR3/ddr3_write.v               
 ../../../DDR3/ddr3_top.v                 
 ../../../AXI4/slave_axi_async.v          
-../../../DDR3/sim_file/ddr3.v            
-../../../DDR3/sim_file/ddr3_parameters.vh
+../../../DDR3/sim_file/ddr3.v
 ../ddr3_slave_tb.v                       
 
 ../../../IPCORE/fifo_ddr3_read/rtl/ipm2l_fifo_ctrl_v1_1_fifo_ddr3_read.v
@@ -137,3 +136,4 @@
 +define+den4096Mb   
 +define+x16         
 +define+sg25E       
+-sv

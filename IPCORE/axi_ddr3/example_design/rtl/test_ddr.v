@@ -56,7 +56,7 @@ output                               err_flag_led
 );
 
 
-localparam DEVICE_ID             = 1                  ;
+localparam DEVICE_ID             = 0                  ;
 
 //8'h00: OTHERS; 
 //8'h01: PG2L100H; 
