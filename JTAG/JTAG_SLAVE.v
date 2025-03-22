@@ -1,5 +1,5 @@
 module JTAG_SALVE #(
-    parameter ADDR_LEN = 4;
+    parameter ADDR_LEN = 4
 )(
     input wire clk,
     input wire rst,
@@ -27,10 +27,10 @@ module JTAG_SALVE #(
     input  wire                RD_ADDR_VALID, //读地址通道有效
     output wire                RD_ADDR_READY, //读地址通道准备
      
-    output wire        [31:0] RD_DATA      , //读数据
+    output  reg        [31:0] RD_DATA      , //读数据
     output wire               RD_DATA_LAST , //最后一个读数据标志位
-    input  reg                RD_DATA_READY, //读数据准备
-    output wire               RD_DATA_VALID, //读数据有效
+    input  wire               RD_DATA_READY, //读数据准备
+    output  reg               RD_DATA_VALID  //读数据有效
 );
 
 /*
@@ -63,11 +63,9 @@ wire cmd_done;
 
 
 //________________写地址逻辑________________//
-reg [1:0] cu_wr_cnt, nt_wr_cnt;
-localparam WR_ST_IDLE  = 2'b00,
-           WR_ST_TRANS = 2'b01,
-           WR_ST_IDLE  = 2'b00,
-           WR_ST_IDLE  = 2'b00;
+reg cu_wr_cnt, nt_wr_cnt;
+localparam WR_ST_IDLE  = 1'b0,
+           WR_ST_TRANS = 1'b1;
 always @(*) begin
     if(rst)  nt_wr_cnt <= 0;
     else case (cu_wr_cnt)
@@ -92,11 +90,9 @@ always @(posedge clk) begin
     else wr_burst_load <= wr_burst_load;
 end
 //________________读地址逻辑________________//
-reg [1:0] cu_rd_cnt, nt_rd_cnt;
-localparam RD_ST_IDLE  = 2'b00,
-           RD_ST_TRANS = 2'b01,
-           RD_ST_IDLE  = 2'b00,
-           RD_ST_IDLE  = 2'b00;
+reg cu_rd_cnt, nt_rd_cnt;
+localparam RD_ST_IDLE  = 2'b0,
+           RD_ST_TRANS = 2'b1;
 always @(*) begin
     if(rst)  nt_rd_cnt <= 0;
     else case (cu_rd_cnt)
@@ -261,11 +257,10 @@ always @(*) begin
     endcase
 end
 assign RD_ADDR_READY = (cu_rd_cnt == RD_ST_IDLE);
-assign RD_DATA_VALID = (cu_rd_cnt == RD_ST_TRANS);
 always @(*) begin
     if(cu_rd_cnt == RD_ST_IDLE) begin
         RD_DATA <= 0;
-        RD_DATA_VALID <= 1;
+        RD_DATA_VALID <= 0;
     end else case (rd_addr_load)
         4'h0: begin RD_DATA <= SU_reg; RD_DATA_VALID <= 1;end
         4'h1: begin RD_DATA <= IR_reg; RD_DATA_VALID <= 1;end

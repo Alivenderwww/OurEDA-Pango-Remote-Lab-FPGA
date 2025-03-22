@@ -6,20 +6,20 @@ module slave_ddr3 (
     input  wire        BUS_CLK          ,
     input  wire        BUS_RST          ,
 
-    input wire [31:0]  BUS_WR_ADDR      , //写地址
-    input wire [ 7:0]  BUS_WR_LEN       , //写突发长度，实际长度为WR_LEN+1
-    input wire         BUS_WR_ADDR_VALID, //写地址通道有效
+    input  wire [31:0] BUS_WR_ADDR      , //写地址
+    input  wire [ 7:0] BUS_WR_LEN       , //写突发长度，实际长度为WR_LEN+1
+    input  wire        BUS_WR_ADDR_VALID, //写地址通道有效
     output wire        BUS_WR_ADDR_READY, //写地址通道准备
      
-    input wire [ 31:0] BUS_WR_DATA      , //写数据
-    input wire [  3:0] BUS_WR_STRB      , //写数据掩码
+    input  wire [31:0] BUS_WR_DATA      , //写数据
+    input  wire [ 3:0] BUS_WR_STRB      , //写数据掩码
     input  wire        BUS_WR_DATA_VALID, //写数据有效
     output wire        BUS_WR_DATA_READY, //写数据准备
     input  wire        BUS_WR_DATA_LAST , //最后一个写数据标志位
      
-    input wire [31:0]  BUS_RD_ADDR      , //读地址
-    input wire [ 7:0]  BUS_RD_LEN       , //读突发长度，实际长度为WR_LEN+1
-    input wire         BUS_RD_ADDR_VALID, //读地址通道有效
+    input  wire [31:0] BUS_RD_ADDR      , //读地址
+    input  wire [ 7:0] BUS_RD_LEN       , //读突发长度，实际长度为WR_LEN+1
+    input  wire        BUS_RD_ADDR_VALID, //读地址通道有效
     output wire        BUS_RD_ADDR_READY, //读地址通道准备
      
     output wire [31:0] BUS_RD_DATA      , //读数据
@@ -63,7 +63,7 @@ wire [255:0] READ_DATA      ; //读数据
 wire         READ_DATA_LAST ; //最后一个读数据标志位
 wire         READ_DATA_VALID; //读数据有效
 
-wire [27:0] SLAVE_WR_ADDR      ;
+wire [31:0] SLAVE_WR_ADDR      ;
 wire [ 7:0] SLAVE_WR_LEN       ;
 wire        SLAVE_WR_ADDR_VALID;
 wire        SLAVE_WR_ADDR_READY;
@@ -105,7 +105,7 @@ wire SLAVE_CLK = ddr_core_clk;
 slave_axi_async u_slave_axi_async(
     .BUS_CLK             (BUS_CLK             ),
     .SLAVE_CLK           (SLAVE_CLK           ),
-    .rst                 (BUS_RST             ),
+    .BUS_RST             (BUS_RST             ),
     .BUS_WR_ADDR         (BUS_WR_ADDR_I       ),
     .BUS_WR_LEN          (BUS_WR_LEN          ),
     .BUS_WR_ADDR_VALID   (BUS_WR_ADDR_VALID   ),
@@ -148,7 +148,7 @@ ddr3_read ddr3_read_inst(
     .rst                (BUS_RST              ),
     .ddr_init_done      (ddr_init_done        ),
 
-    .RD_ADDR            (SLAVE_RD_ADDR        ),
+    .RD_ADDR            (SLAVE_RD_ADDR[27:0]  ),
     .RD_LEN             (SLAVE_RD_LEN         ),
     .RD_ADDR_VALID      (SLAVE_RD_ADDR_VALID  ),
     .RD_ADDR_READY      (SLAVE_RD_ADDR_READY  ),
@@ -173,7 +173,7 @@ ddr3_write ddr3_write_inst(
     .rst                (BUS_RST              ),
     .ddr_init_done      (ddr_init_done        ),
 
-    .WR_ADDR            (SLAVE_WR_ADDR        ),
+    .WR_ADDR            (SLAVE_WR_ADDR[27:0]  ),
     .WR_LEN             (SLAVE_WR_LEN         ),
     .WR_ADDR_VALID      (SLAVE_WR_ADDR_VALID  ),
     .WR_ADDR_READY      (SLAVE_WR_ADDR_READY  ),

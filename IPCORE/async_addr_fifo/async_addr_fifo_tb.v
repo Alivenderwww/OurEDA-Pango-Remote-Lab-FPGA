@@ -19,7 +19,7 @@ module  async_addr_fifo_tb;
 localparam T_CLK_PERIOD       = 10 ;       //clock a half perid
 localparam T_RST_TIME         = 200 ;       //reset time 
 
-localparam CAS_MODE = "18K" ; // @IPC enum 18K,36K,64K
+localparam CAS_MODE = "36K" ; // @IPC enum 18K,36K,64K
 
 localparam POWER_OPT = 0 ; // @IPC bool
 
@@ -35,13 +35,13 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 36 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 40 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 2,128
 
 localparam RD_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 36 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 40 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 2,128
 

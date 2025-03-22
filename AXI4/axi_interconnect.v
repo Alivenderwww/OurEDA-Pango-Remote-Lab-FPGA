@@ -123,7 +123,7 @@ reg [ 1:0] cu_slave_wr_data_sel, nt_slave_wr_data_sel;
 reg [ 1:0] cu_slave_rd_data_sel, nt_slave_rd_data_sel;
 
 /**************************写地址通道接口**********************/
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) wr_addr_lock <= 0;
     else if((BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)) wr_addr_lock <= 0; //握手成功，传输通道解锁
     else if(BUS_WR_ADDR_VALID) wr_addr_lock <= 1; //握手未成功，传输通道加锁
@@ -138,7 +138,7 @@ always @(*) begin
         else                      nt_master_wr_addr_id <= 2'd0;
     end else                      nt_master_wr_addr_id <= cu_master_wr_addr_id;
 end
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) cu_master_wr_addr_id <= 2'd0;
     else cu_master_wr_addr_id <= nt_master_wr_addr_id;
 end
@@ -160,7 +160,7 @@ axi_inter_sel41 #( 1)selS_WR_ADDR_READY(    slave_wr_addr_sel, BUS_WR_ADDR_READY
 axi_inter_sel14 #( 1)selM_WR_ADDR_READY( cu_master_wr_addr_id, BUS_WR_ADDR_READY, M0_WR_ADDR_READY, M1_WR_ADDR_READY, M2_WR_ADDR_READY, M3_WR_ADDR_READY);
 
 /**************************读地址通道接口**********************/
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) rd_addr_lock <= 0;
     else if((BUS_RD_ADDR_VALID && BUS_RD_ADDR_READY)) rd_addr_lock <= 0; //握手成功，传输通道解锁
     else if(BUS_RD_ADDR_VALID) rd_addr_lock <= 1; //握手未成功，传输通道加锁
@@ -175,7 +175,7 @@ always @(*) begin
         else                      nt_master_rd_addr_id <= 2'd0;
     end else                      nt_master_rd_addr_id <= cu_master_rd_addr_id;
 end
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) cu_master_rd_addr_id <= 2'd0;
     else cu_master_rd_addr_id <= nt_master_rd_addr_id;
 end
@@ -198,7 +198,7 @@ axi_inter_sel14 #( 1)selM_RD_ADDR_READY( cu_master_rd_addr_id, BUS_RD_ADDR_READY
 
 
 /**************************写数据通道接口**********************/
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) wr_data_lock <= 0;
     else if((BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST))
         wr_data_lock <= 0; //握手成功并收到最后一个数据标志位，传输通道解锁
@@ -215,7 +215,7 @@ always @(*) begin
         else                      nt_slave_wr_data_sel <= 2'd0;
     end else                      nt_slave_wr_data_sel <= cu_slave_wr_data_sel;
 end
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) cu_slave_wr_data_sel <= 2'd0;
     else cu_slave_wr_data_sel <= nt_slave_wr_data_sel;
 end
@@ -238,7 +238,7 @@ axi_inter_sel14 #( 1)selS_WR_DATA_LAST ( cu_slave_wr_data_sel,  BUS_WR_DATA_LAST
 
 
 /**************************读数据通道接口**********************/
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) rd_data_lock <= 0;
     else if((BUS_RD_DATA_VALID && BUS_RD_DATA_READY && BUS_RD_DATA_LAST))
         rd_data_lock <= 0; //握手成功并收到最后一个数据标志位，传输通道解锁
@@ -255,23 +255,21 @@ always @(*) begin
         else                      nt_slave_rd_data_sel <= 2'd0;
     end else                      nt_slave_rd_data_sel <= cu_slave_rd_data_sel;
 end
-always @(posedge clk) begin
+always @(posedge BUS_CLK) begin
     if(BUS_RST) cu_slave_rd_data_sel <= 2'd0;
     else cu_slave_rd_data_sel <= nt_slave_rd_data_sel;
-end
-always @(*) begin
-    master_rd_data_id <= BUS_RD_BACK_ID[3:2];
 end
 
 axi_inter_sel41 #(32)selS_RD_DATA      ( cu_slave_rd_data_sel, BUS_RD_DATA        , S0_RD_DATA      , S1_RD_DATA      , S2_RD_DATA      , S3_RD_DATA      );
 axi_inter_nosel #(32)selM_RD_DATA      (                       BUS_RD_DATA        , M0_RD_DATA      , M1_RD_DATA      , M2_RD_DATA      , M3_RD_DATA      );
-axi_inter_sel41 #( 4)selS_RD_BACK_ID   ( cu_slave_rd_data_sel, BUS_RD_BACK_ID     , S0_RD_BACK_ID   , S1_RD_BACK_ID   , S2_RD_BACK_ID   , S3_RD_BACK_ID   );
-axi_inter_nosel #( 2)selM_RD_BACK_ID   (    master_rd_data_id, BUS_RD_BACK_ID[1:0], M0_RD_BACK_ID   , M1_RD_BACK_ID   , M2_RD_BACK_ID   , M3_RD_BACK_ID   );
+axi_inter_sel41 #( 4)selS_RD_BACK_ID   ( cu_slave_rd_data_sel,{master_rd_data_id,BUS_RD_BACK_ID}    , S0_RD_BACK_ID   , S1_RD_BACK_ID   , S2_RD_BACK_ID   , S3_RD_BACK_ID   );
+axi_inter_nosel #( 2)selM_RD_BACK_ID   (    master_rd_data_id, BUS_RD_BACK_ID     , M0_RD_BACK_ID   , M1_RD_BACK_ID   , M2_RD_BACK_ID   , M3_RD_BACK_ID   );
 axi_inter_sel41 #( 1)selS_RD_DATA_VALID( cu_slave_rd_data_sel, BUS_RD_DATA_VALID  , S0_RD_DATA_VALID, S1_RD_DATA_VALID, S2_RD_DATA_VALID, S3_RD_DATA_VALID);
 axi_inter_sel14 #( 1)selM_RD_DATA_VALID(    master_rd_data_id, BUS_RD_DATA_VALID  , M0_RD_DATA_VALID, M1_RD_DATA_VALID, M2_RD_DATA_VALID, M3_RD_DATA_VALID);
 axi_inter_sel41 #( 1)selM_RD_DATA_READY(    master_rd_data_id, BUS_RD_DATA_READY  , M0_RD_DATA_READY, M1_RD_DATA_READY, M2_RD_DATA_READY, M3_RD_DATA_READY);
 axi_inter_sel14 #( 1)selS_RD_DATA_READY( cu_slave_rd_data_sel, BUS_RD_DATA_READY  , S0_RD_DATA_READY, S1_RD_DATA_READY, S2_RD_DATA_READY, S3_RD_DATA_READY);
 axi_inter_sel41 #( 1)selS_RD_DATA_LAST ( cu_slave_rd_data_sel, BUS_RD_DATA_LAST   , S0_RD_DATA_LAST , S1_RD_DATA_LAST , S2_RD_DATA_LAST , S3_RD_DATA_LAST );
 axi_inter_sel14 #( 1)selM_RD_DATA_LAST (    master_rd_data_id, BUS_RD_DATA_LAST   , M0_RD_DATA_LAST , M1_RD_DATA_LAST , M2_RD_DATA_LAST , M3_RD_DATA_LAST );
+
 
 endmodule
