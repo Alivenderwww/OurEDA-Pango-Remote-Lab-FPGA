@@ -8,54 +8,54 @@
         <version>1.10</version>
         <instance>udp_fifo_wr</instance>
         <family>Logos2</family>
-        <device>PG2L200H</device>
-        <package>FBB676</package>
+        <device>PG2L100H</device>
+        <package>FBG676</package>
         <speedgrade>-6</speedgrade>
         <generator version="2022.2-SP6.4" build="146967">IP Compiler</generator>
     </header>
     <param_list>
         <param>
-            <name>CAS_MODE_SEL</name>
-            <value>AUTO</value>
+            <name>RD_BE_WIDTH</name>
+            <value>1</value>
         </param>
         <param>
             <name>WR_BYTE_EN</name>
             <value>false</value>
         </param>
         <param>
-            <name>EMPTY_WL_EN</name>
+            <name>SAMEWIDTH_EN</name>
             <value>true</value>
         </param>
         <param>
-            <name>RD_OCE_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>ALMOST_FULL_NUM</name>
-            <value>1000</value>
-        </param>
-        <param>
-            <name>RD_BE_WIDTH</name>
+            <name>BE_WIDTH</name>
             <value>1</value>
-        </param>
-        <param>
-            <name>RST_VAL</name>
-            <value>0</value>
-        </param>
-        <param>
-            <name>WR_DATA_WIDTH</name>
-            <value>33</value>
-        </param>
-        <param>
-            <name>RST_VAL_EN</name>
-            <value>false</value>
         </param>
         <param>
             <name>CAS_MODE</name>
             <value>36K</value>
         </param>
         <param>
-            <name>OUTPUT_REG</name>
+            <name>ALMOST_FULL_NUM</name>
+            <value>1000</value>
+        </param>
+        <param>
+            <name>RST_VAL</name>
+            <value>0</value>
+        </param>
+        <param>
+            <name>RST_VAL_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RD_DATA_WIDTH</name>
+            <value>33</value>
+        </param>
+        <param>
+            <name>RD_DEPTH_WIDTH</name>
+            <value>11</value>
+        </param>
+        <param>
+            <name>RD_OCE_EN</name>
             <value>false</value>
         </param>
         <param>
@@ -63,44 +63,36 @@
             <value>false</value>
         </param>
         <param>
-            <name>RD_DEPTH_WIDTH</name>
-            <value>11</value>
+            <name>FAB_REG</name>
+            <value>false</value>
         </param>
         <param>
-            <name>RESET_TYPE</name>
-            <value>ASYNC</value>
+            <name>WR_DATA_WIDTH</name>
+            <value>33</value>
+        </param>
+        <param>
+            <name>RD_CLK_OR_POL_INV</name>
+            <value>false</value>
         </param>
         <param>
             <name>WR_DEPTH_WIDTH</name>
             <value>11</value>
         </param>
         <param>
-            <name>BE_WIDTH</name>
-            <value>1</value>
-        </param>
-        <param>
-            <name>RD_DATA_WIDTH</name>
-            <value>33</value>
-        </param>
-        <param>
-            <name>FAB_REG</name>
+            <name>OUTPUT_REG</name>
             <value>false</value>
-        </param>
-        <param>
-            <name>BYTE_SIZE</name>
-            <value>8</value>
-        </param>
-        <param>
-            <name>FIFO_TYPE</name>
-            <value>SYN_FIFO</value>
-        </param>
-        <param>
-            <name>SAMEWIDTH_EN</name>
-            <value>true</value>
         </param>
         <param>
             <name>ALMOST_EMPTY_NUM</name>
             <value>4</value>
+        </param>
+        <param>
+            <name>RESET_TYPE</name>
+            <value>ASYNC</value>
+        </param>
+        <param>
+            <name>EMPTY_WL_EN</name>
+            <value>true</value>
         </param>
         <param>
             <name>ASYN_FIFO_EN</name>
@@ -111,8 +103,16 @@
             <value>true</value>
         </param>
         <param>
-            <name>RD_CLK_OR_POL_INV</name>
-            <value>false</value>
+            <name>BYTE_SIZE</name>
+            <value>8</value>
+        </param>
+        <param>
+            <name>CAS_MODE_SEL</name>
+            <value>AUTO</value>
+        </param>
+        <param>
+            <name>FIFO_TYPE</name>
+            <value>SYN_FIFO</value>
         </param>
     </param_list>
     <pin_list>

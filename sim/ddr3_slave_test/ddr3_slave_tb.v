@@ -1,14 +1,20 @@
-`timescale 1ns/10fs
-module ddr3_slave_tb ();
+`timescale 1ns/1ps
 `include "ddr3_parameters.vh"
+module ddr3_slave_tb ();
 
 parameter MEM_DQ_WIDTH = 32;
 parameter MEM_DQS_WIDTH = MEM_DQ_WIDTH/8;
 parameter MEM_ROW_WIDTH = 15;
 
+
 ///////////////////////////test WRLVL case///////////////////////////
 parameter CA_FIRST_DLY          = 0.15;
 parameter CA_GROUP_TO_GROUP_DLY = 0.05;
+////////////////////////////////////////////////////////////////////
+localparam real ACTUAL_RATE  =  800.0   ; 
+///////////////////////////test ppll sync case///////////////////////////
+// 1 step rst_clk phase adjust changes 2 / 128 ppll fast clk phase. the ppll fast clk frequency is twice the otput frequecey of ppll.
+parameter real OUT_SYNC_DLY = (500.0 / ACTUAL_RATE) * (123.0 / 128.0); 
 ////////////////////////////////////////////////////////////////////
 
 reg          ddr_ref_clk  ;
@@ -62,7 +68,7 @@ wire [ADDR_BITS-1:0] mem_addr;
 initial begin
     ddr_ref_clk = 0;
     rst_n = 0;
-    #800000
+    #300000
     rst_n = 1;
 end
 
@@ -236,9 +242,22 @@ generate
 end     
 endgenerate
 
+reg grs_n;
+GTP_GRS GRS_INST(.GRS_N (grs_n));
+initial begin
+grs_n = 1'b0;
+#5 grs_n = 1'b1;
+end
 
-wire GRS_N;
-GTP_GRS GRS_INST (.GRS_N(1'b1));
 
+wire b0_gate;
+wire b1_gate;
+assign b1_gate = ddr3_slave_tb.slave_ddr3_inst.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[1];
+assign #OUT_SYNC_DLY b0_gate =  b1_gate;
+initial 
+begin    
+    force ddr3_slave_tb.slave_ddr3_inst.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll.clkoutphy_gate = b0_gate;
+//    force ddr3_slave_tb.slave_ddr3_inst.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[2].ddrphy_ppll.clkoutphy_gate = b0_gate;
+end
 
 endmodule
