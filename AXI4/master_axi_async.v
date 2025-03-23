@@ -205,7 +205,7 @@ wire              rd_data_fifo_rd_empty;
 
 reg async_rd_data_fifo_data_dont_care;
 always @(posedge MASTER_CLK) begin
-    if(BUS_RST) async_rd_data_fifo_data_dont_care <= 1;
+    if(MASTER_RST) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_empty && (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY)) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_en && async_rd_data_fifo_data_dont_care) async_rd_data_fifo_data_dont_care <= 0;
     else async_rd_data_fifo_data_dont_care <= async_rd_data_fifo_data_dont_care;

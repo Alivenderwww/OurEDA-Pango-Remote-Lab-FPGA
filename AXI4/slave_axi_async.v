@@ -71,7 +71,7 @@ wire            wr_addr_fifo_rd_empty;
 
 reg async_wr_addr_fifo_data_dont_care;
 always @(posedge SLAVE_CLK) begin
-    if(BUS_RST) async_wr_addr_fifo_data_dont_care <= 1;
+    if(SLAVE_RST) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_empty && (SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY)) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_en && async_wr_addr_fifo_data_dont_care) async_wr_addr_fifo_data_dont_care <= 0;
     else async_wr_addr_fifo_data_dont_care <= async_wr_addr_fifo_data_dont_care;
@@ -116,7 +116,7 @@ wire            rd_addr_fifo_rd_empty;
 
 reg async_rd_addr_fifo_data_dont_care;
 always @(posedge SLAVE_CLK) begin
-    if(BUS_RST) async_rd_addr_fifo_data_dont_care <= 1;
+    if(SLAVE_RST) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_empty && (SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY)) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_en && async_rd_addr_fifo_data_dont_care) async_rd_addr_fifo_data_dont_care <= 0;
     else async_rd_addr_fifo_data_dont_care <= async_rd_addr_fifo_data_dont_care;
@@ -161,11 +161,13 @@ wire              wr_data_fifo_rd_empty;
 
 reg async_wr_data_fifo_data_dont_care;
 always @(posedge SLAVE_CLK) begin
-    if(BUS_RST) async_wr_data_fifo_data_dont_care <= 1;
+    if(SLAVE_RST) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_empty && (SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY)) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_en && async_wr_data_fifo_data_dont_care) async_wr_data_fifo_data_dont_care <= 0;
     else async_wr_data_fifo_data_dont_care <= async_wr_data_fifo_data_dont_care;
 end
+
+//写数据通道，主机向从机写入数据的同时从机也需要给主机返回ID号
 
 assign wr_data_fifo_wr_rst  =  BUS_RST;
 assign wr_data_fifo_wr_en   = (BUS_WR_DATA_VALID && BUS_WR_DATA_READY);

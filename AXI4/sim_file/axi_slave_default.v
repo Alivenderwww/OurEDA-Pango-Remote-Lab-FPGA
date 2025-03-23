@@ -17,13 +17,13 @@ module axi_slave_default (
       
     input  wire [31:0] RD_ADDR      ,
     input  wire [ 7:0] RD_LEN       ,
-    input  wire [ 1:0] RD_ID        ,
+    input  wire [ 3:0] RD_ID        ,
     input  wire        RD_ADDR_VALID,
     output wire        RD_ADDR_READY,
 
     output wire [31:0] RD_DATA      ,
     output wire        RD_DATA_LAST ,
-    output wire [ 1:0] RD_BACK_ID   ,
+    output wire [ 3:0] RD_BACK_ID   ,
     input  wire        RD_DATA_READY,
     output wire        RD_DATA_VALID
 );
