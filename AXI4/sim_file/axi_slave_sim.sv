@@ -2,35 +2,35 @@ module axi_slave_sim #(
     parameter addr_b = 0,
     parameter addr_e = 2047
 ) (
-    input  wire        clk              ,
-    input  wire        rstn             ,
-    input  wire        BUS_CLK          ,
-    input  wire        BUS_RST          ,
+    input  wire        clk          ,
+    input  wire        rstn         ,
+    input  wire        BUS_CLK      ,
+    input  wire        BUS_RST      ,
 
-    input wire [ 3:0]  WR_ID        , //写ID
     input wire [31:0]  WR_ADDR      , //写地址
     input wire [ 7:0]  WR_LEN       , //写突发长度，实际长度为WR_LEN+1
+    input wire [ 3:0]  WR_ID        , //写ID
     input wire         WR_ADDR_VALID, //写地址通道有效
     output reg         WR_ADDR_READY, //写地址通道准备
     
-    output reg [ 3: 0] WR_BACK_ID   , //写回ID
     input wire [ 31:0] WR_DATA      , //写数据
     input wire [  3:0] WR_STRB      , //写数据掩码
+    output reg [ 3: 0] WR_BACK_ID   , //写回ID
     input  wire        WR_DATA_VALID, //写数据有效
     output wire        WR_DATA_READY, //写数据准备
     input  wire        WR_DATA_LAST , //最后一个写数据标志位
     
-    input wire [ 3:0]  RD_ID        , //读ID
     input wire [31:0]  RD_ADDR      , //读地址
     input wire [ 7:0]  RD_LEN       , //读突发长度，实际长度为WR_LEN+1
+    input wire [ 3:0]  RD_ID        , //读ID
     input wire         RD_ADDR_VALID, //读地址通道有效
     output reg         RD_ADDR_READY, //读地址通道准备
     
     output reg  [ 3:0] RD_BACK_ID   , //读回ID
-    output reg [31:0] RD_DATA      , //读数据
-    output reg        RD_DATA_LAST , //最后一个读数据标志位
+    output reg [31:0]  RD_DATA      , //读数据
+    output reg         RD_DATA_LAST , //最后一个读数据标志位
     input  wire        RD_DATA_READY, //读数据准备
-    output reg        RD_DATA_VALID //读数据有效
+    output reg         RD_DATA_VALID //读数据有效
 );
 reg [31:0] wr_addr_reg;
 reg [ 7:0] wr_len_reg;

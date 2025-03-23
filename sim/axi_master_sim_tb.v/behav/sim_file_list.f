@@ -1,3 +1,4 @@
 ../../../AXI4/sim_file/axi_master_sim.v
-../axi_master_sim_tb.v
+../../../AXI4/sim_file/axi_slave_sim.sv
+../axi_master_slave_sim_tb.v
 -sv
