@@ -28,4 +28,3 @@ add wave *
 view wave
 view structure
 view signals
-run 20000ns

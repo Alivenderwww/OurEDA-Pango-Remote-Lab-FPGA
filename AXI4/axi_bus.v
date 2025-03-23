@@ -55,7 +55,7 @@ output wire        S0_WR_DATA_VALID,    output wire        S1_WR_DATA_VALID,    
 input  wire        S0_WR_DATA_READY,    input  wire        S1_WR_DATA_READY,    input  wire        S2_WR_DATA_READY,    input  wire        S3_WR_DATA_READY,
 output wire        S0_WR_DATA_LAST ,    output wire        S1_WR_DATA_LAST ,    output wire        S2_WR_DATA_LAST ,    output wire        S3_WR_DATA_LAST ,
 
-output wire [27:0] S0_RD_ADDR      ,    output wire [ 3:0] S1_RD_ADDR      ,    output wire [27:0] S2_RD_ADDR      ,    output wire [ 3:0] S3_RD_ADDR      ,
+output wire [31:0] S0_RD_ADDR      ,    output wire [31:0] S1_RD_ADDR      ,    output wire [31:0] S2_RD_ADDR      ,    output wire [31:0] S3_RD_ADDR      ,
 output wire [ 7:0] S0_RD_LEN       ,    output wire [ 7:0] S1_RD_LEN       ,    output wire [ 7:0] S2_RD_LEN       ,    output wire [ 7:0] S3_RD_LEN       ,
 output wire [ 3:0] S0_RD_ID        ,    output wire [ 3:0] S1_RD_ID        ,    output wire [ 3:0] S2_RD_ID        ,    output wire [ 3:0] S3_RD_ID        ,
 output wire        S0_RD_ADDR_VALID,    output wire        S1_RD_ADDR_VALID,    output wire        S2_RD_ADDR_VALID,    output wire        S3_RD_ADDR_VALID,
@@ -101,7 +101,7 @@ wire [ 3:0] S0_BUS_WR_BACK_ID   ; wire [ 3:0] S1_BUS_WR_BACK_ID   ; wire [ 3:0] 
 wire        S0_BUS_WR_DATA_VALID; wire        S1_BUS_WR_DATA_VALID; wire        S2_BUS_WR_DATA_VALID; wire        S3_BUS_WR_DATA_VALID;
 wire        S0_BUS_WR_DATA_READY; wire        S1_BUS_WR_DATA_READY; wire        S2_BUS_WR_DATA_READY; wire        S3_BUS_WR_DATA_READY;
 wire        S0_BUS_WR_DATA_LAST ; wire        S1_BUS_WR_DATA_LAST ; wire        S2_BUS_WR_DATA_LAST ; wire        S3_BUS_WR_DATA_LAST ;
-wire [27:0] S0_BUS_RD_ADDR      ; wire [ 3:0] S1_BUS_RD_ADDR      ; wire [27:0] S2_BUS_RD_ADDR      ; wire [ 3:0] S3_BUS_RD_ADDR      ;
+wire [31:0] S0_BUS_RD_ADDR      ; wire [31:0] S1_BUS_RD_ADDR      ; wire [31:0] S2_BUS_RD_ADDR      ; wire [31:0] S3_BUS_RD_ADDR      ;
 wire [ 7:0] S0_BUS_RD_LEN       ; wire [ 7:0] S1_BUS_RD_LEN       ; wire [ 7:0] S2_BUS_RD_LEN       ; wire [ 7:0] S3_BUS_RD_LEN       ;
 wire [ 3:0] S0_BUS_RD_ID        ; wire [ 3:0] S1_BUS_RD_ID        ; wire [ 3:0] S2_BUS_RD_ID        ; wire [ 3:0] S3_BUS_RD_ID        ;
 wire        S0_BUS_RD_ADDR_VALID; wire        S1_BUS_RD_ADDR_VALID; wire        S2_BUS_RD_ADDR_VALID; wire        S3_BUS_RD_ADDR_VALID;
