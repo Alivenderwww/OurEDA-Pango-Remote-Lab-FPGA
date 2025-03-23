@@ -1,41 +1,44 @@
 module axi_slave_default (
+    //___________________其他接口_____________________//
     input  wire        clk          ,
-    input  wire        rst          ,
+    input  wire        rstn         ,
 
-    input  wire [31:0] WR_ADDR      ,
-    input  wire [ 7:0] WR_LEN       ,
-    input  wire [ 1:0] WR_ID        ,
-    input  wire        WR_ADDR_VALID,
-    output wire        WR_ADDR_READY,
-      
-    input  wire [31:0] WR_DATA      ,
-    input  wire [ 3:0] WR_STRB      ,
-    output wire [ 1:0] WR_BACK_ID   ,
-    input  wire        WR_DATA_VALID,
-    output wire        WR_DATA_READY,
-    input  wire        WR_DATA_LAST ,
-      
-    input  wire [31:0] RD_ADDR      ,
-    input  wire [ 7:0] RD_LEN       ,
-    input  wire [ 3:0] RD_ID        ,
-    input  wire        RD_ADDR_VALID,
-    output wire        RD_ADDR_READY,
+    //___________________AXI接口_____________________//
+    input  wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
+    input  wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
 
-    output wire [31:0] RD_DATA      ,
-    output wire        RD_DATA_LAST ,
-    output wire [ 3:0] RD_BACK_ID   ,
-    input  wire        RD_DATA_READY,
-    output wire        RD_DATA_VALID
+    input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
+    input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型
+    input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
+
+    input  wire [31:0] SLAVE_WR_DATA      , //写数据通道-数据
+    input  wire [ 3:0] SLAVE_WR_STRB      , //写数据通道-选通
+    input  wire        SLAVE_WR_DATA_LAST , //写数据通道-last信号
+    input  wire        SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+
+    output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应
+    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
+    input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
+
+    input  wire [ 3:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
+    input  wire [31:0] SLAVE_RD_ADDR      , //读地址通道-地址
+    input  wire [ 7:0] SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0] SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。
+    input  wire        SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
+    output wire        SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
+
+    output wire [ 3:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
+    output wire [31:0] SLAVE_RD_DATA      , //读数据通道-数据
+    output wire [ 1:0] SLAVE_RD_DATA_RESP , //读数据通道-响应
+    output wire        SLAVE_RD_DATA_LAST , //读数据通道-last信号
+    output wire        SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
+    input  wire        SLAVE_RD_DATA_READY  //读数据通道-握手信号-准备
 );
 //如果AXI总线某一个模块暂时不需要连接，用default模块代替。
-
-assign WR_ADDR_READY = 0;
-assign WR_BACK_ID    = 0;
-assign WR_DATA_READY = 0;
-assign RD_ADDR_READY = 0;
-assign RD_DATA       = 0;
-assign RD_DATA_LAST  = 0;
-assign RD_BACK_ID    = 0;
-assign RD_DATA_VALID = 0;
 
 endmodule

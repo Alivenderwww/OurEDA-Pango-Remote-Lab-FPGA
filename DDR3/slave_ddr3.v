@@ -8,30 +8,37 @@ module slave_ddr3 (
     output wire        DDR_SLAVE_CLK          , //DDR作为从机向总线提供的时钟信号
     output wire        DDR_SLAVE_RST          , //DDR作为从机向总线提供的复位信号
 
-    input  wire [31:0] DDR_SLAVE_WR_ADDR      , //写地址
-    input  wire [ 7:0] DDR_SLAVE_WR_LEN       , //写突发长度，实际长度为WR_LEN+1
-    input  wire [ 3:0] DDR_SLAVE_WR_ID        , //写ID
-    input  wire        DDR_SLAVE_WR_ADDR_VALID, //写地址通道有效
-    output wire        DDR_SLAVE_WR_ADDR_READY, //写地址通道准备
-     
-    input  wire [31:0] DDR_SLAVE_WR_DATA      , //写数据
-    input  wire [ 3:0] DDR_SLAVE_WR_STRB      , //写数据掩码
-    output wire [ 3:0] DDR_SLAVE_WR_BACK_ID   , //写返回ID
-    input  wire        DDR_SLAVE_WR_DATA_VALID, //写数据有效
-    output wire        DDR_SLAVE_WR_DATA_READY, //写数据准备
-    input  wire        DDR_SLAVE_WR_DATA_LAST , //最后一个写数据标志位
-     
-    input  wire [31:0] DDR_SLAVE_RD_ADDR      , //读地址
-    input  wire [ 7:0] DDR_SLAVE_RD_LEN       , //读突发长度，实际长度为WR_LEN+1
-    input  wire [ 3:0] DDR_SLAVE_RD_ID        , //读ID
-    input  wire        DDR_SLAVE_RD_ADDR_VALID, //读地址通道有效
-    output wire        DDR_SLAVE_RD_ADDR_READY, //读地址通道准备
-     
-    output wire [31:0] DDR_SLAVE_RD_DATA      , //读数据
-    output wire [ 3:0] DDR_SLAVE_RD_BACK_ID   , //读返回ID
-    output wire        DDR_SLAVE_RD_DATA_LAST , //最后一个读数据标志位
-    input  wire        DDR_SLAVE_RD_DATA_READY, //读数据准备
-    output wire        DDR_SLAVE_RD_DATA_VALID, //读数据有效
+    input  wire [ 3:0] DDR_SLAVE_WR_ADDR_ID   , //写地址通道-ID
+    input  wire [31:0] DDR_SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [ 7:0] DDR_SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0] DDR_SLAVE_WR_ADDR_BURST, //写地址通道-突发类型（DDR不支持除增量传输外的其他突发类型，因此不接入逻辑）
+    input  wire        DDR_SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    output wire        DDR_SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
+
+    input  wire [31:0] DDR_SLAVE_WR_DATA      , //写数据通道-数据
+    input  wire [ 3:0] DDR_SLAVE_WR_STRB      , //写数据通道-选通
+    input  wire        DDR_SLAVE_WR_DATA_LAST , //写数据通道-last信号
+    input  wire        DDR_SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire        DDR_SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+
+    output wire [ 3:0] DDR_SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0] DDR_SLAVE_WR_BACK_RESP , //写响应通道-响应（暂时未接）
+    output wire        DDR_SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效（暂时未接）
+    input  wire        DDR_SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
+
+    input  wire [ 3:0] DDR_SLAVE_RD_ADDR_ID   , //读地址通道-ID
+    input  wire [31:0] DDR_SLAVE_RD_ADDR      , //读地址通道-地址
+    input  wire [ 7:0] DDR_SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0] DDR_SLAVE_RD_ADDR_BURST, //读地址通道-突发类型-DDR不支持除增量传输外的其他突发类型，因此不接入逻辑
+    input  wire        DDR_SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
+    output wire        DDR_SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
+
+    output wire [ 3:0] DDR_SLAVE_RD_BACK_ID   , //读数据通道-ID
+    output wire [31:0] DDR_SLAVE_RD_DATA      , //读数据通道-数据
+    output wire [ 1:0] DDR_SLAVE_RD_DATA_RESP , //读数据通道-响应
+    output wire        DDR_SLAVE_RD_DATA_LAST , //读数据通道-last信号
+    output wire        DDR_SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
+    input  wire        DDR_SLAVE_RD_DATA_READY, //读数据通道-握手信号-准备
     
     //DDR-memory接口
     output wire         mem_rst_n    , //Memory复位
@@ -64,10 +71,12 @@ wire         WRITE_DATA_LAST ; //最后一个写数据标志位
 
 wire [27:0]  READ_ADDR      ; //读地址
 wire [ 3:0]  READ_LEN       ; //读长度，实际长度为WR_LEN+1
+wire [ 3:0]  READ_ID        ;
 wire         READ_ADDR_VALID; //读地址通道有效
 wire         READ_ADDR_READY; //读地址通道准备
 
 wire [255:0] READ_DATA      ; //读数据
+wire [ 3:0]  READ_BACK_ID   ;
 wire         READ_DATA_LAST ; //最后一个读数据标志位
 wire         READ_DATA_VALID; //读数据有效
 
@@ -87,55 +96,66 @@ assign DDR_SLAVE_RST = (~ddr_init_done);
 */
 
 ddr3_read ddr3_read_inst(
-    .clk                (DDR_SLAVE_CLK            ),
-    .rst                (DDR_SLAVE_RST            ),
+    .clk                 (DDR_SLAVE_CLK           ),
+    .rst                 (DDR_SLAVE_RST           ),
 
-    .RD_ADDR            (DDR_SLAVE_RD_ADDR[27:0]  ),
-    .RD_LEN             (DDR_SLAVE_RD_LEN         ),
-    .RD_ADDR_VALID      (DDR_SLAVE_RD_ADDR_VALID  ),
-    .RD_ADDR_READY      (DDR_SLAVE_RD_ADDR_READY  ),
-    
-    .RD_DATA            (DDR_SLAVE_RD_DATA        ),
-    .RD_DATA_LAST       (DDR_SLAVE_RD_DATA_LAST   ),
-    .RD_DATA_VALID      (DDR_SLAVE_RD_DATA_VALID  ),
-    .RD_DATA_READY      (DDR_SLAVE_RD_DATA_READY  ),
+    .SLAVE_RD_ADDR_ID    (DDR_SLAVE_RD_ADDR_ID    ),
+    .SLAVE_RD_ADDR       (DDR_SLAVE_RD_ADDR[27:0] ),
+    .SLAVE_RD_ADDR_LEN   (DDR_SLAVE_RD_ADDR_LEN   ),
+    .SLAVE_RD_ADDR_BURST (DDR_SLAVE_RD_ADDR_BURST ),
+    .SLAVE_RD_ADDR_VALID (DDR_SLAVE_RD_ADDR_VALID ),
+    .SLAVE_RD_ADDR_READY (DDR_SLAVE_RD_ADDR_READY ),
 
-    .READ_ADDR          (READ_ADDR                ),
-    .READ_LEN           (READ_LEN                 ),
-    .READ_ADDR_VALID    (READ_ADDR_VALID          ),
-    .READ_ADDR_READY    (READ_ADDR_READY          ),
+    .SLAVE_RD_BACK_ID    (DDR_SLAVE_RD_BACK_ID    ),
+    .SLAVE_RD_DATA       (DDR_SLAVE_RD_DATA       ),
+    .SLAVE_RD_DATA_RESP  (DDR_SLAVE_RD_DATA_RESP  ),
+    .SLAVE_RD_DATA_LAST  (DDR_SLAVE_RD_DATA_LAST  ),
+    .SLAVE_RD_DATA_VALID (DDR_SLAVE_RD_DATA_VALID ),
+    .SLAVE_RD_DATA_READY (DDR_SLAVE_RD_DATA_READY ),
 
-    .READ_DATA          (READ_DATA                ),
-    .READ_DATA_LAST     (READ_DATA_LAST           ),
-    .READ_DATA_VALID    (READ_DATA_VALID          )
+    .READ_ADDR           (READ_ADDR           ),
+    .READ_LEN            (READ_LEN            ),
+    .READ_ID             (READ_ID             ),
+    .READ_ADDR_VALID     (READ_ADDR_VALID     ),
+    .READ_ADDR_READY     (READ_ADDR_READY     ),
+    .READ_DATA           (READ_DATA           ),
+    .READ_BACK_ID        (READ_BACK_ID        ),
+    .READ_DATA_LAST      (READ_DATA_LAST      ),
+    .READ_DATA_VALID     (READ_DATA_VALID     )
 );
 
 ddr3_write ddr3_write_inst(
-    .clk                (DDR_SLAVE_CLK            ),
-    .rst                (DDR_SLAVE_RST            ),
+    .clk                 (DDR_SLAVE_CLK           ),
+    .rst                 (DDR_SLAVE_RST           ),
+    .SLAVE_WR_ADDR_ID    (DDR_SLAVE_WR_ADDR_ID    ),
+    .SLAVE_WR_ADDR       (DDR_SLAVE_WR_ADDR[27:0] ),
+    .SLAVE_WR_ADDR_LEN   (DDR_SLAVE_WR_ADDR_LEN   ),
+    .SLAVE_WR_ADDR_BURST (DDR_SLAVE_WR_ADDR_BURST ),
+    .SLAVE_WR_ADDR_VALID (DDR_SLAVE_WR_ADDR_VALID ),
+    .SLAVE_WR_ADDR_READY (DDR_SLAVE_WR_ADDR_READY ),
 
-    .WR_ADDR            (DDR_SLAVE_WR_ADDR[27:0]  ),
-    .WR_LEN             (DDR_SLAVE_WR_LEN         ),
-    .WR_ADDR_VALID      (DDR_SLAVE_WR_ADDR_VALID  ),
-    .WR_ADDR_READY      (DDR_SLAVE_WR_ADDR_READY  ),
+    .SLAVE_WR_DATA       (DDR_SLAVE_WR_DATA       ),
+    .SLAVE_WR_STRB       (DDR_SLAVE_WR_STRB       ),
+    .SLAVE_WR_DATA_LAST  (DDR_SLAVE_WR_DATA_LAST  ),
+    .SLAVE_WR_DATA_VALID (DDR_SLAVE_WR_DATA_VALID ),
+    .SLAVE_WR_DATA_READY (DDR_SLAVE_WR_DATA_READY ),
+    .SLAVE_WR_BACK_ID    (DDR_SLAVE_WR_BACK_ID    ),
 
-    .WR_DATA            (DDR_SLAVE_WR_DATA        ),
-    .WR_STRB            (DDR_SLAVE_WR_STRB        ),
-    .WR_DATA_VALID      (DDR_SLAVE_WR_DATA_VALID  ),
-    .WR_DATA_READY      (DDR_SLAVE_WR_DATA_READY  ),
-    .WR_DATA_LAST       (DDR_SLAVE_WR_DATA_LAST   ),
+    .SLAVE_WR_BACK_RESP  (DDR_SLAVE_WR_BACK_RESP  ),
+    .SLAVE_WR_BACK_VALID (DDR_SLAVE_WR_BACK_VALID ),
+    .SLAVE_WR_BACK_READY (DDR_SLAVE_WR_BACK_READY ),
 
-    .WRITE_ADDR         (WRITE_ADDR               ),
-    .WRITE_LEN          (WRITE_LEN                ),
-    .WRITE_ADDR_VALID   (WRITE_ADDR_VALID         ),
-    .WRITE_ADDR_READY   (WRITE_ADDR_READY         ),
-
-    .WRITE_DATA         (WRITE_DATA               ),
-    .WRITE_STRB         (WRITE_STRB               ),
-    .WRITE_DATA_READY   (WRITE_DATA_READY         ),
-    .WRITE_DATA_LAST    (WRITE_DATA_LAST          )
+    .WRITE_ADDR          (WRITE_ADDR          ),
+    .WRITE_LEN           (WRITE_LEN           ),
+    .WRITE_ID            (WRITE_ID            ),
+    .WRITE_ADDR_VALID    (WRITE_ADDR_VALID    ),
+    .WRITE_ADDR_READY    (WRITE_ADDR_READY    ),
+    .WRITE_DATA          (WRITE_DATA          ),
+    .WRITE_STRB          (WRITE_STRB          ),
+    .WRITE_BACK_ID       (WRITE_BACK_ID       ),
+    .WRITE_DATA_READY    (WRITE_DATA_READY    ),
+    .WRITE_DATA_LAST     (WRITE_DATA_LAST     )
 );
-
  
 ddr3_top ddr3_top_inst(
     .ddr_ref_clk  (ddr_ref_clk  ),

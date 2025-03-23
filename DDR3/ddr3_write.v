@@ -2,19 +2,25 @@ module ddr3_write(
     input  wire         clk              ,
     input  wire         rst              ,
 
-    input  wire [ 27:0] WR_ADDR          ,
-    input  wire [  7:0] WR_LEN           ,
-    input  wire [  3:0] WR_ID            ,
-    input  wire         WR_ADDR_VALID    ,
-    output wire         WR_ADDR_READY    ,
-     
-    input  wire [ 31:0] WR_DATA          ,
-    input  wire [  3:0] WR_STRB          ,
-    output wire [  3:0] WR_BACK_ID       ,
-    input  wire         WR_DATA_VALID    ,
-    output wire         WR_DATA_READY    ,
-    input  wire         WR_DATA_LAST     ,
+    input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
+    input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型（DDR不支持除增量传输外的其他突发类型，因此不接入逻辑）
+    input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
 
+    input  wire [31:0] SLAVE_WR_DATA      , //写数据通道-数据
+    input  wire [ 3:0] SLAVE_WR_STRB      , //写数据通道-选通
+    input  wire        SLAVE_WR_DATA_LAST , //写数据通道-last信号
+    input  wire        SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+
+    output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应（暂时未接）
+    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效（暂时未接）
+    input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
+        
+    //转换前的总线
     output wire [ 27:0]  WRITE_ADDR      ,
     output wire [  3:0]  WRITE_LEN       ,
     output wire [  3:0]  WRITE_ID        ,
@@ -45,6 +51,8 @@ WRITE_LEN最大16突发长度
 填入前向空数据后，只要FIFO未满，就可以一直向上级模块发送DATA_READY信号。
 当数据FIFO内数据量高于固定值时，进入TRANS_ADDR状态，发送地址线，握手成功后进入TRANS_DATA状态，将这些数据+掩码传入下一级AXI，最后回到WAIT状态
 当检测到FIFO内剩余数据是最后一波数据且已经收到了上级模块的DATA_LAST，进入AFTER状态，补全掩码和空数据后....
+
+TODO: 可以做ADDR暂存支持out-standing传输
 */
 
 wire         fifo_rst;
@@ -62,7 +70,7 @@ reg [2:0] start_complete_num, end_complete_num;
 reg [27:0] wr_addr_load;
 reg [ 7:0] wr_len_load;
 reg [3:0] wr_id_load;
-wire [27:0] wr_addr_end = WR_ADDR + WR_LEN;
+wire [27:0] wr_addr_end = SLAVE_WR_ADDR + SLAVE_WR_ADDR_LEN;
 reg flag_last_trans;
 reg flag_data_recv_over;
 
@@ -71,15 +79,17 @@ localparam WRITE_ST_IDLE       = 3'b000,
            WRITE_ST_WAIT       = 3'b001,
            WRITE_ST_TRANS_ADDR = 3'b010,
            WRITE_ST_TRANS_DATA = 3'b011,
-           WRITE_ST_AFTER      = 3'b100;
+           WRITE_ST_AFTER      = 3'b100,
+           WRITE_ST_RESP       = 3'b101;
 always @(*) begin
     if(rst) nt_wr_st <= WRITE_ST_IDLE;
     else case (cu_wr_st)
-        WRITE_ST_IDLE      : nt_wr_st <= (WR_ADDR_READY && WR_ADDR_VALID)?(WRITE_ST_WAIT):(WRITE_ST_IDLE);
+        WRITE_ST_IDLE      : nt_wr_st <= (SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID)?(WRITE_ST_WAIT):(WRITE_ST_IDLE);
         WRITE_ST_WAIT      : begin
             //在WAIT状态下，如果检测到start_complete_num不为0就先存入空数据，并且只要非满就持续接收上级模块的数据
             //触发条件1 为存入了大于32x(8x16)bit的数据，表现为almost_full被拉高。跳转至WRITE_ST_TRANS_ADDR以直接发送WRITE_ADDR等地址线
-            //触发条件2 为"收到过"WR_DATA_LAST. 说明与上级模块的数据传输已经结束。跳转至WRITE_ST_AFTER，先补齐位宽再跳转至WRITE_ST_TRANS_ADDR。
+            //触发条件2 为"收到过"SLAVE_WR_DATA_LAST. 说明与上级模块的数据传输已经结束。跳转至WRITE_ST_AFTER，先补齐位宽再跳转至WRITE_ST_TRANS_ADDR。
+            //触发条件3 本次传输完全结束，跳转至WRITE_ST_RESP发送RESP。
             if(almost_full) nt_wr_st <= WRITE_ST_TRANS_ADDR;
             else if(flag_data_recv_over) nt_wr_st <= WRITE_ST_AFTER;
             else nt_wr_st <= WRITE_ST_WAIT;
@@ -92,6 +102,7 @@ always @(*) begin
             end else nt_wr_st <= WRITE_ST_TRANS_DATA;
         end
         WRITE_ST_AFTER     : nt_wr_st <= (end_complete_num == 0)?(WRITE_ST_TRANS_ADDR):(WRITE_ST_AFTER);
+        WRITE_ST_RESP      : nt_wr_st <= (SLAVE_WR_BACK_VALID && SLAVE_WR_BACK_READY)?(WRITE_ST_IDLE):(WRITE_ST_RESP);
         default            : nt_wr_st <= WRITE_ST_IDLE;
     endcase
 end
@@ -99,7 +110,7 @@ always @(posedge clk) cu_wr_st <= nt_wr_st;
 
 always @(posedge clk) begin
     if(rst || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
-    else if(WR_DATA_READY && WR_DATA_VALID && WR_DATA_LAST) flag_data_recv_over <= 1;
+    else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_LAST) flag_data_recv_over <= 1;
     else flag_data_recv_over <= flag_data_recv_over;
 end
 
@@ -108,10 +119,10 @@ always @(posedge clk) begin
         wr_addr_load     <= 0;
         wr_len_load      <= 0;
         wr_id_load       <= 0;
-    end else if(WR_ADDR_VALID && WR_ADDR_READY) begin
-        wr_addr_load     <= {WR_ADDR[27:3],3'b000};
-        wr_len_load      <= wr_addr_end[7:3] - WR_ADDR[7:3];
-        wr_id_load       <= WR_ID;
+    end else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) begin
+        wr_addr_load     <= {SLAVE_WR_ADDR[27:3],3'b000};
+        wr_len_load      <= wr_addr_end[7:3] - SLAVE_WR_ADDR[7:3];
+        wr_id_load       <= SLAVE_WR_ADDR_ID;
     end else if(WRITE_ADDR_VALID && WRITE_ADDR_READY) begin
         if(flag_last_trans) begin
             wr_addr_load <= wr_addr_load;
@@ -141,14 +152,14 @@ end
 
 always @(posedge clk) begin
     if(rst) start_complete_num <= 0;
-    else if(WR_ADDR_VALID && WR_ADDR_READY) start_complete_num <= WR_ADDR[2:0];
+    else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) start_complete_num <= SLAVE_WR_ADDR[2:0];
     else if((fifo_wr_en) && (~full) && (cu_wr_st != WRITE_ST_IDLE) && (start_complete_num != 0)) start_complete_num <= start_complete_num - 1;
     else start_complete_num <= start_complete_num;
 end
 
 always @(posedge clk) begin
     if(rst) end_complete_num <= 0;
-    else if(WR_ADDR_VALID && WR_ADDR_READY) end_complete_num <= 7 - wr_addr_end[2:0];
+    else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) end_complete_num <= 7 - wr_addr_end[2:0];
     else if((fifo_wr_en) && (cu_wr_st == WRITE_ST_AFTER) && (end_complete_num != 0)) end_complete_num <= end_complete_num - 1;
     else end_complete_num <= end_complete_num;
 end
@@ -160,24 +171,26 @@ always @(posedge clk) begin
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign WR_ADDR_READY    = (~rst) && (cu_wr_st == WRITE_ST_IDLE);
-assign WR_DATA_READY    = (~rst) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
-assign WRITE_ADDR       = wr_addr_load;
-assign WRITE_LEN        = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
-assign WRITE_ID         = wr_id_load;
-assign WRITE_ADDR_VALID = (~rst) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
-assign WRITE_DATA       = fifo_rd_data;
-assign WRITE_STRB       = fifo_rd_strb;
-assign WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
+assign SLAVE_WR_ADDR_READY    = (~rst) && (cu_wr_st == WRITE_ST_IDLE);
+assign SLAVE_WR_DATA_READY    = (~rst) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
+assign SLAVE_WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
+assign SLAVE_WR_BACK_VALID    = (cu_wr_st == WRITE_ST_RESP);
+assign SLAVE_WR_BACK_RESP     = 2'b00;
+assign WRITE_ADDR             = wr_addr_load;
+assign WRITE_LEN              = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
+assign WRITE_ID               = wr_id_load;
+assign WRITE_ADDR_VALID       = (~rst) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
+assign WRITE_DATA             = fifo_rd_data;
+assign WRITE_STRB             = fifo_rd_strb;
 
 assign fifo_rst     = rst;
 assign fifo_wr_en   = (~full) && (((cu_wr_st != WRITE_ST_IDLE ) && (start_complete_num != 0))
                               ||  ((cu_wr_st == WRITE_ST_AFTER) && (  end_complete_num != 0))
-                              ||  (WR_DATA_READY && WR_DATA_VALID));
+                              ||  (SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID));
 assign fifo_wr_data = (((cu_wr_st == WRITE_ST_WAIT) && (start_complete_num != 0)) || ((cu_wr_st == WRITE_ST_AFTER) && (end_complete_num != 0)))
-                     ?(32'b0):(WR_DATA);
+                     ?(32'b0):(SLAVE_WR_DATA);
 assign fifo_wr_strb = (((cu_wr_st == WRITE_ST_WAIT) && (start_complete_num != 0)) || ((cu_wr_st == WRITE_ST_AFTER) && (end_complete_num != 0)))
-                     ?(4'b0000):(WR_STRB);
+                     ?(4'b0000):(SLAVE_WR_STRB);
 assign fifo_rd_en   = (~empty) && ((fifo_rd_first_need) || (WRITE_DATA_READY));
 
 fifo_ddr3_write fifo_ddr3_write(

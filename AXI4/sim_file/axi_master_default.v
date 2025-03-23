@@ -1,46 +1,45 @@
 module axi_master_default (
+    //___________________其他接口_____________________//
     input  wire        clk          ,
-    input  wire        rst          ,
+    input  wire        rstn         ,
 
-    output wire [31:0] WR_ADDR      ,
-    output wire [ 7:0] WR_LEN       ,
-    output wire [ 1:0] WR_ID        ,
-    output wire        WR_ADDR_VALID,
-    input  wire        WR_ADDR_READY,
-      
-    output wire [31:0] WR_DATA      ,
-    output wire [ 3:0] WR_STRB      ,
-    input  wire [ 1:0] WR_BACK_ID   ,
-    output wire        WR_DATA_VALID,
-    input  wire        WR_DATA_READY,
-    output wire        WR_DATA_LAST ,
-      
-    output wire [31:0] RD_ADDR      ,
-    output wire [ 7:0] RD_LEN       ,
-    output wire [ 1:0] RD_ID        ,
-    output wire        RD_ADDR_VALID,
-    input  wire        RD_ADDR_READY,
+    //___________________AXI接口_____________________//
+    output wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
+    output wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
 
-    input  wire [31:0] RD_DATA      ,
-    input  wire        RD_DATA_LAST ,
-    input  wire [ 1:0] RD_BACK_ID   ,
-    output wire        RD_DATA_READY,
-    input  wire        RD_DATA_VALID
+    output wire [ 3:0] MASTER_WR_ADDR_ID   , //写地址通道-ID
+    output wire [31:0] MASTER_WR_ADDR      , //写地址通道-地址
+    output wire [ 7:0] MASTER_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    output wire [ 1:0] MASTER_WR_ADDR_BURST, //写地址通道-突发类型
+    output wire        MASTER_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    input  wire        MASTER_WR_ADDR_READY, //写地址通道-握手信号-准备
+
+    output wire [ 3:0] MASTER_WR_DATA_ID   , //写数据通道-ID
+    output wire [31:0] MASTER_WR_DATA      , //写数据通道-数据
+    output wire [ 3:0] MASTER_WR_STRB      , //写数据通道-选通
+    output wire        MASTER_WR_DATA_LAST , //写数据通道-last信号
+    output wire        MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
+    input  wire        MASTER_WR_DATA_READY, //写数据通道-握手信号-准备
+
+    input  wire [ 3:0] MASTER_WR_BACK_ID   , //写响应通道-ID
+    input  wire [ 1:0] MASTER_WR_BACK_RESP , //写响应通道-响应
+    input  wire        MASTER_WR_BACK_VALID, //写响应通道-握手信号-有效
+    output wire        MASTER_WR_BACK_READY, //写响应通道-握手信号-准备
+
+    output wire [ 3:0] MASTER_RD_ADDR_ID   , //读地址通道-ID
+    output wire [31:0] MASTER_RD_ADDR      , //读地址通道-地址
+    output wire [ 7:0] MASTER_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
+    output wire [ 1:0] MASTER_RD_ADDR_BURST, //读地址通道-突发类型。
+    output wire        MASTER_RD_ADDR_VALID, //读地址通道-握手信号-有效
+    input  wire        MASTER_RD_ADDR_READY, //读地址通道-握手信号-准备
+
+    input  wire [ 3:0] MASTER_RD_BACK_ID   , //读数据通道-ID
+    input  wire [31:0] MASTER_RD_DATA      , //读数据通道-数据
+    input  wire [ 1:0] MASTER_RD_DATA_RESP , //读数据通道-响应
+    input  wire        MASTER_RD_DATA_LAST , //读数据通道-last信号
+    input  wire        MASTER_RD_DATA_VALID, //读数据通道-握手信号-有效
+    output wire        MASTER_RD_DATA_READY  //读数据通道-握手信号-准备
 );
 //如果AXI总线某一个模块暂时不需要连接，用default模块代替。
-
-assign WR_ADDR       = 0;
-assign WR_LEN        = 0;
-assign WR_ID         = 0;
-assign WR_ADDR_VALID = 0;
-assign WR_DATA       = 0;
-assign WR_STRB       = 0;
-assign WR_DATA_VALID = 0;
-assign WR_DATA_LAST  = 0;
-assign RD_ADDR       = 0;
-assign RD_LEN        = 0;
-assign RD_ID         = 0;
-assign RD_ADDR_VALID = 0;
-assign RD_DATA_READY = 0;
 
 endmodule
