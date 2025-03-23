@@ -1,4 +1,4 @@
-module axo_clock_converter (
+module axi_clock_converter (
     input wire BUS_CLK,
     input wire BUS_RST,
 

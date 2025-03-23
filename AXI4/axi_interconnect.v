@@ -2,7 +2,11 @@ module axi_interconnect #(
     parameter S0_START_ADDR = 32'h00_00_00_00,
     parameter S0_END_ADDR   = 32'h0F_FF_FF_FF,
     parameter S1_START_ADDR = 32'h10_00_00_00,
-    parameter S1_END_ADDR   = 32'h10_00_00_0F
+    parameter S1_END_ADDR   = 32'h1F_FF_FF_0F,
+    parameter S2_START_ADDR = 32'h20_00_00_00,
+    parameter S2_END_ADDR   = 32'h2F_FF_FF_0F,
+    parameter S3_START_ADDR = 32'h30_00_00_00,
+    parameter S3_END_ADDR   = 32'h3F_FF_FF_0F
 )(
     input wire BUS_CLK,
     input wire BUS_RST,
@@ -143,9 +147,11 @@ always @(posedge BUS_CLK) begin
     else cu_master_wr_addr_id <= nt_master_wr_addr_id;
 end
 always @(*) begin
-    if(BUS_WR_ADDR >= S0_START_ADDR && BUS_WR_ADDR <= S0_END_ADDR) slave_wr_addr_sel <= 2'b00;
-    else if(BUS_WR_ADDR >= S1_START_ADDR && BUS_WR_ADDR <= S1_END_ADDR) slave_wr_addr_sel <= 2'b01;
-    else slave_wr_addr_sel <= 2'b00;
+         if(BUS_WR_ADDR >= S0_START_ADDR && BUS_WR_ADDR <= S0_END_ADDR) slave_wr_addr_sel <= 2'd0;
+    else if(BUS_WR_ADDR >= S1_START_ADDR && BUS_WR_ADDR <= S1_END_ADDR) slave_wr_addr_sel <= 2'd1;
+    else if(BUS_WR_ADDR >= S2_START_ADDR && BUS_WR_ADDR <= S2_END_ADDR) slave_wr_addr_sel <= 2'd2;
+    else if(BUS_WR_ADDR >= S3_START_ADDR && BUS_WR_ADDR <= S3_END_ADDR) slave_wr_addr_sel <= 2'd3;
+    else slave_wr_addr_sel <= 2'd0;
 end
 
 axi_inter_sel41 #(32)selM_WR_ADDR      ( cu_master_wr_addr_id, BUS_WR_ADDR      , M0_WR_ADDR      , M1_WR_ADDR      , M2_WR_ADDR      , M3_WR_ADDR      );
@@ -180,9 +186,11 @@ always @(posedge BUS_CLK) begin
     else cu_master_rd_addr_id <= nt_master_rd_addr_id;
 end
 always @(*) begin
-         if(BUS_RD_ADDR >= S0_START_ADDR && BUS_RD_ADDR <= S0_END_ADDR) slave_rd_addr_sel <= 2'b00;
-    else if(BUS_RD_ADDR >= S1_START_ADDR && BUS_RD_ADDR <= S1_END_ADDR) slave_rd_addr_sel <= 2'b01;
-    else slave_rd_addr_sel <= 2'b00;
+         if(BUS_RD_ADDR >= S0_START_ADDR && BUS_RD_ADDR <= S0_END_ADDR) slave_rd_addr_sel <= 2'd0;
+    else if(BUS_RD_ADDR >= S1_START_ADDR && BUS_RD_ADDR <= S1_END_ADDR) slave_rd_addr_sel <= 2'd1;
+    else if(BUS_RD_ADDR >= S2_START_ADDR && BUS_RD_ADDR <= S2_END_ADDR) slave_rd_addr_sel <= 2'd2;
+    else if(BUS_RD_ADDR >= S3_START_ADDR && BUS_RD_ADDR <= S3_END_ADDR) slave_rd_addr_sel <= 2'd3;
+    else slave_rd_addr_sel <= 2'd0;
 end
 
 axi_inter_sel41 #(32)selM_RD_ADDR      ( cu_master_rd_addr_id, BUS_RD_ADDR      , M0_RD_ADDR      , M1_RD_ADDR      , M2_RD_ADDR      , M3_RD_ADDR      );
