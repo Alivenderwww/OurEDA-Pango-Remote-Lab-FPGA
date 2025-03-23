@@ -5,8 +5,8 @@ module slave_ddr3 (
     output wire        ddr_init_done          ,
     
     //DDR-AXI-SLAVE接口
-    output wire        DDR_SLAVE_CLK          ,
-    output wire        DDR_SLAVE_RST          ,
+    output wire        DDR_SLAVE_CLK          , //DDR作为从机向总线提供的时钟信号
+    output wire        DDR_SLAVE_RST          , //DDR作为从机向总线提供的复位信号
 
     input  wire [31:0] DDR_SLAVE_WR_ADDR      , //写地址
     input  wire [ 7:0] DDR_SLAVE_WR_LEN       , //写突发长度，实际长度为WR_LEN+1
