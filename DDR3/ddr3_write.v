@@ -1,26 +1,29 @@
 module ddr3_write(
     input  wire         clk              ,
     input  wire         rst              ,
-    input  wire         ddr_init_done    ,
 
     input  wire [ 27:0] WR_ADDR          ,
     input  wire [  7:0] WR_LEN           ,
+    input  wire [  3:0] WR_ID            ,
     input  wire         WR_ADDR_VALID    ,
     output wire         WR_ADDR_READY    ,
      
     input  wire [ 31:0] WR_DATA          ,
     input  wire [  3:0] WR_STRB          ,
+    output wire [  3:0] WR_BACK_ID       ,
     input  wire         WR_DATA_VALID    ,
     output wire         WR_DATA_READY    ,
     input  wire         WR_DATA_LAST     ,
 
     output wire [ 27:0]  WRITE_ADDR      ,
     output wire [  3:0]  WRITE_LEN       ,
+    output wire [  3:0]  WRITE_ID        ,
     output wire          WRITE_ADDR_VALID,
     input  wire          WRITE_ADDR_READY,
      
     output wire [255:0] WRITE_DATA       ,
     output wire [ 31:0] WRITE_STRB       ,
+    input  wire [  3:0] WRITE_BACK_ID    ,
     input  wire         WRITE_DATA_READY ,
     input  wire         WRITE_DATA_LAST 
 );
@@ -58,6 +61,7 @@ reg          fifo_rd_first_need;
 reg [2:0] start_complete_num, end_complete_num;
 reg [27:0] wr_addr_load;
 reg [ 7:0] wr_len_load;
+reg [3:0] wr_id_load;
 wire [27:0] wr_addr_end = WR_ADDR + WR_LEN;
 reg flag_last_trans;
 reg flag_data_recv_over;
@@ -103,20 +107,25 @@ always @(posedge clk) begin
     if(rst) begin
         wr_addr_load     <= 0;
         wr_len_load      <= 0;
+        wr_id_load       <= 0;
     end else if(WR_ADDR_VALID && WR_ADDR_READY) begin
         wr_addr_load     <= {WR_ADDR[27:3],3'b000};
         wr_len_load      <= wr_addr_end[7:3] - WR_ADDR[7:3];
+        wr_id_load       <= WR_ID;
     end else if(WRITE_ADDR_VALID && WRITE_ADDR_READY) begin
         if(flag_last_trans) begin
             wr_addr_load <= wr_addr_load;
             wr_len_load  <= wr_len_load;
+            wr_id_load   <= wr_id_load;
         end else begin
             wr_addr_load <= wr_addr_load + WRITE_LEN * 8 + 8;
             wr_len_load  <= wr_len_load - WRITE_LEN - 1;
+            wr_id_load   <= wr_id_load;
         end
     end else begin
         wr_addr_load <= wr_addr_load;
         wr_len_load  <= wr_len_load;
+        wr_id_load   <= wr_id_load;
     end
 end
 
@@ -151,13 +160,15 @@ always @(posedge clk) begin
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign WR_ADDR_READY    = (ddr_init_done) && (cu_wr_st == WRITE_ST_IDLE);
-assign WR_DATA_READY    = (ddr_init_done) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
+assign WR_ADDR_READY    = (~rst) && (cu_wr_st == WRITE_ST_IDLE);
+assign WR_DATA_READY    = (~rst) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
 assign WRITE_ADDR       = wr_addr_load;
 assign WRITE_LEN        = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
-assign WRITE_ADDR_VALID = (ddr_init_done) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
+assign WRITE_ID         = wr_id_load;
+assign WRITE_ADDR_VALID = (~rst) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
 assign WRITE_DATA       = fifo_rd_data;
 assign WRITE_STRB       = fifo_rd_strb;
+assign WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
 
 assign fifo_rst     = rst;
 assign fifo_wr_en   = (~full) && (((cu_wr_st != WRITE_ST_IDLE ) && (start_complete_num != 0))
@@ -195,10 +206,5 @@ fifo_ddr3_write_strb fifo_ddr3_write_strb(
     .rd_en  (fifo_rd_en),
     .rd_data(fifo_rd_strb)
 );
-
-
-
-
-
 
 endmodule

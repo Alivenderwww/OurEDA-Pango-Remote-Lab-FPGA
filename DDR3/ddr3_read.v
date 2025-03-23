@@ -1,26 +1,29 @@
 module ddr3_read(
     input wire          clk            ,
     input wire          rst            ,
-    input wire          ddr_init_done  ,
 
     //转换后的总线
     input  wire [ 27:0] RD_ADDR        ,
     input  wire [  7:0] RD_LEN         ,
+    input  wire [  3:0] RD_ID          ,
     input  wire         RD_ADDR_VALID  ,
     output wire         RD_ADDR_READY  ,
      
     output wire [ 31:0] RD_DATA        ,
     output wire         RD_DATA_LAST   ,
+    output wire [  3:0] RD_BACK_ID     ,
     input  wire         RD_DATA_READY  ,
     output wire         RD_DATA_VALID  ,
 
     //转换前的总线
     output wire [ 27:0] READ_ADDR      ,
     output wire [  3:0] READ_LEN       ,
+    output wire [  3:0] READ_ID        ,
     output wire         READ_ADDR_VALID,
     input  wire         READ_ADDR_READY,
 
     input wire  [255:0] READ_DATA      ,
+    input wire  [  3:0] READ_BACK_ID   ,
     input wire          READ_DATA_LAST ,
     input wire          READ_DATA_VALID
 );
@@ -73,6 +76,7 @@ reg [2:0] start_giveup_num;
 reg [7:0] trans_num;
 reg [27:0] rd_addr_load;
 reg [ 7:0] rd_len_load;
+reg [3:0] rd_id_load;
 wire [27:0] rd_addr_end = RD_ADDR + RD_LEN;
 wire flag_last_trans = (rd_len_load <= 15);
 wire flag_unuse_rd_need = (cu_rd_st != READ_ST_IDLE) && (start_giveup_num != 0);
@@ -107,20 +111,25 @@ always @(posedge clk) begin
     if(rst) begin
         rd_addr_load     <= 0;
         rd_len_load      <= 0;
+        rd_id_load       <= 0;
     end else if(RD_ADDR_VALID && RD_ADDR_READY) begin
         rd_addr_load     <= {RD_ADDR[27:3],3'b000};
         rd_len_load      <= rd_addr_end[7:3] - RD_ADDR[7:3];
+        rd_id_load       <= RD_ID;
     end else if(READ_ADDR_VALID && READ_ADDR_READY) begin
         if(flag_last_trans) begin
             rd_addr_load <= rd_addr_load;
             rd_len_load  <= rd_len_load;
+            rd_id_load   <= rd_id_load;
         end else begin
             rd_addr_load <= rd_addr_load + READ_LEN * 8 + 8;
             rd_len_load  <= rd_len_load - READ_LEN - 1;
+            rd_id_load   <= rd_id_load;
         end
     end else begin
         rd_addr_load <= rd_addr_load;
         rd_len_load  <= rd_len_load;
+        rd_id_load   <= rd_id_load;
     end
 end
 
@@ -145,13 +154,15 @@ always @(posedge clk) begin
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign RD_ADDR_READY   = (ddr_init_done) && (cu_rd_st == READ_ST_IDLE);
+assign RD_ADDR_READY   = (~rst) && (cu_rd_st == READ_ST_IDLE);
 assign RD_DATA         = fifo_rd_data;
-assign RD_DATA_LAST    = (ddr_init_done) && (cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (trans_num == 0);
-assign RD_DATA_VALID   = (ddr_init_done) && ((cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (~fifo_rd_first_need) && (~flag_unuse_rd_need));
+assign RD_BACK_ID      = rd_id_load;//DDR不支持乱序执行，因此直接连线就OK。
+assign RD_DATA_LAST    = (~rst) && (cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (trans_num == 0);
+assign RD_DATA_VALID   = (~rst) && ((cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (~fifo_rd_first_need) && (~flag_unuse_rd_need));
 assign READ_ADDR       = rd_addr_load;
 assign READ_LEN        = (rd_len_load >= 15)?(4'b1111):(rd_len_load);
-assign READ_ADDR_VALID = (ddr_init_done) && (cu_rd_st == READ_ST_TRANS_ADDR);
+assign READ_ID         = rd_id_load;
+assign READ_ADDR_VALID = (~rst) && (cu_rd_st == READ_ST_TRANS_ADDR);
 
 assign fifo_rst     = (rst) || (cu_rd_st == READ_ST_RESET);
 assign fifo_wr_en   = (READ_DATA_VALID);
