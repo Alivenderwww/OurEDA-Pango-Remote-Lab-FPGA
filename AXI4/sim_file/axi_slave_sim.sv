@@ -126,7 +126,7 @@ always @ (posedge clk) begin
 end
 //RD_DATA
 
-always @(rd_req_en)begin
+always @(*)begin
     if     (rd_req_en[0] && ~task_on[0])begin task_on[0] <= 1'b1; send_data(rd_addr_reg[0],rd_len_reg[0],RD_ID_reg[0],task_on[0]); end
     else if(rd_req_en[1] && ~task_on[1])begin task_on[1] <= 1'b1; send_data(rd_addr_reg[1],rd_len_reg[1],RD_ID_reg[1],task_on[1]); end
     else if(rd_req_en[2] && ~task_on[2])begin task_on[2] <= 1'b1; send_data(rd_addr_reg[2],rd_len_reg[2],RD_ID_reg[2],task_on[2]); end
@@ -146,9 +146,9 @@ task send_data;
     reg [7:0] rd_num;
     begin : axi_slave_sim_send_data
         task_on_task = 1'b1;
-        rd_num = 0;
+        rd_num = 1;
         RD_DATA = wr_data_reg[rd_addr];
-        rd_addr = rd_addr;
+        rd_addr = rd_addr+1;
         RD_DATA_LAST = 1'b0;
         RD_BACK_ID = rd_id;
         while(rd_num <= rd_len)begin

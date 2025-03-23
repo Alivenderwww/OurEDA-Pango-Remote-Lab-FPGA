@@ -17,7 +17,7 @@
 # Modifying modelsim.ini
 # ** Warning: (vlib-34) Library already exists at "work".
 # Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
-# Start time: 16:42:23 on Mar 23,2025
+# Start time: 17:26:35 on Mar 23,2025
 # vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
 # -- Compiling module axi_master_sim
 # -- Compiling module axi_slave_sim
@@ -25,11 +25,11 @@
 # 
 # Top level modules:
 # 	axi_master_slave_sim_tb
-# End time: 16:42:23 on Mar 23,2025, Elapsed time: 0:00:00
+# End time: 17:26:35 on Mar 23,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
 # vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva axi_master_slave_sim_tb 
-# Start time: 16:42:23 on Mar 23,2025
+# Start time: 17:26:35 on Mar 23,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # Loading sv_std.std
 # Loading work.axi_master_slave_sim_tb(fast)
@@ -37,12 +37,35 @@
 # Loading work.axi_slave_sim(fast)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: 1  Hostname: DESKTOP-FLDUJ87  ProcessID: 32892
-#           Attempting to use alternate WLF file "./wlftr3a8ya".
+#           Attempting to use alternate WLF file "./wlftih7hid".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftr3a8ya
+#           Using alternate file: ./wlftih7hid
 # .main_pane.wave.interior.cs.body.pw.wf
 # .main_pane.structure.interior.cs.body.struct
 # .main_pane.objects.interior.cs.body.tree
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/clk
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/rst
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_ADDR
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_LEN
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_ID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_ADDR_VALID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_ADDR_READY
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_DATA
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_STRB
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_BACK_ID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_DATA_VALID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_DATA_READY
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/WR_DATA_LAST
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_ADDR
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_LEN
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_ID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_ADDR_VALID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_ADDR_READY
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_DATA
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_DATA_LAST
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_BACK_ID
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_DATA_READY
+add wave -position end  sim:/axi_master_slave_sim_tb/master_inst/RD_DATA_VALID
 add wave -position end  sim:/axi_master_slave_sim_tb/slave_inst/addr_b
 add wave -position end  sim:/axi_master_slave_sim_tb/slave_inst/addr_e
 add wave -position end  sim:/axi_master_slave_sim_tb/slave_inst/clk
@@ -90,6 +113,3 @@ restart
 # Loading work.axi_master_sim(fast)
 # Loading work.axi_slave_sim(fast)
 run
-run
-run
-# Causality operation skipped due to absence of debug database file

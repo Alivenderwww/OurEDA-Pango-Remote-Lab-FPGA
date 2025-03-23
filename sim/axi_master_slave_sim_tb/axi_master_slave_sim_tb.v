@@ -61,7 +61,31 @@ initial begin
    #10000
    master_inst.send_wr_addr(32'h00000170, 100, 0);
    master_inst.send_wr_data(32'h00000000, 100, 4'b1111, 0);
+   master_inst.send_wr_addr(32'h00000270, 100, 0);
+   master_inst.send_wr_data(32'h00000000, 100, 4'b1111, 0);
+   master_inst.send_wr_addr(32'h00000370, 100, 0);
+   master_inst.send_wr_data(32'h00000000, 100, 4'b1111, 0);
+   master_inst.send_wr_addr(32'h00000470, 100, 0);
+   master_inst.send_wr_data(32'h00000000, 100, 4'b1111, 0);
+   master_inst.send_wr_addr(32'h00000570, 100, 0);
+   master_inst.send_wr_data(32'h00000000, 100, 4'b1111, 0);
    master_inst.send_rd_addr(32'h00000170, 100, 0);
+   master_inst.send_rd_addr(32'h00000270, 100, 0);
+   master_inst.send_rd_addr(32'h00000370, 100, 0);
+   master_inst.send_rd_addr(32'h00000470, 100, 0);
+   master_inst.send_rd_addr(32'h00000570, 100, 0);
+   master_inst.send_rd_addr(32'h00000170, 100, 0);
+   master_inst.send_rd_addr(32'h00000270, 100, 0);
+   master_inst.send_rd_addr(32'h00000370, 100, 0);
+   master_inst.send_rd_addr(32'h00000470, 100, 0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
+   master_inst.recv_rd_data(0);
    master_inst.recv_rd_data(0);
 end
 axi_slave_sim slave_inst(
