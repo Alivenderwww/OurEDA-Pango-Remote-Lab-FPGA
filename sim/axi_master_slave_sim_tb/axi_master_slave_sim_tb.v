@@ -66,9 +66,7 @@ initial begin
 end
 axi_slave_sim slave_inst(
    .clk          (clk          ),
-   .rstn         (~rst         ),
-   .BUS_CLK      (    ),
-   .BUS_RST      (    ),
+   .rst          (rst         ),
    .WR_ADDR      (WR_ADDR      ),
    .WR_LEN       (WR_LEN       ),
    .WR_ID        (WR_ID        ),

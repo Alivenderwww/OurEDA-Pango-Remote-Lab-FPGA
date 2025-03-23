@@ -83,8 +83,8 @@ always @(posedge clk) begin
     else if(WR_DATA_VALID ) wr_data_ready_cnt <= wr_data_ready_cnt + 1;
     else wr_data_ready_cnt <= 0;
 end
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) WR_DATA_READY <= 1'b0;
+always @(posedge clk or negedge rst) begin
+    if(rst) WR_DATA_READY <= 1'b0;
     else if(wr_data_ready_cnt == 3) WR_DATA_READY <= 1'b1;
     else WR_DATA_READY <= 1'b0;
 end
@@ -147,12 +147,12 @@ task send_data;
     begin : axi_slave_sim_send_data
         task_on_task = 1'b1;
         rd_num = 0;
-        RD_DATA_VALID = 1'b1;
         RD_DATA = wr_data_reg[rd_addr];
-        rd_addr = rd_addr + 1;
+        rd_addr = rd_addr;
         RD_DATA_LAST = 1'b0;
         RD_BACK_ID = rd_id;
         while(rd_num <= rd_len)begin
+            RD_DATA_VALID = 1'b1;
             RD_DATA_LAST <= (rd_num == rd_len);
             @(posedge clk)begin
                 if(RD_DATA_READY && RD_DATA_VALID)begin
@@ -167,16 +167,17 @@ task send_data;
         while (rd_num == rd_len+1)begin
             @(posedge clk)begin
                 if(RD_DATA_READY && RD_DATA_VALID)begin
-                    RD_DATA_LAST <= 1'b0;
-                    RD_DATA_VALID <= 1'b0;
-                    rd_num <= rd_num + 1;
+                    RD_DATA_LAST = 1'b0;
+                    rd_num = rd_num + 1;
                 end
             end
         end
+        @(negedge clk);
+        RD_DATA_VALID = 1'b0;
         task_end = 1'b1;
-        @(posedge clk)
+        @(posedge clk);
         task_end = 1'b0;
-        task_on_task <= 1'b0;
+        task_on_task = 1'b0;
     end
 endtask
 endmodule
