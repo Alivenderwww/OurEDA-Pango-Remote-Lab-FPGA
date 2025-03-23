@@ -1,0 +1,257 @@
+# //  ModelSim SE-64 2020.4 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do ctrl_phy_sim.tcl
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap work work 
+# Modifying modelsim.ini
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap usim ./../../pangu_sim_libraries/usim 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap adc_e2 ./../../pangu_sim_libraries/adc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ddc_e2 ./../../pangu_sim_libraries/ddc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap dll_e2 ./../../pangu_sim_libraries/dll_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap hsstlp_lane ./../../pangu_sim_libraries/hsstlp_lane 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap hsstlp_pll ./../../pangu_sim_libraries/hsstlp_pll 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap iolhr_dft ./../../pangu_sim_libraries/iolhr_dft 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ipal_e1 ./../../pangu_sim_libraries/ipal_e1 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ipal_e2 ./../../pangu_sim_libraries/ipal_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap iserdes_e2 ./../../pangu_sim_libraries/iserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap oserdes_e2 ./../../pangu_sim_libraries/oserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap pciegen2 ./../../pangu_sim_libraries/pciegen2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 14:16:08 on Mar 23,2025
+# vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
+# -- Compiling module axi_slave_sim
+# -- Compiling module axi_master_sim
+# -- Compiling module axi_bus
+# -- Compiling module axi_clock_converter
+# -- Compiling module axi_interconnect
+# -- Compiling module axi_inter_sel41
+# -- Compiling module axi_inter_sel14
+# -- Compiling module axi_inter_nosel
+# -- Compiling module master_axi_async
+# -- Compiling module slave_axi_async
+# -- Compiling module axi_bus_test_tb
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_addr_fifo
+# -- Compiling module master_async_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_rd_data_fifo
+# -- Compiling module master_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_wr_data_fifo
+# -- Compiling module master_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_addr_fifo
+# -- Compiling module slave_async_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_wr_data_fifo
+# -- Compiling module slave_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_rd_data_fifo
+# -- Compiling module slave_async_rd_data_fifo
+# 
+# Top level modules:
+# 	axi_slave_sim
+# 	axi_bus_test_tb
+# End time: 14:16:08 on Mar 23,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
+# vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 axi_bus_test_tb usim.GTP_GRS 
+# Start time: 14:16:08 on Mar 23,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: ../../../AXI4/slave_axi_async.v(93): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(93): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(93): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(138): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(138): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(138): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(182): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(182): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(182): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(226): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(226): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(226): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(93): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_wr_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(93): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(93): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(138): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_rd_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(138): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(138): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(182): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_wr_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(182): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(182): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(226): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_rd_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(226): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(226): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=27.
+# Loading sv_std.std
+# Loading work.axi_bus_test_tb(fast)
+# Loading work.axi_master_sim(fast)
+# Loading work.axi_bus(fast)
+# Loading work.axi_clock_converter(fast)
+# Loading work.master_axi_async(fast)
+# Loading work.master_async_addr_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_master_async_addr_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_master_async_addr_fifo(fast)
+# Loading usim.GTP_DRM36K_E1(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo(fast)
+# Loading work.master_async_wr_data_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_master_async_wr_data_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_master_async_wr_data_fifo(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo(fast)
+# Loading work.master_async_rd_data_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_master_async_rd_data_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_master_async_rd_data_fifo(fast)
+# Loading usim.GTP_DRM18K_E1(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo(fast)
+# Loading work.slave_axi_async(fast)
+# Loading work.slave_async_addr_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_slave_async_addr_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_slave_async_addr_fifo(fast)
+# Loading usim.GTP_DRM36K_E1(fast__1)
+# Loading work.ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo(fast)
+# Loading work.slave_async_wr_data_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_slave_async_wr_data_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_slave_async_wr_data_fifo(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo(fast)
+# Loading work.slave_async_rd_data_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_slave_async_rd_data_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_slave_async_rd_data_fifo(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo(fast)
+# Loading work.axi_interconnect(fast)
+# Loading work.axi_inter_sel41(fast)
+# Loading work.axi_inter_nosel(fast)
+# Loading work.axi_inter_sel41(fast__1)
+# Loading work.axi_inter_nosel(fast__1)
+# Loading work.axi_inter_sel41(fast__2)
+# Loading work.axi_inter_sel41(fast__3)
+# Loading work.axi_inter_sel14(fast)
+# Loading work.axi_inter_nosel(fast__2)
+# Loading work.axi_inter_sel41(fast__4)
+# Loading work.axi_inter_nosel(fast__3)
+# Loading usim.GTP_GRS(fast__1)
+# Loading usim.GTP_GRS(fast)
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'BUS_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(21).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s0_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 224
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'SLAVE_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(47).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s0_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 224
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'BUS_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(21).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s1_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 250
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'SLAVE_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(47).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s1_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 250
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'BUS_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(21).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s2_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 276
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'SLAVE_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(47).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s2_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 276
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'BUS_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(21).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s3_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 302
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'SLAVE_RD_ADDR'. The port definition is at: ../../../AXI4/slave_axi_async.v(47).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_clock_converter_inst/s3_axi_async File: ../../../AXI4/axi_clock_converter.v Line: 302
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'out'. The port definition is at: ../../../AXI4/axi_inter_sel.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selM_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 157
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (28) for port 'in'. The port definition is at: ../../../AXI4/axi_inter_sel.v(42).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 158
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (32) for port 'out0'. The port definition is at: ../../../AXI4/axi_inter_sel.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 158
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (32) for port 'out1'. The port definition is at: ../../../AXI4/axi_inter_sel.v(44).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 158
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (32) for port 'out2'. The port definition is at: ../../../AXI4/axi_inter_sel.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 158
+# ** Warning: (vsim-3015) [PCDPC] - Port size (4) does not match connection size (32) for port 'out3'. The port definition is at: ../../../AXI4/axi_inter_sel.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_WR_ADDR File: ../../../AXI4/axi_interconnect.v Line: 158
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'out'. The port definition is at: ../../../AXI4/axi_inter_sel.v(5).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selM_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 196
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'in'. The port definition is at: ../../../AXI4/axi_inter_sel.v(42).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 197
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'out0'. The port definition is at: ../../../AXI4/axi_inter_sel.v(43).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 197
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'out1'. The port definition is at: ../../../AXI4/axi_inter_sel.v(44).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 197
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (28) for port 'out2'. The port definition is at: ../../../AXI4/axi_inter_sel.v(45).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 197
+# ** Warning: (vsim-3015) [PCDPC] - Port size (32) does not match connection size (4) for port 'out3'. The port definition is at: ../../../AXI4/axi_inter_sel.v(46).
+#    Time: 0 ps  Iteration: 0  Instance: /axi_bus_test_tb/AXI_BUS/axi_interconnect_inst/selS_RD_ADDR File: ../../../AXI4/axi_interconnect.v Line: 197
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: 1  Hostname: DESKTOP-FLDUJ87  ProcessID: 32892
+#           Attempting to use alternate WLF file "./wlft2538ww".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft2538ww
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
