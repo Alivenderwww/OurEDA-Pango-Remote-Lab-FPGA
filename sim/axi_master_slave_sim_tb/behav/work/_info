@@ -1,0 +1,91 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/sim/axi_master_slave_sim_tb/behav
+T_opt
+Z1 !s110 1742717785
+Va8IPD;;5:Hg4]V8`0]SJV1
+04 23 4 work axi_master_slave_sim_tb fast 0
+=1-002b6709ff5e-67dfc359-154-169c
+o-quiet -auto_acc_if_foreign -work work -suppress 3486,3680,3781 +acc
+Z2 tCvgOpt 0
+n@_opt
+OL;O;10.5;63
+vaxi_master_sim
+Z3 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+R1
+!i10b 1
+!s100 <?NXK:CgZicGfn`o;OkA:1
+IzF@2HCJfATJ:CGBJJ5^:i3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 !s105 axi_master_sim_v_unit
+S1
+R0
+w1742710931
+8../../../AXI4/sim_file/axi_master_sim.v
+F../../../AXI4/sim_file/axi_master_sim.v
+L0 2
+Z6 OL;L;10.5;63
+r1
+!s85 0
+31
+Z7 !s108 1742717785.000000
+Z8 !s107 ../axi_master_slave_sim_tb.v|../../../AXI4/sim_file/axi_slave_sim.sv|../../../AXI4/sim_file/axi_master_sim.v|
+Z9 !s90 -reportprogress|300|-sv|-work|work|-mfcu|-incr|-suppress|2902|-f|sim_file_list.f|
+!i113 0
+Z10 o-suppress 2902 -sv -work work -mfcu -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
+vaxi_master_slave_sim_tb
+R3
+R1
+!i10b 1
+!s100 YO[keeHbYRPEzmDiYdI9>1
+I2XE_9HDH7zb]=iS1`Ki992
+R4
+R5
+S1
+R0
+w1742716198
+8../axi_master_slave_sim_tb.v
+F../axi_master_slave_sim_tb.v
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R2
+vaxi_slave_sim
+R3
+R1
+!i10b 1
+!s100 d6Uz5[znWnO_W?m@gKJFB2
+ID4`IAXg@I8joZD5gR@?CT0
+R4
+R5
+S1
+R0
+w1742717563
+8../../../AXI4/sim_file/axi_slave_sim.sv
+F../../../AXI4/sim_file/axi_slave_sim.sv
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R2
