@@ -30,13 +30,14 @@ module axi_master_sim (
 );
 
 ///////////////////////////////////////////////////////////////
-initial begin
-    #50000
-    send_wr_addr(32'h00000170, 111, 0);
-    send_wr_data(32'h00000000, 100, 4'b1111, 0);
-    send_rd_addr(32'h00000170, 111, 0);
-    recv_rd_data(0);
-end
+//参考样式
+// initial begin
+//     #50000
+//     send_wr_addr(32'h00000170, 111, 0);
+//     send_wr_data(32'h00000000, 100, 4'b1111, 0);
+//     send_rd_addr(32'h00000170, 111, 0);
+//     recv_rd_data(0);
+// end
 ///////////////////////////////////////////////////////////////
 
 task send_wr_addr; //MASTER的写地址线通道传输一次。指定WR_ADDR，WR_LEN，WR_ID。

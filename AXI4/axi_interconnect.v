@@ -107,7 +107,7 @@ wire        BUS_WR_DATA_READY;
 wire        BUS_WR_DATA_LAST ;
 wire [31:0] BUS_RD_DATA      ;
 wire        BUS_RD_DATA_LAST ;
-wire [ 1:0] BUS_RD_BACK_ID   ;
+wire [ 3:0] BUS_RD_BACK_ID   ;
 wire        BUS_RD_DATA_READY;
 wire        BUS_RD_DATA_VALID;
 
@@ -236,7 +236,7 @@ axi_inter_nosel #(32)selS_WR_DATA      (                       BUS_WR_DATA      
 axi_inter_sel41 #( 4)selM_WR_STRB      (    master_wr_data_id, BUS_WR_STRB        , M0_WR_STRB      , M1_WR_STRB      , M2_WR_STRB      , M3_WR_STRB      );
 axi_inter_nosel #( 4)selS_WR_STRB      (                       BUS_WR_STRB        , S0_WR_STRB      , S1_WR_STRB      , S2_WR_STRB      , S3_WR_STRB      );
 axi_inter_sel41 #( 4)selS_WR_BACK_ID   ( cu_slave_wr_data_sel, BUS_WR_BACK_ID     , S0_WR_BACK_ID   , S1_WR_BACK_ID   , S2_WR_BACK_ID   , S3_WR_BACK_ID   );
-axi_inter_nosel #( 2)selM_WR_BACK_ID   (    master_wr_data_id, BUS_WR_BACK_ID[1:0], M0_WR_BACK_ID   , M1_WR_BACK_ID   , M2_WR_BACK_ID   , M3_WR_BACK_ID   );
+axi_inter_nosel #( 2)selM_WR_BACK_ID   (                       BUS_WR_BACK_ID[1:0], M0_WR_BACK_ID   , M1_WR_BACK_ID   , M2_WR_BACK_ID   , M3_WR_BACK_ID   );
 axi_inter_sel41 #( 1)selM_WR_DATA_VALID(    master_wr_data_id, BUS_WR_DATA_VALID  , M0_WR_DATA_VALID, M1_WR_DATA_VALID, M2_WR_DATA_VALID, M3_WR_DATA_VALID);
 axi_inter_sel14 #( 1)selS_WR_DATA_VALID( cu_slave_wr_data_sel, BUS_WR_DATA_VALID  , S0_WR_DATA_VALID, S1_WR_DATA_VALID, S2_WR_DATA_VALID, S3_WR_DATA_VALID);
 axi_inter_sel41 #( 1)selS_WR_DATA_READY( cu_slave_wr_data_sel, BUS_WR_DATA_READY  , S0_WR_DATA_READY, S1_WR_DATA_READY, S2_WR_DATA_READY, S3_WR_DATA_READY);
@@ -267,11 +267,14 @@ always @(posedge BUS_CLK) begin
     if(BUS_RST) cu_slave_rd_data_sel <= 2'd0;
     else cu_slave_rd_data_sel <= nt_slave_rd_data_sel;
 end
+always @(*) begin
+    master_rd_data_id <= BUS_RD_BACK_ID[3:2];
+end
 
 axi_inter_sel41 #(32)selS_RD_DATA      ( cu_slave_rd_data_sel, BUS_RD_DATA        , S0_RD_DATA      , S1_RD_DATA      , S2_RD_DATA      , S3_RD_DATA      );
 axi_inter_nosel #(32)selM_RD_DATA      (                       BUS_RD_DATA        , M0_RD_DATA      , M1_RD_DATA      , M2_RD_DATA      , M3_RD_DATA      );
-axi_inter_sel41 #( 4)selS_RD_BACK_ID   ( cu_slave_rd_data_sel,{master_rd_data_id,BUS_RD_BACK_ID}    , S0_RD_BACK_ID   , S1_RD_BACK_ID   , S2_RD_BACK_ID   , S3_RD_BACK_ID   );
-axi_inter_nosel #( 2)selM_RD_BACK_ID   (    master_rd_data_id, BUS_RD_BACK_ID     , M0_RD_BACK_ID   , M1_RD_BACK_ID   , M2_RD_BACK_ID   , M3_RD_BACK_ID   );
+axi_inter_sel41 #( 4)selS_RD_BACK_ID   ( cu_slave_rd_data_sel, BUS_RD_BACK_ID     , S0_RD_BACK_ID   , S1_RD_BACK_ID   , S2_RD_BACK_ID   , S3_RD_BACK_ID   );
+axi_inter_nosel #( 2)selM_RD_BACK_ID   (                       BUS_RD_BACK_ID[1:0], M0_RD_BACK_ID   , M1_RD_BACK_ID   , M2_RD_BACK_ID   , M3_RD_BACK_ID   );
 axi_inter_sel41 #( 1)selS_RD_DATA_VALID( cu_slave_rd_data_sel, BUS_RD_DATA_VALID  , S0_RD_DATA_VALID, S1_RD_DATA_VALID, S2_RD_DATA_VALID, S3_RD_DATA_VALID);
 axi_inter_sel14 #( 1)selM_RD_DATA_VALID(    master_rd_data_id, BUS_RD_DATA_VALID  , M0_RD_DATA_VALID, M1_RD_DATA_VALID, M2_RD_DATA_VALID, M3_RD_DATA_VALID);
 axi_inter_sel41 #( 1)selM_RD_DATA_READY(    master_rd_data_id, BUS_RD_DATA_READY  , M0_RD_DATA_READY, M1_RD_DATA_READY, M2_RD_DATA_READY, M3_RD_DATA_READY);
