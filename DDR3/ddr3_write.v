@@ -5,7 +5,7 @@ module ddr3_write(
     input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
     input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
     input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
-    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型（DDR不支持除增量传输外的其他突发类型，因此不接入逻辑）
+    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型-DDR不支持除增量传输外的其他突发类型，因此不接入逻辑
     input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
     output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
 
@@ -16,8 +16,8 @@ module ddr3_write(
     output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
 
     output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
-    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应（暂时未接）
-    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效（暂时未接）
+    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应
+    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
     input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
         
     //转换前的总线

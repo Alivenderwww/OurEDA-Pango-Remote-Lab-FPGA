@@ -4,8 +4,8 @@ module axi_slave_default (
     input  wire        rstn         ,
 
     //___________________AXI接口_____________________//
-    input  wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
-    input  wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
+    input  wire        SLAVE_CLK          , //向AXI总线提供的本主机时钟信号
+    input  wire        SLAVE_RSTN         , //向AXI总线提供的本主机复位信号
 
     input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
     input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
