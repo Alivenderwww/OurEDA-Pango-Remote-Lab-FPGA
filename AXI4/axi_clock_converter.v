@@ -42,7 +42,7 @@ module axi_clock_converter (
     output wire        S0_BUS_WR_DATA_READY,    output wire        S1_BUS_WR_DATA_READY,    output wire        S2_BUS_WR_DATA_READY,    output wire        S3_BUS_WR_DATA_READY,
     input  wire        S0_BUS_WR_DATA_LAST ,    input  wire        S1_BUS_WR_DATA_LAST ,    input  wire        S2_BUS_WR_DATA_LAST ,    input  wire        S3_BUS_WR_DATA_LAST ,
 
-    input  wire [27:0] S0_BUS_RD_ADDR      ,    input  wire [ 3:0] S1_BUS_RD_ADDR      ,    input  wire [27:0] S2_BUS_RD_ADDR      ,    input  wire [ 3:0] S3_BUS_RD_ADDR      ,
+    input  wire [31:0] S0_BUS_RD_ADDR      ,    input  wire [31:0] S1_BUS_RD_ADDR      ,    input  wire [31:0] S2_BUS_RD_ADDR      ,    input  wire [31:0] S3_BUS_RD_ADDR      ,
     input  wire [ 7:0] S0_BUS_RD_LEN       ,    input  wire [ 7:0] S1_BUS_RD_LEN       ,    input  wire [ 7:0] S2_BUS_RD_LEN       ,    input  wire [ 7:0] S3_BUS_RD_LEN       ,
     input  wire [ 3:0] S0_BUS_RD_ID        ,    input  wire [ 3:0] S1_BUS_RD_ID        ,    input  wire [ 3:0] S2_BUS_RD_ID        ,    input  wire [ 3:0] S3_BUS_RD_ID        ,
     input  wire        S0_BUS_RD_ADDR_VALID,    input  wire        S1_BUS_RD_ADDR_VALID,    input  wire        S2_BUS_RD_ADDR_VALID,    input  wire        S3_BUS_RD_ADDR_VALID,
@@ -100,7 +100,7 @@ module axi_clock_converter (
     input  wire        S0_WR_DATA_READY,    input  wire        S1_WR_DATA_READY,    input  wire        S2_WR_DATA_READY,    input  wire        S3_WR_DATA_READY,
     output wire        S0_WR_DATA_LAST ,    output wire        S1_WR_DATA_LAST ,    output wire        S2_WR_DATA_LAST ,    output wire        S3_WR_DATA_LAST ,
 
-    output wire [27:0] S0_RD_ADDR      ,    output wire [ 3:0] S1_RD_ADDR      ,    output wire [27:0] S2_RD_ADDR      ,    output wire [ 3:0] S3_RD_ADDR      ,
+    output wire [31:0] S0_RD_ADDR      ,    output wire [31:0] S1_RD_ADDR      ,    output wire [31:0] S2_RD_ADDR      ,    output wire [31:0] S3_RD_ADDR      ,
     output wire [ 7:0] S0_RD_LEN       ,    output wire [ 7:0] S1_RD_LEN       ,    output wire [ 7:0] S2_RD_LEN       ,    output wire [ 7:0] S3_RD_LEN       ,
     output wire [ 3:0] S0_RD_ID        ,    output wire [ 3:0] S1_RD_ID        ,    output wire [ 3:0] S2_RD_ID        ,    output wire [ 3:0] S3_RD_ID        ,
     output wire        S0_RD_ADDR_VALID,    output wire        S1_RD_ADDR_VALID,    output wire        S2_RD_ADDR_VALID,    output wire        S3_RD_ADDR_VALID,
@@ -118,8 +118,8 @@ fifo的引入同时使主从模块支持了outstanding功能
 */
 
 master_axi_async m0_axi_async(
-    .BUS_CLK              (M0_BUS_CLK              ), /* <===> */ .MASTER_CLK           (M0_CLK           ),
-    .BUS_RST              (M0_BUS_RST              ), /* <===> */ .MASTER_RST           (M0_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .MASTER_CLK           (M0_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .MASTER_RST           (M0_RST           ),
     .BUS_WR_ADDR          (M0_BUS_WR_ADDR          ), /* <===> */ .MASTER_WR_ADDR       (M0_WR_ADDR       ),
     .BUS_WR_LEN           (M0_BUS_WR_LEN           ), /* <===> */ .MASTER_WR_LEN        (M0_WR_LEN        ),
     .BUS_WR_ID            (M0_BUS_WR_ID            ), /* <===> */ .MASTER_WR_ID         (M0_WR_ID         ),
@@ -144,8 +144,8 @@ master_axi_async m0_axi_async(
 );
 
 master_axi_async m1_axi_async(
-    .BUS_CLK              (M1_BUS_CLK              ), /* <===> */ .MASTER_CLK           (M1_CLK           ),
-    .BUS_RST              (M1_BUS_RST              ), /* <===> */ .MASTER_RST           (M1_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .MASTER_CLK           (M1_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .MASTER_RST           (M1_RST           ),
     .BUS_WR_ADDR          (M1_BUS_WR_ADDR          ), /* <===> */ .MASTER_WR_ADDR       (M1_WR_ADDR       ),
     .BUS_WR_LEN           (M1_BUS_WR_LEN           ), /* <===> */ .MASTER_WR_LEN        (M1_WR_LEN        ),
     .BUS_WR_ID            (M1_BUS_WR_ID            ), /* <===> */ .MASTER_WR_ID         (M1_WR_ID         ),
@@ -170,8 +170,8 @@ master_axi_async m1_axi_async(
 );
 
 master_axi_async m2_axi_async(
-    .BUS_CLK              (M2_BUS_CLK              ), /* <===> */ .MASTER_CLK           (M2_CLK           ),
-    .BUS_RST              (M2_BUS_RST              ), /* <===> */ .MASTER_RST           (M2_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .MASTER_CLK           (M2_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .MASTER_RST           (M2_RST           ),
     .BUS_WR_ADDR          (M2_BUS_WR_ADDR          ), /* <===> */ .MASTER_WR_ADDR       (M2_WR_ADDR       ),
     .BUS_WR_LEN           (M2_BUS_WR_LEN           ), /* <===> */ .MASTER_WR_LEN        (M2_WR_LEN        ),
     .BUS_WR_ID            (M2_BUS_WR_ID            ), /* <===> */ .MASTER_WR_ID         (M2_WR_ID         ),
@@ -196,8 +196,8 @@ master_axi_async m2_axi_async(
 );
 
 master_axi_async m3_axi_async(
-    .BUS_CLK              (M3_BUS_CLK              ), /* <===> */ .MASTER_CLK           (M3_CLK           ),
-    .BUS_RST              (M3_BUS_RST              ), /* <===> */ .MASTER_RST           (M3_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .MASTER_CLK           (M3_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .MASTER_RST           (M3_RST           ),
     .BUS_WR_ADDR          (M3_BUS_WR_ADDR          ), /* <===> */ .MASTER_WR_ADDR       (M3_WR_ADDR       ),
     .BUS_WR_LEN           (M3_BUS_WR_LEN           ), /* <===> */ .MASTER_WR_LEN        (M3_WR_LEN        ),
     .BUS_WR_ID            (M3_BUS_WR_ID            ), /* <===> */ .MASTER_WR_ID         (M3_WR_ID         ),
@@ -222,8 +222,8 @@ master_axi_async m3_axi_async(
 );
 
 slave_axi_async s0_axi_async(
-    .BUS_CLK              (S0_BUS_CLK              ), /* <===> */ .SLAVE_CLK           (S0_CLK           ),
-    .BUS_RST              (S0_BUS_RST              ), /* <===> */ .SLAVE_RST           (S0_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .SLAVE_CLK           (S0_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .SLAVE_RST           (S0_RST           ),
     .BUS_WR_ADDR          (S0_BUS_WR_ADDR          ), /* <===> */ .SLAVE_WR_ADDR       (S0_WR_ADDR       ),
     .BUS_WR_LEN           (S0_BUS_WR_LEN           ), /* <===> */ .SLAVE_WR_LEN        (S0_WR_LEN        ),
     .BUS_WR_ID            (S0_BUS_WR_ID            ), /* <===> */ .SLAVE_WR_ID         (S0_WR_ID         ),
@@ -248,8 +248,8 @@ slave_axi_async s0_axi_async(
 );
 
 slave_axi_async s1_axi_async(
-    .BUS_CLK              (S1_BUS_CLK              ), /* <===> */ .SLAVE_CLK           (S1_CLK           ),
-    .BUS_RST              (S1_BUS_RST              ), /* <===> */ .SLAVE_RST           (S1_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .SLAVE_CLK           (S1_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .SLAVE_RST           (S1_RST           ),
     .BUS_WR_ADDR          (S1_BUS_WR_ADDR          ), /* <===> */ .SLAVE_WR_ADDR       (S1_WR_ADDR       ),
     .BUS_WR_LEN           (S1_BUS_WR_LEN           ), /* <===> */ .SLAVE_WR_LEN        (S1_WR_LEN        ),
     .BUS_WR_ID            (S1_BUS_WR_ID            ), /* <===> */ .SLAVE_WR_ID         (S1_WR_ID         ),
@@ -274,8 +274,8 @@ slave_axi_async s1_axi_async(
 );
 
 slave_axi_async s2_axi_async(
-    .BUS_CLK              (S2_BUS_CLK              ), /* <===> */ .SLAVE_CLK           (S2_CLK           ),
-    .BUS_RST              (S2_BUS_RST              ), /* <===> */ .SLAVE_RST           (S2_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .SLAVE_CLK           (S2_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .SLAVE_RST           (S2_RST           ),
     .BUS_WR_ADDR          (S2_BUS_WR_ADDR          ), /* <===> */ .SLAVE_WR_ADDR       (S2_WR_ADDR       ),
     .BUS_WR_LEN           (S2_BUS_WR_LEN           ), /* <===> */ .SLAVE_WR_LEN        (S2_WR_LEN        ),
     .BUS_WR_ID            (S2_BUS_WR_ID            ), /* <===> */ .SLAVE_WR_ID         (S2_WR_ID         ),
@@ -300,8 +300,8 @@ slave_axi_async s2_axi_async(
 );
 
 slave_axi_async s3_axi_async(
-    .BUS_CLK              (S3_BUS_CLK              ), /* <===> */ .SLAVE_CLK           (S3_CLK           ),
-    .BUS_RST              (S3_BUS_RST              ), /* <===> */ .SLAVE_RST           (S3_RST           ),
+    .BUS_CLK              (BUS_CLK                 ), /* <===> */ .SLAVE_CLK           (S3_CLK           ),
+    .BUS_RST              (BUS_RST                 ), /* <===> */ .SLAVE_RST           (S3_RST           ),
     .BUS_WR_ADDR          (S3_BUS_WR_ADDR          ), /* <===> */ .SLAVE_WR_ADDR       (S3_WR_ADDR       ),
     .BUS_WR_LEN           (S3_BUS_WR_LEN           ), /* <===> */ .SLAVE_WR_LEN        (S3_WR_LEN        ),
     .BUS_WR_ID            (S3_BUS_WR_ID            ), /* <===> */ .SLAVE_WR_ID         (S3_WR_ID         ),

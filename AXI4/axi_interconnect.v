@@ -51,7 +51,7 @@ module axi_interconnect #(
     input  wire        S0_WR_DATA_READY,    input  wire        S1_WR_DATA_READY,    input  wire        S2_WR_DATA_READY,    input  wire        S3_WR_DATA_READY,
     output wire        S0_WR_DATA_LAST ,    output wire        S1_WR_DATA_LAST ,    output wire        S2_WR_DATA_LAST ,    output wire        S3_WR_DATA_LAST ,
 
-    output wire [27:0] S0_RD_ADDR      ,    output wire [ 3:0] S1_RD_ADDR      ,    output wire [27:0] S2_RD_ADDR      ,    output wire [ 3:0] S3_RD_ADDR      ,
+    output wire [31:0] S0_RD_ADDR      ,    output wire [31:0] S1_RD_ADDR      ,    output wire [31:0] S2_RD_ADDR      ,    output wire [31:0] S3_RD_ADDR      ,
     output wire [ 7:0] S0_RD_LEN       ,    output wire [ 7:0] S1_RD_LEN       ,    output wire [ 7:0] S2_RD_LEN       ,    output wire [ 7:0] S3_RD_LEN       ,
     output wire [ 3:0] S0_RD_ID        ,    output wire [ 3:0] S1_RD_ID        ,    output wire [ 3:0] S2_RD_ID        ,    output wire [ 3:0] S3_RD_ID        ,
     output wire        S0_RD_ADDR_VALID,    output wire        S1_RD_ADDR_VALID,    output wire        S2_RD_ADDR_VALID,    output wire        S3_RD_ADDR_VALID,
@@ -89,12 +89,12 @@ AXI协议只能做到主机到从机通信，即主机向从机申请数据传�
 **/
 
 //__________________________________________//
-wire [27:0] BUS_WR_ADDR      ;
+wire [31:0] BUS_WR_ADDR      ;
 wire [ 7:0] BUS_WR_LEN       ;
 wire [ 1:0] BUS_WR_ID        ;
 wire        BUS_WR_ADDR_VALID;
 wire        BUS_WR_ADDR_READY;
-wire [27:0] BUS_RD_ADDR      ;
+wire [31:0] BUS_RD_ADDR      ;
 wire [ 7:0] BUS_RD_LEN       ;
 wire [ 1:0] BUS_RD_ID        ;
 wire        BUS_RD_ADDR_VALID;
@@ -155,7 +155,7 @@ always @(*) begin
 end
 
 axi_inter_sel41 #(32)selM_WR_ADDR      ( cu_master_wr_addr_id, BUS_WR_ADDR      , M0_WR_ADDR      , M1_WR_ADDR      , M2_WR_ADDR      , M3_WR_ADDR      );
-axi_inter_nosel #( 4)selS_WR_ADDR      (                       BUS_WR_ADDR      , S0_WR_ADDR      , S1_WR_ADDR      , S2_WR_ADDR      , S3_WR_ADDR      );
+axi_inter_nosel #(32)selS_WR_ADDR      (                       BUS_WR_ADDR      , S0_WR_ADDR      , S1_WR_ADDR      , S2_WR_ADDR      , S3_WR_ADDR      );
 axi_inter_sel41 #( 8)selM_WR_LEN       ( cu_master_wr_addr_id, BUS_WR_LEN       , M0_WR_LEN       , M1_WR_LEN       , M2_WR_LEN       , M3_WR_LEN       );
 axi_inter_nosel #( 8)selS_WR_LEN       (                       BUS_WR_LEN       , S0_WR_LEN       , S1_WR_LEN       , S2_WR_LEN       , S3_WR_LEN       );
 axi_inter_sel41 #( 2)selM_WR_ID        ( cu_master_wr_addr_id, BUS_WR_ID        , M0_WR_ID        , M1_WR_ID        , M2_WR_ID        , M3_WR_ID        );

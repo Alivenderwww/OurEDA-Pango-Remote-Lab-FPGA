@@ -3,9 +3,7 @@ module axi_slave_sim #(
     parameter addr_e = 2047
 ) (
     input  wire        clk          ,
-    input  wire        rstn         ,
-    input  wire        BUS_CLK      ,
-    input  wire        BUS_RST      ,
+    input  wire        rst          ,
 
     input wire [31:0]  WR_ADDR      , //写地址
     input wire [ 7:0]  WR_LEN       , //写突发长度，实际长度为WR_LEN+1
@@ -43,14 +41,14 @@ reg [ 7:0] rd_req_en;
 reg [ 7:0] task_on;
 reg [1:0] wr_data_ready_cnt;
 //wr_addr
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) WR_ADDR_READY <= 1'b0;
+always @(posedge clk) begin
+    if(rst) WR_ADDR_READY <= 1'b0;
     else if(WR_ADDR_VALID && ~WR_ADDR_READY) WR_ADDR_READY <= 1'b1;
     else if(WR_ADDR_VALID && WR_ADDR_READY) WR_ADDR_READY <= 1'b0;
     else WR_ADDR_READY <= 1'b0;
 end
-always @(posedge clk or negedge rstn) begin
-    if (~rstn) begin
+always @(posedge clk) begin
+    if (rst) begin
         wr_addr_reg <= 0;
         wr_len_reg  <= 0;
         WR_BACK_ID  <= 0;
@@ -66,30 +64,30 @@ always @(posedge clk or negedge rstn) begin
     end
 end
 //wr_data
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) wr_data_reg <= '{default:0};
+always @(posedge clk) begin
+    if(rst) wr_data_reg <= '{default:0};
     else if(WR_DATA_VALID && WR_DATA_READY) wr_data_reg[wr_addr_reg] <= WR_DATA;
 end
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) wr_data_ready_cnt <= 0;
+always @(posedge clk) begin
+    if(rst) wr_data_ready_cnt <= 0;
     else if(WR_DATA_VALID && WR_DATA_READY && WR_DATA_LAST) wr_data_ready_cnt <= 0;
     else if(WR_DATA_VALID ) wr_data_ready_cnt <= wr_data_ready_cnt + 1;
     else wr_data_ready_cnt <= 0;
 end
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) WR_ADDR_READY <= 1'b0;
+always @(posedge clk) begin
+    if(rst) WR_ADDR_READY <= 1'b0;
     else if(wr_data_ready_cnt == 3) WR_ADDR_READY <= 1'b1;
     else WR_ADDR_READY <= 1'b0;
 end
 //rd_addr
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) RD_ADDR_READY <= 1'b0;
+always @(posedge clk) begin
+    if(rst) RD_ADDR_READY <= 1'b0;
     else if(rd_req_en[rd_req_num] == 0) RD_ADDR_READY <= 1'b1;
     else if(rd_req_en[rd_req_num] == 1) RD_ADDR_READY <= 1'b0;
     else RD_ADDR_READY <= 1'b0;
 end
-always @ (posedge clk or negedge rstn) begin
-    if (~rstn) begin
+always @ (posedge clk) begin
+    if (rst) begin
         rd_addr_reg <= '{default:0};
         rd_len_reg  <= '{default:0};
         RD_ID_reg  <= '{default:0};
