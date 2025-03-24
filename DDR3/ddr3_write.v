@@ -1,9 +1,9 @@
 module ddr3_write(
     input  wire         clk              ,
-    input  wire         rst              ,
+    input  wire         rstn             ,
 
     input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
-    input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [27:0] SLAVE_WR_ADDR      , //写地址通道-地址
     input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
     input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型-DDR不支持除增量传输外的其他突发类型，因此不接入逻辑
     input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
@@ -82,7 +82,7 @@ localparam WRITE_ST_IDLE       = 3'b000,
            WRITE_ST_AFTER      = 3'b100,
            WRITE_ST_RESP       = 3'b101;
 always @(*) begin
-    if(rst) nt_wr_st <= WRITE_ST_IDLE;
+    if(~rstn) nt_wr_st <= WRITE_ST_IDLE;
     else case (cu_wr_st)
         WRITE_ST_IDLE      : nt_wr_st <= (SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID)?(WRITE_ST_WAIT):(WRITE_ST_IDLE);
         WRITE_ST_WAIT      : begin
@@ -97,7 +97,7 @@ always @(*) begin
         WRITE_ST_TRANS_ADDR: nt_wr_st <= (WRITE_ADDR_READY && WRITE_ADDR_VALID)?(WRITE_ST_TRANS_DATA):(WRITE_ST_TRANS_ADDR);
         WRITE_ST_TRANS_DATA: begin
             if(WRITE_DATA_READY && WRITE_DATA_LAST) begin
-                if(flag_last_trans) nt_wr_st <= WRITE_ST_IDLE;
+                if(flag_last_trans) nt_wr_st <= WRITE_ST_RESP;
                 else nt_wr_st <= WRITE_ST_WAIT;
             end else nt_wr_st <= WRITE_ST_TRANS_DATA;
         end
@@ -109,13 +109,13 @@ end
 always @(posedge clk) cu_wr_st <= nt_wr_st;
 
 always @(posedge clk) begin
-    if(rst || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
+    if((~rstn) || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
     else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_LAST) flag_data_recv_over <= 1;
     else flag_data_recv_over <= flag_data_recv_over;
 end
 
 always @(posedge clk) begin
-    if(rst) begin
+    if(~rstn) begin
         wr_addr_load     <= 0;
         wr_len_load      <= 0;
         wr_id_load       <= 0;
@@ -141,7 +141,7 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if(rst || cu_wr_st == WRITE_ST_IDLE) begin
+    if((~rstn) || cu_wr_st == WRITE_ST_IDLE) begin
         flag_last_trans <= 0;
     end else if((cu_wr_st == WRITE_ST_TRANS_DATA) && (nt_wr_st == WRITE_ST_WAIT)) begin
         flag_last_trans <= (wr_len_load <= 15);
@@ -151,14 +151,14 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if(rst) start_complete_num <= 0;
+    if(~rstn) start_complete_num <= 0;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) start_complete_num <= SLAVE_WR_ADDR[2:0];
     else if((fifo_wr_en) && (~full) && (cu_wr_st != WRITE_ST_IDLE) && (start_complete_num != 0)) start_complete_num <= start_complete_num - 1;
     else start_complete_num <= start_complete_num;
 end
 
 always @(posedge clk) begin
-    if(rst) end_complete_num <= 0;
+    if(~rstn) end_complete_num <= 0;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) end_complete_num <= 7 - wr_addr_end[2:0];
     else if((fifo_wr_en) && (cu_wr_st == WRITE_ST_AFTER) && (end_complete_num != 0)) end_complete_num <= end_complete_num - 1;
     else end_complete_num <= end_complete_num;
@@ -171,19 +171,19 @@ always @(posedge clk) begin
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign SLAVE_WR_ADDR_READY    = (~rst) && (cu_wr_st == WRITE_ST_IDLE);
-assign SLAVE_WR_DATA_READY    = (~rst) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
+assign SLAVE_WR_ADDR_READY    = (rstn) && (cu_wr_st == WRITE_ST_IDLE);
+assign SLAVE_WR_DATA_READY    = (rstn) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
 assign SLAVE_WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
 assign SLAVE_WR_BACK_VALID    = (cu_wr_st == WRITE_ST_RESP);
 assign SLAVE_WR_BACK_RESP     = 2'b00;
 assign WRITE_ADDR             = wr_addr_load;
 assign WRITE_LEN              = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
 assign WRITE_ID               = wr_id_load;
-assign WRITE_ADDR_VALID       = (~rst) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
+assign WRITE_ADDR_VALID       = (rstn) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
 assign WRITE_DATA             = fifo_rd_data;
 assign WRITE_STRB             = fifo_rd_strb;
 
-assign fifo_rst     = rst;
+assign fifo_rst     = (~rstn);
 assign fifo_wr_en   = (~full) && (((cu_wr_st != WRITE_ST_IDLE ) && (start_complete_num != 0))
                               ||  ((cu_wr_st == WRITE_ST_AFTER) && (  end_complete_num != 0))
                               ||  (SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID));

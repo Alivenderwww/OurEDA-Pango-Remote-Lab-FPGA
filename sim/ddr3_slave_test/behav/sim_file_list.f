@@ -2,7 +2,7 @@
 ../../../DDR3/slave_ddr3.v               
 ../../../DDR3/ddr3_write.v               
 ../../../DDR3/ddr3_top.v                 
-../../../AXI4/slave_axi_async.v          
+../../../AXI4/sim_file/axi_master_sim.v          
 ../../../DDR3/sim_file/ddr3.v
 ../ddr3_slave_tb.v                       
 

@@ -1,6 +1,6 @@
 module ddr3_read(
     input wire          clk            ,
-    input wire          rst            ,
+    input wire          rstn           ,
 
     //转换后的总线
     input  wire [ 3:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
@@ -86,7 +86,7 @@ reg flag_trans_addr_over;
 reg fifo_rd_first_need;
 
 always @(*) begin
-    if(rst) nt_rd_st <= READ_ST_IDLE;
+    if(~rstn) nt_rd_st <= READ_ST_IDLE;
     else case (cu_rd_st)
         READ_ST_IDLE      : nt_rd_st <= (SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID)?(READ_ST_WAIT):(READ_ST_IDLE);
         READ_ST_WAIT      : begin
@@ -103,14 +103,14 @@ end
 always @(posedge clk) cu_rd_st <= nt_rd_st;
 
 always @(posedge clk) begin
-    if(rst) flag_trans_addr_over <= 0;
+    if(~rstn) flag_trans_addr_over <= 0;
     else if(cu_rd_st == READ_ST_IDLE) flag_trans_addr_over <= 0;
     else if(READ_ADDR_VALID && READ_ADDR_READY && flag_last_trans) flag_trans_addr_over <= 1;
     else flag_trans_addr_over <= flag_trans_addr_over;
 end
 
 always @(posedge clk) begin
-    if(rst) begin
+    if(~rstn) begin
         rd_addr_load     <= 0;
         rd_len_load      <= 0;
         rd_id_load       <= 0;
@@ -136,14 +136,14 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if(rst) start_giveup_num <= 0;
+    if(~rstn) start_giveup_num <= 0;
     else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) start_giveup_num <= SLAVE_RD_ADDR[2:0];
     else if(fifo_rd_en && (~fifo_rd_first_need) && flag_unuse_rd_need) start_giveup_num <= start_giveup_num - 1;
     else start_giveup_num <= start_giveup_num;
 end
 
 always @(posedge clk) begin
-    if(rst) trans_num <= 0;
+    if(~rstn) trans_num <= 0;
     else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) trans_num <= SLAVE_RD_ADDR_LEN;
     else if(fifo_rd_en && (~flag_unuse_rd_need) && (~fifo_rd_first_need) && (trans_num != 0)) trans_num <= trans_num - 1;
     else trans_num <= trans_num;
@@ -156,18 +156,18 @@ always @(posedge clk) begin
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign SLAVE_RD_ADDR_READY   = (~rst) && (cu_rd_st == READ_ST_IDLE);
+assign SLAVE_RD_ADDR_READY   = (rstn) && (cu_rd_st == READ_ST_IDLE);
 assign SLAVE_RD_DATA         = fifo_rd_data;
 assign SLAVE_RD_BACK_ID      = rd_id_load;//DDR不支持乱序执行，因此直接连线就OK。
-assign SLAVE_RD_DATA_LAST    = (~rst) && (cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (trans_num == 0);
-assign SLAVE_RD_DATA_VALID   = (~rst) && ((cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (~fifo_rd_first_need) && (~flag_unuse_rd_need));
+assign SLAVE_RD_DATA_LAST    = (rstn) && (cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (trans_num == 0);
+assign SLAVE_RD_DATA_VALID   = (rstn) && ((cu_rd_st != READ_ST_IDLE && cu_rd_st != READ_ST_RESET) && (~fifo_rd_first_need) && (~flag_unuse_rd_need));
 assign SLAVE_RD_DATA_RESP    = 2'b00;
 assign READ_ADDR             = rd_addr_load;
 assign READ_LEN              = (rd_len_load >= 15)?(4'b1111):(rd_len_load);
 assign READ_ID               = rd_id_load;
-assign READ_ADDR_VALID       = (~rst) && (cu_rd_st == READ_ST_TRANS_ADDR);
+assign READ_ADDR_VALID       = (rstn) && (cu_rd_st == READ_ST_TRANS_ADDR);
 
-assign fifo_rst     = (rst) || (cu_rd_st == READ_ST_RESET);
+assign fifo_rst     = (~rstn) || (cu_rd_st == READ_ST_RESET);
 assign fifo_wr_en   = (READ_DATA_VALID);
 assign fifo_wr_data = (READ_DATA);
 assign fifo_rd_en   = (~empty) && ((flag_unuse_rd_need) || (fifo_rd_first_need) || ((SLAVE_RD_DATA_READY) && (SLAVE_RD_DATA_VALID))); //dont care或读出无用数据或与上级模块数据线握手成功

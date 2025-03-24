@@ -6,7 +6,7 @@ module slave_ddr3 (
     
     //DDR-AXI-SLAVE接口
     output wire        DDR_SLAVE_CLK          , //DDR作为从机向总线提供的时钟信号
-    output wire        DDR_SLAVE_RST          , //DDR作为从机向总线提供的复位信号
+    output wire        DDR_SLAVE_RSTN         , //DDR作为从机向总线提供的复位信号
 
     input  wire [ 3:0] DDR_SLAVE_WR_ADDR_ID   , //写地址通道-ID
     input  wire [31:0] DDR_SLAVE_WR_ADDR      , //写地址通道-地址
@@ -80,8 +80,8 @@ wire [ 3:0]  READ_BACK_ID   ;
 wire         READ_DATA_LAST ; //最后一个读数据标志位
 wire         READ_DATA_VALID; //读数据有效
 
-assign DDR_SLAVE_CLK = ddr_core_clk;
-assign DDR_SLAVE_RST = (~ddr_init_done);
+assign DDR_SLAVE_CLK  = ddr_core_clk;
+assign DDR_SLAVE_RSTN = (ddr_init_done);
 
 /*
 首先地址要对齐，低3位始终为0
@@ -97,7 +97,7 @@ assign DDR_SLAVE_RST = (~ddr_init_done);
 
 ddr3_read ddr3_read_inst(
     .clk                 (DDR_SLAVE_CLK           ),
-    .rst                 (DDR_SLAVE_RST           ),
+    .rstn                (DDR_SLAVE_RSTN          ),
 
     .SLAVE_RD_ADDR_ID    (DDR_SLAVE_RD_ADDR_ID    ),
     .SLAVE_RD_ADDR       (DDR_SLAVE_RD_ADDR[27:0] ),
@@ -126,7 +126,7 @@ ddr3_read ddr3_read_inst(
 
 ddr3_write ddr3_write_inst(
     .clk                 (DDR_SLAVE_CLK           ),
-    .rst                 (DDR_SLAVE_RST           ),
+    .rstn                (DDR_SLAVE_RSTN          ),
     .SLAVE_WR_ADDR_ID    (DDR_SLAVE_WR_ADDR_ID    ),
     .SLAVE_WR_ADDR       (DDR_SLAVE_WR_ADDR[27:0] ),
     .SLAVE_WR_ADDR_LEN   (DDR_SLAVE_WR_ADDR_LEN   ),

@@ -14,7 +14,6 @@ module axi_master_default (
     output wire        MASTER_WR_ADDR_VALID, //写地址通道-握手信号-有效
     input  wire        MASTER_WR_ADDR_READY, //写地址通道-握手信号-准备
 
-    output wire [ 3:0] MASTER_WR_DATA_ID   , //写数据通道-ID
     output wire [31:0] MASTER_WR_DATA      , //写数据通道-数据
     output wire [ 3:0] MASTER_WR_STRB      , //写数据通道-选通
     output wire        MASTER_WR_DATA_LAST , //写数据通道-last信号

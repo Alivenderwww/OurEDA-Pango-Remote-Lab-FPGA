@@ -20,29 +20,6 @@ parameter real OUT_SYNC_DLY = (500.0 / ACTUAL_RATE) * (123.0 / 128.0);
 reg          ddr_ref_clk  ;
 reg          rst_n        ;
 
-wire         DDR_SLAVE_CLK      ;
-wire         DDR_SLAVE_RST      ;
-reg  [31:0]  DDR_SLAVE_WR_ADDR      ; //写地址
-reg  [ 7:0]  DDR_SLAVE_WR_LEN       ; //写长度，实际长度为WR_LEN+1
-reg          DDR_SLAVE_WR_ADDR_VALID; //写地址通道有效
-wire         DDR_SLAVE_WR_ADDR_READY; //写地址通道准备
-
-reg  [ 31:0] DDR_SLAVE_WR_DATA      ; //写数据
-reg  [  3:0] DDR_SLAVE_WR_STRB      ; //写数据掩码
-reg          DDR_SLAVE_WR_DATA_VALID; //写数据有效
-wire         DDR_SLAVE_WR_DATA_READY; //写数据准备
-reg          DDR_SLAVE_WR_DATA_LAST ; //最后一个写数据标志位
-
-reg  [31:0]  DDR_SLAVE_RD_ADDR      ; //读地址
-reg  [ 7:0]  DDR_SLAVE_RD_LEN       ; //读长度，实际长度为WR_LEN+1
-reg          DDR_SLAVE_RD_ADDR_VALID; //读地址通道有效
-wire         DDR_SLAVE_RD_ADDR_READY; //读地址通道准备
-
-wire [31:0]  DDR_SLAVE_RD_DATA      ; //读数据
-wire         DDR_SLAVE_RD_DATA_LAST ; //最后一个读数据标志位
-reg          DDR_SLAVE_RD_DATA_READY; //读数据准备
-wire         DDR_SLAVE_RD_DATA_VALID; //读数据有效
-
 wire         mem_rst_n    ; //Memory复位
 wire         mem_ck       ; //Memory差分时钟正端
 wire         mem_ck_n     ; //Memory差分时钟负端
@@ -58,6 +35,36 @@ wire         mem_ras_n    ; //行地址strobe
 wire         mem_cas_n    ; //列地址strobe
 wire         mem_we_n     ; //写使能
 wire [ 2:0]  mem_ba       ; //Bank地址总线
+
+wire        AXI_CLK;
+wire        AXI_RSTN;
+wire [ 1:0] WR_ADDR_ID   ;
+wire [31:0] WR_ADDR      ;
+wire [ 7:0] WR_ADDR_LEN  ;
+wire [ 1:0] WR_ADDR_BURST;
+wire        WR_ADDR_VALID;
+wire        WR_ADDR_READY;
+wire [31:0] WR_DATA      ;
+wire [ 3:0] WR_STRB      ;
+wire        WR_DATA_LAST ;
+wire        WR_DATA_VALID;
+wire        WR_DATA_READY;
+wire [ 3:0] WR_BACK_ID   ;
+wire [ 1:0] WR_BACK_RESP ;
+wire        WR_BACK_VALID;
+wire        WR_BACK_READY;
+wire [ 1:0] RD_ADDR_ID   ;
+wire [31:0] RD_ADDR      ;
+wire [ 7:0] RD_ADDR_LEN  ;
+wire [ 1:0] RD_ADDR_BURST;
+wire        RD_ADDR_VALID;
+wire        RD_ADDR_READY;
+wire [ 1:0] RD_BACK_ID   ;
+wire [31:0] RD_DATA      ;
+wire [ 1:0] RD_DATA_RESP ;
+wire        RD_DATA_LAST ;
+wire        RD_DATA_VALID;
+wire        RD_DATA_READY;
  
 wire [ADDR_BITS-1:0] mem_addr;
 
@@ -71,87 +78,94 @@ end
 always #10 ddr_ref_clk <= ~ddr_ref_clk;
 
 initial begin
-    DDR_SLAVE_WR_ADDR = 32'h0001005;
-    DDR_SLAVE_WR_LEN  = 8'd167;
-    DDR_SLAVE_RD_ADDR = 32'h0001005;
-    DDR_SLAVE_RD_LEN  = 8'd167;
+    #50000
+    while(~AXI_RSTN) #500;
+    MASTER.set_rd_data_channel(7);                              
+    MASTER.set_wr_data_channel(7);                              
+    MASTER.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
+    MASTER.send_wr_data(32'h00000000, 4'b1111);
+    MASTER.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b00);
+    MASTER.send_wr_data(32'h10000000, 4'b1111);
+    MASTER.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
+    MASTER.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b00);
 end
 
-reg [31:0] cnt;
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) cnt <= 0;
-    else cnt <= (cnt >= 50000)?(cnt):(cnt + 1);
-end
+axi_master_sim MASTER(
+    .clk                  (AXI_CLK       ),
+    .rstn                 (AXI_RSTN      ),
+    .MASTER_CLK           (              ),
+    .MASTER_RSTN          (              ),
+    .MASTER_WR_ADDR_ID    (WR_ADDR_ID    ),
+    .MASTER_WR_ADDR       (WR_ADDR       ),
+    .MASTER_WR_ADDR_LEN   (WR_ADDR_LEN   ),
+    .MASTER_WR_ADDR_BURST (WR_ADDR_BURST ),
+    .MASTER_WR_ADDR_VALID (WR_ADDR_VALID ),
+    .MASTER_WR_ADDR_READY (WR_ADDR_READY ),
+    .MASTER_WR_DATA       (WR_DATA       ),
+    .MASTER_WR_STRB       (WR_STRB       ),
+    .MASTER_WR_DATA_LAST  (WR_DATA_LAST  ),
+    .MASTER_WR_DATA_VALID (WR_DATA_VALID ),
+    .MASTER_WR_DATA_READY (WR_DATA_READY ),
+    .MASTER_WR_BACK_ID    (WR_BACK_ID    ),
+    .MASTER_WR_BACK_RESP  (WR_BACK_RESP  ),
+    .MASTER_WR_BACK_VALID (WR_BACK_VALID ),
+    .MASTER_WR_BACK_READY (WR_BACK_READY ),
+    .MASTER_RD_ADDR_ID    (RD_ADDR_ID    ),
+    .MASTER_RD_ADDR       (RD_ADDR       ),
+    .MASTER_RD_ADDR_LEN   (RD_ADDR_LEN   ),
+    .MASTER_RD_ADDR_BURST (RD_ADDR_BURST ),
+    .MASTER_RD_ADDR_VALID (RD_ADDR_VALID ),
+    .MASTER_RD_ADDR_READY (RD_ADDR_READY ),
+    .MASTER_RD_BACK_ID    (RD_BACK_ID    ),
+    .MASTER_RD_DATA       (RD_DATA       ),
+    .MASTER_RD_DATA_RESP  (RD_DATA_RESP  ),
+    .MASTER_RD_DATA_LAST  (RD_DATA_LAST  ),
+    .MASTER_RD_DATA_VALID (RD_DATA_VALID ),
+    .MASTER_RD_DATA_READY (RD_DATA_READY )
+);
 
-/****写通道****/
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_WR_ADDR_VALID <= 0;
-    else if(cnt == 500 && DDR_SLAVE_WR_ADDR_VALID == 0) DDR_SLAVE_WR_ADDR_VALID <= 1;
-    else if(DDR_SLAVE_WR_ADDR_READY && DDR_SLAVE_WR_ADDR_VALID) DDR_SLAVE_WR_ADDR_VALID <= 0;
-end
-
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_WR_DATA_VALID <= 0;
-    else if(DDR_SLAVE_WR_ADDR_READY && DDR_SLAVE_WR_ADDR_VALID) DDR_SLAVE_WR_DATA_VALID <= 1;
-    else if(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY && DDR_SLAVE_WR_DATA_LAST) DDR_SLAVE_WR_DATA_VALID <= 0;
-end
-
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_WR_DATA <= 0;
-    else if(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY) DDR_SLAVE_WR_DATA <= DDR_SLAVE_WR_DATA + 1;
-end
-
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_WR_STRB <= 4'b1111;
-    else if(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY) DDR_SLAVE_WR_STRB <= 4'b1111;
-end
-
-reg [10:0] wr_cnt;
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) wr_cnt <= 0;
-    else if(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY) wr_cnt <= wr_cnt + 1;
-end
-always @(*) begin
-    DDR_SLAVE_WR_DATA_LAST = (wr_cnt >= DDR_SLAVE_WR_LEN);
-end
-
-/****读通道****/
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_RD_ADDR_VALID <= 0;
-    else if(cnt == 2000 && DDR_SLAVE_RD_ADDR_VALID == 0) DDR_SLAVE_RD_ADDR_VALID <= 1;
-    else if(DDR_SLAVE_RD_ADDR_READY && DDR_SLAVE_RD_ADDR_VALID) DDR_SLAVE_RD_ADDR_VALID <= 0;
-end
-
-always @(posedge DDR_SLAVE_CLK) begin
-    if(DDR_SLAVE_RST) DDR_SLAVE_RD_DATA_READY <= 0;
-    else if(DDR_SLAVE_RD_ADDR_READY && DDR_SLAVE_RD_ADDR_VALID) DDR_SLAVE_RD_DATA_READY <= 1;
-    else if(DDR_SLAVE_RD_DATA_VALID && DDR_SLAVE_RD_DATA_READY && DDR_SLAVE_RD_DATA_LAST) DDR_SLAVE_RD_DATA_READY <= 0;
-end
 
 slave_ddr3 slave_ddr3_inst(
     .ddr_ref_clk             (ddr_ref_clk   ),
     .rst_n                   (rst_n         ),
     .ddr_init_done           (ddr_init_done ),
+    
+    //DDR-AXI-SLAVE接口
+    .DDR_SLAVE_CLK          (AXI_CLK  ),
+    .DDR_SLAVE_RSTN         (AXI_RSTN ),
 
-    .DDR_SLAVE_CLK           (DDR_SLAVE_CLK           ),
-    .DDR_SLAVE_RST           (DDR_SLAVE_RST           ),
-    .DDR_SLAVE_WR_ADDR       (DDR_SLAVE_WR_ADDR       ),
-    .DDR_SLAVE_WR_LEN        (DDR_SLAVE_WR_LEN        ),
-    .DDR_SLAVE_WR_ADDR_VALID (DDR_SLAVE_WR_ADDR_VALID ),
-    .DDR_SLAVE_WR_ADDR_READY (DDR_SLAVE_WR_ADDR_READY ),
-    .DDR_SLAVE_WR_DATA       (DDR_SLAVE_WR_DATA       ),
-    .DDR_SLAVE_WR_STRB       (DDR_SLAVE_WR_STRB       ),
-    .DDR_SLAVE_WR_DATA_VALID (DDR_SLAVE_WR_DATA_VALID ),
-    .DDR_SLAVE_WR_DATA_READY (DDR_SLAVE_WR_DATA_READY ),
-    .DDR_SLAVE_WR_DATA_LAST  (DDR_SLAVE_WR_DATA_LAST  ),
-    .DDR_SLAVE_RD_ADDR       (DDR_SLAVE_RD_ADDR       ),
-    .DDR_SLAVE_RD_LEN        (DDR_SLAVE_RD_LEN        ),
-    .DDR_SLAVE_RD_ADDR_VALID (DDR_SLAVE_RD_ADDR_VALID ),
-    .DDR_SLAVE_RD_ADDR_READY (DDR_SLAVE_RD_ADDR_READY ),
-    .DDR_SLAVE_RD_DATA       (DDR_SLAVE_RD_DATA       ),
-    .DDR_SLAVE_RD_DATA_LAST  (DDR_SLAVE_RD_DATA_LAST  ),
-    .DDR_SLAVE_RD_DATA_READY (DDR_SLAVE_RD_DATA_READY ),
-    .DDR_SLAVE_RD_DATA_VALID (DDR_SLAVE_RD_DATA_VALID ),
+    .DDR_SLAVE_WR_ADDR_ID   ({2'b00,WR_ADDR_ID}   ),
+    .DDR_SLAVE_WR_ADDR      (WR_ADDR      ),
+    .DDR_SLAVE_WR_ADDR_LEN  (WR_ADDR_LEN  ),
+    .DDR_SLAVE_WR_ADDR_BURST(WR_ADDR_BURST),
+    .DDR_SLAVE_WR_ADDR_VALID(WR_ADDR_VALID),
+    .DDR_SLAVE_WR_ADDR_READY(WR_ADDR_READY),
+
+    .DDR_SLAVE_WR_DATA      (WR_DATA      ),
+    .DDR_SLAVE_WR_STRB      (WR_STRB      ),
+    .DDR_SLAVE_WR_DATA_LAST (WR_DATA_LAST ),
+    .DDR_SLAVE_WR_DATA_VALID(WR_DATA_VALID),
+    .DDR_SLAVE_WR_DATA_READY(WR_DATA_READY),
+
+    .DDR_SLAVE_WR_BACK_ID   (WR_BACK_ID   ),
+    .DDR_SLAVE_WR_BACK_RESP (WR_BACK_RESP ),
+    .DDR_SLAVE_WR_BACK_VALID(WR_BACK_VALID),
+    .DDR_SLAVE_WR_BACK_READY(WR_BACK_READY),
+
+    .DDR_SLAVE_RD_ADDR_ID   ({2'b00,RD_ADDR_ID}   ),
+    .DDR_SLAVE_RD_ADDR      (RD_ADDR      ),
+    .DDR_SLAVE_RD_ADDR_LEN  (RD_ADDR_LEN  ),
+    .DDR_SLAVE_RD_ADDR_BURST(RD_ADDR_BURST),
+    .DDR_SLAVE_RD_ADDR_VALID(RD_ADDR_VALID),
+    .DDR_SLAVE_RD_ADDR_READY(RD_ADDR_READY),
+
+    .DDR_SLAVE_RD_BACK_ID   (RD_BACK_ID   ),
+    .DDR_SLAVE_RD_DATA      (RD_DATA      ),
+    .DDR_SLAVE_RD_DATA_RESP (RD_DATA_RESP ),
+    .DDR_SLAVE_RD_DATA_LAST (RD_DATA_LAST ),
+    .DDR_SLAVE_RD_DATA_VALID(RD_DATA_VALID),
+    .DDR_SLAVE_RD_DATA_READY(RD_DATA_READY),
+
     .mem_rst_n               (mem_rst_n     ),
     .mem_ck                  (mem_ck        ),
     .mem_ck_n                (mem_ck_n      ),
