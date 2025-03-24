@@ -143,7 +143,7 @@ task send_data;
     input [ 8:0] rd_len;
     input [ 3:0] rd_id;
     output reg task_on_task;
-    reg [7:0] rd_num;
+    reg [8:0] rd_num;
     begin : axi_slave_sim_send_data
         task_on_task = 1'b1;
         rd_num = 1;
@@ -151,6 +151,8 @@ task send_data;
         rd_addr = rd_addr+1;
         RD_DATA_LAST = 1'b0;
         RD_BACK_ID = rd_id;
+        RD_DATA_VALID = 1'b1;
+        RD_DATA_LAST = (rd_num == rd_len + 1);
         while(rd_num <= rd_len)begin
             RD_DATA_VALID = 1'b1;
             RD_DATA_LAST <= (rd_num == rd_len);
@@ -172,7 +174,6 @@ task send_data;
                 end
             end
         end
-        @(negedge clk);
         RD_DATA_VALID = 1'b0;
         task_end = 1'b1;
         @(posedge clk);
