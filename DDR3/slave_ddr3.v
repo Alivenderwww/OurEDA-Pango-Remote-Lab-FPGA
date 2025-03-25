@@ -61,11 +61,13 @@ module slave_ddr3 (
 wire         ddr_core_clk    ;
 wire [27:0]  WRITE_ADDR      ; //写地址
 wire [ 3:0]  WRITE_LEN       ; //写长度，实际长度为WR_LEN+1
+wire [ 3:0]  WRITE_ID        ;
 wire         WRITE_ADDR_VALID; //写地址通道有效
 wire         WRITE_ADDR_READY; //写地址通道准备
 
 wire [255:0] WRITE_DATA      ; //写数据
 wire [ 31:0] WRITE_STRB      ; //写数据掩码
+wire [  3:0] WRITE_BACK_ID   ;
 wire         WRITE_DATA_READY; //写数据准备
 wire         WRITE_DATA_LAST ; //最后一个写数据标志位
 

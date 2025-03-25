@@ -174,7 +174,7 @@ end
 assign SLAVE_WR_ADDR_READY    = (rstn) && (cu_wr_st == WRITE_ST_IDLE);
 assign SLAVE_WR_DATA_READY    = (rstn) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
 assign SLAVE_WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
-assign SLAVE_WR_BACK_VALID    = (cu_wr_st == WRITE_ST_RESP);
+assign SLAVE_WR_BACK_VALID    = (rstn) && (cu_wr_st == WRITE_ST_RESP);
 assign SLAVE_WR_BACK_RESP     = 2'b00;
 assign WRITE_ADDR             = wr_addr_load;
 assign WRITE_LEN              = (wr_len_load >= 15)?(4'b1111):(wr_len_load);

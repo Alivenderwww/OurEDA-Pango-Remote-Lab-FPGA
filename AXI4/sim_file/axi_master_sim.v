@@ -16,14 +16,14 @@ module axi_master_sim (//模拟AXI-MASTER时序，时钟域为clk
 
     output  reg [31:0] MASTER_WR_DATA      , //写数据通道-数据
     output  reg [ 3:0] MASTER_WR_STRB      , //写数据通道-选通
-    output  reg        MASTER_WR_DATA_LAST , //写数据通道-last信号
+    output wire        MASTER_WR_DATA_LAST , //写数据通道-last信号
     output  reg        MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
     input  wire        MASTER_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    input  wire [ 3:0] MASTER_WR_BACK_ID   , //写响应通道-ID
+    input  wire [ 1:0] MASTER_WR_BACK_ID   , //写响应通道-ID
     input  wire [ 1:0] MASTER_WR_BACK_RESP , //写响应通道-响应
     input  wire        MASTER_WR_BACK_VALID, //写响应通道-握手信号-有效
-    output  reg        MASTER_WR_BACK_READY, //写响应通道-握手信号-准备
+    output wire        MASTER_WR_BACK_READY, //写响应通道-握手信号-准备
 
     output  reg [ 1:0] MASTER_RD_ADDR_ID   , //读地址通道-ID
     output  reg [31:0] MASTER_RD_ADDR      , //读地址通道-地址
@@ -64,8 +64,7 @@ module axi_master_sim (//模拟AXI-MASTER时序，时钟域为clk
 localparam BUFF_WIDTH = 10;
 reg [9:0] wr_channel_buff[2**BUFF_WIDTH-1:0];
 reg [BUFF_WIDTH:0] wr_channel_wrptr, wr_channel_rdptr, wr_channel_respptr;
-wire wr_channel_buff_full  = (wr_channel_wrptr ^ wr_channel_respptr == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
-wire wr_channel_buff_empty = (wr_channel_wrptr == wr_channel_respptr);
+wire wr_channel_buff_full  = ((wr_channel_wrptr ^ wr_channel_respptr) == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
 initial begin
     wr_channel_wrptr   = 0;
     wr_channel_rdptr   = 0;
@@ -83,29 +82,29 @@ always @(posedge clk) begin
 end
 always @(posedge clk) begin
     if(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST)begin
-        if(wr_channel_buff_empty) //ERROR 写数据错误，事务列表空
+        if(wr_channel_wrptr == wr_channel_rdptr) //ERROR 写数据错误，事务列表空
             $display("%m: at time %0t ERROR: Write data failed. MASTER's write transction fifo empty.", $time);
         else wr_channel_rdptr <= wr_channel_rdptr + 1;
     end
 end
 always @(posedge clk) begin
     if(MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY)begin
-        if(wr_channel_buff_empty) //ERROR 写响应错误，事务列表为空
+        if(wr_channel_wrptr == wr_channel_respptr) //ERROR 写响应错误，事务列表为空
             $display("%m: at time %0t ERROR: Write resp failed. MASTER's write transction fifo empty.", $time);
         else begin
             if(wr_channel_buff[wr_channel_respptr[BUFF_WIDTH-1:0]][1:0] != MASTER_WR_BACK_ID) //ERROR 事务ID错误
                 $display("%m: at time %0t ERROR: Write resp ID error. Back ID is %b but %b expexcted.", $time, MASTER_WR_BACK_ID, wr_channel_buff[wr_channel_respptr[BUFF_WIDTH-1:0]][1:0]);
-            wr_channel_respptr <= wr_channel_respptr + 1;
+            else wr_channel_respptr <= wr_channel_respptr + 1;
         end
     end
 end
 
 reg [9:0] rd_channel_buff[2**BUFF_WIDTH-1:0];
 reg [BUFF_WIDTH:0] rd_channel_wrptr, rd_channel_rdptr;
-wire rd_channel_buff_full  = (rd_channel_wrptr ^ rd_channel_rdptr == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
+wire rd_channel_buff_full  = ((rd_channel_wrptr ^ rd_channel_rdptr) == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
 wire rd_channel_buff_empty = (rd_channel_wrptr == rd_channel_rdptr);
 initial begin
-    rd_channel_wrptr   = 0;
+    rd_channel_wrptr = 0;
     rd_channel_rdptr = 0;
 end
 always @(posedge clk) begin
@@ -123,9 +122,9 @@ always @(posedge clk) begin
         if(rd_channel_buff_empty) //ERROR 读数据错误，事务列表空
             $display("%m: at time %0t ERROR: Read data failed. MASTER's read transction fifo empty.", $time);
         else if(rd_channel_buff[rd_channel_rdptr[BUFF_WIDTH-1:0]][1:0] != MASTER_RD_BACK_ID) //ERROR 事务ID错误
-            $display("%m: at time %0t ERROR: Read resp ID error. Back ID is %b but %b expexcted.", $time, MASTER_WR_BACK_ID, wr_channel_buff[wr_channel_respptr[BUFF_WIDTH-1:0]][1:0]);
+            $display("%m: at time %0t ERROR: Read resp ID error. Back ID is %b but %b expexcted.", $time, MASTER_RD_BACK_ID, rd_channel_buff[rd_channel_rdptr[BUFF_WIDTH-1:0]][1:0]);
         else begin
-            $display("%m: at time %0t INFO: Read data finished. ID is %b", $time, MASTER_WR_BACK_ID);
+            $display("%m: at time %0t INFO: Read data finished. ID is %b", $time, MASTER_RD_BACK_ID);
             rd_channel_rdptr <= rd_channel_rdptr + 1;
         end
     end
@@ -205,44 +204,41 @@ task send_rd_addr;
     end
 endtask
 
-reg [7:0] wr_data_trans_cnt;
-initial wr_data_trans_cnt = 0;
 /*
 MASTER的写数据线通道传输一次。AXI协议取消了写交织功能，因此按照暂存fifo内的顺序传输数据
 指定start_data，strb。
 按照写通道暂存fifo内容读取id，len。
 最后一个数据发出后解除堵塞状态。
 */
+reg wr_data_enable;
+initial wr_data_enable = 0;
+reg [ 7:0] wr_data_trans_cnt;
+initial wr_data_trans_cnt = 0;
 task send_wr_data;
 //数据格式是从start_data开始每一次+1
     input [31:0] start_data;
     input [ 3:0] strb;
-    reg   [ 7:0] trans_cnt;
     begin
         wr_data_trans_cnt <= 0;
         @(posedge clk) begin
             MASTER_WR_DATA       <= start_data;
             MASTER_WR_STRB       <= strb;
-            MASTER_WR_DATA_VALID <= (1+{$random}%(7) <= wr_data_capcity);
-            MASTER_WR_DATA_LAST  <= (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
+            wr_data_enable       <= 1;
         end
         while(~(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST))begin
-            MASTER_WR_DATA_VALID <= (1+{$random}%(7) <= wr_data_capcity);
-            MASTER_WR_DATA_LAST  <= (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
             @(posedge clk) if(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY) begin
                 MASTER_WR_DATA <= MASTER_WR_DATA + 1;
                 wr_data_trans_cnt <= wr_data_trans_cnt + 1;
             end
-            MASTER_WR_DATA_VALID <= (1+{$random}%(7) <= wr_data_capcity);
-            MASTER_WR_DATA_LAST  <= (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
         end
-        @(negedge clk) begin
-            MASTER_WR_DATA_VALID <= 0;
-            MASTER_WR_DATA_LAST  <= 0;
-            wr_data_trans_cnt <= 0;
-        end
+        wr_data_enable       <= 0;
+        wr_data_trans_cnt    <= 0;
     end
 endtask
+always @(negedge clk) begin
+    MASTER_WR_DATA_VALID <= (wr_data_enable == 1) && (1+{$random}%(7) <= wr_data_capcity);
+end
+assign MASTER_WR_DATA_LAST = (wr_data_enable == 1) && (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
 
 initial begin
     MASTER_WR_ADDR_ID    = 0;
@@ -253,7 +249,6 @@ initial begin
     MASTER_WR_DATA       = 0;
     MASTER_WR_STRB       = 0;
     MASTER_WR_DATA_VALID = 0;
-    MASTER_WR_BACK_READY = 0;
     MASTER_RD_ADDR_ID    = 0;
     MASTER_RD_ADDR       = 0;
     MASTER_RD_ADDR_LEN   = 0;
@@ -267,6 +262,6 @@ always @(negedge clk) begin
 end
 assign MASTER_CLK = clk;
 assign MASTER_RSTN = rstn;
-assign MASTER_WR_BACK_VALID = 1;
+assign MASTER_WR_BACK_READY = 1;
 
 endmodule

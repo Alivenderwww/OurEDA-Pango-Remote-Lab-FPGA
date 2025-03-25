@@ -36,7 +36,7 @@ module master_async_rd_data_fifo
    );
 
 
-localparam CAS_MODE = "18K" ; // @IPC enum 18K,36K,64K
+localparam CAS_MODE = "36K" ; // @IPC enum 18K,36K,64K
 
 localparam POWER_OPT = 0 ; // @IPC bool
 
@@ -52,13 +52,13 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 35 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 37 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 1,128
 
 localparam RD_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 35 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 37 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 1,128
 

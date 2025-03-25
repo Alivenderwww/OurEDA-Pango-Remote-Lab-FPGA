@@ -40,55 +40,67 @@ wire [ 2:0]  mem_ba       ; //Bank地址总线
  
 wire [ADDR_BITS-1:0] mem_addr;
 
-reg         BUS_CLK;
-reg         BUS_RST;
-
-reg         M0_CLK          ;reg         M1_CLK          ;reg         M2_CLK          ;reg         M3_CLK          ;
-reg         M0_RST          ;reg         M1_RST          ;reg         M2_RST          ;reg         M3_RST          ;
+reg BUS_CLK;
+reg BUS_RSTN;
+reg M0_CLK;reg S0_CLK;reg M0_RSTN;reg S0_RSTN;
+reg M1_CLK;reg S1_CLK;reg M1_RSTN;reg S1_RSTN;
+reg M2_CLK;reg S2_CLK;reg M2_RSTN;reg S2_RSTN;
+reg M3_CLK;reg S3_CLK;reg M3_RSTN;reg S3_RSTN;
+wire [ 1:0] M0_WR_ADDR_ID   ;wire [ 1:0] M1_WR_ADDR_ID   ;wire [ 1:0] M2_WR_ADDR_ID   ;wire [ 1:0] M3_WR_ADDR_ID   ;
 wire [31:0] M0_WR_ADDR      ;wire [31:0] M1_WR_ADDR      ;wire [31:0] M2_WR_ADDR      ;wire [31:0] M3_WR_ADDR      ;
-wire [ 7:0] M0_WR_LEN       ;wire [ 7:0] M1_WR_LEN       ;wire [ 7:0] M2_WR_LEN       ;wire [ 7:0] M3_WR_LEN       ;
-wire [ 1:0] M0_WR_ID        ;wire [ 1:0] M1_WR_ID        ;wire [ 1:0] M2_WR_ID        ;wire [ 1:0] M3_WR_ID        ;
+wire [ 7:0] M0_WR_ADDR_LEN  ;wire [ 7:0] M1_WR_ADDR_LEN  ;wire [ 7:0] M2_WR_ADDR_LEN  ;wire [ 7:0] M3_WR_ADDR_LEN  ;
+wire [ 1:0] M0_WR_ADDR_BURST;wire [ 1:0] M1_WR_ADDR_BURST;wire [ 1:0] M2_WR_ADDR_BURST;wire [ 1:0] M3_WR_ADDR_BURST;
 wire        M0_WR_ADDR_VALID;wire        M1_WR_ADDR_VALID;wire        M2_WR_ADDR_VALID;wire        M3_WR_ADDR_VALID;
 wire        M0_WR_ADDR_READY;wire        M1_WR_ADDR_READY;wire        M2_WR_ADDR_READY;wire        M3_WR_ADDR_READY;
 wire [31:0] M0_WR_DATA      ;wire [31:0] M1_WR_DATA      ;wire [31:0] M2_WR_DATA      ;wire [31:0] M3_WR_DATA      ;
 wire [ 3:0] M0_WR_STRB      ;wire [ 3:0] M1_WR_STRB      ;wire [ 3:0] M2_WR_STRB      ;wire [ 3:0] M3_WR_STRB      ;
-wire [ 1:0] M0_WR_BACK_ID   ;wire [ 1:0] M1_WR_BACK_ID   ;wire [ 1:0] M2_WR_BACK_ID   ;wire [ 1:0] M3_WR_BACK_ID   ;
+wire        M0_WR_DATA_LAST ;wire        M1_WR_DATA_LAST ;wire        M2_WR_DATA_LAST ;wire        M3_WR_DATA_LAST ;
 wire        M0_WR_DATA_VALID;wire        M1_WR_DATA_VALID;wire        M2_WR_DATA_VALID;wire        M3_WR_DATA_VALID;
 wire        M0_WR_DATA_READY;wire        M1_WR_DATA_READY;wire        M2_WR_DATA_READY;wire        M3_WR_DATA_READY;
-wire        M0_WR_DATA_LAST ;wire        M1_WR_DATA_LAST ;wire        M2_WR_DATA_LAST ;wire        M3_WR_DATA_LAST ;
+wire [ 1:0] M0_WR_BACK_ID   ;wire [ 1:0] M1_WR_BACK_ID   ;wire [ 1:0] M2_WR_BACK_ID   ;wire [ 1:0] M3_WR_BACK_ID   ;
+wire [ 1:0] M0_WR_BACK_RESP ;wire [ 1:0] M1_WR_BACK_RESP ;wire [ 1:0] M2_WR_BACK_RESP ;wire [ 1:0] M3_WR_BACK_RESP ;
+wire        M0_WR_BACK_VALID;wire        M1_WR_BACK_VALID;wire        M2_WR_BACK_VALID;wire        M3_WR_BACK_VALID;
+wire        M0_WR_BACK_READY;wire        M1_WR_BACK_READY;wire        M2_WR_BACK_READY;wire        M3_WR_BACK_READY;
+wire [ 1:0] M0_RD_ADDR_ID   ;wire [ 1:0] M1_RD_ADDR_ID   ;wire [ 1:0] M2_RD_ADDR_ID   ;wire [ 1:0] M3_RD_ADDR_ID   ;
 wire [31:0] M0_RD_ADDR      ;wire [31:0] M1_RD_ADDR      ;wire [31:0] M2_RD_ADDR      ;wire [31:0] M3_RD_ADDR      ;
-wire [ 7:0] M0_RD_LEN       ;wire [ 7:0] M1_RD_LEN       ;wire [ 7:0] M2_RD_LEN       ;wire [ 7:0] M3_RD_LEN       ;
-wire [ 1:0] M0_RD_ID        ;wire [ 1:0] M1_RD_ID        ;wire [ 1:0] M2_RD_ID        ;wire [ 1:0] M3_RD_ID        ;
+wire [ 7:0] M0_RD_ADDR_LEN  ;wire [ 7:0] M1_RD_ADDR_LEN  ;wire [ 7:0] M2_RD_ADDR_LEN  ;wire [ 7:0] M3_RD_ADDR_LEN  ;
+wire [ 1:0] M0_RD_ADDR_BURST;wire [ 1:0] M1_RD_ADDR_BURST;wire [ 1:0] M2_RD_ADDR_BURST;wire [ 1:0] M3_RD_ADDR_BURST;
 wire        M0_RD_ADDR_VALID;wire        M1_RD_ADDR_VALID;wire        M2_RD_ADDR_VALID;wire        M3_RD_ADDR_VALID;
 wire        M0_RD_ADDR_READY;wire        M1_RD_ADDR_READY;wire        M2_RD_ADDR_READY;wire        M3_RD_ADDR_READY;
-wire [31:0] M0_RD_DATA      ;wire [31:0] M1_RD_DATA      ;wire [31:0] M2_RD_DATA      ;wire [31:0] M3_RD_DATA      ;
-wire        M0_RD_DATA_LAST ;wire        M1_RD_DATA_LAST ;wire        M2_RD_DATA_LAST ;wire        M3_RD_DATA_LAST ;
 wire [ 1:0] M0_RD_BACK_ID   ;wire [ 1:0] M1_RD_BACK_ID   ;wire [ 1:0] M2_RD_BACK_ID   ;wire [ 1:0] M3_RD_BACK_ID   ;
-wire        M0_RD_DATA_READY;wire        M1_RD_DATA_READY;wire        M2_RD_DATA_READY;wire        M3_RD_DATA_READY;
+wire [31:0] M0_RD_DATA      ;wire [31:0] M1_RD_DATA      ;wire [31:0] M2_RD_DATA      ;wire [31:0] M3_RD_DATA      ;
+wire [ 1:0] M0_RD_DATA_RESP ;wire [ 1:0] M1_RD_DATA_RESP ;wire [ 1:0] M2_RD_DATA_RESP ;wire [ 1:0] M3_RD_DATA_RESP ;
+wire        M0_RD_DATA_LAST ;wire        M1_RD_DATA_LAST ;wire        M2_RD_DATA_LAST ;wire        M3_RD_DATA_LAST ;
 wire        M0_RD_DATA_VALID;wire        M1_RD_DATA_VALID;wire        M2_RD_DATA_VALID;wire        M3_RD_DATA_VALID;
-wire        S0_CLK          ;reg         S1_CLK          ;reg         S2_CLK          ;reg         S3_CLK          ;
-wire        S0_RST          ;reg         S1_RST          ;reg         S2_RST          ;reg         S3_RST          ;
+wire        M0_RD_DATA_READY;wire        M1_RD_DATA_READY;wire        M2_RD_DATA_READY;wire        M3_RD_DATA_READY;
+wire [ 3:0] S0_WR_ADDR_ID   ;wire [ 3:0] S1_WR_ADDR_ID   ;wire [ 3:0] S2_WR_ADDR_ID   ;wire [ 3:0] S3_WR_ADDR_ID   ;
 wire [31:0] S0_WR_ADDR      ;wire [31:0] S1_WR_ADDR      ;wire [31:0] S2_WR_ADDR      ;wire [31:0] S3_WR_ADDR      ;
-wire [ 7:0] S0_WR_LEN       ;wire [ 7:0] S1_WR_LEN       ;wire [ 7:0] S2_WR_LEN       ;wire [ 7:0] S3_WR_LEN       ;
-wire [ 3:0] S0_WR_ID        ;wire [ 3:0] S1_WR_ID        ;wire [ 3:0] S2_WR_ID        ;wire [ 3:0] S3_WR_ID        ;
+wire [ 7:0] S0_WR_ADDR_LEN  ;wire [ 7:0] S1_WR_ADDR_LEN  ;wire [ 7:0] S2_WR_ADDR_LEN  ;wire [ 7:0] S3_WR_ADDR_LEN  ;
+wire [ 1:0] S0_WR_ADDR_BURST;wire [ 1:0] S1_WR_ADDR_BURST;wire [ 1:0] S2_WR_ADDR_BURST;wire [ 1:0] S3_WR_ADDR_BURST;
 wire        S0_WR_ADDR_VALID;wire        S1_WR_ADDR_VALID;wire        S2_WR_ADDR_VALID;wire        S3_WR_ADDR_VALID;
 wire        S0_WR_ADDR_READY;wire        S1_WR_ADDR_READY;wire        S2_WR_ADDR_READY;wire        S3_WR_ADDR_READY;
 wire [31:0] S0_WR_DATA      ;wire [31:0] S1_WR_DATA      ;wire [31:0] S2_WR_DATA      ;wire [31:0] S3_WR_DATA      ;
 wire [ 3:0] S0_WR_STRB      ;wire [ 3:0] S1_WR_STRB      ;wire [ 3:0] S2_WR_STRB      ;wire [ 3:0] S3_WR_STRB      ;
-wire [ 3:0] S0_WR_BACK_ID   ;wire [ 3:0] S1_WR_BACK_ID   ;wire [ 3:0] S2_WR_BACK_ID   ;wire [ 3:0] S3_WR_BACK_ID   ;
+wire        S0_WR_DATA_LAST ;wire        S1_WR_DATA_LAST ;wire        S2_WR_DATA_LAST ;wire        S3_WR_DATA_LAST ;
 wire        S0_WR_DATA_VALID;wire        S1_WR_DATA_VALID;wire        S2_WR_DATA_VALID;wire        S3_WR_DATA_VALID;
 wire        S0_WR_DATA_READY;wire        S1_WR_DATA_READY;wire        S2_WR_DATA_READY;wire        S3_WR_DATA_READY;
-wire        S0_WR_DATA_LAST ;wire        S1_WR_DATA_LAST ;wire        S2_WR_DATA_LAST ;wire        S3_WR_DATA_LAST ;
+wire [ 3:0] S0_WR_BACK_ID   ;wire [ 3:0] S1_WR_BACK_ID   ;wire [ 3:0] S2_WR_BACK_ID   ;wire [ 3:0] S3_WR_BACK_ID   ;
+wire [ 1:0] S0_WR_BACK_RESP ;wire [ 1:0] S1_WR_BACK_RESP ;wire [ 1:0] S2_WR_BACK_RESP ;wire [ 1:0] S3_WR_BACK_RESP ;
+wire        S0_WR_BACK_VALID;wire        S1_WR_BACK_VALID;wire        S2_WR_BACK_VALID;wire        S3_WR_BACK_VALID;
+wire        S0_WR_BACK_READY;wire        S1_WR_BACK_READY;wire        S2_WR_BACK_READY;wire        S3_WR_BACK_READY;
+wire [ 3:0] S0_RD_ADDR_ID   ;wire [ 3:0] S1_RD_ADDR_ID   ;wire [ 3:0] S2_RD_ADDR_ID   ;wire [ 3:0] S3_RD_ADDR_ID   ;
 wire [31:0] S0_RD_ADDR      ;wire [31:0] S1_RD_ADDR      ;wire [31:0] S2_RD_ADDR      ;wire [31:0] S3_RD_ADDR      ;
-wire [ 7:0] S0_RD_LEN       ;wire [ 7:0] S1_RD_LEN       ;wire [ 7:0] S2_RD_LEN       ;wire [ 7:0] S3_RD_LEN       ;
-wire [ 3:0] S0_RD_ID        ;wire [ 3:0] S1_RD_ID        ;wire [ 3:0] S2_RD_ID        ;wire [ 3:0] S3_RD_ID        ;
+wire [ 7:0] S0_RD_ADDR_LEN  ;wire [ 7:0] S1_RD_ADDR_LEN  ;wire [ 7:0] S2_RD_ADDR_LEN  ;wire [ 7:0] S3_RD_ADDR_LEN  ;
+wire [ 1:0] S0_RD_ADDR_BURST;wire [ 1:0] S1_RD_ADDR_BURST;wire [ 1:0] S2_RD_ADDR_BURST;wire [ 1:0] S3_RD_ADDR_BURST;
 wire        S0_RD_ADDR_VALID;wire        S1_RD_ADDR_VALID;wire        S2_RD_ADDR_VALID;wire        S3_RD_ADDR_VALID;
 wire        S0_RD_ADDR_READY;wire        S1_RD_ADDR_READY;wire        S2_RD_ADDR_READY;wire        S3_RD_ADDR_READY;
-wire [31:0] S0_RD_DATA      ;wire [31:0] S1_RD_DATA      ;wire [31:0] S2_RD_DATA      ;wire [31:0] S3_RD_DATA      ;
-wire        S0_RD_DATA_LAST ;wire        S1_RD_DATA_LAST ;wire        S2_RD_DATA_LAST ;wire        S3_RD_DATA_LAST ;
 wire [ 3:0] S0_RD_BACK_ID   ;wire [ 3:0] S1_RD_BACK_ID   ;wire [ 3:0] S2_RD_BACK_ID   ;wire [ 3:0] S3_RD_BACK_ID   ;
-wire        S0_RD_DATA_READY;wire        S1_RD_DATA_READY;wire        S2_RD_DATA_READY;wire        S3_RD_DATA_READY;
+wire [31:0] S0_RD_DATA      ;wire [31:0] S1_RD_DATA      ;wire [31:0] S2_RD_DATA      ;wire [31:0] S3_RD_DATA      ;
+wire [ 1:0] S0_RD_DATA_RESP ;wire [ 1:0] S1_RD_DATA_RESP ;wire [ 1:0] S2_RD_DATA_RESP ;wire [ 1:0] S3_RD_DATA_RESP ;
+wire        S0_RD_DATA_LAST ;wire        S1_RD_DATA_LAST ;wire        S2_RD_DATA_LAST ;wire        S3_RD_DATA_LAST ;
 wire        S0_RD_DATA_VALID;wire        S1_RD_DATA_VALID;wire        S2_RD_DATA_VALID;wire        S3_RD_DATA_VALID;
+wire        S0_RD_DATA_READY;wire        S1_RD_DATA_READY;wire        S2_RD_DATA_READY;wire        S3_RD_DATA_READY;
+
 
 parameter S0_START_ADDR = 32'h00_00_00_00,
           S0_END_ADDR   = 32'h0F_FF_FF_FF,
@@ -101,7 +113,7 @@ parameter S0_START_ADDR = 32'h00_00_00_00,
 
 always #10 ddr_ref_clk = ~ddr_ref_clk;
 
-always #10 BUS_CLK = ~BUS_CLK; //speed:4
+always #8  BUS_CLK = ~BUS_CLK; //speed:2
 always #7    M0_CLK = ~M0_CLK; //speed:1
 always #9    M1_CLK = ~M1_CLK; //speed:3
 always #11   M2_CLK = ~M2_CLK; //speed:5
@@ -119,259 +131,235 @@ initial begin
 end
 
 initial begin
-    BUS_CLK = 0; BUS_RST = 1;
-    M0_CLK  = 0; M0_RST  = 1;
-    M1_CLK  = 0; M1_RST  = 1;
-    M2_CLK  = 0; M2_RST  = 1;
-    M3_CLK  = 0; M3_RST  = 1;
-    // S0_CLK  = 0; S0_RST  = 1;
-    S1_CLK  = 0; S1_RST  = 1;
-    S2_CLK  = 0; S2_RST  = 1;
-    S3_CLK  = 0; S3_RST  = 1;
+    BUS_CLK = 0; BUS_RSTN = 0;
+    M0_CLK  = 0; M0_RSTN  = 0;
+    M1_CLK  = 0; M1_RSTN  = 0;
+    M2_CLK  = 0; M2_RSTN  = 0;
+    M3_CLK  = 0; M3_RSTN  = 0;
+    // S0_CLK  = 0; S0_RSTN  = 0;
+    S1_CLK  = 0; S1_RSTN  = 0;
+    S2_CLK  = 0; S2_RSTN  = 0;
+    S3_CLK  = 0; S3_RSTN  = 0;
 #50000
-    M0_RST = 0;  // S0_RST = 0;
-    M1_RST = 0;  S1_RST = 0;
-    M2_RST = 0;  S2_RST = 0;
-    M3_RST = 0;  S3_RST = 0;
+    M0_RSTN = 1;  // S0_RSTN = 1;
+    M1_RSTN = 1;  S1_RSTN = 1;
+    M2_RSTN = 1;  S2_RSTN = 1;
+    M3_RSTN = 1;  S3_RSTN = 1;
 #5000
-    BUS_RST = 0;
+    BUS_RSTN = 1;
 end
 
-initial begin //M0
-    while (~ddr_init_done) #1000
-    #500 M0.send_wr_addr(32'h00000170, 255, 0);
-    #300 M0.send_wr_data(32'h00000000, 255, 4'b1111, 0);
-    #200 M0.send_rd_addr(32'h00000170, 255, 0);
-    #600 M0.recv_rd_data(0);
+initial begin
+    #5000
+    while (~ddr_init_done) #1000;
+    #300 M0.set_rd_data_channel(7);
+    #300 M0.set_wr_data_channel(7);
+    #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
+    #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b00);
+    #300 M0.send_wr_data(32'h00000000, 4'b1111);
+    #300 M0.send_wr_data(32'h10000000, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
+    #300 M0.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b00);
 end
 
 axi_master_sim M0(
-    .clk           (M0_CLK           ),
-    .rst           (M0_RST           ),
-    .WR_ADDR       (M0_WR_ADDR       ),
-    .WR_LEN        (M0_WR_LEN        ),
-    .WR_ID         (M0_WR_ID         ),
-    .WR_ADDR_VALID (M0_WR_ADDR_VALID ),
-    .WR_ADDR_READY (M0_WR_ADDR_READY ),
-    .WR_DATA       (M0_WR_DATA       ),
-    .WR_STRB       (M0_WR_STRB       ),
-    .WR_BACK_ID    (M0_WR_BACK_ID    ),
-    .WR_DATA_VALID (M0_WR_DATA_VALID ),
-    .WR_DATA_READY (M0_WR_DATA_READY ),
-    .WR_DATA_LAST  (M0_WR_DATA_LAST  ),
-    .RD_ADDR       (M0_RD_ADDR       ),
-    .RD_LEN        (M0_RD_LEN        ),
-    .RD_ID         (M0_RD_ID         ),
-    .RD_ADDR_VALID (M0_RD_ADDR_VALID ),
-    .RD_ADDR_READY (M0_RD_ADDR_READY ),
-    .RD_DATA       (M0_RD_DATA       ),
-    .RD_DATA_LAST  (M0_RD_DATA_LAST  ),
-    .RD_BACK_ID    (M0_RD_BACK_ID    ),
-    .RD_DATA_READY (M0_RD_DATA_READY ),
-    .RD_DATA_VALID (M0_RD_DATA_VALID )
+    .clk                  (M0_CLK           ),
+    .rstn                 (M0_RSTN          ),
+    .MASTER_CLK           (                 ),
+    .MASTER_RSTN          (                 ),
+    .MASTER_WR_ADDR_ID    (M0_WR_ADDR_ID    ),
+    .MASTER_WR_ADDR       (M0_WR_ADDR       ),
+    .MASTER_WR_ADDR_LEN   (M0_WR_ADDR_LEN   ),
+    .MASTER_WR_ADDR_BURST (M0_WR_ADDR_BURST ),
+    .MASTER_WR_ADDR_VALID (M0_WR_ADDR_VALID ),
+    .MASTER_WR_ADDR_READY (M0_WR_ADDR_READY ),
+    .MASTER_WR_DATA       (M0_WR_DATA       ),
+    .MASTER_WR_STRB       (M0_WR_STRB       ),
+    .MASTER_WR_DATA_LAST  (M0_WR_DATA_LAST  ),
+    .MASTER_WR_DATA_VALID (M0_WR_DATA_VALID ),
+    .MASTER_WR_DATA_READY (M0_WR_DATA_READY ),
+    .MASTER_WR_BACK_ID    (M0_WR_BACK_ID    ),
+    .MASTER_WR_BACK_RESP  (M0_WR_BACK_RESP  ),
+    .MASTER_WR_BACK_VALID (M0_WR_BACK_VALID ),
+    .MASTER_WR_BACK_READY (M0_WR_BACK_READY ),
+    .MASTER_RD_ADDR_ID    (M0_RD_ADDR_ID    ),
+    .MASTER_RD_ADDR       (M0_RD_ADDR       ),
+    .MASTER_RD_ADDR_LEN   (M0_RD_ADDR_LEN   ),
+    .MASTER_RD_ADDR_BURST (M0_RD_ADDR_BURST ),
+    .MASTER_RD_ADDR_VALID (M0_RD_ADDR_VALID ),
+    .MASTER_RD_ADDR_READY (M0_RD_ADDR_READY ),
+    .MASTER_RD_BACK_ID    (M0_RD_BACK_ID    ),
+    .MASTER_RD_DATA       (M0_RD_DATA       ),
+    .MASTER_RD_DATA_RESP  (M0_RD_DATA_RESP  ),
+    .MASTER_RD_DATA_LAST  (M0_RD_DATA_LAST  ),
+    .MASTER_RD_DATA_VALID (M0_RD_DATA_VALID ),
+    .MASTER_RD_DATA_READY (M0_RD_DATA_READY )
 );
 
 axi_master_default M1(
-    .clk           (M1_CLK           ),
-    .rst           (M1_RST           ),
-    .WR_ADDR       (M1_WR_ADDR       ),
-    .WR_LEN        (M1_WR_LEN        ),
-    .WR_ID         (M1_WR_ID         ),
-    .WR_ADDR_VALID (M1_WR_ADDR_VALID ),
-    .WR_ADDR_READY (M1_WR_ADDR_READY ),
-    .WR_DATA       (M1_WR_DATA       ),
-    .WR_STRB       (M1_WR_STRB       ),
-    .WR_BACK_ID    (M1_WR_BACK_ID    ),
-    .WR_DATA_VALID (M1_WR_DATA_VALID ),
-    .WR_DATA_READY (M1_WR_DATA_READY ),
-    .WR_DATA_LAST  (M1_WR_DATA_LAST  ),
-    .RD_ADDR       (M1_RD_ADDR       ),
-    .RD_LEN        (M1_RD_LEN        ),
-    .RD_ID         (M1_RD_ID         ),
-    .RD_ADDR_VALID (M1_RD_ADDR_VALID ),
-    .RD_ADDR_READY (M1_RD_ADDR_READY ),
-    .RD_DATA       (M1_RD_DATA       ),
-    .RD_DATA_LAST  (M1_RD_DATA_LAST  ),
-    .RD_BACK_ID    (M1_RD_BACK_ID    ),
-    .RD_DATA_READY (M1_RD_DATA_READY ),
-    .RD_DATA_VALID (M1_RD_DATA_VALID )
+    .clk                  (M1_CLK           ),
+    .rstn                 (M1_RSTN          ),
+    .MASTER_CLK           (                 ),
+    .MASTER_RSTN          (                 ),
+    .MASTER_WR_ADDR_ID    (M1_WR_ADDR_ID    ),
+    .MASTER_WR_ADDR       (M1_WR_ADDR       ),
+    .MASTER_WR_ADDR_LEN   (M1_WR_ADDR_LEN   ),
+    .MASTER_WR_ADDR_BURST (M1_WR_ADDR_BURST ),
+    .MASTER_WR_ADDR_VALID (M1_WR_ADDR_VALID ),
+    .MASTER_WR_ADDR_READY (M1_WR_ADDR_READY ),
+    .MASTER_WR_DATA       (M1_WR_DATA       ),
+    .MASTER_WR_STRB       (M1_WR_STRB       ),
+    .MASTER_WR_DATA_LAST  (M1_WR_DATA_LAST  ),
+    .MASTER_WR_DATA_VALID (M1_WR_DATA_VALID ),
+    .MASTER_WR_DATA_READY (M1_WR_DATA_READY ),
+    .MASTER_WR_BACK_ID    (M1_WR_BACK_ID    ),
+    .MASTER_WR_BACK_RESP  (M1_WR_BACK_RESP  ),
+    .MASTER_WR_BACK_VALID (M1_WR_BACK_VALID ),
+    .MASTER_WR_BACK_READY (M1_WR_BACK_READY ),
+    .MASTER_RD_ADDR_ID    (M1_RD_ADDR_ID    ),
+    .MASTER_RD_ADDR       (M1_RD_ADDR       ),
+    .MASTER_RD_ADDR_LEN   (M1_RD_ADDR_LEN   ),
+    .MASTER_RD_ADDR_BURST (M1_RD_ADDR_BURST ),
+    .MASTER_RD_ADDR_VALID (M1_RD_ADDR_VALID ),
+    .MASTER_RD_ADDR_READY (M1_RD_ADDR_READY ),
+    .MASTER_RD_BACK_ID    (M1_RD_BACK_ID    ),
+    .MASTER_RD_DATA       (M1_RD_DATA       ),
+    .MASTER_RD_DATA_RESP  (M1_RD_DATA_RESP  ),
+    .MASTER_RD_DATA_LAST  (M1_RD_DATA_LAST  ),
+    .MASTER_RD_DATA_VALID (M1_RD_DATA_VALID ),
+    .MASTER_RD_DATA_READY (M1_RD_DATA_READY )
 );
 
 axi_master_default M2(
-    .clk           (M2_CLK           ),
-    .rst           (M2_RST           ),
-    .WR_ADDR       (M2_WR_ADDR       ),
-    .WR_LEN        (M2_WR_LEN        ),
-    .WR_ID         (M2_WR_ID         ),
-    .WR_ADDR_VALID (M2_WR_ADDR_VALID ),
-    .WR_ADDR_READY (M2_WR_ADDR_READY ),
-    .WR_DATA       (M2_WR_DATA       ),
-    .WR_STRB       (M2_WR_STRB       ),
-    .WR_BACK_ID    (M2_WR_BACK_ID    ),
-    .WR_DATA_VALID (M2_WR_DATA_VALID ),
-    .WR_DATA_READY (M2_WR_DATA_READY ),
-    .WR_DATA_LAST  (M2_WR_DATA_LAST  ),
-    .RD_ADDR       (M2_RD_ADDR       ),
-    .RD_LEN        (M2_RD_LEN        ),
-    .RD_ID         (M2_RD_ID         ),
-    .RD_ADDR_VALID (M2_RD_ADDR_VALID ),
-    .RD_ADDR_READY (M2_RD_ADDR_READY ),
-    .RD_DATA       (M2_RD_DATA       ),
-    .RD_DATA_LAST  (M2_RD_DATA_LAST  ),
-    .RD_BACK_ID    (M2_RD_BACK_ID    ),
-    .RD_DATA_READY (M2_RD_DATA_READY ),
-    .RD_DATA_VALID (M2_RD_DATA_VALID )
+    .clk                  (M2_CLK           ),
+    .rstn                 (M2_RSTN          ),
+    .MASTER_CLK           (                 ),
+    .MASTER_RSTN          (                 ),
+    .MASTER_WR_ADDR_ID    (M2_WR_ADDR_ID    ),
+    .MASTER_WR_ADDR       (M2_WR_ADDR       ),
+    .MASTER_WR_ADDR_LEN   (M2_WR_ADDR_LEN   ),
+    .MASTER_WR_ADDR_BURST (M2_WR_ADDR_BURST ),
+    .MASTER_WR_ADDR_VALID (M2_WR_ADDR_VALID ),
+    .MASTER_WR_ADDR_READY (M2_WR_ADDR_READY ),
+    .MASTER_WR_DATA       (M2_WR_DATA       ),
+    .MASTER_WR_STRB       (M2_WR_STRB       ),
+    .MASTER_WR_DATA_LAST  (M2_WR_DATA_LAST  ),
+    .MASTER_WR_DATA_VALID (M2_WR_DATA_VALID ),
+    .MASTER_WR_DATA_READY (M2_WR_DATA_READY ),
+    .MASTER_WR_BACK_ID    (M2_WR_BACK_ID    ),
+    .MASTER_WR_BACK_RESP  (M2_WR_BACK_RESP  ),
+    .MASTER_WR_BACK_VALID (M2_WR_BACK_VALID ),
+    .MASTER_WR_BACK_READY (M2_WR_BACK_READY ),
+    .MASTER_RD_ADDR_ID    (M2_RD_ADDR_ID    ),
+    .MASTER_RD_ADDR       (M2_RD_ADDR       ),
+    .MASTER_RD_ADDR_LEN   (M2_RD_ADDR_LEN   ),
+    .MASTER_RD_ADDR_BURST (M2_RD_ADDR_BURST ),
+    .MASTER_RD_ADDR_VALID (M2_RD_ADDR_VALID ),
+    .MASTER_RD_ADDR_READY (M2_RD_ADDR_READY ),
+    .MASTER_RD_BACK_ID    (M2_RD_BACK_ID    ),
+    .MASTER_RD_DATA       (M2_RD_DATA       ),
+    .MASTER_RD_DATA_RESP  (M2_RD_DATA_RESP  ),
+    .MASTER_RD_DATA_LAST  (M2_RD_DATA_LAST  ),
+    .MASTER_RD_DATA_VALID (M2_RD_DATA_VALID ),
+    .MASTER_RD_DATA_READY (M2_RD_DATA_READY )
 );
 
 axi_master_default M3(
-    .clk           (M3_CLK           ),
-    .rst           (M3_RST           ),
-    .WR_ADDR       (M3_WR_ADDR       ),
-    .WR_LEN        (M3_WR_LEN        ),
-    .WR_ID         (M3_WR_ID         ),
-    .WR_ADDR_VALID (M3_WR_ADDR_VALID ),
-    .WR_ADDR_READY (M3_WR_ADDR_READY ),
-    .WR_DATA       (M3_WR_DATA       ),
-    .WR_STRB       (M3_WR_STRB       ),
-    .WR_BACK_ID    (M3_WR_BACK_ID    ),
-    .WR_DATA_VALID (M3_WR_DATA_VALID ),
-    .WR_DATA_READY (M3_WR_DATA_READY ),
-    .WR_DATA_LAST  (M3_WR_DATA_LAST  ),
-    .RD_ADDR       (M3_RD_ADDR       ),
-    .RD_LEN        (M3_RD_LEN        ),
-    .RD_ID         (M3_RD_ID         ),
-    .RD_ADDR_VALID (M3_RD_ADDR_VALID ),
-    .RD_ADDR_READY (M3_RD_ADDR_READY ),
-    .RD_DATA       (M3_RD_DATA       ),
-    .RD_DATA_LAST  (M3_RD_DATA_LAST  ),
-    .RD_BACK_ID    (M3_RD_BACK_ID    ),
-    .RD_DATA_READY (M3_RD_DATA_READY ),
-    .RD_DATA_VALID (M3_RD_DATA_VALID )
+    .clk                  (M3_CLK           ),
+    .rstn                 (M3_RSTN          ),
+    .MASTER_CLK           (                 ),
+    .MASTER_RSTN          (                 ),
+    .MASTER_WR_ADDR_ID    (M3_WR_ADDR_ID    ),
+    .MASTER_WR_ADDR       (M3_WR_ADDR       ),
+    .MASTER_WR_ADDR_LEN   (M3_WR_ADDR_LEN   ),
+    .MASTER_WR_ADDR_BURST (M3_WR_ADDR_BURST ),
+    .MASTER_WR_ADDR_VALID (M3_WR_ADDR_VALID ),
+    .MASTER_WR_ADDR_READY (M3_WR_ADDR_READY ),
+    .MASTER_WR_DATA       (M3_WR_DATA       ),
+    .MASTER_WR_STRB       (M3_WR_STRB       ),
+    .MASTER_WR_DATA_LAST  (M3_WR_DATA_LAST  ),
+    .MASTER_WR_DATA_VALID (M3_WR_DATA_VALID ),
+    .MASTER_WR_DATA_READY (M3_WR_DATA_READY ),
+    .MASTER_WR_BACK_ID    (M3_WR_BACK_ID    ),
+    .MASTER_WR_BACK_RESP  (M3_WR_BACK_RESP  ),
+    .MASTER_WR_BACK_VALID (M3_WR_BACK_VALID ),
+    .MASTER_WR_BACK_READY (M3_WR_BACK_READY ),
+    .MASTER_RD_ADDR_ID    (M3_RD_ADDR_ID    ),
+    .MASTER_RD_ADDR       (M3_RD_ADDR       ),
+    .MASTER_RD_ADDR_LEN   (M3_RD_ADDR_LEN   ),
+    .MASTER_RD_ADDR_BURST (M3_RD_ADDR_BURST ),
+    .MASTER_RD_ADDR_VALID (M3_RD_ADDR_VALID ),
+    .MASTER_RD_ADDR_READY (M3_RD_ADDR_READY ),
+    .MASTER_RD_BACK_ID    (M3_RD_BACK_ID    ),
+    .MASTER_RD_DATA       (M3_RD_DATA       ),
+    .MASTER_RD_DATA_RESP  (M3_RD_DATA_RESP  ),
+    .MASTER_RD_DATA_LAST  (M3_RD_DATA_LAST  ),
+    .MASTER_RD_DATA_VALID (M3_RD_DATA_VALID ),
+    .MASTER_RD_DATA_READY (M3_RD_DATA_READY )
 );
 
 slave_ddr3 S0(
-    .ddr_ref_clk             (ddr_ref_clk      ),
-    .rst_n                   (rst_n            ),
-    .ddr_init_done           (ddr_init_done    ),
+    .ddr_ref_clk             (ddr_ref_clk             ),
+    .rst_n                   (rst_n                   ),
+    .ddr_init_done           (ddr_init_done           ),
     .DDR_SLAVE_CLK           (S0_CLK           ),
-    .DDR_SLAVE_RST           (S0_RST           ),
+    .DDR_SLAVE_RSTN          (S0_RSTN          ),
+    .DDR_SLAVE_WR_ADDR_ID    (S0_WR_ADDR_ID    ),
     .DDR_SLAVE_WR_ADDR       (S0_WR_ADDR       ),
-    .DDR_SLAVE_WR_LEN        (S0_WR_LEN        ),
-    .DDR_SLAVE_WR_ID         (S0_WR_ID         ),
+    .DDR_SLAVE_WR_ADDR_LEN   (S0_WR_ADDR_LEN   ),
+    .DDR_SLAVE_WR_ADDR_BURST (S0_WR_ADDR_BURST ),
     .DDR_SLAVE_WR_ADDR_VALID (S0_WR_ADDR_VALID ),
     .DDR_SLAVE_WR_ADDR_READY (S0_WR_ADDR_READY ),
     .DDR_SLAVE_WR_DATA       (S0_WR_DATA       ),
     .DDR_SLAVE_WR_STRB       (S0_WR_STRB       ),
-    .DDR_SLAVE_WR_BACK_ID    (S0_WR_BACK_ID    ),
+    .DDR_SLAVE_WR_DATA_LAST  (S0_WR_DATA_LAST  ),
     .DDR_SLAVE_WR_DATA_VALID (S0_WR_DATA_VALID ),
     .DDR_SLAVE_WR_DATA_READY (S0_WR_DATA_READY ),
-    .DDR_SLAVE_WR_DATA_LAST  (S0_WR_DATA_LAST  ),
+    .DDR_SLAVE_WR_BACK_ID    (S0_WR_BACK_ID    ),
+    .DDR_SLAVE_WR_BACK_RESP  (S0_WR_BACK_RESP  ),
+    .DDR_SLAVE_WR_BACK_VALID (S0_WR_BACK_VALID ),
+    .DDR_SLAVE_WR_BACK_READY (S0_WR_BACK_READY ),
+    .DDR_SLAVE_RD_ADDR_ID    (S0_RD_ADDR_ID    ),
     .DDR_SLAVE_RD_ADDR       (S0_RD_ADDR       ),
-    .DDR_SLAVE_RD_LEN        (S0_RD_LEN        ),
-    .DDR_SLAVE_RD_ID         (S0_RD_ID         ),
+    .DDR_SLAVE_RD_ADDR_LEN   (S0_RD_ADDR_LEN   ),
+    .DDR_SLAVE_RD_ADDR_BURST (S0_RD_ADDR_BURST ),
     .DDR_SLAVE_RD_ADDR_VALID (S0_RD_ADDR_VALID ),
     .DDR_SLAVE_RD_ADDR_READY (S0_RD_ADDR_READY ),
-    .DDR_SLAVE_RD_DATA       (S0_RD_DATA       ),
-    .DDR_SLAVE_RD_DATA_LAST  (S0_RD_DATA_LAST  ),
     .DDR_SLAVE_RD_BACK_ID    (S0_RD_BACK_ID    ),
-    .DDR_SLAVE_RD_DATA_READY (S0_RD_DATA_READY ),
+    .DDR_SLAVE_RD_DATA       (S0_RD_DATA       ),
+    .DDR_SLAVE_RD_DATA_RESP  (S0_RD_DATA_RESP  ),
+    .DDR_SLAVE_RD_DATA_LAST  (S0_RD_DATA_LAST  ),
     .DDR_SLAVE_RD_DATA_VALID (S0_RD_DATA_VALID ),
-    .mem_rst_n  (mem_rst_n),
-    .mem_ck     (mem_ck   ),
-    .mem_ck_n   (mem_ck_n ),
-    .mem_cs_n   (mem_cs_n ),
-    .mem_a      (mem_a    ),
-    .mem_dq     (mem_dq   ),
-    .mem_dqs    (mem_dqs  ),
-    .mem_dqs_n  (mem_dqs_n),
-    .mem_dm     (mem_dm   ),
-    .mem_cke    (mem_cke  ),
-    .mem_odt    (mem_odt  ),
-    .mem_ras_n  (mem_ras_n),
-    .mem_cas_n  (mem_cas_n),
-    .mem_we_n   (mem_we_n ),
-    .mem_ba     (mem_ba   )
+    .DDR_SLAVE_RD_DATA_READY (S0_RD_DATA_READY ),
+    .mem_rst_n               (mem_rst_n               ),
+    .mem_ck                  (mem_ck                  ),
+    .mem_ck_n                (mem_ck_n                ),
+    .mem_cs_n                (mem_cs_n                ),
+    .mem_a                   (mem_a                   ),
+    .mem_dq                  (mem_dq                  ),
+    .mem_dqs                 (mem_dqs                 ),
+    .mem_dqs_n               (mem_dqs_n               ),
+    .mem_dm                  (mem_dm                  ),
+    .mem_cke                 (mem_cke                 ),
+    .mem_odt                 (mem_odt                 ),
+    .mem_ras_n               (mem_ras_n               ),
+    .mem_cas_n               (mem_cas_n               ),
+    .mem_we_n                (mem_we_n                ),
+    .mem_ba                  (mem_ba                  )
 );
+assign S1_WR_ADDR_READY = 0;assign S2_WR_ADDR_READY = 0;assign S3_WR_ADDR_READY = 0;
+assign S1_WR_DATA_READY = 0;assign S2_WR_DATA_READY = 0;assign S3_WR_DATA_READY = 0;
+assign S1_WR_BACK_ID    = 0;assign S2_WR_BACK_ID    = 0;assign S3_WR_BACK_ID    = 0;
+assign S1_WR_BACK_RESP  = 0;assign S2_WR_BACK_RESP  = 0;assign S3_WR_BACK_RESP  = 0;
+assign S1_WR_BACK_VALID = 0;assign S2_WR_BACK_VALID = 0;assign S3_WR_BACK_VALID = 0;
+assign S1_RD_ADDR_READY = 0;assign S2_RD_ADDR_READY = 0;assign S3_RD_ADDR_READY = 0;
+assign S1_RD_BACK_ID    = 0;assign S2_RD_BACK_ID    = 0;assign S3_RD_BACK_ID    = 0;
+assign S1_RD_DATA       = 0;assign S2_RD_DATA       = 0;assign S3_RD_DATA       = 0;
+assign S1_RD_DATA_RESP  = 0;assign S2_RD_DATA_RESP  = 0;assign S3_RD_DATA_RESP  = 0;
+assign S1_RD_DATA_LAST  = 0;assign S2_RD_DATA_LAST  = 0;assign S3_RD_DATA_LAST  = 0;
+assign S1_RD_DATA_VALID = 0;assign S2_RD_DATA_VALID = 0;assign S3_RD_DATA_VALID = 0;
 
-axi_slave_default S1(
-    .clk           (S1_CLK           ),
-    .rst           (S1_RST           ),
-    .WR_ADDR       (S1_WR_ADDR       ),
-    .WR_LEN        (S1_WR_LEN        ),
-    .WR_ID         (S1_WR_ID         ),
-    .WR_ADDR_VALID (S1_WR_ADDR_VALID ),
-    .WR_ADDR_READY (S1_WR_ADDR_READY ),
-    .WR_DATA       (S1_WR_DATA       ),
-    .WR_STRB       (S1_WR_STRB       ),
-    .WR_BACK_ID    (S1_WR_BACK_ID    ),
-    .WR_DATA_VALID (S1_WR_DATA_VALID ),
-    .WR_DATA_READY (S1_WR_DATA_READY ),
-    .WR_DATA_LAST  (S1_WR_DATA_LAST  ),
-    .RD_ADDR       (S1_RD_ADDR       ),
-    .RD_LEN        (S1_RD_LEN        ),
-    .RD_ID         (S1_RD_ID         ),
-    .RD_ADDR_VALID (S1_RD_ADDR_VALID ),
-    .RD_ADDR_READY (S1_RD_ADDR_READY ),
-    .RD_DATA       (S1_RD_DATA       ),
-    .RD_DATA_LAST  (S1_RD_DATA_LAST  ),
-    .RD_BACK_ID    (S1_RD_BACK_ID    ),
-    .RD_DATA_READY (S1_RD_DATA_READY ),
-    .RD_DATA_VALID (S1_RD_DATA_VALID )
-);
-
-axi_slave_default S2(
-    .clk           (S2_CLK           ),
-    .rst           (S2_RST           ),
-    .WR_ADDR       (S2_WR_ADDR       ),
-    .WR_LEN        (S2_WR_LEN        ),
-    .WR_ID         (S2_WR_ID         ),
-    .WR_ADDR_VALID (S2_WR_ADDR_VALID ),
-    .WR_ADDR_READY (S2_WR_ADDR_READY ),
-    .WR_DATA       (S2_WR_DATA       ),
-    .WR_STRB       (S2_WR_STRB       ),
-    .WR_BACK_ID    (S2_WR_BACK_ID    ),
-    .WR_DATA_VALID (S2_WR_DATA_VALID ),
-    .WR_DATA_READY (S2_WR_DATA_READY ),
-    .WR_DATA_LAST  (S2_WR_DATA_LAST  ),
-    .RD_ADDR       (S2_RD_ADDR       ),
-    .RD_LEN        (S2_RD_LEN        ),
-    .RD_ID         (S2_RD_ID         ),
-    .RD_ADDR_VALID (S2_RD_ADDR_VALID ),
-    .RD_ADDR_READY (S2_RD_ADDR_READY ),
-    .RD_DATA       (S2_RD_DATA       ),
-    .RD_DATA_LAST  (S2_RD_DATA_LAST  ),
-    .RD_BACK_ID    (S2_RD_BACK_ID    ),
-    .RD_DATA_READY (S2_RD_DATA_READY ),
-    .RD_DATA_VALID (S2_RD_DATA_VALID )
-);
-
-axi_slave_default S3(
-    .clk           (S3_CLK           ),
-    .rst           (S3_RST           ),
-    .WR_ADDR       (S3_WR_ADDR       ),
-    .WR_LEN        (S3_WR_LEN        ),
-    .WR_ID         (S3_WR_ID         ),
-    .WR_ADDR_VALID (S3_WR_ADDR_VALID ),
-    .WR_ADDR_READY (S3_WR_ADDR_READY ),
-    .WR_DATA       (S3_WR_DATA       ),
-    .WR_STRB       (S3_WR_STRB       ),
-    .WR_BACK_ID    (S3_WR_BACK_ID    ),
-    .WR_DATA_VALID (S3_WR_DATA_VALID ),
-    .WR_DATA_READY (S3_WR_DATA_READY ),
-    .WR_DATA_LAST  (S3_WR_DATA_LAST  ),
-    .RD_ADDR       (S3_RD_ADDR       ),
-    .RD_LEN        (S3_RD_LEN        ),
-    .RD_ID         (S3_RD_ID         ),
-    .RD_ADDR_VALID (S3_RD_ADDR_VALID ),
-    .RD_ADDR_READY (S3_RD_ADDR_READY ),
-    .RD_DATA       (S3_RD_DATA       ),
-    .RD_DATA_LAST  (S3_RD_DATA_LAST  ),
-    .RD_BACK_ID    (S3_RD_BACK_ID    ),
-    .RD_DATA_READY (S3_RD_DATA_READY ),
-    .RD_DATA_VALID (S3_RD_DATA_VALID )
-);
-
-axi_bus #(
+axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设置FIFO。支持out-standing传输暂存，从机可选择性支持out-of-order乱序执行，目前不支持主机interleaving交织。
     .S0_START_ADDR(S0_START_ADDR),
     .S0_END_ADDR  (S0_END_ADDR  ),
     .S1_START_ADDR(S1_START_ADDR),
@@ -380,65 +368,67 @@ axi_bus #(
     .S2_END_ADDR  (S2_END_ADDR  ),
     .S3_START_ADDR(S3_START_ADDR),
     .S3_END_ADDR  (S3_END_ADDR  )
-)AXI_BUS(
-    .BUS_CLK          (BUS_CLK          ),
-    .BUS_RST          (BUS_RST          ),
-
-    .M0_CLK           (M0_CLK           ),  .M1_CLK           (M1_CLK           ),  .M2_CLK           (M2_CLK           ),  .M3_CLK           (M3_CLK           ),
-    .M0_RST           (M0_RST           ),  .M1_RST           (M1_RST           ),  .M2_RST           (M2_RST           ),  .M3_RST           (M3_RST           ),
-
-    .M0_WR_ADDR       (M0_WR_ADDR       ),  .M1_WR_ADDR       (M1_WR_ADDR       ),  .M2_WR_ADDR       (M2_WR_ADDR       ),  .M3_WR_ADDR       (M3_WR_ADDR       ),
-    .M0_WR_LEN        (M0_WR_LEN        ),  .M1_WR_LEN        (M1_WR_LEN        ),  .M2_WR_LEN        (M2_WR_LEN        ),  .M3_WR_LEN        (M3_WR_LEN        ),
-    .M0_WR_ID         (M0_WR_ID         ),  .M1_WR_ID         (M1_WR_ID         ),  .M2_WR_ID         (M2_WR_ID         ),  .M3_WR_ID         (M3_WR_ID         ),
-    .M0_WR_ADDR_VALID (M0_WR_ADDR_VALID ),  .M1_WR_ADDR_VALID (M1_WR_ADDR_VALID ),  .M2_WR_ADDR_VALID (M2_WR_ADDR_VALID ),  .M3_WR_ADDR_VALID (M3_WR_ADDR_VALID ),
-    .M0_WR_ADDR_READY (M0_WR_ADDR_READY ),  .M1_WR_ADDR_READY (M1_WR_ADDR_READY ),  .M2_WR_ADDR_READY (M2_WR_ADDR_READY ),  .M3_WR_ADDR_READY (M3_WR_ADDR_READY ),
-
-    .M0_WR_DATA       (M0_WR_DATA       ),  .M1_WR_DATA       (M1_WR_DATA       ),  .M2_WR_DATA       (M2_WR_DATA       ),  .M3_WR_DATA       (M3_WR_DATA       ),
-    .M0_WR_STRB       (M0_WR_STRB       ),  .M1_WR_STRB       (M1_WR_STRB       ),  .M2_WR_STRB       (M2_WR_STRB       ),  .M3_WR_STRB       (M3_WR_STRB       ),
-    .M0_WR_BACK_ID    (M0_WR_BACK_ID    ),  .M1_WR_BACK_ID    (M1_WR_BACK_ID    ),  .M2_WR_BACK_ID    (M2_WR_BACK_ID    ),  .M3_WR_BACK_ID    (M3_WR_BACK_ID    ),
-    .M0_WR_DATA_VALID (M0_WR_DATA_VALID ),  .M1_WR_DATA_VALID (M1_WR_DATA_VALID ),  .M2_WR_DATA_VALID (M2_WR_DATA_VALID ),  .M3_WR_DATA_VALID (M3_WR_DATA_VALID ),
-    .M0_WR_DATA_READY (M0_WR_DATA_READY ),  .M1_WR_DATA_READY (M1_WR_DATA_READY ),  .M2_WR_DATA_READY (M2_WR_DATA_READY ),  .M3_WR_DATA_READY (M3_WR_DATA_READY ),
-    .M0_WR_DATA_LAST  (M0_WR_DATA_LAST  ),  .M1_WR_DATA_LAST  (M1_WR_DATA_LAST  ),  .M2_WR_DATA_LAST  (M2_WR_DATA_LAST  ),  .M3_WR_DATA_LAST  (M3_WR_DATA_LAST  ),
-
-    .M0_RD_ADDR       (M0_RD_ADDR       ),  .M1_RD_ADDR       (M1_RD_ADDR       ),  .M2_RD_ADDR       (M2_RD_ADDR       ),  .M3_RD_ADDR       (M3_RD_ADDR       ),
-    .M0_RD_LEN        (M0_RD_LEN        ),  .M1_RD_LEN        (M1_RD_LEN        ),  .M2_RD_LEN        (M2_RD_LEN        ),  .M3_RD_LEN        (M3_RD_LEN        ),
-    .M0_RD_ID         (M0_RD_ID         ),  .M1_RD_ID         (M1_RD_ID         ),  .M2_RD_ID         (M2_RD_ID         ),  .M3_RD_ID         (M3_RD_ID         ),
-    .M0_RD_ADDR_VALID (M0_RD_ADDR_VALID ),  .M1_RD_ADDR_VALID (M1_RD_ADDR_VALID ),  .M2_RD_ADDR_VALID (M2_RD_ADDR_VALID ),  .M3_RD_ADDR_VALID (M3_RD_ADDR_VALID ),
-    .M0_RD_ADDR_READY (M0_RD_ADDR_READY ),  .M1_RD_ADDR_READY (M1_RD_ADDR_READY ),  .M2_RD_ADDR_READY (M2_RD_ADDR_READY ),  .M3_RD_ADDR_READY (M3_RD_ADDR_READY ),
-
-    .M0_RD_DATA       (M0_RD_DATA       ),  .M1_RD_DATA       (M1_RD_DATA       ),  .M2_RD_DATA       (M2_RD_DATA       ),  .M3_RD_DATA       (M3_RD_DATA       ),
-    .M0_RD_DATA_LAST  (M0_RD_DATA_LAST  ),  .M1_RD_DATA_LAST  (M1_RD_DATA_LAST  ),  .M2_RD_DATA_LAST  (M2_RD_DATA_LAST  ),  .M3_RD_DATA_LAST  (M3_RD_DATA_LAST  ),
-    .M0_RD_BACK_ID    (M0_RD_BACK_ID    ),  .M1_RD_BACK_ID    (M1_RD_BACK_ID    ),  .M2_RD_BACK_ID    (M2_RD_BACK_ID    ),  .M3_RD_BACK_ID    (M3_RD_BACK_ID    ),
-    .M0_RD_DATA_READY (M0_RD_DATA_READY ),  .M1_RD_DATA_READY (M1_RD_DATA_READY ),  .M2_RD_DATA_READY (M2_RD_DATA_READY ),  .M3_RD_DATA_READY (M3_RD_DATA_READY ),
-    .M0_RD_DATA_VALID (M0_RD_DATA_VALID ),  .M1_RD_DATA_VALID (M1_RD_DATA_VALID ),  .M2_RD_DATA_VALID (M2_RD_DATA_VALID ),  .M3_RD_DATA_VALID (M3_RD_DATA_VALID ),
-
-    .S0_CLK           (S0_CLK           ),  .S1_CLK           (S1_CLK           ),  .S2_CLK           (S2_CLK           ),  .S3_CLK           (S3_CLK           ),
-    .S0_RST           (S0_RST           ),  .S1_RST           (S1_RST           ),  .S2_RST           (S2_RST           ),  .S3_RST           (S3_RST           ),
-
-    .S0_WR_ADDR       (S0_WR_ADDR       ),  .S1_WR_ADDR       (S1_WR_ADDR       ),  .S2_WR_ADDR       (S2_WR_ADDR       ),  .S3_WR_ADDR       (S3_WR_ADDR       ),
-    .S0_WR_LEN        (S0_WR_LEN        ),  .S1_WR_LEN        (S1_WR_LEN        ),  .S2_WR_LEN        (S2_WR_LEN        ),  .S3_WR_LEN        (S3_WR_LEN        ),
-    .S0_WR_ID         (S0_WR_ID         ),  .S1_WR_ID         (S1_WR_ID         ),  .S2_WR_ID         (S2_WR_ID         ),  .S3_WR_ID         (S3_WR_ID         ),
-    .S0_WR_ADDR_VALID (S0_WR_ADDR_VALID ),  .S1_WR_ADDR_VALID (S1_WR_ADDR_VALID ),  .S2_WR_ADDR_VALID (S2_WR_ADDR_VALID ),  .S3_WR_ADDR_VALID (S3_WR_ADDR_VALID ),
-    .S0_WR_ADDR_READY (S0_WR_ADDR_READY ),  .S1_WR_ADDR_READY (S1_WR_ADDR_READY ),  .S2_WR_ADDR_READY (S2_WR_ADDR_READY ),  .S3_WR_ADDR_READY (S3_WR_ADDR_READY ),
-
-    .S0_WR_DATA       (S0_WR_DATA       ),  .S1_WR_DATA       (S1_WR_DATA       ),  .S2_WR_DATA       (S2_WR_DATA       ),  .S3_WR_DATA       (S3_WR_DATA       ),
-    .S0_WR_STRB       (S0_WR_STRB       ),  .S1_WR_STRB       (S1_WR_STRB       ),  .S2_WR_STRB       (S2_WR_STRB       ),  .S3_WR_STRB       (S3_WR_STRB       ),
-    .S0_WR_BACK_ID    (S0_WR_BACK_ID    ),  .S1_WR_BACK_ID    (S1_WR_BACK_ID    ),  .S2_WR_BACK_ID    (S2_WR_BACK_ID    ),  .S3_WR_BACK_ID    (S3_WR_BACK_ID    ),
-    .S0_WR_DATA_VALID (S0_WR_DATA_VALID ),  .S1_WR_DATA_VALID (S1_WR_DATA_VALID ),  .S2_WR_DATA_VALID (S2_WR_DATA_VALID ),  .S3_WR_DATA_VALID (S3_WR_DATA_VALID ),
-    .S0_WR_DATA_READY (S0_WR_DATA_READY ),  .S1_WR_DATA_READY (S1_WR_DATA_READY ),  .S2_WR_DATA_READY (S2_WR_DATA_READY ),  .S3_WR_DATA_READY (S3_WR_DATA_READY ),
-    .S0_WR_DATA_LAST  (S0_WR_DATA_LAST  ),  .S1_WR_DATA_LAST  (S1_WR_DATA_LAST  ),  .S2_WR_DATA_LAST  (S2_WR_DATA_LAST  ),  .S3_WR_DATA_LAST  (S3_WR_DATA_LAST  ),
-
-    .S0_RD_ADDR       (S0_RD_ADDR       ),  .S1_RD_ADDR       (S1_RD_ADDR       ),  .S2_RD_ADDR       (S2_RD_ADDR       ),  .S3_RD_ADDR       (S3_RD_ADDR       ),
-    .S0_RD_LEN        (S0_RD_LEN        ),  .S1_RD_LEN        (S1_RD_LEN        ),  .S2_RD_LEN        (S2_RD_LEN        ),  .S3_RD_LEN        (S3_RD_LEN        ),
-    .S0_RD_ID         (S0_RD_ID         ),  .S1_RD_ID         (S1_RD_ID         ),  .S2_RD_ID         (S2_RD_ID         ),  .S3_RD_ID         (S3_RD_ID         ),
-    .S0_RD_ADDR_VALID (S0_RD_ADDR_VALID ),  .S1_RD_ADDR_VALID (S1_RD_ADDR_VALID ),  .S2_RD_ADDR_VALID (S2_RD_ADDR_VALID ),  .S3_RD_ADDR_VALID (S3_RD_ADDR_VALID ),
-    .S0_RD_ADDR_READY (S0_RD_ADDR_READY ),  .S1_RD_ADDR_READY (S1_RD_ADDR_READY ),  .S2_RD_ADDR_READY (S2_RD_ADDR_READY ),  .S3_RD_ADDR_READY (S3_RD_ADDR_READY ),
-    
-    .S0_RD_DATA       (S0_RD_DATA       ),  .S1_RD_DATA       (S1_RD_DATA       ),  .S2_RD_DATA       (S2_RD_DATA       ),  .S3_RD_DATA       (S3_RD_DATA       ),
-    .S0_RD_DATA_LAST  (S0_RD_DATA_LAST  ),  .S1_RD_DATA_LAST  (S1_RD_DATA_LAST  ),  .S2_RD_DATA_LAST  (S2_RD_DATA_LAST  ),  .S3_RD_DATA_LAST  (S3_RD_DATA_LAST  ),
-    .S0_RD_BACK_ID    (S0_RD_BACK_ID    ),  .S1_RD_BACK_ID    (S1_RD_BACK_ID    ),  .S2_RD_BACK_ID    (S2_RD_BACK_ID    ),  .S3_RD_BACK_ID    (S3_RD_BACK_ID    ),
-    .S0_RD_DATA_READY (S0_RD_DATA_READY ),  .S1_RD_DATA_READY (S1_RD_DATA_READY ),  .S2_RD_DATA_READY (S2_RD_DATA_READY ),  .S3_RD_DATA_READY (S3_RD_DATA_READY ),
-    .S0_RD_DATA_VALID (S0_RD_DATA_VALID ),  .S1_RD_DATA_VALID (S1_RD_DATA_VALID ),  .S2_RD_DATA_VALID (S2_RD_DATA_VALID ),  .S3_RD_DATA_VALID (S3_RD_DATA_VALID )
+)axi_bus_inst(
+.BUS_CLK         (BUS_CLK         ),
+.BUS_RSTN        (BUS_RSTN        ),
+.M0_CLK          (M0_CLK          ),   .M1_CLK          (M1_CLK          ),    .M2_CLK          (M2_CLK          ),    .M3_CLK          (M3_CLK          ),
+.M0_RSTN         (M0_RSTN         ),   .M1_RSTN         (M1_RSTN         ),    .M2_RSTN         (M2_RSTN         ),    .M3_RSTN         (M3_RSTN         ),
+.M0_WR_ADDR_ID   (M0_WR_ADDR_ID   ),   .M1_WR_ADDR_ID   (M1_WR_ADDR_ID   ),    .M2_WR_ADDR_ID   (M2_WR_ADDR_ID   ),    .M3_WR_ADDR_ID   (M3_WR_ADDR_ID   ),
+.M0_WR_ADDR      (M0_WR_ADDR      ),   .M1_WR_ADDR      (M1_WR_ADDR      ),    .M2_WR_ADDR      (M2_WR_ADDR      ),    .M3_WR_ADDR      (M3_WR_ADDR      ),
+.M0_WR_ADDR_LEN  (M0_WR_ADDR_LEN  ),   .M1_WR_ADDR_LEN  (M1_WR_ADDR_LEN  ),    .M2_WR_ADDR_LEN  (M2_WR_ADDR_LEN  ),    .M3_WR_ADDR_LEN  (M3_WR_ADDR_LEN  ),
+.M0_WR_ADDR_BURST(M0_WR_ADDR_BURST),   .M1_WR_ADDR_BURST(M1_WR_ADDR_BURST),    .M2_WR_ADDR_BURST(M2_WR_ADDR_BURST),    .M3_WR_ADDR_BURST(M3_WR_ADDR_BURST),
+.M0_WR_ADDR_VALID(M0_WR_ADDR_VALID),   .M1_WR_ADDR_VALID(M1_WR_ADDR_VALID),    .M2_WR_ADDR_VALID(M2_WR_ADDR_VALID),    .M3_WR_ADDR_VALID(M3_WR_ADDR_VALID),
+.M0_WR_ADDR_READY(M0_WR_ADDR_READY),   .M1_WR_ADDR_READY(M1_WR_ADDR_READY),    .M2_WR_ADDR_READY(M2_WR_ADDR_READY),    .M3_WR_ADDR_READY(M3_WR_ADDR_READY),
+.M0_WR_DATA      (M0_WR_DATA      ),   .M1_WR_DATA      (M1_WR_DATA      ),    .M2_WR_DATA      (M2_WR_DATA      ),    .M3_WR_DATA      (M3_WR_DATA      ),
+.M0_WR_STRB      (M0_WR_STRB      ),   .M1_WR_STRB      (M1_WR_STRB      ),    .M2_WR_STRB      (M2_WR_STRB      ),    .M3_WR_STRB      (M3_WR_STRB      ),
+.M0_WR_DATA_LAST (M0_WR_DATA_LAST ),   .M1_WR_DATA_LAST (M1_WR_DATA_LAST ),    .M2_WR_DATA_LAST (M2_WR_DATA_LAST ),    .M3_WR_DATA_LAST (M3_WR_DATA_LAST ),
+.M0_WR_DATA_VALID(M0_WR_DATA_VALID),   .M1_WR_DATA_VALID(M1_WR_DATA_VALID),    .M2_WR_DATA_VALID(M2_WR_DATA_VALID),    .M3_WR_DATA_VALID(M3_WR_DATA_VALID),
+.M0_WR_DATA_READY(M0_WR_DATA_READY),   .M1_WR_DATA_READY(M1_WR_DATA_READY),    .M2_WR_DATA_READY(M2_WR_DATA_READY),    .M3_WR_DATA_READY(M3_WR_DATA_READY),
+.M0_WR_BACK_ID   (M0_WR_BACK_ID   ),   .M1_WR_BACK_ID   (M1_WR_BACK_ID   ),    .M2_WR_BACK_ID   (M2_WR_BACK_ID   ),    .M3_WR_BACK_ID   (M3_WR_BACK_ID   ),
+.M0_WR_BACK_RESP (M0_WR_BACK_RESP ),   .M1_WR_BACK_RESP (M1_WR_BACK_RESP ),    .M2_WR_BACK_RESP (M2_WR_BACK_RESP ),    .M3_WR_BACK_RESP (M3_WR_BACK_RESP ),
+.M0_WR_BACK_VALID(M0_WR_BACK_VALID),   .M1_WR_BACK_VALID(M1_WR_BACK_VALID),    .M2_WR_BACK_VALID(M2_WR_BACK_VALID),    .M3_WR_BACK_VALID(M3_WR_BACK_VALID),
+.M0_WR_BACK_READY(M0_WR_BACK_READY),   .M1_WR_BACK_READY(M1_WR_BACK_READY),    .M2_WR_BACK_READY(M2_WR_BACK_READY),    .M3_WR_BACK_READY(M3_WR_BACK_READY),
+.M0_RD_ADDR_ID   (M0_RD_ADDR_ID   ),   .M1_RD_ADDR_ID   (M1_RD_ADDR_ID   ),    .M2_RD_ADDR_ID   (M2_RD_ADDR_ID   ),    .M3_RD_ADDR_ID   (M3_RD_ADDR_ID   ),
+.M0_RD_ADDR      (M0_RD_ADDR      ),   .M1_RD_ADDR      (M1_RD_ADDR      ),    .M2_RD_ADDR      (M2_RD_ADDR      ),    .M3_RD_ADDR      (M3_RD_ADDR      ),
+.M0_RD_ADDR_LEN  (M0_RD_ADDR_LEN  ),   .M1_RD_ADDR_LEN  (M1_RD_ADDR_LEN  ),    .M2_RD_ADDR_LEN  (M2_RD_ADDR_LEN  ),    .M3_RD_ADDR_LEN  (M3_RD_ADDR_LEN  ),
+.M0_RD_ADDR_BURST(M0_RD_ADDR_BURST),   .M1_RD_ADDR_BURST(M1_RD_ADDR_BURST),    .M2_RD_ADDR_BURST(M2_RD_ADDR_BURST),    .M3_RD_ADDR_BURST(M3_RD_ADDR_BURST),
+.M0_RD_ADDR_VALID(M0_RD_ADDR_VALID),   .M1_RD_ADDR_VALID(M1_RD_ADDR_VALID),    .M2_RD_ADDR_VALID(M2_RD_ADDR_VALID),    .M3_RD_ADDR_VALID(M3_RD_ADDR_VALID),
+.M0_RD_ADDR_READY(M0_RD_ADDR_READY),   .M1_RD_ADDR_READY(M1_RD_ADDR_READY),    .M2_RD_ADDR_READY(M2_RD_ADDR_READY),    .M3_RD_ADDR_READY(M3_RD_ADDR_READY),
+.M0_RD_BACK_ID   (M0_RD_BACK_ID   ),   .M1_RD_BACK_ID   (M1_RD_BACK_ID   ),    .M2_RD_BACK_ID   (M2_RD_BACK_ID   ),    .M3_RD_BACK_ID   (M3_RD_BACK_ID   ),
+.M0_RD_DATA      (M0_RD_DATA      ),   .M1_RD_DATA      (M1_RD_DATA      ),    .M2_RD_DATA      (M2_RD_DATA      ),    .M3_RD_DATA      (M3_RD_DATA      ),
+.M0_RD_DATA_RESP (M0_RD_DATA_RESP ),   .M1_RD_DATA_RESP (M1_RD_DATA_RESP ),    .M2_RD_DATA_RESP (M2_RD_DATA_RESP ),    .M3_RD_DATA_RESP (M3_RD_DATA_RESP ),
+.M0_RD_DATA_LAST (M0_RD_DATA_LAST ),   .M1_RD_DATA_LAST (M1_RD_DATA_LAST ),    .M2_RD_DATA_LAST (M2_RD_DATA_LAST ),    .M3_RD_DATA_LAST (M3_RD_DATA_LAST ),
+.M0_RD_DATA_VALID(M0_RD_DATA_VALID),   .M1_RD_DATA_VALID(M1_RD_DATA_VALID),    .M2_RD_DATA_VALID(M2_RD_DATA_VALID),    .M3_RD_DATA_VALID(M3_RD_DATA_VALID),
+.M0_RD_DATA_READY(M0_RD_DATA_READY),   .M1_RD_DATA_READY(M1_RD_DATA_READY),    .M2_RD_DATA_READY(M2_RD_DATA_READY),    .M3_RD_DATA_READY(M3_RD_DATA_READY),
+.S0_CLK          (S0_CLK          ),   .S1_CLK          (S1_CLK          ),    .S2_CLK          (S2_CLK          ),    .S3_CLK          (S3_CLK          ),
+.S0_RSTN         (S0_RSTN         ),   .S1_RSTN         (S1_RSTN         ),    .S2_RSTN         (S2_RSTN         ),    .S3_RSTN         (S3_RSTN         ),
+.S0_WR_ADDR_ID   (S0_WR_ADDR_ID   ),   .S1_WR_ADDR_ID   (S1_WR_ADDR_ID   ),    .S2_WR_ADDR_ID   (S2_WR_ADDR_ID   ),    .S3_WR_ADDR_ID   (S3_WR_ADDR_ID   ),
+.S0_WR_ADDR      (S0_WR_ADDR      ),   .S1_WR_ADDR      (S1_WR_ADDR      ),    .S2_WR_ADDR      (S2_WR_ADDR      ),    .S3_WR_ADDR      (S3_WR_ADDR      ),
+.S0_WR_ADDR_LEN  (S0_WR_ADDR_LEN  ),   .S1_WR_ADDR_LEN  (S1_WR_ADDR_LEN  ),    .S2_WR_ADDR_LEN  (S2_WR_ADDR_LEN  ),    .S3_WR_ADDR_LEN  (S3_WR_ADDR_LEN  ),
+.S0_WR_ADDR_BURST(S0_WR_ADDR_BURST),   .S1_WR_ADDR_BURST(S1_WR_ADDR_BURST),    .S2_WR_ADDR_BURST(S2_WR_ADDR_BURST),    .S3_WR_ADDR_BURST(S3_WR_ADDR_BURST),
+.S0_WR_ADDR_VALID(S0_WR_ADDR_VALID),   .S1_WR_ADDR_VALID(S1_WR_ADDR_VALID),    .S2_WR_ADDR_VALID(S2_WR_ADDR_VALID),    .S3_WR_ADDR_VALID(S3_WR_ADDR_VALID),
+.S0_WR_ADDR_READY(S0_WR_ADDR_READY),   .S1_WR_ADDR_READY(S1_WR_ADDR_READY),    .S2_WR_ADDR_READY(S2_WR_ADDR_READY),    .S3_WR_ADDR_READY(S3_WR_ADDR_READY),
+.S0_WR_DATA      (S0_WR_DATA      ),   .S1_WR_DATA      (S1_WR_DATA      ),    .S2_WR_DATA      (S2_WR_DATA      ),    .S3_WR_DATA      (S3_WR_DATA      ),
+.S0_WR_STRB      (S0_WR_STRB      ),   .S1_WR_STRB      (S1_WR_STRB      ),    .S2_WR_STRB      (S2_WR_STRB      ),    .S3_WR_STRB      (S3_WR_STRB      ),
+.S0_WR_DATA_LAST (S0_WR_DATA_LAST ),   .S1_WR_DATA_LAST (S1_WR_DATA_LAST ),    .S2_WR_DATA_LAST (S2_WR_DATA_LAST ),    .S3_WR_DATA_LAST (S3_WR_DATA_LAST ),
+.S0_WR_DATA_VALID(S0_WR_DATA_VALID),   .S1_WR_DATA_VALID(S1_WR_DATA_VALID),    .S2_WR_DATA_VALID(S2_WR_DATA_VALID),    .S3_WR_DATA_VALID(S3_WR_DATA_VALID),
+.S0_WR_DATA_READY(S0_WR_DATA_READY),   .S1_WR_DATA_READY(S1_WR_DATA_READY),    .S2_WR_DATA_READY(S2_WR_DATA_READY),    .S3_WR_DATA_READY(S3_WR_DATA_READY),
+.S0_WR_BACK_ID   (S0_WR_BACK_ID   ),   .S1_WR_BACK_ID   (S1_WR_BACK_ID   ),    .S2_WR_BACK_ID   (S2_WR_BACK_ID   ),    .S3_WR_BACK_ID   (S3_WR_BACK_ID   ),
+.S0_WR_BACK_RESP (S0_WR_BACK_RESP ),   .S1_WR_BACK_RESP (S1_WR_BACK_RESP ),    .S2_WR_BACK_RESP (S2_WR_BACK_RESP ),    .S3_WR_BACK_RESP (S3_WR_BACK_RESP ),
+.S0_WR_BACK_VALID(S0_WR_BACK_VALID),   .S1_WR_BACK_VALID(S1_WR_BACK_VALID),    .S2_WR_BACK_VALID(S2_WR_BACK_VALID),    .S3_WR_BACK_VALID(S3_WR_BACK_VALID),
+.S0_WR_BACK_READY(S0_WR_BACK_READY),   .S1_WR_BACK_READY(S1_WR_BACK_READY),    .S2_WR_BACK_READY(S2_WR_BACK_READY),    .S3_WR_BACK_READY(S3_WR_BACK_READY),
+.S0_RD_ADDR_ID   (S0_RD_ADDR_ID   ),   .S1_RD_ADDR_ID   (S1_RD_ADDR_ID   ),    .S2_RD_ADDR_ID   (S2_RD_ADDR_ID   ),    .S3_RD_ADDR_ID   (S3_RD_ADDR_ID   ),
+.S0_RD_ADDR      (S0_RD_ADDR      ),   .S1_RD_ADDR      (S1_RD_ADDR      ),    .S2_RD_ADDR      (S2_RD_ADDR      ),    .S3_RD_ADDR      (S3_RD_ADDR      ),
+.S0_RD_ADDR_LEN  (S0_RD_ADDR_LEN  ),   .S1_RD_ADDR_LEN  (S1_RD_ADDR_LEN  ),    .S2_RD_ADDR_LEN  (S2_RD_ADDR_LEN  ),    .S3_RD_ADDR_LEN  (S3_RD_ADDR_LEN  ),
+.S0_RD_ADDR_BURST(S0_RD_ADDR_BURST),   .S1_RD_ADDR_BURST(S1_RD_ADDR_BURST),    .S2_RD_ADDR_BURST(S2_RD_ADDR_BURST),    .S3_RD_ADDR_BURST(S3_RD_ADDR_BURST),
+.S0_RD_ADDR_VALID(S0_RD_ADDR_VALID),   .S1_RD_ADDR_VALID(S1_RD_ADDR_VALID),    .S2_RD_ADDR_VALID(S2_RD_ADDR_VALID),    .S3_RD_ADDR_VALID(S3_RD_ADDR_VALID),
+.S0_RD_ADDR_READY(S0_RD_ADDR_READY),   .S1_RD_ADDR_READY(S1_RD_ADDR_READY),    .S2_RD_ADDR_READY(S2_RD_ADDR_READY),    .S3_RD_ADDR_READY(S3_RD_ADDR_READY),
+.S0_RD_BACK_ID   (S0_RD_BACK_ID   ),   .S1_RD_BACK_ID   (S1_RD_BACK_ID   ),    .S2_RD_BACK_ID   (S2_RD_BACK_ID   ),    .S3_RD_BACK_ID   (S3_RD_BACK_ID   ),
+.S0_RD_DATA      (S0_RD_DATA      ),   .S1_RD_DATA      (S1_RD_DATA      ),    .S2_RD_DATA      (S2_RD_DATA      ),    .S3_RD_DATA      (S3_RD_DATA      ),
+.S0_RD_DATA_RESP (S0_RD_DATA_RESP ),   .S1_RD_DATA_RESP (S1_RD_DATA_RESP ),    .S2_RD_DATA_RESP (S2_RD_DATA_RESP ),    .S3_RD_DATA_RESP (S3_RD_DATA_RESP ),
+.S0_RD_DATA_LAST (S0_RD_DATA_LAST ),   .S1_RD_DATA_LAST (S1_RD_DATA_LAST ),    .S2_RD_DATA_LAST (S2_RD_DATA_LAST ),    .S3_RD_DATA_LAST (S3_RD_DATA_LAST ),
+.S0_RD_DATA_VALID(S0_RD_DATA_VALID),   .S1_RD_DATA_VALID(S1_RD_DATA_VALID),    .S2_RD_DATA_VALID(S2_RD_DATA_VALID),    .S3_RD_DATA_VALID(S3_RD_DATA_VALID),
+.S0_RD_DATA_READY(S0_RD_DATA_READY),   .S1_RD_DATA_READY(S1_RD_DATA_READY),    .S2_RD_DATA_READY(S2_RD_DATA_READY),    .S3_RD_DATA_READY(S3_RD_DATA_READY)
 );
 
 

@@ -83,10 +83,10 @@ initial begin
     MASTER.set_rd_data_channel(7);                              
     MASTER.set_wr_data_channel(7);                              
     MASTER.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
-    MASTER.send_wr_data(32'h00000000, 4'b1111);
     MASTER.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b00);
-    MASTER.send_wr_data(32'h10000000, 4'b1111);
+    MASTER.send_wr_data(32'h00000000, 4'b1111);
     MASTER.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b00);
+    MASTER.send_wr_data(32'h10000000, 4'b1111);
     MASTER.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b00);
 end
 
