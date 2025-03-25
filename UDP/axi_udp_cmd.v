@@ -47,8 +47,9 @@ module axi_udp_cmd  (
 );
 
 localparam IDLE      = 0;
-localparam ADDR      = 1;
-localparam DATA      = 2;
+localparam WAIT      = 1;
+localparam ADDR      = 2;
+localparam DATA      = 3;
 reg [4:0] head_cnt;
 reg [4:0] state, next_state;
 reg [63:0] head_data;
@@ -86,19 +87,25 @@ always @(*) begin
     next_state = IDLE;
     case(state)
         IDLE : begin                                  
-            if(cmd_fifo_rd_en) begin
-                if(cmd_fifo_rd_data[31:24] == 8'hFF)
+            if(cmd_fifo_rx_en) begin
+                if(udp_rx_data[31:24] == 8'hFF)
                     next_state <= DATA;
-                else if(cmd_fifo_rd_data[31:24] == 8'h00)
-                    next_state <= ADDR;
+                else if(udp_rx_data[31:24] == 8'h00)
+                    next_state <= WAIT;
                 else 
                     next_state <= IDLE; 
             end
             else 
                 next_state = IDLE;
         end
+        WAIT : begin
+            if(udp_rx_done)
+                next_state <= ADDR;
+            else 
+                next_state <= WAIT;
+        end
         ADDR : begin
-            if(cmd_fifo_rd_data[32] && head_cnt == 3)
+            if(cmd_fifo_rd_data[32] && head_cnt == 4)
                 next_state <= IDLE;
             else 
                 next_state <= ADDR;
@@ -119,7 +126,7 @@ always @(posedge gmii_rx_clk ) begin
         rdaddr_fifo_wr_en <= 1'b0;
         data_fifo_en <= 0;
         head_cnt <= 0;
-
+        head_data <= 0;
     end
     else begin
         cmd_fifo_rd_en <= 1'b0;
@@ -142,11 +149,14 @@ always @(posedge gmii_rx_clk ) begin
                     cmd_fifo_rd_en <= 1'b1;
                     head_cnt <= head_cnt + 1;
                 end
-                else if(head_cnt == 1)begin
+                else if(head_cnt == 1)begin//等待数据准备好
+                    head_cnt <= head_cnt + 1;
+                end
+                else if(head_cnt == 2)begin//将第二个数据写入
                     head_data[31: 0] <= cmd_fifo_rd_data[31:0];
                     head_cnt <= head_cnt + 1;
                 end
-                else if(head_cnt == 2)begin
+                else if(head_cnt == 3)begin//判断是读地址还是写地址
                     if(head_data[63:56] == 8'h00 && head_data[48] == 1)begin
                         wraddr_fifo_wr_data <= head_data;
                         wraddr_fifo_wr_en <= 1'b1;
@@ -155,7 +165,7 @@ always @(posedge gmii_rx_clk ) begin
                         rdaddr_fifo_wr_data <= head_data;
                         rdaddr_fifo_wr_en <= 1'b1;
                     end
-                    if(cmd_fifo_rd_data[32]) head_cnt <= 3;
+                    if(cmd_fifo_rd_data[32]) head_cnt <= 4;
                     else head_cnt <= 0;
                 end
             end

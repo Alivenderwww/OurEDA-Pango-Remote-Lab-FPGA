@@ -72,7 +72,7 @@ localparam data_byte_num = 16'h20_00;    //传32字节
 localparam udp_byte_num = 16'h28_00; //data_byte_num+8,udp部首长8
 
 reg [400+data_byte_num*8-1:0] data_mem        ;   //data_mem是一个存储器,相当于一个ram
-reg [data_byte_num*8-1:0] data = 'hFE_DC_BA_98_76_54_32_10_FE_DC_BA_98_76_54_32_10_FE_DC_BA_98_76_54_32_10_FE_DC_BA_98_76_54_32_10;
+reg [data_byte_num*8-1:0] data = 'h55555555_41_41_41_00_44444444_31_31_31_00_33333333_21_21_21_00_22222222_11_11_11_FF;
 //data_mem
 always@(negedge eth_rxc_x2 or negedge sys_rst_n)
     if(sys_rst_n == 1'b0)
@@ -111,16 +111,16 @@ assign  eth_rx_data = (eth_rxdv == 1'b1)
 //********************************************************************//
 wire gmii_rx_clk ;
 wire gmii_rx_dv  ;
-wire gmii_rxd    ;
+wire [7:0] gmii_rxd    ;
 wire gmii_tx_clk ;
 wire gmii_tx_en  ;
-wire gmii_txd    ;
+wire [7:0] gmii_txd    ;
 wire rec_pkt_done;
 wire rec_en      ;
-wire rec_data    ;
-wire rec_byte_num;
+wire [31:0] rec_data    ;
+wire [15:0] rec_byte_num;
 wire tx_start_en ;
-wire tx_data     ;
+wire [31:0] tx_data     ;
 wire udp_tx_done ;
 wire tx_req      ;
 //GMII接口与RGMII接口 互转
