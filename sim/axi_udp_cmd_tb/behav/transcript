@@ -1,0 +1,161 @@
+# //  ModelSim SE-64 10.5 Feb 13 2016 
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do ctrl_phy_sim.tcl
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap work work 
+# Modifying modelsim.ini
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap work ./work 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap usim ./../../pangu_sim_libraries/usim 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap adc_e2 ./../../pangu_sim_libraries/adc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ddc_e2 ./../../pangu_sim_libraries/ddc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap dll_e2 ./../../pangu_sim_libraries/dll_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap hsstlp_lane ./../../pangu_sim_libraries/hsstlp_lane 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap hsstlp_pll ./../../pangu_sim_libraries/hsstlp_pll 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap iolhr_dft ./../../pangu_sim_libraries/iolhr_dft 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ipal_e1 ./../../pangu_sim_libraries/ipal_e1 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ipal_e2 ./../../pangu_sim_libraries/ipal_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap iserdes_e2 ./../../pangu_sim_libraries/iserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap oserdes_e2 ./../../pangu_sim_libraries/oserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap pciegen2 ./../../pangu_sim_libraries/pciegen2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
+# Start time: 19:47:19 on Mar 25,2025
+# vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
+# -- Compiling module gmii_to_rgmii
+# -- Compiling module rgmii_rx
+# -- Compiling module rgmii_tx
+# -- Compiling module udp_rx
+# -- Compiling module udp_tx
+# -- Compiling module udp
+# -- Compiling module crc32_d8
+# -- Compiling module axi_udp_cmd
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_udp_fifo_rd
+# -- Compiling module ipm2l_sdpram_v1_10_udp_fifo_rd
+# -- Compiling module ipm2l_fifo_v1_10_udp_fifo_rd
+# -- Compiling module udp_fifo_rd
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_udp_fifo_wr
+# -- Compiling module ipm2l_sdpram_v1_10_udp_fifo_wr
+# -- Compiling module ipm2l_fifo_v1_10_udp_fifo_wr
+# -- Compiling module udp_fifo_wr
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_rd_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_rd_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_rd_addr_fifo
+# -- Compiling module rd_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_wr_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_wr_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_wr_addr_fifo
+# -- Compiling module wr_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_udp_cmd_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_udp_cmd_fifo
+# -- Compiling module ipm2l_fifo_v1_10_udp_cmd_fifo
+# -- Compiling module udp_cmd_fifo
+# -- Compiling module clk_phase
+# -- Compiling module eth_udp_cmd_tb
+# 
+# Top level modules:
+# 	eth_udp_cmd_tb
+# End time: 19:47:19 on Mar 25,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
+# vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 eth_udp_cmd_tb usim.GTP_GRS 
+# Start time: 19:47:19 on Mar 25,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../IPCORE/UDP/clk_phase/clk_phase.v(301): Module 'GTP_GPLL' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../UDP/rgmii_rx.v(74): Module 'GTP_ISERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../UDP/rgmii_rx.v(109): Module 'GTP_ISERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../UDP/rgmii_rx.v(144): Module 'GTP_ISERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../UDP/rgmii_rx.v(178): Module 'GTP_ISERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/clk_phase/clk_phase.v".
+# ** Error: ../../../UDP/rgmii_rx.v(212): Module 'GTP_ISERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(110): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(130): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(159): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(179): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(208): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(228): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(257): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(277): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(306): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(326): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(356): Module 'GTP_OSERDES_E2' is not defined.
+# This version of the compiler is incompatible with library file"../../../UDP/rgmii_tx.v".
+# ** Error: ../../../UDP/rgmii_tx.v(376): Module 'GTP_OUTBUF' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_rd.v".
+# ** Error: ../eth_udp_cmd_tb.v(214): Module 'GTP_GRS' is not defined.
+# This version of the compiler is incompatible with library file"../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_rd.v".
+# ** Error: (vopt-13130) Failed to find design unit GTP_GRS.
+#         Searched libraries:
+#             work
+#             usim
+#             adc_e2
+#             ddc_e2
+#             dll_e2
+#             hsstlp_lane
+#             hsstlp_pll
+#             iolhr_dft
+#             ipal_e1
+#             ipal_e2
+#             iserdes_e2
+#             oserdes_e2
+#             pciegen2
+#             work
+# Optimization failed
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./ctrl_phy_sim.tcl PAUSED at line 27
+# End time: 19:47:24 on Mar 25,2025, Elapsed time: 0:00:05
+# Errors: 20, Warnings: 1
