@@ -56,7 +56,7 @@
 # vmap pciegen2 E:/JiChuang_2025/ebf_pg2l100h_tutorial_code_20231227/47_eth_udp_loop/pds_prj/pango_sim_libraries/pciegen2 
 # Modifying modelsim.ini
 # Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
-# Start time: 21:06:53 on Mar 25,2025
+# Start time: 12:53:19 on Mar 26,2025
 # vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
 # -- Compiling module gmii_to_rgmii
 # -- Compiling module rgmii_rx
@@ -91,11 +91,11 @@
 # 
 # Top level modules:
 # 	eth_udp_cmd_tb
-# End time: 21:06:53 on Mar 25,2025, Elapsed time: 0:00:00
+# End time: 12:53:19 on Mar 26,2025, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
 # vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 eth_udp_cmd_tb usim.GTP_GRS 
-# Start time: 21:06:53 on Mar 25,2025
+# Start time: 12:53:19 on Mar 26,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_rd.v(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_rd.v(23).
@@ -250,9 +250,9 @@
 # Loading usim.GTP_GRS(fast)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: 1  Hostname: DESKTOP-FLDUJ87  ProcessID: 32892
-#           Attempting to use alternate WLF file "./wlft5vbvcb".
+#           Attempting to use alternate WLF file "./wlftkmcamh".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft5vbvcb
+#           Using alternate file: ./wlftkmcamh
 # .main_pane.wave.interior.cs.body.pw.wf
 # .main_pane.structure.interior.cs.body.struct
 # .main_pane.objects.interior.cs.body.tree
@@ -260,3 +260,52 @@
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.eth_udp_cmd_tb(fast)
+# Loading work.gmii_to_rgmii(fast)
+# Loading work.rgmii_rx(fast)
+# Loading work.clk_phase(fast)
+# Loading usim.GTP_GPLL(fast)
+# Loading usim.GTP_ISERDES_E2(fast)
+# Loading usim.GTP_GRS(fast__1)
+# Loading work.rgmii_tx(fast)
+# Loading usim.GTP_OSERDES_E2(fast)
+# Loading usim.GTP_OUTBUF(fast)
+# Loading work.udp(fast)
+# Loading work.udp_rx(fast)
+# Loading work.udp_tx(fast)
+# Loading work.crc32_d8(fast)
+# Loading work.axi_udp_cmd(fast)
+# Loading work.udp_cmd_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_udp_cmd_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_udp_cmd_fifo(fast)
+# Loading usim.GTP_DRM18K_E1(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_udp_cmd_fifo(fast)
+# Loading work.wr_addr_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_wr_addr_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_wr_addr_fifo(fast)
+# Loading usim.GTP_DRM36K_E1(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_wr_addr_fifo(fast)
+# Loading work.rd_addr_fifo(fast)
+# Loading work.ipm2l_fifo_v1_10_rd_addr_fifo(fast)
+# Loading work.ipm2l_sdpram_v1_10_rd_addr_fifo(fast)
+# Loading work.ipm2l_fifo_ctrl_v1_1_rd_addr_fifo(fast)
+# Loading work.udp_fifo_wr(fast)
+# Loading work.ipm2l_fifo_v1_10_udp_fifo_wr(fast)
+# Loading work.ipm2l_sdpram_v1_10_udp_fifo_wr(fast)
+# Loading usim.GTP_DRM36K_E1(fast__1)
+# Loading usim.GTP_DRM36K_E1(fast__2)
+# Loading work.ipm2l_fifo_ctrl_v1_1_udp_fifo_wr(fast)
+# Loading work.udp_fifo_rd(fast)
+# Loading work.ipm2l_fifo_v1_10_udp_fifo_rd(fast)
+# Loading work.ipm2l_sdpram_v1_10_udp_fifo_rd(fast)
+# Loading usim.GTP_DRM36K_E1(fast__3)
+# Loading usim.GTP_DRM36K_E1(fast__4)
+# Loading work.ipm2l_fifo_ctrl_v1_1_udp_fifo_rd(fast)
+# Loading usim.GTP_GRS(fast)
+run
+# IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
+# End time: 18:25:51 on Mar 26,2025, Elapsed time: 5:32:32
+# Errors: 0, Warnings: 213
