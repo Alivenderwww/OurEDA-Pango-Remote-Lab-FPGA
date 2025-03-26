@@ -221,14 +221,14 @@ reg async_wr_back_fifo_data_dont_care;
 always @(posedge BUS_CLK) begin
     if(~BUS_RSTN) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_empty && (BUS_WR_BACK_VALID && BUS_WR_BACK_READY)) async_wr_back_fifo_data_dont_care <= 1;
-    else if(wr_back_fifo_wr_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
+    else if(wr_back_fifo_rd_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
     else async_wr_back_fifo_data_dont_care <= async_wr_back_fifo_data_dont_care;
 end
 
 assign wr_back_fifo_wr_rst  =  ~SLAVE_RSTN;
 assign wr_back_fifo_wr_en   = (SLAVE_WR_BACK_VALID && SLAVE_WR_BACK_READY);
 assign wr_back_fifo_wr_data = {SLAVE_WR_BACK_ID, SLAVE_WR_BACK_RESP};
-assign SLAVE_WR_BACK_READY  = (RSTN) && ~wr_back_fifo_wr_full;
+assign SLAVE_WR_BACK_READY  = (RSTN) && (~wr_back_fifo_wr_full);
 
 assign wr_back_fifo_rd_rst  =  ~BUS_RSTN;
 assign wr_back_fifo_rd_en   = (~wr_back_fifo_rd_empty) && ((async_wr_back_fifo_data_dont_care) || (BUS_WR_BACK_VALID && BUS_WR_BACK_READY));

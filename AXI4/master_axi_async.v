@@ -225,7 +225,7 @@ reg async_wr_back_fifo_data_dont_care;
 always @(posedge MASTER_CLK) begin
     if(~MASTER_RSTN) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_empty && (MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY)) async_wr_back_fifo_data_dont_care <= 1;
-    else if(wr_back_fifo_wr_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
+    else if(wr_back_fifo_rd_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
     else async_wr_back_fifo_data_dont_care <= async_wr_back_fifo_data_dont_care;
 end
 

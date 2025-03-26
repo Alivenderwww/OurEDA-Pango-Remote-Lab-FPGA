@@ -1,4 +1,4 @@
-`include "JTAG_CMD.v"
+`include "JTAG_CMD.vh"
 
 //TAP FSM implementation
 module tap_FSM #(
@@ -6,25 +6,26 @@ module tap_FSM #(
     parameter CMD_LEN   = 4,
     parameter CYCLE_LEN = 28
 )(
-input wire                 clk        ,
-input wire                 rst        ,
+input  wire                clk           ,
+input  wire                rstn          ,
 
-output wire                tck        ,
-output reg                 tms        , //TMS在TCK上升沿被芯片读取，需要在下降沿改变值
-output reg                 tdi        , //TDI在TCK上升沿被芯片读取，需要在下降沿改变值
-input wire                 tdo        , //TDO在TCK下降沿被芯片改变值，需要在上升沿读取
+output wire                tck           ,
+output reg                 tms           , //TMS在TCK上升沿被芯片读取，需要在下降沿改变值
+output reg                 tdi           , //TDI在TCK上升沿被芯片读取，需要在下降沿改变值
+input  wire                tdo           , //TDO在TCK下降沿被芯片改变值，需要在上升沿读取
 
-input wire [  CMD_LEN-1:0] cmd        , //自定义CMD命令
-input wire [CYCLE_LEN-1:0] cycle_num  , //循环次数
-input wire                 shift_in   , //移位比特流，低位先入
-input wire                 shift_ready, //拉低表示shift_in是上级fifo中最后一个bit. 会使JTAG进入PAUSE态
-output wire                shift_out  , //从TDO读出的移位比特流
+input  wire [  CMD_LEN-1:0] cmd          , //自定义CMD命令
+input  wire [CYCLE_LEN-1:0] cycle_num    , //循环次数
+input  wire                 shift_in     , //移位比特流，低位先入
+output wire                 shift_in_rd  , //移位入使能
+input  wire                 shift_in_last, //拉高表示shift_in是上级fifo中最后一个bit. 会使JTAG进入PAUSE态
+output wire                 shift_out    , //从TDO读出的移位比特流
+input  wire                 shift_out_last,//拉高表示当前shift_out再存就会满. 会使JTAG进入PAUSE态
+output wire                 shift_out_wr , //移位出使能
 
-input wire                 cmd_valid  , //cmd, cycle_num有效信号
-output wire                cmd_ready  , //准备信号
-output wire                tap_shift  , //表示当前TAP状态为SHIFT_XR
-output wire          [9:0] ir_reg     , //当前TAP的IR寄存器是什么寄存器，方便上级模块处理shift_out
-output wire                cmd_done     //暂存列全空标志位
+input  wire                 cmd_valid    , //cmd, cycle_num有效信号
+output wire                 cmd_ready    , //准备信号
+output wire                 cmd_done       //暂存列全空标志位
 );
 assign tck = clk;
 /*
@@ -52,19 +53,20 @@ assign cycle_over = (cnt_cycle >= cycle_num_running_now);
 
 //_____________与芯片内部完全同步的设计, 以上升沿为触发信号___________
 always @(posedge clk) begin
-    if(rst) cnt_cycle <= 0;
-    else if(flag_cmd_one_done || cmd_done) cnt_cycle <= 0;
+    if(~rstn) cnt_cycle <= 0;
     else if(cu_tap_state == `TAP_UNKNOWN) cnt_cycle <= (tms)?(cnt_cycle + 1):(1);
+    else if(flag_cmd_one_done || cmd_done) cnt_cycle <= 0;
     else case (cmd_running_now)
-        `CMD_JTAG_LOAD_IR    : cnt_cycle <= (nt_tap_state == `TAP_SHIFT_IR     )?(cnt_cycle + 1):(cnt_cycle);
-        `CMD_JTAG_LOAD_DR    : cnt_cycle <= (nt_tap_state == `TAP_SHIFT_DR     )?(cnt_cycle + 1):(cnt_cycle);
-        `CMD_JTAG_IDLE_DELAY : cnt_cycle <= (nt_tap_state == `TAP_RUN_TEST_IDLE)?(cnt_cycle + 1):(cnt_cycle);
-        default              : cnt_cycle <= cnt_cycle;
+        `CMD_JTAG_LOAD_IR      : cnt_cycle <= (nt_tap_state == `TAP_SHIFT_IR     )?(cnt_cycle + 1):(cnt_cycle);
+        `CMD_JTAG_LOAD_DR_CAREI: cnt_cycle <= (nt_tap_state == `TAP_SHIFT_DR     )?(cnt_cycle + 1):(cnt_cycle);
+        `CMD_JTAG_LOAD_DR_CAREO: cnt_cycle <= (nt_tap_state == `TAP_SHIFT_DR     )?(cnt_cycle + 1):(cnt_cycle);
+        `CMD_JTAG_IDLE_DELAY   : cnt_cycle <= (nt_tap_state == `TAP_RUN_TEST_IDLE)?(cnt_cycle + 1):(cnt_cycle);
+        default                : cnt_cycle <= cnt_cycle;
     endcase
 end
 
 always @(*) begin
-    if(rst) nt_tap_state <= `TAP_UNKNOWN;
+    if(~rstn) nt_tap_state <= `TAP_UNKNOWN;
     else begin
         case (cu_tap_state)
             `TAP_UNKNOWN          : nt_tap_state <= (tms && cnt_cycle >= 5)?(`TAP_TEST_LOGIC_RESET):(`TAP_UNKNOWN      );
@@ -91,52 +93,58 @@ end
 
 always @(posedge clk) cu_tap_state <= nt_tap_state;
 
-assign tdi_reg        = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(shift_in):(0);
-assign shift_out = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(tdo):(0);
-assign tap_shift      = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(1):(0);
+assign tdi_reg           = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(shift_in):(0);
+assign shift_out         = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(tdo):(0);
+assign shift_in_rd       = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREI || cmd_running_now == `CMD_JTAG_LOAD_IR):(0);
+assign shift_out_wr      = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREO):(0);
 
 //_______________CMD暂存列逻辑________________
 assign cmd_running_now = cmd_load[cmd_running_rd_pointer[CMD_STORE-1:0]];
 assign cycle_num_running_now = cycle_num_load[cmd_running_rd_pointer[CMD_STORE-1:0]];
 
 assign cmd_done = (cmd_running_wr_pointer == cmd_running_rd_pointer);
-assign cmd_ready = (rst == 0) && ((cmd_running_wr_pointer ^ cmd_running_rd_pointer) != {1'b1,{(CMD_STORE-1){1'b0}}});
+assign cmd_ready = (rstn) && ((cmd_running_wr_pointer ^ cmd_running_rd_pointer) != {1'b1,{(CMD_STORE-1){1'b0}}});
 
 integer i;
 always @(posedge clk) begin
-    if(rst) cmd_running_wr_pointer <= 0;
+    if(~rstn) cmd_running_wr_pointer <= 0;
     else if(cmd_valid && cmd_ready) cmd_running_wr_pointer <= cmd_running_wr_pointer + 1;
     else cmd_running_wr_pointer <= cmd_running_wr_pointer;
 end
 always @(posedge clk) begin
-    if(rst) for(i=0;i<CMD_STORE_NUM;i=i+1) cmd_load[i] <= 0;
+    if(~rstn) for(i=0;i<CMD_STORE_NUM;i=i+1) cmd_load[i] <= 0;
     else if(cmd_valid && cmd_ready) cmd_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cmd;
 end
 always @(posedge clk) begin
-    if(rst) for(i=0;i<CMD_STORE_NUM;i=i+1) cycle_num_load[i] <= 0;
+    if(~rstn) for(i=0;i<CMD_STORE_NUM;i=i+1) cycle_num_load[i] <= 0;
     else if(cmd_valid && cmd_ready) cycle_num_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cycle_num;
+end
+always @(posedge clk) begin
+    if(~rstn);
+    else if(cmd_valid && cmd_ready)$display("%m: at time %0t INFO: Jtag recv a cmd-%b, cyclenum-%u.", $time, cmd, cycle_num);
 end
 
 always @(*) begin
     if(cmd_done == 0) case (cmd_running_now)
-        `CMD_JTAG_CLOSE_TEST: flag_cmd_one_done <= (nt_tap_state == `TAP_TEST_LOGIC_RESET)?(1):(0);
-        `CMD_JTAG_RUN_TEST  : flag_cmd_one_done <= (nt_tap_state == `TAP_RUN_TEST_IDLE)?(1):(0);
-        `CMD_JTAG_LOAD_IR   : flag_cmd_one_done <= (nt_tap_state == `TAP_UPDATE_IR)?(1):(0);
-        `CMD_JTAG_LOAD_DR   : flag_cmd_one_done <= (nt_tap_state == `TAP_UPDATE_DR)?(1):(0);
-        `CMD_JTAG_IDLE_DELAY: flag_cmd_one_done <= (cycle_over)?(1):(0);
-        default             : flag_cmd_one_done <= (nt_tap_state == `TAP_TEST_LOGIC_RESET)?(1):(0);
+        `CMD_JTAG_CLOSE_TEST      : flag_cmd_one_done <= (nt_tap_state == `TAP_TEST_LOGIC_RESET)?(1):(0);
+        `CMD_JTAG_RUN_TEST        : flag_cmd_one_done <= (nt_tap_state == `TAP_RUN_TEST_IDLE)?(1):(0);
+        `CMD_JTAG_LOAD_IR         : flag_cmd_one_done <= (nt_tap_state == `TAP_UPDATE_IR)?(1):(0);
+        `CMD_JTAG_LOAD_DR_CAREI   : flag_cmd_one_done <= (nt_tap_state == `TAP_UPDATE_DR)?(1):(0);
+        `CMD_JTAG_LOAD_DR_CAREO   : flag_cmd_one_done <= (nt_tap_state == `TAP_UPDATE_DR)?(1):(0);
+        `CMD_JTAG_IDLE_DELAY      : flag_cmd_one_done <= (cycle_over)?(1):(0);
+        default                   : flag_cmd_one_done <= (nt_tap_state == `TAP_TEST_LOGIC_RESET)?(1):(0);
     endcase else flag_cmd_one_done <= 0;
 end
 
 always @(posedge clk) begin
-    if(rst) cmd_running_rd_pointer <= 0;
+    if(~rstn) cmd_running_rd_pointer <= 0;
     else if(flag_cmd_one_done) cmd_running_rd_pointer <= cmd_running_rd_pointer + 1;
     else cmd_running_rd_pointer <= cmd_running_rd_pointer;
 end
 
 //tlr_or_rti切换逻辑 0为TLR 1为RTI
 always @(posedge clk) begin
-    if(rst) tlr_or_rti <= 0;
+    if(~rstn) tlr_or_rti <= 0;
     else if(flag_cmd_one_done) begin
         if(cmd_running_now == `CMD_JTAG_RUN_TEST) tlr_or_rti <= 1;
         else if(cmd_running_now == `CMD_JTAG_CLOSE_TEST) tlr_or_rti <= 0;
@@ -172,22 +180,34 @@ always @(*) begin
             case (cu_tap_state)
                 `TAP_TEST_LOGIC_RESET : tms_reg <= 0;
                 `TAP_SELECT_IR_SCAN   : tms_reg <= 0;
-                `TAP_CAPTURE_IR       : tms_reg <= (shift_ready == 0)?(1):(0);
-                `TAP_SHIFT_IR         : tms_reg <= ((cycle_over == 1) || (shift_ready == 0))?(1):(0);
+                `TAP_CAPTURE_IR       : tms_reg <= (shift_in_last)?(1):(0);
+                `TAP_SHIFT_IR         : tms_reg <= ((cycle_over) || (shift_in_last))?(1):(0);
                 `TAP_EXIT1_IR         : tms_reg <= (cycle_over)?(1):(0);
-                `TAP_PAUSE_IR         : tms_reg <= (cycle_over)?(1):((shift_ready == 1)?(1):(0));
+                `TAP_PAUSE_IR         : tms_reg <= (cycle_over)?(1):((~shift_in_last)?(1):(0));
                 `TAP_EXIT2_IR         : tms_reg <= (cycle_over)?(1):(0);
                 default               : tms_reg <= 1;
             endcase
         end
-        `CMD_JTAG_LOAD_DR   :begin
+        `CMD_JTAG_LOAD_DR_CAREI:begin
             case (cu_tap_state)
                 `TAP_TEST_LOGIC_RESET : tms_reg <= 0;
                 `TAP_SELECT_DR_SCAN   : tms_reg <= 0;
-                `TAP_CAPTURE_DR       : tms_reg <= (shift_ready == 0)?(1):(0);
-                `TAP_SHIFT_DR         : tms_reg <= ((cycle_over == 1) || (shift_ready == 0))?(1):(0);
+                `TAP_CAPTURE_DR       : tms_reg <= (shift_in_last)?(1):(0);
+                `TAP_SHIFT_DR         : tms_reg <= ((cycle_over) || (shift_in_last))?(1):(0);
                 `TAP_EXIT1_DR         : tms_reg <= (cycle_over)?(1):(0);
-                `TAP_PAUSE_DR         : tms_reg <= (cycle_over)?(1):((shift_ready == 1)?(1):(0));
+                `TAP_PAUSE_DR         : tms_reg <= (cycle_over)?(1):((~shift_in_last)?(1):(0));
+                `TAP_EXIT2_DR         : tms_reg <= (cycle_over)?(1):(0);
+                default               : tms_reg <= 1;
+            endcase
+        end
+        `CMD_JTAG_LOAD_DR_CAREO:begin
+            case (cu_tap_state)
+                `TAP_TEST_LOGIC_RESET : tms_reg <= 0;
+                `TAP_SELECT_DR_SCAN   : tms_reg <= 0;
+                `TAP_CAPTURE_DR       : tms_reg <= (shift_out_last)?(1):(0);
+                `TAP_SHIFT_DR         : tms_reg <= ((cycle_over) || (shift_out_last))?(1):(0);
+                `TAP_EXIT1_DR         : tms_reg <= (cycle_over)?(1):(0);
+                `TAP_PAUSE_DR         : tms_reg <= (cycle_over)?(1):((~shift_out_last)?(1):(0));
                 `TAP_EXIT2_DR         : tms_reg <= (cycle_over)?(1):(0);
                 default               : tms_reg <= 1;
             endcase

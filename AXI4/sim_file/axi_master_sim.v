@@ -51,12 +51,12 @@ module axi_master_sim (//模拟AXI-MASTER时序，时钟域为clk
 //     while(~MASTER_RSTN) #500;
 //     set_rd_data_channel(7);                           //设置读数据通道能力为7
 //     set_wr_data_channel(7);                           //设置写数据通道能力为7
-//     send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b00); //写地址通道，ID0，起始地址0x00000000，突发长度255，突发类型0
-//     send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b00); //写地址通道，ID0，起始地址0x00010000，突发长度255，突发类型0
+//     send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b01); //写地址通道，ID0，起始地址0x00000000，突发长度255，突发类型1
+//     send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01); //写地址通道，ID0，起始地址0x00010000，突发长度255，突发类型1
 //     send_wr_data(32'h00000000, 4'b1111);              //写数据通道，起始数据0，每32位写选通4'b1111。自动按照先前发的地址线顺序发送数据。
-//     send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b00); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型0
+//     send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型1
 //     send_wr_data(32'h00000000, 4'b1111);              //写数据通道，起始数据0，每32位写选通4'b1111。自动按照先前发的地址线顺序发送数据。
-//     send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b00); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型0
+//     send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型1
 //     MASTER自动处理读数据通道，写响应通道
 // end
 ///////////////////////////////////////////////////////////////
@@ -75,6 +75,7 @@ always @(posedge clk) begin
         if(wr_channel_buff_full) //ERROR 记录事务失败，MASTER写地址通道事务已满，请完成先前的事务再发送新事务。
             $display("%m: at time %0t ERROR: Write Transction set failed. MASTER's write transction fifo is full, please complete the previous Transction first.", $time);
         else begin
+            $display("%m: at time %0t INFO: ID is %b, write addr %h, len is %d, burst is %b.", $time, MASTER_WR_ADDR_ID, MASTER_WR_ADDR, MASTER_WR_ADDR_LEN, MASTER_WR_ADDR_BURST);
             wr_channel_wrptr <= wr_channel_wrptr + 1;
             wr_channel_buff[wr_channel_wrptr[BUFF_WIDTH-1:0]] <= {MASTER_WR_ADDR_LEN, MASTER_WR_ADDR_ID};
         end
@@ -84,7 +85,10 @@ always @(posedge clk) begin
     if(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST)begin
         if(wr_channel_wrptr == wr_channel_rdptr) //ERROR 写数据错误，事务列表空
             $display("%m: at time %0t ERROR: Write data failed. MASTER's write transction fifo empty.", $time);
-        else wr_channel_rdptr <= wr_channel_rdptr + 1;
+        else begin
+            $display("%m: at time %0t INFO: ID %b write data finished, trans len is %d", $time, wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][1:0], wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
+            wr_channel_rdptr <= wr_channel_rdptr + 1;
+        end
     end
 end
 always @(posedge clk) begin
@@ -94,7 +98,10 @@ always @(posedge clk) begin
         else begin
             if(wr_channel_buff[wr_channel_respptr[BUFF_WIDTH-1:0]][1:0] != MASTER_WR_BACK_ID) //ERROR 事务ID错误
                 $display("%m: at time %0t ERROR: Write resp ID error. Back ID is %b but %b expexcted.", $time, MASTER_WR_BACK_ID, wr_channel_buff[wr_channel_respptr[BUFF_WIDTH-1:0]][1:0]);
-            else wr_channel_respptr <= wr_channel_respptr + 1;
+            else begin
+                $display("%m: at time %0t INFO: ID %b write resp finished, RESP is %b", $time, MASTER_WR_BACK_ID, MASTER_WR_BACK_RESP);
+                wr_channel_respptr <= wr_channel_respptr + 1;
+            end
         end
     end
 end
@@ -108,10 +115,11 @@ initial begin
     rd_channel_rdptr = 0;
 end
 always @(posedge clk) begin
-    if(MASTER_WR_ADDR_VALID && MASTER_WR_ADDR_READY)begin
+    if(MASTER_RD_ADDR_VALID && MASTER_RD_ADDR_READY)begin
         if(rd_channel_buff_full) //ERROR 记录事务失败，MASTER读地址通道事务已满，请完成先前的事务再发送新事务。
         $display("%m: at time %0t ERROR: Read Transction set failed. MASTER's read transction fifo is full, please complete the previous Transction first.", $time);
         else begin
+            $display("%m: at time %0t INFO: ID is %b,  read addr %h, len is %d, burst is %b.", $time, MASTER_RD_ADDR_ID, MASTER_RD_ADDR, MASTER_RD_ADDR_LEN, MASTER_RD_ADDR_BURST);
             rd_channel_wrptr <= rd_channel_wrptr + 1;
             rd_channel_buff[rd_channel_wrptr[BUFF_WIDTH-1:0]] <= {MASTER_RD_ADDR_LEN, MASTER_RD_ADDR_ID};
         end
@@ -124,7 +132,7 @@ always @(posedge clk) begin
         else if(rd_channel_buff[rd_channel_rdptr[BUFF_WIDTH-1:0]][1:0] != MASTER_RD_BACK_ID) //ERROR 事务ID错误
             $display("%m: at time %0t ERROR: Read resp ID error. Back ID is %b but %b expexcted.", $time, MASTER_RD_BACK_ID, rd_channel_buff[rd_channel_rdptr[BUFF_WIDTH-1:0]][1:0]);
         else begin
-            $display("%m: at time %0t INFO: Read data finished. ID is %b", $time, MASTER_RD_BACK_ID);
+            $display("%m: at time %0t INFO: Read data finished. ID is %b, trans len is %d, RESP is %b", $time, MASTER_RD_BACK_ID, rd_channel_buff[rd_channel_rdptr[BUFF_WIDTH-1:0]][9:2], MASTER_RD_DATA_RESP);
             rd_channel_rdptr <= rd_channel_rdptr + 1;
         end
     end
@@ -132,23 +140,23 @@ end
 
 /*
 设置MASTER的读数据通道READY能力
-rd_data_capcity为MASTER读数据接收能力，7为最强（ready始终拉高），越小ready随机拉低的时间越长，0为最低（关闭通道）
+rd_data_capcity为MASTER读数据接收能力，31为最强（ready始终拉高），越小ready随机拉低的时间越长，0为最低（关闭通道）
 */
-reg [2:0] rd_data_capcity;
-initial rd_data_capcity = 7;
+reg [4:0] rd_data_capcity;
+initial rd_data_capcity = 31;
 task set_rd_data_channel;
-    input [2:0] capcity_in;
+    input [4:0] capcity_in;
     rd_data_capcity = capcity_in;
 endtask
 
 /*
 设置MASTER的写数据通道VALID能力
-wr_data_capcity为MASTER写数据发送能力，7为最强（valid在传输数据时始终拉高），越小valid随机拉低的时间越长，0为最低（关闭通道）
+wr_data_capcity为MASTER写数据发送能力，31为最强（valid在传输数据时始终拉高），越小valid随机拉低的时间越长，0为最低（关闭通道）
 */
-reg [2:0] wr_data_capcity;
-initial wr_data_capcity = 7;
+reg [4:0] wr_data_capcity;
+initial wr_data_capcity = 31;
 task set_wr_data_channel;
-    input [2:0] capcity_in;
+    input [4:0] capcity_in;
     wr_data_capcity = capcity_in;
 endtask
 
@@ -236,7 +244,7 @@ task send_wr_data;
     end
 endtask
 always @(negedge clk) begin
-    MASTER_WR_DATA_VALID <= (wr_data_enable == 1) && (1+{$random}%(7) <= wr_data_capcity);
+    MASTER_WR_DATA_VALID <= (wr_data_enable == 1) && (1+{$random}%(31) <= wr_data_capcity);
 end
 assign MASTER_WR_DATA_LAST = (wr_data_enable == 1) && (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
 
@@ -258,7 +266,7 @@ initial begin
 end
 
 always @(negedge clk) begin
-    MASTER_RD_DATA_READY <= (1+{$random}%(7) <= rd_data_capcity);
+    MASTER_RD_DATA_READY <= (1+{$random}%(31) <= rd_data_capcity);
 end
 assign MASTER_CLK = clk;
 assign MASTER_RSTN = rstn;
