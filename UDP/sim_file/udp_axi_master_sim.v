@@ -90,16 +90,16 @@ localparam udp_byte_num = 16'h28_00; //data_byte_num+8,udp部首长8
 reg [400+data_byte_num*8-1:0] data_mem        ;   //data_mem是一个存储器,相当于一个ram
 reg [data_byte_num*8-1:0] data = 'h55555555_41_41_41_00_44444444_31_31_31_00_33333333_21_21_21_00_22222222_11_11_11_FF;
 
-task automatic send_to_udp;
+task  send_to_udp;
     input [4:0] trans_num; //传输字节个数。（0为传输1个字节，最多传输32字节）
     input [32*8-1:0] trans_data; //传输数据。从低位开始传trans_num*4个字节。
     reg [400+32*8-1:0] data_mem;
-    integer trans_cnt;
-    localparam TRANS_NUM = (400+(trans_num+1)*8)/4;//经计算后得到的传输总长度
+    integer i;
+    // localparam TRANS_NUM = (400+(trans_num+1)*8)/4;//经计算后得到的传输总长度
     begin
         data_mem <= {trans_data,16'h00_00,udp_byte_num,32'hD2_04_D2_04,board_ip,192'h91_00_A8_C0_00_00_11_80_00_00_00_5F_3C_00_00_45_00_08_2D_DB_4A_5E_D5_E0,board_mac,64'hD5_55_55_55_55_55_55_55};
         eth_rxdv <= 1;
-        for(i=0; i<TRANS_NUM; i=i+1)
+        for(i=0; i<(400+(trans_num+1)*8)/4; i=i+1)
             @(negedge eth_rxc_x2)
              data_mem <= data_mem>>4;
         @(negedge eth_rxc_x2) eth_rxdv <= 0;
