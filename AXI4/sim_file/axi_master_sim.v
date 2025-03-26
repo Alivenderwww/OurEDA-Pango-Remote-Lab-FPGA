@@ -144,7 +144,7 @@ rd_data_capcity为MASTER读数据接收能力，31为最强（ready始终拉高�
 */
 reg [4:0] rd_data_capcity;
 initial rd_data_capcity = 31;
-task set_rd_data_channel;
+task automatic set_rd_data_channel;
     input [4:0] capcity_in;
     rd_data_capcity = capcity_in;
 endtask
@@ -155,7 +155,7 @@ wr_data_capcity为MASTER写数据发送能力，31为最强（valid在传输数�
 */
 reg [4:0] wr_data_capcity;
 initial wr_data_capcity = 31;
-task set_wr_data_channel;
+task automatic set_wr_data_channel;
     input [4:0] capcity_in;
     wr_data_capcity = capcity_in;
 endtask
@@ -166,7 +166,7 @@ MASTER的写地址线通道传输一次。
 同时将ID，LEN存入写通道暂存fifo。
 握手成功后解除堵塞状态。
 */
-task send_wr_addr;
+task automatic send_wr_addr;
     input [ 1:0] id;
     input [31:0] addr;
     input [ 7:0] len;
@@ -192,7 +192,7 @@ MASTER的读地址线通道传输一次。
 同时将ID，LEN存入读通道暂存fifo。
 握手成功后解除堵塞状态。
 */
-task send_rd_addr;
+task automatic send_rd_addr;
     input [ 1:0] id;
     input [31:0] addr;
     input [ 7:0] len;
@@ -222,7 +222,7 @@ reg wr_data_enable;
 initial wr_data_enable = 0;
 reg [ 7:0] wr_data_trans_cnt;
 initial wr_data_trans_cnt = 0;
-task send_wr_data;
+task automatic send_wr_data;
 //数据格式是从start_data开始每一次+1
     input [31:0] start_data;
     input [ 3:0] strb;
