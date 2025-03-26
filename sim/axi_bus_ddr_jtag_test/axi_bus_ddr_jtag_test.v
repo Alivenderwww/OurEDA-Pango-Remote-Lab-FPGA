@@ -201,20 +201,20 @@ initial begin
     #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //读取JTAG状态寄存器确认全部清空
 
     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00); //写JTAG的data_in_fifo入口
-    #300 M0.send_wr_data({22'b0,`JTAG_DR_IDCODE}, 4'b1111);   //写入`JTAG_DR_IDCODE，低10位有效，高22位无效
+    #300 M0.send_wr_data({22'b0,{`JTAG_DR_IDCODE}}, 4'b1111);   //写入`JTAG_DR_IDCODE，低10位有效，高22位无效
 
     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);  //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({`CMD_JTAG_LOAD_IR, 28'd10}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_IR，循环长度10}
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_IR，循环长度10}
     #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
     #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //写JTAG状态寄存器
     #300 M0.send_wr_data(32'h00001100, 4'b0010);               //选通[15:8]，清空data_in_fifo以清除22位无效数据
 
     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({`CMD_JTAG_LOAD_DR_CAREO, 28'd32}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度32}
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREO}, 28'd32}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度32}
     #300 M0.send_rd_addr(2'b00, 32'h10000001, 8'd000, 2'b00);     //读取JTAG的data_out_fifo，读32bit（突发长度0）
 
     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({`CMD_JTAG_LOAD_DR_CAREI, 28'd5000}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度5000}
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREI}, 28'd5000}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度5000}
     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd156, 2'b00);     //写JTAG的data_in_fifo入口，突发长度5000/32=156.25~157
     #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);                  //写入比特流
     #900 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);     //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
