@@ -44,7 +44,8 @@ module axi_udp_cmd  (
     input              udp_tx_done    ,
     input  wire        udp_tx_req     ,
     output reg         udp_tx_start   ,
-    output      [31:0] udp_tx_data     
+    output      [31:0] udp_tx_data    ,
+    output reg  [15:0] udp_tx_byte_num 
 );
 
 localparam IDLE      = 0;
@@ -54,6 +55,13 @@ localparam DATA      = 3;
 reg [4:0] head_cnt;
 reg [4:0] state, next_state;
 reg [63:0] head_data;
+//仲裁
+localparam TXIDLE   = 0;
+localparam TXWRBACK = 1; // 优先级高
+localparam TXRDDATA = 2;
+reg [4:0] tx_state;
+reg wrback_tx_done;
+reg rddata_tx_done;
 //cmd_fifo
 wire cmd_fifo_wr_en;
 wire cmd_fifo_empty;
@@ -76,20 +84,34 @@ reg [4 :0] rdaddr_fifo_rd_cnt; //类似状态机
 //wrback_fifo
 reg [31:0] wrback_fifo_wr_data; 
 reg wrback_fifo_wr_en;
+wire wrback_fifo_rd_en;
 wire wrback_fifo_full;
 wire wrback_fifo_empty;
-wire [12:0] wrback_fifo_wr_water_level;
+wire [6:0] wrback_fifo_wr_water_level;
+reg [4:0] wrback_fifo_rd_cnt;//类似状态机
+wire [31:0] wrback_fifo_rd_data;
+reg wrback_tx_start_req;
+wire [6:0] wrback_fifo_rd_water_level;
 //wrdata_fifo
 wire wrdata_fifo_empty;
 wire wrdata_fifo_wr_en; reg wrdata_fifo_wr_en_reg;
 wire wrdata_fifo_rd_en; reg wrdata_fifo_rd_en_reg;
-reg [4:0] wrdata_fifo_rd_cnt;
+reg [4:0] wrdata_fifo_rd_cnt;//类似状态机
 //rddata_fifo
 wire rddata_fifo_wr_en;
 wire rddata_fifo_empty;
-
+wire [11:0] rddata_fifo_rd_water_level;
+wire [31:0] rddata_head;
+reg [4:0] rddata_fifo_rd_cnt;//类似状态机
+reg rddata_tx_start_req;
+wire rddata_fifo_rd_en;
+reg [31:0] rddata_fifo_rd_data;
 assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
+
+
+assign udp_tx_data = (tx_state == TXWRBACK) ? wrback_fifo_rd_data : (wrdata_fifo_rd_cnt == 2 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data ;
+
 assign MASTER_CLK  = gmii_rx_clk;
 assign MASTER_RSTN = rstn;
 
@@ -230,11 +252,11 @@ always @(posedge gmii_rx_clk ) begin
         wraddr_fifo_rd_en <= 1;//拉高一个时钟周期取出一个数据
         wraddr_fifo_rd_cnt <= wraddr_fifo_rd_cnt + 1;
     end
-    else if(wraddr_fifo_rd_cnt == 2)begin
+    else if(wraddr_fifo_rd_cnt == 1)begin
         wraddr_fifo_rd_en <= 0;
         wraddr_fifo_rd_cnt <= wraddr_fifo_rd_cnt + 1;
     end
-    else if(wraddr_fifo_rd_cnt == 3 )begin
+    else if(wraddr_fifo_rd_cnt == 2 )begin
         if(MASTER_WR_ADDR_READY && MASTER_WR_ADDR_VALID)begin
             MASTER_WR_ADDR_VALID <= 0;
             wraddr_fifo_rd_cnt <= 0;
@@ -309,6 +331,7 @@ rd_addr_fifo u_sync_fifo_64x64b_rdaddr (
 //*****************************axi_wrback***************************//
 //******************************************************************//
 //wrback
+assign wrback_fifo_rd_en = (tx_state == TXWRBACK) ? udp_tx_req : 0;
 always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         MASTER_WR_BACK_READY <= 0;
@@ -331,20 +354,40 @@ always @(posedge gmii_rx_clk ) begin
         wrback_fifo_wr_en <= 0;
     end
 end
-// udp_fifo_wrback u_sync_fifo_64x32b_wrback (
-//     .clk             (gmii_rx_clk  ),              // input
-//     .rst             (~rstn        ),              // input
-//     .wr_en           (wrback_fifo_wr_en ),            // input
-//     .wr_data         (wrback_fifo_wr_data),          // input [31:0]
-//     .wr_full         (wrback_fifo_full),          // output
-//     .wr_water_level  (wrback_fifo_wr_water_level),                        // output [12:0]
-//     .almost_full     (),                        // output
-//     .rd_en           (),                        // input
-//     .rd_data         (),                        // output [31:0]
-//     .rd_empty        (wrback_fifo_empty),                        // output
-//     .rd_water_level  (),                        // output [12:0]
-//     .almost_empty    ()                         // output
-//   );
+always @(posedge gmii_rx_clk ) begin
+    if(~rstn)begin
+        wrback_fifo_rd_cnt <= 0;
+        wrback_tx_start_req <= 0;
+    end
+    else if(wrback_fifo_rd_cnt == 0)begin
+        if(~wrback_fifo_empty)begin
+            wrback_tx_start_req <= 1;
+            wrback_fifo_rd_cnt <= wrback_fifo_rd_cnt + 1;
+        end
+    end
+    else if(wrback_fifo_rd_cnt == 1)begin
+        if(tx_state == 1)begin
+            wrback_tx_start_req <= 0;
+        end
+        if(wrback_tx_done)begin
+            wrback_fifo_rd_cnt = 0;
+        end
+    end
+end
+udp_fifo_wrback u_sync_fifo_64x32b_wrback (
+    .clk             (gmii_rx_clk  ),              // input
+    .rst             (~rstn        ),              // input
+    .wr_en           (wrback_fifo_wr_en ),            // input
+    .wr_data         (wrback_fifo_wr_data),          // input [31:0]
+    .wr_full         (wrback_fifo_full),          // output
+    .wr_water_level  (wrback_fifo_wr_water_level),                        // output [12:0]
+    .almost_full     (),                        // output
+    .rd_en           (wrback_fifo_rd_en),                        // input
+    .rd_data         (wrback_fifo_rd_data),                        // output [31:0]
+    .rd_empty        (wrback_fifo_empty),                        // output
+    .rd_water_level  (wrback_fifo_rd_water_level),                        // output [12:0]
+    .almost_empty    ()                         // output
+  );
 //******************************************************************//
 //*****************************axi_wr*******************************//
 //******************************************************************//
@@ -393,16 +436,37 @@ udp_fifo_wr u_sync_fifo_2048x33b_wr (
 //******************************************************************//
 //*****************************axi_rd*******************************//
 //******************************************************************//
+
+  //传输长度还没写
+assign rddata_head = MASTER_RD_DATA_LAST ? {8'h0F,6'b000000,MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00} : rddata_head;
 assign rddata_fifo_wr_en = MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY;
+
+assign rddata_fifo_rd_en = (wrdata_fifo_rd_cnt == 3) ? udp_tx_req : 0 ;
 always @(negedge gmii_rx_clk ) begin
     if(~rstn)begin
         MASTER_RD_DATA_READY <= 0;
+        wrdata_fifo_rd_cnt <= 0;
+        // rddata_head <= 0;
+        rddata_tx_start_req <= 0;
+        // rddata_tx_req_en <= 0;
     end
-    else if(rddata_fifo_empty)begin
+    else if(rddata_fifo_empty && wrdata_fifo_rd_cnt == 0)begin
         MASTER_RD_DATA_READY <= 1;
+        wrdata_fifo_rd_cnt <= wrdata_fifo_rd_cnt + 1;
     end
-    else if(MASTER_RD_DATA_LAST)begin
+    else if(MASTER_RD_DATA_LAST && MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY && wrdata_fifo_rd_cnt == 1)begin
         MASTER_RD_DATA_READY <= 0;
+        wrdata_fifo_rd_cnt <= wrdata_fifo_rd_cnt + 1;
+        rddata_tx_start_req <= 1;
+    end
+    else if(wrdata_fifo_rd_cnt == 2 && tx_state == TXRDDATA)begin//回应请求
+        rddata_tx_start_req <= 0;
+        if(udp_tx_req)begin
+            wrdata_fifo_rd_cnt <= wrdata_fifo_rd_cnt + 1;
+        end
+    end
+    else if(wrdata_fifo_rd_cnt == 3 && rddata_tx_done )begin
+        wrdata_fifo_rd_cnt <= 0;
     end
 end
 udp_fifo_rd u_sync_fifo_2048x32b_rd (
@@ -413,12 +477,55 @@ udp_fifo_rd u_sync_fifo_2048x32b_rd (
     //.wr_full         (),          // output
     //.wr_water_level  (),   // output [12:0]
     .almost_full     (),      // output 设为1000
-    .rd_en           (),            // input
-    .rd_data         (),          // output [31:0]
+    .rd_en           (rddata_fifo_rd_en),            // input
+    .rd_data         (rddata_fifo_rd_data),          // output [31:0]
     .rd_empty        (rddata_fifo_empty),         // output
-    //.rd_water_level  (),   // output [12:0]
+    .rd_water_level  (rddata_fifo_rd_water_level),   // output [12:0]
     .almost_empty    ()      // output
   );
 
 
+
+///_______________________仲裁发送请求________________________///
+
+always @(posedge gmii_rx_clk ) begin
+    if(~rstn)begin
+        tx_state <= TXIDLE;
+        udp_tx_byte_num <= 0;
+        rddata_tx_done <= 0;
+        wrback_tx_done <= 0;
+        udp_tx_start <= 0;
+    end
+    else if(tx_state == TXIDLE)begin
+        if(wrback_tx_start_req)begin
+            udp_tx_byte_num <= wrback_fifo_rd_water_level;
+            tx_state <= TXWRBACK;
+            udp_tx_start <= 1;
+        end
+        else if(rddata_tx_start_req)begin
+            tx_state <= TXRDDATA;
+            udp_tx_byte_num <= rddata_fifo_rd_water_level;
+            udp_tx_start <= 1;
+        end
+        else begin
+            tx_state <= tx_state;
+            rddata_tx_done <= 0;
+            wrback_tx_done <= 0;
+        end
+    end
+    else if(tx_state == TXWRBACK)begin
+        udp_tx_start <= 0;
+        if(udp_tx_done)begin
+            wrback_tx_done <= 1;
+            tx_state <= TXIDLE;
+        end
+    end
+    else if(tx_state == TXRDDATA)begin
+        udp_tx_start <= 0;
+        if(udp_tx_done)begin
+            tx_state <= TXIDLE;
+            rddata_tx_done <= 1;
+        end
+    end
+end
 endmodule
