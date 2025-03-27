@@ -5,7 +5,7 @@ module axi_udp_cmd  (
     output wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
     output wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
 
-    output wire [ 3:0] MASTER_WR_ADDR_ID   , //写地址通道-ID
+    output wire [ 1:0] MASTER_WR_ADDR_ID   , //写地址通道-ID
     output wire [31:0] MASTER_WR_ADDR      , //写地址通道-地址
     output wire [ 7:0] MASTER_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
     output wire [ 1:0] MASTER_WR_ADDR_BURST, //写地址通道-突发类型
@@ -18,19 +18,19 @@ module axi_udp_cmd  (
     output reg         MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
     input  wire        MASTER_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    input  wire [ 3:0] MASTER_WR_BACK_ID   , //写响应通道-ID
+    input  wire [ 1:0] MASTER_WR_BACK_ID   , //写响应通道-ID
     input  wire [ 1:0] MASTER_WR_BACK_RESP , //写响应通道-响应
     input  wire        MASTER_WR_BACK_VALID, //写响应通道-握手信号-有效
     output reg         MASTER_WR_BACK_READY, //写响应通道-握手信号-准备
 
-    output wire [ 3:0] MASTER_RD_ADDR_ID   , //读地址通道-ID
+    output wire [ 1:0] MASTER_RD_ADDR_ID   , //读地址通道-ID
     output wire [31:0] MASTER_RD_ADDR      , //读地址通道-地址
     output wire [ 7:0] MASTER_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
     output wire [ 1:0] MASTER_RD_ADDR_BURST, //读地址通道-突发类型。
     output reg         MASTER_RD_ADDR_VALID, //读地址通道-握手信号-有效
     input  wire        MASTER_RD_ADDR_READY, //读地址通道-握手信号-准备
 
-    input  wire [ 3:0] MASTER_RD_BACK_ID   , //读数据通道-ID
+    input  wire [ 1:0] MASTER_RD_BACK_ID   , //读数据通道-ID
     input  wire [31:0] MASTER_RD_DATA      , //读数据通道-数据
     input  wire [ 1:0] MASTER_RD_DATA_RESP , //读数据通道-响应
     input  wire        MASTER_RD_DATA_LAST , //读数据通道-last信号
@@ -95,7 +95,8 @@ wire rddata_fifo_rd_en;
 reg [31:0] rddata_fifo_rd_data;
 assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
-
+assign MASTER_CLK  = gmii_rx_clk;
+assign MASTER_RSTN = rstn;
 
 always @(posedge gmii_rx_clk or negedge rstn) begin
     if(!rstn)
@@ -144,6 +145,7 @@ always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         cmd_fifo_rd_en <= 0;
         wraddr_fifo_wr_en <= 1'b0;
+        wraddr_fifo_wr_data <= 0;
         rdaddr_fifo_wr_en <= 1'b0;
         wrdata_fifo_wr_en_reg <= 0;
         head_cnt <= 0;
@@ -227,6 +229,7 @@ always @(posedge gmii_rx_clk ) begin
     if(~rstn) begin
         wraddr_fifo_rd_cnt <= 0;
         MASTER_WR_ADDR_VALID <= 0;
+        wraddr_fifo_rd_en <= 0;
     end
     else if(wraddr_fifo_rd_cnt == 0 && MASTER_WR_ADDR_VALID == 0 && ~wraddr_fifo_empty)begin
         wraddr_fifo_rd_en <= 1;//拉高一个时钟周期取出一个数据
@@ -333,20 +336,20 @@ always @(posedge gmii_rx_clk ) begin
         wrback_fifo_wr_en <= 0;
     end
 end
-udp_fifo_wrback u_sync_fifo_64x32b_wrback (
-    .clk             (gmii_rx_clk  ),              // input
-    .rst             (~rstn        ),              // input
-    .wr_en           (wrback_fifo_wr_en ),            // input
-    .wr_data         (wrback_fifo_wr_data),          // input [31:0]
-    .wr_full         (wrback_fifo_full),          // output
-    .wr_water_level  (wrback_fifo_wr_water_level),                        // output [12:0]
-    .almost_full     (),                        // output
-    .rd_en           (),                        // input
-    .rd_data         (),                        // output [31:0]
-    .rd_empty        (wrback_fifo_empty),                        // output
-    .rd_water_level  (),                        // output [12:0]
-    .almost_empty    ()                         // output
-  );
+// udp_fifo_wrback u_sync_fifo_64x32b_wrback (
+//     .clk             (gmii_rx_clk  ),              // input
+//     .rst             (~rstn        ),              // input
+//     .wr_en           (wrback_fifo_wr_en ),            // input
+//     .wr_data         (wrback_fifo_wr_data),          // input [31:0]
+//     .wr_full         (wrback_fifo_full),          // output
+//     .wr_water_level  (wrback_fifo_wr_water_level),                        // output [12:0]
+//     .almost_full     (),                        // output
+//     .rd_en           (),                        // input
+//     .rd_data         (),                        // output [31:0]
+//     .rd_empty        (wrback_fifo_empty),                        // output
+//     .rd_water_level  (),                        // output [12:0]
+//     .almost_empty    ()                         // output
+//   );
 //******************************************************************//
 //*****************************axi_wr*******************************//
 //******************************************************************//
@@ -357,6 +360,7 @@ always @(posedge gmii_rx_clk ) begin
         wrdata_fifo_rd_cnt <= 0;
         wrdata_fifo_rd_en_reg <= 0;
         MASTER_WR_STRB <= 4'b1111;
+        MASTER_WR_DATA_VALID <= 0;
     end
     else if(wrdata_fifo_rd_cnt == 0 && ~wrdata_fifo_empty)begin
         wrdata_fifo_rd_en_reg <= 1;

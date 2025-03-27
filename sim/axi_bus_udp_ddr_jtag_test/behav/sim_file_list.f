@@ -4,7 +4,9 @@
 ../../../DDR3/*.v
 ../../../DDR3/sim_file/ddr3.v
 ../../../JTAG/*.v
-../axi_bus_ddr_jtag_test.v
+../../../UDP/sim_file/*.v
+../../../UDP/*.v
+../axi_bus_udp_ddr_jtag_test.v
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v
@@ -75,6 +77,34 @@
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_sdpram_v1_10_jtag_fifo_shift_out.v
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_fifo_v1_10_jtag_fifo_shift_out.v
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/jtag_fifo_shift_out.v
+
+../../../IPCORE/UDP/clk_phase/clk_phase.v
+
+../../../IPCORE/UDP/rd_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_rd_addr_fifo.v
+../../../IPCORE/UDP/rd_addr_fifo/rtl/ipm2l_sdpram_v1_10_rd_addr_fifo.v
+../../../IPCORE/UDP/rd_addr_fifo/rtl/ipm2l_fifo_v1_10_rd_addr_fifo.v
+../../../IPCORE/UDP/rd_addr_fifo/rd_addr_fifo.v
+
+../../../IPCORE/UDP/udp_cmd_fifo/rtl/ipm2l_fifo_ctrl_v1_1_udp_cmd_fifo.v
+../../../IPCORE/UDP/udp_cmd_fifo/rtl/ipm2l_sdpram_v1_10_udp_cmd_fifo.v
+../../../IPCORE/UDP/udp_cmd_fifo/rtl/ipm2l_fifo_v1_10_udp_cmd_fifo.v
+../../../IPCORE/UDP/udp_cmd_fifo/udp_cmd_fifo.v
+
+../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_rd.v
+../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_sdpram_v1_10_udp_fifo_rd.v
+../../../IPCORE/UDP/udp_fifo_rd/rtl/ipm2l_fifo_v1_10_udp_fifo_rd.v
+../../../IPCORE/UDP/udp_fifo_rd/udp_fifo_rd.v
+
+../../../IPCORE/UDP/udp_fifo_wr/rtl/ipm2l_fifo_ctrl_v1_1_udp_fifo_wr.v
+../../../IPCORE/UDP/udp_fifo_wr/rtl/ipm2l_sdpram_v1_10_udp_fifo_wr.v
+../../../IPCORE/UDP/udp_fifo_wr/rtl/ipm2l_fifo_v1_10_udp_fifo_wr.v
+../../../IPCORE/UDP/udp_fifo_wr/udp_fifo_wr.v
+
+../../../IPCORE/UDP/wr_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_wr_addr_fifo.v
+../../../IPCORE/UDP/wr_addr_fifo/rtl/ipm2l_sdpram_v1_10_wr_addr_fifo.v
+../../../IPCORE/UDP/wr_addr_fifo/rtl/ipm2l_fifo_v1_10_wr_addr_fifo.v
+../../../IPCORE/UDP/wr_addr_fifo/wr_addr_fifo.v
+
 
 ../../../IPCORE/DDR3/axi_ddr3/sim_lib/ips2l_rst_sync_v1_3.v
 ../../../IPCORE/DDR3/axi_ddr3/sim_lib/ddrphy/ips2l_ddrphy_wrlvl_v1_14.vp
