@@ -186,8 +186,8 @@ always @(posedge clk) begin
         wr_addr_id    <= JTAG_SLAVE_WR_ADDR_ID;
         wr_addr_burst <= JTAG_SLAVE_WR_ADDR_BURST;
     end else begin
-        wr_addr_id    <= JTAG_SLAVE_WR_ADDR_ID;
-        wr_addr_burst <= JTAG_SLAVE_WR_ADDR_BURST;
+        wr_addr_id    <= wr_addr_id;
+        wr_addr_burst <= wr_addr_burst;
     end
 end
 always @(posedge clk) begin
