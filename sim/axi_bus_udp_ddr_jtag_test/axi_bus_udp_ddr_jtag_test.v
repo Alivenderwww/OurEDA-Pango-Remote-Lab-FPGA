@@ -191,55 +191,56 @@ B. CMD_JTAG_CLOSE_TEST                  0
 initial begin
     #5000
     while (~M1_RSTN) #1000;
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b1},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
-    #500 M1.send_to_udp(11,{{8'hFF},{8'h0,8'h0,8'h0},32'h01010101,32'h10101010});//UDP数据包12字节（4+4*2），数据32'h01010101，32'h10101010。
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b1},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
-    #500 M1.send_to_udp(11,{{8'hFF},{8'h0,8'h0,8'h0},32'h01010101,32'h10101010});//UDP数据包12字节（4+4*2），数据32'h01010101，32'h10101010。
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b1},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
-    #500 M1.send_to_udp(11,{{8'hFF},{8'h0,8'h0,8'h0},32'h01010101,32'h10101010});//UDP数据包12字节（4+4*2），数据32'h01010101，32'h10101010。
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b0},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b0},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
-    #500 M1.send_to_udp(7,{{8'h00},{2'b01,2'b00,1'b0,1'b0,1'b0,1'b0},8'd1,8'h0,32'h10000000});//UDP数据包8字节，写地址包，突发类型01，ID00，突发长度1，地址32'h10000000
+    while (~S1_RSTN) #1000;
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态
+    #10000 M1.send_wr_addr(2'b00, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
+    #10000 M1.send_wr_data(              3'd3, 32'h1234_5678); //写入
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低
+    #10000 M1.send_wr_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //写JTAG状态寄存器
+    #10000 M1.send_wr_data(              3'd0, 32'h0F0F_0F0F); //重置FIFO状态
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看是否重置成功
+    #10000 M1.send_wr_addr(2'b00, 2'b01, 3'd3, 32'h1000_0010); //对JTAG写入错误地址的数据，测试RESP响应
+    #10000 M1.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 end
 
 
-initial begin
-    #5000
-    #300 M0.set_rd_data_channel(7);
-    #300 M0.set_wr_data_channel(1);
+// initial begin
+//     #5000
+//     #300 M0.set_rd_data_channel(7);
+//     #300 M0.set_wr_data_channel(1);
 
-    //JTAG读取IDCODE的流程：
-    #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //写JTAG状态寄存器
-    #300 M0.send_wr_data(32'h11111111, 4'b1111);              //清空全部fifo
-    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //读取JTAG状态寄存器确认全部清空
+//     //JTAG读取IDCODE的流程：
+//     #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //写JTAG状态寄存器
+//     #300 M0.send_wr_data(32'h11111111, 4'b1111);              //清空全部fifo
+//     #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //读取JTAG状态寄存器确认全部清空
 
-    #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00); //写JTAG的data_in_fifo入口
-    #300 M0.send_wr_data({22'b0,{`JTAG_DR_IDCODE}}, 4'b1111);   //写入`JTAG_DR_IDCODE，低10位有效，高22位无效
+//     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00); //写JTAG的data_in_fifo入口
+//     #300 M0.send_wr_data({22'b0,{`JTAG_DR_IDCODE}}, 4'b1111);   //写入`JTAG_DR_IDCODE，低10位有效，高22位无效
 
-    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);  //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_IR，循环长度10}
-    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
-    #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //写JTAG状态寄存器
-    #300 M0.send_wr_data(32'h00001100, 4'b0010);               //选通[15:8]，清空data_in_fifo以清除22位无效数据
+//     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);  //写JTAG的cmd_fifo入口
+//     #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_IR，循环长度10}
+//     #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+//     #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);  //写JTAG状态寄存器
+//     #300 M0.send_wr_data(32'h00001100, 4'b0010);               //选通[15:8]，清空data_in_fifo以清除22位无效数据
 
-    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREO}, 28'd32}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度32}
-    #300 M0.send_rd_addr(2'b00, 32'h10000001, 8'd000, 2'b00);     //读取JTAG的data_out_fifo，读32bit（突发长度0）
+//     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
+//     #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREO}, 28'd32}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度32}
+//     #300 M0.send_rd_addr(2'b00, 32'h10000001, 8'd000, 2'b00);     //读取JTAG的data_out_fifo，读32bit（突发长度0）
 
-    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
-    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREI}, 28'd5000}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度5000}
-    #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd156, 2'b00);     //写JTAG的data_in_fifo入口，突发长度5000/32=156.25~157
-    #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);                  //写入比特流
-    #900 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);     //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+//     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
+//     #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREI}, 28'd5000}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度5000}
+//     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd156, 2'b00);     //写JTAG的data_in_fifo入口，突发长度5000/32=156.25~157
+//     #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);                  //写入比特流
+//     #900 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);     //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
 
-    while (~ddr_init_done) #1000;
-    #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
-    #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01);
-    #300 M0.send_wr_data(32'h00000000, 4'b1111);
-    #300 M0.send_wr_data(32'h10000000, 4'b1111);
-    #300 M0.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
-    #300 M0.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01);
-end
+//     while (~ddr_init_done) #1000;
+//     #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
+//     #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01);
+//     #300 M0.send_wr_data(32'h00000000, 4'b1111);
+//     #300 M0.send_wr_data(32'h10000000, 4'b1111);
+//     #300 M0.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
+//     #300 M0.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01);
+// end
 
 axi_master_sim M0(
     .clk                  (M0_CLK           ),
