@@ -366,7 +366,7 @@ always @(posedge gmii_rx_clk ) begin
         end
     end
     else if(wrback_fifo_rd_cnt == 1)begin
-        if(state == 1)begin
+        if(tx_state == 1)begin
             wrback_tx_start_req <= 0;
         end
         if(wrback_tx_done)begin
@@ -494,6 +494,7 @@ always @(posedge gmii_rx_clk ) begin
         udp_tx_byte_num <= 0;
         rddata_tx_done <= 0;
         wrback_tx_done <= 0;
+        udp_tx_start <= 0;
     end
     else if(tx_state == TXIDLE)begin
         if(wrback_tx_start_req)begin
