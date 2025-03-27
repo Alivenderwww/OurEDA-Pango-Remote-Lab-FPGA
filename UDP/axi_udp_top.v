@@ -4,37 +4,35 @@ module axi_udp_top #(
     parameter DES_MAC  = 48'h2c_f0_5d_32_f1_07,
     parameter DES_IP   = {8'd0,8'd0,8'd0,8'd0}
 ) (
-    output            BUS_CLK        ,
-    input wire        rstn           ,
-    //AXI_master接口
-    output reg [27:0] wr_addr        , //写地址
-    output reg [ 7:0] wr_len         , //写长度，实际长度为wr_len+1
-    output reg        wr_addr_valid  , //写地址有效信号
-    input wire        wr_addr_ready  , //写地址准备好信号
-
-    output reg [31:0] wr_data        , //写数据
-    output reg [ 3:0] wr_strb        , //写数据掩码
-    output reg        wr_data_valid  , //写数据有效信号
-    input wire        wr_data_ready  , //写数据准备好信号
-    output reg        wr_data_last   , //写数据最后一个信号
-
-    output reg [27:0] rd_addr        , //读地址
-    output reg [ 7:0] rd_len         , //读长度，实际长度为rd_len+1 一个4字节
-    output reg        rd_addr_valid  , //读地址有效信号
-    input wire        rd_addr_ready  , //读地址准备好信号
-
-    input wire [31:0] rd_data        , //读数据
-    input wire        rd_data_last   , //读数据最后一个信号
-    output reg        rd_data_ready  , //读数据准备好信号
-    input wire        rd_data_valid  , //读数据有效信号
-    
-    //GMII接口
-    input             gmii_rx_clk    , //GMII接收数据时钟
-    input             gmii_rx_dv     , //GMII输入数据有效信号
-    input      [7:0]  gmii_rxd       , //GMII输入数据
-    input             gmii_tx_clk    , //GMII发送数据时钟    //事实上与rx相同
-    output            gmii_tx_en     , //GMII输出数据有效信号
-    output     [7:0]  gmii_txd         //GMII输出数据
+    output wire MASTER_CLK ,
+    output wire MASTER_RSTN,
+    output wire [ 1:0] MASTER_WR_ADDR_ID   ,
+    output wire [31:0] MASTER_WR_ADDR      ,
+    output wire [ 7:0] MASTER_WR_ADDR_LEN  ,
+    output wire [ 1:0] MASTER_WR_ADDR_BURST,
+    output wire        MASTER_WR_ADDR_VALID,
+    input  wire        MASTER_WR_ADDR_READY,
+    output wire [31:0] MASTER_WR_DATA      ,
+    output wire [ 3:0] MASTER_WR_STRB      ,
+    output wire        MASTER_WR_DATA_LAST ,
+    output wire        MASTER_WR_DATA_VALID,
+    input  wire        MASTER_WR_DATA_READY,
+    input  wire [ 1:0] MASTER_WR_BACK_ID   ,
+    input  wire [ 1:0] MASTER_WR_BACK_RESP ,
+    input  wire        MASTER_WR_BACK_VALID,
+    output wire        MASTER_WR_BACK_READY,
+    output wire [ 1:0] MASTER_RD_ADDR_ID   ,
+    output wire [31:0] MASTER_RD_ADDR      ,
+    output wire [ 7:0] MASTER_RD_ADDR_LEN  ,
+    output wire [ 1:0] MASTER_RD_ADDR_BURST,
+    output wire        MASTER_RD_ADDR_VALID,
+    input  wire        MASTER_RD_ADDR_READY,
+    input  wire [ 1:0] MASTER_RD_BACK_ID   ,
+    input  wire [31:0] MASTER_RD_DATA      ,
+    input  wire [ 1:0] MASTER_RD_DATA_RESP ,
+    input  wire        MASTER_RD_DATA_LAST ,
+    input  wire        MASTER_RD_DATA_VALID,
+    output wire        MASTER_RD_DATA_READY     
 );
 //udp接口信号
 wire            rec_pkt_done; //以太网单包数据接收完成信号
@@ -53,90 +51,97 @@ wire  [ 7:0]    crc_d8      ; //输入待校验8位数据
 wire  [31:0]    crc_data    ; //CRC校验数据
 wire  [31:0]    crc_next    ; //CRC下次校验完成数据
 
-assign  crc_d8 = gmii_txd;
-assign BUS_CLK = gmii_rx_clk;
 
 
-//以太网接收模块
-udp_rx
-   #(
-    .BOARD_MAC       (BOARD_MAC),         //参数例化
-    .BOARD_IP        (BOARD_IP )
+
+//GMII接口与RGMII接口 互转
+gmii_to_rgmii u_gmii_to_rgmii(
+    .gmii_rx_clk   (gmii_rx_clk  ),  //gmii接收
+    .gmii_rx_dv    (gmii_rx_dv   ),
+    .gmii_rxd      (gmii_rxd     ),
+    .gmii_tx_clk   (gmii_tx_clk  ),  //gmii发送
+    .gmii_tx_en    (gmii_tx_en   ),
+    .gmii_txd      (gmii_txd     ),
+ 
+    .rgmii_rxc     (eth_rxc      ),  //rgmii接收
+    .rgmii_rx_ctl  (eth_rxdv     ),
+    .rgmii_rxd     (eth_rx_data  ),
+    .rgmii_txc     (eth_txc      ),  //rgmii发送
+    .rgmii_tx_ctl  (eth_tx_en_r  ),
+    .rgmii_txd     (eth_tx_data_r)
+);
+
+//UDP通信
+udp #(
+    .BOARD_MAC     (BOARD_MAC   ),      //参数例化
+    .BOARD_IP      (BOARD_IP    ),
+    .DES_MAC       (DES_MAC     ),
+    .DES_IP        (DES_IP      )
     )
-   u_udp_rx(
-    .clk             (gmii_rx_clk ),
-    .rst_n           (rstn        ),
-    .gmii_rx_dv      (gmii_rx_dv  ),
-    .gmii_rxd        (gmii_rxd    ),
-    .rec_pkt_done    (rec_pkt_done),
-    .rec_en          (rec_en      ),
-    .rec_data        (rec_data    ),
-    .rec_byte_num    (rec_byte_num)
-    );
+   u_udp(
+    .rst_n         (sys_rst_n   ),
 
-//以太网发送模块
-udp_tx
-   #(
-    .BOARD_MAC       (BOARD_MAC ),         //参数例化
-    .BOARD_IP        (BOARD_IP  ),
-    .DES_MAC         (DES_MAC   ),
-    .DES_IP          (DES_IP    )
-    )
-   u_udp_tx(
-    .clk             (gmii_tx_clk),
-    .rst_n           (rstn       ),
-    .tx_start_en     (tx_start_en),
-    .tx_data         ( tx_data   ),
-    .tx_byte_num     ((rd_len+1)*4),
-    .crc_data        (crc_data   ),
-    .crc_next        (crc_next[31:24]),
-    .tx_done         (tx_done    ),
-    .tx_req          (   tx_req  ),
-    .gmii_tx_en      (gmii_tx_en ),
-    .gmii_txd        (gmii_txd   ),
-    .crc_en          (crc_en     ),
-    .crc_clr         (crc_clr    )
-    );
+    .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
+    .gmii_rx_dv    (gmii_rx_dv  ),
+    .gmii_rxd      (gmii_rxd    ),
+    .gmii_tx_clk   (gmii_tx_clk ),//gmii发送
+    .gmii_tx_en    (gmii_tx_en  ),
+    .gmii_txd      (gmii_txd    ),
 
-//以太网发送CRC校验模块
-crc32_d8   u_crc32_d8(
-    .clk             (gmii_tx_clk),
-    .rst_n           (rstn       ),
-    .data            (crc_d8     ),
-    .crc_en          (crc_en     ),
-    .crc_clr         (crc_clr    ),
-    .crc_data        (crc_data   ),
-    .crc_next        (crc_next   )
-    );
+    .rec_pkt_done  (rec_pkt_done),  //数据包接收结束
+    .rec_en        (rec_en      ),  //四字节接收使能
+    .rec_data      (rec_data    ),  //接收数据
+    .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
+    .tx_start_en   (tx_start_en ),  //发送使能
+    .tx_data       (tx_data     ),  //发送数据
+    .tx_byte_num   (udp_tx_byte_num),  //发送长度
+    .tx_done       (udp_tx_done ),  //发送结束
+    .tx_req        (tx_req      )   //四字节发送使能
+);
 
-axi_udp_cmd axi_udp_cmd_inst (
-    .gmii_rx_clk(gmii_rx_clk),
-    .rstn(rstn),
-    .wr_addr(wr_addr),
-    .wr_len(wr_len),
-    .wr_addr_valid(wr_addr_valid),
-    .wr_addr_ready(wr_addr_ready),
-    .wr_data(wr_data),
-    .wr_strb(wr_strb),
-    .wr_data_valid(wr_data_valid),
-    .wr_data_ready(wr_data_ready),
-    .wr_data_last(wr_data_last),
-    .rd_addr(rd_addr),
-    .rd_len(rd_len),
-    .rd_addr_valid(rd_addr_valid),
-    .rd_addr_ready(rd_addr_ready),
-    .rd_data(rd_data),
-    .rd_data_last(rd_data_last),
-    .rd_data_ready(rd_data_ready),
-    .rd_data_valid(rd_data_valid),
+axi_udp_cmd axi_udp_cmd_inst(
+    .gmii_rx_clk         (gmii_rx_clk         ),
+    .rstn                (sys_rst_n           ),
 
+    .MASTER_CLK          (MASTER_CLK          ), 
+    .MASTER_RSTN         (MASTER_RSTN         ), 
+    .MASTER_WR_ADDR_ID   (MASTER_WR_ADDR_ID   ), 
+    .MASTER_WR_ADDR      (MASTER_WR_ADDR      ), 
+    .MASTER_WR_ADDR_LEN  (MASTER_WR_ADDR_LEN  ), 
+    .MASTER_WR_ADDR_BURST(MASTER_WR_ADDR_BURST), 
+    .MASTER_WR_ADDR_VALID(MASTER_WR_ADDR_VALID), 
+    .MASTER_WR_ADDR_READY(MASTER_WR_ADDR_READY), 
+    .MASTER_WR_DATA      (MASTER_WR_DATA      ), 
+    .MASTER_WR_STRB      (MASTER_WR_STRB      ), 
+    .MASTER_WR_DATA_LAST (MASTER_WR_DATA_LAST ), 
+    .MASTER_WR_DATA_VALID(MASTER_WR_DATA_VALID), 
+    .MASTER_WR_DATA_READY(MASTER_WR_DATA_READY), 
+    .MASTER_WR_BACK_ID   (MASTER_WR_BACK_ID   ), 
+    .MASTER_WR_BACK_RESP (MASTER_WR_BACK_RESP ), 
+    .MASTER_WR_BACK_VALID(MASTER_WR_BACK_VALID), 
+    .MASTER_WR_BACK_READY(MASTER_WR_BACK_READY), 
+    .MASTER_RD_ADDR_ID   (MASTER_RD_ADDR_ID   ), 
+    .MASTER_RD_ADDR      (MASTER_RD_ADDR      ), 
+    .MASTER_RD_ADDR_LEN  (MASTER_RD_ADDR_LEN  ), 
+    .MASTER_RD_ADDR_BURST(MASTER_RD_ADDR_BURST), 
+    .MASTER_RD_ADDR_VALID(MASTER_RD_ADDR_VALID), 
+    .MASTER_RD_ADDR_READY(MASTER_RD_ADDR_READY), 
+    .MASTER_RD_BACK_ID   (MASTER_RD_BACK_ID   ), 
+    .MASTER_RD_DATA      (MASTER_RD_DATA      ), 
+    .MASTER_RD_DATA_RESP (MASTER_RD_DATA_RESP ), 
+    .MASTER_RD_DATA_LAST (MASTER_RD_DATA_LAST ), 
+    .MASTER_RD_DATA_VALID(MASTER_RD_DATA_VALID), 
+    .MASTER_RD_DATA_READY(MASTER_RD_DATA_READY), 
 
-    .rec_pkt_done(rec_pkt_done),
-    .datain(rec_data),
-    .rec_en(rec_en),
-    .tx_req(tx_req),
-    .tx_start_en(tx_start_en),
-    .udp_tx_data(tx_data)
-  );    
+    .udp_rx_done         (rec_pkt_done),
+    .udp_rx_data         (rec_data    ),
+    .udp_rx_en           (rec_en      ),
+
+    .udp_tx_req          (tx_req      ),
+    .udp_tx_start        (tx_start_en ),
+    .udp_tx_data         (tx_data     ),
+    .udp_tx_done         (udp_tx_done ),
+    .udp_tx_byte_num     (udp_tx_byte_num)
+);
 
 endmodule
