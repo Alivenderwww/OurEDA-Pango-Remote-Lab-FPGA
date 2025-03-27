@@ -64,6 +64,7 @@ wire            tx_start_en     ;
 wire    [31:0]  tx_data         ;
 wire            udp_tx_done     ;
 wire            tx_req          ;
+wire    [15:0]  udp_tx_byte_num ;
 
 initial begin
     sys_clk    = 1'b1;
@@ -159,7 +160,7 @@ udp #(
     .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
     .tx_start_en   (tx_start_en ),  //发送使能
     .tx_data       (tx_data     ),  //发送数据
-    .tx_byte_num   (rec_byte_num),  //发送长度
+    .tx_byte_num   (udp_tx_byte_num),  //发送长度
     .tx_done       (udp_tx_done ),  //发送结束
     .tx_req        (tx_req      )   //四字节发送使能
 );
@@ -201,9 +202,12 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_rx_done         (rec_pkt_done),
     .udp_rx_data         (rec_data    ),
     .udp_rx_en           (rec_en      ),
+
     .udp_tx_req          (tx_req      ),
     .udp_tx_start        (tx_start_en ),
-    .udp_tx_data         (tx_data     )
+    .udp_tx_data         (tx_data     ),
+    .udp_tx_done         (udp_tx_done ),
+    .udp_tx_byte_num     (udp_tx_byte_num)
 );
 
 
