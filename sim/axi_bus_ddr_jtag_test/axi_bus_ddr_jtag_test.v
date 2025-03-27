@@ -30,6 +30,10 @@ reg          ddr_ref_clk  ;
 reg          ddr_rst_n    ;
 wire         ddr_init_done;
 
+reg led_clk;
+reg led_rst_n;
+wire [31:0] led;
+
 wire         mem_rst_n    ; //Memory复位
 wire         mem_ck       ; //Memory差分时钟正端
 wire         mem_ck_n     ; //Memory差分时钟负端
@@ -121,6 +125,7 @@ parameter S0_START_ADDR = 32'h00_00_00_00,
 
 always #10 ddr_ref_clk = ~ddr_ref_clk;
 always #7  jtag_clk = ~jtag_clk;
+always #30 led_clk = ~led_clk;
 
 always #8  BUS_CLK = ~BUS_CLK; //speed:2
 always #7    M0_CLK = ~M0_CLK; //speed:1
@@ -129,7 +134,7 @@ always #11   M2_CLK = ~M2_CLK; //speed:5
 always #13   M3_CLK = ~M3_CLK; //speed:7
 // always #6    S0_CLK = ~S0_CLK; //speed:0(FAST)
 // always #8    S1_CLK = ~S1_CLK; //speed:2
-always #12   S2_CLK = ~S2_CLK; //speed:6
+// always #12   S2_CLK = ~S2_CLK; //speed:6
 always #14   S3_CLK = ~S3_CLK; //speed:8(SLOW)
 
 initial begin
@@ -143,6 +148,12 @@ initial begin
     jtag_rst_n = 0;
     #500 jtag_rst_n = 1;
 end
+
+initial begin
+    led_clk = 0;
+    led_rst_n = 0;
+    #500 led_rst_n = 1;
+end
 assign tdo = 0;
 
 initial begin
@@ -153,12 +164,12 @@ initial begin
     M3_CLK  = 0; M3_RSTN  = 0;
     // S0_CLK  = 0; S0_RSTN  = 0;
     // S1_CLK  = 0; S1_RSTN  = 0;
-    S2_CLK  = 0; S2_RSTN  = 0;
+    // S2_CLK  = 0; S2_RSTN  = 0;
     S3_CLK  = 0; S3_RSTN  = 0;
 #50000
     M0_RSTN = 1;  // S0_RSTN = 1;
     M1_RSTN = 1;  // S1_RSTN = 1;
-    M2_RSTN = 1;  S2_RSTN = 1;
+    M2_RSTN = 1;  // S2_RSTN = 1;
     M3_RSTN = 1;  S3_RSTN = 1;
 #5000
     BUS_RSTN = 1;
@@ -218,6 +229,16 @@ initial begin
     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd156, 2'b00);     //写JTAG的data_in_fifo入口，突发长度5000/32=156.25~157
     #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);                  //写入比特流
     #900 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);     //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+
+    #300 M0.send_wr_addr(2'b00, 32'h20000000, 8'd000, 2'b00);
+    #300 M0.send_wr_data(32'h10101010, 4'b1111);
+    #300 M0.send_wr_addr(2'b01, 32'h20000010, 8'd000, 2'b00);
+    #300 M0.send_wr_data(32'h10101010, 4'b1111);
+    #300 M0.send_wr_addr(2'b10, 32'h20000000, 8'd003, 2'b00);
+    #300 M0.send_wr_data(32'h10101010, 4'b1111);
+    #300 M0.send_wr_addr(2'b11, 32'h20000000, 8'd000, 2'b10);
+    #300 M0.send_wr_data(32'h10101010, 4'b1111);
+    #300 M0.send_rd_addr(2'b01, 32'h20000000, 8'd000, 2'b00);
 
     while (~ddr_init_done) #1000;
     #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
@@ -364,7 +385,9 @@ axi_master_default M3(
     .MASTER_RD_DATA_READY (M3_RD_DATA_READY )
 );
 
-slave_ddr3 S0(
+slave_ddr3 #(
+    .OFFSET_ADDR             (S0_START_ADDR)
+)S0(
     .ddr_ref_clk             (ddr_ref_clk      ),
     .rst_n                   (ddr_rst_n        ),
     .ddr_init_done           (ddr_init_done    ),
@@ -414,7 +437,9 @@ slave_ddr3 S0(
     .mem_ba                  (mem_ba                  )
 );
 
-JTAG_SLAVE S1(
+JTAG_SLAVE  #(
+    .OFFSET_ADDR              (S1_START_ADDR)
+)S1(
     .clk                      (jtag_clk                 ),
     .rstn                     (jtag_rst_n               ),
     .tck                      (tck                      ),
@@ -452,18 +477,55 @@ JTAG_SLAVE S1(
     .JTAG_SLAVE_RD_DATA_READY (S1_RD_DATA_READY         )
 );
 
+axi_led_slave #(
+    .OFFSET_ADDR             (S2_START_ADDR)
+)S2(
+    .clk                     (led_clk                  ),
+    .rstn                    (led_rst_n                ),
+    .led                     (led                      ),
+    .LED_SLAVE_CLK           (S2_CLK                   ),
+    .LED_SLAVE_RSTN          (S2_RSTN                  ),
+    .LED_SLAVE_WR_ADDR_ID    (S2_WR_ADDR_ID            ),
+    .LED_SLAVE_WR_ADDR       (S2_WR_ADDR               ),
+    .LED_SLAVE_WR_ADDR_LEN   (S2_WR_ADDR_LEN           ),
+    .LED_SLAVE_WR_ADDR_BURST (S2_WR_ADDR_BURST         ),
+    .LED_SLAVE_WR_ADDR_VALID (S2_WR_ADDR_VALID         ),
+    .LED_SLAVE_WR_ADDR_READY (S2_WR_ADDR_READY         ),
+    .LED_SLAVE_WR_DATA       (S2_WR_DATA               ),
+    .LED_SLAVE_WR_STRB       (S2_WR_STRB               ),
+    .LED_SLAVE_WR_DATA_LAST  (S2_WR_DATA_LAST          ),
+    .LED_SLAVE_WR_DATA_VALID (S2_WR_DATA_VALID         ),
+    .LED_SLAVE_WR_DATA_READY (S2_WR_DATA_READY         ),
+    .LED_SLAVE_WR_BACK_ID    (S2_WR_BACK_ID            ),
+    .LED_SLAVE_WR_BACK_RESP  (S2_WR_BACK_RESP          ),
+    .LED_SLAVE_WR_BACK_VALID (S2_WR_BACK_VALID         ),
+    .LED_SLAVE_WR_BACK_READY (S2_WR_BACK_READY         ),
+    .LED_SLAVE_RD_ADDR_ID    (S2_RD_ADDR_ID            ),
+    .LED_SLAVE_RD_ADDR       (S2_RD_ADDR               ),
+    .LED_SLAVE_RD_ADDR_LEN   (S2_RD_ADDR_LEN           ),
+    .LED_SLAVE_RD_ADDR_BURST (S2_RD_ADDR_BURST         ),
+    .LED_SLAVE_RD_ADDR_VALID (S2_RD_ADDR_VALID         ),
+    .LED_SLAVE_RD_ADDR_READY (S2_RD_ADDR_READY         ),
+    .LED_SLAVE_RD_BACK_ID    (S2_RD_BACK_ID            ),
+    .LED_SLAVE_RD_DATA       (S2_RD_DATA               ),
+    .LED_SLAVE_RD_DATA_RESP  (S2_RD_DATA_RESP          ),
+    .LED_SLAVE_RD_DATA_LAST  (S2_RD_DATA_LAST          ),
+    .LED_SLAVE_RD_DATA_VALID (S2_RD_DATA_VALID         ),
+    .LED_SLAVE_RD_DATA_READY (S2_RD_DATA_READY         )
+);
 
-assign S2_WR_ADDR_READY = 0;assign S3_WR_ADDR_READY = 0;
-assign S2_WR_DATA_READY = 0;assign S3_WR_DATA_READY = 0;
-assign S2_WR_BACK_ID    = 0;assign S3_WR_BACK_ID    = 0;
-assign S2_WR_BACK_RESP  = 0;assign S3_WR_BACK_RESP  = 0;
-assign S2_WR_BACK_VALID = 0;assign S3_WR_BACK_VALID = 0;
-assign S2_RD_ADDR_READY = 0;assign S3_RD_ADDR_READY = 0;
-assign S2_RD_BACK_ID    = 0;assign S3_RD_BACK_ID    = 0;
-assign S2_RD_DATA       = 0;assign S3_RD_DATA       = 0;
-assign S2_RD_DATA_RESP  = 0;assign S3_RD_DATA_RESP  = 0;
-assign S2_RD_DATA_LAST  = 0;assign S3_RD_DATA_LAST  = 0;
-assign S2_RD_DATA_VALID = 0;assign S3_RD_DATA_VALID = 0;
+
+assign S3_WR_ADDR_READY = 0;
+assign S3_WR_DATA_READY = 0;
+assign S3_WR_BACK_ID    = 0;
+assign S3_WR_BACK_RESP  = 0;
+assign S3_WR_BACK_VALID = 0;
+assign S3_RD_ADDR_READY = 0;
+assign S3_RD_BACK_ID    = 0;
+assign S3_RD_DATA       = 0;
+assign S3_RD_DATA_RESP  = 0;
+assign S3_RD_DATA_LAST  = 0;
+assign S3_RD_DATA_VALID = 0;
 
 axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设置FIFO。支持out-standing传输暂存，从机可选择性支持out-of-order乱序执行，目前不支持主机interleaving交织。
     .S0_START_ADDR(S0_START_ADDR),
