@@ -87,11 +87,11 @@ reg wrback_fifo_wr_en;
 wire wrback_fifo_rd_en;
 wire wrback_fifo_full;
 wire wrback_fifo_empty;
-wire [12:0] wrback_fifo_wr_water_level;
+wire [6:0] wrback_fifo_wr_water_level;
 reg [4:0] wrback_fifo_rd_cnt;//类似状态机
 wire [31:0] wrback_fifo_rd_data;
 reg wrback_tx_start_req;
-wire [12:0] wrback_fifo_rd_water_level;
+wire [6:0] wrback_fifo_rd_water_level;
 //wrdata_fifo
 wire wrdata_fifo_empty;
 wire wrdata_fifo_wr_en; reg wrdata_fifo_wr_en_reg;
@@ -100,7 +100,7 @@ reg [4:0] wrdata_fifo_rd_cnt;//类似状态机
 //rddata_fifo
 wire rddata_fifo_wr_en;
 wire rddata_fifo_empty;
-wire [12:0] rddata_fifo_rd_water_level;
+wire [11:0] rddata_fifo_rd_water_level;
 wire [31:0] rddata_head;
 reg [4:0] rddata_fifo_rd_cnt;//类似状态机
 reg rddata_tx_start_req;
@@ -518,7 +518,6 @@ always @(posedge gmii_rx_clk ) begin
             wrback_tx_done <= 1;
             tx_state <= TXIDLE;
         end
-            
     end
     else if(tx_state == TXRDDATA)begin
         udp_tx_start <= 0;
