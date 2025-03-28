@@ -5,15 +5,16 @@ module axi_udp_master #(
     parameter DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
     parameter DES_IP    = {8'd169,8'd254,8'd103,8'd126} 
 )(
-    input  wire        udp_in_clk   , //连什么线？
     input  wire        udp_in_rstn  , //连什么线？
+    output wire        eth_rst_n    ,
+    //以太网rgmii外部接口
     input  wire        rgmii_rxc    ,
     input  wire        rgmii_rx_ctl ,
     input  wire [ 3:0] rgmii_rxd    ,
     output wire        rgmii_txc    ,
     output wire        rgmii_tx_ctl ,
     output wire [ 3:0] rgmii_txd    ,
-
+    //AXI接口
     output wire        MASTER_CLK          ,
     output wire        MASTER_RSTN         ,
     output wire [ 1:0] MASTER_WR_ADDR_ID   ,
@@ -44,7 +45,7 @@ module axi_udp_master #(
     input  wire        MASTER_RD_DATA_VALID,
     output wire        MASTER_RD_DATA_READY 
 );
-
+assign eth_rst_n = udp_in_rstn;
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
@@ -87,7 +88,7 @@ udp #(
     .DES_IP        (DES_IP      )
     )
    u_udp(
-    .rst_n         (sys_rst_n   ),
+    .rst_n         (udp_in_rstn ),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
     .gmii_rx_dv    (gmii_rx_dv  ),
@@ -109,7 +110,7 @@ udp #(
 
 axi_udp_cmd axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
-    .rstn                (sys_rst_n           ),
+    .rstn                (udp_in_rstn         ),
 
     .MASTER_CLK          (MASTER_CLK          ), 
     .MASTER_RSTN         (MASTER_RSTN         ), 
