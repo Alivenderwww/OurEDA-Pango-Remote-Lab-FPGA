@@ -170,7 +170,7 @@ wire [4+32+2+1-1:0] rd_data_fifo_wr_data ;
 wire                rd_data_fifo_wr_full ;
 wire                rd_data_fifo_rd_rst  ;
 wire                rd_data_fifo_rd_en   ;
-wire [2+32+2+1-1:0] rd_data_fifo_rd_data ;
+wire [4+32+2+1-1:0] rd_data_fifo_rd_data ;
 wire                rd_data_fifo_rd_empty;
 
 reg async_rd_data_fifo_data_dont_care;
