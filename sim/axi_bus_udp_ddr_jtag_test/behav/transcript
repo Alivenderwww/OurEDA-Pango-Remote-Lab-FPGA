@@ -57,7 +57,7 @@
 # vmap pciegen2 ./../../pangu_sim_libraries/pciegen2 
 # Modifying modelsim.ini
 # Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
-# Start time: 21:40:12 on Mar 27,2025
+# Start time: 13:40:08 on Mar 28,2025
 # vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
 # -- Compiling module axi_slave_default
 # -- Compiling module axi_slave_sim
@@ -190,11 +190,11 @@
 # 	axi_udp_top
 # 	udp_model
 # 	axi_bus_udp_ddr_jtag_test
-# End time: 21:40:18 on Mar 27,2025, Elapsed time: 0:00:06
+# End time: 13:40:14 on Mar 28,2025, Elapsed time: 0:00:06
 # Errors: 0, Warnings: 0
 # ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
 # vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 axi_bus_udp_ddr_jtag_test usim.GTP_GRS 
-# Start time: 21:40:18 on Mar 27,2025
+# Start time: 13:40:14 on Mar 28,2025
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
@@ -205,6 +205,16 @@
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(394): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(393): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_out_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_data_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_cmd_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Note: (vopt-143) Recognized 2 FSMs in module "JTAG_SLAVE(fast)".
 # ** Note: (vopt-143) Recognized 2 FSMs in module "GTP_DDC_E2(fast)".
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
 # ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
@@ -357,16 +367,6 @@
 # ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
 # ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_ba'.  Expected 5, found 4.
 # ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_out_inst'.  Expected 10, found 8.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(350): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_data_inst'.  Expected 10, found 8.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(377): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_cmd_inst'.  Expected 10, found 8.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
-# ** Warning: ../../../JTAG/JTAG_SLAVE.v(402): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
-# ** Note: (vopt-143) Recognized 2 FSMs in module "JTAG_SLAVE(fast)".
 # ** Warning: ../../../UDP/axi_udp_cmd.v(474): (vopt-2685) [TFMPC] - Too few port connections for 'u_sync_fifo_2048x32b_rd'.  Expected 12, found 10.
 # ** Warning: ../../../UDP/axi_udp_cmd.v(474): (vopt-2718) [TFMPC] - Missing connection for port 'wr_water_level'.
 # ** Warning: ../../../UDP/axi_udp_cmd.v(474): (vopt-2718) [TFMPC] - Missing connection for port 'wr_full'.
@@ -775,14 +775,6 @@
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/S0/ddr3_top_inst/axi_ddr3_inst/u_ddrphy_top/ddrphy_slice_top/i_ca_group/genblk1[2]/u_ddc_ca/dly_chain4 File: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v Line: 739
 # ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (1) for port 'ldo_ctrl'. The port definition is at: nofile(23).
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/S0/ddr3_top_inst/axi_ddr3_inst/u_ddrphy_top/ddrphy_slice_top/i_ca_group/genblk1[2]/u_ddc_ca/dly_chain5 File: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v Line: 740
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s0_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s1_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s2_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s3_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (2) for port 'rst_n'. The port definition is at: ../../../DDR3/sim_file/ddr3.v(97).
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/i_mem[0]/mem_core File: ../axi_bus_udp_ddr_jtag_test.v Line: 601
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (2) for port 'ck'. The port definition is at: ../../../DDR3/sim_file/ddr3.v(98).
@@ -829,9 +821,9 @@
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/i_mem[1]/mem_core File: ../axi_bus_udp_ddr_jtag_test.v Line: 601
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: 1  Hostname: DESKTOP-FLDUJ87  ProcessID: 12016
-#           Attempting to use alternate WLF file "./wlft74f7ge".
+#           Attempting to use alternate WLF file "./wlftzjw9ec".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft74f7ge
+#           Using alternate file: ./wlftzjw9ec
 # .main_pane.wave.interior.cs.body.pw.wf
 # .main_pane.structure.interior.cs.body.struct
 # .main_pane.objects.interior.cs.body.tree
@@ -948,15 +940,16 @@ run -all
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 # IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 15470000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 25938000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 36502000.0 ps INFO: send wr data.
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 46970000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 57438000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 67906000.0 ps INFO: send wr data.
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 78374000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 88842000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 99406000.0 ps INFO: send wr data.
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 15474000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 25946000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 36514000.0 ps INFO: send wr data.
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 46986000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 57458000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 67930000.0 ps INFO: send wr data.
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 78402000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 88874000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 99442000.0 ps INFO: send wr data.
+run -all
 add wave -position end  sim:/axi_bus_udp_ddr_jtag_test/M1/axi_udp_cmd_inst/IDLE
 add wave -position end  sim:/axi_bus_udp_ddr_jtag_test/M1/axi_udp_cmd_inst/WAIT
 add wave -position end  sim:/axi_bus_udp_ddr_jtag_test/M1/axi_udp_cmd_inst/ADDR
@@ -1348,14 +1341,6 @@ restart
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/S0/ddr3_top_inst/axi_ddr3_inst/u_ddrphy_top/ddrphy_slice_top/i_ca_group/genblk1[2]/u_ddc_ca/dly_chain4 File: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v Line: 739
 # ** Warning: (vsim-3015) [PCDPC] - Port size (2) does not match connection size (1) for port 'ldo_ctrl'. The port definition is at: nofile(23).
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/S0/ddr3_top_inst/axi_ddr3_inst/u_ddrphy_top/ddrphy_slice_top/i_ca_group/genblk1[2]/u_ddc_ca/dly_chain5 File: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v Line: 740
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s0_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s1_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s2_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
-# ** Warning: (vsim-3015) [PCDPC] - Port size (39) does not match connection size (37) for port 'rd_data'. The port definition is at: ../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v(30).
-#    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/axi_bus_inst/axi_clock_converter_inst/s3_axi_async/slave_async_rd_data_fifo_inst File: ../../../AXI4/slave_axi_async.v Line: 196
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (2) for port 'rst_n'. The port definition is at: ../../../DDR3/sim_file/ddr3.v(97).
 #    Time: 0 fs  Iteration: 0  Instance: /axi_bus_udp_ddr_jtag_test/i_mem[0]/mem_core File: ../axi_bus_udp_ddr_jtag_test.v Line: 601
 # ** Warning: (vsim-3015) [PCDPC] - Port size (1) does not match connection size (2) for port 'ck'. The port definition is at: ../../../DDR3/sim_file/ddr3.v(98).
@@ -1451,14 +1436,14 @@ run -all
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 # IPSpecCheck: 04030130 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 36K
 # IPSpecCheck: 04030101 ipm2l_flex_sdpram parameter setting error !!!: c_WR_ADDR_WIDTH must between 9-20 when DRM Resource is 18K
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 15470000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 25938000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 36502000.0 ps INFO: send wr data.
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 46970000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 57438000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 67906000.0 ps INFO: send wr data.
-# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 78374000.0 ps INFO: send rd addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 88842000.0 ps INFO: send wr addr.
-# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 99406000.0 ps INFO: send wr data.
-run -all
-run -all
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 15474000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 25946000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 36514000.0 ps INFO: send wr data.
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 46986000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 57458000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 67930000.0 ps INFO: send wr data.
+# axi_bus_udp_ddr_jtag_test.M1.send_rd_addr: at time 78402000.0 ps INFO: send rd addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_addr: at time 88874000.0 ps INFO: send wr addr.
+# axi_bus_udp_ddr_jtag_test.M1.send_wr_data: at time 99442000.0 ps INFO: send wr data.
+# Paste insertion failed: udp_tx_req: ** UI-Msg: (vish-4014) No objects found matching 'udp_tx_req'.
+# Paste insertion failed: udp_tx_req: ** UI-Msg: (vish-4014) No objects found matching 'udp_tx_req'.

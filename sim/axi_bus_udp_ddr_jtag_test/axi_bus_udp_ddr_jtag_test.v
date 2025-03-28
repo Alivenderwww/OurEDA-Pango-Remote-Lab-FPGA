@@ -192,13 +192,13 @@ initial begin
     #5000
     while (~M1_RSTN) #1000;
     while (~S1_RSTN) #1000;
-    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态 (32'h01020202)
     #10000 M1.send_wr_addr(2'b00, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
     #10000 M1.send_wr_data(              3'd3, 32'h1234_5678); //写入
-    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低 (32'h01020002)
     #10000 M1.send_wr_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //写JTAG状态寄存器
-    #10000 M1.send_wr_data(              3'd0, 32'h0F0F_0F0F); //重置FIFO状态
-    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看是否重置成功
+    #10000 M1.send_wr_data(              3'd0, 32'hFFFF_FFFF); //重置FIFO状态
+    #10000 M1.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看是否重置成功 (32'h01020202)
     #10000 M1.send_wr_addr(2'b00, 2'b01, 3'd3, 32'h1000_0010); //对JTAG写入错误地址的数据，测试RESP响应
     #10000 M1.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 end
