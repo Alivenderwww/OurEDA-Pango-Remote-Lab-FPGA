@@ -1,7 +1,7 @@
 module udp_axi_ddr_top(
 //system io
-input  wire        external_clk  ,
-input  wire        external_rst_n,
+input  wire        external_clk ,
+input  wire        external_rstn,
 //led io
 output wire [7:0]  led          ,
 //jtag io
@@ -16,6 +16,7 @@ input  wire [3:0]  rgmii_rxd    ,
 output wire        rgmii_txc    ,
 output wire        rgmii_tx_ctl ,
 output wire [3:0]  rgmii_txd    ,
+output wire        eth_rst_n    ,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -43,10 +44,10 @@ localparam S2_END_ADDR   = 32'h2F_FF_FF_0F;
 localparam S3_START_ADDR = 32'h30_00_00_00;
 localparam S3_END_ADDR   = 32'h3F_FF_FF_0F;
 
-localparam BOARD_MAC     = {48'h12_34_56_78_9a_bc}      ;
-localparam BOARD_IP      = {8'd192,8'd168,8'd0,8'd234}  ;
-localparam DES_MAC       = {48'h00_2B_67_09_FF_5E}      ;
-localparam DES_IP        = {8'd169,8'd254,8'd103,8'd126};
+localparam BOARD_MAC     = {48'h12_34_56_78_9a_bc}        ;
+localparam BOARD_IP      = {8'd169,8'd254,8'd109,8'd100}  ;
+localparam DES_MAC       = {48'h84_47_09_4C_47_7C}        ;
+localparam DES_IP        = {8'd169,8'd254,8'd109,8'd183}  ;
 
 /*
 装载比特流的顺序：
@@ -104,25 +105,47 @@ wire        M0_RD_DATA_LAST ;wire        M1_RD_DATA_LAST ;wire        M2_RD_DATA
 wire        M0_RD_DATA_VALID;wire        M1_RD_DATA_VALID;wire        M2_RD_DATA_VALID;wire        M3_RD_DATA_VALID;    wire        S0_RD_DATA_VALID;wire        S1_RD_DATA_VALID;wire        S2_RD_DATA_VALID;wire        S3_RD_DATA_VALID;
 wire        M0_RD_DATA_READY;wire        M1_RD_DATA_READY;wire        M2_RD_DATA_READY;wire        M3_RD_DATA_READY;    wire        S0_RD_DATA_READY;wire        S1_RD_DATA_READY;wire        S2_RD_DATA_READY;wire        S3_RD_DATA_READY;
 
+wire clk_50M;
+wire clk_200M;
+wire clk_5M;
+wire clk_lock;
+
 wire sys_clk;
-wire sys_rstn;
-
 wire BUS_CLK;
-wire BUS_RSTN;
-
-wire udp_in_clk;
-wire udp_in_rstn;
-
 wire led_clk;
-wire led_rst_n;
-wire [31:0] led;
-
-wire ddr_ref_clk  ;
-wire ddr_rst_n    ;
-wire ddr_init_done;
-
+wire ddr_ref_clk;
 wire jtag_clk;
-wire jtag_rstn;
+
+wire sys_rstn   ;
+wire BUS_RSTN   ;
+wire udp_in_rstn;
+wire led_rst_n  ;
+wire ddr_rst_n  ;
+wire jtag_rstn  ;
+
+wire ddr_init_done;
+wire [31:0] axi_led;
+assign led = {ddr_init_done,axi_led[6:0]};
+
+clk_pll_top the_instance_name (
+  .clkout0(clk_50M),    // output
+  .clkout1(clk_200M),    // output
+  .clkout2(clk_5M),    // output
+  .lock   (clk_lock),          // output
+  .clkin1 (external_clk)       // input
+);
+assign sys_clk     = clk_50M;
+assign led_clk     = clk_50M;
+assign BUS_CLK     = clk_200M;
+assign ddr_ref_clk = clk_50M;
+assign jtag_clk    = clk_5M;
+
+assign sys_rstn    = (external_rstn) & (clk_lock);
+assign BUS_RSTN    = (external_rstn) & (clk_lock);
+assign udp_in_rstn = (external_rstn) & (clk_lock);
+assign led_rst_n   = (external_rstn) & (clk_lock);
+assign ddr_rst_n   = (external_rstn) & (clk_lock);
+assign jtag_rstn   = (external_rstn) & (clk_lock);
 
 axi_udp_master #(
 	.BOARD_MAC 	(BOARD_MAC),
@@ -130,8 +153,8 @@ axi_udp_master #(
 	.DES_MAC   	(DES_MAC  ),
 	.DES_IP    	(DES_IP   )
 )M0(
-	.udp_in_clk             ( udp_in_clk      ),
 	.udp_in_rstn            ( udp_in_rstn     ),
+	.eth_rst_n              ( eth_rst_n       ),
 	.rgmii_rxc            	( rgmii_rxc       ),
 	.rgmii_rx_ctl         	( rgmii_rx_ctl    ),
 	.rgmii_rxd            	( rgmii_rxd       ),
@@ -368,7 +391,7 @@ axi_led_slave #(
 )S2(
     .clk                     (led_clk         ),
     .rstn                    (led_rst_n       ),
-    .led                     (led             ),
+    .led                     (axi_led         ),
     .LED_SLAVE_CLK           (S2_CLK          ),
     .LED_SLAVE_RSTN          (S2_RSTN         ),
     .LED_SLAVE_WR_ADDR_ID    (S2_WR_ADDR_ID   ),

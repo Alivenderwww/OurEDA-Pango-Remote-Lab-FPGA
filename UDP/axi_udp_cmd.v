@@ -53,7 +53,8 @@ localparam WAIT      = 1;
 localparam ADDR      = 2;
 localparam DATA      = 3;
 reg [4:0] head_cnt;
-reg [4:0] state, next_state;
+reg [4:0] state;
+reg [4:0] next_state;
 reg [63:0] head_data;
 //仲裁
 localparam TXIDLE   = 0;
@@ -72,14 +73,14 @@ wire wraddr_fifo_empty;
 reg wraddr_fifo_wr_en;
 reg wraddr_fifo_rd_en;
 reg [63:0] wraddr_fifo_wr_data;
-reg [63:0] wraddr_fifo_rd_data;
+wire[63:0] wraddr_fifo_rd_data;
 reg [4 :0] wraddr_fifo_rd_cnt; //类似状态机
 //rd_addr
 wire rdaddr_fifo_empty;
 reg rdaddr_fifo_wr_en;
 reg rdaddr_fifo_rd_en;
 reg [63:0] rdaddr_fifo_wr_data; 
-reg [63:0] rdaddr_fifo_rd_data;
+wire[63:0] rdaddr_fifo_rd_data;
 reg [4 :0] rdaddr_fifo_rd_cnt; //类似状态机
 //wrback_fifo
 reg [31:0] wrback_fifo_wr_data; 
@@ -105,7 +106,7 @@ wire [31:0] rddata_head;
 reg [4:0] rddata_fifo_rd_cnt;//类似状态机
 reg rddata_tx_start_req;
 wire rddata_fifo_rd_en;
-reg [31:0] rddata_fifo_rd_data;
+wire[31:0] rddata_fifo_rd_data;
 assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
@@ -117,13 +118,13 @@ assign MASTER_RSTN = rstn;
 
 always @(posedge gmii_rx_clk or posedge rstn) begin
     if(!rstn)
-        state <= next_state;
+        state <= IDLE;
     else
         state <= next_state;
 end
 
 always @(*) begin
-    next_state = IDLE;
+    next_state <= IDLE;
     case(state)
         IDLE : begin                                  
             if(cmd_fifo_wr_en) begin
@@ -135,7 +136,7 @@ always @(*) begin
                     next_state <= IDLE; 
             end
             else 
-                next_state = IDLE;
+                next_state <= IDLE;
         end
         WAIT : begin
             if(udp_rx_done)
@@ -155,7 +156,7 @@ always @(*) begin
             else 
                 next_state <= DATA;
         end
-        default : next_state = IDLE;
+        default : next_state <= IDLE;
     endcase
 end
 always @(posedge gmii_rx_clk ) begin
@@ -372,7 +373,7 @@ always @(posedge gmii_rx_clk ) begin
             wrback_tx_start_req <= 0;
         end
         if(wrback_tx_done)begin
-            wrback_fifo_rd_cnt = 0;
+            wrback_fifo_rd_cnt <= 0;
         end
     end
 end

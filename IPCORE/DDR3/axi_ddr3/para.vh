@@ -13,15 +13,13 @@
  
 `define DQ3_EN
 
-`define WE_DQS_EN
+`define CKE_DQS_EN
 
-`define ODT_DQS_EN
-
-`define BA0_DQS_EN
+`define CK_DQS_EN 
 
 `define BA2_EN
 
-`define A10_DQS_EN
+`define A5_DQS_EN
 
 `define A11_DQS_EN
 
