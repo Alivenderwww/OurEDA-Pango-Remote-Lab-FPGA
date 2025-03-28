@@ -15,7 +15,7 @@ module axi_udp_cmd  (
     output wire [31:0] MASTER_WR_DATA      , //写数据通道-数据
     output reg  [ 3:0] MASTER_WR_STRB      , //写数据通道-选通
     output wire        MASTER_WR_DATA_LAST , //写数据通道-last信号
-    output reg         MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire        MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
     input  wire        MASTER_WR_DATA_READY, //写数据通道-握手信号-准备
 
     input  wire [ 1:0] MASTER_WR_BACK_ID   , //写响应通道-ID
@@ -394,15 +394,16 @@ udp_fifo_wrback u_sync_fifo_64x32b_wrback (
 //*****************************axi_wr*******************************//
 //******************************************************************//
 //wrdata
-assign wrdata_fifo_rd_en = wrdata_fifo_rd_en_reg || (MASTER_WR_DATA_READY && MASTER_WR_DATA_VALID && ~MASTER_WR_DATA_LAST);
+assign wrdata_fifo_rd_en = wrdata_fifo_rd_en_reg || (MASTER_WR_DATA_READY && MASTER_WR_DATA_VALID && ~MASTER_WR_DATA_LAST && ~wrdata_fifo_empty);
+assign MASTER_WR_DATA_VALID = (wrdata_fifo_rd_cnt == 2 && (~wrdata_fifo_empty || MASTER_WR_DATA_LAST)); 
 always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         wrdata_fifo_rd_cnt <= 0;
         wrdata_fifo_rd_en_reg <= 0;
         MASTER_WR_STRB <= 4'b1111;
-        MASTER_WR_DATA_VALID <= 0;
+        // MASTER_WR_DATA_VALID <= 0;
     end
-    else if(wrdata_fifo_rd_cnt == 0 && ~wrdata_fifo_empty)begin
+    else if(wrdata_fifo_rd_cnt == 0 && ~wrdata_fifo_empty )begin
         wrdata_fifo_rd_en_reg <= 1;
         wrdata_fifo_rd_cnt <= wrdata_fifo_rd_cnt + 1;
     end
@@ -412,11 +413,17 @@ always @(posedge gmii_rx_clk ) begin
     end
     else if(wrdata_fifo_rd_cnt == 2 )begin
         if(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST )begin
-            MASTER_WR_DATA_VALID <= 0;
+            // MASTER_WR_DATA_VALID <= 0;
             wrdata_fifo_rd_cnt <= 0;
         end
+        else if(MASTER_WR_DATA_LAST)begin
+            // MASTER_WR_DATA_VALID <= 1;
+        end
+        else if(wrdata_fifo_empty)begin
+            // MASTER_WR_DATA_VALID <= 0;
+        end
         else begin
-            MASTER_WR_DATA_VALID <= 1;
+            // MASTER_WR_DATA_VALID <= 1;
             wrdata_fifo_rd_cnt <= wrdata_fifo_rd_cnt;
         end
     end
