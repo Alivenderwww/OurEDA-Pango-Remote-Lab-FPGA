@@ -110,7 +110,7 @@ assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
 
-assign udp_tx_data = (tx_state == TXWRBACK) ? wrback_fifo_rd_data : (wrdata_fifo_rd_cnt == 2 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data ;
+assign udp_tx_data = (tx_state == TXWRBACK) ? wrback_fifo_rd_data : (rddata_fifo_rd_cnt == 3 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data ;
 
 assign MASTER_CLK  = gmii_rx_clk;
 assign MASTER_RSTN = rstn;
@@ -343,7 +343,7 @@ always @(posedge gmii_rx_clk ) begin
     else if(~wrback_fifo_full) begin
         MASTER_WR_BACK_READY <= 1;
         if(MASTER_WR_BACK_READY && MASTER_WR_BACK_VALID) begin
-            wrback_fifo_wr_data <= {8'hff,6'b000000,MASTER_WR_BACK_ID,6'b000000,MASTER_WR_BACK_RESP,8'h00};
+            wrback_fifo_wr_data <= {8'hf0,6'b000000,MASTER_WR_BACK_ID,6'b000000,MASTER_WR_BACK_RESP,8'h00};
             wrback_fifo_wr_en <= 1;
         end
         else begin
@@ -443,7 +443,7 @@ udp_fifo_wr u_sync_fifo_2048x33b_wr (
 assign rddata_head = MASTER_RD_DATA_LAST ? {8'h0F,6'b000000,MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00} : rddata_head;
 assign rddata_fifo_wr_en = MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY;
 
-assign rddata_fifo_rd_en = (rddata_fifo_rd_cnt == 3) ? udp_tx_req : 0 ;
+assign rddata_fifo_rd_en = (rddata_fifo_rd_cnt == 3 || rddata_fifo_rd_cnt == 4) ? udp_tx_req : 0 ;////3或者4不太好，应该用格雷码
 always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         MASTER_RD_DATA_READY <= 0;
@@ -463,11 +463,17 @@ always @(posedge gmii_rx_clk ) begin
     end
     else if(rddata_fifo_rd_cnt == 2 && tx_state == TXRDDATA)begin//回应请求
         rddata_tx_start_req <= 0;
-        if(udp_tx_req)begin
+        if(udp_tx_req)begin //进入下一个状态，把head送上去
             rddata_fifo_rd_cnt <= rddata_fifo_rd_cnt + 1;
         end
     end
-    else if(rddata_fifo_rd_cnt == 3 && rddata_tx_done )begin
+    else if(rddata_fifo_rd_cnt == 3 && tx_state == TXRDDATA)begin//发送head
+        rddata_tx_start_req <= 0;
+        if(udp_tx_req)begin//进入下一个状态，并且把fifo数据送上去
+            rddata_fifo_rd_cnt <= rddata_fifo_rd_cnt + 1;
+        end
+    end
+    else if(rddata_fifo_rd_cnt == 4 && rddata_tx_done )begin
         rddata_fifo_rd_cnt <= 0;
     end
 end
@@ -499,6 +505,8 @@ always @(posedge gmii_rx_clk ) begin
         udp_tx_start <= 0;
     end
     else if(tx_state == TXIDLE)begin
+        rddata_tx_done <= 0;
+        wrback_tx_done <= 0;
         if(wrback_tx_start_req)begin
             udp_tx_byte_num <= wrback_fifo_rd_water_level*4;
             tx_state <= TXWRBACK;
@@ -510,9 +518,7 @@ always @(posedge gmii_rx_clk ) begin
             udp_tx_start <= 1;
         end
         else begin
-            tx_state <= tx_state;
-            rddata_tx_done <= 0;
-            wrback_tx_done <= 0;
+            tx_state <= tx_state;  
         end
     end
     else if(tx_state == TXWRBACK)begin
