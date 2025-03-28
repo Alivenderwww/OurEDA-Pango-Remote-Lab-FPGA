@@ -5,8 +5,8 @@ module axi_udp_master #(
     parameter DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
     parameter DES_IP    = {8'd169,8'd254,8'd103,8'd126} 
 )(
-    input  wire        clk          ,
-    input  wire        rst          ,
+    input  wire        udp_in_clk   , //连什么线？
+    input  wire        udp_in_rstn  , //连什么线？
     input  wire        rgmii_rxc    ,
     input  wire        rgmii_rx_ctl ,
     input  wire [ 3:0] rgmii_rxd    ,
