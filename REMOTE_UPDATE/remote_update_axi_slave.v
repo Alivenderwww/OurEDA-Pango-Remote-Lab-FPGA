@@ -7,7 +7,7 @@ module remote_update_axi_slave #(
     parameter USER_BITSTREAM3_ADDR  = 24'h61_5000           // user bitstream3 start address  ---> 24'h61_5000
 )(
     //___________________其他接口_____________________//
-    input  wire        clk          ,
+    input  wire        clk          , //10Mhz need
     input  wire        rstn         ,
     
     output wire        spi_cs       ,
@@ -116,14 +116,14 @@ wire        time_out_reg            ;
 //--------------------------------------------------------------------------
 // clear is 4KB align , so the bitstream write data is 4KB align 
 //--------------------------------------------------------------------------
-data_ctrl#(
+data_ctrl_slave#(
     .FPGA_VESION                (FPGA_VESION                ),  
     .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
     .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
     .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
     .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
 )
-u_data_ctrl
+data_ctrl_master_inst
 (
     .sys_clk                    (sys_clk                    ),
     .sys_rst_n                  (sys_rst_n                  ),
@@ -191,7 +191,7 @@ spi_top
 )
 u_spi_top
 (
-    .sys_clk                    (sys_clk                    ),
+    .sys_clk                    (clk                    ),
     .sys_rst_n                  (sys_rst_n                  ),
  
     .spi_cs                     (spi_cs                     ),
@@ -246,7 +246,7 @@ ipal_ctrl#(
     .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
 ) 
 u_ipal_ctrl(
-    .sys_clk                    (sys_clk                    ),
+    .sys_clk                    (clk                    ),
     .sys_rst_n                  (sys_rst_n                  ),
 
     .open_sw_num                (open_sw_num                ),
@@ -261,7 +261,7 @@ u_ipal_ctrl(
 
 GTP_CFGCLK u_gtp_cfgclk (
     .CE_N                       (spi_clk_en                 ),   
-    .CLKIN                      (sys_clk                    )  
+    .CLKIN                      (clk                    )  
 );
 //-----------------------------------------------------------------------------------------------------
 
@@ -276,6 +276,12 @@ spi_top控制逻辑（sys_clk时钟域下）
 4. 上位机发送比特流（详见写入比特流-数据流程）
 5. 模块将 bitstream_wr_done 置1，标志写位流完成，写入比特流流程结束
 
+写入比特流-数据流程：
+bitstream_fifo_rd_rdy 非空（ >256字节 ）
+收到 bitstream_fifo_rd_req ， bitstream_fifo_rd_valid立即拉高
+发送完256字节的同时拉高一下eop。rdy拉低。
+
+
 读出比特流-控制流程：
 0. 上位机将 bitstream_rd_num 修改为想要读的应用位流num号
 1. 上位机将 flash_rd_en 置1，模块自动置0
@@ -283,6 +289,11 @@ spi_top控制逻辑（sys_clk时钟域下）
 3. 模块将 bitstream_rd_done 置1，标志读位流完成
 4. 模块同时将 crc_valid 置1，修改 readback_crc 为读位流的CRC校验值，向上级模块提供本次读位流的CRC校验值
 5. 若 crc_check_en 为1，上位机需修改 bs_crc32_ok 为CRC校验结果，模块会接收；否则直接置 bs_crc32_ok = 2'b10。读出比特流流程结束
+
+读出比特流-数据流程：
+flash_rd_data_fifo_afull 为0（至少预留出256字节空余）
+flash_rd_valid 拉高，连续256周期写入数据
+写入后若flash_rd_data_fifo_afull 为1，则等待直至拉低。若为0则继续写入。
 
 单独擦除开关流程：
 0. 上位机将 clear_sw_en 置1 
