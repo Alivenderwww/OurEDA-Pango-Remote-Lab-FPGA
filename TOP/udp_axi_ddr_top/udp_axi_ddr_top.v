@@ -44,10 +44,10 @@ localparam S2_END_ADDR   = 32'h2F_FF_FF_0F;
 localparam S3_START_ADDR = 32'h30_00_00_00;
 localparam S3_END_ADDR   = 32'h3F_FF_FF_0F;
 
-localparam BOARD_MAC     = {48'h12_34_56_78_9a_bc}        ;
-localparam BOARD_IP      = {8'd169,8'd254,8'd109,8'd100}  ;
-localparam DES_MAC       = {48'h84_47_09_4C_47_7C}        ;
-localparam DES_IP        = {8'd169,8'd254,8'd109,8'd183}  ;
+localparam BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ;
+localparam BOARD_IP      = {8'd169,8'd254,8'd103,8'd006}  ;
+localparam DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ;
+localparam DES_IP        = {8'd169,8'd254,8'd103,8'd126}  ;
 
 /*
 装载比特流的顺序：
@@ -136,7 +136,7 @@ clk_pll_top the_instance_name (
 );
 assign sys_clk     = clk_50M;
 assign led_clk     = clk_50M;
-assign BUS_CLK     = clk_200M;
+assign BUS_CLK     = clk_50M;
 assign ddr_ref_clk = clk_50M;
 assign jtag_clk    = clk_5M;
 
