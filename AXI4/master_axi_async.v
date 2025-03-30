@@ -31,7 +31,10 @@ input  wire [31:0] BUS_RD_DATA      , output wire [31:0] MASTER_RD_DATA      ,
 input  wire [ 1:0] BUS_RD_DATA_RESP , output wire [ 1:0] MASTER_RD_DATA_RESP ,
 input  wire        BUS_RD_DATA_LAST , output wire        MASTER_RD_DATA_LAST ,
 input  wire        BUS_RD_DATA_VALID, output wire        MASTER_RD_DATA_VALID,
-output wire        BUS_RD_DATA_READY, input  wire        MASTER_RD_DATA_READY
+output wire        BUS_RD_DATA_READY, input  wire        MASTER_RD_DATA_READY,
+
+//测试用接口
+output wire [4:0] fifo_empty_flag
 );
 
 wire RSTN = BUS_RSTN & MASTER_RSTN;
@@ -254,5 +257,6 @@ master_async_wr_back_fifo master_async_wr_back_fifo_inst(
     .rd_empty(wr_back_fifo_rd_empty) 
 );
 
+assign fifo_empty_flag = {wr_addr_fifo_rd_empty, rd_addr_fifo_rd_empty, wr_data_fifo_rd_empty, rd_data_fifo_rd_empty, wr_back_fifo_rd_empty};
 
 endmodule
