@@ -1,4 +1,5 @@
 module remote_update_axi_slave #(
+    parameter OFFSET_ADDR           = 32'h3000_0000     ,
     parameter FPGA_VESION           = 48'h2024_1119_1943,   // year,month,day,hour,minute;
     parameter DEVICE                = "PG2L100H"        ,   // "PG2L200H":bitstream 8974KB;8c4_000 "PG2L100H":bitstream 3703KB;39e_000 "PG2L50H":bitstream 2065KB;204_400 "PG2L25H":bitstream 1168KB;124_000
     parameter USER_BITSTREAM_CNT    = 2'd1              ,   // user bitstream count,2'd1,2'd2,2'd3 ----> there are 1/2/3 user bitstream in the flash,at least 1 bitstream.
@@ -56,9 +57,6 @@ module remote_update_axi_slave #(
 wire        flash_rd_en             ;
 wire        flash_wr_en             ;
 
-wire        spi_status_rd_en        ;
-wire [ 7:0] spi_status_erorr        ;
-
 wire        flash_cfg_cmd_en        ;
 wire [ 7:0] flash_cfg_cmd           ;
 wire [15:0] flash_cfg_reg_wrdata    ;
@@ -84,7 +82,6 @@ wire        bitstream_valid         ;
 wire        bitstream_eop           ;
 wire        bitstream_fifo_rd_rdy   ;
 
-wire       pll_lock                ;
 wire       clear_bs_done           ;
 wire       clear_sw_done           ;
 
@@ -109,6 +106,7 @@ wire        time_out_reg            ;
 //--------------------------------------------------------------------------
 data_ctrl_slave
 #(
+    .OFFSET_ADDR                (OFFSET_ADDR                ),
     .FPGA_VESION                (FPGA_VESION                ),  
     .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
     .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
@@ -116,7 +114,7 @@ data_ctrl_slave
     .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
 )data_ctrl_master_inst(
     .clk                        (clk                        ),
-    .rst_n                      (rstn                       ),
+    .rstn                      (rstn                       ),
 
     .flash_rd_en                (flash_rd_en                ),
     .flash_wr_en                (flash_wr_en                ),
@@ -130,8 +128,6 @@ data_ctrl_slave
     .hotreset_en                (hotreset_en                ),
     .open_sw_num                (open_sw_num                ),
 
-    .spi_status_rd_en           (spi_status_rd_en           ),
-    .spi_status_erorr           (spi_status_erorr           ),
     .flash_flag_status          (flash_flag_status          ),
     .time_out_reg               (time_out_reg               ),
 
