@@ -149,7 +149,7 @@ assign MASTER_WR_DATA_READY = (RSTN) && ~wr_data_fifo_wr_full;
 
 assign wr_data_fifo_rd_rst  =  ~BUS_RSTN;
 assign wr_data_fifo_rd_en   = (~wr_data_fifo_rd_empty) && ((async_wr_data_fifo_data_dont_care) || (BUS_WR_DATA_VALID && BUS_WR_DATA_READY));
-assign {BUS_WR_DATA, BUS_WR_STRB, BUS_WR_DATA_LAST} = wr_data_fifo_rd_data;
+assign {BUS_WR_DATA, BUS_WR_STRB, BUS_WR_DATA_LAST} = wr_data_fifo_rd_data & ({(32+4+1){BUS_WR_DATA_VALID}});
 assign BUS_WR_DATA_VALID   = (RSTN) && (~async_wr_data_fifo_data_dont_care);
 
 //MASTER写数据通道<===>fifo写通道<===>fifo读通道<===>BUS写数据通道
@@ -192,7 +192,7 @@ assign BUS_RD_DATA_READY    = (RSTN) && ~rd_data_fifo_wr_full;
 
 assign rd_data_fifo_rd_rst  =  ~MASTER_RSTN;
 assign rd_data_fifo_rd_en   = (~rd_data_fifo_rd_empty) && ((async_rd_data_fifo_data_dont_care) || (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY));
-assign {MASTER_RD_BACK_ID, MASTER_RD_DATA, MASTER_RD_DATA_RESP, MASTER_RD_DATA_LAST} = rd_data_fifo_rd_data;
+assign {MASTER_RD_BACK_ID, MASTER_RD_DATA, MASTER_RD_DATA_RESP, MASTER_RD_DATA_LAST} = rd_data_fifo_rd_data & ({(2+32+2+1){MASTER_RD_DATA_VALID}});
 assign MASTER_RD_DATA_VALID = (RSTN) && (~async_rd_data_fifo_data_dont_care);
 
 //BUS读数据通道<===>fifo写通道<===>fifo读通道<===>MASTER读数据通道   !!!!这个通道反过来!!!!

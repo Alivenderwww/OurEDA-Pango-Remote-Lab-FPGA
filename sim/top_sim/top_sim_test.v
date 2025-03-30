@@ -87,14 +87,18 @@ initial begin
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 
     while (~u_udp_axi_ddr_top.S0_RSTN) #1000;
-    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    #10000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
-    #10000;
-    #10000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    #10000;
-    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
-    #10000 u_rgmii_sim.send_wr_data(              3'd6, 32'h0000_0001); //写入
-    #10000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
+    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
+    #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
+    #1000;
+    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
+    #1000;
+    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
+    #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h0000_0001); //写入
+    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
+
+    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
+    #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h1234_5678); //写入
+    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
 end
 
 // outports wire
