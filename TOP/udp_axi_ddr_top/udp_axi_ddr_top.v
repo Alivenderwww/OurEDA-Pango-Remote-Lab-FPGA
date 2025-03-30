@@ -128,7 +128,7 @@ wire jtag_rstn  ;
 wire ddr_init_done;
 wire [31:0] axi_led;
 wire [31:0] m1_recv_led;
-assign led = {m1_recv_led[3:0],axi_led[3:0]};
+assign led = {m1_recv_led[1:0],axi_led[1:0]};
 
 clk_pll_top the_instance_name (
   .clkout0(clk_50M),    // output
@@ -165,7 +165,7 @@ axi_udp_master #(
 	.rgmii_tx_ctl         	( rgmii_tx_ctl    ),
 	.rgmii_txd            	( rgmii_txd       ),
 
-   .udp_led                ( led[2:0]             ),
+   .udp_led                (           ),
 	.MASTER_CLK           	( M0_CLK          ),
 	.MASTER_RSTN          	( M0_RSTN         ),
 	.MASTER_WR_ADDR_ID    	( M0_WR_ADDR_ID   ),
