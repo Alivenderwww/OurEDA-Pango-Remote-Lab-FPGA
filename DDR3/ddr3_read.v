@@ -116,7 +116,7 @@ always @(posedge clk) begin
         rd_id_load       <= 0;
     end else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) begin
         rd_addr_load     <= {SLAVE_RD_ADDR[27:3],3'b000};
-        rd_len_load      <= rd_addr_end[7:3] - SLAVE_RD_ADDR[7:3];
+        rd_len_load      <= rd_addr_end[27:3] - SLAVE_RD_ADDR[27:3];
         rd_id_load       <= SLAVE_RD_ADDR_ID;
     end else if(READ_ADDR_VALID && READ_ADDR_READY) begin
         if(flag_last_trans) begin

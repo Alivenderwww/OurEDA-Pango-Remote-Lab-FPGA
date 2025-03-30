@@ -245,8 +245,11 @@ initial begin
     #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01);
     #300 M0.send_wr_data(32'h00000000, 4'b1111);
     #300 M0.send_wr_data(32'h10000000, 4'b1111);
+    
     #300 M0.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
     #300 M0.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01);
+    $display("here!");
+    #300 M0.send_rd_addr(2'b00, 32'h000000F0, 8'h10, 2'b01);
 end
 
 axi_master_sim M0(

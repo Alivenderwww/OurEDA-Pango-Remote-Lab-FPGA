@@ -228,7 +228,7 @@ begin
             "PG2L100H": subsector_num <= 16'd926; 
             "PG2L50H" : subsector_num <= 16'd517; 
             "PG2L25H" : subsector_num <= 16'd292; 
-            "SIMULATE": subsector_num <= 16'd50; 
+            "SIMULATE": subsector_num <= 16'd15; 
             default: subsector_num <= 16'd926; 
         endcase
     end

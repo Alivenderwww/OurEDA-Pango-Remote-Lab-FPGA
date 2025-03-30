@@ -130,8 +130,8 @@ initial begin
     #1000 M0.send_rd_addr(2'b00, 32'h00000002, 8'd000, 2'b00); //模块将 clear_bs_done 置1，标志擦除完成指示
 
     //100H需要发送926*4KB数据，即3704KB数据，一次255突发数据量为256*4bytes=1KB，因此共传3704次。
-    //SIMULATE设定需要发50*4KB数据
-    for(j=0;j<50*4;j=j+1) begin
+    //SIMULATE设定需要发15*4KB数据
+    for(j=0;j<15*4;j=j+1) begin
         #300 M0.send_wr_addr(2'b00, 32'h00000001, 8'd255, 2'b00);
         #300 M0.send_wr_data(j*256, 4'b1111);
     end
@@ -140,10 +140,10 @@ initial begin
     #1000 M0.send_rd_addr(2'b00, 32'h00000002, 8'd000, 2'b00);
     #1000 M0.send_rd_addr(2'b00, 32'h00000002, 8'd000, 2'b00); //模块将 bitstream_wr_done 置1，标志写位流完成，写入比特流流程结束
 
-    #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd000, 2'b01);
+    #300 M0.send_wr_addr(2'b00, 32'h00000003, 8'd000, 2'b01);
     #300 M0.send_wr_data(32'h00_00_01_07, 4'b1111); //bs_crc32_ok设置为无效；crc_check_en置0不校验；bitstream_up2cpu_en为1回读；上位机将 bitstream_rd_num 修改为想要读的应用位流num号；上位机将 flash_rd_en 置1，模块自动置0
 
-    for(j=0;j<50*4;j=j+1) begin
+    for(j=0;j<15*4;j=j+1) begin
         #300 M0.send_rd_addr(2'b00, 32'h00000004, 8'd255, 2'b00); //回读比特流
     end
 

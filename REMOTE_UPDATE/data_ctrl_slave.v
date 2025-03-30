@@ -353,7 +353,7 @@ end
 
 //读通道的VALID信号
 always @(*) begin
-    if(~rstn || (cu_rd_st == ST_WR_IDLE)) SLAVE_RD_DATA_VALID <= 0;
+    if(~rstn || (cu_rd_st == ST_RD_IDLE)) SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         case (rd_addr)
             REAL_RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA_VALID <= (rd_fifo_rd_data_valid);
@@ -364,7 +364,7 @@ end
 
 //读通道的DATA选通
 always @(*) begin
-    if(~rstn || (cu_rd_st == ST_WR_IDLE)) SLAVE_RD_DATA <= 0;
+    if(~rstn || (cu_rd_st == ST_RD_IDLE)) SLAVE_RD_DATA <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         case (rd_addr)
             REAL_RU_WRBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{5'b0, bitstream_wr_num, flash_wr_en}  };
