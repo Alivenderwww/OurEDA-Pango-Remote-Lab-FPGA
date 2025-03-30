@@ -11,6 +11,7 @@ input  wire        external_rstn,
 input  wire [3:0]  btn          ,
 //led io
 output wire [3:0]  led          ,
+output wire [7:0]  pmod_led     ,//低电平亮
 //jtag io
 output wire        tck          ,
 output wire        tms          ,
