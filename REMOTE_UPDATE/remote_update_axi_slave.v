@@ -23,17 +23,17 @@ module remote_update_axi_slave #(
     input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
     input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型
     input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
-    output reg         SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
+    output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
 
     input  wire [31:0] SLAVE_WR_DATA      , //写数据通道-数据
     input  wire [ 3:0] SLAVE_WR_STRB      , //写数据通道-选通
     input  wire        SLAVE_WR_DATA_LAST , //写数据通道-last信号
     input  wire        SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
-    output reg         SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+    output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    output reg  [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
-    output reg  [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应 //SLAVE_WR_DATA_LAST拉高的同时或者之后 00 01正常 10写错误 11地址有问题找不到从机
-    output reg         SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
+    output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应 //SLAVE_WR_DATA_LAST拉高的同时或者之后 00 01正常 10写错误 11地址有问题找不到从机
+    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
     input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
 
     input  wire [ 3:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
@@ -41,25 +41,18 @@ module remote_update_axi_slave #(
     input  wire [ 7:0] SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
     input  wire [ 1:0] SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。
     input  wire        SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
-    output reg         SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
+    output wire        SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
 
-    output reg  [ 3:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
-    output reg  [31:0] SLAVE_RD_DATA      , //读数据通道-数据
-    output reg  [ 1:0] SLAVE_RD_DATA_RESP , //读数据通道-响应
-    output reg         SLAVE_RD_DATA_LAST , //读数据通道-last信号
-    output reg         SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
+    output wire [ 3:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
+    output wire [31:0] SLAVE_RD_DATA      , //读数据通道-数据
+    output wire [ 1:0] SLAVE_RD_DATA_RESP , //读数据通道-响应
+    output wire        SLAVE_RD_DATA_LAST , //读数据通道-last信号
+    output wire        SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
     input  wire        SLAVE_RD_DATA_READY  //读数据通道-握手信号-准备
 );
 
 
 //-----------------------------------------------------------
-wire [ 7:0] rx_data                 ;
-wire        rx_valid                ;
-     
-wire [ 7:0] tx_data                 ;
-wire        tx_valid                ;
-wire        tx_ready                ;
-
 wire        flash_rd_en             ;
 wire        flash_wr_en             ;
 
@@ -92,8 +85,6 @@ wire        bitstream_eop           ;
 wire        bitstream_fifo_rd_rdy   ;
 
 wire       pll_lock                ;
-wire       sys_clk                 ;
-wire       sys_clk_50m             ;
 wire       clear_bs_done           ;
 wire       clear_sw_done           ;
 
@@ -116,24 +107,16 @@ wire        time_out_reg            ;
 //--------------------------------------------------------------------------
 // clear is 4KB align , so the bitstream write data is 4KB align 
 //--------------------------------------------------------------------------
-data_ctrl_slave#(
+data_ctrl_slave
+#(
     .FPGA_VESION                (FPGA_VESION                ),  
     .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
     .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
     .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
     .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
-)
-data_ctrl_master_inst
-(
-    .sys_clk                    (sys_clk                    ),
-    .sys_rst_n                  (sys_rst_n                  ),
-
-    .rx_data                    (rx_data                    ),
-    .rx_valid                   (rx_valid                   ),
-
-    .tx_data                    (tx_data                    ),
-    .tx_valid                   (tx_valid                   ),
-    .tx_ready                   (tx_ready                   ),
+)data_ctrl_master_inst(
+    .clk                        (clk                        ),
+    .rst_n                      (rstn                       ),
 
     .flash_rd_en                (flash_rd_en                ),
     .flash_wr_en                (flash_wr_en                ),
@@ -141,11 +124,11 @@ data_ctrl_master_inst
     .bitstream_rd_num           (bitstream_rd_num           ),
     .bs_crc32_ok                (bs_crc32_ok                ),
     .write_sw_code_en           (write_sw_code_en           ),
-    .bitstream_up2cpu_en_out    (bitstream_up2cpu_en        ),
-    .crc_check_en_out           (crc_check_en               ),
-    .clear_sw_en_out            (clear_sw_en                ),
+    .bitstream_up2cpu_en        (bitstream_up2cpu_en        ),
+    .crc_check_en               (crc_check_en               ),
+    .clear_sw_en                (clear_sw_en                ),
     .hotreset_en                (hotreset_en                ),
-    .open_sw_num_out            (open_sw_num                ),
+    .open_sw_num                (open_sw_num                ),
 
     .spi_status_rd_en           (spi_status_rd_en           ),
     .spi_status_erorr           (spi_status_erorr           ),
@@ -176,7 +159,37 @@ data_ctrl_master_inst
     .bitstream_data             (bitstream_data             ),
     .bitstream_valid            (bitstream_valid            ),
     .bitstream_eop              (bitstream_eop              ),
-    .bitstream_fifo_rd_rdy      (bitstream_fifo_rd_rdy      )
+    .bitstream_fifo_rd_rdy      (bitstream_fifo_rd_rdy      ),
+
+    .SLAVE_CLK                  (SLAVE_CLK                  ),
+    .SLAVE_RSTN                 (SLAVE_RSTN                 ),
+    .SLAVE_WR_ADDR_ID           (SLAVE_WR_ADDR_ID           ),
+    .SLAVE_WR_ADDR              (SLAVE_WR_ADDR              ),
+    .SLAVE_WR_ADDR_LEN          (SLAVE_WR_ADDR_LEN          ),
+    .SLAVE_WR_ADDR_BURST        (SLAVE_WR_ADDR_BURST        ),
+    .SLAVE_WR_ADDR_VALID        (SLAVE_WR_ADDR_VALID        ),
+    .SLAVE_WR_ADDR_READY        (SLAVE_WR_ADDR_READY        ),
+    .SLAVE_WR_DATA              (SLAVE_WR_DATA              ),
+    .SLAVE_WR_STRB              (SLAVE_WR_STRB              ),
+    .SLAVE_WR_DATA_LAST         (SLAVE_WR_DATA_LAST         ),
+    .SLAVE_WR_DATA_VALID        (SLAVE_WR_DATA_VALID        ),
+    .SLAVE_WR_DATA_READY        (SLAVE_WR_DATA_READY        ),
+    .SLAVE_WR_BACK_ID           (SLAVE_WR_BACK_ID           ),
+    .SLAVE_WR_BACK_RESP         (SLAVE_WR_BACK_RESP         ),
+    .SLAVE_WR_BACK_VALID        (SLAVE_WR_BACK_VALID        ),
+    .SLAVE_WR_BACK_READY        (SLAVE_WR_BACK_READY        ),
+    .SLAVE_RD_ADDR_ID           (SLAVE_RD_ADDR_ID           ),
+    .SLAVE_RD_ADDR              (SLAVE_RD_ADDR              ),
+    .SLAVE_RD_ADDR_LEN          (SLAVE_RD_ADDR_LEN          ),
+    .SLAVE_RD_ADDR_BURST        (SLAVE_RD_ADDR_BURST        ),
+    .SLAVE_RD_ADDR_VALID        (SLAVE_RD_ADDR_VALID        ),
+    .SLAVE_RD_ADDR_READY        (SLAVE_RD_ADDR_READY        ),
+    .SLAVE_RD_BACK_ID           (SLAVE_RD_BACK_ID           ),
+    .SLAVE_RD_DATA              (SLAVE_RD_DATA              ),
+    .SLAVE_RD_DATA_RESP         (SLAVE_RD_DATA_RESP         ),
+    .SLAVE_RD_DATA_LAST         (SLAVE_RD_DATA_LAST         ),
+    .SLAVE_RD_DATA_VALID        (SLAVE_RD_DATA_VALID        ),
+    .SLAVE_RD_DATA_READY        (SLAVE_RD_DATA_READY        )
 );
 
 
@@ -192,7 +205,7 @@ spi_top
 u_spi_top
 (
     .sys_clk                    (clk                    ),
-    .sys_rst_n                  (sys_rst_n                  ),
+    .sys_rst_n                  (rstn                   ),
  
     .spi_cs                     (spi_cs                     ),
     .spi_clk_en                 (spi_clk_en                 ),
@@ -244,10 +257,10 @@ ipal_ctrl#(
     .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
     .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
     .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
-) 
+)
 u_ipal_ctrl(
     .sys_clk                    (clk                    ),
-    .sys_rst_n                  (sys_rst_n                  ),
+    .sys_rst_n                  (rstn                   ),
 
     .open_sw_num                (open_sw_num                ),
     .ipal_busy                  (ipal_busy                  ),
@@ -285,7 +298,7 @@ bitstream_fifo_rd_rdy 非空（ >256字节 ）
 读出比特流-控制流程：
 0. 上位机将 bitstream_rd_num 修改为想要读的应用位流num号
 1. 上位机将 flash_rd_en 置1，模块自动置0
-2. 等待读位流完成，如果bitstream_up2cpu_en为1，模块会同时把位流送进回读数据接口（详见读出比特流-数据流程）
+2. 等待读位流完成，如果 bitstream_up2cpu_en 为1，模块会同时把位流送进回读数据接口（详见读出比特流-数据流程）
 3. 模块将 bitstream_rd_done 置1，标志读位流完成
 4. 模块同时将 crc_valid 置1，修改 readback_crc 为读位流的CRC校验值，向上级模块提供本次读位流的CRC校验值
 5. 若 crc_check_en 为1，上位机需修改 bs_crc32_ok 为CRC校验结果，模块会接收；否则直接置 bs_crc32_ok = 2'b10。读出比特流流程结束
@@ -301,9 +314,10 @@ flash_rd_valid 拉高，连续256周期写入数据
 2. 模块将 clear_sw_done 置1，单独擦除开关流程结束
 
 写开关流程：
-0. 上位机将 write_sw_code_en 置1 
-1. 等待打开开关程序
-2. 模块将 open_sw_code_done 置1，写开关流程结束
+0. 配置 open_sw_num
+1. 上位机将 write_sw_code_en 置1 
+2. 等待打开开关程序
+3. 模块将 open_sw_code_done 置1，写开关流程结束
 
 热启动流程：
 0. 若 crc_check_en 为1，则会根据 bs_crc32_ok 选择启动哪一个位流。

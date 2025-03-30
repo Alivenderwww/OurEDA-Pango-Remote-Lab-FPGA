@@ -163,7 +163,7 @@ always @(posedge clk) begin
 end
 
 always @(posedge clk) begin
-    if((~rstn) || (cu_wr_st == ST_RD_IDLE)) trans_num <= 0;
+    if((~rstn) || (cu_rd_st == ST_RD_IDLE)) trans_num <= 0;
     else if(LED_SLAVE_RD_DATA_READY && LED_SLAVE_RD_DATA_VALID) trans_num <= trans_num + 1;
     else trans_num <= trans_num;
 end
