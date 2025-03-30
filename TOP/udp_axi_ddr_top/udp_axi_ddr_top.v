@@ -52,6 +52,7 @@ localparam S2_END_ADDR   = 32'h2F_FF_FF_0F;
 localparam S3_START_ADDR = 32'h30_00_00_00;
 localparam S3_END_ADDR   = 32'h3F_FF_FF_0F;
 
+assign eth_rst_n = 1;
 /*
 装载比特流的顺序：
 0. CMD_JTAG_CLOSE_TEST                  0
@@ -160,7 +161,7 @@ axi_udp_master #(
 	.DES_IP    	(DES_IP   )
 )M0(
 	.udp_in_rstn            ( udp_in_rstn     ),
-	.eth_rst_n              ( eth_rst_n       ),
+	.eth_rst_n              ( 1               ),
 	.rgmii_rxc            	( rgmii_rxc       ),
 	.rgmii_rx_ctl         	( rgmii_rx_ctl    ),
 	.rgmii_rxd            	( rgmii_rxd       ),
