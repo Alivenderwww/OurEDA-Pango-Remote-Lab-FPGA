@@ -1,0 +1,45 @@
+--/example_design                              //设计实例包含的文件
+  -- /bench                                    //_top_tb.v和ddr仿真模型
+     -- /mem                                   //ddr仿真模型
+        -- 2048Mb_mobile_ddr_parameters.vh     //lpddr仿真模型的配置文件
+        -- ddr2.v                              //ddr2仿真模型
+        -- ddr2_parameters.vh                  //ddr2仿真模型的配置文件
+        -- ddr3.v                              //ddr3仿真模型
+        -- ddr3_parameters.vh                  //ddr3仿真模型的配置文件
+        -- mobile_ddr.v                        //lpddr仿真模型
+  -- /rtl                                      //设计实例包含的RTL文件，HMIC IP以外的代码文件
+     -- ddr_test.v                             //Example Design顶层文件，包含IP和其他外围模块
+     -- axi_bist_top_v1_0.v               //AXI bist顶层模块
+     -- prbs31_128bit_v1_0.v            //prbs模块，用于产生随机序列
+     -- prbs15_64bit_v1_0.v              //prbs模块，用于产生随机序列
+     -- test_main_ctrl_v1_0.v            //主控制模块，用于产生随机读写指令
+     -- test_rd_ctrl_v1_0.v                 //AXI 接口的读控制模块，控制读指令和检验读数据
+     -- test_wr_ctrl_v1_0.v                 //AXI 接口的写控制模块，控制写指令和产生写数据
+     -- dfi_bist_top_v1_0.v                //DFI bist顶层模块
+     -- dfi_cmd_gen_v1_0.v              //DFI 命令生成模块
+     -- dfi_rddata_check_v1_0.v        //DFI 数据比对模块
+     -- uart_rd_lock.v                        //串口读数据锁存
+     -- state_group_mux_v1_0.v        //DEBUG数据BUS
+     -- /adc                                   //adc模块
+        -- adc_ctrl.v                          //adc控制
+     -- /uart_ctrl_32bit                       //串口模块
+     -- /drm_fifo                              //标准AXI4接口fifo
+--/pnr                                         //IP Example Design的综合布局布线工程
+     -- ddr_test.fdc                           //PDS约束文件
+     -- prj_name.pds                           //IP Example Design PDS工程文件
+     -- example_design.f                       //Example Design的filelist
+     -- gtp.f                                     //GTP模型文件的filelist
+     -- rtl.f                                       //CONTROLLER+PHY时rtl代码的filelist
+--/rtl                                         //IP包含的设计代码
+  -- /pll                                      //PLL模块的代码
+  -- /ddrphy                                   //PHY层代码
+  -- /mcdq                                     //controller代码
+--/sim                                         //simulation目录
+  -- /modelsim
+      -- ctrl_phy_sim.tcl                    //用于仿真运行的.tcl文件
+      -- ctrl_phy_sim_linux.tcl               //用于linux环境下仿真运行的.tcl文件
+      -- sim_file_list.f                       //用于仿真的filelist
+  -- /vcs
+      -- makefile                              //用于仿真运行的.tcl文件
+      -- sim_file_list.f                       //用于仿真的filelist
+--/sim_lib                                     //simulation仿真库
