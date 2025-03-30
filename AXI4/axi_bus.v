@@ -79,7 +79,10 @@ input  wire [31:0] S0_RD_DATA      ,    input  wire [31:0] S1_RD_DATA      ,    
 input  wire [ 1:0] S0_RD_DATA_RESP ,    input  wire [ 1:0] S1_RD_DATA_RESP ,    input  wire [ 1:0] S2_RD_DATA_RESP ,    input  wire [ 1:0] S3_RD_DATA_RESP ,
 input  wire        S0_RD_DATA_LAST ,    input  wire        S1_RD_DATA_LAST ,    input  wire        S2_RD_DATA_LAST ,    input  wire        S3_RD_DATA_LAST ,
 input  wire        S0_RD_DATA_VALID,    input  wire        S1_RD_DATA_VALID,    input  wire        S2_RD_DATA_VALID,    input  wire        S3_RD_DATA_VALID,
-output wire        S0_RD_DATA_READY,    output wire        S1_RD_DATA_READY,    output wire        S2_RD_DATA_READY,    output wire        S3_RD_DATA_READY
+output wire        S0_RD_DATA_READY,    output wire        S1_RD_DATA_READY,    output wire        S2_RD_DATA_READY,    output wire        S3_RD_DATA_READY,
+    
+output wire [4:0] M0_fifo_empty_flag, M1_fifo_empty_flag, M2_fifo_empty_flag, M3_fifo_empty_flag,
+output wire [4:0] S0_fifo_empty_flag, S1_fifo_empty_flag, S2_fifo_empty_flag, S3_fifo_empty_flag
 );
 
 wire [ 1:0] M0_BUS_WR_ADDR_ID   ;     wire [ 1:0] M1_BUS_WR_ADDR_ID   ;     wire [ 1:0] M2_BUS_WR_ADDR_ID   ;     wire [ 1:0] M3_BUS_WR_ADDR_ID   ; wire [ 3:0] S0_BUS_WR_ADDR_ID   ;     wire [ 3:0] S1_BUS_WR_ADDR_ID   ;     wire [ 3:0] S2_BUS_WR_ADDR_ID   ;     wire [ 3:0] S3_BUS_WR_ADDR_ID   ;
@@ -231,7 +234,10 @@ axi_clock_converter axi_clock_converter_inst(
     .S0_RD_DATA_RESP      (S0_RD_DATA_RESP      ),    .S1_RD_DATA_RESP      (S1_RD_DATA_RESP      ),    .S2_RD_DATA_RESP      (S2_RD_DATA_RESP      ),    .S3_RD_DATA_RESP      (S3_RD_DATA_RESP      ),
     .S0_RD_DATA_LAST      (S0_RD_DATA_LAST      ),    .S1_RD_DATA_LAST      (S1_RD_DATA_LAST      ),    .S2_RD_DATA_LAST      (S2_RD_DATA_LAST      ),    .S3_RD_DATA_LAST      (S3_RD_DATA_LAST      ),
     .S0_RD_DATA_VALID     (S0_RD_DATA_VALID     ),    .S1_RD_DATA_VALID     (S1_RD_DATA_VALID     ),    .S2_RD_DATA_VALID     (S2_RD_DATA_VALID     ),    .S3_RD_DATA_VALID     (S3_RD_DATA_VALID     ),
-    .S0_RD_DATA_READY     (S0_RD_DATA_READY     ),    .S1_RD_DATA_READY     (S1_RD_DATA_READY     ),    .S2_RD_DATA_READY     (S2_RD_DATA_READY     ),    .S3_RD_DATA_READY     (S3_RD_DATA_READY     )
+    .S0_RD_DATA_READY     (S0_RD_DATA_READY     ),    .S1_RD_DATA_READY     (S1_RD_DATA_READY     ),    .S2_RD_DATA_READY     (S2_RD_DATA_READY     ),    .S3_RD_DATA_READY     (S3_RD_DATA_READY     ),
+
+    .M0_fifo_empty_flag(M0_fifo_empty_flag), .M1_fifo_empty_flag(M1_fifo_empty_flag), .M2_fifo_empty_flag(M2_fifo_empty_flag), .M3_fifo_empty_flag(M3_fifo_empty_flag),
+    .S0_fifo_empty_flag(S0_fifo_empty_flag), .S1_fifo_empty_flag(S1_fifo_empty_flag), .S2_fifo_empty_flag(S2_fifo_empty_flag), .S3_fifo_empty_flag(S3_fifo_empty_flag)
 );
 
 axi_interconnect  #(

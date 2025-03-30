@@ -138,7 +138,10 @@ module axi_clock_converter (
     input  wire [ 1:0] S0_RD_DATA_RESP ,    input  wire [ 1:0] S1_RD_DATA_RESP ,    input  wire [ 1:0] S2_RD_DATA_RESP ,    input  wire [ 1:0] S3_RD_DATA_RESP ,
     input  wire        S0_RD_DATA_LAST ,    input  wire        S1_RD_DATA_LAST ,    input  wire        S2_RD_DATA_LAST ,    input  wire        S3_RD_DATA_LAST ,
     input  wire        S0_RD_DATA_VALID,    input  wire        S1_RD_DATA_VALID,    input  wire        S2_RD_DATA_VALID,    input  wire        S3_RD_DATA_VALID,
-    output wire        S0_RD_DATA_READY,    output wire        S1_RD_DATA_READY,    output wire        S2_RD_DATA_READY,    output wire        S3_RD_DATA_READY
+    output wire        S0_RD_DATA_READY,    output wire        S1_RD_DATA_READY,    output wire        S2_RD_DATA_READY,    output wire        S3_RD_DATA_READY,
+    
+    output wire [4:0] M0_fifo_empty_flag, M1_fifo_empty_flag, M2_fifo_empty_flag, M3_fifo_empty_flag,
+    output wire [4:0] S0_fifo_empty_flag, S1_fifo_empty_flag, S2_fifo_empty_flag, S3_fifo_empty_flag
 );
 /*
 AXI CLOCK CONVERTER模块，集中处理各个模块的时钟域转换
@@ -174,7 +177,8 @@ master_axi_async m0_axi_async(
     .BUS_RD_DATA_RESP       (M0_BUS_RD_DATA_RESP ), /* <===> */ .MASTER_RD_DATA_RESP     (M0_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (M0_BUS_RD_DATA_LAST ), /* <===> */ .MASTER_RD_DATA_LAST     (M0_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (M0_BUS_RD_DATA_VALID), /* <===> */ .MASTER_RD_DATA_VALID    (M0_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (M0_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M0_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (M0_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M0_RD_DATA_READY),
+    .fifo_empty_flag        (M0_fifo_empty_flag)
 );
 
 master_axi_async m1_axi_async(
@@ -206,7 +210,8 @@ master_axi_async m1_axi_async(
     .BUS_RD_DATA_RESP       (M1_BUS_RD_DATA_RESP ), /* <===> */ .MASTER_RD_DATA_RESP     (M1_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (M1_BUS_RD_DATA_LAST ), /* <===> */ .MASTER_RD_DATA_LAST     (M1_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (M1_BUS_RD_DATA_VALID), /* <===> */ .MASTER_RD_DATA_VALID    (M1_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (M1_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M1_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (M1_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M1_RD_DATA_READY),
+    .fifo_empty_flag        (M1_fifo_empty_flag)
 );
 
 master_axi_async m2_axi_async(
@@ -238,7 +243,8 @@ master_axi_async m2_axi_async(
     .BUS_RD_DATA_RESP       (M2_BUS_RD_DATA_RESP ), /* <===> */ .MASTER_RD_DATA_RESP     (M2_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (M2_BUS_RD_DATA_LAST ), /* <===> */ .MASTER_RD_DATA_LAST     (M2_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (M2_BUS_RD_DATA_VALID), /* <===> */ .MASTER_RD_DATA_VALID    (M2_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (M2_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M2_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (M2_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M2_RD_DATA_READY),
+    .fifo_empty_flag        (M2_fifo_empty_flag)
 );
 
 master_axi_async m3_axi_async(
@@ -270,7 +276,8 @@ master_axi_async m3_axi_async(
     .BUS_RD_DATA_RESP       (M3_BUS_RD_DATA_RESP ), /* <===> */ .MASTER_RD_DATA_RESP     (M3_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (M3_BUS_RD_DATA_LAST ), /* <===> */ .MASTER_RD_DATA_LAST     (M3_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (M3_BUS_RD_DATA_VALID), /* <===> */ .MASTER_RD_DATA_VALID    (M3_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (M3_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M3_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (M3_BUS_RD_DATA_READY), /* <===> */ .MASTER_RD_DATA_READY    (M3_RD_DATA_READY),
+    .fifo_empty_flag        (M3_fifo_empty_flag)
 );
 
 slave_axi_async s0_axi_async(
@@ -302,7 +309,8 @@ slave_axi_async s0_axi_async(
     .BUS_RD_DATA_RESP       (S0_BUS_RD_DATA_RESP ), /* <===> */ .SLAVE_RD_DATA_RESP     (S0_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (S0_BUS_RD_DATA_LAST ), /* <===> */ .SLAVE_RD_DATA_LAST     (S0_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (S0_BUS_RD_DATA_VALID), /* <===> */ .SLAVE_RD_DATA_VALID    (S0_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (S0_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S0_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (S0_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S0_RD_DATA_READY),
+    .fifo_empty_flag        (S0_fifo_empty_flag)
 );
 
 slave_axi_async s1_axi_async(
@@ -334,7 +342,8 @@ slave_axi_async s1_axi_async(
     .BUS_RD_DATA_RESP       (S1_BUS_RD_DATA_RESP ), /* <===> */ .SLAVE_RD_DATA_RESP     (S1_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (S1_BUS_RD_DATA_LAST ), /* <===> */ .SLAVE_RD_DATA_LAST     (S1_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (S1_BUS_RD_DATA_VALID), /* <===> */ .SLAVE_RD_DATA_VALID    (S1_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (S1_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S1_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (S1_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S1_RD_DATA_READY),
+    .fifo_empty_flag        (S1_fifo_empty_flag)
 );
 
 slave_axi_async s2_axi_async(
@@ -366,7 +375,8 @@ slave_axi_async s2_axi_async(
     .BUS_RD_DATA_RESP       (S2_BUS_RD_DATA_RESP ), /* <===> */ .SLAVE_RD_DATA_RESP     (S2_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (S2_BUS_RD_DATA_LAST ), /* <===> */ .SLAVE_RD_DATA_LAST     (S2_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (S2_BUS_RD_DATA_VALID), /* <===> */ .SLAVE_RD_DATA_VALID    (S2_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (S2_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S2_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (S2_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S2_RD_DATA_READY),
+    .fifo_empty_flag        (S2_fifo_empty_flag)
 );
 
 slave_axi_async s3_axi_async(
@@ -398,7 +408,8 @@ slave_axi_async s3_axi_async(
     .BUS_RD_DATA_RESP       (S3_BUS_RD_DATA_RESP ), /* <===> */ .SLAVE_RD_DATA_RESP     (S3_RD_DATA_RESP ),
     .BUS_RD_DATA_LAST       (S3_BUS_RD_DATA_LAST ), /* <===> */ .SLAVE_RD_DATA_LAST     (S3_RD_DATA_LAST ),
     .BUS_RD_DATA_VALID      (S3_BUS_RD_DATA_VALID), /* <===> */ .SLAVE_RD_DATA_VALID    (S3_RD_DATA_VALID),
-    .BUS_RD_DATA_READY      (S3_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S3_RD_DATA_READY)
+    .BUS_RD_DATA_READY      (S3_BUS_RD_DATA_READY), /* <===> */ .SLAVE_RD_DATA_READY    (S3_RD_DATA_READY),
+    .fifo_empty_flag        (S3_fifo_empty_flag)
 );
 
 endmodule

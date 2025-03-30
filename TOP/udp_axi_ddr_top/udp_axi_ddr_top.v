@@ -10,7 +10,8 @@ input  wire        external_rstn,
 //btn io
 input  wire [3:0]  btn          ,
 //led io
-output wire [3:0]  led          ,
+output wire [7:0]  led8         ,
+output wire [3:0]  led4         ,
 //jtag io
 output wire        tck          ,
 output wire        tms          ,
@@ -128,7 +129,9 @@ wire jtag_rstn  ;
 wire ddr_init_done;
 wire [31:0] axi_led;
 wire [31:0] m1_recv_led;
-assign led = {m1_recv_led[1:0],axi_led[1:0]};
+
+wire [4:0] M0_fifo_empty_flag, M1_fifo_empty_flag, M2_fifo_empty_flag, M3_fifo_empty_flag;
+wire [4:0] S0_fifo_empty_flag, S1_fifo_empty_flag, S2_fifo_empty_flag, S3_fifo_empty_flag;
 
 clk_pll_top the_instance_name (
   .clkout0(clk_50M),    // output
@@ -197,13 +200,10 @@ axi_udp_master #(
 	.MASTER_RD_DATA_READY 	( M0_RD_DATA_READY)
 );
 
-axi_btn_master M1(
+
+axi_master_default M1(
     .clk                  (sys_clk          ),
     .rstn                 (sys_rstn         ),
-    .btn                  (btn              ),
-    .recv_data            (m1_recv_led      ),
-
-
     .MASTER_CLK           (M1_CLK           ),
     .MASTER_RSTN          (M1_RSTN          ),
     .MASTER_WR_ADDR_ID    (M1_WR_ADDR_ID    ),
@@ -400,7 +400,7 @@ axi_led_slave #(
 )S2(
     .clk                     (led_clk         ),
     .rstn                    (led_rst_n       ),
-    .led                     (axi_led         ),
+    .led                     (          ),
     .LED_SLAVE_CLK           (S2_CLK          ),
     .LED_SLAVE_RSTN          (S2_RSTN         ),
     .LED_SLAVE_WR_ADDR_ID    (S2_WR_ADDR_ID   ),
@@ -536,7 +536,45 @@ axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设置FIFO
 .S0_RD_DATA_RESP (S0_RD_DATA_RESP ),   .S1_RD_DATA_RESP (S1_RD_DATA_RESP ),    .S2_RD_DATA_RESP (S2_RD_DATA_RESP ),    .S3_RD_DATA_RESP (S3_RD_DATA_RESP ),
 .S0_RD_DATA_LAST (S0_RD_DATA_LAST ),   .S1_RD_DATA_LAST (S1_RD_DATA_LAST ),    .S2_RD_DATA_LAST (S2_RD_DATA_LAST ),    .S3_RD_DATA_LAST (S3_RD_DATA_LAST ),
 .S0_RD_DATA_VALID(S0_RD_DATA_VALID),   .S1_RD_DATA_VALID(S1_RD_DATA_VALID),    .S2_RD_DATA_VALID(S2_RD_DATA_VALID),    .S3_RD_DATA_VALID(S3_RD_DATA_VALID),
-.S0_RD_DATA_READY(S0_RD_DATA_READY),   .S1_RD_DATA_READY(S1_RD_DATA_READY),    .S2_RD_DATA_READY(S2_RD_DATA_READY),    .S3_RD_DATA_READY(S3_RD_DATA_READY)
+.S0_RD_DATA_READY(S0_RD_DATA_READY),   .S1_RD_DATA_READY(S1_RD_DATA_READY),    .S2_RD_DATA_READY(S2_RD_DATA_READY),    .S3_RD_DATA_READY(S3_RD_DATA_READY),
+
+.M0_fifo_empty_flag(M0_fifo_empty_flag), .M1_fifo_empty_flag(M1_fifo_empty_flag), .M2_fifo_empty_flag(M2_fifo_empty_flag), .M3_fifo_empty_flag(M3_fifo_empty_flag),
+.S0_fifo_empty_flag(S0_fifo_empty_flag), .S1_fifo_empty_flag(S1_fifo_empty_flag), .S2_fifo_empty_flag(S2_fifo_empty_flag), .S3_fifo_empty_flag(S3_fifo_empty_flag)
 );
+
+// outports wire
+wire [7:0]      	led;
+wire [3:0]      	bcd;
+
+wire [16*8-1:0] data_in;
+assign data_in[(8*0)+:8]    = 0;
+assign data_in[(8*1)+:8]    = 0;
+assign data_in[(8*2)+:8]    = 0;
+assign data_in[(8*3)+:8]    = 0;
+assign data_in[(8*4)+:8]    = 0;
+assign data_in[(8*5)+:8]    = 0;
+assign data_in[(8*6)+:8]    = 0;
+assign data_in[(8*7)+:8]    = 0;
+assign data_in[(8*8)+:8]    = 0;
+assign data_in[(8*9)+:8]    = 0;
+assign data_in[(8*10)+:8]   = 0;
+assign data_in[(8*11)+:8]   = 0;
+assign data_in[(8*12)+:8]   = 0;
+assign data_in[(8*13)+:8]   = 0;
+assign data_in[(8*14)+:8]   = 0;
+assign data_in[(8*15)+:8]   = 0;
+
+led8_btn u_led8_btn(
+	.clk      	( sys_clk   ),
+	.rstn     	( sys_rstn  ),
+	.data_in  	( data_in   ),
+	.btn_up   	( btn[0]    ),
+	.btn_down 	( btn[1]    ),
+	.led      	(           ),
+	.led_n    	( led8      ),
+	.bcd      	(           ),
+	.bcd_n    	( led4      )
+);
+
 
 endmodule
