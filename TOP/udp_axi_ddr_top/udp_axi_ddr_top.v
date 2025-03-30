@@ -168,7 +168,7 @@ axi_udp_master #(
 	.rgmii_tx_ctl         	( rgmii_tx_ctl    ),
 	.rgmii_txd            	( rgmii_txd       ),
 
-   .udp_led                (           ),
+    .udp_led                (                 ),
 	.MASTER_CLK           	( M0_CLK          ),
 	.MASTER_RSTN          	( M0_RSTN         ),
 	.MASTER_WR_ADDR_ID    	( M0_WR_ADDR_ID   ),
@@ -433,8 +433,8 @@ axi_led_slave #(
 );
 
 axi_slave_default S3(
-	.clk                 	( BUS_CLK           ),
-	.rstn                	( BUS_RSTN          ),
+	.clk                 	( sys_clk           ),
+	.rstn                	( sys_rstn          ),
 	.SLAVE_CLK           	( S3_CLK            ),
 	.SLAVE_RSTN          	( S3_RSTN           ),
 	.SLAVE_WR_ADDR_ID    	( S3_WR_ADDR_ID     ),
