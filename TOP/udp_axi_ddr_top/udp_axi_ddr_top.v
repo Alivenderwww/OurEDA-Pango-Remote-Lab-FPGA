@@ -547,22 +547,22 @@ wire [7:0]      	led;
 wire [3:0]      	bcd;
 
 wire [16*8-1:0] data_in;
-assign data_in[(8*0)+:8]    = 0;
-assign data_in[(8*1)+:8]    = 0;
-assign data_in[(8*2)+:8]    = 0;
-assign data_in[(8*3)+:8]    = 0;
-assign data_in[(8*4)+:8]    = 0;
-assign data_in[(8*5)+:8]    = 0;
-assign data_in[(8*6)+:8]    = 0;
-assign data_in[(8*7)+:8]    = 0;
-assign data_in[(8*8)+:8]    = 0;
-assign data_in[(8*9)+:8]    = 0;
-assign data_in[(8*10)+:8]   = 0;
-assign data_in[(8*11)+:8]   = 0;
-assign data_in[(8*12)+:8]   = 0;
-assign data_in[(8*13)+:8]   = 0;
-assign data_in[(8*14)+:8]   = 0;
-assign data_in[(8*15)+:8]   = 0;
+assign data_in[(8*0)+:8]    = {3'b0,M0_fifo_empty_flag};
+assign data_in[(8*1)+:8]    = {3'b0,M1_fifo_empty_flag};
+assign data_in[(8*2)+:8]    = {3'b0,M2_fifo_empty_flag};
+assign data_in[(8*3)+:8]    = {3'b0,M3_fifo_empty_flag};
+assign data_in[(8*4)+:8]    = {3'b0,S0_fifo_empty_flag};
+assign data_in[(8*5)+:8]    = {3'b0,S1_fifo_empty_flag};
+assign data_in[(8*6)+:8]    = {3'b0,S2_fifo_empty_flag};
+assign data_in[(8*7)+:8]    = {3'b0,S3_fifo_empty_flag};
+assign data_in[(8*8)+:8]    = 8'b10101010;
+assign data_in[(8*9)+:8]    = 8'b01010101;
+assign data_in[(8*10)+:8]   = 8'b11110000;
+assign data_in[(8*11)+:8]   = 8'b00001111;
+assign data_in[(8*12)+:8]   = 8'b10101010;
+assign data_in[(8*13)+:8]   = 8'b01010101;
+assign data_in[(8*14)+:8]   = 8'b11110000;
+assign data_in[(8*15)+:8]   = 8'b00001111;
 
 led8_btn u_led8_btn(
 	.clk      	( sys_clk   ),
@@ -572,8 +572,8 @@ led8_btn u_led8_btn(
 	.btn_down 	( btn[1]    ),
 	.led      	(           ),
 	.led_n    	( led8      ),
-	.bcd      	(           ),
-	.bcd_n    	( led4      )
+	.bcd      	( led4      ),
+	.bcd_n    	(           )
 );
 
 
