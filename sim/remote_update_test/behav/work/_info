@@ -1,0 +1,1634 @@
+m255
+K4
+z2
+!s11f vlog 2020.4 2020.10, Oct 13 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/_Project/Pangu/sim/remote_update_test/behav
+T_opt
+!s110 1743325910
+VS4jio8ZG_<=mi;]4^jI^D0
+04 18 4 work remote_update_test fast 0
+04 7 4 usim GTP_GRS fast 0
+=1-8447094c477c-67e90ad5-a-71cc
+o-quiet -auto_acc_if_foreign -work work -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 -suppress 3486,3680,3781 +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;2020.4;71
+vasyn_fifo
+Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z3 !s110 1743325907
+!i10b 1
+!s100 ZYzeoi0Ton1abBVzLn`G41
+Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I=DfTG?IKTj6R8CG<C[Hj23
+S1
+R0
+w1600152042
+8../../../REMOTE_UPDATE/spi/asyn_fifo.v
+F../../../REMOTE_UPDATE/spi/asyn_fifo.v
+!i122 0
+L0 3 205
+Z5 VDg1SIo80bB@j0V0VzS_@n1
+Z6 OL;L;2020.4;71
+r1
+!s85 0
+31
+Z7 !s108 1743325907.000000
+Z8 !s107 ../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_v1_10_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_v1_10_remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_rd_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_v1_10_slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_v1_10_master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v|../remote_update_test.v|../../../REMOTE_UPDATE/spi/spi_top.v|../../../REMOTE_UPDATE/spi/spi_driver.v|../../../REMOTE_UPDATE/spi/asyn_fifo.v|../../../REMOTE_UPDATE/ipal/ipal_ctrl.v|../../../REMOTE_UPDATE/remote_update_axi_slave.v|../../../REMOTE_UPDATE/MX25L12805D.v|../../../REMOTE_UPDATE/data_ctrl_slave.v|../../../AXI4/slave_axi_async.v|../../../AXI4/master_axi_async.v|../../../AXI4/axi_led_slave.v|../../../AXI4/axi_inter_sel.v|../../../AXI4/axi_interconnect.v|../../../AXI4/axi_clock_converter.v|../../../AXI4/axi_bus.v|../../../AXI4/axi_btn_master.v|../../../AXI4/sim_file/axi_slave_default.v|../../../AXI4/sim_file/axi_master_sim.v|../../../AXI4/sim_file/axi_master_default.v|../../../AXI4/sim_file/axi_slave_sim.sv|
+Z9 !s90 -reportprogress|300|-sv|-work|work|-mfcu|-incr|-suppress|2902|-f|sim_file_list.f|
+!i113 0
+Z10 o-suppress 2902 -sv -work work -mfcu -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 !s92 -suppress 2902 -sv -work work -mfcu +define+IPS_DDR_SPEEDUP_SIM +define+RTL_SIM +define+den4096Mb +define+x16 +define+sg25E -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vaxi_btn_master
+R2
+R3
+!i10b 1
+!s100 51kZ`;8QGL_36?KoFjDBz3
+R4
+IHS`5hkiUeohgL<z0BSLF23
+S1
+R0
+w1743306163
+8../../../AXI4/axi_btn_master.v
+F../../../AXI4/axi_btn_master.v
+!i122 0
+L0 1 135
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_bus
+R2
+R3
+!i10b 1
+!s100 >?Ec=45905Q9dMJIlocj?0
+R4
+I6_0gHTCKi;Y3DnmFihV700
+S1
+R0
+w1742812749
+8../../../AXI4/axi_bus.v
+F../../../AXI4/axi_bus.v
+!i122 0
+L0 1 310
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_clock_converter
+R2
+R3
+!i10b 1
+!s100 :65n:fiZaQehWVl[KF34K3
+R4
+IVf]h0VdP6IL2MUZDdT43T3
+S1
+R0
+w1742811173
+8../../../AXI4/axi_clock_converter.v
+F../../../AXI4/axi_clock_converter.v
+!i122 0
+L0 1 404
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_inter_nosel
+R2
+R3
+!i10b 1
+!s100 ]R[aAa;Q46`3@eGL`ZUgz1
+R4
+I9Wj9VQJCj>kW:lXg7D^[d2
+S1
+R0
+Z12 w1742628574
+Z13 8../../../AXI4/axi_inter_sel.v
+Z14 F../../../AXI4/axi_inter_sel.v
+!i122 0
+L0 39 16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_inter_sel14
+R2
+R3
+!i10b 1
+!s100 3OP:4ZDRK_E9n:2L@2kTj3
+R4
+I<G:=WIae7O9HzEzXkhaWQ0
+S1
+R0
+R12
+R13
+R14
+!i122 0
+L0 21 17
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_inter_sel41
+R2
+R3
+!i10b 1
+!s100 <mAE`:7M79@Zd[Eo3jP:j1
+R4
+Ik3L0^4L4KFS[kjlZB_0m>1
+S1
+R0
+R12
+R13
+R14
+!i122 0
+L0 1 19
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_interconnect
+R2
+R3
+!i10b 1
+!s100 8^=3T]gM>_?<6JzTNi:VZ2
+R4
+I?`BlS=bo_TA<W[Mc?9IYF3
+S1
+R0
+w1743139522
+8../../../AXI4/axi_interconnect.v
+F../../../AXI4/axi_interconnect.v
+!i122 0
+L0 1 287
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_led_slave
+R2
+R3
+!i10b 1
+!s100 lF[fg[g:GGRQdH8M3N;=02
+R4
+II55C@kXVkEX`^XN7468zO3
+S1
+R0
+w1743237188
+8../../../AXI4/axi_led_slave.v
+F../../../AXI4/axi_led_slave.v
+!i122 0
+L0 9 180
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_master_default
+R2
+R3
+!i10b 1
+!s100 K`<UkPdI<^UngI;^667^33
+R4
+ISHIe[9ATbZ@8e`cSLe60j3
+S1
+R0
+w1742808268
+8../../../AXI4/sim_file/axi_master_default.v
+F../../../AXI4/sim_file/axi_master_default.v
+!i122 0
+L0 1 63
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_master_sim
+R2
+R3
+!i10b 1
+!s100 EOTTZWfiEf9nC60jF2:cb1
+R4
+I6GYaT>dLL=69T28g]j6Zk1
+S1
+R0
+w1742986389
+8../../../AXI4/sim_file/axi_master_sim.v
+F../../../AXI4/sim_file/axi_master_sim.v
+!i122 0
+L0 2 274
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_slave_default
+R2
+R3
+!i10b 1
+!s100 UN_MEBgfUo6FN[Lemb2LA1
+R4
+IG:g=XK<DIm[bC=OaK_AFd0
+S1
+R0
+w1743149289
+8../../../AXI4/sim_file/axi_slave_default.v
+F../../../AXI4/sim_file/axi_slave_default.v
+!i122 0
+L0 1 44
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vaxi_slave_sim
+R2
+R3
+!i10b 1
+!s100 @VRE?;UC61MjczTU=E3503
+R4
+ID1]i7oRck[6lSP8Me8j<92
+S1
+R0
+w1742903408
+8../../../AXI4/sim_file/axi_slave_sim.sv
+F../../../AXI4/sim_file/axi_slave_sim.sv
+!i122 0
+L0 1 214
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vdata_ctrl_slave
+R2
+R3
+!i10b 1
+!s100 NDCPcI8Sz`>P;?m?5j_Qb0
+R4
+Id<XNRK[giH>4i>[Ij;bho2
+S1
+R0
+w1743318360
+8../../../REMOTE_UPDATE/data_ctrl_slave.v
+F../../../REMOTE_UPDATE/data_ctrl_slave.v
+!i122 0
+L0 1 516
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipal_ctrl
+R2
+R3
+!i10b 1
+!s100 54B<lP]?8kI<k4iGOnN500
+R4
+IiUP_;=8aP?mX>Zon:T15Q2
+S1
+R0
+w1732017574
+8../../../REMOTE_UPDATE/ipal/ipal_ctrl.v
+F../../../REMOTE_UPDATE/ipal/ipal_ctrl.v
+!i122 0
+L0 16 300
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_master_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 U]9J>8hHSXHnEmdo1JV5[3
+R4
+IUHegmhCzam7?c;Zkn4eO@2
+S1
+R0
+Z15 w1742809528
+8../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
+F../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
+!i122 0
+Z16 L0 18 363
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo
+R2
+R3
+!i10b 1
+!s100 ZBH42=U8H801^[Umzmill3
+R4
+I4IoeFWWo3FiP53:0`SQEC0
+S1
+R0
+Z17 w1742809585
+8../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo
+R2
+R3
+!i10b 1
+!s100 A`DLgS<hnV8N_g?1adA`X3
+R4
+IXKSl4Jg^1lHi3P5ofC<F[0
+S1
+R0
+Z18 w1742809653
+8../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 >OXR::2FcFQ_JSTV^SiEJ0
+R4
+Im]g77`@j]B:Ub=VlH9N143
+S1
+R0
+Z19 w1742809561
+8../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_remote_update_rd_fifo
+R2
+Z20 !s110 1743325908
+!i10b 1
+!s100 6S`lY25N@;V]^dMSCHRP23
+R4
+I9h4effg3`@h0ET`9YOG?10
+S1
+R0
+Z21 w1743315475
+8../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_rd_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_rd_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_remote_update_wr_fifo
+R2
+R20
+!i10b 1
+!s100 >o_0e<beU2n?[I^;GLWLk3
+R4
+I8>OB7ki]TMhBdbM:dbf;d2
+S1
+R0
+Z22 w1743315273
+8../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_wr_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_wr_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 f3fdn]AL;29YUX9IZFVbI3
+R4
+IR:9nIgI^Y0IVdB8HXRm863
+S1
+R0
+Z23 w1742809687
+8../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo.v
+F../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo
+R2
+R20
+!i10b 1
+!s100 P<UXM4ofFUTCGJK_XOJQe2
+R4
+IYig<37_XflRj5kO];4_]e0
+S1
+R0
+Z24 w1742809780
+8../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo
+R2
+R3
+!i10b 1
+!s100 7=<Zc?[^30nlb>?gmnG`J2
+R4
+I`MN>J?[`RTSFCRC5:ko<S2
+S1
+R0
+Z25 w1742810285
+8../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 TXOCf9hbXh=;]z33@W@1g3
+R4
+IXUf]1H4g`0hl4ZoRWiN?B1
+S1
+R0
+Z26 w1742809723
+8../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo.v
+!i122 0
+R16
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_master_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 Q1GZKZ=Q?8b_A]lZiNUTV0
+R4
+IHG:4mF=jJJAf7]jFBSn5@3
+S1
+R0
+R15
+8../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_v1_10_master_async_addr_fifo.v
+F../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_v1_10_master_async_addr_fifo.v
+!i122 0
+Z27 L0 19 108
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_master_async_rd_data_fifo
+R2
+R3
+!i10b 1
+!s100 lLXgfc`MTUk;J``M82zj70
+R4
+I:`UCBezK`NUWRcilf]bGT2
+S1
+R0
+R17
+8../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_rd_data_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_master_async_wr_back_fifo
+R2
+R3
+!i10b 1
+!s100 TS;4EoU_P5;d<RVlBcLSh3
+R4
+ICROanIYVK<Po:]lP?7@bK3
+S1
+R0
+R18
+8../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_back_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_master_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 `Tc6^C;GbS:YYY8>liZ[20
+R4
+Id1GkGLk2`7A@963L9ZV_d0
+S1
+R0
+R19
+8../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_data_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_remote_update_rd_fifo
+R2
+R20
+!i10b 1
+!s100 b5284XfEYzRj59AXmLbVa1
+R4
+IWWiZTDA=ME[l1nDBf=;3S1
+S1
+R0
+R21
+8../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_v1_10_remote_update_rd_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_v1_10_remote_update_rd_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_remote_update_wr_fifo
+R2
+R20
+!i10b 1
+!s100 Uc:fQ4fO=^1M>SbX_n2Jd1
+R4
+I8`II3n00[@4Y4X;F=9e0T2
+S1
+R0
+R22
+8../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_v1_10_remote_update_wr_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_v1_10_remote_update_wr_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_slave_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 ODN5HX=7BYA23h=<bn<b82
+R4
+In7?7So20QAK`P4ThGe:Wd1
+S1
+R0
+R23
+8../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_v1_10_slave_async_addr_fifo.v
+F../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_v1_10_slave_async_addr_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_slave_async_rd_data_fifo
+R2
+R20
+!i10b 1
+!s100 X`W1FEFaNnn4[dE;o@2iH3
+R4
+IM4`YKoGmT^F5C;11`]a4;0
+S1
+R0
+R24
+8../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_rd_data_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_slave_async_wr_back_fifo
+R2
+R20
+!i10b 1
+!s100 aW17VMb2_OzQ:YePM]G@C2
+R4
+I6f<i;8VF[Rj`_24HdT]f;3
+S1
+R0
+R25
+8../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_back_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_fifo_v1_10_slave_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 ??7L9N8Eem3N]Q<C1l]QI2
+R4
+I4a@BS]0cA=fnOn@0fNETQ3
+S1
+R0
+R26
+8../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_data_fifo.v
+!i122 0
+R27
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_master_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 LYQn[7jn`bZZD=LSK=iUd2
+R4
+IA5WbVH:AbK;L`_QodeOfm2
+S1
+R0
+R15
+8../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v
+F../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v
+!i122 0
+Z28 L0 18 972
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_master_async_rd_data_fifo
+R2
+R3
+!i10b 1
+!s100 `]K2YVM6niQPDdMNPCB@j1
+R4
+IKdl3U<R5gPYQFTNGSUdf?2
+S1
+R0
+R17
+8../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_rd_data_fifo.v
+!i122 0
+R28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_master_async_wr_back_fifo
+R2
+R3
+!i10b 1
+!s100 cK9aM13LD`]0il_7kX`ne0
+R4
+I2czF]o80=le;mL3V;z4I51
+S1
+R0
+R18
+8../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_back_fifo.v
+!i122 0
+Z29 L0 18 846
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_master_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 ZAM9A=S62UgXa8mTolQfh2
+R4
+Ifkeb<ig=G:5WRllbNPdN40
+S1
+R0
+R19
+8../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_data_fifo.v
+!i122 0
+R28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_remote_update_rd_fifo
+R2
+R20
+!i10b 1
+!s100 hX;<cjUSZbl?f=<d3A:Sc1
+R4
+IiVz<VoFH4bM4B?Q=10O^X1
+S1
+R0
+R21
+8../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_rd_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_rd_fifo.v
+!i122 0
+R29
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_remote_update_wr_fifo
+R2
+R20
+!i10b 1
+!s100 0BcoV`V7]ke41UfeTN5lI3
+R4
+II_dUF0:WXf=G:S13ME6md3
+S1
+R0
+R22
+8../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_wr_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_wr_fifo.v
+!i122 0
+R29
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_slave_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 b4;khe>K<LTR6W^lgjN5`2
+R4
+I>J6Z`izkd3gAcE@^8HOR@0
+S1
+R0
+R23
+8../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_addr_fifo.v
+F../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_addr_fifo.v
+!i122 0
+R28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_slave_async_rd_data_fifo
+R2
+R20
+!i10b 1
+!s100 N_8LY>:TSB8OV1?ITm]_G0
+R4
+Io@gQbV;E3EH:7R6zefeD72
+S1
+R0
+R24
+8../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_rd_data_fifo.v
+!i122 0
+R28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_slave_async_wr_back_fifo
+R2
+R20
+!i10b 1
+!s100 cSH_zaTXOdUARgW18IHRT2
+R4
+I>V`:g<1JnC9c1>Rh:OANT3
+S1
+R0
+R25
+8../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_back_fifo.v
+!i122 0
+R29
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vipm2l_sdpram_v1_10_slave_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 i:MzYRHUE>X`e^]J0llkQ1
+R4
+Ik_h>h<CY[zeci36anP=Cm0
+S1
+R0
+R26
+8../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_data_fifo.v
+!i122 0
+R28
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vmaster_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 ;[]aUX5Wz7idBdkIiFWRz1
+R4
+IXo`N7Oki]9onL5c4?Qn=23
+S1
+R0
+R15
+8../../../IPCORE/AXI4/master_async_addr_fifo/master_async_addr_fifo.v
+F../../../IPCORE/AXI4/master_async_addr_fifo/master_async_addr_fifo.v
+!i122 0
+Z30 L0 16 199
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vmaster_async_rd_data_fifo
+R2
+R3
+!i10b 1
+!s100 XI=^z:EazJMFgP?hWDeIf0
+R4
+I5IldYaCaS5@UDT>P[z5KR2
+S1
+R0
+R17
+8../../../IPCORE/AXI4/master_async_rd_data_fifo/master_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/master_async_rd_data_fifo/master_async_rd_data_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vmaster_async_wr_back_fifo
+R2
+R3
+!i10b 1
+!s100 DTYbjS9ia2Ij0iTQh78CD1
+R4
+I_YK]<=_[FYVF6SX9R;mF=1
+S1
+R0
+R18
+8../../../IPCORE/AXI4/master_async_wr_back_fifo/master_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_back_fifo/master_async_wr_back_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vmaster_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 cYYL9YZ6<O@l89FBH6ho`1
+R4
+If^=WZhc[IcjDzC8]cf11>3
+S1
+R0
+R19
+8../../../IPCORE/AXI4/master_async_wr_data_fifo/master_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/master_async_wr_data_fifo/master_async_wr_data_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vmaster_axi_async
+R2
+R3
+!i10b 1
+!s100 `[UEa]JDD]<C5@cG]4e<l0
+R4
+I3]Of7DFgOXEaM?Pb2ljAc0
+S1
+R0
+w1742979621
+8../../../AXI4/master_axi_async.v
+F../../../AXI4/master_axi_async.v
+!i122 0
+L0 1 258
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vMX25L12805D
+R2
+R3
+!i10b 1
+!s100 `[QaMiGfGoEXUkE^oKZg81
+R4
+I97KJL]KRf6A8Bm1^QF^8P2
+S1
+R0
+w1743321734
+8../../../REMOTE_UPDATE/MX25L12805D.v
+F../../../REMOTE_UPDATE/MX25L12805D.v
+!i122 0
+L0 70 1510
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+n@m@x25@l12805@d
+vremote_update_axi_slave
+R2
+R3
+!i10b 1
+!s100 ]6EUGiEU=^P9KzmkW:dU`2
+R4
+IOUe[Tz@WKEQ6J9e_G<[C41
+S1
+R0
+w1743318042
+8../../../REMOTE_UPDATE/remote_update_axi_slave.v
+F../../../REMOTE_UPDATE/remote_update_axi_slave.v
+!i122 0
+L0 1 343
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vremote_update_rd_fifo
+R2
+R20
+!i10b 1
+!s100 MlP=BBfmWDml9<V^NDBhk2
+R4
+IMnkOmli2]Q7SMFSiiAe5n2
+S1
+R0
+R21
+8../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/remote_update_rd_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/remote_update_rd_fifo.v
+!i122 0
+L0 16 193
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vremote_update_test
+R2
+R3
+!i10b 1
+!s100 5KjY=ehg>maazGz>B@1`[2
+R4
+IV6oS7angDI@`AFE_5Ji;Y2
+S1
+R0
+w1743325880
+8../remote_update_test.v
+F../remote_update_test.v
+!i122 0
+L0 2 420
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vremote_update_wr_fifo
+R2
+R20
+!i10b 1
+!s100 ldDgVD<d<=AB<d_VeZSdc2
+R4
+IzXNbgTjXPaLjn]<1m_<YO2
+S1
+R0
+R22
+8../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/remote_update_wr_fifo.v
+F../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/remote_update_wr_fifo.v
+!i122 0
+L0 16 197
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vslave_async_addr_fifo
+R2
+R3
+!i10b 1
+!s100 6d<[B`fLkmz`hjSQj?OjU2
+R4
+I^lnOIW4cSP@bceh<]E10c1
+S1
+R0
+R23
+8../../../IPCORE/AXI4/slave_async_addr_fifo/slave_async_addr_fifo.v
+F../../../IPCORE/AXI4/slave_async_addr_fifo/slave_async_addr_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vslave_async_rd_data_fifo
+R2
+R20
+!i10b 1
+!s100 3;OTSkUX4_e7gHDf[aP3d1
+R4
+IaRAEz11fBMo:0a7D[N>IE0
+S1
+R0
+R24
+8../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vslave_async_wr_back_fifo
+R2
+R20
+!i10b 1
+!s100 >41UMn`Ch4g^?oAlT;QQV0
+R4
+ITSP@L4]4ecf3PBPS0iZ=b1
+S1
+R0
+R25
+8../../../IPCORE/AXI4/slave_async_wr_back_fifo/slave_async_wr_back_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_back_fifo/slave_async_wr_back_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vslave_async_wr_data_fifo
+R2
+R3
+!i10b 1
+!s100 mbT_G7kO^b1OSIMWaFa=93
+R4
+IEU@9ffz1N>80jX4Jj0XZ43
+S1
+R0
+R26
+8../../../IPCORE/AXI4/slave_async_wr_data_fifo/slave_async_wr_data_fifo.v
+F../../../IPCORE/AXI4/slave_async_wr_data_fifo/slave_async_wr_data_fifo.v
+!i122 0
+R30
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vslave_axi_async
+R2
+R3
+!i10b 1
+!s100 589mj4KYNCk<b71hR1:Q<3
+R4
+I4amdfV64h3US`hk_XQY`;3
+S1
+R0
+w1743140394
+8../../../AXI4/slave_axi_async.v
+F../../../AXI4/slave_axi_async.v
+!i122 0
+L0 1 251
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vspi_driver
+R2
+R3
+!i10b 1
+!s100 H7:MHZSXgZ1ZOfY:Dcf5n0
+R4
+I2k=Tn^mgV8L6?kmZWeJbM1
+S1
+R0
+w1653987439
+8../../../REMOTE_UPDATE/spi/spi_driver.v
+F../../../REMOTE_UPDATE/spi/spi_driver.v
+!i122 0
+L0 16 428
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1
+vspi_top
+R2
+R3
+!i10b 1
+!s100 lg_bk];5OB229@nTf1IDX0
+R4
+IJQF]e91Ne_;mc>Glhb_WH1
+S1
+R0
+w1732017611
+8../../../REMOTE_UPDATE/spi/spi_top.v
+F../../../REMOTE_UPDATE/spi/spi_top.v
+!i122 0
+L0 16 1092
+R5
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R11
+R1

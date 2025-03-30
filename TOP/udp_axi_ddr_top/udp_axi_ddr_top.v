@@ -432,6 +432,39 @@ axi_led_slave #(
     .LED_SLAVE_RD_DATA_READY (S2_RD_DATA_READY)
 );
 
+axi_slave_default S3(
+	.clk                 	( BUS_CLK           ),
+	.rstn                	( BUS_RSTN          ),
+	.SLAVE_CLK           	( S3_CLK            ),
+	.SLAVE_RSTN          	( S3_RSTN           ),
+	.SLAVE_WR_ADDR_ID    	( S3_WR_ADDR_ID     ),
+	.SLAVE_WR_ADDR       	( S3_WR_ADDR        ),
+	.SLAVE_WR_ADDR_LEN   	( S3_WR_ADDR_LEN    ),
+	.SLAVE_WR_ADDR_BURST 	( S3_WR_ADDR_BURST  ),
+	.SLAVE_WR_ADDR_VALID 	( S3_WR_ADDR_VALID  ),
+	.SLAVE_WR_ADDR_READY 	( S3_WR_ADDR_READY  ),
+	.SLAVE_WR_DATA       	( S3_WR_DATA        ),
+	.SLAVE_WR_STRB       	( S3_WR_STRB        ),
+	.SLAVE_WR_DATA_LAST  	( S3_WR_DATA_LAST   ),
+	.SLAVE_WR_DATA_VALID 	( S3_WR_DATA_VALID  ),
+	.SLAVE_WR_DATA_READY 	( S3_WR_DATA_READY  ),
+	.SLAVE_WR_BACK_ID    	( S3_WR_BACK_ID     ),
+	.SLAVE_WR_BACK_RESP  	( S3_WR_BACK_RESP   ),
+	.SLAVE_WR_BACK_VALID 	( S3_WR_BACK_VALID  ),
+	.SLAVE_WR_BACK_READY 	( S3_WR_BACK_READY  ),
+	.SLAVE_RD_ADDR_ID    	( S3_RD_ADDR_ID     ),
+	.SLAVE_RD_ADDR       	( S3_RD_ADDR        ),
+	.SLAVE_RD_ADDR_LEN   	( S3_RD_ADDR_LEN    ),
+	.SLAVE_RD_ADDR_BURST 	( S3_RD_ADDR_BURST  ),
+	.SLAVE_RD_ADDR_VALID 	( S3_RD_ADDR_VALID  ),
+	.SLAVE_RD_ADDR_READY 	( S3_RD_ADDR_READY  ),
+	.SLAVE_RD_BACK_ID    	( S3_RD_BACK_ID     ),
+	.SLAVE_RD_DATA       	( S3_RD_DATA        ),
+	.SLAVE_RD_DATA_RESP  	( S3_RD_DATA_RESP   ),
+	.SLAVE_RD_DATA_LAST  	( S3_RD_DATA_LAST   ),
+	.SLAVE_RD_DATA_VALID 	( S3_RD_DATA_VALID  ),
+	.SLAVE_RD_DATA_READY 	( S3_RD_DATA_READY  )
+);
 
 
 axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设置FIFO。支持out-standing超前传输，从机可选择性支持out-of-order乱序执行，支持interleaving读交织。

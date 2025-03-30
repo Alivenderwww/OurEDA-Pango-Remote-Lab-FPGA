@@ -7,7 +7,7 @@ parameter USER_BITSTREAM2_ADDR  = 24'h41_0000       ,   // user bitstream2 start
 parameter USER_BITSTREAM3_ADDR  = 24'h61_5000           // user bitstream3 start address  ---> 24'h61_5000
 )(
 input  wire        clk                     ,
-input  wire        rst_n                   ,
+input  wire        rstn                    ,
 
 //写入比特流-控制接口1
 output  reg [1:0]  bitstream_wr_num        ,
@@ -23,36 +23,34 @@ output wire [7:0]  bitstream_data          ,
 output wire        bitstream_eop           ,
 
 //读出比特流-控制接口1
-output wire [1:0]  bitstream_rd_num        ,
-output wire        flash_rd_en             ,
+output  reg [1:0]  bitstream_rd_num        ,
+output  reg        flash_rd_en             ,
 //读出比特流-控制接口2
 input  wire        bitstream_rd_done       ,
 input  wire        bs_readback_crc_valid   ,
 input  wire [31:0] bs_readback_crc         ,
 //读出比特流-控制接口3
-output wire        crc_check_en        ,
-output wire [1:0]  bs_crc32_ok             ,//[1]:valid   [0]:1'b0,OK  1'b1,error
+output  reg        crc_check_en        ,
+output  reg [1:0]  bs_crc32_ok             ,//[1]:valid   [0]:1'b0,OK  1'b1,error
 //读出比特流-回读接口
-output wire        bitstream_up2cpu_en ,
+output  reg        bitstream_up2cpu_en ,
 output wire        flash_rd_data_fifo_afull,
 input  wire [7:0]  flash_rd_data           ,
 input  wire        flash_rd_valid          ,
 
 //单独擦除开关接口
-output wire        clear_sw_en         ,
+output  reg        clear_sw_en         ,
 input  wire        clear_sw_done           ,
 
 //写开关接口
-output wire        write_sw_code_en        ,
+output  reg        write_sw_code_en        ,
 input  wire        open_sw_code_done       ,
 
 //热启动接口
-output wire        hotreset_en             ,
-output wire [1:0]  open_sw_num         ,
+output  reg        hotreset_en             ,
+output  reg [1:0]  open_sw_num         ,
 
 //未知用途
-output wire        spi_status_rd_en        ,
-input  wire [7:0]  spi_status_erorr        ,
 input  wire        ipal_busy               ,
 input  wire        time_out_reg            ,
 
@@ -111,8 +109,8 @@ OFFSET_ADDR + 1: 写比特流-只写地址——FIFO入口
 [31:0]:  写比特流数据入口
 
 OFFSET_ADDR + 2: 写比特流-只读地址——标志位
-[31:24]: 保留
-[23:17]: 保留
+[31:24]: {-, -, -, -, -, -, -,      wr_fifo_full}
+[23:17]: {-, -, -, -, -, -, -,     wr_fifo_empty}
 [16: 8]: {-, -, -, -, -, -, -, bitstream_wr_done}
 [ 7: 0]: {-, -, -, -, -, -, -,     clear_bs_done}
 
@@ -129,8 +127,8 @@ OFFSET_ADDR + 5: 读比特流-只读地址——CRC校验值
 [31:0]: CRC校验值 bs_readback_crc
 
 OFFSET_ADDR + 6: 读比特流-只读地址——标志位
-[31:24]: {-, -, -, -, -, -, -,          -           }
-[23:17]: {-, -, -, -, -, -, -,          -           }
+[31:24]: {-, -, -, -, -, -, -,         rd_fifo_afull}
+[23:17]: {-, -, -, -, -, -, -,         rd_fifo_empty}
 [16: 8]: {-, -, -, -, -, -, -,     bitstream_rd_done}
 [ 7: 0]: {-, -, -, -, -, -, -, bs_readback_crc_valid}
 
@@ -141,9 +139,9 @@ OFFSET_ADDR + 7: 单独擦除开关-读写地址——控制位
 [ 7: 0]: {-, -, -, -, -, -, -, clear_sw_en}
 
 OFFSET_ADDR + 8: 单独擦除开关-只读地址——标志位
-[31:24]: {-, -, -, -, -, -, -,       -      }
-[23:17]: {-, -, -, -, -, -, -,       -      }
-[16: 8]: {-, -, -, -, -, -, -,       -      }
+[31:24]: {-, -, -, -, -, -, -,  time_out_reg}
+[23:17]: {           flash_flag_status[15:8]}
+[16: 8]: {            flash_flag_status[7:0]}
 [ 7: 0]: {-, -, -, -, -, -, -, clear_sw_done}
 
 OFFSET_ADDR + 9: 写开关-读写地址——标志位
@@ -155,7 +153,7 @@ OFFSET_ADDR + 9: 写开关-读写地址——标志位
 OFFSET_ADDR + A: 写开关-只读地址——控制位
 [31:24]: {-, -, -, -, -, -, -,       -          }
 [23:17]: {-, -, -, -, -, -, -,       -          }
-[16: 8]: {-, -, -, -, -, -, -,       -          }
+[16: 8]: {-, -, -, -, -, -, -,         ipal_busy}
 [ 7: 0]: {-, -, -, -, -, -, -, open_sw_code_done}
 
 OFFSET_ADDR + B: 热启动开关-读写地址——控制位
@@ -213,8 +211,8 @@ wire [ 7:0] wr_fifo_rd_data;
 reg         wr_fifo_rd_data_valid;
 wire        wr_fifo_full;
 wire        wr_fifo_empty;
-wire [31:0] wr_fifo_bytes_num;
-reg  [31:0] wr_fifo_trans_cnt;
+wire [11:0] wr_fifo_bytes_num;
+reg  [11:0] wr_fifo_trans_cnt;
 
 wire        rd_fifo_rst;
 wire        rd_fifo_wr_en;
@@ -263,6 +261,13 @@ always @(posedge clk) begin
     else if(cu_wr_st == ST_WR_DATA)begin
         if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_error_detect <= 1;
         else if((wr_addr < REAL_RU_WRBIT_RW_CTRL_ADDR) || (wr_addr > REAL_RU_HOTRS_RW_CTRL_ADDR)) wr_error_detect <= 1;
+        else if((wr_addr == REAL_RU_WRBIT_RO_FLAG_ADDR) ||
+                (wr_addr == REAL_RU_RDBIT_RO_FIFO_ADDR) ||
+                (wr_addr == REAL_RU_RDBIT_RO_FLAG_ADDR) ||
+                (wr_addr == REAL_RU_RDBIT_RO__CRC_ADDR) ||
+                (wr_addr == REAL_RU_SWTCH_RO_FLAG_ADDR) ||
+                (wr_addr == REAL_RU_CLEAR_RO_FLAG_ADDR)) wr_error_detect <= 1;
+        else wr_error_detect <= 0;
     end else wr_error_detect <= wr_error_detect;
 end
 
@@ -322,8 +327,10 @@ end
 always @(*) begin
     if((~rstn) || (cu_rd_st == ST_RD_IDLE)) rd_error_detect <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
+        if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_error_detect <= 1;
         if((rd_addr < REAL_RU_WRBIT_RW_CTRL_ADDR) || (rd_addr > REAL_RU_HOTRS_RW_CTRL_ADDR)) rd_error_detect <= 1;
-        else if(rd_addr != REAL_ADDR) rd_error_detect <= 1;
+        else if(rd_addr == REAL_RU_WRBIT_WO_FIFO_ADDR) rd_error_detect <= 1;
+        else rd_error_detect <= 0;
     end else rd_error_detect <= 0;
 end
 always @(posedge clk) rd_error_detect_reg <= rd_error_detect;
@@ -360,18 +367,18 @@ always @(*) begin
     if(~rstn || (cu_rd_st == ST_WR_IDLE)) SLAVE_RD_DATA <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         case (rd_addr)
-            REAL_RU_WRBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{8'b0}                         ,{5'b0, bitstream_wr_num, flash_wr_en}  };
+            REAL_RU_WRBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{5'b0, bitstream_wr_num, flash_wr_en}  };
             REAL_RU_WRBIT_WO_FIFO_ADDR: SLAVE_RD_DATA <= 32'hFFFF_FFFF;
-            REAL_RU_WRBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{7'b0,bitstream_wr_done}       ,{7'b0, clear_bs_done}                  };
-            REAL_RU_RDBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{6'b0,bs_crc32_ok},{7'b0,crc_check_en},{7'b0,bitstream_up2cpu_en} ,{5'b0, bitstream_rd_num, flash_rd_en}  };
+            REAL_RU_WRBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,wr_fifo_full} ,{7'b0,wr_fifo_empty}   ,{7'b0,bitstream_wr_done}       ,{7'b0, clear_bs_done}                  };
+            REAL_RU_RDBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{6'b0,bs_crc32_ok}  ,{7'b0,crc_check_en}    ,{7'b0,bitstream_up2cpu_en} ,{5'b0, bitstream_rd_num, flash_rd_en}  };
             REAL_RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA <= rd_fifo_rd_data;
             REAL_RU_RDBIT_RO__CRC_ADDR: SLAVE_RD_DATA <= bs_readback_crc;
-            REAL_RU_RDBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{6'b0,bitstream_rd_done}       ,{7'b0, bs_readback_crc_valid}          };
-            REAL_RU_CLEAR_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{8'b0}                         ,{7'b0, clear_sw_en}                };
-            REAL_RU_CLEAR_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{8'b0}                         ,{7'b0, clear_sw_done}                  };
-            REAL_RU_SWTCH_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{6'b0,open_sw_num}             ,{7'b0, write_sw_code_en}               };
-            REAL_RU_SWTCH_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{8'b0}                         ,{7'b0, open_sw_code_done}              };
-            REAL_RU_HOTRS_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}            ,{8'b0}                 ,{8'b0}                         ,{7'b0, hotreset_en}                    };
+            REAL_RU_RDBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,rd_fifo_afull},{7'b0,rd_fifo_empty}   ,{6'b0,bitstream_rd_done}       ,{7'b0, bs_readback_crc_valid}          };
+            REAL_RU_CLEAR_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, clear_sw_en}                };
+            REAL_RU_CLEAR_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,time_out_reg} ,flash_flag_status[15:8],flash_flag_status[7:0]         ,{7'b0, clear_sw_done}                  };
+            REAL_RU_SWTCH_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{6'b0,open_sw_num}             ,{7'b0, write_sw_code_en}               };
+            REAL_RU_SWTCH_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{7'b0,ipal_busy}               ,{7'b0, open_sw_code_done}              };
+            REAL_RU_HOTRS_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, hotreset_en}                    };
             default                   : SLAVE_RD_DATA <= 32'hFFFF_FFFF;
         endcase
     end else SLAVE_RD_DATA <= 32'hFFFF_FFFF;
@@ -402,8 +409,8 @@ end
 
 
 reg cu_wr_fifo_st, nt_wr_fifo_st;
-localparam ST_WR_FIFO_IDLE  = 1'b00;
-localparam ST_WR_FIFO_TRANS = 1'b00;
+localparam ST_WR_FIFO_IDLE  = 1'b0;
+localparam ST_WR_FIFO_TRANS = 1'b1;
 always @(*) begin
     if(~rstn) nt_wr_fifo_st <= ST_WR_FIFO_IDLE;
     else case(cu_wr_fifo_st)
@@ -434,8 +441,8 @@ remote_update_wr_fifo remote_update_wr_fifo_inst(
     .rd_en         (wr_fifo_rd_en),
     .rd_data       (wr_fifo_rd_data),
 
-    .full          (wr_fifo_full),
-    .empty         (wr_fifo_empty),
+    .wr_full       (wr_fifo_full),
+    .rd_empty      (wr_fifo_empty),
     .rd_water_level(wr_fifo_bytes_num)
 );
 
@@ -447,7 +454,7 @@ remote_update_rd_fifo remote_update_rd_fifo_inst(
     .rd_en         (rd_fifo_rd_en),
     .rd_data       (rd_fifo_rd_data),
 
-    .empty         (rd_fifo_empty),
+    .rd_empty      (rd_fifo_empty),
     .almost_full   (rd_fifo_afull) //set n-256 bytes almost full
 );
 
