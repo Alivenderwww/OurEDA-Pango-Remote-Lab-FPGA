@@ -7,6 +7,8 @@ module axi_udp_master #(
 )(
     input  wire        udp_in_rstn  , //连什么线？
     output wire        eth_rst_n    ,
+
+    output wire [7:0]  udp_led      ,
     //以太网rgmii外部接口
     input  wire        rgmii_rxc    ,
     input  wire        rgmii_rx_ctl ,
@@ -111,6 +113,8 @@ udp #(
 axi_udp_cmd axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
     .rstn                (udp_in_rstn         ),
+
+    .cmdled              (udp_led             ),    
 
     .MASTER_CLK          (MASTER_CLK          ), 
     .MASTER_RSTN         (MASTER_RSTN         ), 

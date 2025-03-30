@@ -3,7 +3,7 @@ module udp_axi_ddr_top(
 input  wire        external_clk ,
 input  wire        external_rstn,
 //led io
-output wire [7:0]  led          ,
+output wire [3:0]  led          ,
 //jtag io
 output wire        tck          ,
 output wire        tms          ,
@@ -125,7 +125,7 @@ wire jtag_rstn  ;
 
 wire ddr_init_done;
 wire [31:0] axi_led;
-assign led = {ddr_init_done,axi_led[6:0]};
+//assign led[3] = ddr_init_done;
 
 clk_pll_top the_instance_name (
   .clkout0(clk_50M),    // output
@@ -161,6 +161,8 @@ axi_udp_master #(
 	.rgmii_txc            	( rgmii_txc       ),
 	.rgmii_tx_ctl         	( rgmii_tx_ctl    ),
 	.rgmii_txd            	( rgmii_txd       ),
+
+   .udp_led                ( led[2:0]             ),
 	.MASTER_CLK           	( M0_CLK          ),
 	.MASTER_RSTN          	( M0_RSTN         ),
 	.MASTER_WR_ADDR_ID    	( M0_WR_ADDR_ID   ),

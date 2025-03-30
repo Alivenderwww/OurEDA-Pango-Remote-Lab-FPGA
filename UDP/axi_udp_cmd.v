@@ -1,6 +1,8 @@
 module axi_udp_cmd  (
     input  wire        gmii_rx_clk         ,//125M
     input  wire        rstn                ,
+
+    output wire  [7:0]  cmdled              ,
     //___________________AXI接口_____________________//
     output wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
     output wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
@@ -110,13 +112,64 @@ wire[31:0] rddata_fifo_rd_data;
 assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
+//debug
+assign cmdled = {4'b0,MASTER_WR_ADDR[3:0]};
+reg [1:0] rdaddr_cnt;
+reg  rdaddr_fifo_wr_en_cnt;
+reg  rdaddr_fifo_rd_en_cnt;
+reg  wraddr_fifo_wr_en_cnt;
+reg  wraddr_fifo_rd_en_cnt;
+reg udp_tx_done_cnt;
+always @(posedge gmii_rx_clk or negedge rstn)begin
+    if(~rstn)begin
+        rdaddr_cnt <= 0; 
+    end
+    else if(MASTER_RD_ADDR_READY && MASTER_RD_ADDR_VALID)begin
+        rdaddr_cnt <= rdaddr_cnt + 1;
+    end
+    
+    if(~rstn)begin
+        rdaddr_fifo_wr_en_cnt <= 0; 
+    end
+    else if(rdaddr_fifo_wr_en)begin
+        rdaddr_fifo_wr_en_cnt <= rdaddr_fifo_wr_en_cnt + 1;
+    end
+
+    if(~rstn)begin
+        rdaddr_fifo_rd_en_cnt <= 0; 
+    end
+    else if(rdaddr_fifo_rd_en)begin
+        rdaddr_fifo_rd_en_cnt <= rdaddr_fifo_rd_en_cnt + 1;
+    end
+
+    if(~rstn)begin
+        udp_tx_done_cnt <= 0; 
+    end
+    else if(udp_tx_done)begin
+        udp_tx_done_cnt <= udp_tx_done_cnt + 1;
+    end
+
+    if(~rstn)begin
+        wraddr_fifo_wr_en_cnt <= 0; 
+    end
+    else if(wraddr_fifo_wr_en)begin
+        wraddr_fifo_wr_en_cnt <= wraddr_fifo_wr_en_cnt + 1;
+    end
+
+    if(~rstn)begin
+        wraddr_fifo_rd_en_cnt <= 0; 
+    end
+    else if(wraddr_fifo_rd_en)begin
+        wraddr_fifo_rd_en_cnt <= wraddr_fifo_rd_en_cnt + 1;
+    end
+end
 
 assign udp_tx_data = (tx_state == TXWRBACK) ? wrback_fifo_rd_data : (rddata_fifo_rd_cnt == 3 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data ;
 
 assign MASTER_CLK  = gmii_rx_clk;
 assign MASTER_RSTN = rstn;
 
-always @(posedge gmii_rx_clk or posedge rstn) begin
+always @(posedge gmii_rx_clk or negedge rstn) begin
     if(!rstn)
         state <= IDLE;
     else
