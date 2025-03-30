@@ -542,10 +542,6 @@ axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设置FIFO
 .S0_fifo_empty_flag(S0_fifo_empty_flag), .S1_fifo_empty_flag(S1_fifo_empty_flag), .S2_fifo_empty_flag(S2_fifo_empty_flag), .S3_fifo_empty_flag(S3_fifo_empty_flag)
 );
 
-// outports wire
-wire [7:0]      	led;
-wire [3:0]      	bcd;
-
 wire [16*8-1:0] data_in;
 assign data_in[(8*0)+:8]    = {3'b0,M0_fifo_empty_flag};
 assign data_in[(8*1)+:8]    = {3'b0,M1_fifo_empty_flag};
