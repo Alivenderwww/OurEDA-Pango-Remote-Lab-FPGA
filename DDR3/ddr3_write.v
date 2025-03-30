@@ -71,7 +71,6 @@ reg [27:0] wr_addr_load;
 reg [ 7:0] wr_len_load;
 reg [3:0] wr_id_load;
 wire [27:0] wr_addr_end = SLAVE_WR_ADDR + SLAVE_WR_ADDR_LEN;
-reg flag_last_trans;
 reg flag_data_recv_over;
 
 reg [2:0] cu_wr_st, nt_wr_st;
@@ -89,7 +88,6 @@ always @(*) begin
             //在WAIT状态下，如果检测到start_complete_num不为0就先存入空数据，并且只要非满就持续接收上级模块的数据
             //触发条件1 为存入了大于32x(8x16)bit的数据，表现为almost_full被拉高。跳转至WRITE_ST_TRANS_ADDR以直接发送WRITE_ADDR等地址线
             //触发条件2 为"收到过"SLAVE_WR_DATA_LAST. 说明与上级模块的数据传输已经结束。跳转至WRITE_ST_AFTER，先补齐位宽再跳转至WRITE_ST_TRANS_ADDR。
-            //触发条件3 本次传输完全结束，跳转至WRITE_ST_RESP发送RESP。
             if(almost_full) nt_wr_st <= WRITE_ST_TRANS_ADDR;
             else if(flag_data_recv_over) nt_wr_st <= WRITE_ST_AFTER;
             else nt_wr_st <= WRITE_ST_WAIT;
@@ -97,7 +95,7 @@ always @(*) begin
         WRITE_ST_TRANS_ADDR: nt_wr_st <= (WRITE_ADDR_READY && WRITE_ADDR_VALID)?(WRITE_ST_TRANS_DATA):(WRITE_ST_TRANS_ADDR);
         WRITE_ST_TRANS_DATA: begin
             if(WRITE_DATA_READY && WRITE_DATA_LAST) begin
-                if(flag_last_trans) nt_wr_st <= WRITE_ST_RESP;
+                if(flag_data_recv_over) nt_wr_st <= WRITE_ST_RESP;
                 else nt_wr_st <= WRITE_ST_WAIT;
             end else nt_wr_st <= WRITE_ST_TRANS_DATA;
         end
@@ -124,7 +122,7 @@ always @(posedge clk) begin
         wr_len_load      <= wr_addr_end[7:3] - SLAVE_WR_ADDR[7:3];
         wr_id_load       <= SLAVE_WR_ADDR_ID;
     end else if(WRITE_ADDR_VALID && WRITE_ADDR_READY) begin
-        if(flag_last_trans) begin
+        if(wr_len_load <= 15) begin
             wr_addr_load <= wr_addr_load;
             wr_len_load  <= wr_len_load;
             wr_id_load   <= wr_id_load;
@@ -137,16 +135,6 @@ always @(posedge clk) begin
         wr_addr_load <= wr_addr_load;
         wr_len_load  <= wr_len_load;
         wr_id_load   <= wr_id_load;
-    end
-end
-
-always @(posedge clk) begin
-    if((~rstn) || cu_wr_st == WRITE_ST_IDLE) begin
-        flag_last_trans <= 0;
-    end else if((cu_wr_st == WRITE_ST_TRANS_DATA) && (nt_wr_st == WRITE_ST_WAIT)) begin
-        flag_last_trans <= (wr_len_load <= 15);
-    end else begin
-        flag_last_trans <= flag_last_trans;
     end
 end
 

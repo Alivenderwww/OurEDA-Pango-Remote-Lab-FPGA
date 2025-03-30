@@ -1,7 +1,14 @@
-module udp_axi_ddr_top(
+module udp_axi_ddr_top #(
+    parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
+    parameter BOARD_IP      = {8'd169,8'd254,8'd103,8'd006}  ,
+    parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ,
+    parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}  
+)(
 //system io
 input  wire        external_clk ,
 input  wire        external_rstn,
+//btn io
+input  wire [3:0]  btn          ,
 //led io
 output wire [3:0]  led          ,
 //jtag io
@@ -43,11 +50,6 @@ localparam S2_START_ADDR = 32'h20_00_00_00;
 localparam S2_END_ADDR   = 32'h2F_FF_FF_0F;
 localparam S3_START_ADDR = 32'h30_00_00_00;
 localparam S3_END_ADDR   = 32'h3F_FF_FF_0F;
-
-localparam BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ;
-localparam BOARD_IP      = {8'd169,8'd254,8'd103,8'd006}  ;
-localparam DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ;
-localparam DES_IP        = {8'd169,8'd254,8'd103,8'd126}  ;
 
 /*
 装载比特流的顺序：
@@ -125,7 +127,7 @@ wire jtag_rstn  ;
 
 wire ddr_init_done;
 wire [31:0] axi_led;
-//assign led[3] = ddr_init_done;
+assign led = {ddr_init_done,axi_led[6:0]};
 
 clk_pll_top the_instance_name (
   .clkout0(clk_50M),    // output
@@ -194,9 +196,13 @@ axi_udp_master #(
 	.MASTER_RD_DATA_READY 	( M0_RD_DATA_READY)
 );
 
-axi_master_default M1(
+axi_btn_master M1(
     .clk                  (sys_clk          ),
     .rstn                 (sys_rstn         ),
+    .btn                  (btn              ),
+    .recv_data            (m1_recv_led      ),
+
+
     .MASTER_CLK           (M1_CLK           ),
     .MASTER_RSTN          (M1_RSTN          ),
     .MASTER_WR_ADDR_ID    (M1_WR_ADDR_ID    ),
