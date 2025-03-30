@@ -50,13 +50,13 @@ localparam WR_BYTE_EN = 0 ; // @IPC bool
 
 localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
-localparam WR_DEPTH_WIDTH = 6 ; // @IPC int 9,20
+localparam WR_DEPTH_WIDTH = 9 ; // @IPC int 9,20
 
 localparam WR_DATA_WIDTH = 46 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 1,128
 
-localparam RD_DEPTH_WIDTH = 6 ; // @IPC int 9,20
+localparam RD_DEPTH_WIDTH = 9 ; // @IPC int 9,20
 
 localparam RD_DATA_WIDTH = 46 ; // @IPC int 1,1152
 

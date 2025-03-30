@@ -1,5 +1,5 @@
 //user set reset value
-localparam c_RSTB_VAL_00 = {18'h00000};
-localparam c_RSTA_VAL_00 = {18'h00000};
+localparam c_RSTB_VAL_00 = {1'h0,{2{4'h0}},1'h0,{2{4'h0}}};
+localparam c_RSTA_VAL_00 = {1'h0,{2{4'h0}},1'h0,{2{4'h0}}};
 localparam c_RSTA_VAL = { c_RSTA_VAL_00}; 
 localparam c_RSTB_VAL = { c_RSTB_VAL_00}; 

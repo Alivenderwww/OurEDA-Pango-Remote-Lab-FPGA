@@ -31,7 +31,9 @@ output wire [31:0] BUS_RD_DATA      , input  wire [31:0] SLAVE_RD_DATA      ,
 output wire [ 1:0] BUS_RD_DATA_RESP , input  wire [ 1:0] SLAVE_RD_DATA_RESP ,
 output wire        BUS_RD_DATA_LAST , input  wire        SLAVE_RD_DATA_LAST ,
 output wire        BUS_RD_DATA_VALID, input  wire        SLAVE_RD_DATA_VALID,
-input  wire        BUS_RD_DATA_READY, output wire        SLAVE_RD_DATA_READY
+input  wire        BUS_RD_DATA_READY, output wire        SLAVE_RD_DATA_READY,
+
+output wire [ 4:0] fifo_empty_flag
 );
 
 wire RSTN = BUS_RSTN & SLAVE_RSTN;
@@ -248,4 +250,7 @@ slave_async_wr_back_fifo slave_async_wr_back_fifo_inst(
     .rd_data (wr_back_fifo_rd_data ),
     .rd_empty(wr_back_fifo_rd_empty) 
 );
+
+assign fifo_empty_flag = {wr_addr_fifo_rd_empty, rd_addr_fifo_rd_empty, wr_data_fifo_rd_empty, rd_data_fifo_rd_empty, wr_back_fifo_rd_empty};
+
 endmodule

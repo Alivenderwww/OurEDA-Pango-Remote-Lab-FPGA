@@ -158,29 +158,29 @@ always @(*) begin
     else slave_wr_channel_sel <= 2'd0;
 end
 
-axi_inter_sel41 #( 2)selM_WR_ADDR_ID   ( cu_master_wr_channel_id, BUS_WR_ADDR_ID   , M0_WR_ADDR_ID   , M1_WR_ADDR_ID   , M2_WR_ADDR_ID   , M3_WR_ADDR_ID   );
-axi_inter_nosel #( 4)selS_WR_ADDR_ID   ({cu_master_wr_channel_id, BUS_WR_ADDR_ID}  , S0_WR_ADDR_ID   , S1_WR_ADDR_ID   , S2_WR_ADDR_ID   , S3_WR_ADDR_ID   );
-axi_inter_sel41 #(32)selM_WR_ADDR      ( cu_master_wr_channel_id, BUS_WR_ADDR      , M0_WR_ADDR      , M1_WR_ADDR      , M2_WR_ADDR      , M3_WR_ADDR      );
+axi_inter_sel41 #( 2)selM_WR_ADDR_ID   ( nt_master_wr_channel_id, BUS_WR_ADDR_ID   , M0_WR_ADDR_ID   , M1_WR_ADDR_ID   , M2_WR_ADDR_ID   , M3_WR_ADDR_ID   );
+axi_inter_nosel #( 4)selS_WR_ADDR_ID   ({nt_master_wr_channel_id, BUS_WR_ADDR_ID}  , S0_WR_ADDR_ID   , S1_WR_ADDR_ID   , S2_WR_ADDR_ID   , S3_WR_ADDR_ID   );
+axi_inter_sel41 #(32)selM_WR_ADDR      ( nt_master_wr_channel_id, BUS_WR_ADDR      , M0_WR_ADDR      , M1_WR_ADDR      , M2_WR_ADDR      , M3_WR_ADDR      );
 axi_inter_nosel #(32)selS_WR_ADDR      (                          BUS_WR_ADDR      , S0_WR_ADDR      , S1_WR_ADDR      , S2_WR_ADDR      , S3_WR_ADDR      );
-axi_inter_sel41 #( 8)selM_WR_ADDR_LEN  ( cu_master_wr_channel_id, BUS_WR_ADDR_LEN  , M0_WR_ADDR_LEN  , M1_WR_ADDR_LEN  , M2_WR_ADDR_LEN  , M3_WR_ADDR_LEN  );
+axi_inter_sel41 #( 8)selM_WR_ADDR_LEN  ( nt_master_wr_channel_id, BUS_WR_ADDR_LEN  , M0_WR_ADDR_LEN  , M1_WR_ADDR_LEN  , M2_WR_ADDR_LEN  , M3_WR_ADDR_LEN  );
 axi_inter_nosel #( 8)selS_WR_ADDR_LEN  (                          BUS_WR_ADDR_LEN  , S0_WR_ADDR_LEN  , S1_WR_ADDR_LEN  , S2_WR_ADDR_LEN  , S3_WR_ADDR_LEN  );
-axi_inter_sel41 #( 2)selM_WR_ADDR_BURST( cu_master_wr_channel_id, BUS_WR_ADDR_BURST, M0_WR_ADDR_BURST, M1_WR_ADDR_BURST, M2_WR_ADDR_BURST, M3_WR_ADDR_BURST);
+axi_inter_sel41 #( 2)selM_WR_ADDR_BURST( nt_master_wr_channel_id, BUS_WR_ADDR_BURST, M0_WR_ADDR_BURST, M1_WR_ADDR_BURST, M2_WR_ADDR_BURST, M3_WR_ADDR_BURST);
 axi_inter_nosel #( 2)selS_WR_ADDR_BURST(                          BUS_WR_ADDR_BURST, S0_WR_ADDR_BURST, S1_WR_ADDR_BURST, S2_WR_ADDR_BURST, S3_WR_ADDR_BURST);
-axi_inter_sel41 #( 1)selM_WR_ADDR_VALID( cu_master_wr_channel_id, BUS_WR_ADDR_VALID, M0_WR_ADDR_VALID, M1_WR_ADDR_VALID, M2_WR_ADDR_VALID, M3_WR_ADDR_VALID);
+axi_inter_sel41 #( 1)selM_WR_ADDR_VALID( nt_master_wr_channel_id, BUS_WR_ADDR_VALID, M0_WR_ADDR_VALID, M1_WR_ADDR_VALID, M2_WR_ADDR_VALID, M3_WR_ADDR_VALID);
 axi_inter_sel14 #( 1)selS_WR_ADDR_VALID(    slave_wr_channel_sel, (BUS_WR_ADDR_VALID & (cu_wr_st == ST_WR_IDLE)), S0_WR_ADDR_VALID, S1_WR_ADDR_VALID, S2_WR_ADDR_VALID, S3_WR_ADDR_VALID);
 axi_inter_sel41 #( 1)selS_WR_ADDR_READY(    slave_wr_channel_sel, BUS_WR_ADDR_READY, S0_WR_ADDR_READY, S1_WR_ADDR_READY, S2_WR_ADDR_READY, S3_WR_ADDR_READY);
-axi_inter_sel14 #( 1)selM_WR_ADDR_READY( cu_master_wr_channel_id, (BUS_WR_ADDR_READY & (cu_wr_st == ST_WR_IDLE)), M0_WR_ADDR_READY, M1_WR_ADDR_READY, M2_WR_ADDR_READY, M3_WR_ADDR_READY);
+axi_inter_sel14 #( 1)selM_WR_ADDR_READY( nt_master_wr_channel_id, (BUS_WR_ADDR_READY & (cu_wr_st == ST_WR_IDLE)), M0_WR_ADDR_READY, M1_WR_ADDR_READY, M2_WR_ADDR_READY, M3_WR_ADDR_READY);
 
-axi_inter_sel41 #(32)selM_WR_DATA      (cu_master_wr_channel_id, BUS_WR_DATA        , M0_WR_DATA      , M1_WR_DATA      , M2_WR_DATA      , M3_WR_DATA      );
+axi_inter_sel41 #(32)selM_WR_DATA      (nt_master_wr_channel_id, BUS_WR_DATA        , M0_WR_DATA      , M1_WR_DATA      , M2_WR_DATA      , M3_WR_DATA      );
 axi_inter_nosel #(32)selS_WR_DATA      (                         BUS_WR_DATA        , S0_WR_DATA      , S1_WR_DATA      , S2_WR_DATA      , S3_WR_DATA      );
-axi_inter_sel41 #( 4)selM_WR_STRB      (cu_master_wr_channel_id, BUS_WR_STRB        , M0_WR_STRB      , M1_WR_STRB      , M2_WR_STRB      , M3_WR_STRB      );
+axi_inter_sel41 #( 4)selM_WR_STRB      (nt_master_wr_channel_id, BUS_WR_STRB        , M0_WR_STRB      , M1_WR_STRB      , M2_WR_STRB      , M3_WR_STRB      );
 axi_inter_nosel #( 4)selS_WR_STRB      (                         BUS_WR_STRB        , S0_WR_STRB      , S1_WR_STRB      , S2_WR_STRB      , S3_WR_STRB      );
-axi_inter_sel41 #( 1)selM_WR_DATA_LAST (cu_master_wr_channel_id, BUS_WR_DATA_LAST   , M0_WR_DATA_LAST , M1_WR_DATA_LAST , M2_WR_DATA_LAST , M3_WR_DATA_LAST );
+axi_inter_sel41 #( 1)selM_WR_DATA_LAST (nt_master_wr_channel_id, BUS_WR_DATA_LAST   , M0_WR_DATA_LAST , M1_WR_DATA_LAST , M2_WR_DATA_LAST , M3_WR_DATA_LAST );
 axi_inter_sel14 #( 1)selS_WR_DATA_LAST (   slave_wr_channel_sel, BUS_WR_DATA_LAST   , S0_WR_DATA_LAST , S1_WR_DATA_LAST , S2_WR_DATA_LAST , S3_WR_DATA_LAST );
-axi_inter_sel41 #( 1)selM_WR_DATA_VALID(cu_master_wr_channel_id, BUS_WR_DATA_VALID  , M0_WR_DATA_VALID, M1_WR_DATA_VALID, M2_WR_DATA_VALID, M3_WR_DATA_VALID);
+axi_inter_sel41 #( 1)selM_WR_DATA_VALID(nt_master_wr_channel_id, BUS_WR_DATA_VALID  , M0_WR_DATA_VALID, M1_WR_DATA_VALID, M2_WR_DATA_VALID, M3_WR_DATA_VALID);
 axi_inter_sel14 #( 1)selS_WR_DATA_VALID(   slave_wr_channel_sel, (BUS_WR_DATA_VALID & (cu_wr_st == ST_WR_DATA))  , S0_WR_DATA_VALID, S1_WR_DATA_VALID, S2_WR_DATA_VALID, S3_WR_DATA_VALID);
 axi_inter_sel41 #( 1)selS_WR_DATA_READY(   slave_wr_channel_sel, BUS_WR_DATA_READY  , S0_WR_DATA_READY, S1_WR_DATA_READY, S2_WR_DATA_READY, S3_WR_DATA_READY);
-axi_inter_sel14 #( 1)selM_WR_DATA_READY(cu_master_wr_channel_id, (BUS_WR_DATA_READY & (cu_wr_st == ST_WR_DATA))  , M0_WR_DATA_READY, M1_WR_DATA_READY, M2_WR_DATA_READY, M3_WR_DATA_READY);
+axi_inter_sel14 #( 1)selM_WR_DATA_READY(nt_master_wr_channel_id, (BUS_WR_DATA_READY & (cu_wr_st == ST_WR_DATA))  , M0_WR_DATA_READY, M1_WR_DATA_READY, M2_WR_DATA_READY, M3_WR_DATA_READY);
 
 /**********************读地址接口 需要lock**********************/
 always @(posedge BUS_CLK) begin
@@ -210,18 +210,18 @@ always @(*) begin
     else slave_rd_addr_channel_sel <= 2'd0;
 end
 
-axi_inter_sel41 #( 2)selM_RD_ADDR_ID   ( cu_master_rd_addr_channel_id, BUS_RD_ADDR_ID   , M0_RD_ADDR_ID   , M1_RD_ADDR_ID   , M2_RD_ADDR_ID   , M3_RD_ADDR_ID   );
-axi_inter_nosel #( 4)selS_RD_ADDR_ID   ({cu_master_rd_addr_channel_id, BUS_RD_ADDR_ID}  , S0_RD_ADDR_ID   , S1_RD_ADDR_ID   , S2_RD_ADDR_ID   , S3_RD_ADDR_ID   );
-axi_inter_sel41 #(32)selM_RD_ADDR      ( cu_master_rd_addr_channel_id, BUS_RD_ADDR      , M0_RD_ADDR      , M1_RD_ADDR      , M2_RD_ADDR      , M3_RD_ADDR      );
+axi_inter_sel41 #( 2)selM_RD_ADDR_ID   ( nt_master_rd_addr_channel_id, BUS_RD_ADDR_ID   , M0_RD_ADDR_ID   , M1_RD_ADDR_ID   , M2_RD_ADDR_ID   , M3_RD_ADDR_ID   );
+axi_inter_nosel #( 4)selS_RD_ADDR_ID   ({nt_master_rd_addr_channel_id, BUS_RD_ADDR_ID}  , S0_RD_ADDR_ID   , S1_RD_ADDR_ID   , S2_RD_ADDR_ID   , S3_RD_ADDR_ID   );
+axi_inter_sel41 #(32)selM_RD_ADDR      ( nt_master_rd_addr_channel_id, BUS_RD_ADDR      , M0_RD_ADDR      , M1_RD_ADDR      , M2_RD_ADDR      , M3_RD_ADDR      );
 axi_inter_nosel #(32)selS_RD_ADDR      (                               BUS_RD_ADDR      , S0_RD_ADDR      , S1_RD_ADDR      , S2_RD_ADDR      , S3_RD_ADDR      );
-axi_inter_sel41 #( 8)selM_RD_ADDR_LEN  ( cu_master_rd_addr_channel_id, BUS_RD_ADDR_LEN  , M0_RD_ADDR_LEN  , M1_RD_ADDR_LEN  , M2_RD_ADDR_LEN  , M3_RD_ADDR_LEN  );
+axi_inter_sel41 #( 8)selM_RD_ADDR_LEN  ( nt_master_rd_addr_channel_id, BUS_RD_ADDR_LEN  , M0_RD_ADDR_LEN  , M1_RD_ADDR_LEN  , M2_RD_ADDR_LEN  , M3_RD_ADDR_LEN  );
 axi_inter_nosel #( 8)selS_RD_ADDR_LEN  (                               BUS_RD_ADDR_LEN  , S0_RD_ADDR_LEN  , S1_RD_ADDR_LEN  , S2_RD_ADDR_LEN  , S3_RD_ADDR_LEN  );
-axi_inter_sel41 #( 2)selM_RD_ADDR_BURST( cu_master_rd_addr_channel_id, BUS_RD_ADDR_BURST, M0_RD_ADDR_BURST, M1_RD_ADDR_BURST, M2_RD_ADDR_BURST, M3_RD_ADDR_BURST);
+axi_inter_sel41 #( 2)selM_RD_ADDR_BURST( nt_master_rd_addr_channel_id, BUS_RD_ADDR_BURST, M0_RD_ADDR_BURST, M1_RD_ADDR_BURST, M2_RD_ADDR_BURST, M3_RD_ADDR_BURST);
 axi_inter_nosel #( 2)selS_RD_ADDR_BURST(                               BUS_RD_ADDR_BURST, S0_RD_ADDR_BURST, S1_RD_ADDR_BURST, S2_RD_ADDR_BURST, S3_RD_ADDR_BURST);
-axi_inter_sel41 #( 1)selM_RD_ADDR_VALID( cu_master_rd_addr_channel_id, BUS_RD_ADDR_VALID, M0_RD_ADDR_VALID, M1_RD_ADDR_VALID, M2_RD_ADDR_VALID, M3_RD_ADDR_VALID);
+axi_inter_sel41 #( 1)selM_RD_ADDR_VALID( nt_master_rd_addr_channel_id, BUS_RD_ADDR_VALID, M0_RD_ADDR_VALID, M1_RD_ADDR_VALID, M2_RD_ADDR_VALID, M3_RD_ADDR_VALID);
 axi_inter_sel14 #( 1)selS_RD_ADDR_VALID(    slave_rd_addr_channel_sel, BUS_RD_ADDR_VALID, S0_RD_ADDR_VALID, S1_RD_ADDR_VALID, S2_RD_ADDR_VALID, S3_RD_ADDR_VALID);
 axi_inter_sel41 #( 1)selS_RD_ADDR_READY(    slave_rd_addr_channel_sel, BUS_RD_ADDR_READY, S0_RD_ADDR_READY, S1_RD_ADDR_READY, S2_RD_ADDR_READY, S3_RD_ADDR_READY);
-axi_inter_sel14 #( 1)selM_RD_ADDR_READY( cu_master_rd_addr_channel_id, BUS_RD_ADDR_READY, M0_RD_ADDR_READY, M1_RD_ADDR_READY, M2_RD_ADDR_READY, M3_RD_ADDR_READY);
+axi_inter_sel14 #( 1)selM_RD_ADDR_READY( nt_master_rd_addr_channel_id, BUS_RD_ADDR_READY, M0_RD_ADDR_READY, M1_RD_ADDR_READY, M2_RD_ADDR_READY, M3_RD_ADDR_READY);
 
 /**********************读数据接口 支持写交织，无需lock**********************/
 //有优化空间
@@ -274,14 +274,14 @@ always @(*) begin
     master_wr_resp_id <= BUS_WR_BACK_ID[3:2];
 end
 
-axi_inter_sel41 #( 4)selS_WR_BACK_ID   (cu_slave_wr_resp_sel,     BUS_WR_BACK_ID,    S0_WR_BACK_ID,    S1_WR_BACK_ID,    S2_WR_BACK_ID,    S3_WR_BACK_ID);
+axi_inter_sel41 #( 4)selS_WR_BACK_ID   (nt_slave_wr_resp_sel,     BUS_WR_BACK_ID,    S0_WR_BACK_ID,    S1_WR_BACK_ID,    S2_WR_BACK_ID,    S3_WR_BACK_ID);
 axi_inter_nosel #( 2)selM_WR_BACK_ID   (                     BUS_WR_BACK_ID[1:0],    M0_WR_BACK_ID,    M1_WR_BACK_ID,    M2_WR_BACK_ID,    M3_WR_BACK_ID);
-axi_inter_sel41 #( 2)selS_WR_BACK_RESP (cu_slave_wr_resp_sel,   BUS_WR_BACK_RESP,  S0_WR_BACK_RESP,  S1_WR_BACK_RESP,  S2_WR_BACK_RESP,  S3_WR_BACK_RESP);
+axi_inter_sel41 #( 2)selS_WR_BACK_RESP (nt_slave_wr_resp_sel,   BUS_WR_BACK_RESP,  S0_WR_BACK_RESP,  S1_WR_BACK_RESP,  S2_WR_BACK_RESP,  S3_WR_BACK_RESP);
 axi_inter_nosel #( 2)selM_WR_BACK_RESP (                        BUS_WR_BACK_RESP,  M0_WR_BACK_RESP,  M1_WR_BACK_RESP,  M2_WR_BACK_RESP,  M3_WR_BACK_RESP);
-axi_inter_sel41 #( 1)selS_WR_BACK_VALID(cu_slave_wr_resp_sel,  BUS_WR_BACK_VALID, S0_WR_BACK_VALID, S1_WR_BACK_VALID, S2_WR_BACK_VALID, S3_WR_BACK_VALID);
+axi_inter_sel41 #( 1)selS_WR_BACK_VALID(nt_slave_wr_resp_sel,  BUS_WR_BACK_VALID, S0_WR_BACK_VALID, S1_WR_BACK_VALID, S2_WR_BACK_VALID, S3_WR_BACK_VALID);
 axi_inter_sel14 #( 1)selM_WR_BACK_VALID(   master_wr_resp_id,  BUS_WR_BACK_VALID, M0_WR_BACK_VALID, M1_WR_BACK_VALID, M2_WR_BACK_VALID, M3_WR_BACK_VALID);
 axi_inter_sel41 #( 1)selM_WR_BACK_READY(   master_wr_resp_id,  BUS_WR_BACK_READY, M0_WR_BACK_READY, M1_WR_BACK_READY, M2_WR_BACK_READY, M3_WR_BACK_READY);
-axi_inter_sel14 #( 1)selS_WR_BACK_READY(cu_slave_wr_resp_sel,  BUS_WR_BACK_READY, S0_WR_BACK_READY, S1_WR_BACK_READY, S2_WR_BACK_READY, S3_WR_BACK_READY);
+axi_inter_sel14 #( 1)selS_WR_BACK_READY(nt_slave_wr_resp_sel,  BUS_WR_BACK_READY, S0_WR_BACK_READY, S1_WR_BACK_READY, S2_WR_BACK_READY, S3_WR_BACK_READY);
 
 
 endmodule
