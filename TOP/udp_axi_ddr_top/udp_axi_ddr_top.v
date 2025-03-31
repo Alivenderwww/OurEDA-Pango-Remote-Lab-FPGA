@@ -128,7 +128,7 @@ wire ddr_rst_n  ;
 wire jtag_rstn  ;
 
 wire ddr_init_done;
-wire udp_led;
+wire [7:0] udp_led;
 
 wire [4:0] M0_fifo_empty_flag, M1_fifo_empty_flag, M2_fifo_empty_flag, M3_fifo_empty_flag;
 wire [4:0] S0_fifo_empty_flag, S1_fifo_empty_flag, S2_fifo_empty_flag, S3_fifo_empty_flag;
