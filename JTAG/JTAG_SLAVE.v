@@ -205,9 +205,10 @@ always @(*) begin
 end
 always @(posedge clk) begin
     if((~rstn) || (cu_wrchannel_st == ST_WR_IDLE)) wr_transcript_error_reg <= 0;
-    else if(cu_wrchannel_st == ST_WR_DATA) wr_transcript_error_reg <= (wr_transcript_error)?(1):(wr_transcript_error_reg);
-    else wr_transcript_error_reg <= wr_transcript_error_reg;
+    else wr_transcript_error_reg <= (wr_transcript_error)?(1):(wr_transcript_error_reg);
 end
+
+
 
 //_______________________________________________________________________________//
 always @(*) begin
