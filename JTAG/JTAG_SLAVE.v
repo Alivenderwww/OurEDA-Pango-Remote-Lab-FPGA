@@ -169,14 +169,17 @@ wire        jtag_fifo_shift_cmd_rst  ;
 //_______________________________________________________________________________//
 always @(*) begin
     if(~jtag_rstn_sync) nt_wrchannel_st <= ST_WR_IDLE;
-    case (cu_wrchannel_st)
+    else case (cu_wrchannel_st)
         ST_WR_IDLE: nt_wrchannel_st <= (JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
         ST_WR_DATA: nt_wrchannel_st <= (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && JTAG_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
         ST_WR_RESP: nt_wrchannel_st <= (JTAG_SLAVE_WR_BACK_VALID && JTAG_SLAVE_WR_BACK_READY)?(ST_WR_IDLE):(ST_WR_RESP);
         default   : nt_wrchannel_st <= ST_WR_IDLE;
     endcase
 end
-always @(posedge clk or negedge jtag_rstn_sync) cu_wrchannel_st <= nt_wrchannel_st;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) cu_wrchannel_st <= ST_WR_IDLE;
+    else cu_wrchannel_st <= nt_wrchannel_st;
+end
 assign JTAG_SLAVE_WR_ADDR_READY = (jtag_rstn_sync) && (cu_wrchannel_st == ST_WR_IDLE);
 assign JTAG_SLAVE_WR_BACK_VALID = (jtag_rstn_sync) && (cu_wrchannel_st == ST_WR_RESP);
 assign JTAG_SLAVE_WR_BACK_RESP  = ((jtag_rstn_sync) && ((~wr_transcript_error) && (~wr_transcript_error_reg)))?(2'b00):(2'b10);
@@ -216,13 +219,16 @@ end
 //_______________________________________________________________________________//
 always @(*) begin
     if(~jtag_rstn_sync) nt_rdchannel_st <= ST_RD_IDLE;
-    case (cu_rdchannel_st)
+    else case (cu_rdchannel_st)
         ST_RD_IDLE: nt_rdchannel_st <= (JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY)?(ST_RD_DATA):(ST_RD_IDLE);
         ST_RD_DATA: nt_rdchannel_st <= (JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY && JTAG_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
         default   : nt_rdchannel_st <= ST_RD_IDLE;
     endcase
 end
-always @(posedge clk or negedge jtag_rstn_sync) cu_rdchannel_st <= nt_rdchannel_st;
+always @(posedge clk or negedge jtag_rstn_sync)begin
+    if(~jtag_rstn_sync) cu_rdchannel_st <= ST_RD_IDLE;
+    else cu_rdchannel_st <= nt_rdchannel_st;
+end
 assign JTAG_SLAVE_RD_ADDR_READY = (jtag_rstn_sync) && (cu_rdchannel_st == ST_RD_IDLE);
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) begin
