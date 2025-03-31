@@ -37,7 +37,9 @@ output wire        BUS_RD_DATA_READY, input  wire        MASTER_RD_DATA_READY,
 output wire [4:0] fifo_empty_flag
 );
 
-wire RSTN = BUS_RSTN & MASTER_RSTN;
+wire BUS_RSTN_SYNC, MASTER_RSTN_SYNC;
+rstn_sync rstn_sync_bus   (BUS_CLK, BUS_RSTN, BUS_RSTN_SYNC);
+rstn_sync rstn_sync_master(MASTER_CLK, MASTER_RSTN, MASTER_RSTN_SYNC);
 
 wire                wr_addr_fifo_wr_rst  ;
 wire                wr_addr_fifo_wr_en   ;
@@ -49,22 +51,22 @@ wire [32+8+2+2-1:0] wr_addr_fifo_rd_data ;
 wire                wr_addr_fifo_rd_empty;
 
 reg async_wr_addr_fifo_data_dont_care;
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) async_wr_addr_fifo_data_dont_care <= 1;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_empty && (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_en && async_wr_addr_fifo_data_dont_care) async_wr_addr_fifo_data_dont_care <= 0;
     else async_wr_addr_fifo_data_dont_care <= async_wr_addr_fifo_data_dont_care;
 end
 
-assign wr_addr_fifo_wr_rst  =  ~MASTER_RSTN;
+assign wr_addr_fifo_wr_rst  =  ~MASTER_RSTN_SYNC;
 assign wr_addr_fifo_wr_en   = (MASTER_WR_ADDR_VALID && MASTER_WR_ADDR_READY);
 assign wr_addr_fifo_wr_data = {MASTER_WR_ADDR_ID, MASTER_WR_ADDR, MASTER_WR_ADDR_LEN, MASTER_WR_ADDR_BURST};
-assign MASTER_WR_ADDR_READY = (MASTER_RSTN) && (~wr_addr_fifo_wr_full);
+assign MASTER_WR_ADDR_READY = (MASTER_RSTN_SYNC) && (~wr_addr_fifo_wr_full);
 
-assign wr_addr_fifo_rd_rst  =  ~BUS_RSTN;
+assign wr_addr_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
 assign wr_addr_fifo_rd_en   = (~wr_addr_fifo_rd_empty) && ((async_wr_addr_fifo_data_dont_care) || (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY));
 assign {BUS_WR_ADDR_ID, BUS_WR_ADDR, BUS_WR_ADDR_LEN, BUS_WR_ADDR_BURST} = wr_addr_fifo_rd_data;
-assign BUS_WR_ADDR_VALID    = (BUS_RSTN) && (~async_wr_addr_fifo_data_dont_care);
+assign BUS_WR_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_wr_addr_fifo_data_dont_care);
 
 //写地址通道和读地址通道是完全一样的接口设计，都用async_addr_fifo模块就可以
 //MASTER写地址通道<===>fifo写通道<===>fifo读通道<===>BUS写地址通道
@@ -93,22 +95,22 @@ wire [32+8+2+2-1:0] rd_addr_fifo_rd_data ;
 wire                rd_addr_fifo_rd_empty;
 
 reg async_rd_addr_fifo_data_dont_care;
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) async_rd_addr_fifo_data_dont_care <= 1;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_empty && (BUS_RD_ADDR_VALID && BUS_RD_ADDR_READY)) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_en && async_rd_addr_fifo_data_dont_care) async_rd_addr_fifo_data_dont_care <= 0;
     else async_rd_addr_fifo_data_dont_care <= async_rd_addr_fifo_data_dont_care;
 end
 
-assign rd_addr_fifo_wr_rst  =  ~MASTER_RSTN;
+assign rd_addr_fifo_wr_rst  =  ~MASTER_RSTN_SYNC;
 assign rd_addr_fifo_wr_en   = (MASTER_RD_ADDR_VALID && MASTER_RD_ADDR_READY);
 assign rd_addr_fifo_wr_data = {MASTER_RD_ADDR_ID, MASTER_RD_ADDR, MASTER_RD_ADDR_LEN, MASTER_RD_ADDR_BURST};
-assign MASTER_RD_ADDR_READY = (MASTER_RSTN) && (~rd_addr_fifo_wr_full);
+assign MASTER_RD_ADDR_READY = (MASTER_RSTN_SYNC) && (~rd_addr_fifo_wr_full);
 
-assign rd_addr_fifo_rd_rst  =  ~BUS_RSTN;
+assign rd_addr_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
 assign rd_addr_fifo_rd_en   = (~rd_addr_fifo_rd_empty) && ((async_rd_addr_fifo_data_dont_care) || (BUS_RD_ADDR_VALID && BUS_RD_ADDR_READY));
 assign {BUS_RD_ADDR_ID, BUS_RD_ADDR, BUS_RD_ADDR_LEN, BUS_RD_ADDR_BURST} = rd_addr_fifo_rd_data;
-assign BUS_RD_ADDR_VALID    = (BUS_RSTN) && (~async_rd_addr_fifo_data_dont_care);
+assign BUS_RD_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_rd_addr_fifo_data_dont_care);
 
 //fifo写由BUS的写地址通道控制，fifo读由MASTER的读地址通道控制
 //MASTER读地址通道<===>fifo写通道<===>fifo读通道<===>BUS读地址通道
@@ -138,22 +140,22 @@ wire [32+4+1-1:0] wr_data_fifo_rd_data ;
 wire              wr_data_fifo_rd_empty;
 
 reg async_wr_data_fifo_data_dont_care;
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) async_wr_data_fifo_data_dont_care <= 1;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_empty && (BUS_WR_DATA_VALID && BUS_WR_DATA_READY)) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_en && async_wr_data_fifo_data_dont_care) async_wr_data_fifo_data_dont_care <= 0;
     else async_wr_data_fifo_data_dont_care <= async_wr_data_fifo_data_dont_care;
 end
 
-assign wr_data_fifo_wr_rst  =  ~MASTER_RSTN;
+assign wr_data_fifo_wr_rst  =  ~MASTER_RSTN_SYNC;
 assign wr_data_fifo_wr_en   = (MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY);
 assign wr_data_fifo_wr_data = {MASTER_WR_DATA, MASTER_WR_STRB, MASTER_WR_DATA_LAST};
-assign MASTER_WR_DATA_READY = (MASTER_RSTN) && ~wr_data_fifo_wr_full;
+assign MASTER_WR_DATA_READY = (MASTER_RSTN_SYNC) && ~wr_data_fifo_wr_full;
 
-assign wr_data_fifo_rd_rst  =  ~BUS_RSTN;
+assign wr_data_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
 assign wr_data_fifo_rd_en   = (~wr_data_fifo_rd_empty) && ((async_wr_data_fifo_data_dont_care) || (BUS_WR_DATA_VALID && BUS_WR_DATA_READY));
 assign {BUS_WR_DATA, BUS_WR_STRB, BUS_WR_DATA_LAST} = wr_data_fifo_rd_data & ({(32+4+1){BUS_WR_DATA_VALID}});
-assign BUS_WR_DATA_VALID   = (BUS_RSTN) && (~async_wr_data_fifo_data_dont_care);
+assign BUS_WR_DATA_VALID   = (BUS_RSTN_SYNC) && (~async_wr_data_fifo_data_dont_care);
 
 //MASTER写数据通道<===>fifo写通道<===>fifo读通道<===>BUS写数据通道
 master_async_wr_data_fifo master_async_wr_data_fifo_inst(
@@ -181,22 +183,22 @@ wire [2+32+2+1-1:0] rd_data_fifo_rd_data ;
 wire                rd_data_fifo_rd_empty;
 
 reg async_rd_data_fifo_data_dont_care;
-always @(posedge MASTER_CLK) begin
-    if(~MASTER_RSTN) async_rd_data_fifo_data_dont_care <= 1;
+always @(posedge MASTER_CLK or negedge MASTER_RSTN_SYNC) begin
+    if(~MASTER_RSTN_SYNC) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_empty && (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY)) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_en && async_rd_data_fifo_data_dont_care) async_rd_data_fifo_data_dont_care <= 0;
     else async_rd_data_fifo_data_dont_care <= async_rd_data_fifo_data_dont_care;
 end
 
-assign rd_data_fifo_wr_rst  =  ~BUS_RSTN;
+assign rd_data_fifo_wr_rst  =  ~BUS_RSTN_SYNC;
 assign rd_data_fifo_wr_en   = (BUS_RD_DATA_VALID && BUS_RD_DATA_READY);
 assign rd_data_fifo_wr_data = {BUS_RD_BACK_ID, BUS_RD_DATA, BUS_RD_DATA_RESP, BUS_RD_DATA_LAST};
-assign BUS_RD_DATA_READY    = (BUS_RSTN) && ~rd_data_fifo_wr_full;
+assign BUS_RD_DATA_READY    = (BUS_RSTN_SYNC) && ~rd_data_fifo_wr_full;
 
-assign rd_data_fifo_rd_rst  =  ~MASTER_RSTN;
+assign rd_data_fifo_rd_rst  =  ~MASTER_RSTN_SYNC;
 assign rd_data_fifo_rd_en   = (~rd_data_fifo_rd_empty) && ((async_rd_data_fifo_data_dont_care) || (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY));
 assign {MASTER_RD_BACK_ID, MASTER_RD_DATA, MASTER_RD_DATA_RESP, MASTER_RD_DATA_LAST} = rd_data_fifo_rd_data & ({(2+32+2+1){MASTER_RD_DATA_VALID}});
-assign MASTER_RD_DATA_VALID = (MASTER_RSTN) && (~async_rd_data_fifo_data_dont_care);
+assign MASTER_RD_DATA_VALID = (MASTER_RSTN_SYNC) && (~async_rd_data_fifo_data_dont_care);
 
 //BUS读数据通道<===>fifo写通道<===>fifo读通道<===>MASTER读数据通道   !!!!这个通道反过来!!!!
 //{BACK_ID, DATA, RESP, LAST} WIDTH = 37
@@ -225,22 +227,22 @@ wire [2+2-1:0]        wr_back_fifo_rd_data ;
 wire                  wr_back_fifo_rd_empty;
 
 reg async_wr_back_fifo_data_dont_care;
-always @(posedge MASTER_CLK) begin
-    if(~MASTER_RSTN) async_wr_back_fifo_data_dont_care <= 1;
+always @(posedge MASTER_CLK or negedge MASTER_RSTN_SYNC) begin
+    if(~MASTER_RSTN_SYNC) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_empty && (MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY)) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
     else async_wr_back_fifo_data_dont_care <= async_wr_back_fifo_data_dont_care;
 end
 
-assign wr_back_fifo_wr_rst  =  ~BUS_RSTN;
+assign wr_back_fifo_wr_rst  =  ~BUS_RSTN_SYNC;
 assign wr_back_fifo_wr_en   = (BUS_WR_BACK_VALID && BUS_WR_BACK_READY);
 assign wr_back_fifo_wr_data = {BUS_WR_BACK_ID, BUS_WR_BACK_RESP};
-assign BUS_WR_BACK_READY    = (BUS_RSTN) && ~wr_back_fifo_wr_full;
+assign BUS_WR_BACK_READY    = (BUS_RSTN_SYNC) && ~wr_back_fifo_wr_full;
 
-assign wr_back_fifo_rd_rst  =  ~MASTER_RSTN;
+assign wr_back_fifo_rd_rst  =  ~MASTER_RSTN_SYNC;
 assign wr_back_fifo_rd_en   = (~wr_back_fifo_rd_empty) && ((async_wr_back_fifo_data_dont_care) || (MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY));
 assign {MASTER_WR_BACK_ID, MASTER_WR_BACK_RESP} = wr_back_fifo_rd_data;
-assign MASTER_WR_BACK_VALID = (MASTER_RSTN) && (~async_wr_back_fifo_data_dont_care);
+assign MASTER_WR_BACK_VALID = (MASTER_RSTN_SYNC) && (~async_wr_back_fifo_data_dont_care);
 
 //BUS读数据通道<===>fifo写通道<===>fifo读通道<===>MASTER读数据通道   !!!!这个通道反过来!!!!
 master_async_wr_back_fifo master_async_wr_back_fifo_inst(

@@ -90,6 +90,8 @@ assign DDR_SLAVE_RSTN = (ddr_init_done);
 wire [31:0] DDR_SLAVE_WR_ADDR_CONVERTED = DDR_SLAVE_WR_ADDR - OFFSET_ADDR;
 wire [31:0] DDR_SLAVE_RD_ADDR_CONVERTED = DDR_SLAVE_RD_ADDR - OFFSET_ADDR;
 
+
+
 /*
 首先地址要对齐，低3位始终为0
 如果要读写中间的，需要转换一下STRB

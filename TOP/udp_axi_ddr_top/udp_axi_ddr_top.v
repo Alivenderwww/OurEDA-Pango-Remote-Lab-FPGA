@@ -52,7 +52,6 @@ localparam S2_END_ADDR   = 32'h2F_FF_FF_0F;
 localparam S3_START_ADDR = 32'h30_00_00_00;
 localparam S3_END_ADDR   = 32'h3F_FF_FF_0F;
 
-assign eth_rst_n = 1;
 /*
 装载比特流的顺序：
 0. CMD_JTAG_CLOSE_TEST                  0
@@ -120,6 +119,7 @@ wire led_clk;
 wire ddr_ref_clk;
 wire jtag_clk;
 
+//顶层模块的所有复位信号不保证同步
 wire sys_rstn   ;
 wire BUS_RSTN   ;
 wire udp_in_rstn;
@@ -146,12 +146,12 @@ assign BUS_CLK     = clk_50M;
 assign ddr_ref_clk = clk_50M;
 assign jtag_clk    = clk_5M;
 
-assign sys_rstn    = (external_rstn);
-assign BUS_RSTN    = (external_rstn);
-assign udp_in_rstn = (external_rstn);
-assign led_rst_n   = (external_rstn);
-assign ddr_rst_n   = (external_rstn);
-assign jtag_rstn   = (external_rstn);
+assign sys_rstn    = (external_rstn) && (clk_lock);
+assign BUS_RSTN    = (external_rstn) && (clk_lock);
+assign udp_in_rstn = (external_rstn) && (clk_lock);
+assign led_rst_n   = (external_rstn) && (clk_lock);
+assign ddr_rst_n   = (external_rstn) && (clk_lock);
+assign jtag_rstn   = (external_rstn) && (clk_lock);
 
 axi_udp_master #(
 	.BOARD_MAC 	(BOARD_MAC),
@@ -160,7 +160,7 @@ axi_udp_master #(
 	.DES_IP    	(DES_IP   )
 )M0(
 	.udp_in_rstn            ( udp_in_rstn     ),
-	.eth_rst_n              (                 ),
+	.eth_rst_n              ( eth_rst_n       ),
 	.rgmii_rxc            	( rgmii_rxc       ),
 	.rgmii_rx_ctl         	( rgmii_rx_ctl    ),
 	.rgmii_rxd            	( rgmii_rxd       ),

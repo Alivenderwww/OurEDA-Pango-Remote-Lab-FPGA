@@ -75,6 +75,8 @@ module axi_interconnect #(
     input  wire        S0_RD_DATA_VALID,    input  wire        S1_RD_DATA_VALID,    input  wire        S2_RD_DATA_VALID,    input  wire        S3_RD_DATA_VALID,
     output wire        S0_RD_DATA_READY,    output wire        S1_RD_DATA_READY,    output wire        S2_RD_DATA_READY,    output wire        S3_RD_DATA_READY
 );
+wire BUS_RSTN_SYNC;
+rstn_sync rstn_sync_bus (BUS_CLK, BUS_RSTN, BUS_RSTN_SYNC);
 
 wire [ 1:0] BUS_WR_ADDR_ID   ;
 wire [31:0] BUS_WR_ADDR      ;
@@ -123,16 +125,16 @@ reg cu_wr_st, nt_wr_st;
 localparam ST_WR_IDLE = 0,
            ST_WR_DATA = 1;
 always @(*)begin
-    if(~BUS_RSTN) nt_wr_st <= ST_WR_IDLE;
+    if(~BUS_RSTN_SYNC) nt_wr_st <= ST_WR_IDLE;
     else case (cu_wr_st)
         ST_WR_IDLE: nt_wr_st <= (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
         ST_WR_DATA: nt_wr_st <= (BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST)?(ST_WR_IDLE):(ST_WR_DATA);
     endcase
 end
-always @(posedge BUS_CLK) cu_wr_st <= nt_wr_st;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) cu_wr_st <= nt_wr_st;
 
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) wr_channel_lock <= 0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) wr_channel_lock <= 0;
     else if((cu_wr_st == ST_WR_DATA) && (BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST)) wr_channel_lock <= 0; //传输结束，传输通道解锁
     else if((cu_wr_st == ST_WR_IDLE) && BUS_WR_ADDR_VALID) wr_channel_lock <= 1; //握手未成功，传输通道加锁
     else  wr_channel_lock <= wr_channel_lock;
@@ -146,8 +148,8 @@ always @(*) begin
         else                      nt_master_wr_channel_id <= 2'd0;
     end else                      nt_master_wr_channel_id <= cu_master_wr_channel_id;
 end
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) cu_master_wr_channel_id <= 2'd0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) cu_master_wr_channel_id <= 2'd0;
     else cu_master_wr_channel_id <= nt_master_wr_channel_id;
 end
 always @(*) begin
@@ -183,8 +185,8 @@ axi_inter_sel41 #( 1)selS_WR_DATA_READY(   slave_wr_channel_sel, BUS_WR_DATA_REA
 axi_inter_sel14 #( 1)selM_WR_DATA_READY(nt_master_wr_channel_id, (BUS_WR_DATA_READY & (cu_wr_st == ST_WR_DATA))  , M0_WR_DATA_READY, M1_WR_DATA_READY, M2_WR_DATA_READY, M3_WR_DATA_READY);
 
 /**********************读地址接口 需要lock**********************/
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) rd_addr_channel_lock <= 0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) rd_addr_channel_lock <= 0;
     else if((BUS_RD_ADDR_VALID && BUS_RD_ADDR_READY)) rd_addr_channel_lock <= 0; //握手成功，传输通道解锁
     else if(BUS_RD_ADDR_VALID) rd_addr_channel_lock <= 1; //握手未成功，传输通道加锁
     else  rd_addr_channel_lock <= rd_addr_channel_lock;
@@ -198,8 +200,8 @@ always @(*) begin
         else                      nt_master_rd_addr_channel_id <= 2'd0;
     end else                      nt_master_rd_addr_channel_id <= cu_master_rd_addr_channel_id;
 end
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) cu_master_rd_addr_channel_id <= 2'd0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) cu_master_rd_addr_channel_id <= 2'd0;
     else cu_master_rd_addr_channel_id <= nt_master_rd_addr_channel_id;
 end
 always @(*) begin
@@ -251,8 +253,8 @@ axi_inter_sel14 #( 1)selS_RD_DATA_READY(    slave_rd_data_channel_sel, BUS_RD_DA
 
 
 /**************************写响应接口**********************/
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) wr_resp_lock <= 0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) wr_resp_lock <= 0;
     else if(BUS_WR_BACK_VALID && BUS_WR_BACK_READY) wr_resp_lock <= 0; //传输结束，传输通道解锁
     else if(BUS_WR_BACK_VALID) wr_resp_lock <= 1; //握手未成功，传输通道加锁
     else  wr_resp_lock <= wr_resp_lock;
@@ -266,8 +268,8 @@ always @(*) begin
         else                      nt_slave_wr_resp_sel <= 2'd0;
     end else                      nt_slave_wr_resp_sel <= cu_slave_wr_resp_sel;
 end
-always @(posedge BUS_CLK) begin
-    if(~BUS_RSTN) cu_slave_wr_resp_sel <= 2'd0;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
+    if(~BUS_RSTN_SYNC) cu_slave_wr_resp_sel <= 2'd0;
     else cu_slave_wr_resp_sel <= nt_slave_wr_resp_sel;
 end
 always @(*) begin
