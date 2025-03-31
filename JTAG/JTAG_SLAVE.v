@@ -63,11 +63,10 @@ shift_out_data怎么办？鉴于移出的数据与TAP内部寄存器一一对应
 因此需要设置3个UID寄存器地址(UID是96位)
 需要设置n个（n根据芯片类型固定）边界扫描寄存器地址
 */
-assign JTAG_SLAVE_CLK  = clk;
-assign JTAG_SLAVE_RSTN = jtag_rstn_sync;
-
 wire jtag_rstn_sync;
 rstn_sync rstn_sync_jtag(clk, rstn, jtag_rstn_sync);
+assign JTAG_SLAVE_CLK  = clk;
+assign JTAG_SLAVE_RSTN = jtag_rstn_sync;
 
 wire [3:0] cmd;
 wire [27:0] cycle_num;
@@ -424,7 +423,7 @@ tap_FSM #(
     .CYCLE_LEN(28)
 )tap_FSM_inst(
 .clk          (clk                     ),
-.rstn         (jtag_rstn_sync                    ),
+.rstn         (jtag_rstn_sync          ),
 
 .tck          (tck                     ),
 .tms          (tms                     ), //TMS在TCK上升沿被芯片读取，需要在下降沿改变值
