@@ -125,13 +125,15 @@ reg cu_wr_st, nt_wr_st;
 localparam ST_WR_IDLE = 0,
            ST_WR_DATA = 1;
 always @(*)begin
-    if(~BUS_RSTN_SYNC) nt_wr_st <= ST_WR_IDLE;
-    else case (cu_wr_st)
+    case (cu_wr_st)
         ST_WR_IDLE: nt_wr_st <= (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
         ST_WR_DATA: nt_wr_st <= (BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST)?(ST_WR_IDLE):(ST_WR_DATA);
     endcase
 end
-always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) cu_wr_st <= nt_wr_st;
+always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC)begin
+    if(~BUS_RSTN_SYNC) cu_wr_st <= ST_WR_IDLE;
+    else cu_wr_st <= nt_wr_st;
+end
 
 always @(posedge BUS_CLK or negedge BUS_RSTN_SYNC) begin
     if(~BUS_RSTN_SYNC) wr_channel_lock <= 0;
