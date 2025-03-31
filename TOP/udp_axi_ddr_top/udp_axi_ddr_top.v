@@ -128,8 +128,7 @@ wire ddr_rst_n  ;
 wire jtag_rstn  ;
 
 wire ddr_init_done;
-wire [31:0] axi_led;
-wire [31:0] m1_recv_led;
+wire udp_led;
 
 wire [4:0] M0_fifo_empty_flag, M1_fifo_empty_flag, M2_fifo_empty_flag, M3_fifo_empty_flag;
 wire [4:0] S0_fifo_empty_flag, S1_fifo_empty_flag, S2_fifo_empty_flag, S3_fifo_empty_flag;
@@ -169,7 +168,7 @@ axi_udp_master #(
 	.rgmii_tx_ctl         	( rgmii_tx_ctl    ),
 	.rgmii_txd            	( rgmii_txd       ),
 
-    .udp_led                (                 ),
+    .udp_led                ( udp_led         ),
 	.MASTER_CLK           	( M0_CLK          ),
 	.MASTER_RSTN          	( M0_RSTN         ),
 	.MASTER_WR_ADDR_ID    	( M0_WR_ADDR_ID   ),
@@ -552,7 +551,7 @@ assign data_in[(8*4)+:8]    = {3'b0,S0_fifo_empty_flag};
 assign data_in[(8*5)+:8]    = {3'b0,S1_fifo_empty_flag};
 assign data_in[(8*6)+:8]    = {3'b0,S2_fifo_empty_flag};
 assign data_in[(8*7)+:8]    = {3'b0,S3_fifo_empty_flag};
-assign data_in[(8*8)+:8]    = 8'b10101010;
+assign data_in[(8*8)+:8]    = {udp_led};
 assign data_in[(8*9)+:8]    = 8'b01010101;
 assign data_in[(8*10)+:8]   = 8'b11110000;
 assign data_in[(8*11)+:8]   = 8'b00001111;

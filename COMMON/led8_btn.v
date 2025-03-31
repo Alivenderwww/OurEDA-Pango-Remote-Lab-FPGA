@@ -13,7 +13,7 @@ module led8_btn(
 
 wire btn_up_ggle, btn_down_ggle;
 btn_ggle btn_ggle0(clk, rstn, btn_up, btn_up_ggle);
-btn_ggle btn_ggle0(clk, rstn, btn_down, btn_down_ggle);
+btn_ggle btn_ggle1(clk, rstn, btn_down, btn_down_ggle);
 
 reg btn_up_d0, btn_up_d1;
 wire btn_up_neg = (~btn_up_d0) & (btn_up_d1);

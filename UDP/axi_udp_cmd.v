@@ -113,7 +113,7 @@ assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
 //debug
-assign cmdled = {4'b0,MASTER_WR_ADDR[3:0]};
+assign cmdled = {3'b000, wraddr_fifo_empty, rdaddr_fifo_empty, wrback_fifo_empty, wrdata_fifo_empty, rddata_fifo_empty};
 reg [1:0] rdaddr_cnt;
 reg  rdaddr_fifo_wr_en_cnt;
 reg  rdaddr_fifo_rd_en_cnt;
