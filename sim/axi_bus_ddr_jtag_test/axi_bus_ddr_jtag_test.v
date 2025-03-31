@@ -204,11 +204,11 @@ B. CMD_JTAG_CLOSE_TEST                  0
 initial begin
     #5000
     #300 M0.set_rd_data_channel(7);
-    #300 M0.set_wr_data_channel(1);
+    #300 M0.set_wr_data_channel(7);
 
     //JTAG读取IDCODE的流程：
     #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //写JTAG状态寄存器
-    #300 M0.send_wr_data(32'h11111111, 4'b1111);              //清空全部fifo
+    #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);              //清空全部fifo
     #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //读取JTAG状态寄存器确认全部清空
 
     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00); //写JTAG的data_in_fifo入口
@@ -245,7 +245,7 @@ initial begin
     #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01);
     #300 M0.send_wr_data(32'h00000000, 4'b1111);
     #300 M0.send_wr_data(32'h10000000, 4'b1111);
-    
+
     #300 M0.send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
     #300 M0.send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01);
     $display("here!");
