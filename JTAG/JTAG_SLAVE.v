@@ -64,7 +64,10 @@ shift_out_data怎么办？鉴于移出的数据与TAP内部寄存器一一对应
 需要设置n个（n根据芯片类型固定）边界扫描寄存器地址
 */
 assign JTAG_SLAVE_CLK  = clk;
-assign JTAG_SLAVE_RSTN = rstn;
+assign JTAG_SLAVE_RSTN = jtag_rstn_sync;
+
+wire jtag_rstn_sync;
+rstn_sync rstn_sync_jtag(clk, rstn, jtag_rstn_sync);
 
 wire [3:0] cmd;
 wire [27:0] cycle_num;
@@ -165,7 +168,7 @@ wire        jtag_fifo_shift_cmd_rst  ;
 
 //_______________________________________________________________________________//
 always @(*) begin
-    if(~rstn) nt_wrchannel_st <= ST_WR_IDLE;
+    if(~jtag_rstn_sync) nt_wrchannel_st <= ST_WR_IDLE;
     case (cu_wrchannel_st)
         ST_WR_IDLE: nt_wrchannel_st <= (JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
         ST_WR_DATA: nt_wrchannel_st <= (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && JTAG_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
@@ -173,13 +176,13 @@ always @(*) begin
         default   : nt_wrchannel_st <= ST_WR_IDLE;
     endcase
 end
-always @(posedge clk) cu_wrchannel_st <= nt_wrchannel_st;
-assign JTAG_SLAVE_WR_ADDR_READY = (rstn) && (cu_wrchannel_st == ST_WR_IDLE);
-assign JTAG_SLAVE_WR_BACK_VALID = (rstn) && (cu_wrchannel_st == ST_WR_RESP);
-assign JTAG_SLAVE_WR_BACK_RESP  = ((rstn) && ((~wr_transcript_error) && (~wr_transcript_error_reg)))?(2'b00):(2'b10);
+always @(posedge clk or negedge jtag_rstn_sync) cu_wrchannel_st <= nt_wrchannel_st;
+assign JTAG_SLAVE_WR_ADDR_READY = (jtag_rstn_sync) && (cu_wrchannel_st == ST_WR_IDLE);
+assign JTAG_SLAVE_WR_BACK_VALID = (jtag_rstn_sync) && (cu_wrchannel_st == ST_WR_RESP);
+assign JTAG_SLAVE_WR_BACK_RESP  = ((jtag_rstn_sync) && ((~wr_transcript_error) && (~wr_transcript_error_reg)))?(2'b00):(2'b10);
 assign JTAG_SLAVE_WR_BACK_ID    = wr_addr_id;
-always @(posedge clk) begin
-    if(~rstn) begin
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
         wr_addr_id    <= 0;
         wr_addr_burst <= 0;
     end else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) begin
@@ -190,21 +193,21 @@ always @(posedge clk) begin
         wr_addr_burst <= wr_addr_burst;
     end
 end
-always @(posedge clk) begin
-    if(~rstn) wr_addr <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) wr_addr <= 0;
     else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) wr_addr <= JTAG_SLAVE_WR_ADDR;
     else if((wr_addr_burst == 2'b01) && JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
 always @(*) begin
-    if((~rstn) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
+    if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
     else if((wr_addr < REAL_JTAG_STATE_ADDR) || (wr_addr > REAL_JTAG_SHIFT_CMD_ADDR)) wr_transcript_error <= 1;
     else if(wr_addr == REAL_JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
-always @(posedge clk) begin
-    if((~rstn) || (cu_wrchannel_st == ST_WR_IDLE)) wr_transcript_error_reg <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE)) wr_transcript_error_reg <= 0;
     else wr_transcript_error_reg <= (wr_transcript_error)?(1):(wr_transcript_error_reg);
 end
 
@@ -212,17 +215,17 @@ end
 
 //_______________________________________________________________________________//
 always @(*) begin
-    if(~rstn) nt_rdchannel_st <= ST_RD_IDLE;
+    if(~jtag_rstn_sync) nt_rdchannel_st <= ST_RD_IDLE;
     case (cu_rdchannel_st)
         ST_RD_IDLE: nt_rdchannel_st <= (JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY)?(ST_RD_DATA):(ST_RD_IDLE);
         ST_RD_DATA: nt_rdchannel_st <= (JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY && JTAG_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
         default   : nt_rdchannel_st <= ST_RD_IDLE;
     endcase
 end
-always @(posedge clk) cu_rdchannel_st <= nt_rdchannel_st;
-assign JTAG_SLAVE_RD_ADDR_READY = (rstn) && (cu_rdchannel_st == ST_RD_IDLE);
-always @(posedge clk) begin
-    if(~rstn) begin
+always @(posedge clk or negedge jtag_rstn_sync) cu_rdchannel_st <= nt_rdchannel_st;
+assign JTAG_SLAVE_RD_ADDR_READY = (jtag_rstn_sync) && (cu_rdchannel_st == ST_RD_IDLE);
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
         rd_addr_id    <= 0;
         rd_addr_burst <= 0;
         rd_addr_len   <= 0;
@@ -236,24 +239,24 @@ always @(posedge clk) begin
         rd_addr_len   <= rd_addr_len;
     end
 end
-always @(posedge clk) begin
-    if(~rstn) rd_addr <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) rd_addr <= 0;
     else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR;
     else if(JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
-always @(posedge clk) begin
-    if(~rstn || (cu_rdchannel_st == ST_RD_IDLE)) rd_data_trans_num <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync || (cu_rdchannel_st == ST_RD_IDLE)) rd_data_trans_num <= 0;
     else if(JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_data_trans_num <= rd_data_trans_num + 1;
     else rd_data_trans_num <= rd_data_trans_num;
 end
 assign JTAG_SLAVE_RD_DATA_LAST = (JTAG_SLAVE_RD_DATA_VALID) && (rd_data_trans_num == rd_addr_len);
 assign JTAG_SLAVE_RD_BACK_ID = rd_addr_id;
-assign JTAG_SLAVE_RD_DATA_RESP  = ((rstn) && ((~rd_transcript_error) && (~rd_transcript_error_reg)))?(2'b00):(2'b10);
+assign JTAG_SLAVE_RD_DATA_RESP  = ((jtag_rstn_sync) && ((~rd_transcript_error) && (~rd_transcript_error_reg)))?(2'b00):(2'b10);
 
 always @(*) begin
     //写数据READY选通
-    if(~rstn) JTAG_SLAVE_WR_DATA_READY <= 0;
+    if(~jtag_rstn_sync) JTAG_SLAVE_WR_DATA_READY <= 0;
     else if(cu_wrchannel_st == ST_WR_DATA) begin
              if(wr_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_WR_DATA_READY <= 1; //状态寄存器可立即写
         else if(wr_addr == REAL_JTAG_SHIFT_IN_ADDR ) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_data_full); //写FIFO未满可写
@@ -261,14 +264,14 @@ always @(*) begin
         else JTAG_SLAVE_WR_DATA_READY <= 1; //ERROR，直接跳过不写
     end else JTAG_SLAVE_WR_DATA_READY <= 0;
     //读数据VALID选通
-    if(~rstn) JTAG_SLAVE_RD_DATA_VALID <= 0;
+    if(~jtag_rstn_sync) JTAG_SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
              if(rd_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA_VALID <= 1; //状态寄存器可立即读   
         else if(rd_addr == REAL_JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA_VALID <= (fifo_shift_out_out_valid); //读FIFO数据有效可读
         else JTAG_SLAVE_RD_DATA_VALID <= 1; //ERROR，直接跳过默认为全1
     end else JTAG_SLAVE_RD_DATA_VALID <= 0;
     //读数据DATA选通
-    if(~rstn) JTAG_SLAVE_RD_DATA <= 0;
+    if(~jtag_rstn_sync) JTAG_SLAVE_RD_DATA <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
              if(rd_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读  
         else if(rd_addr == REAL_JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
@@ -277,13 +280,13 @@ always @(*) begin
 end
 
 always @(*) begin
-    if((~rstn) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
+    if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
     else if((rd_addr < REAL_JTAG_STATE_ADDR) || (rd_addr > REAL_JTAG_SHIFT_OUT_ADDR)) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
-always @(posedge clk) begin
-    if((~rstn) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error_reg <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error_reg <= 0;
     else rd_transcript_error_reg <= (rd_transcript_error)?(1):(rd_transcript_error_reg);
 end
 
@@ -306,8 +309,8 @@ always @(*) begin
     JTAG_STATE_REG_READ[24]   = cmd_done;
     JTAG_STATE_REG_READ[31:25]= 0;
 end
-always @(posedge clk) begin
-    if(~rstn) JTAG_STATE_REG_WR <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) JTAG_STATE_REG_WR <= 0;
     else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_STATE_ADDR))begin
         JTAG_STATE_REG_WR[07:00] <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[07:00]):(JTAG_STATE_REG_WR[07:00]);
         JTAG_STATE_REG_WR[15:08] <= (JTAG_SLAVE_WR_STRB[1])?(JTAG_SLAVE_WR_DATA[15:08]):(JTAG_STATE_REG_WR[15:08]);
@@ -321,7 +324,7 @@ always @(posedge clk) begin
 end
 
 //_______32'h10000001_______//
-always @(posedge clk) begin
+always @(posedge clk or negedge jtag_rstn_sync) begin
     if(jtag_fifo_shift_out_rst) 
          fifo_shift_out_out_valid <= 0;
     else if(fifo_shift_out_empty && fifo_shift_out_rd_en && fifo_shift_out_out_valid)//在fifo为空的情况下有效数据被读了
@@ -330,14 +333,14 @@ always @(posedge clk) begin
          fifo_shift_out_out_valid <= 1;
     else fifo_shift_out_out_valid <= fifo_shift_out_out_valid;
 end
-always @(posedge clk) begin
-    if(~rstn) fifo_out_full_data_valid <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) fifo_out_full_data_valid <= 0;
     else if(fifo_shift_out_full && shift_out_wr) fifo_out_full_data_valid <= 1;
     else if((~fifo_shift_out_full) && (fifo_out_full_data_valid) && (fifo_shift_out_wr_en)) fifo_out_full_data_valid <= 0;
     else fifo_out_full_data_valid <= fifo_out_full_data_valid;
 end
-always @(posedge clk) begin
-    if(~rstn) fifo_out_full_data_temp <= 0;
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) fifo_out_full_data_temp <= 0;
     else if(fifo_shift_out_full && shift_out_wr) fifo_out_full_data_temp <= shift_out;
     else fifo_out_full_data_temp <= fifo_out_full_data_temp;
 end
@@ -345,7 +348,7 @@ assign fifo_shift_out_rd_en = ((~fifo_shift_out_empty) && (~fifo_shift_out_out_v
 assign fifo_shift_out_wr_en = (~fifo_shift_out_full) && ((fifo_out_full_data_valid) || (shift_out_wr));
 assign fifo_shift_out_wr_data = (fifo_out_full_data_valid)?(fifo_out_full_data_temp):(shift_out);
 assign fifo_shift_data_out_last = fifo_shift_out_full;
-assign jtag_fifo_shift_out_rst = (~rstn) || (JTAG_STATE_REG_WR[0]);
+assign jtag_fifo_shift_out_rst = (~jtag_rstn_sync) || (JTAG_STATE_REG_WR[0]);
 
 jtag_fifo_shift_out jtag_fifo_shift_out_inst(
     .clk        (clk                    ),
@@ -360,7 +363,7 @@ jtag_fifo_shift_out jtag_fifo_shift_out_inst(
 
 
 //_______32'h10000002_______//
-always @(posedge clk) begin
+always @(posedge clk or negedge jtag_rstn_sync) begin
     if(jtag_fifo_shift_data_rst) 
          fifo_shift_data_out_valid <= 0;
     else if(fifo_shift_data_empty && (fifo_shift_data_out_valid && shift_in_rd))//在fifo为空的情况下有效数据被读了
@@ -373,7 +376,7 @@ assign fifo_shift_data_rd_en = (~fifo_shift_data_empty) && ((~fifo_shift_data_ou
 assign fifo_shift_data_in_last = (fifo_shift_data_empty);
 assign fifo_shift_data_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_IN_ADDR));
 assign fifo_shift_data_wr_data = JTAG_SLAVE_WR_DATA;
-assign jtag_fifo_shift_data_rst = (~rstn) || (JTAG_STATE_REG_WR[8]);
+assign jtag_fifo_shift_data_rst = (~jtag_rstn_sync) || (JTAG_STATE_REG_WR[8]);
 jtag_fifo_shift_data jtag_fifo_shift_data_inst(
     .clk        (clk                     ),
     .rst        (jtag_fifo_shift_data_rst),
@@ -386,7 +389,7 @@ jtag_fifo_shift_data jtag_fifo_shift_data_inst(
 );
 
 //_______32'h10000003_______//
-always @(posedge clk) begin
+always @(posedge clk or negedge jtag_rstn_sync) begin
     if(jtag_fifo_shift_cmd_rst) 
          fifo_shift_cmd_out_valid <= 0;
     else if(fifo_shift_cmd_empty && (fifo_shift_cmd_out_valid && cmd_ready))//在fifo为空的情况下有效数据被读了
@@ -398,7 +401,7 @@ end
 assign fifo_shift_cmd_rd_en = (~fifo_shift_cmd_empty) && ((~fifo_shift_cmd_out_valid) || (cmd_ready));
 assign fifo_shift_cmd_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_CMD_ADDR));
 assign fifo_shift_cmd_wr_data = JTAG_SLAVE_WR_DATA;
-assign jtag_fifo_shift_cmd_rst = (~rstn) || (JTAG_STATE_REG_WR[16]);
+assign jtag_fifo_shift_cmd_rst = (~jtag_rstn_sync) || (JTAG_STATE_REG_WR[16]);
 jtag_fifo_shift_cmd jtag_fifo_shift_cmd_inst(
     .clk        (clk                    ),
     .rst        (jtag_fifo_shift_cmd_rst),
@@ -417,7 +420,7 @@ tap_FSM #(
     .CYCLE_LEN(28)
 )tap_FSM_inst(
 .clk          (clk                     ),
-.rstn         (rstn                    ),
+.rstn         (jtag_rstn_sync                    ),
 
 .tck          (tck                     ),
 .tms          (tms                     ), //TMS在TCK上升沿被芯片读取，需要在下降沿改变值

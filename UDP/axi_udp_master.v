@@ -47,7 +47,9 @@ module axi_udp_master #(
     input  wire        MASTER_RD_DATA_VALID,
     output wire        MASTER_RD_DATA_READY 
 );
-assign eth_rst_n = udp_in_rstn;
+wire eth_rstn_sync;
+rstn_sync rstn_sync_eth(rgmii_rxc, udp_in_rstn, eth_rstn_sync);
+assign eth_rst_n = eth_rstn_sync;
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
@@ -90,7 +92,7 @@ udp #(
     .DES_IP        (DES_IP      )
     )
    u_udp(
-    .rst_n         (udp_in_rstn ),
+    .rst_n         (eth_rstn_sync),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
     .gmii_rx_dv    (gmii_rx_dv  ),
@@ -112,7 +114,7 @@ udp #(
 
 axi_udp_cmd axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
-    .rstn                (udp_in_rstn         ),
+    .rstn                (eth_rstn_sync       ),
 
     .cmdled              (udp_led             ),    
 

@@ -28,6 +28,9 @@ output wire                 cmd_ready    , //准备信号
 output wire                 cmd_done       //暂存列全空标志位
 );
 assign tck = clk;
+
+wire tap_rstn_sync;
+rstn_sync rstn_sync_tap(clk, rstn, tap_rstn_sync);
 /*
 CMD指令(cmd, cycle_num)在模块内有暂存列，最多可存8条CMD, 与FIFO一样执行完毕后自动向前补。
 当cmd_valid == 1且cmd_ready == 1时cmd被写入模块内。
@@ -52,8 +55,8 @@ wire cycle_over;
 assign cycle_over = (cnt_cycle >= cycle_num_running_now);
 
 //_____________与芯片内部完全同步的设计, 以上升沿为触发信号___________
-always @(posedge clk) begin
-    if(~rstn) cnt_cycle <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) cnt_cycle <= 0;
     else if(cu_tap_state == `TAP_UNKNOWN) cnt_cycle <= (tms)?(cnt_cycle + 1):(1);
     else if(flag_cmd_one_done || cmd_done) cnt_cycle <= 0;
     else case (cmd_running_now)
@@ -66,7 +69,7 @@ always @(posedge clk) begin
 end
 
 always @(*) begin
-    if(~rstn) nt_tap_state <= `TAP_UNKNOWN;
+    if(~tap_rstn_sync) nt_tap_state <= `TAP_UNKNOWN;
     else begin
         case (cu_tap_state)
             `TAP_UNKNOWN          : nt_tap_state <= (tms && cnt_cycle >= 5)?(`TAP_TEST_LOGIC_RESET):(`TAP_UNKNOWN      );
@@ -91,7 +94,7 @@ always @(*) begin
     end
 end
 
-always @(posedge clk) cu_tap_state <= nt_tap_state;
+always @(posedge clk or negedge tap_rstn_sync) cu_tap_state <= nt_tap_state;
 
 assign tdi_reg           = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(shift_in):(0);
 assign shift_out         = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(tdo):(0);
@@ -103,24 +106,24 @@ assign cmd_running_now = cmd_load[cmd_running_rd_pointer[CMD_STORE-1:0]];
 assign cycle_num_running_now = cycle_num_load[cmd_running_rd_pointer[CMD_STORE-1:0]];
 
 assign cmd_done = (cmd_running_wr_pointer == cmd_running_rd_pointer);
-assign cmd_ready = (rstn) && ((cmd_running_wr_pointer ^ cmd_running_rd_pointer) != {1'b1,{(CMD_STORE-1){1'b0}}});
+assign cmd_ready = (tap_rstn_sync) && ((cmd_running_wr_pointer ^ cmd_running_rd_pointer) != {1'b1,{(CMD_STORE-1){1'b0}}});
 
 integer i;
-always @(posedge clk) begin
-    if(~rstn) cmd_running_wr_pointer <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) cmd_running_wr_pointer <= 0;
     else if(cmd_valid && cmd_ready) cmd_running_wr_pointer <= cmd_running_wr_pointer + 1;
     else cmd_running_wr_pointer <= cmd_running_wr_pointer;
 end
-always @(posedge clk) begin
-    if(~rstn) for(i=0;i<CMD_STORE_NUM;i=i+1) cmd_load[i] <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) for(i=0;i<CMD_STORE_NUM;i=i+1) cmd_load[i] <= 0;
     else if(cmd_valid && cmd_ready) cmd_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cmd;
 end
-always @(posedge clk) begin
-    if(~rstn) for(i=0;i<CMD_STORE_NUM;i=i+1) cycle_num_load[i] <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) for(i=0;i<CMD_STORE_NUM;i=i+1) cycle_num_load[i] <= 0;
     else if(cmd_valid && cmd_ready) cycle_num_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cycle_num;
 end
-always @(posedge clk) begin
-    if(~rstn);
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync);
     else if(cmd_valid && cmd_ready)$display("%m: at time %0t INFO: Jtag recv a cmd-%b, cyclenum-%u.", $time, cmd, cycle_num);
 end
 
@@ -136,15 +139,15 @@ always @(*) begin
     endcase else flag_cmd_one_done <= 0;
 end
 
-always @(posedge clk) begin
-    if(~rstn) cmd_running_rd_pointer <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) cmd_running_rd_pointer <= 0;
     else if(flag_cmd_one_done) cmd_running_rd_pointer <= cmd_running_rd_pointer + 1;
     else cmd_running_rd_pointer <= cmd_running_rd_pointer;
 end
 
 //tlr_or_rti切换逻辑 0为TLR 1为RTI
-always @(posedge clk) begin
-    if(~rstn) tlr_or_rti <= 0;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) tlr_or_rti <= 0;
     else if(flag_cmd_one_done) begin
         if(cmd_running_now == `CMD_JTAG_RUN_TEST) tlr_or_rti <= 1;
         else if(cmd_running_now == `CMD_JTAG_CLOSE_TEST) tlr_or_rti <= 0;

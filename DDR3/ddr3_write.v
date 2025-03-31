@@ -33,6 +33,8 @@ module ddr3_write(
     input  wire         WRITE_DATA_READY ,
     input  wire         WRITE_DATA_LAST 
 );
+wire ddr_rstn_sync;
+rstn_sync rstn_sync_ddr(clk, rstn, ddr_rstn_sync);
 /*
 WRITE_LEN最大16突发长度
 256*16 = 4096 bits
@@ -81,7 +83,7 @@ localparam WRITE_ST_IDLE       = 3'b000,
            WRITE_ST_AFTER      = 3'b100,
            WRITE_ST_RESP       = 3'b101;
 always @(*) begin
-    if(~rstn) nt_wr_st <= WRITE_ST_IDLE;
+    if(~ddr_rstn_sync) nt_wr_st <= WRITE_ST_IDLE;
     else case (cu_wr_st)
         WRITE_ST_IDLE      : nt_wr_st <= (SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID)?(WRITE_ST_WAIT):(WRITE_ST_IDLE);
         WRITE_ST_WAIT      : begin
@@ -104,16 +106,16 @@ always @(*) begin
         default            : nt_wr_st <= WRITE_ST_IDLE;
     endcase
 end
-always @(posedge clk) cu_wr_st <= nt_wr_st;
+always @(posedge clk or negedge ddr_rstn_sync) cu_wr_st <= nt_wr_st;
 
-always @(posedge clk) begin
-    if((~rstn) || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if((~ddr_rstn_sync) || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
     else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_LAST) flag_data_recv_over <= 1;
     else flag_data_recv_over <= flag_data_recv_over;
 end
 
-always @(posedge clk) begin
-    if(~rstn) begin
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if(~ddr_rstn_sync) begin
         wr_addr_load     <= 0;
         wr_len_load      <= 0;
         wr_id_load       <= 0;
@@ -138,40 +140,40 @@ always @(posedge clk) begin
     end
 end
 
-always @(posedge clk) begin
-    if(~rstn) start_complete_num <= 0;
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if(~ddr_rstn_sync) start_complete_num <= 0;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) start_complete_num <= SLAVE_WR_ADDR[2:0];
     else if((fifo_wr_en) && (~full) && (cu_wr_st != WRITE_ST_IDLE) && (start_complete_num != 0)) start_complete_num <= start_complete_num - 1;
     else start_complete_num <= start_complete_num;
 end
 
-always @(posedge clk) begin
-    if(~rstn) end_complete_num <= 0;
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if(~ddr_rstn_sync) end_complete_num <= 0;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) end_complete_num <= 7 - wr_addr_end[2:0];
     else if((fifo_wr_en) && (cu_wr_st == WRITE_ST_AFTER) && (end_complete_num != 0)) end_complete_num <= end_complete_num - 1;
     else end_complete_num <= end_complete_num;
 end
 
-always @(posedge clk) begin
+always @(posedge clk or negedge ddr_rstn_sync) begin
     if(fifo_rst) fifo_rd_first_need <= 1;
     else if(empty && (WRITE_DATA_READY)) fifo_rd_first_need <= 1;
     else if(fifo_rd_en && fifo_rd_first_need) fifo_rd_first_need <= 0;
     else fifo_rd_first_need <= fifo_rd_first_need;
 end
 
-assign SLAVE_WR_ADDR_READY    = (rstn) && (cu_wr_st == WRITE_ST_IDLE);
-assign SLAVE_WR_DATA_READY    = (rstn) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
+assign SLAVE_WR_ADDR_READY    = (ddr_rstn_sync) && (cu_wr_st == WRITE_ST_IDLE);
+assign SLAVE_WR_DATA_READY    = (ddr_rstn_sync) && ((cu_wr_st != WRITE_ST_IDLE) && (~full) && (start_complete_num == 0));
 assign SLAVE_WR_BACK_ID       = wr_id_load;//DDR不支持乱序执行，因此直接连线就行。
-assign SLAVE_WR_BACK_VALID    = (rstn) && (cu_wr_st == WRITE_ST_RESP);
+assign SLAVE_WR_BACK_VALID    = (ddr_rstn_sync) && (cu_wr_st == WRITE_ST_RESP);
 assign SLAVE_WR_BACK_RESP     = 2'b00;
 assign WRITE_ADDR             = wr_addr_load;
 assign WRITE_LEN              = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
 assign WRITE_ID               = wr_id_load;
-assign WRITE_ADDR_VALID       = (rstn) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
+assign WRITE_ADDR_VALID       = (ddr_rstn_sync) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
 assign WRITE_DATA             = fifo_rd_data;
 assign WRITE_STRB             = fifo_rd_strb;
 
-assign fifo_rst     = (~rstn);
+assign fifo_rst     = (~ddr_rstn_sync);
 assign fifo_wr_en   = (~full) && (((cu_wr_st != WRITE_ST_IDLE ) && (start_complete_num != 0))
                               ||  ((cu_wr_st == WRITE_ST_AFTER) && (  end_complete_num != 0))
                               ||  (SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID));

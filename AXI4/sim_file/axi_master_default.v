@@ -42,6 +42,7 @@ module axi_master_default (
 //如果AXI总线某一个模块暂时不需要连接，用default模块代替。
 
 assign MASTER_CLK = clk;
+rstn_sync rstn_sync_u(MASTER_CLK, rstn, MASTER_RSTN);
 assign MASTER_RSTN = rstn;
 assign MASTER_WR_ADDR_ID    = 0;
 assign MASTER_WR_ADDR       = 0;
