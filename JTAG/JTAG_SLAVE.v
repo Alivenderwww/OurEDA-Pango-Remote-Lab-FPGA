@@ -168,8 +168,7 @@ wire        jtag_fifo_shift_cmd_rst  ;
 
 //_______________________________________________________________________________//
 always @(*) begin
-    if(~jtag_rstn_sync) nt_wrchannel_st <= ST_WR_IDLE;
-    else case (cu_wrchannel_st)
+    case (cu_wrchannel_st)
         ST_WR_IDLE: nt_wrchannel_st <= (JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
         ST_WR_DATA: nt_wrchannel_st <= (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && JTAG_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
         ST_WR_RESP: nt_wrchannel_st <= (JTAG_SLAVE_WR_BACK_VALID && JTAG_SLAVE_WR_BACK_READY)?(ST_WR_IDLE):(ST_WR_RESP);
@@ -218,8 +217,7 @@ end
 
 //_______________________________________________________________________________//
 always @(*) begin
-    if(~jtag_rstn_sync) nt_rdchannel_st <= ST_RD_IDLE;
-    else case (cu_rdchannel_st)
+    case (cu_rdchannel_st)
         ST_RD_IDLE: nt_rdchannel_st <= (JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY)?(ST_RD_DATA):(ST_RD_IDLE);
         ST_RD_DATA: nt_rdchannel_st <= (JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY && JTAG_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
         default   : nt_rdchannel_st <= ST_RD_IDLE;
