@@ -69,8 +69,7 @@ always @(posedge clk or negedge tap_rstn_sync) begin
 end
 
 always @(*) begin
-    if(~tap_rstn_sync) nt_tap_state <= `TAP_UNKNOWN;
-    else begin
+    begin
         case (cu_tap_state)
             `TAP_UNKNOWN          : nt_tap_state <= (tms && cnt_cycle >= 5)?(`TAP_TEST_LOGIC_RESET):(`TAP_UNKNOWN      );
             `TAP_TEST_LOGIC_RESET : nt_tap_state <= (tms                  )?(`TAP_TEST_LOGIC_RESET):(`TAP_RUN_TEST_IDLE);
@@ -94,7 +93,10 @@ always @(*) begin
     end
 end
 
-always @(posedge clk or negedge tap_rstn_sync) cu_tap_state <= nt_tap_state;
+always @(posedge clk or negedge tap_rstn_sync)begin
+    if(~tap_rstn_sync) cu_tap_state <= `TAP_UNKNOWN;
+    else cu_tap_state <= nt_tap_state;
+end
 
 assign tdi_reg           = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(shift_in):(0);
 assign shift_out         = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(tdo):(0);
