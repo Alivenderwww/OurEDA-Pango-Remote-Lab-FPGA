@@ -88,8 +88,7 @@ reg flag_trans_addr_over;
 reg fifo_rd_first_need;
 
 always @(*) begin
-    if(~ddr_rstn_sync) nt_rd_st <= READ_ST_IDLE;
-    else case (cu_rd_st)
+    case (cu_rd_st)
         READ_ST_IDLE      : nt_rd_st <= (SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID)?(READ_ST_WAIT):(READ_ST_IDLE);
         READ_ST_WAIT      : begin
             if(SLAVE_RD_DATA_LAST && SLAVE_RD_DATA_READY && SLAVE_RD_DATA_VALID) nt_rd_st <= READ_ST_RESET;
@@ -102,7 +101,10 @@ always @(*) begin
         default            : nt_rd_st <= READ_ST_IDLE;
     endcase
 end
-always @(posedge clk or negedge ddr_rstn_sync) cu_rd_st <= nt_rd_st;
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if(~ddr_rstn_sync) cu_rd_st <= READ_ST_IDLE;
+    else cu_rd_st <= nt_rd_st;
+end
 
 always @(posedge clk or negedge ddr_rstn_sync) begin
     if(~ddr_rstn_sync) flag_trans_addr_over <= 0;
@@ -152,7 +154,8 @@ always @(posedge clk or negedge ddr_rstn_sync) begin
 end
 
 always @(posedge clk or negedge ddr_rstn_sync) begin
-    if(fifo_rst) fifo_rd_first_need <= 1;
+    if(~ddr_rstn_sync) fifo_rd_first_need <= 1;
+    else if(cu_rd_st == READ_ST_RESET) fifo_rd_first_need <= 1;
     else if(empty && ((SLAVE_RD_DATA_READY) && (SLAVE_RD_DATA_VALID))) fifo_rd_first_need <= 1;
     else if(fifo_rd_en && fifo_rd_first_need) fifo_rd_first_need <= 0;
     else fifo_rd_first_need <= fifo_rd_first_need;
