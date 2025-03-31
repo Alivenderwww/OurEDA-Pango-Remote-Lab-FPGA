@@ -43,7 +43,6 @@ module axi_master_default (
 
 assign MASTER_CLK = clk;
 rstn_sync rstn_sync_u(MASTER_CLK, rstn, MASTER_RSTN);
-assign MASTER_RSTN = rstn;
 assign MASTER_WR_ADDR_ID    = 0;
 assign MASTER_WR_ADDR       = 0;
 assign MASTER_WR_ADDR_LEN   = 0;
