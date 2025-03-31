@@ -10,18 +10,18 @@ z2
 cModel Technology
 Z0 dC:/_Project/Pangu/sim/remote_update_test/behav
 T_opt
-!s110 1743339602
-Vd0]^>@@>KAXC23]3Dc4f^1
+!s110 1743341838
+VkeDH_<N@20gF9WK>ilYWz1
 04 18 4 work remote_update_test fast 0
 04 7 4 usim GTP_GRS fast 0
-=1-8447094c477c-67e94051-125-7218
+=1-8447094c477c-67e9490d-2ce-7b10
 o-quiet -auto_acc_if_foreign -work work -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 -suppress 3486,3680,3781 +acc
 Z1 tCvgOpt 0
 n@_opt
 OL;O;2020.4;71
 vasyn_fifo
 Z2 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z3 !s110 1743339600
+Z3 !s110 1743341836
 !i10b 1
 !s100 ZYzeoi0Ton1abBVzLn`G41
 Z4 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -38,7 +38,7 @@ Z6 OL;L;2020.4;71
 r1
 !s85 0
 31
-Z7 !s108 1743339600.000000
+Z7 !s108 1743341836.000000
 Z8 !s107 ../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_v1_10_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_wr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_wr_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_v1_10_remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_sdpram_v1_10_remote_update_rd_fifo.v|../../../IPCORE/REMOTE_UPDATE/remote_update_rd_fifo/rtl/ipm2l_fifo_ctrl_v1_1_remote_update_rd_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_v1_10_slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_slave_async_addr_fifo.v|../../../IPCORE/AXI4/slave_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_back_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_wr_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_v1_10_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_sdpram_v1_10_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_rd_data_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_v1_10_master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v|../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v|../remote_update_test.v|../../../REMOTE_UPDATE/spi/spi_top.v|../../../REMOTE_UPDATE/spi/spi_driver.v|../../../REMOTE_UPDATE/spi/asyn_fifo.v|../../../REMOTE_UPDATE/ipal/ipal_ctrl.v|../../../REMOTE_UPDATE/remote_update_axi_slave.v|../../../REMOTE_UPDATE/MX25L12805D.v|../../../REMOTE_UPDATE/data_ctrl_slave.v|../../../AXI4/slave_axi_async.v|../../../AXI4/master_axi_async.v|../../../AXI4/axi_led_slave.v|../../../AXI4/axi_inter_sel.v|../../../AXI4/axi_interconnect.v|../../../AXI4/axi_clock_converter.v|../../../AXI4/axi_bus.v|../../../AXI4/axi_btn_master.v|../../../AXI4/sim_file/axi_slave_default.v|../../../AXI4/sim_file/axi_master_sim.v|../../../AXI4/sim_file/axi_master_default.v|../../../AXI4/sim_file/axi_slave_sim.sv|
 Z9 !s90 -reportprogress|300|-sv|-work|work|-mfcu|-incr|-suppress|2902|-f|sim_file_list.f|
 !i113 0
@@ -361,12 +361,12 @@ vdata_ctrl_slave
 R2
 R3
 !i10b 1
-!s100 <HGZVlTIz<b[MegUYF^N:1
+!s100 OPIXmb?FB07iU`KXUlNSj0
 R4
-IjcmDcG8b4FBG_B==4E?mN2
+I80WcoW[0`Lk7kC^Abf3cj2
 S1
 R0
-w1743339558
+w1743341821
 8../../../REMOTE_UPDATE/data_ctrl_slave.v
 F../../../REMOTE_UPDATE/data_ctrl_slave.v
 !i122 0
@@ -1407,7 +1407,7 @@ R4
 I?K[o3D=ikN5V]iR5DlMgW2
 S1
 R0
-w1743339029
+w1743340365
 8../remote_update_test.v
 F../remote_update_test.v
 !i122 0
