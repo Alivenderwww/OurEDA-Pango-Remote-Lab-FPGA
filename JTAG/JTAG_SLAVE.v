@@ -328,7 +328,9 @@ end
 
 //_______32'h10000001_______//
 always @(posedge clk or negedge jtag_rstn_sync) begin
-    if(jtag_fifo_shift_out_rst) 
+    if(~jtag_rstn_sync) 
+         fifo_shift_out_out_valid <= 0;
+    else if(JTAG_STATE_REG_WR[0]) 
          fifo_shift_out_out_valid <= 0;
     else if(fifo_shift_out_empty && fifo_shift_out_rd_en && fifo_shift_out_out_valid)//在fifo为空的情况下有效数据被读了
          fifo_shift_out_out_valid <= 0;
@@ -367,7 +369,9 @@ jtag_fifo_shift_out jtag_fifo_shift_out_inst(
 
 //_______32'h10000002_______//
 always @(posedge clk or negedge jtag_rstn_sync) begin
-    if(jtag_fifo_shift_data_rst) 
+    if(~jtag_rstn_sync) 
+         fifo_shift_data_out_valid <= 0;
+    else if(JTAG_STATE_REG_WR[8]) 
          fifo_shift_data_out_valid <= 0;
     else if(fifo_shift_data_empty && (fifo_shift_data_out_valid && shift_in_rd))//在fifo为空的情况下有效数据被读了
          fifo_shift_data_out_valid <= 0;
@@ -393,7 +397,9 @@ jtag_fifo_shift_data jtag_fifo_shift_data_inst(
 
 //_______32'h10000003_______//
 always @(posedge clk or negedge jtag_rstn_sync) begin
-    if(jtag_fifo_shift_cmd_rst) 
+    if(~jtag_rstn_sync) 
+         fifo_shift_cmd_out_valid <= 0;
+    else if(JTAG_STATE_REG_WR[16]) 
          fifo_shift_cmd_out_valid <= 0;
     else if(fifo_shift_cmd_empty && (fifo_shift_cmd_out_valid && cmd_ready))//在fifo为空的情况下有效数据被读了
          fifo_shift_cmd_out_valid <= 0;
