@@ -345,7 +345,7 @@ assign fifo_shift_out_rd_en = ((~fifo_shift_out_empty) && (~fifo_shift_out_out_v
 assign fifo_shift_out_wr_en = (~fifo_shift_out_full) && ((fifo_out_full_data_valid) || (shift_out_wr));
 assign fifo_shift_out_wr_data = (fifo_out_full_data_valid)?(fifo_out_full_data_temp):(shift_out);
 assign fifo_shift_data_out_last = fifo_shift_out_full;
-assign jtag_fifo_shift_out_rst = (~rstn) || (~JTAG_STATE_REG_WR[0]);
+assign jtag_fifo_shift_out_rst = (~rstn) && (~JTAG_STATE_REG_WR[0]);
 
 jtag_fifo_shift_out jtag_fifo_shift_out_inst(
     .clk        (clk                    ),
@@ -373,7 +373,7 @@ assign fifo_shift_data_rd_en = (~fifo_shift_data_empty) && ((~fifo_shift_data_ou
 assign fifo_shift_data_in_last = (fifo_shift_data_empty);
 assign fifo_shift_data_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_IN_ADDR));
 assign fifo_shift_data_wr_data = JTAG_SLAVE_WR_DATA;
-assign jtag_fifo_shift_data_rst = (~rstn) || (~JTAG_STATE_REG_WR[8]);
+assign jtag_fifo_shift_data_rst = (~rstn) && (~JTAG_STATE_REG_WR[8]);
 jtag_fifo_shift_data jtag_fifo_shift_data_inst(
     .clk        (clk                     ),
     .rst        (jtag_fifo_shift_data_rst),
@@ -398,7 +398,7 @@ end
 assign fifo_shift_cmd_rd_en = (~fifo_shift_cmd_empty) && ((~fifo_shift_cmd_out_valid) || (cmd_ready));
 assign fifo_shift_cmd_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_CMD_ADDR));
 assign fifo_shift_cmd_wr_data = JTAG_SLAVE_WR_DATA;
-assign jtag_fifo_shift_cmd_rst = (~rstn) || (~JTAG_STATE_REG_WR[16]);
+assign jtag_fifo_shift_cmd_rst = (~rstn) && (~JTAG_STATE_REG_WR[16]);
 jtag_fifo_shift_cmd jtag_fifo_shift_cmd_inst(
     .clk        (clk                    ),
     .rst        (jtag_fifo_shift_cmd_rst),
