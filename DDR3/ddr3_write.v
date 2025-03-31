@@ -83,8 +83,7 @@ localparam WRITE_ST_IDLE       = 3'b000,
            WRITE_ST_AFTER      = 3'b100,
            WRITE_ST_RESP       = 3'b101;
 always @(*) begin
-    if(~ddr_rstn_sync) nt_wr_st <= WRITE_ST_IDLE;
-    else case (cu_wr_st)
+    case (cu_wr_st)
         WRITE_ST_IDLE      : nt_wr_st <= (SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID)?(WRITE_ST_WAIT):(WRITE_ST_IDLE);
         WRITE_ST_WAIT      : begin
             //在WAIT状态下，如果检测到start_complete_num不为0就先存入空数据，并且只要非满就持续接收上级模块的数据
@@ -106,10 +105,14 @@ always @(*) begin
         default            : nt_wr_st <= WRITE_ST_IDLE;
     endcase
 end
-always @(posedge clk or negedge ddr_rstn_sync) cu_wr_st <= nt_wr_st;
+always @(posedge clk or negedge ddr_rstn_sync)begin
+    if(~ddr_rstn_sync) cu_wr_st <= WRITE_ST_IDLE;
+    else  cu_wr_st <= nt_wr_st;
+end
 
 always @(posedge clk or negedge ddr_rstn_sync) begin
-    if((~ddr_rstn_sync) || cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
+    if(~ddr_rstn_sync) flag_data_recv_over <= 0;
+    else if(cu_wr_st == WRITE_ST_IDLE) flag_data_recv_over <= 0;
     else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_LAST) flag_data_recv_over <= 1;
     else flag_data_recv_over <= flag_data_recv_over;
 end
@@ -155,7 +158,7 @@ always @(posedge clk or negedge ddr_rstn_sync) begin
 end
 
 always @(posedge clk or negedge ddr_rstn_sync) begin
-    if(fifo_rst) fifo_rd_first_need <= 1;
+    if(~ddr_rstn_sync) fifo_rd_first_need <= 1;
     else if(empty && (WRITE_DATA_READY)) fifo_rd_first_need <= 1;
     else if(fifo_rd_en && fifo_rd_first_need) fifo_rd_first_need <= 0;
     else fifo_rd_first_need <= fifo_rd_first_need;
