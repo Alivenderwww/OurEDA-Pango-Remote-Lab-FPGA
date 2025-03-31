@@ -43,6 +43,8 @@ module axi_slave_default (
 
 assign SLAVE_CLK = clk;
 assign SLAVE_RSTN = rstn;
+rstn_sync rstn_sync_u(SLAVE_CLK, rstn, SLAVE_RSTN);
+
 assign SLAVE_WR_ADDR_READY = 0;
 assign SLAVE_WR_DATA_READY = 0;
 assign SLAVE_WR_BACK_ID    = 0;
