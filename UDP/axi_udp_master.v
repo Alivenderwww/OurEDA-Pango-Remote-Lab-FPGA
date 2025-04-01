@@ -49,7 +49,7 @@ module axi_udp_master #(
 );
 wire eth_rstn_sync;
 rstn_sync rstn_sync_eth(rgmii_rxc, udp_in_rstn, eth_rstn_sync);
-assign eth_rst_n = eth_rstn_sync;
+//assign eth_rst_n = eth_rstn_sync;
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
