@@ -4,6 +4,7 @@
 ../../../DDR3/*.v
 ../../../DDR3/sim_file/ddr3.v
 ../../../JTAG/*.v
+../../../COMMON/*.v
 ../axi_bus_ddr_jtag_test.v
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v

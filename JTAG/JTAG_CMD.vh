@@ -17,9 +17,9 @@
 
 `define CMD_JTAG_CLOSE_TEST    4'b0000 //设定JTAG默认状态为TEST_LOGIC_RESET态 （JTAG复位）
 `define CMD_JTAG_RUN_TEST      4'b0001 //设定JTAG默认状态为RUN_TEST_IDLE态    （JTAG空闲）
-`define CMD_JTAG_LOAD_IR       4'b0010 //JTAG进入SHIFTIR循环cycle_num次后回到设定的默认态
-`define CMD_JTAG_LOAD_DR_CAREI 4'b0011 //JTAG进入SHIFTDR循环cycle_num次后回到设定的默认态，同时输入shift_in
-`define CMD_JTAG_LOAD_DR_CAREO 4'b0100 //JTAG进入SHIFTDR循环cycle_num次后回到设定的默认态，同时输出shift_out
+`define CMD_JTAG_LOAD_IR       4'b0010 //JTAG进入SHIFTIR循环cycle_num次后回到设定的默认状态
+`define CMD_JTAG_LOAD_DR_CAREI 4'b0011 //JTAG进入SHIFTDR循环cycle_num次后回到设定的默认状态，同时输入shift_in
+`define CMD_JTAG_LOAD_DR_CAREO 4'b0100 //JTAG进入SHIFTDR循环cycle_num次后回到设定的默认状态，同时输出shift_out
 `define CMD_JTAG_IDLE_DELAY    4'b0101 //JTAG进入RUN_TEST_IDLE态循环cycle_num次
 
 `define TAP_UNKNOWN           16'b0000_0000_0000_0000

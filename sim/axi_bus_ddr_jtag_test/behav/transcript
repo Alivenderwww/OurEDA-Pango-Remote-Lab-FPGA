@@ -1,0 +1,408 @@
+# //  ModelSim SE-64 2020.4 Oct 13 2020
+# //
+# //  Copyright 1991-2020 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do ctrl_phy_sim.tcl
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap work work 
+# Modifying modelsim.ini
+# ** Warning: (vlib-34) Library already exists at "work".
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap usim ./../../pangu_sim_libraries/usim 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap adc_e2 ./../../pangu_sim_libraries/adc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ddc_e2 ./../../pangu_sim_libraries/ddc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap dll_e2 ./../../pangu_sim_libraries/dll_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap hsstlp_lane ./../../pangu_sim_libraries/hsstlp_lane 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap hsstlp_pll ./../../pangu_sim_libraries/hsstlp_pll 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap iolhr_dft ./../../pangu_sim_libraries/iolhr_dft 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ipal_e1 ./../../pangu_sim_libraries/ipal_e1 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap ipal_e2 ./../../pangu_sim_libraries/ipal_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap iserdes_e2 ./../../pangu_sim_libraries/iserdes_e2 
+# Modifying modelsim.ini
+# ** Error: 详鶻껨꺗胣ං
+# 牯≴愠㯛㝩耀晲捡彥楶睥潰瑲⤢琠慨⁴牡㯝㡥耀⁴湩琠敨椠灮瑵ਮ※桔⁥敤㯟㥴耀〠‬獵⁥浥敢摤摥瀠潲整瑣㯑㩥耀捶彥楶睥潰瑲⤢琠慨⁴牡⁥㯓㭥耀湩琠敨椠灮瑵മ㬊吠敨搠晥㯕㰠耀ⰰ甠敳攠扭摥敤⁤牰瑯捥⁴楤敲瑣癩
+#        Unable to replace existing ini file (modelsim.ini).  File can not be renamed.
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap oserdes_e2 ./../../pangu_sim_libraries/oserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 2020.4 Lib Mapping Utility 2020.10 Oct 13 2020
+# vmap pciegen2 ./../../pangu_sim_libraries/pciegen2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vlog 2020.4 Compiler 2020.10 Oct 13 2020
+# Start time: 13:42:50 on Apr 01,2025
+# vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
+# -- Compiling module axi_slave_sim
+# -- Compiling module axi_master_default
+# -- Compiling module axi_master_sim
+# -- Compiling module axi_slave_default
+# -- Compiling module axi_btn_master
+# -- Compiling module axi_bus
+# -- Compiling module axi_clock_converter
+# -- Compiling module axi_interconnect
+# -- Compiling module axi_inter_sel41
+# -- Compiling module axi_inter_sel14
+# -- Compiling module axi_inter_nosel
+# -- Compiling module axi_led_slave
+# -- Compiling module master_axi_async
+# -- Compiling module slave_axi_async
+# -- Compiling module ddr3_read
+# -- Compiling module ddr3_top
+# -- Compiling module ddr3_write
+# -- Compiling module slave_ddr3
+# -- Compiling module ddr3
+# -- Compiling module JTAG_SLAVE
+# -- Compiling module tap_FSM
+# -- Compiling module btn_ggle
+# -- Compiling module led8_btn
+# -- Compiling module rstn_sync
+# -- Compiling package axi_slave_sim_sv_unit
+# -- Compiling module axi_bus_ddr_jtag_test
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_addr_fifo
+# -- Compiling module master_async_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_rd_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_rd_data_fifo
+# -- Compiling module master_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_wr_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_wr_data_fifo
+# -- Compiling module master_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_master_async_wr_back_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_master_async_wr_back_fifo
+# -- Compiling module ipm2l_fifo_v1_10_master_async_wr_back_fifo
+# -- Compiling module master_async_wr_back_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_addr_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_addr_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_addr_fifo
+# -- Compiling module slave_async_addr_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_wr_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_wr_data_fifo
+# -- Compiling module slave_async_wr_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_wr_back_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_wr_back_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_wr_back_fifo
+# -- Compiling module slave_async_wr_back_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_slave_async_rd_data_fifo
+# -- Compiling module ipm2l_sdpram_v1_10_slave_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_v1_10_slave_async_rd_data_fifo
+# -- Compiling module slave_async_rd_data_fifo
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_fifo_ddr3_read
+# -- Compiling module ipm2l_sdpram_v1_10_fifo_ddr3_read
+# -- Compiling module ipm2l_fifo_v1_10_fifo_ddr3_read
+# -- Compiling module fifo_ddr3_read
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_fifo_ddr3_write
+# -- Compiling module ipm2l_sdpram_v1_10_fifo_ddr3_write
+# -- Compiling module ipm2l_fifo_v1_10_fifo_ddr3_write
+# -- Compiling module fifo_ddr3_write
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_fifo_ddr3_write_strb
+# -- Compiling module ipm2l_sdpram_v1_10_fifo_ddr3_write_strb
+# -- Compiling module ipm2l_fifo_v1_10_fifo_ddr3_write_strb
+# -- Compiling module fifo_ddr3_write_strb
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_cmd
+# -- Compiling module ipm2l_sdpram_v1_10_jtag_fifo_shift_cmd
+# -- Compiling module ipm2l_fifo_v1_10_jtag_fifo_shift_cmd
+# -- Compiling module jtag_fifo_shift_cmd
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_data
+# -- Compiling module ipm2l_sdpram_v1_10_jtag_fifo_shift_data
+# -- Compiling module ipm2l_fifo_v1_10_jtag_fifo_shift_data
+# -- Compiling module jtag_fifo_shift_data
+# -- Compiling module ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_out
+# -- Compiling module ipm2l_sdpram_v1_10_jtag_fifo_shift_out
+# -- Compiling module ipm2l_fifo_v1_10_jtag_fifo_shift_out
+# -- Compiling module jtag_fifo_shift_out
+# -- Compiling module ips2l_rst_sync_v1_3
+# -- Compiling module ips2l_ddrphy_gpll_v1_3
+# -- Compiling module ips2l_ddrphy_ppll_v1_0
+# -- Compiling module axi_ddr3
+# -- Compiling module axi_ddr3_ddrphy_top
+# -- Compiling module axi_ddr3_mcdq_wrapper_v1_9
+# -- Compiling module axi_ddr3_slice_top_v1_15
+# 
+# Top level modules:
+# 	axi_slave_sim
+# 	axi_slave_default
+# 	axi_btn_master
+# 	led8_btn
+# 	axi_bus_ddr_jtag_test
+# End time: 13:42:56 on Apr 01,2025, Elapsed time: 0:00:06
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
+# vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 axi_bus_ddr_jtag_test usim.GTP_GRS 
+# Start time: 13:42:57 on Apr 01,2025
+# Break key hit
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_OSERDES_E2.v(692): (vopt-2241) Connection width does not match width of port 'ts_ctrl'. The port definition is at: ./oserdes_e2_source_codes/oserdes_e2_iolhr_ol.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(740): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(739): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(397): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(395): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(394): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DDC_E2.v(393): (vopt-2241) Connection width does not match width of port 'ldo_ctrl'. The port definition is at: ./ddc_e2_source_codes/ddc_e2_dly_chain.vp(23).
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Note: (vopt-143) Recognized 2 FSMs in module "GTP_DDC_E2(fast)".
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca0'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca1'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca0'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca1'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca0'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1275): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2685) [TFMPC] - Too few port connections for 'u_tserdes_ca1'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1317): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1362): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_ck'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1362): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1362): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1421): (vopt-2685) [TFMPC] - Too few port connections for 'u_iodelay_dq'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1421): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1458): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_odt'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1458): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1458): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1482): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_odt'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1482): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1518): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_csn'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1518): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1518): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1542): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_csn'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1542): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1578): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_rasn'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1578): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1578): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1602): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_rasn'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1602): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1638): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_casn'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1638): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1638): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1662): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_casn'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1662): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1697): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_wen'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1697): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1697): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1721): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_wen'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1721): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1757): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_cke'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1757): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1757): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1781): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_cke'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1781): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_addr'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1823): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_addr'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1847): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_ba'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_ba'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_ba'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_ba'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2685) [TFMPC] - Too few port connections for 'u_oserdes_ba'.  Expected 20, found 18.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TERM_FB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1888): (vopt-2718) [TFMPC] - Missing connection for port 'TFB'.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2685) [TFMPC] - Too few port connections for 'u_odelay_ba'.  Expected 5, found 4.
+# ** Warning: ../../../IPCORE/DDR3/axi_ddr3/rtl/ddrphy/axi_ddr3_slice_top_v1_15.v(1912): (vopt-2718) [TFMPC] - Missing connection for port 'EN_N'.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/GTP_DRM36K_E1.v(746): (vopt-2250) Function "mem_read_a" has no return value assignment.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2685) [TFMPC] - Too few port connections for 'axi_bus_inst'.  Expected 242, found 234.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'S3_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'S2_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'S1_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'S0_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'M3_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'M2_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'M1_fifo_empty_flag'.
+# ** Warning: ../axi_bus_ddr_jtag_test.v(545): (vopt-2718) [TFMPC] - Missing connection for port 'M0_fifo_empty_flag'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(358): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_out_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(358): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(358): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(387): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_data_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(387): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(387): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(414): (vopt-2685) [TFMPC] - Too few port connections for 'jtag_fifo_shift_cmd_inst'.  Expected 10, found 8.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(414): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../JTAG/JTAG_SLAVE.v(414): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Note: (vopt-143) Recognized 2 FSMs in module "JTAG_SLAVE(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "tap_FSM(fast)".
+# ** Warning: ../../../AXI4/master_axi_async.v(73): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_wr_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(73): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(73): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(118): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_rd_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(118): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(118): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(161): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_wr_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(161): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(161): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(205): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_rd_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/master_axi_async.v(248): (vopt-2685) [TFMPC] - Too few port connections for 'master_async_wr_back_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/master_axi_async.v(248): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/master_axi_async.v(248): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_back_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(71): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_addr_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(114): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(156): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_rd_data_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(200): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2685) [TFMPC] - Too few port connections for 'slave_async_wr_back_fifo_inst'.  Expected 12, found 10.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../AXI4/slave_axi_async.v(242): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../DDR3/ddr3_write.v(189): (vopt-2685) [TFMPC] - Too few port connections for 'fifo_ddr3_write'.  Expected 10, found 9.
+# ** Warning: ../../../DDR3/ddr3_write.v(189): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../DDR3/ddr3_write.v(205): (vopt-2685) [TFMPC] - Too few port connections for 'fifo_ddr3_write_strb'.  Expected 10, found 6.
+# ** Warning: ../../../DDR3/ddr3_write.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'almost_empty'.
+# ** Warning: ../../../DDR3/ddr3_write.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'rd_empty'.
+# ** Warning: ../../../DDR3/ddr3_write.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../DDR3/ddr3_write.v(205): (vopt-2718) [TFMPC] - Missing connection for port 'wr_full'.
+# ** Note: (vopt-143) Recognized 1 FSM in module "ddr3_write(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "axi_led_slave(fast)".
+# ** Warning: ../../../DDR3/ddr3_read.v(186): (vopt-2685) [TFMPC] - Too few port connections for 'fifo_ddr3_read'.  Expected 10, found 8.
+# ** Warning: ../../../DDR3/ddr3_read.v(186): (vopt-2718) [TFMPC] - Missing connection for port 'almost_full'.
+# ** Warning: ../../../DDR3/ddr3_read.v(186): (vopt-2718) [TFMPC] - Missing connection for port 'wr_full'.
+# ** Note: (vopt-143) Recognized 1 FSM in module "ddr3_read(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=232.
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./ctrl_phy_sim.tcl PAUSED at line 26
+# End time: 13:44:35 on Apr 01,2025, Elapsed time: 0:01:38
+# Errors: 0, Warnings: 232
