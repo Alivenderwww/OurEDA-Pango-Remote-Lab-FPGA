@@ -146,6 +146,7 @@ assign BUS_CLK     = clk_50M;
 assign ddr_ref_clk = clk_50M;
 assign jtag_clk    = clk_5M;
 
+assign eth_rst_n   = 1;
 assign sys_rstn    = (external_rstn) && (clk_lock);
 assign BUS_RSTN    = (external_rstn) && (clk_lock);
 assign udp_in_rstn = (external_rstn) && (clk_lock);
@@ -160,7 +161,7 @@ axi_udp_master #(
 	.DES_IP    	(DES_IP   )
 )M0(
 	.udp_in_rstn            ( udp_in_rstn     ),
-	.eth_rst_n              ( eth_rst_n       ),
+	.eth_rst_n              (                 ),
 	.rgmii_rxc            	( rgmii_rxc       ),
 	.rgmii_rx_ctl         	( rgmii_rx_ctl    ),
 	.rgmii_rxd            	( rgmii_rxd       ),
