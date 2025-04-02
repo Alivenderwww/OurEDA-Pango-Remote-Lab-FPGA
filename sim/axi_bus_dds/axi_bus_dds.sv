@@ -1,6 +1,11 @@
 `timescale 1ns/1ps
 module axi_bus_dds ();
 
+localparam M_WIDTH = 2;
+localparam S_WIDTH  = 2;
+localparam [31:0] S_START_ADDR[0:(2**S_WIDTH-1)] = '{32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000};
+localparam [31:0]   S_END_ADDR[0:(2**S_WIDTH-1)] = '{32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF};
+
 reg dds_clk     ;
 reg dds_rstn    ;
 wire [2*8-1:0] dds_wave_out;
@@ -9,84 +14,47 @@ wire [7:0] dds_wave_out1 = dds_wave_out[15:8];
 
 reg BUS_CLK;
 reg BUS_RSTN;
-reg M0_CLK;reg S0_CLK;reg M0_RSTN;reg S0_RSTN;
-reg M1_CLK;reg S1_CLK;reg M1_RSTN;reg S1_RSTN;
-reg M2_CLK;reg S2_CLK;reg M2_RSTN;reg S2_RSTN;
-reg M3_CLK;reg S3_CLK;reg M3_RSTN;reg S3_RSTN;
-wire [ 1:0] M0_WR_ADDR_ID   ;wire [ 1:0] M1_WR_ADDR_ID   ;wire [ 1:0] M2_WR_ADDR_ID   ;wire [ 1:0] M3_WR_ADDR_ID   ;
-wire [31:0] M0_WR_ADDR      ;wire [31:0] M1_WR_ADDR      ;wire [31:0] M2_WR_ADDR      ;wire [31:0] M3_WR_ADDR      ;
-wire [ 7:0] M0_WR_ADDR_LEN  ;wire [ 7:0] M1_WR_ADDR_LEN  ;wire [ 7:0] M2_WR_ADDR_LEN  ;wire [ 7:0] M3_WR_ADDR_LEN  ;
-wire [ 1:0] M0_WR_ADDR_BURST;wire [ 1:0] M1_WR_ADDR_BURST;wire [ 1:0] M2_WR_ADDR_BURST;wire [ 1:0] M3_WR_ADDR_BURST;
-wire        M0_WR_ADDR_VALID;wire        M1_WR_ADDR_VALID;wire        M2_WR_ADDR_VALID;wire        M3_WR_ADDR_VALID;
-wire        M0_WR_ADDR_READY;wire        M1_WR_ADDR_READY;wire        M2_WR_ADDR_READY;wire        M3_WR_ADDR_READY;
-wire [31:0] M0_WR_DATA      ;wire [31:0] M1_WR_DATA      ;wire [31:0] M2_WR_DATA      ;wire [31:0] M3_WR_DATA      ;
-wire [ 3:0] M0_WR_STRB      ;wire [ 3:0] M1_WR_STRB      ;wire [ 3:0] M2_WR_STRB      ;wire [ 3:0] M3_WR_STRB      ;
-wire        M0_WR_DATA_LAST ;wire        M1_WR_DATA_LAST ;wire        M2_WR_DATA_LAST ;wire        M3_WR_DATA_LAST ;
-wire        M0_WR_DATA_VALID;wire        M1_WR_DATA_VALID;wire        M2_WR_DATA_VALID;wire        M3_WR_DATA_VALID;
-wire        M0_WR_DATA_READY;wire        M1_WR_DATA_READY;wire        M2_WR_DATA_READY;wire        M3_WR_DATA_READY;
-wire [ 1:0] M0_WR_BACK_ID   ;wire [ 1:0] M1_WR_BACK_ID   ;wire [ 1:0] M2_WR_BACK_ID   ;wire [ 1:0] M3_WR_BACK_ID   ;
-wire [ 1:0] M0_WR_BACK_RESP ;wire [ 1:0] M1_WR_BACK_RESP ;wire [ 1:0] M2_WR_BACK_RESP ;wire [ 1:0] M3_WR_BACK_RESP ;
-wire        M0_WR_BACK_VALID;wire        M1_WR_BACK_VALID;wire        M2_WR_BACK_VALID;wire        M3_WR_BACK_VALID;
-wire        M0_WR_BACK_READY;wire        M1_WR_BACK_READY;wire        M2_WR_BACK_READY;wire        M3_WR_BACK_READY;
-wire [ 1:0] M0_RD_ADDR_ID   ;wire [ 1:0] M1_RD_ADDR_ID   ;wire [ 1:0] M2_RD_ADDR_ID   ;wire [ 1:0] M3_RD_ADDR_ID   ;
-wire [31:0] M0_RD_ADDR      ;wire [31:0] M1_RD_ADDR      ;wire [31:0] M2_RD_ADDR      ;wire [31:0] M3_RD_ADDR      ;
-wire [ 7:0] M0_RD_ADDR_LEN  ;wire [ 7:0] M1_RD_ADDR_LEN  ;wire [ 7:0] M2_RD_ADDR_LEN  ;wire [ 7:0] M3_RD_ADDR_LEN  ;
-wire [ 1:0] M0_RD_ADDR_BURST;wire [ 1:0] M1_RD_ADDR_BURST;wire [ 1:0] M2_RD_ADDR_BURST;wire [ 1:0] M3_RD_ADDR_BURST;
-wire        M0_RD_ADDR_VALID;wire        M1_RD_ADDR_VALID;wire        M2_RD_ADDR_VALID;wire        M3_RD_ADDR_VALID;
-wire        M0_RD_ADDR_READY;wire        M1_RD_ADDR_READY;wire        M2_RD_ADDR_READY;wire        M3_RD_ADDR_READY;
-wire [ 1:0] M0_RD_BACK_ID   ;wire [ 1:0] M1_RD_BACK_ID   ;wire [ 1:0] M2_RD_BACK_ID   ;wire [ 1:0] M3_RD_BACK_ID   ;
-wire [31:0] M0_RD_DATA      ;wire [31:0] M1_RD_DATA      ;wire [31:0] M2_RD_DATA      ;wire [31:0] M3_RD_DATA      ;
-wire [ 1:0] M0_RD_DATA_RESP ;wire [ 1:0] M1_RD_DATA_RESP ;wire [ 1:0] M2_RD_DATA_RESP ;wire [ 1:0] M3_RD_DATA_RESP ;
-wire        M0_RD_DATA_LAST ;wire        M1_RD_DATA_LAST ;wire        M2_RD_DATA_LAST ;wire        M3_RD_DATA_LAST ;
-wire        M0_RD_DATA_VALID;wire        M1_RD_DATA_VALID;wire        M2_RD_DATA_VALID;wire        M3_RD_DATA_VALID;
-wire        M0_RD_DATA_READY;wire        M1_RD_DATA_READY;wire        M2_RD_DATA_READY;wire        M3_RD_DATA_READY;
-wire [ 3:0] S0_WR_ADDR_ID   ;wire [ 3:0] S1_WR_ADDR_ID   ;wire [ 3:0] S2_WR_ADDR_ID   ;wire [ 3:0] S3_WR_ADDR_ID   ;
-wire [31:0] S0_WR_ADDR      ;wire [31:0] S1_WR_ADDR      ;wire [31:0] S2_WR_ADDR      ;wire [31:0] S3_WR_ADDR      ;
-wire [ 7:0] S0_WR_ADDR_LEN  ;wire [ 7:0] S1_WR_ADDR_LEN  ;wire [ 7:0] S2_WR_ADDR_LEN  ;wire [ 7:0] S3_WR_ADDR_LEN  ;
-wire [ 1:0] S0_WR_ADDR_BURST;wire [ 1:0] S1_WR_ADDR_BURST;wire [ 1:0] S2_WR_ADDR_BURST;wire [ 1:0] S3_WR_ADDR_BURST;
-wire        S0_WR_ADDR_VALID;wire        S1_WR_ADDR_VALID;wire        S2_WR_ADDR_VALID;wire        S3_WR_ADDR_VALID;
-wire        S0_WR_ADDR_READY;wire        S1_WR_ADDR_READY;wire        S2_WR_ADDR_READY;wire        S3_WR_ADDR_READY;
-wire [31:0] S0_WR_DATA      ;wire [31:0] S1_WR_DATA      ;wire [31:0] S2_WR_DATA      ;wire [31:0] S3_WR_DATA      ;
-wire [ 3:0] S0_WR_STRB      ;wire [ 3:0] S1_WR_STRB      ;wire [ 3:0] S2_WR_STRB      ;wire [ 3:0] S3_WR_STRB      ;
-wire        S0_WR_DATA_LAST ;wire        S1_WR_DATA_LAST ;wire        S2_WR_DATA_LAST ;wire        S3_WR_DATA_LAST ;
-wire        S0_WR_DATA_VALID;wire        S1_WR_DATA_VALID;wire        S2_WR_DATA_VALID;wire        S3_WR_DATA_VALID;
-wire        S0_WR_DATA_READY;wire        S1_WR_DATA_READY;wire        S2_WR_DATA_READY;wire        S3_WR_DATA_READY;
-wire [ 3:0] S0_WR_BACK_ID   ;wire [ 3:0] S1_WR_BACK_ID   ;wire [ 3:0] S2_WR_BACK_ID   ;wire [ 3:0] S3_WR_BACK_ID   ;
-wire [ 1:0] S0_WR_BACK_RESP ;wire [ 1:0] S1_WR_BACK_RESP ;wire [ 1:0] S2_WR_BACK_RESP ;wire [ 1:0] S3_WR_BACK_RESP ;
-wire        S0_WR_BACK_VALID;wire        S1_WR_BACK_VALID;wire        S2_WR_BACK_VALID;wire        S3_WR_BACK_VALID;
-wire        S0_WR_BACK_READY;wire        S1_WR_BACK_READY;wire        S2_WR_BACK_READY;wire        S3_WR_BACK_READY;
-wire [ 3:0] S0_RD_ADDR_ID   ;wire [ 3:0] S1_RD_ADDR_ID   ;wire [ 3:0] S2_RD_ADDR_ID   ;wire [ 3:0] S3_RD_ADDR_ID   ;
-wire [31:0] S0_RD_ADDR      ;wire [31:0] S1_RD_ADDR      ;wire [31:0] S2_RD_ADDR      ;wire [31:0] S3_RD_ADDR      ;
-wire [ 7:0] S0_RD_ADDR_LEN  ;wire [ 7:0] S1_RD_ADDR_LEN  ;wire [ 7:0] S2_RD_ADDR_LEN  ;wire [ 7:0] S3_RD_ADDR_LEN  ;
-wire [ 1:0] S0_RD_ADDR_BURST;wire [ 1:0] S1_RD_ADDR_BURST;wire [ 1:0] S2_RD_ADDR_BURST;wire [ 1:0] S3_RD_ADDR_BURST;
-wire        S0_RD_ADDR_VALID;wire        S1_RD_ADDR_VALID;wire        S2_RD_ADDR_VALID;wire        S3_RD_ADDR_VALID;
-wire        S0_RD_ADDR_READY;wire        S1_RD_ADDR_READY;wire        S2_RD_ADDR_READY;wire        S3_RD_ADDR_READY;
-wire [ 3:0] S0_RD_BACK_ID   ;wire [ 3:0] S1_RD_BACK_ID   ;wire [ 3:0] S2_RD_BACK_ID   ;wire [ 3:0] S3_RD_BACK_ID   ;
-wire [31:0] S0_RD_DATA      ;wire [31:0] S1_RD_DATA      ;wire [31:0] S2_RD_DATA      ;wire [31:0] S3_RD_DATA      ;
-wire [ 1:0] S0_RD_DATA_RESP ;wire [ 1:0] S1_RD_DATA_RESP ;wire [ 1:0] S2_RD_DATA_RESP ;wire [ 1:0] S3_RD_DATA_RESP ;
-wire        S0_RD_DATA_LAST ;wire        S1_RD_DATA_LAST ;wire        S2_RD_DATA_LAST ;wire        S3_RD_DATA_LAST ;
-wire        S0_RD_DATA_VALID;wire        S1_RD_DATA_VALID;wire        S2_RD_DATA_VALID;wire        S3_RD_DATA_VALID;
-wire        S0_RD_DATA_READY;wire        S1_RD_DATA_READY;wire        S2_RD_DATA_READY;wire        S3_RD_DATA_READY;
-
-
-parameter S0_START_ADDR = 32'h00_00_00_00,
-          S0_END_ADDR   = 32'h0F_FF_FF_FF,
-          S1_START_ADDR = 32'h10_00_00_00,
-          S1_END_ADDR   = 32'h1F_FF_FF_0F,
-          S2_START_ADDR = 32'h20_00_00_00,
-          S2_END_ADDR   = 32'h2F_FF_FF_0F,
-          S3_START_ADDR = 32'h30_00_00_00,
-          S3_END_ADDR   = 32'h3F_FF_FF_0F;
+reg M_CLK;[0:(2**M_WIDTH-1)];
+reg M_RSTN[0:(2**M_WIDTH-1)];
+reg S_CLK[0:(2**S_WIDTH-1)];
+reg S_RSTN[0:(2**S_WIDTH-1)];
+wire [ 1:0] M_WR_ADDR_ID   [0:(2**M_WIDTH-1)]; wire [ 3:0] S_WR_ADDR_ID   [0:(2**S_WIDTH-1)];
+wire [31:0] M_WR_ADDR      [0:(2**M_WIDTH-1)]; wire [31:0] S_WR_ADDR      [0:(2**S_WIDTH-1)];
+wire [ 7:0] M_WR_ADDR_LEN  [0:(2**M_WIDTH-1)]; wire [ 7:0] S_WR_ADDR_LEN  [0:(2**S_WIDTH-1)];
+wire [ 1:0] M_WR_ADDR_BURST[0:(2**M_WIDTH-1)]; wire [ 1:0] S_WR_ADDR_BURST[0:(2**S_WIDTH-1)];
+wire        M_WR_ADDR_VALID[0:(2**M_WIDTH-1)]; wire        S_WR_ADDR_VALID[0:(2**S_WIDTH-1)];
+wire        M_WR_ADDR_READY[0:(2**M_WIDTH-1)]; wire        S_WR_ADDR_READY[0:(2**S_WIDTH-1)];
+wire [31:0] M_WR_DATA      [0:(2**M_WIDTH-1)]; wire [31:0] S_WR_DATA      [0:(2**S_WIDTH-1)];
+wire [ 3:0] M_WR_STRB      [0:(2**M_WIDTH-1)]; wire [ 3:0] S_WR_STRB      [0:(2**S_WIDTH-1)];
+wire        M_WR_DATA_LAST [0:(2**M_WIDTH-1)]; wire        S_WR_DATA_LAST [0:(2**S_WIDTH-1)];
+wire        M_WR_DATA_VALID[0:(2**M_WIDTH-1)]; wire        S_WR_DATA_VALID[0:(2**S_WIDTH-1)];
+wire        M_WR_DATA_READY[0:(2**M_WIDTH-1)]; wire        S_WR_DATA_READY[0:(2**S_WIDTH-1)];
+wire [ 1:0] M_WR_BACK_ID   [0:(2**M_WIDTH-1)]; wire [ 3:0] S_WR_BACK_ID   [0:(2**S_WIDTH-1)];
+wire [ 1:0] M_WR_BACK_RESP [0:(2**M_WIDTH-1)]; wire [ 1:0] S_WR_BACK_RESP [0:(2**S_WIDTH-1)];
+wire        M_WR_BACK_VALID[0:(2**M_WIDTH-1)]; wire        S_WR_BACK_VALID[0:(2**S_WIDTH-1)];
+wire        M_WR_BACK_READY[0:(2**M_WIDTH-1)]; wire        S_WR_BACK_READY[0:(2**S_WIDTH-1)];
+wire [ 1:0] M_RD_ADDR_ID   [0:(2**M_WIDTH-1)]; wire [ 3:0] S_RD_ADDR_ID   [0:(2**S_WIDTH-1)];
+wire [31:0] M_RD_ADDR      [0:(2**M_WIDTH-1)]; wire [31:0] S_RD_ADDR      [0:(2**S_WIDTH-1)];
+wire [ 7:0] M_RD_ADDR_LEN  [0:(2**M_WIDTH-1)]; wire [ 7:0] S_RD_ADDR_LEN  [0:(2**S_WIDTH-1)];
+wire [ 1:0] M_RD_ADDR_BURST[0:(2**M_WIDTH-1)]; wire [ 1:0] S_RD_ADDR_BURST[0:(2**S_WIDTH-1)];
+wire        M_RD_ADDR_VALID[0:(2**M_WIDTH-1)]; wire        S_RD_ADDR_VALID[0:(2**S_WIDTH-1)];
+wire        M_RD_ADDR_READY[0:(2**M_WIDTH-1)]; wire        S_RD_ADDR_READY[0:(2**S_WIDTH-1)];
+wire [ 1:0] M_RD_BACK_ID   [0:(2**M_WIDTH-1)]; wire [ 3:0] S_RD_BACK_ID   [0:(2**S_WIDTH-1)];
+wire [31:0] M_RD_DATA      [0:(2**M_WIDTH-1)]; wire [31:0] S_RD_DATA      [0:(2**S_WIDTH-1)];
+wire [ 1:0] M_RD_DATA_RESP [0:(2**M_WIDTH-1)]; wire [ 1:0] S_RD_DATA_RESP [0:(2**S_WIDTH-1)];
+wire        M_RD_DATA_LAST [0:(2**M_WIDTH-1)]; wire        S_RD_DATA_LAST [0:(2**S_WIDTH-1)];
+wire        M_RD_DATA_VALID[0:(2**M_WIDTH-1)]; wire        S_RD_DATA_VALID[0:(2**S_WIDTH-1)];
+wire        M_RD_DATA_READY[0:(2**M_WIDTH-1)]; wire        S_RD_DATA_READY[0:(2**S_WIDTH-1)];
 
 always #8  BUS_CLK = ~BUS_CLK; //speed:2
-always #7    M0_CLK = ~M0_CLK; //speed:1
-always #9    M1_CLK = ~M1_CLK; //speed:3
-always #11   M2_CLK = ~M2_CLK; //speed:5
-always #13   M3_CLK = ~M3_CLK; //speed:7
-// always #6    S0_CLK = ~S0_CLK; //speed:0(FAST)
-always #8    S1_CLK = ~S1_CLK; //speed:2
-always #12   S2_CLK = ~S2_CLK; //speed:6
-always #14   S3_CLK = ~S3_CLK; //speed:8(SLOW)
+always #7    M_CLK[0] = ~M_CLK[0]; //speed:1
+always #9    M_CLK[1] = ~M_CLK[1]; //speed:3
+always #11   M_CLK[2] = ~M_CLK[2]; //speed:5
+always #13   M_CLK[3] = ~M_CLK[3]; //speed:7
+// always #6    S_CLK[0] = ~S_CLK[0]; //speed:0(FAST)
+always #8    S_CLK[1] = ~S_CLK[1]; //speed:2
+always #12   S_CLK[2] = ~S_CLK[2]; //speed:6
+always #14   S_CLK[3] = ~S_CLK[3]; //speed:8(SLOW)
 
 initial dds_clk = 0;
 always #50 dds_clk = ~dds_clk;
@@ -99,14 +67,10 @@ end
 
 initial begin
     BUS_CLK = 0; BUS_RSTN = 0;
-    M0_CLK  = 0; M0_RSTN  = 0;
-    M1_CLK  = 0; M1_RSTN  = 0;
-    M2_CLK  = 0; M2_RSTN  = 0;
-    M3_CLK  = 0; M3_RSTN  = 0;
-    // S0_CLK  = 0; S0_RSTN  = 0;
-    S1_CLK  = 0; S1_RSTN  = 0;
-    S2_CLK  = 0; S2_RSTN  = 0;
-    S3_CLK  = 0; S3_RSTN  = 0;
+    foreach(M_CLK[i])  M_CLK[i] = 0;
+    foreach(M_RSTN[i]) M_RSTN[i] = 0;
+    foreach(S_CLK[i])  S_CLK[i] = 0;
+    foreach(S_RSTN[i]) S_RSTN[i] = 0;
 #50000
     M0_RSTN = 1;  // S0_RSTN = 1;
     M1_RSTN = 1;  S1_RSTN = 1;

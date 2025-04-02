@@ -1,10 +1,8 @@
 ../../../AXI4/sim_file/*.sv
-../../../AXI4/sim_file/*.v
-../../../AXI4/*.v
 ../../../AXI4/*.sv
 ../../../COMMON/*.v
 ../../../DDS/*.sv
-../axi_bus_dds.sv
+../newaxi_bus_dds.sv
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v

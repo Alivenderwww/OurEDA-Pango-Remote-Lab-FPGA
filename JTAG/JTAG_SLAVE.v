@@ -78,10 +78,10 @@ wire shift_out_wr;
 
 /*
 JTAG从机地址规定
-OFFSET_ADDR + 0为JTAG状态标识位，可读可写
-OFFSET_ADDR + 1为移位数据fifo读入口，只读
-OFFSET_ADDR + 2为移位数据fifo写入口，只写
-OFFSET_ADDR + 3为移位命令fifo写入口，只写
+0   JTAG状态标识位，可读可写
+1   移位数据fifo读入口，只读
+2   移位数据fifo写入口，只写
+3   移位命令fifo写入口，只写
 其余的都是未定义，
 若出现以下任何一种情况，返回RESP = 2'b10：
 1. 对只写地址读操作
@@ -89,10 +89,10 @@ OFFSET_ADDR + 3为移位命令fifo写入口，只写
 3. 对未定义地址读写操作
 4. 增量突发超出了JTAG从机边界
 */
-localparam REAL_JTAG_STATE_ADDR     = OFFSET_ADDR + 32'h0;
-localparam REAL_JTAG_SHIFT_OUT_ADDR = OFFSET_ADDR + 32'h1;
-localparam REAL_JTAG_SHIFT_IN_ADDR  = OFFSET_ADDR + 32'h2;
-localparam REAL_JTAG_SHIFT_CMD_ADDR = OFFSET_ADDR + 32'h3;
+localparam JTAG_STATE_ADDR     = 32'h0;
+localparam JTAG_SHIFT_OUT_ADDR = 32'h1;
+localparam JTAG_SHIFT_IN_ADDR  = 32'h2;
+localparam JTAG_SHIFT_CMD_ADDR = 32'h3;
 
 reg  [31:0] JTAG_STATE_REG_WR;
 reg  [31:0] JTAG_STATE_REG_READ;
@@ -196,15 +196,15 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) wr_addr <= 0;
-    else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) wr_addr <= JTAG_SLAVE_WR_ADDR;
+    else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) wr_addr <= JTAG_SLAVE_WR_ADDR - OFFSET_ADDR;
     else if((wr_addr_burst == 2'b01) && JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < REAL_JTAG_STATE_ADDR) || (wr_addr > REAL_JTAG_SHIFT_CMD_ADDR)) wr_transcript_error <= 1;
-    else if(wr_addr == REAL_JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
+    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > JTAG_SHIFT_CMD_ADDR)) wr_transcript_error <= 1;
+    else if(wr_addr == JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
@@ -244,7 +244,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) rd_addr <= 0;
-    else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR;
+    else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR - OFFSET_ADDR;
     else if(JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
@@ -261,23 +261,23 @@ always @(*) begin
     //写数据READY选通
     if(~jtag_rstn_sync) JTAG_SLAVE_WR_DATA_READY <= 0;
     else if(cu_wrchannel_st == ST_WR_DATA) begin
-             if(wr_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_WR_DATA_READY <= 1; //状态寄存器可立即写
-        else if(wr_addr == REAL_JTAG_SHIFT_IN_ADDR ) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_data_full); //写FIFO未满可写
-        else if(wr_addr == REAL_JTAG_SHIFT_CMD_ADDR) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_cmd_full); //写FIFO未满可写
+             if(wr_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_WR_DATA_READY <= 1; //状态寄存器可立即写
+        else if(wr_addr == JTAG_SHIFT_IN_ADDR ) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_data_full); //写FIFO未满可写
+        else if(wr_addr == JTAG_SHIFT_CMD_ADDR) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_cmd_full); //写FIFO未满可写
         else JTAG_SLAVE_WR_DATA_READY <= 1; //ERROR，直接跳过不写
     end else JTAG_SLAVE_WR_DATA_READY <= 0;
     //读数据VALID选通
     if(~jtag_rstn_sync) JTAG_SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
-             if(rd_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA_VALID <= 1; //状态寄存器可立即读   
-        else if(rd_addr == REAL_JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA_VALID <= (fifo_shift_out_out_valid); //读FIFO数据有效可读
+             if(rd_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA_VALID <= 1; //状态寄存器可立即读   
+        else if(rd_addr == JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA_VALID <= (fifo_shift_out_out_valid); //读FIFO数据有效可读
         else JTAG_SLAVE_RD_DATA_VALID <= 1; //ERROR，直接跳过默认为全1
     end else JTAG_SLAVE_RD_DATA_VALID <= 0;
     //读数据DATA选通
     if(~jtag_rstn_sync) JTAG_SLAVE_RD_DATA <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
-             if(rd_addr == REAL_JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读  
-        else if(rd_addr == REAL_JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
+             if(rd_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读  
+        else if(rd_addr == JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
         else JTAG_SLAVE_RD_DATA <= 32'hFFFFFFFF;
     end else JTAG_SLAVE_RD_DATA <= 0;
 end
@@ -285,7 +285,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < REAL_JTAG_STATE_ADDR) || (rd_addr > REAL_JTAG_SHIFT_OUT_ADDR)) rd_transcript_error <= 1;
+    else if((rd_addr < JTAG_STATE_ADDR) || (rd_addr > JTAG_SHIFT_OUT_ADDR)) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
@@ -314,7 +314,7 @@ always @(*) begin
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) JTAG_STATE_REG_WR <= 0;
-    else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_STATE_ADDR))begin
+    else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == JTAG_STATE_ADDR))begin
         JTAG_STATE_REG_WR[07:00] <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[07:00]):(JTAG_STATE_REG_WR[07:00]);
         JTAG_STATE_REG_WR[15:08] <= (JTAG_SLAVE_WR_STRB[1])?(JTAG_SLAVE_WR_DATA[15:08]):(JTAG_STATE_REG_WR[15:08]);
         JTAG_STATE_REG_WR[23:16] <= (JTAG_SLAVE_WR_STRB[2])?(JTAG_SLAVE_WR_DATA[23:16]):(JTAG_STATE_REG_WR[23:16]);
@@ -349,7 +349,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
     else if(fifo_shift_out_full && shift_out_wr) fifo_out_full_data_temp <= shift_out;
     else fifo_out_full_data_temp <= fifo_out_full_data_temp;
 end
-assign fifo_shift_out_rd_en = ((~fifo_shift_out_empty) && (~fifo_shift_out_out_valid)) || (JTAG_SLAVE_RD_DATA_READY && JTAG_SLAVE_RD_DATA_VALID && (rd_addr == REAL_JTAG_SHIFT_OUT_ADDR));
+assign fifo_shift_out_rd_en = ((~fifo_shift_out_empty) && (~fifo_shift_out_out_valid)) || (JTAG_SLAVE_RD_DATA_READY && JTAG_SLAVE_RD_DATA_VALID && (rd_addr == JTAG_SHIFT_OUT_ADDR));
 assign fifo_shift_out_wr_en = (~fifo_shift_out_full) && ((fifo_out_full_data_valid) || (shift_out_wr));
 assign fifo_shift_out_wr_data = (fifo_out_full_data_valid)?(fifo_out_full_data_temp):(shift_out);
 assign fifo_shift_data_out_last = fifo_shift_out_full;
@@ -381,7 +381,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 assign fifo_shift_data_rd_en = (~fifo_shift_data_empty) && ((~fifo_shift_data_out_valid) || (shift_in_rd));
 assign fifo_shift_data_in_last = (fifo_shift_data_empty);
-assign fifo_shift_data_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_IN_ADDR));
+assign fifo_shift_data_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == JTAG_SHIFT_IN_ADDR));
 assign fifo_shift_data_wr_data = JTAG_SLAVE_WR_DATA;
 assign jtag_fifo_shift_data_rst = (~jtag_rstn_sync) || (JTAG_STATE_REG_WR[8]);
 jtag_fifo_shift_data jtag_fifo_shift_data_inst(
@@ -408,7 +408,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
     else fifo_shift_cmd_out_valid <= fifo_shift_cmd_out_valid;
 end
 assign fifo_shift_cmd_rd_en = (~fifo_shift_cmd_empty) && ((~fifo_shift_cmd_out_valid) || (cmd_ready));
-assign fifo_shift_cmd_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == REAL_JTAG_SHIFT_CMD_ADDR));
+assign fifo_shift_cmd_wr_en = (JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == JTAG_SHIFT_CMD_ADDR));
 assign fifo_shift_cmd_wr_data = JTAG_SLAVE_WR_DATA;
 assign jtag_fifo_shift_cmd_rst = (~jtag_rstn_sync) || (JTAG_STATE_REG_WR[16]);
 jtag_fifo_shift_cmd jtag_fifo_shift_cmd_inst(
