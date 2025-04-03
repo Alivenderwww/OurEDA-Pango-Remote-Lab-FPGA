@@ -7,8 +7,8 @@ module axi_master_switch #(
     input wire [M_WIDTH-1:0] wr_resp_sel,
     input wire [M_WIDTH-1:0] rd_addr_sel,
     input wire [M_WIDTH-1:0] rd_data_sel,
-    AXI_INF.S                AXI_MASTER[0:2**M_WIDTH-1],
-    AXI_INF.M                AXI_BUS
+    AXI_INF.SYNC_S           AXI_MASTER[0:2**M_WIDTH-1],
+    AXI_INF.SYNC_M           AXI_BUS
 );
 
 logic  [M_ID-1:0]     M_WR_ADDR_ID   [2**M_WIDTH-1:0];
@@ -119,8 +119,8 @@ module axi_slave_switch #(
     input wire [S_WIDTH-1:0] wr_resp_sel,
     input wire [S_WIDTH-1:0] rd_addr_sel,
     input wire [S_WIDTH-1:0] rd_data_sel,
-    AXI_INF.M                AXI_SLAVE[0:2**S_WIDTH-1],
-    AXI_INF.S                AXI_BUS
+    AXI_INF.SYNC_M           AXI_SLAVE[0:2**S_WIDTH-1],
+    AXI_INF.SYNC_S           AXI_BUS
 );
 
 logic            S_WR_ADDR_READY[2**S_WIDTH-1:0];

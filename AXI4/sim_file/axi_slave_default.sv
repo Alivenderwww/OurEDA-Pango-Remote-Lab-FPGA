@@ -13,5 +13,25 @@ assign AXI_S.RD_DATA_RESP  = 0;
 assign AXI_S.RD_DATA_LAST  = 0;
 assign AXI_S.RD_DATA_VALID = 0;
 
+integer clk_delay;
+task automatic set_clk;
+    input integer delayin;
+    begin
+        AXI_S.RSTN = 0;
+        #5000;
+        clk_delay = delayin;
+        #5000;
+        AXI_S.RSTN = 1;
+    end
+endtask
+initial begin
+    clk_delay = 5;
+    AXI_S.CLK = 0;
+    AXI_S.RSTN = 0;
+    #5000;
+    AXI_S.RSTN = 1;
+end
+always #clk_delay AXI_S.CLK = ~AXI_S.CLK;
+
 
 endmodule

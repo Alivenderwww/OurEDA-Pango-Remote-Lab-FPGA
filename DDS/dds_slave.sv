@@ -7,16 +7,12 @@ module dds_slave#(
    input wire rstn,
 
    output wire [CHANNEL_NUM*(VERTICAL_RESOLUTION)-1:0] wave_out,
-   AXI_INF.S  AXI_S,
-
-   //___________________AXI接口_____________________//
-   output wire        DDS_SLAVE_CLK          , //向AXI总线提供的本主机时钟信号
-   output wire        DDS_SLAVE_RSTN          //向AXI总线提供的本主机复位信号
+   AXI_INF.S  AXI_S
 );
 wire DDS_SLAVE_RSTN_SYNC;
-assign DDS_SLAVE_CLK = clk;
-assign DDS_SLAVE_RSTN = DDS_SLAVE_RSTN_SYNC;
-rstn_sync dds_rstn_sync(DDS_SLAVE_CLK,rstn,DDS_SLAVE_RSTN_SYNC);
+assign AXI_S.CLK = clk;
+assign AXI_S.RSTN = DDS_SLAVE_RSTN_SYNC;
+rstn_sync dds_rstn_sync(clk,rstn,DDS_SLAVE_RSTN_SYNC);
 /*地址定义：（以2路输出，4波形存储为例）
 00    R/W   CHANNEL0        wave_sel
 01    R/W   CHANNEL0 STORE0 freq_ctrl

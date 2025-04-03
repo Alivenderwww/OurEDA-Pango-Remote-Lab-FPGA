@@ -1,16 +1,14 @@
 module master_axi_async ( //用于总线-主机的时钟域转换
 input B_CLK,
 input B_RSTN,
-input M_CLK,
-input M_RSTN,
-AXI_INF.S          AXI_B ,
-AXI_INF.M          AXI_M ,
+AXI_INF.SYNC_M     AXI_B ,
+AXI_INF.INTER_M    AXI_M ,
 output wire [4:0] fifo_empty_flag
 );
 
 wire BUS_RSTN_SYNC, MASTER_RSTN_SYNC;
 rstn_sync rstn_sync_bus   (B_CLK, B_RSTN, BUS_RSTN_SYNC);
-rstn_sync rstn_sync_master(M_CLK, M_RSTN, MASTER_RSTN_SYNC);
+rstn_sync rstn_sync_master(AXI_M.CLK, AXI_M.RSTN, MASTER_RSTN_SYNC);
 
 wire                wr_addr_fifo_wr_rst  ;
 wire                wr_addr_fifo_wr_en   ;
@@ -42,7 +40,7 @@ assign AXI_B.WR_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_wr_addr_fifo_data_don
 //写地址通道和读地址通道是完全一样的接口设计，都用async_addr_fifo模块就可以
 //MASTER写地址通道<===>fifo写通道<===>fifo读通道<===>BUS写地址通道
 master_async_addr_fifo master_async_wr_addr_fifo_inst(
-    .wr_clk  (M_CLK      ), 
+    .wr_clk  (AXI_M.CLK      ), 
     .wr_rst  (wr_addr_fifo_wr_rst ), 
     .wr_en   (wr_addr_fifo_wr_en  ), 
     .wr_data (wr_addr_fifo_wr_data), 
@@ -87,7 +85,7 @@ assign AXI_B.RD_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_rd_addr_fifo_data_don
 //MASTER读地址通道<===>fifo写通道<===>fifo读通道<===>BUS读地址通道
 //{AXI_M.RD_ADDR, AXI_M.RD_LEN, AXI_M.RD_ID} WIDTH = 42
 master_async_addr_fifo master_async_rd_addr_fifo_inst(
-    .wr_clk  (M_CLK          ), 
+    .wr_clk  (AXI_M.CLK          ), 
     .wr_rst  (rd_addr_fifo_wr_rst ), 
     .wr_en   (rd_addr_fifo_wr_en  ), 
     .wr_data (rd_addr_fifo_wr_data), 
@@ -130,7 +128,7 @@ assign AXI_B.WR_DATA_VALID   = (BUS_RSTN_SYNC) && (~async_wr_data_fifo_data_dont
 
 //MASTER写数据通道<===>fifo写通道<===>fifo读通道<===>BUS写数据通道
 master_async_wr_data_fifo master_async_wr_data_fifo_inst(
-    .wr_clk  (M_CLK          ), 
+    .wr_clk  (AXI_M.CLK          ), 
     .wr_rst  (wr_data_fifo_wr_rst ), 
     .wr_en   (wr_data_fifo_wr_en  ), 
     .wr_data (wr_data_fifo_wr_data), 
@@ -154,7 +152,7 @@ wire [2+32+2+1-1:0] rd_data_fifo_rd_data ;
 wire                rd_data_fifo_rd_empty;
 
 reg async_rd_data_fifo_data_dont_care;
-always @(posedge M_CLK or negedge MASTER_RSTN_SYNC) begin
+always @(posedge AXI_M.CLK or negedge MASTER_RSTN_SYNC) begin
     if(~MASTER_RSTN_SYNC) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_empty && (AXI_M.RD_DATA_VALID && AXI_M.RD_DATA_READY)) async_rd_data_fifo_data_dont_care <= 1;
     else if(rd_data_fifo_rd_en && async_rd_data_fifo_data_dont_care) async_rd_data_fifo_data_dont_care <= 0;
@@ -180,7 +178,7 @@ master_async_rd_data_fifo master_async_rd_data_fifo_inst(
     .wr_data (rd_data_fifo_wr_data), 
     .wr_full (rd_data_fifo_wr_full), 
     
-    .rd_clk  (M_CLK           ),
+    .rd_clk  (AXI_M.CLK           ),
     .rd_rst  (rd_data_fifo_rd_rst  ),
     .rd_en   (rd_data_fifo_rd_en   ),
     .rd_data (rd_data_fifo_rd_data ),
@@ -198,7 +196,7 @@ wire [2+2-1:0]        wr_back_fifo_rd_data ;
 wire                  wr_back_fifo_rd_empty;
 
 reg async_wr_back_fifo_data_dont_care;
-always @(posedge M_CLK or negedge MASTER_RSTN_SYNC) begin
+always @(posedge AXI_M.CLK or negedge MASTER_RSTN_SYNC) begin
     if(~MASTER_RSTN_SYNC) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_empty && (AXI_M.WR_BACK_VALID && AXI_M.WR_BACK_READY)) async_wr_back_fifo_data_dont_care <= 1;
     else if(wr_back_fifo_rd_en && async_wr_back_fifo_data_dont_care) async_wr_back_fifo_data_dont_care <= 0;
@@ -223,7 +221,7 @@ master_async_wr_back_fifo master_async_wr_back_fifo_inst(
     .wr_data (wr_back_fifo_wr_data), 
     .wr_full (wr_back_fifo_wr_full), 
     
-    .rd_clk  (M_CLK           ),
+    .rd_clk  (AXI_M.CLK           ),
     .rd_rst  (wr_back_fifo_rd_rst  ),
     .rd_en   (wr_back_fifo_rd_en   ),
     .rd_data (wr_back_fifo_rd_data ),

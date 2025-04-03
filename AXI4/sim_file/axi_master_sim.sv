@@ -1,9 +1,5 @@
 `timescale 1ns/1ps
-module axi_master_sim (//模拟AXI-MASTER时序，时钟域为clk
-    input  wire        clk          ,
-    input  wire        rstn         ,
-    AXI_INF.M          AXI_M
-);
+module axi_master_sim (AXI_INF.M AXI_M);
 
 //axi_master_sim模块，用于模仿MASTER时序。支持outstanding传输，自动处理ID和LEN。
 
@@ -35,7 +31,7 @@ initial begin
     wr_channel_rdptr   = 0;
     wr_channel_respptr = 0;
 end
-always @(posedge clk) begin
+always @(posedge AXI_M.CLK) begin
     if(AXI_M.WR_ADDR_VALID && AXI_M.WR_ADDR_READY)begin
         if(wr_channel_buff_full) //ERROR 记录事务失败，MASTER写地址通道事务已满，请完成先前的事务再发送新事务。
             $display("%m: at time %0t ERROR: Write Transction set failed. MASTER's write transction fifo is full, please complete the previous Transction first.", $time);
@@ -46,7 +42,7 @@ always @(posedge clk) begin
         end
     end
 end
-always @(posedge clk) begin
+always @(posedge AXI_M.CLK) begin
     if(AXI_M.WR_DATA_VALID && AXI_M.WR_DATA_READY && AXI_M.WR_DATA_LAST)begin
         if(wr_channel_wrptr == wr_channel_rdptr) //ERROR 写数据错误，事务列表空
             $display("%m: at time %0t ERROR: Write data failed. MASTER's write transction fifo empty.", $time);
@@ -56,7 +52,7 @@ always @(posedge clk) begin
         end
     end
 end
-always @(posedge clk) begin
+always @(posedge AXI_M.CLK) begin
     if(AXI_M.WR_BACK_VALID && AXI_M.WR_BACK_READY)begin
         if(wr_channel_wrptr == wr_channel_respptr) //ERROR 写响应错误，事务列表为空
             $display("%m: at time %0t ERROR: Write resp failed. MASTER's write transction fifo empty.", $time);
@@ -79,7 +75,7 @@ initial begin
     rd_channel_wrptr = 0;
     rd_channel_rdptr = 0;
 end
-always @(posedge clk) begin
+always @(posedge AXI_M.CLK) begin
     if(AXI_M.RD_ADDR_VALID && AXI_M.RD_ADDR_READY)begin
         if(rd_channel_buff_full) //ERROR 记录事务失败，MASTER读地址通道事务已满，请完成先前的事务再发送新事务。
         $display("%m: at time %0t ERROR: Read Transction set failed. MASTER's read transction fifo is full, please complete the previous Transction first.", $time);
@@ -90,7 +86,7 @@ always @(posedge clk) begin
         end
     end
 end
-always @(posedge clk) begin
+always @(posedge AXI_M.CLK) begin
     if(AXI_M.RD_DATA_VALID && AXI_M.RD_DATA_READY && AXI_M.RD_DATA_LAST)begin
         if(rd_channel_buff_empty) //ERROR 读数据错误，事务列表空
             $display("%m: at time %0t ERROR: Read data failed. MASTER's read transction fifo empty.", $time);
@@ -137,7 +133,7 @@ task automatic send_wr_addr;
     input [ 7:0] len;
     input [ 1:0] burst;
     begin
-        @(posedge clk) begin
+        @(posedge AXI_M.CLK) begin
             AXI_M.WR_ADDR_ID    <= id;
             AXI_M.WR_ADDR       <= addr;
             AXI_M.WR_ADDR_LEN   <= len;
@@ -145,9 +141,9 @@ task automatic send_wr_addr;
             AXI_M.WR_ADDR_VALID <= 1;
         end
         while(~(AXI_M.WR_ADDR_VALID && AXI_M.WR_ADDR_READY))begin
-            @(posedge clk);
+            @(posedge AXI_M.CLK);
         end
-        @(negedge clk) AXI_M.WR_ADDR_VALID <= 0;
+        @(negedge AXI_M.CLK) AXI_M.WR_ADDR_VALID <= 0;
     end
 endtask
 
@@ -163,7 +159,7 @@ task automatic send_rd_addr;
     input [ 7:0] len;
     input [ 1:0] burst;
     begin
-        @(posedge clk) begin
+        @(posedge AXI_M.CLK) begin
             AXI_M.RD_ADDR_ID    <= id;
             AXI_M.RD_ADDR       <= addr;
             AXI_M.RD_ADDR_LEN   <= len;
@@ -171,9 +167,9 @@ task automatic send_rd_addr;
             AXI_M.RD_ADDR_VALID <= 1;
         end
         while(~(AXI_M.RD_ADDR_VALID && AXI_M.RD_ADDR_READY))begin
-            @(posedge clk);
+            @(posedge AXI_M.CLK);
         end
-        @(negedge clk) AXI_M.RD_ADDR_VALID <= 0;
+        @(negedge AXI_M.CLK) AXI_M.RD_ADDR_VALID <= 0;
     end
 endtask
 
@@ -193,13 +189,13 @@ task automatic send_wr_data;
     input [ 3:0] strb;
     begin
         wr_data_trans_cnt <= 0;
-        @(posedge clk) begin
+        @(posedge AXI_M.CLK) begin
             AXI_M.WR_DATA       <= start_data;
             AXI_M.WR_STRB       <= strb;
             wr_data_enable       <= 1;
         end
         while(~(AXI_M.WR_DATA_VALID && AXI_M.WR_DATA_READY && AXI_M.WR_DATA_LAST))begin
-            @(posedge clk) if(AXI_M.WR_DATA_VALID && AXI_M.WR_DATA_READY) begin
+            @(posedge AXI_M.CLK) if(AXI_M.WR_DATA_VALID && AXI_M.WR_DATA_READY) begin
                 AXI_M.WR_DATA <= AXI_M.WR_DATA + 1;
                 wr_data_trans_cnt <= wr_data_trans_cnt + 1;
             end
@@ -208,7 +204,7 @@ task automatic send_wr_data;
         wr_data_trans_cnt    <= 0;
     end
 endtask
-always @(negedge clk) begin
+always @(negedge AXI_M.CLK) begin
     AXI_M.WR_DATA_VALID <= (wr_data_enable == 1) && (1+{$random}%(31) <= wr_data_capcity);
 end
 assign AXI_M.WR_DATA_LAST = (wr_data_enable == 1) && (wr_data_trans_cnt == wr_channel_buff[wr_channel_rdptr[BUFF_WIDTH-1:0]][9:2]);
@@ -230,11 +226,32 @@ initial begin
     AXI_M.RD_DATA_READY = 0;
 end
 
-always @(negedge clk) begin
+always @(negedge AXI_M.CLK) begin
     AXI_M.RD_DATA_READY <= (1+{$random}%(31) <= rd_data_capcity);
 end
-assign MASTER_CLK = clk;
-assign MASTER_RSTN = rstn;
 assign AXI_M.WR_BACK_READY = 1;
+
+integer clk_delay;
+task automatic set_clk;
+    input integer delayin;
+    begin
+        AXI_M.RSTN = 0;
+        #5000;
+        clk_delay = delayin;
+        #5000;
+        AXI_M.RSTN = 1;
+    end
+endtask
+
+initial begin
+    clk_delay = 5;
+    AXI_M.CLK = 0;
+    AXI_M.RSTN = 0;
+    #5000;
+    AXI_M.RSTN = 1;
+end
+
+always #clk_delay AXI_M.CLK = ~AXI_M.CLK;
+
 
 endmodule

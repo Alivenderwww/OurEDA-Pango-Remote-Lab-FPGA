@@ -7,12 +7,8 @@ module axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设
 )(
 	input wire BUS_CLK,
 	input wire BUS_RSTN,
-	input wire M_CLK  [0:(2**M_WIDTH-1)],
-	input wire M_RSTN [0:(2**M_WIDTH-1)],
-	input wire S_CLK  [0:(2**S_WIDTH-1)],
-	input wire S_RSTN [0:(2**S_WIDTH-1)],
-	AXI_INF.S  AXI_M  [0:(2**M_WIDTH-1)],
-	AXI_INF.M  AXI_S  [0:(2**S_WIDTH-1)],
+	AXI_INF.INTER_M  AXI_M[0:(2**M_WIDTH-1)],
+	AXI_INF.INTER_S  AXI_S[0:(2**S_WIDTH-1)],
 	output wire [4:0] M_fifo_empty_flag[0:(2**M_WIDTH-1)],
 	output wire [4:0] S_fifo_empty_flag[0:(2**S_WIDTH-1)]
 );
@@ -26,10 +22,6 @@ axi_clock_converter #(
 u_axi_clock_converter(
 	.BUS_CLK           	( BUS_CLK            ),
 	.BUS_RSTN          	( BUS_RSTN           ),
-	.M_CLK             	( M_CLK              ),
-	.M_RSTN            	( M_RSTN             ),
-	.S_CLK             	( S_CLK              ),
-	.S_RSTN            	( S_RSTN             ),
 	.AXI_M_BUS         	( AXI_M_BUS          ),
 	.AXI_S_BUS         	( AXI_S_BUS          ),
 	.AXI_M             	( AXI_M              ),

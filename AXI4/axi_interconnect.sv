@@ -7,8 +7,8 @@ module axi_interconnect #(
 )(
     input  wire BUS_CLK,
     input  wire BUS_RSTN,
-    AXI_INF.S AXI_M[0:(2**M_WIDTH-1)],
-    AXI_INF.M AXI_S[0:(2**S_WIDTH-1)]
+    AXI_INF.SYNC_S AXI_M[0:(2**M_WIDTH-1)],
+    AXI_INF.SYNC_M AXI_S[0:(2**S_WIDTH-1)]
 );
 wire BUS_RSTN_SYNC;
 rstn_sync rstn_sync_bus (BUS_CLK, BUS_RSTN, BUS_RSTN_SYNC);

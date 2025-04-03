@@ -4,8 +4,8 @@ module axi_master_arbiter #(
 )(
     input wire                  clk,
     input wire                  rstn,
-    AXI_INF.S                   AXI_MASTER[0:(2**M_WIDTH-1)],
-    AXI_INF.S                   AXI_BUS,
+    AXI_INF.SYNC_S              AXI_MASTER[0:(2**M_WIDTH-1)],
+    AXI_INF.SYNC_S              AXI_BUS,
     output logic [M_WIDTH-1:0]  wr_addr_master_sel,
     output logic [M_WIDTH-1:0]  wr_data_master_sel,
     output logic [M_WIDTH-1:0]  wr_resp_master_sel,
@@ -100,8 +100,8 @@ module axi_slave_arbiter #(
 )(
     input wire          clk,
     input wire          rstn,
-    AXI_INF.S           AXI_SLAVE[0:(2**S_WIDTH-1)],
-    AXI_INF.S           AXI_BUS,
+    AXI_INF.SYNC_S      AXI_SLAVE[0:(2**S_WIDTH-1)],
+    AXI_INF.SYNC_S      AXI_BUS,
     output logic [S_WIDTH-1:0]  wr_addr_slave_sel,
     output logic [S_WIDTH-1:0]  wr_data_slave_sel,
     output logic [S_WIDTH-1:0]  wr_resp_slave_sel,

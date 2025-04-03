@@ -1,16 +1,14 @@
 module slave_axi_async ( //用于总线-从机的时钟域转换
 input B_CLK,
 input B_RSTN,
-input S_CLK,
-input S_RSTN,
-AXI_INF.M          AXI_B  ,
-AXI_INF.S          AXI_S  ,
+AXI_INF.SYNC_S   AXI_B  ,
+AXI_INF.INTER_S  AXI_S  ,
 output wire [4:0] fifo_empty_flag
 );
 
 wire BUS_RSTN_SYNC, SLAVE_RSTN_SYNC;
 rstn_sync rstn_sync_bus   (B_CLK, B_RSTN, BUS_RSTN_SYNC);
-rstn_sync rstn_sync_slave (S_CLK, S_RSTN, SLAVE_RSTN_SYNC);
+rstn_sync rstn_sync_slave (AXI_S.CLK, AXI_S.RSTN, SLAVE_RSTN_SYNC);
 
 wire                wr_addr_fifo_wr_rst  ;
 wire                wr_addr_fifo_wr_en   ;
@@ -22,7 +20,7 @@ wire [32+8+4+2-1:0] wr_addr_fifo_rd_data ;
 wire                wr_addr_fifo_rd_empty;
 
 reg async_wr_addr_fifo_data_dont_care;
-always @(posedge S_CLK or negedge SLAVE_RSTN_SYNC) begin
+always @(posedge AXI_S.CLK or negedge SLAVE_RSTN_SYNC) begin
     if(~SLAVE_RSTN_SYNC) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_empty && (AXI_S.WR_ADDR_VALID && AXI_S.WR_ADDR_READY)) async_wr_addr_fifo_data_dont_care <= 1;
     else if(wr_addr_fifo_rd_en && async_wr_addr_fifo_data_dont_care) async_wr_addr_fifo_data_dont_care <= 0;
@@ -47,7 +45,7 @@ slave_async_addr_fifo slave_async_wr_addr_fifo_inst(
     .wr_data (wr_addr_fifo_wr_data), 
     .wr_full (wr_addr_fifo_wr_full), 
     
-    .rd_clk  (S_CLK            ),
+    .rd_clk  (AXI_S.CLK            ),
     .rd_rst  (wr_addr_fifo_rd_rst  ),
     .rd_en   (wr_addr_fifo_rd_en   ),
     .rd_data (wr_addr_fifo_rd_data ),
@@ -65,7 +63,7 @@ wire [32+8+4+2-1:0] rd_addr_fifo_rd_data ;
 wire                rd_addr_fifo_rd_empty;
 
 reg async_rd_addr_fifo_data_dont_care;
-always @(posedge S_CLK or negedge SLAVE_RSTN_SYNC) begin
+always @(posedge AXI_S.CLK or negedge SLAVE_RSTN_SYNC) begin
     if(~SLAVE_RSTN_SYNC) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_empty && (AXI_S.RD_ADDR_VALID && AXI_S.RD_ADDR_READY)) async_rd_addr_fifo_data_dont_care <= 1;
     else if(rd_addr_fifo_rd_en && async_rd_addr_fifo_data_dont_care) async_rd_addr_fifo_data_dont_care <= 0;
@@ -90,7 +88,7 @@ slave_async_addr_fifo slave_async_rd_addr_fifo_inst(
     .wr_data (rd_addr_fifo_wr_data), 
     .wr_full (rd_addr_fifo_wr_full), 
     
-    .rd_clk  (S_CLK            ),
+    .rd_clk  (AXI_S.CLK            ),
     .rd_rst  (rd_addr_fifo_rd_rst  ),
     .rd_en   (rd_addr_fifo_rd_en   ),
     .rd_data (rd_addr_fifo_rd_data ),
@@ -108,7 +106,7 @@ wire [32+4+1-1:0] wr_data_fifo_rd_data ;
 wire              wr_data_fifo_rd_empty;
 
 reg async_wr_data_fifo_data_dont_care;
-always @(posedge S_CLK or negedge SLAVE_RSTN_SYNC) begin
+always @(posedge AXI_S.CLK or negedge SLAVE_RSTN_SYNC) begin
     if(~SLAVE_RSTN_SYNC) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_empty && (AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY)) async_wr_data_fifo_data_dont_care <= 1;
     else if(wr_data_fifo_rd_en && async_wr_data_fifo_data_dont_care) async_wr_data_fifo_data_dont_care <= 0;
@@ -132,7 +130,7 @@ slave_async_wr_data_fifo slave_async_wr_data_fifo_inst(
     .wr_data (wr_data_fifo_wr_data), 
     .wr_full (wr_data_fifo_wr_full), 
     
-    .rd_clk  (S_CLK            ),
+    .rd_clk  (AXI_S.CLK            ),
     .rd_rst  (wr_data_fifo_rd_rst  ),
     .rd_en   (wr_data_fifo_rd_en   ),
     .rd_data (wr_data_fifo_rd_data ),
@@ -170,7 +168,7 @@ assign AXI_B.RD_DATA_VALID    = (BUS_RSTN_SYNC) && (~async_rd_data_fifo_data_don
 //BUS读数据通道<===>fifo写通道<===>fifo读通道<===>SLAVE读数据通道   !!!!这个通道反过来!!!!
 //{BACK_ID, DATA, RESP, LAST} WIDTH = 37
 slave_async_rd_data_fifo slave_async_rd_data_fifo_inst(
-    .wr_clk  (S_CLK           ), 
+    .wr_clk  (AXI_S.CLK           ), 
     .wr_rst  (rd_data_fifo_wr_rst ), 
     .wr_en   (rd_data_fifo_wr_en  ), 
     .wr_data (rd_data_fifo_wr_data), 
@@ -212,7 +210,7 @@ assign {AXI_B.WR_BACK_ID, AXI_B.WR_BACK_RESP} = wr_back_fifo_rd_data;
 assign AXI_B.WR_BACK_VALID    = (BUS_RSTN_SYNC) && (~async_wr_back_fifo_data_dont_care);
 
 slave_async_wr_back_fifo slave_async_wr_back_fifo_inst(
-    .wr_clk  (S_CLK           ), 
+    .wr_clk  (AXI_S.CLK           ), 
     .wr_rst  (wr_back_fifo_wr_rst ), 
     .wr_en   (wr_back_fifo_wr_en  ), 
     .wr_data (wr_back_fifo_wr_data), 

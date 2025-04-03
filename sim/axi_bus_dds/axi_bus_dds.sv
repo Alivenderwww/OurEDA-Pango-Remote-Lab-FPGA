@@ -14,7 +14,7 @@ wire [7:0] dds_wave_out1 = dds_wave_out[15:8];
 
 reg BUS_CLK;
 reg BUS_RSTN;
-reg M_CLK;[0:(2**M_WIDTH-1)];
+reg M_CLK[0:(2**M_WIDTH-1)];
 reg M_RSTN[0:(2**M_WIDTH-1)];
 reg S_CLK[0:(2**S_WIDTH-1)];
 reg S_RSTN[0:(2**S_WIDTH-1)];

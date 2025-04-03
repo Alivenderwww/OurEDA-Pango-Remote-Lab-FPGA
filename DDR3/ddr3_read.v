@@ -82,7 +82,7 @@ reg [27:0] rd_addr_load;
 reg [ 7:0] rd_len_load;
 reg [3:0] rd_id_load;
 wire [27:0] rd_addr_end = SLAVE_RD_ADDR + SLAVE_RD_ADDR_LEN;
-wire flag_last_trans = (rd_len_load <= 15);
+wire flag_last_trans = (cu_rd_st != READ_ST_IDLE) && (rd_len_load <= 15);
 wire flag_unuse_rd_need = (cu_rd_st != READ_ST_IDLE) && (start_giveup_num != 0);
 reg flag_trans_addr_over;
 reg fifo_rd_first_need;
