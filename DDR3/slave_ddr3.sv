@@ -2,9 +2,37 @@ module slave_ddr3 #(
     parameter OFFSET_ADDR = 32'h00000000
 )(
     //DDR时钟/复位/初始化接口
-    input wire         ddr_ref_clk   ,
-    input wire         rst_n         ,
-    AXI_INF.S          AXI_DDR_S     ,
+    input wire     ddr_ref_clk            ,
+    input wire     rst_n                  ,
+    output         DDR_SLAVE_CLK          ,
+    output         DDR_SLAVE_RSTN         ,
+    input  [4-1:0] DDR_SLAVE_WR_ADDR_ID   ,
+    input  [31:0]  DDR_SLAVE_WR_ADDR      ,
+    input  [ 7:0]  DDR_SLAVE_WR_ADDR_LEN  ,
+    input  [ 1:0]  DDR_SLAVE_WR_ADDR_BURST,
+    input          DDR_SLAVE_WR_ADDR_VALID,
+    output         DDR_SLAVE_WR_ADDR_READY,
+    input  [31:0]  DDR_SLAVE_WR_DATA      ,
+    input  [ 3:0]  DDR_SLAVE_WR_STRB      ,
+    input          DDR_SLAVE_WR_DATA_LAST ,
+    input          DDR_SLAVE_WR_DATA_VALID,
+    output         DDR_SLAVE_WR_DATA_READY,
+    output [4-1:0] DDR_SLAVE_WR_BACK_ID   ,
+    output [ 1:0]  DDR_SLAVE_WR_BACK_RESP ,
+    output         DDR_SLAVE_WR_BACK_VALID,
+    input          DDR_SLAVE_WR_BACK_READY,
+    input  [4-1:0] DDR_SLAVE_RD_ADDR_ID   ,
+    input  [31:0]  DDR_SLAVE_RD_ADDR      ,
+    input  [ 7:0]  DDR_SLAVE_RD_ADDR_LEN  ,
+    input  [ 1:0]  DDR_SLAVE_RD_ADDR_BURST,
+    input          DDR_SLAVE_RD_ADDR_VALID,
+    output         DDR_SLAVE_RD_ADDR_READY,
+    output [4-1:0] DDR_SLAVE_RD_BACK_ID   ,
+    output [31:0]  DDR_SLAVE_RD_DATA      ,
+    output [ 1:0]  DDR_SLAVE_RD_DATA_RESP ,
+    output         DDR_SLAVE_RD_DATA_LAST ,
+    output         DDR_SLAVE_RD_DATA_VALID,
+    input          DDR_SLAVE_RD_DATA_READY,
     
     //DDR-memory接口
     output wire         mem_rst_n    , //Memory复位
@@ -49,13 +77,11 @@ wire [ 3:0]  READ_BACK_ID   ;
 wire         READ_DATA_LAST ; //最后一个读数据标志位
 wire         READ_DATA_VALID; //读数据有效
 
-assign AXI_DDR_S.CLK  = ddr_core_clk;
-assign AXI_DDR_S.RSTN = (ddr_init_done);
+assign DDR_SLAVE_CLK  = ddr_core_clk;
+assign DDR_SLAVE_RSTN = (ddr_init_done);
 
-wire [31:0] WR_ADDR_CONVERTED = AXI_DDR_S.WR_ADDR - OFFSET_ADDR;
-wire [31:0] RD_ADDR_CONVERTED = AXI_DDR_S.RD_ADDR - OFFSET_ADDR;
-
-
+wire [31:0] WR_ADDR_CONVERTED = DDR_SLAVE_WR_ADDR - OFFSET_ADDR;
+wire [31:0] RD_ADDR_CONVERTED = DDR_SLAVE_RD_ADDR - OFFSET_ADDR;
 
 /*
 首先地址要对齐，低3位始终为0
@@ -70,22 +96,22 @@ wire [31:0] RD_ADDR_CONVERTED = AXI_DDR_S.RD_ADDR - OFFSET_ADDR;
 */
 
 ddr3_read ddr3_read_inst(
-    .clk                 (AXI_DDR_S.CLK           ),
-    .rstn                (AXI_DDR_S.RSTN          ),
+    .clk                 (DDR_SLAVE_CLK           ),
+    .rstn                (DDR_SLAVE_RSTN          ),
 
-    .SLAVE_RD_ADDR_ID    (AXI_DDR_S.RD_ADDR_ID    ),
+    .SLAVE_RD_ADDR_ID    (DDR_SLAVE_RD_ADDR_ID    ),
     .SLAVE_RD_ADDR       (RD_ADDR_CONVERTED[27:0] ),
-    .SLAVE_RD_ADDR_LEN   (AXI_DDR_S.RD_ADDR_LEN   ),
-    .SLAVE_RD_ADDR_BURST (AXI_DDR_S.RD_ADDR_BURST ),
-    .SLAVE_RD_ADDR_VALID (AXI_DDR_S.RD_ADDR_VALID ),
-    .SLAVE_RD_ADDR_READY (AXI_DDR_S.RD_ADDR_READY ),
+    .SLAVE_RD_ADDR_LEN   (DDR_SLAVE_RD_ADDR_LEN   ),
+    .SLAVE_RD_ADDR_BURST (DDR_SLAVE_RD_ADDR_BURST ),
+    .SLAVE_RD_ADDR_VALID (DDR_SLAVE_RD_ADDR_VALID ),
+    .SLAVE_RD_ADDR_READY (DDR_SLAVE_RD_ADDR_READY ),
 
-    .SLAVE_RD_BACK_ID    (AXI_DDR_S.RD_BACK_ID    ),
-    .SLAVE_RD_DATA       (AXI_DDR_S.RD_DATA       ),
-    .SLAVE_RD_DATA_RESP  (AXI_DDR_S.RD_DATA_RESP  ),
-    .SLAVE_RD_DATA_LAST  (AXI_DDR_S.RD_DATA_LAST  ),
-    .SLAVE_RD_DATA_VALID (AXI_DDR_S.RD_DATA_VALID ),
-    .SLAVE_RD_DATA_READY (AXI_DDR_S.RD_DATA_READY ),
+    .SLAVE_RD_BACK_ID    (DDR_SLAVE_RD_BACK_ID    ),
+    .SLAVE_RD_DATA       (DDR_SLAVE_RD_DATA       ),
+    .SLAVE_RD_DATA_RESP  (DDR_SLAVE_RD_DATA_RESP  ),
+    .SLAVE_RD_DATA_LAST  (DDR_SLAVE_RD_DATA_LAST  ),
+    .SLAVE_RD_DATA_VALID (DDR_SLAVE_RD_DATA_VALID ),
+    .SLAVE_RD_DATA_READY (DDR_SLAVE_RD_DATA_READY ),
 
     .READ_ADDR           (READ_ADDR           ),
     .READ_LEN            (READ_LEN            ),
@@ -99,25 +125,25 @@ ddr3_read ddr3_read_inst(
 );
 
 ddr3_write ddr3_write_inst(
-    .clk                 (AXI_DDR_S.CLK           ),
-    .rstn                (AXI_DDR_S.RSTN          ),
-    .SLAVE_WR_ADDR_ID    (AXI_DDR_S.WR_ADDR_ID    ),
+    .clk                 (DDR_SLAVE_CLK           ),
+    .rstn                (DDR_SLAVE_RSTN          ),
+    .SLAVE_WR_ADDR_ID    (DDR_SLAVE_WR_ADDR_ID    ),
     .SLAVE_WR_ADDR       (WR_ADDR_CONVERTED[27:0] ),
-    .SLAVE_WR_ADDR_LEN   (AXI_DDR_S.WR_ADDR_LEN   ),
-    .SLAVE_WR_ADDR_BURST (AXI_DDR_S.WR_ADDR_BURST ),
-    .SLAVE_WR_ADDR_VALID (AXI_DDR_S.WR_ADDR_VALID ),
-    .SLAVE_WR_ADDR_READY (AXI_DDR_S.WR_ADDR_READY ),
+    .SLAVE_WR_ADDR_LEN   (DDR_SLAVE_WR_ADDR_LEN   ),
+    .SLAVE_WR_ADDR_BURST (DDR_SLAVE_WR_ADDR_BURST ),
+    .SLAVE_WR_ADDR_VALID (DDR_SLAVE_WR_ADDR_VALID ),
+    .SLAVE_WR_ADDR_READY (DDR_SLAVE_WR_ADDR_READY ),
 
-    .SLAVE_WR_DATA       (AXI_DDR_S.WR_DATA       ),
-    .SLAVE_WR_STRB       (AXI_DDR_S.WR_STRB       ),
-    .SLAVE_WR_DATA_LAST  (AXI_DDR_S.WR_DATA_LAST  ),
-    .SLAVE_WR_DATA_VALID (AXI_DDR_S.WR_DATA_VALID ),
-    .SLAVE_WR_DATA_READY (AXI_DDR_S.WR_DATA_READY ),
-    .SLAVE_WR_BACK_ID    (AXI_DDR_S.WR_BACK_ID    ),
+    .SLAVE_WR_DATA       (DDR_SLAVE_WR_DATA       ),
+    .SLAVE_WR_STRB       (DDR_SLAVE_WR_STRB       ),
+    .SLAVE_WR_DATA_LAST  (DDR_SLAVE_WR_DATA_LAST  ),
+    .SLAVE_WR_DATA_VALID (DDR_SLAVE_WR_DATA_VALID ),
+    .SLAVE_WR_DATA_READY (DDR_SLAVE_WR_DATA_READY ),
+    .SLAVE_WR_BACK_ID    (DDR_SLAVE_WR_BACK_ID    ),
 
-    .SLAVE_WR_BACK_RESP  (AXI_DDR_S.WR_BACK_RESP  ),
-    .SLAVE_WR_BACK_VALID (AXI_DDR_S.WR_BACK_VALID ),
-    .SLAVE_WR_BACK_READY (AXI_DDR_S.WR_BACK_READY ),
+    .SLAVE_WR_BACK_RESP  (DDR_SLAVE_WR_BACK_RESP  ),
+    .SLAVE_WR_BACK_VALID (DDR_SLAVE_WR_BACK_VALID ),
+    .SLAVE_WR_BACK_READY (DDR_SLAVE_WR_BACK_READY ),
 
     .WRITE_ADDR          (WRITE_ADDR          ),
     .WRITE_LEN           (WRITE_LEN           ),

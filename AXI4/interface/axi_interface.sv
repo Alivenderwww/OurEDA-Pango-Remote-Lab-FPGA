@@ -171,7 +171,7 @@ interface AXI_INF #(
     modport INTER_S(
         input  CLK          ,
         input  RSTN         ,
-        
+
         output WR_ADDR_ID   , //写地址通道-ID
         output WR_ADDR      , //写地址通道-地址
         output WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）

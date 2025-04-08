@@ -7,11 +7,39 @@ module dds_slave#(
    input wire rstn,
 
    output wire [CHANNEL_NUM*(VERTICAL_RESOLUTION)-1:0] wave_out,
-   AXI_INF.S  AXI_S
+   output logic             DDS_SLAVE_CLK          ,
+   output logic             DDS_SLAVE_RSTN         ,
+   input  logic [4-1:0]     DDS_SLAVE_WR_ADDR_ID   ,
+   input  logic [31:0]      DDS_SLAVE_WR_ADDR      ,
+   input  logic [ 7:0]      DDS_SLAVE_WR_ADDR_LEN  ,
+   input  logic [ 1:0]      DDS_SLAVE_WR_ADDR_BURST,
+   input  logic             DDS_SLAVE_WR_ADDR_VALID,
+   output logic             DDS_SLAVE_WR_ADDR_READY,
+   input  logic [31:0]      DDS_SLAVE_WR_DATA      ,
+   input  logic [ 3:0]      DDS_SLAVE_WR_STRB      ,
+   input  logic             DDS_SLAVE_WR_DATA_LAST ,
+   input  logic             DDS_SLAVE_WR_DATA_VALID,
+   output logic             DDS_SLAVE_WR_DATA_READY,
+   output logic [4-1:0]     DDS_SLAVE_WR_BACK_ID   ,
+   output logic [ 1:0]      DDS_SLAVE_WR_BACK_RESP ,
+   output logic             DDS_SLAVE_WR_BACK_VALID,
+   input  logic             DDS_SLAVE_WR_BACK_READY,
+   input  logic [4-1:0]     DDS_SLAVE_RD_ADDR_ID   ,
+   input  logic [31:0]      DDS_SLAVE_RD_ADDR      ,
+   input  logic [ 7:0]      DDS_SLAVE_RD_ADDR_LEN  ,
+   input  logic [ 1:0]      DDS_SLAVE_RD_ADDR_BURST,
+   input  logic             DDS_SLAVE_RD_ADDR_VALID,
+   output logic             DDS_SLAVE_RD_ADDR_READY,
+   output logic [4-1:0]     DDS_SLAVE_RD_BACK_ID   ,
+   output logic [31:0]      DDS_SLAVE_RD_DATA      ,
+   output logic [ 1:0]      DDS_SLAVE_RD_DATA_RESP ,
+   output logic             DDS_SLAVE_RD_DATA_LAST ,
+   output logic             DDS_SLAVE_RD_DATA_VALID,
+   input  logic             DDS_SLAVE_RD_DATA_READY
 );
 wire DDS_SLAVE_RSTN_SYNC;
-assign AXI_S.CLK = clk;
-assign AXI_S.RSTN = DDS_SLAVE_RSTN_SYNC;
+assign DDS_SLAVE_CLK = clk;
+assign DDS_SLAVE_RSTN = DDS_SLAVE_RSTN_SYNC;
 rstn_sync dds_rstn_sync(clk,rstn,DDS_SLAVE_RSTN_SYNC);
 /*地址定义：（以2路输出，4波形存储为例）
 00    R/W   CHANNEL0        wave_sel
@@ -74,9 +102,9 @@ localparam ST_RD_IDLE = 1'b0,
 //___________________写通道___________________//
 always @(*) begin
     case (cu_wr_st)
-        ST_WR_IDLE: nt_wr_st <= (AXI_S.WR_ADDR_READY && AXI_S.WR_ADDR_VALID)?(ST_WR_DATA):(ST_WR_IDLE);
-        ST_WR_DATA: nt_wr_st <= (AXI_S.WR_DATA_READY && AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
-        ST_WR_RESP: nt_wr_st <= (AXI_S.WR_BACK_READY && AXI_S.WR_BACK_VALID)?(ST_WR_IDLE):(ST_WR_RESP);
+        ST_WR_IDLE: nt_wr_st <= (DDS_SLAVE_WR_ADDR_READY && DDS_SLAVE_WR_ADDR_VALID)?(ST_WR_DATA):(ST_WR_IDLE);
+        ST_WR_DATA: nt_wr_st <= (DDS_SLAVE_WR_DATA_READY && DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
+        ST_WR_RESP: nt_wr_st <= (DDS_SLAVE_WR_BACK_READY && DDS_SLAVE_WR_BACK_VALID)?(ST_WR_IDLE):(ST_WR_RESP);
         default:    nt_wr_st <= ST_WR_IDLE;
     endcase
 end
@@ -89,9 +117,9 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) begin
         wr_addr_id <= 0;
         wr_addr_burst <= 0;
-    end else if(AXI_S.WR_ADDR_READY && AXI_S.WR_ADDR_VALID)begin
-        wr_addr_id <= AXI_S.WR_ADDR_ID;
-        wr_addr_burst <= AXI_S.WR_ADDR_BURST;
+    end else if(DDS_SLAVE_WR_ADDR_READY && DDS_SLAVE_WR_ADDR_VALID)begin
+        wr_addr_id <= DDS_SLAVE_WR_ADDR_ID;
+        wr_addr_burst <= DDS_SLAVE_WR_ADDR_BURST;
     end else begin
         wr_addr_id <= wr_addr_id;
         wr_addr_burst <= wr_addr_burst;
@@ -100,8 +128,8 @@ end
 
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) wr_addr <= 0;
-    else if(AXI_S.WR_ADDR_READY && AXI_S.WR_ADDR_VALID) wr_addr <= AXI_S.WR_ADDR - OFFSER_ADDR;
-    else if((cu_wr_st == ST_WR_DATA) && AXI_S.WR_DATA_READY && AXI_S.WR_DATA_VALID && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
+    else if(DDS_SLAVE_WR_ADDR_READY && DDS_SLAVE_WR_ADDR_VALID) wr_addr <= DDS_SLAVE_WR_ADDR - OFFSER_ADDR;
+    else if((cu_wr_st == ST_WR_DATA) && DDS_SLAVE_WR_DATA_READY && DDS_SLAVE_WR_DATA_VALID && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
 
@@ -118,16 +146,16 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
    end else wr_error_detect <= wr_error_detect;
 end
 
-assign AXI_S.WR_ADDR_READY = (cu_wr_st == ST_WR_IDLE);
-assign AXI_S.WR_BACK_ID    = wr_addr_id;
-assign AXI_S.WR_BACK_RESP  = (wr_error_detect)?(2'b10):(2'b00);
-assign AXI_S.WR_BACK_VALID = (cu_wr_st == ST_WR_RESP);
+assign DDS_SLAVE_WR_ADDR_READY = (cu_wr_st == ST_WR_IDLE);
+assign DDS_SLAVE_WR_BACK_ID    = wr_addr_id;
+assign DDS_SLAVE_WR_BACK_RESP  = (wr_error_detect)?(2'b10):(2'b00);
+assign DDS_SLAVE_WR_BACK_VALID = (cu_wr_st == ST_WR_RESP);
 
 //___________________读通道___________________//
 always @(*) begin
     case (cu_rd_st)
-        ST_RD_IDLE: nt_rd_st <= (AXI_S.RD_ADDR_READY && AXI_S.RD_ADDR_VALID)?(ST_RD_DATA):(ST_RD_IDLE);
-        ST_RD_DATA: nt_rd_st <= (AXI_S.RD_DATA_READY && AXI_S.RD_DATA_VALID && AXI_S.RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
+        ST_RD_IDLE: nt_rd_st <= (DDS_SLAVE_RD_ADDR_READY && DDS_SLAVE_RD_ADDR_VALID)?(ST_RD_DATA):(ST_RD_IDLE);
+        ST_RD_DATA: nt_rd_st <= (DDS_SLAVE_RD_DATA_READY && DDS_SLAVE_RD_DATA_VALID && DDS_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
     endcase
 end
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
@@ -140,10 +168,10 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
         rd_addr_id <= 0;
         rd_addr_burst <= 0;
         rd_addr_len <= 0;
-    end else if(AXI_S.RD_ADDR_READY && AXI_S.RD_ADDR_VALID)begin
-        rd_addr_id <= AXI_S.RD_ADDR_ID;
-        rd_addr_burst <= AXI_S.RD_ADDR_BURST;
-        rd_addr_len <= AXI_S.RD_ADDR_LEN;
+    end else if(DDS_SLAVE_RD_ADDR_READY && DDS_SLAVE_RD_ADDR_VALID)begin
+        rd_addr_id <= DDS_SLAVE_RD_ADDR_ID;
+        rd_addr_burst <= DDS_SLAVE_RD_ADDR_BURST;
+        rd_addr_len <= DDS_SLAVE_RD_ADDR_LEN;
     end else begin
         rd_addr_id <= rd_addr_id;
         rd_addr_burst <= rd_addr_burst;
@@ -153,15 +181,15 @@ end
 
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) rd_addr <= 0;
-    else if(AXI_S.RD_ADDR_READY && AXI_S.RD_ADDR_VALID) rd_addr <= AXI_S.RD_ADDR-OFFSER_ADDR;
-    else if((cu_rd_st == ST_RD_DATA) && AXI_S.RD_DATA_READY && AXI_S.RD_DATA_VALID && (rd_addr_burst == 2'b01)) rd_addr <= rd_addr + 1;
+    else if(DDS_SLAVE_RD_ADDR_READY && DDS_SLAVE_RD_ADDR_VALID) rd_addr <= DDS_SLAVE_RD_ADDR-OFFSER_ADDR;
+    else if((cu_rd_st == ST_RD_DATA) && DDS_SLAVE_RD_DATA_READY && DDS_SLAVE_RD_DATA_VALID && (rd_addr_burst == 2'b01)) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
 
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) trans_num <= 0;
     else if(cu_rd_st == ST_RD_IDLE) trans_num <= 0;
-    else if(AXI_S.RD_DATA_READY && AXI_S.RD_DATA_VALID) trans_num <= trans_num + 1;
+    else if(DDS_SLAVE_RD_DATA_READY && DDS_SLAVE_RD_DATA_VALID) trans_num <= trans_num + 1;
     else trans_num <= trans_num;
 end
 
@@ -182,47 +210,47 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     else rd_error_detect_reg <= rd_error_detect;
 end
 
-assign AXI_S.RD_ADDR_READY = (cu_rd_st == ST_RD_IDLE);
-assign AXI_S.RD_BACK_ID    = rd_addr_id;
-assign AXI_S.RD_DATA_RESP  = (rd_error_detect || rd_error_detect_reg)?(2'b10):(2'b00);
-assign AXI_S.RD_DATA_LAST  = (AXI_S.RD_DATA_VALID && (trans_num == rd_addr_len));
+assign DDS_SLAVE_RD_ADDR_READY = (cu_rd_st == ST_RD_IDLE);
+assign DDS_SLAVE_RD_BACK_ID    = rd_addr_id;
+assign DDS_SLAVE_RD_DATA_RESP  = (rd_error_detect || rd_error_detect_reg)?(2'b10):(2'b00);
+assign DDS_SLAVE_RD_DATA_LAST  = (DDS_SLAVE_RD_DATA_VALID && (trans_num == rd_addr_len));
 
 //写通道的READY信号
 always @(*) begin
-    if((~DDS_SLAVE_RSTN_SYNC) || (cu_wr_st == ST_WR_IDLE) || (cu_wr_st == ST_WR_RESP)) AXI_S.WR_DATA_READY <= 0;
+    if((~DDS_SLAVE_RSTN_SYNC) || (cu_wr_st == ST_WR_IDLE) || (cu_wr_st == ST_WR_RESP)) DDS_SLAVE_WR_DATA_READY <= 0;
     else if(cu_wr_st == ST_WR_DATA)begin
-      if(wr_addr[7:4] < CHANNEL_NUM) AXI_S.WR_DATA_READY <= 1;
-      else if(wr_addr[3:0] == 4'hA) AXI_S.WR_DATA_READY <= 1;
-      else AXI_S.WR_DATA_READY <= 1;
-    end else AXI_S.WR_DATA_READY <= 0;
+      if(wr_addr[7:4] < CHANNEL_NUM) DDS_SLAVE_WR_DATA_READY <= 1;
+      else if(wr_addr[3:0] == 4'hA) DDS_SLAVE_WR_DATA_READY <= 1;
+      else DDS_SLAVE_WR_DATA_READY <= 1;
+    end else DDS_SLAVE_WR_DATA_READY <= 0;
 end
 
 //读通道的VALID信号
 always @(*) begin
-    if((~DDS_SLAVE_RSTN_SYNC) || (cu_rd_st == ST_RD_IDLE)) AXI_S.RD_DATA_VALID <= 0;
-    else if(cu_rd_st == ST_RD_DATA) AXI_S.RD_DATA_VALID <= 1;
-    else AXI_S.RD_DATA_VALID <= 0;
+    if((~DDS_SLAVE_RSTN_SYNC) || (cu_rd_st == ST_RD_IDLE)) DDS_SLAVE_RD_DATA_VALID <= 0;
+    else if(cu_rd_st == ST_RD_DATA) DDS_SLAVE_RD_DATA_VALID <= 1;
+    else DDS_SLAVE_RD_DATA_VALID <= 0;
 end
 
 //读通道的DATA选通
 always @(*) begin
-   if((~DDS_SLAVE_RSTN_SYNC) || (cu_rd_st == ST_RD_IDLE)) AXI_S.RD_DATA <= 0;
+   if((~DDS_SLAVE_RSTN_SYNC) || (cu_rd_st == ST_RD_IDLE)) DDS_SLAVE_RD_DATA <= 0;
    else if(cu_rd_st == ST_RD_DATA)begin
-      if(rd_addr[7:4] >= CHANNEL_NUM) AXI_S.RD_DATA <= 32'hFFFF_FFFF;
+      if(rd_addr[7:4] >= CHANNEL_NUM) DDS_SLAVE_RD_DATA <= 32'hFFFF_FFFF;
       else case (rd_addr[3:0])
-            4'h0: AXI_S.RD_DATA <= wave_sel[rd_addr[7:4]];
-            4'h1: AXI_S.RD_DATA <= freq_ctrl[rd_addr[7:4]][0];
-            4'h2: AXI_S.RD_DATA <= freq_ctrl[rd_addr[7:4]][1];
-            4'h3: AXI_S.RD_DATA <= freq_ctrl[rd_addr[7:4]][2];
-            4'h4: AXI_S.RD_DATA <= freq_ctrl[rd_addr[7:4]][3];
-            4'h5: AXI_S.RD_DATA <= phase_ctrl[rd_addr[7:4]][0];
-            4'h6: AXI_S.RD_DATA <= phase_ctrl[rd_addr[7:4]][1];
-            4'h7: AXI_S.RD_DATA <= phase_ctrl[rd_addr[7:4]][2];
-            4'h8: AXI_S.RD_DATA <= phase_ctrl[rd_addr[7:4]][3];
-            4'h9: AXI_S.RD_DATA <= {7'b0,dds_wr_enable[rd_addr[7:4]]};
-         default: AXI_S.RD_DATA <= 32'hFFFF_FFFF;
+            4'h0: DDS_SLAVE_RD_DATA <= wave_sel[rd_addr[7:4]];
+            4'h1: DDS_SLAVE_RD_DATA <= freq_ctrl[rd_addr[7:4]][0];
+            4'h2: DDS_SLAVE_RD_DATA <= freq_ctrl[rd_addr[7:4]][1];
+            4'h3: DDS_SLAVE_RD_DATA <= freq_ctrl[rd_addr[7:4]][2];
+            4'h4: DDS_SLAVE_RD_DATA <= freq_ctrl[rd_addr[7:4]][3];
+            4'h5: DDS_SLAVE_RD_DATA <= phase_ctrl[rd_addr[7:4]][0];
+            4'h6: DDS_SLAVE_RD_DATA <= phase_ctrl[rd_addr[7:4]][1];
+            4'h7: DDS_SLAVE_RD_DATA <= phase_ctrl[rd_addr[7:4]][2];
+            4'h8: DDS_SLAVE_RD_DATA <= phase_ctrl[rd_addr[7:4]][3];
+            4'h9: DDS_SLAVE_RD_DATA <= {7'b0,dds_wr_enable[rd_addr[7:4]]};
+         default: DDS_SLAVE_RD_DATA <= 32'hFFFF_FFFF;
       endcase
-   end else AXI_S.RD_DATA <= 32'hFFFF_FFFF;
+   end else DDS_SLAVE_RD_DATA <= 32'hFFFF_FFFF;
 end
 ///__________输出信号___________///
 
@@ -230,8 +258,8 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
    if(~DDS_SLAVE_RSTN_SYNC)
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          wave_sel[wave_channel] <= 0;
-   else if(AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'h0))
-         wave_sel[wr_addr[7:4]] <= AXI_S.WR_DATA;
+   else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'h0))
+         wave_sel[wr_addr[7:4]] <= DDS_SLAVE_WR_DATA;
    else
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          wave_sel[wave_channel] <= wave_sel[wave_channel];
@@ -242,8 +270,8 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
             freq_ctrl[wave_channel][wave_select] <= 0;
-   else if(AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h1) && (wr_addr[3:0] <= 4'h4)))
-      freq_ctrl[wr_addr[7:4]][wr_addr[3:0]-1] <= AXI_S.WR_DATA;
+   else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h1) && (wr_addr[3:0] <= 4'h4)))
+      freq_ctrl[wr_addr[7:4]][wr_addr[3:0]-1] <= DDS_SLAVE_WR_DATA;
    else 
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
@@ -255,8 +283,8 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
             phase_ctrl[wave_channel][wave_select] <= 0;
-   else if(AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h5) && (wr_addr[3:0] <= 4'h8)))
-      phase_ctrl[wr_addr[7:4]][wr_addr[3:0]-5] <= AXI_S.WR_DATA;
+   else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h5) && (wr_addr[3:0] <= 4'h8)))
+      phase_ctrl[wr_addr[7:4]][wr_addr[3:0]-5] <= DDS_SLAVE_WR_DATA;
    else 
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
@@ -266,8 +294,8 @@ end
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
    if(~DDS_SLAVE_RSTN_SYNC)
       dds_wr_enable <= 0;
-   else if(AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'h9))
-         dds_wr_enable[wr_addr[7:4]] <= AXI_S.WR_DATA[0];
+   else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'h9))
+         dds_wr_enable[wr_addr[7:4]] <= DDS_SLAVE_WR_DATA[0];
    else
       dds_wr_enable <= dds_wr_enable;
 end
@@ -275,11 +303,11 @@ end
 always @(*) begin
    if(~DDS_SLAVE_RSTN_SYNC)
       dds_wr_valid <= 0;
-   else if(AXI_S.WR_DATA_VALID && AXI_S.WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'hA))
+   else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && (wr_addr[3:0] == 4'hA))
          dds_wr_valid <= dds_wr_enable;
    else dds_wr_valid <= 0;
 end
-assign dds_wr_data = AXI_S.WR_DATA;
+assign dds_wr_data = DDS_SLAVE_WR_DATA;
 
 genvar dds_channel;
 generate
