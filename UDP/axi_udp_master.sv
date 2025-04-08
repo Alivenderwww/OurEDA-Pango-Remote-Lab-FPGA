@@ -17,6 +17,8 @@ module axi_udp_master #(
     output wire        rgmii_tx_ctl ,
     output wire [ 3:0] rgmii_txd    ,
 
+    output wire        ETH_MASTER_CLK          ,
+    output wire        ETH_MASTER_RSTN         ,
     output wire [ 1:0] ETH_MASTER_WR_ADDR_ID   ,
     output wire [31:0] ETH_MASTER_WR_ADDR      ,
     output wire [ 7:0] ETH_MASTER_WR_ADDR_LEN  ,

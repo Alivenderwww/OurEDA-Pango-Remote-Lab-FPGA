@@ -1,4 +1,6 @@
 module axi_master_default (
+input          clk,
+input          rstn,
 output         MASTER_CLK          ,
 output         MASTER_RSTN         ,
 output [2-1:0] MASTER_WR_ADDR_ID   ,
@@ -29,7 +31,8 @@ input          MASTER_RD_DATA_LAST ,
 input          MASTER_RD_DATA_VALID,
 output         MASTER_RD_DATA_READY );
 //如果AXI总线某一个模块暂时不需要连接，用default模块代替。
-
+assign MASTER_CLK = clk;
+assign MASTER_RSTN = rstn;
 assign MASTER_WR_ADDR_ID    = 0;
 assign MASTER_WR_ADDR       = 0;
 assign MASTER_WR_ADDR_LEN   = 0;
