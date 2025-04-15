@@ -71,9 +71,9 @@ localparam HORIZON_RESOLUTION  = 12;
 localparam ADDER_LOWBIT        = 20;
 localparam WAVE_STORE          = 2 ; //1个通道可本地存储4条波形用于快速切换。
 
-reg [WAVE_STORE-1:0]                      wave_sel  [0:CHANNEL_NUM-1]                      ;
-reg [HORIZON_RESOLUTION+ADDER_LOWBIT-1:0] freq_ctrl [0:CHANNEL_NUM-1] [0:(2**WAVE_STORE)-1];
-reg [HORIZON_RESOLUTION-1:0]              phase_ctrl[0:CHANNEL_NUM-1] [0:(2**WAVE_STORE)-1];
+reg [(WAVE_STORE-1):0]                                         wave_sel[(CHANNEL_NUM-1):0];
+reg [(2**WAVE_STORE-1):0][HORIZON_RESOLUTION+ADDER_LOWBIT-1:0] freq_ctrl [(CHANNEL_NUM-1):0];
+reg [(2**WAVE_STORE-1):0][HORIZON_RESOLUTION-1:0]              phase_ctrl[(CHANNEL_NUM-1):0];
 wire[32-1:0]                              dds_wr_data;
 
 reg  [CHANNEL_NUM-1:0] dds_wr_enable;
@@ -271,7 +271,13 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
             freq_ctrl[wave_channel][wave_select] <= 0;
    else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h1) && (wr_addr[3:0] <= 4'h4)))
-      freq_ctrl[wr_addr[7:4]][wr_addr[3:0]-1] <= DDS_SLAVE_WR_DATA;
+      case(wr_addr[3:0])
+         4'h1:    freq_ctrl[wr_addr[7:4]][0] <= DDS_SLAVE_WR_DATA;
+         4'h2:    freq_ctrl[wr_addr[7:4]][1] <= DDS_SLAVE_WR_DATA;
+         4'h3:    freq_ctrl[wr_addr[7:4]][2] <= DDS_SLAVE_WR_DATA;
+         4'h4:    freq_ctrl[wr_addr[7:4]][3] <= DDS_SLAVE_WR_DATA;
+         default: freq_ctrl[wr_addr[7:4]][0] <= freq_ctrl[wr_addr[7:4]][0];
+      endcase
    else 
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
@@ -284,7 +290,13 @@ always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)
             phase_ctrl[wave_channel][wave_select] <= 0;
    else if(DDS_SLAVE_WR_DATA_VALID && DDS_SLAVE_WR_DATA_READY && (wr_addr[7:4] < CHANNEL_NUM) && ((wr_addr[3:0] >= 4'h5) && (wr_addr[3:0] <= 4'h8)))
-      phase_ctrl[wr_addr[7:4]][wr_addr[3:0]-5] <= DDS_SLAVE_WR_DATA;
+      case(wr_addr[3:0])
+         4'h5:    phase_ctrl[wr_addr[7:4]][0] <= DDS_SLAVE_WR_DATA;
+         4'h6:    phase_ctrl[wr_addr[7:4]][1] <= DDS_SLAVE_WR_DATA;
+         4'h7:    phase_ctrl[wr_addr[7:4]][2] <= DDS_SLAVE_WR_DATA;
+         4'h8:    phase_ctrl[wr_addr[7:4]][3] <= DDS_SLAVE_WR_DATA;
+         default: phase_ctrl[wr_addr[7:4]][0] <= phase_ctrl[wr_addr[7:4]][0];
+      endcase
    else 
       for(wave_channel=0;wave_channel<CHANNEL_NUM;wave_channel=wave_channel+1)
          for(wave_select=0;wave_select<(2**WAVE_STORE);wave_select=wave_select+1)

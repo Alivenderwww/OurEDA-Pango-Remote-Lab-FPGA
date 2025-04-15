@@ -353,10 +353,10 @@ axi_master_sim M3(
 .MASTER_RD_DATA_READY(M_RD_DATA_READY[3])
 );
 
-// axi_slave_default S0(AXI_BS[0]);
-// axi_slave_default S1(AXI_BS[1]);
-// axi_slave_default S2(AXI_BS[2]);
-axi_slave_default S3(
+// axi_slave_sim S0(AXI_BS[0]);
+// axi_slave_sim S1(AXI_BS[1]);
+// axi_slave_sim S2(AXI_BS[2]);
+axi_slave_sim S3(
     .SLAVE_CLK          (S_CLK          [3]),
     .SLAVE_RSTN         (S_RSTN         [3]),
     .SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [3]),
@@ -387,7 +387,7 @@ axi_slave_default S3(
     .SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[3]),
     .SLAVE_RD_DATA_READY(S_RD_DATA_READY[3])
 );
-axi_slave_default S4(
+axi_slave_sim S4(
     .SLAVE_CLK          (S_CLK          [4]),
     .SLAVE_RSTN         (S_RSTN         [4]),
     .SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [4]),
@@ -418,7 +418,7 @@ axi_slave_default S4(
     .SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[4]),
     .SLAVE_RD_DATA_READY(S_RD_DATA_READY[4])
 );
-axi_slave_default S5(
+axi_slave_sim S5(
     .SLAVE_CLK          (S_CLK          [5]),
     .SLAVE_RSTN         (S_RSTN         [5]),
     .SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [5]),
@@ -449,7 +449,7 @@ axi_slave_default S5(
     .SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[5]),
     .SLAVE_RD_DATA_READY(S_RD_DATA_READY[5])
 );
-axi_slave_default S6(
+axi_slave_sim S6(
     .SLAVE_CLK          (S_CLK          [6]),
     .SLAVE_RSTN         (S_RSTN         [6]),
     .SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [6]),
@@ -480,7 +480,7 @@ axi_slave_default S6(
     .SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[6]),
     .SLAVE_RD_DATA_READY(S_RD_DATA_READY[6])
 );
-axi_slave_default S7(
+axi_slave_sim S7(
     .SLAVE_CLK          (S_CLK          [7]),
     .SLAVE_RSTN         (S_RSTN         [7]),
     .SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [7]),

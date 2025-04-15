@@ -107,9 +107,9 @@ end
 endmodule //axi_master_arbiter
 
 module axi_slave_arbiter #(
-    parameter S_WIDTH = 2,
-    parameter [31:0] START_ADDR[0:(2**S_WIDTH-1)] = '{32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000},
-    parameter [31:0]   END_ADDR[0:(2**S_WIDTH-1)] = '{32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'h5FFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF}
+    parameter S_WIDTH = 3,
+    parameter [0:(2**S_WIDTH-1)][31:0] START_ADDR= {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000},
+    parameter [0:(2**S_WIDTH-1)][31:0]   END_ADDR= {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'h5FFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF}
 )(
     input  wire                     clk,
     input  wire                     rstn,

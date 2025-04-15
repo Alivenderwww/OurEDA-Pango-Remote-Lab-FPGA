@@ -1,8 +1,8 @@
 module udp_axi_ddr_top #(
     parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
-    parameter BOARD_IP      = {8'd169,8'd254,8'd103,8'd006}  ,
-    parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ,
-    parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}  
+    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //8'd169,8'd254,8'd103,8'd006
+    parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
+    parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
 )(
 //system io
 input  wire        external_clk ,
@@ -71,8 +71,8 @@ B. CMD_JTAG_CLOSE_TEST                  0
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 2;
 localparam M_ID     = 2;
-localparam [31:0] START_ADDR[0:(2**S_WIDTH-1)] = '{32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000};
-localparam [31:0]   END_ADDR[0:(2**S_WIDTH-1)] = '{32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF};
+localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000};
+localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF};
 
 wire [(2**M_WIDTH-1):0]            M_CLK          ;
 wire [(2**M_WIDTH-1):0]            M_RSTN         ;
@@ -158,7 +158,7 @@ wire jtag_rstn  ;
 
 wire [7:0] udp_led;
 
-clk_pll_top the_instance_name (
+clk_pll_top clk_pll_top_inst (
   .clkout0(clk_50M),    // output
   .clkout1(clk_200M),    // output
   .clkout2(clk_5M),    // output
@@ -264,7 +264,7 @@ axi_master_default M1(
 axi_master_default M2(
     .clk                  (sys_clk          ),
     .rstn                 (sys_rstn         ),
-    .MASTER_CLK           (M2_CLK           ),
+    .MASTER_CLK           (M_CLK          [2]),
     .MASTER_RSTN          (M_RSTN         [2]),
     .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [2]),
     .MASTER_WR_ADDR       (M_WR_ADDR      [2]),
@@ -330,7 +330,7 @@ axi_master_default M3(
 );
 
 slave_ddr3 #(
-    .OFFSET_ADDR             (S0_START_ADDR)
+    .OFFSET_ADDR             (START_ADDR[0])
 )S0(
     .ddr_ref_clk             (ddr_ref_clk      ),
     .rst_n                   (ddr_rst_n        ),
@@ -381,7 +381,7 @@ slave_ddr3 #(
 );
 
 JTAG_SLAVE  #(
-    .OFFSET_ADDR              (S1_START_ADDR)
+    .OFFSET_ADDR              (START_ADDR[1])
 )S1(
     .clk                      (jtag_clk        ),
     .rstn                     (jtag_rstn       ),
@@ -420,40 +420,38 @@ JTAG_SLAVE  #(
     .JTAG_SLAVE_RD_DATA_READY (S_RD_DATA_READY[1])
 );
 
-axi_led_slave #(
-    .OFFSET_ADDR             (S2_START_ADDR)
-)S2(
-    .clk                     (led_clk         ),
-    .rstn                    (led_rst_n       ),
-    .LED_SLAVE_CLK           (S_CLK          [2]),
-    .LED_SLAVE_RSTN          (S_RSTN         [2]),
-    .LED_SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   [2]),
-    .LED_SLAVE_WR_ADDR       (S_WR_ADDR      [2]),
-    .LED_SLAVE_WR_ADDR_LEN   (S_WR_ADDR_LEN  [2]),
-    .LED_SLAVE_WR_ADDR_BURST (S_WR_ADDR_BURST[2]),
-    .LED_SLAVE_WR_ADDR_VALID (S_WR_ADDR_VALID[2]),
-    .LED_SLAVE_WR_ADDR_READY (S_WR_ADDR_READY[2]),
-    .LED_SLAVE_WR_DATA       (S_WR_DATA      [2]),
-    .LED_SLAVE_WR_STRB       (S_WR_STRB      [2]),
-    .LED_SLAVE_WR_DATA_LAST  (S_WR_DATA_LAST [2]),
-    .LED_SLAVE_WR_DATA_VALID (S_WR_DATA_VALID[2]),
-    .LED_SLAVE_WR_DATA_READY (S_WR_DATA_READY[2]),
-    .LED_SLAVE_WR_BACK_ID    (S_WR_BACK_ID   [2]),
-    .LED_SLAVE_WR_BACK_RESP  (S_WR_BACK_RESP [2]),
-    .LED_SLAVE_WR_BACK_VALID (S_WR_BACK_VALID[2]),
-    .LED_SLAVE_WR_BACK_READY (S_WR_BACK_READY[2]),
-    .LED_SLAVE_RD_ADDR_ID    (S_RD_ADDR_ID   [2]),
-    .LED_SLAVE_RD_ADDR       (S_RD_ADDR      [2]),
-    .LED_SLAVE_RD_ADDR_LEN   (S_RD_ADDR_LEN  [2]),
-    .LED_SLAVE_RD_ADDR_BURST (S_RD_ADDR_BURST[2]),
-    .LED_SLAVE_RD_ADDR_VALID (S_RD_ADDR_VALID[2]),
-    .LED_SLAVE_RD_ADDR_READY (S_RD_ADDR_READY[2]),
-    .LED_SLAVE_RD_BACK_ID    (S_RD_BACK_ID   [2]),
-    .LED_SLAVE_RD_DATA       (S_RD_DATA      [2]),
-    .LED_SLAVE_RD_DATA_RESP  (S_RD_DATA_RESP [2]),
-    .LED_SLAVE_RD_DATA_LAST  (S_RD_DATA_LAST [2]),
-    .LED_SLAVE_RD_DATA_VALID (S_RD_DATA_VALID[2]),
-    .LED_SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
+axi_slave_default S2(
+    .clk                 (sys_clk         ),
+    .rstn                (sys_rstn       ),
+    .SLAVE_CLK           (S_CLK          [2]),
+    .SLAVE_RSTN          (S_RSTN         [2]),
+    .SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   [2]),
+    .SLAVE_WR_ADDR       (S_WR_ADDR      [2]),
+    .SLAVE_WR_ADDR_LEN   (S_WR_ADDR_LEN  [2]),
+    .SLAVE_WR_ADDR_BURST (S_WR_ADDR_BURST[2]),
+    .SLAVE_WR_ADDR_VALID (S_WR_ADDR_VALID[2]),
+    .SLAVE_WR_ADDR_READY (S_WR_ADDR_READY[2]),
+    .SLAVE_WR_DATA       (S_WR_DATA      [2]),
+    .SLAVE_WR_STRB       (S_WR_STRB      [2]),
+    .SLAVE_WR_DATA_LAST  (S_WR_DATA_LAST [2]),
+    .SLAVE_WR_DATA_VALID (S_WR_DATA_VALID[2]),
+    .SLAVE_WR_DATA_READY (S_WR_DATA_READY[2]),
+    .SLAVE_WR_BACK_ID    (S_WR_BACK_ID   [2]),
+    .SLAVE_WR_BACK_RESP  (S_WR_BACK_RESP [2]),
+    .SLAVE_WR_BACK_VALID (S_WR_BACK_VALID[2]),
+    .SLAVE_WR_BACK_READY (S_WR_BACK_READY[2]),
+    .SLAVE_RD_ADDR_ID    (S_RD_ADDR_ID   [2]),
+    .SLAVE_RD_ADDR       (S_RD_ADDR      [2]),
+    .SLAVE_RD_ADDR_LEN   (S_RD_ADDR_LEN  [2]),
+    .SLAVE_RD_ADDR_BURST (S_RD_ADDR_BURST[2]),
+    .SLAVE_RD_ADDR_VALID (S_RD_ADDR_VALID[2]),
+    .SLAVE_RD_ADDR_READY (S_RD_ADDR_READY[2]),
+    .SLAVE_RD_BACK_ID    (S_RD_BACK_ID   [2]),
+    .SLAVE_RD_DATA       (S_RD_DATA      [2]),
+    .SLAVE_RD_DATA_RESP  (S_RD_DATA_RESP [2]),
+    .SLAVE_RD_DATA_LAST  (S_RD_DATA_LAST [2]),
+    .SLAVE_RD_DATA_VALID (S_RD_DATA_VALID[2]),
+    .SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
 );
 
 axi_slave_default S3(
@@ -563,22 +561,22 @@ u_axi_bus(
 
 
 wire [15:0][7:0] data_in;
-assign data_in[(8*0)+:8]    = {3'b0,M_fifo_empty_flag[0]};
-assign data_in[(8*1)+:8]    = {3'b0,M_fifo_empty_flag[1]};
-assign data_in[(8*2)+:8]    = {3'b0,M_fifo_empty_flag[2]};
-assign data_in[(8*3)+:8]    = {3'b0,M_fifo_empty_flag[3]};
-assign data_in[(8*4)+:8]    = {3'b0,M_fifo_empty_flag[4]};
-assign data_in[(8*5)+:8]    = {3'b0,S_fifo_empty_flag[0]};
-assign data_in[(8*6)+:8]    = {3'b0,S_fifo_empty_flag[1]};
-assign data_in[(8*7)+:8]    = {3'b0,S_fifo_empty_flag[2]};
-assign data_in[(8*8)+:8]    = {3'b0,S_fifo_empty_flag[3]};
-assign data_in[(8*9)+:8]    = {3'b0,S_fifo_empty_flag[4]};
-assign data_in[(8*10)+:8]   = {udp_led};
-assign data_in[(8*11)+:8]   = 8'b00001111;
-assign data_in[(8*12)+:8]   = 8'b10101010;
-assign data_in[(8*13)+:8]   = 8'b01010101;
-assign data_in[(8*14)+:8]   = 8'b11110000;
-assign data_in[(8*15)+:8]   = 8'b00001111;
+assign data_in[0]    = {3'b0,M_fifo_empty_flag[0]};
+assign data_in[1]    = {3'b0,M_fifo_empty_flag[1]};
+assign data_in[2]    = {3'b0,M_fifo_empty_flag[2]};
+assign data_in[3]    = {3'b0,M_fifo_empty_flag[3]};
+assign data_in[4]    = {3'b0,S_fifo_empty_flag[0]};
+assign data_in[5]    = {3'b0,S_fifo_empty_flag[1]};
+assign data_in[6]    = {3'b0,S_fifo_empty_flag[2]};
+assign data_in[7]    = {3'b0,S_fifo_empty_flag[3]};
+assign data_in[8]    = {udp_led};
+assign data_in[9]    = 8'b00001111;
+assign data_in[10]   = 8'b11110000;
+assign data_in[11]   = 8'b00001111;
+assign data_in[12]   = 8'b10101010;
+assign data_in[13]   = 8'b01010101;
+assign data_in[14]   = 8'b11110000;
+assign data_in[15]   = 8'b00001111;
 
 led8_btn u_led8_btn(
 	.clk      	( sys_clk   ),

@@ -246,6 +246,7 @@ always_comb begin: slave_switch
         if(rd_data_sel==i)begin
             BUS_RD_DATA       = SLAVE_RD_DATA      [i];
             BUS_RD_DATA_RESP  = SLAVE_RD_DATA_RESP [i];
+            BUS_RD_BACK_ID    = SLAVE_RD_BACK_ID   [i];
             BUS_RD_DATA_LAST  = SLAVE_RD_DATA_LAST [i];
             BUS_RD_DATA_VALID = SLAVE_RD_DATA_VALID[i];
         end

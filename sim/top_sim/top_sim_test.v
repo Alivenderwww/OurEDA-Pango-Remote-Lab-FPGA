@@ -3,7 +3,8 @@
 module top_sim_test();
 
 // outports wire
-wire [7:0]  	led;
+wire [7:0]      led8;
+wire [3:0]      led4;
 wire        	tck;
 wire        	tms;
 wire        	tdi;
@@ -74,19 +75,19 @@ parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ;
 parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}  ;
 initial begin
     #5000
-    while (~u_udp_axi_ddr_top.M0_RSTN) #1000;
-    while (~u_udp_axi_ddr_top.S1_RSTN) #1000;
-    #10000 u_rgmii_sim.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态 (32'h01020202)
+    while (~u_udp_axi_ddr_top.M_RSTN[0]) #1000;
+    while (~u_udp_axi_ddr_top.S_RSTN[1]) #1000;
+    #10000 u_rgmii_sim.send_rd_addr(2'b01, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态 (32'h01020202)
     #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入
-    #10000 u_rgmii_sim.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低 (32'h01020002)
-    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //写JTAG状态寄存器
+    #10000 u_rgmii_sim.send_rd_addr(2'b10, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低 (32'h01020002)
+    #10000 u_rgmii_sim.send_wr_addr(2'b10, 2'b00, 3'd0, 32'h1000_0000); //写JTAG状态寄存器
     #10000 u_rgmii_sim.send_wr_data(              3'd0, 32'hFFFF_FFFF); //重置FIFO状态
-    #10000 u_rgmii_sim.send_rd_addr(2'b00, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看是否重置成功 (32'h01020202)
+    #10000 u_rgmii_sim.send_rd_addr(2'b11, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看是否重置成功 (32'h01020202)
     #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd3, 32'h1000_0010); //对JTAG写入错误地址的数据，测试RESP响应
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 
-    while (~u_udp_axi_ddr_top.S0_RSTN) #1000;
+    while (~u_udp_axi_ddr_top.S_RSTN[0]) #1000;
     #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
     #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
     #1000;
@@ -136,7 +137,8 @@ udp_axi_ddr_top #(
 	.external_clk  	( external_clk   ),
 	.external_rstn 	( external_rstn  ),
 	.btn           	( btn            ),
-	.led           	( led            ),
+    .led8           ( led8           ),
+    .led4           ( led4           ),
 	.tck           	( tck            ),
 	.tms           	( tms            ),
 	.tdi           	( tdi            ),

@@ -10,8 +10,8 @@ module dds #(
     //选通信号
     input  wire [WAVE_STORE-1:0]                      wave_sel                       , //波形选通，共WAVE_STORE组
     //调制信号
-    input  wire [HORIZON_RESOLUTION+ADDER_LOWBIT-1:0] freq_ctrl [0:(2**WAVE_STORE)-1], //频率控制，位宽与相位累加器位宽相同，共WAVE_STORE组
-    input  wire [HORIZON_RESOLUTION-1:0]              phase_ctrl[0:(2**WAVE_STORE)-1], //相位控制，位宽与一个周期的地址位相同，共WAVE_STORE组
+    input  wire [(2**WAVE_STORE)-1:0] [HORIZON_RESOLUTION+ADDER_LOWBIT-1:0] freq_ctrl , //频率控制，位宽与相位累加器位宽相同，共WAVE_STORE组
+    input  wire [(2**WAVE_STORE)-1:0] [HORIZON_RESOLUTION-1:0]              phase_ctrl, //相位控制，位宽与一个周期的地址位相同，共WAVE_STORE组
     output wire [VERTICAL_RESOLUTION-1:0]             wave_out                       , //输出wave_sel选中的波形
     //RAM写信号
     input  wire                                       wr_enable,

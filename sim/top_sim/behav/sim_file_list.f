@@ -1,12 +1,15 @@
 ../../../AXI4/sim_file/*.sv
-../../../AXI4/sim_file/*.v
-../../../AXI4/*.v
+../../../AXI4/*.sv
 ../../../DDR3/*.v
+../../../DDR3/*.sv
 ../../../DDR3/sim_file/ddr3.v
 ../../../JTAG/*.v
+../../../JTAG/*.sv
 ../../../UDP/sim_file/*.v
 ../../../UDP/*.v
-../../../TOP/udp_axi_ddr_top/*.v
+../../../TOP/udp_axi_ddr_top/*.sv
+../../../COMMON/*.sv
+../../../COMMON/*.v
 ../top_sim_test.v
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
