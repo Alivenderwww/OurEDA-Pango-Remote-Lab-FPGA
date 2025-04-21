@@ -287,7 +287,7 @@ axi_master_default M3(
 
 remote_update_axi_slave #(
     .OFFSET_ADDR            (S0_START_ADDR        ),
-	.FPGA_VESION          	( 48'h2024_1119_1943  ),
+	.FPGA_VERSION          	( 48'h2024_1119_1943  ),
 	.DEVICE               	( "SIMULATE"          ),//100H的文件太大了，仿真太慢，搞小一点
 	.USER_BITSTREAM_CNT   	( 2'd3                ),
 	.USER_BITSTREAM1_ADDR 	( 24'h3a_0000         ),

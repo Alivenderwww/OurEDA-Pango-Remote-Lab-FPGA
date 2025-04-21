@@ -1,6 +1,6 @@
 module data_ctrl_slave #(
 parameter OFFSET_ADDR           = 32'h3000_0000     ,
-parameter FPGA_VESION           = 48'h2000_0101_1200,   // year,month,day,hour,minute;
+parameter FPGA_VERSION           = 48'h2000_0101_1200,   // year,month,day,hour,minute;
 parameter USER_BITSTREAM_CNT    = 2'd3              ,
 parameter USER_BITSTREAM1_ADDR  = 24'h20_b000       ,   // user bitstream1 start address  ---> [6*4KB+2068KB(2065),32MB- 2068KB(2065)],4KB align  // 24'h20_b000
 parameter USER_BITSTREAM2_ADDR  = 24'h41_0000       ,   // user bitstream2 start address  ---> 24'h41_0000 

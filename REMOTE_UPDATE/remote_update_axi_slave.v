@@ -1,6 +1,6 @@
 module remote_update_axi_slave #(
     parameter OFFSET_ADDR           = 32'h3000_0000     ,
-    parameter FPGA_VESION           = 48'h2024_1119_1943,   // year,month,day,hour,minute;
+    parameter FPGA_VERSION           = 48'h2024_1119_1943,   // year,month,day,hour,minute;
     parameter DEVICE                = "PG2L100H"        ,   // "PG2L200H":bitstream 8974KB;8c4_000 "PG2L100H":bitstream 3703KB;39e_000 "PG2L50H":bitstream 2065KB;204_400 "PG2L25H":bitstream 1168KB;124_000
     parameter USER_BITSTREAM_CNT    = 2'd1              ,   // user bitstream count,2'd1,2'd2,2'd3 ----> there are 1/2/3 user bitstream in the flash,at least 1 bitstream.
     parameter USER_BITSTREAM1_ADDR  = 24'h3a_0000       ,   // user bitstream1 start address  ---> [6*4KB+2068KB(2065),32MB- 2068KB(2065)],4KB align  // 24'h20_b000
@@ -107,7 +107,7 @@ wire        time_out_reg            ;
 data_ctrl_slave
 #(
     .OFFSET_ADDR                (OFFSET_ADDR                ),
-    .FPGA_VESION                (FPGA_VESION                ),  
+    .FPGA_VERSION                (FPGA_VERSION                ),  
     .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
     .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
     .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),

@@ -119,6 +119,32 @@ initial begin
 #50000  BUS_RSTN = 1;
 end
 
+/*
+装载比特流的顺序：
+0. CMD_JTAG_CLOSE_TEST                  0
+1. CMD_JTAG_RUN_TEST                    0
+2. CMD_JTAG_LOAD_IR    `JTAG_DR_JRST    10
+3. CMD_JTAG_RUN_TEST                    0
+4. CMD_JTAG_LOAD_IR    `JTAG_DR_CFGI    10
+5. CMD_JTAG_IDLE_DELAY                  75000
+6. CMD_JTAG_LOAD_DR    "BITSTREAM"      取决于比特流大小
+7. CMD_JTAG_CLOSE_TEST                  0
+8. CMD_JTAG_RUN_TEST                    0
+9. CMD_JTAG_LOAD_IR    `JTAG_DR_JWAKEUP 10
+A. CMD_JTAG_IDLE_DELAY                  1000
+B. CMD_JTAG_CLOSE_TEST                  0
+*/
+
+/*
+获取IDCODE的顺序：
+0. CMD_JTAG_CLOSE_TEST                  0
+1. CMD_JTAG_RUN_TEST                    0
+2. CMD_JTAG_LOAD_IR    `JTAG_DR_IDCODE  10
+3. CMD_JTAG_RUN_TEST                    0
+4. CMD_JTAG_LOAD_DR    NOTCARE          32
+5. CMD_JTAG_CLOSE_TEST                  0
+*/
+
 initial begin
     #300 M0.set_clk(5);
     #300 S3.set_clk(15);
@@ -152,12 +178,68 @@ initial begin
     #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREO}, 28'd32}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度32}
     #300 M0.send_rd_addr(2'b00, 32'h10000001, 8'd000, 2'b00);     //读取JTAG的data_out_fifo，读32bit（突发长度0）
 
+
+    //start of download bitstream
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    //写JTAG的cmd_fifo入口
+    #300 M0.send_wr_data({{`CMD_JTAG_RUN_TEST}, 28'd00}, 4'b1111);//`CMD_JTAG_RUN_TEST，JTAG启动
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00);    //写JTAG的data_in_fifo入口
+    #300 M0.send_wr_data({22'b0,{`JTAG_DR_JRST}}, 4'b1111);    //写入JTAG指令`JTAG_DR_IDCODE，低10位有效，高22位无效
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    //写JTAG的cmd_fifo入口
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_IR，循环长度10}
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+    #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    //写JTAG状态寄存器
+    #300 M0.send_wr_data(32'h00001100, 4'b0010);                 //选通[15:8]，清空data_in_fifo以清除22位无效数据（或者FFFFFFFF全部清空）
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    
+    #300 M0.send_wr_data({{`CMD_JTAG_RUN_TEST}, 28'd00}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);   
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00);  
+    #300 M0.send_wr_data({22'b0,{`JTAG_DR_CFGI}}, 4'b1111);    
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);  
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    
+    #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    
+    #300 M0.send_wr_data(32'h00001100, 4'b0010);                 
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    
+    #300 M0.send_wr_data({{`CMD_JTAG_IDLE_DELAY}, 28'd75000}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);   
+
     #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);     //写JTAG的cmd_fifo入口
     #300 M0.send_wr_data({{`CMD_JTAG_LOAD_DR_CAREI}, 28'd5000}, 4'b1111);//{cmd,cyclenum} = {`CMD_JTAG_LOAD_DR_CAREO，循环长度5000}
     #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd156, 2'b00);     //写JTAG的data_in_fifo入口，突发长度5000/32=156.25~157
     #300 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);                  //写入比特流
     #900 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);     //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
 
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);   
+    #300 M0.send_wr_data({{`CMD_JTAG_CLOSE_TEST}, 28'd00}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00); 
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);   
+    #300 M0.send_wr_data({{`CMD_JTAG_RUN_TEST}, 28'd00}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00); 
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00);  
+    #300 M0.send_wr_data({22'b0,{`JTAG_DR_JWAKEUP}}, 4'b1111);    
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);  
+    #300 M0.send_wr_data({{`CMD_JTAG_LOAD_IR}, 28'd10}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    
+    #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    
+    #300 M0.send_wr_data(32'h00001100, 4'b0010);          
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    
+    #300 M0.send_wr_data({{`CMD_JTAG_IDLE_DELAY}, 28'd1000}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00); 
+
+    #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);   
+    #300 M0.send_wr_data({{`CMD_JTAG_CLOSE_TEST}, 28'd00}, 4'b1111);
+    #300 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);   
+
+    //end of download bitstream
     while (~S_RSTN[0]) #500;
     #300 M0.send_wr_addr(2'b00, 32'h00000000, 8'd255, 2'b01);
     #300 M0.send_wr_addr(2'b01, 32'h00010000, 8'd255, 2'b01);
