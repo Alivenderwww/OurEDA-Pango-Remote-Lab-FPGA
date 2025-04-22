@@ -163,22 +163,22 @@ OFFSET_ADDR + B: 热启动开关-读写地址——控制位
 [ 7: 0]: {-, -, -, -, -, -, -,    hotreset_en}
 */
 
-localparam BASE_RU_WRBIT_RW_CTRL_ADDR = 32'h0000_0000; localparam REAL_RU_WRBIT_RW_CTRL_ADDR = OFFSET_ADDR + BASE_RU_WRBIT_RW_CTRL_ADDR;
-localparam BASE_RU_WRBIT_WO_FIFO_ADDR = 32'h0000_0001; localparam REAL_RU_WRBIT_WO_FIFO_ADDR = OFFSET_ADDR + BASE_RU_WRBIT_WO_FIFO_ADDR;
-localparam BASE_RU_WRBIT_RO_FLAG_ADDR = 32'h0000_0002; localparam REAL_RU_WRBIT_RO_FLAG_ADDR = OFFSET_ADDR + BASE_RU_WRBIT_RO_FLAG_ADDR;
+localparam RU_WRBIT_RW_CTRL_ADDR = 32'h0000_0000;
+localparam RU_WRBIT_WO_FIFO_ADDR = 32'h0000_0001;
+localparam RU_WRBIT_RO_FLAG_ADDR = 32'h0000_0002;
   
-localparam BASE_RU_RDBIT_RW_CTRL_ADDR = 32'h0000_0003; localparam REAL_RU_RDBIT_RW_CTRL_ADDR = OFFSET_ADDR + BASE_RU_RDBIT_RW_CTRL_ADDR;
-localparam BASE_RU_RDBIT_RO_FIFO_ADDR = 32'h0000_0004; localparam REAL_RU_RDBIT_RO_FIFO_ADDR = OFFSET_ADDR + BASE_RU_RDBIT_RO_FIFO_ADDR;
-localparam BASE_RU_RDBIT_RO__CRC_ADDR = 32'h0000_0005; localparam REAL_RU_RDBIT_RO__CRC_ADDR = OFFSET_ADDR + BASE_RU_RDBIT_RO__CRC_ADDR;
-localparam BASE_RU_RDBIT_RO_FLAG_ADDR = 32'h0000_0006; localparam REAL_RU_RDBIT_RO_FLAG_ADDR = OFFSET_ADDR + BASE_RU_RDBIT_RO_FLAG_ADDR;
+localparam RU_RDBIT_RW_CTRL_ADDR = 32'h0000_0003;
+localparam RU_RDBIT_RO_FIFO_ADDR = 32'h0000_0004;
+localparam RU_RDBIT_RO__CRC_ADDR = 32'h0000_0005;
+localparam RU_RDBIT_RO_FLAG_ADDR = 32'h0000_0006;
   
-localparam BASE_RU_CLEAR_RW_CTRL_ADDR = 32'h0000_0007; localparam REAL_RU_CLEAR_RW_CTRL_ADDR = OFFSET_ADDR + BASE_RU_CLEAR_RW_CTRL_ADDR;
-localparam BASE_RU_CLEAR_RO_FLAG_ADDR = 32'h0000_0008; localparam REAL_RU_CLEAR_RO_FLAG_ADDR = OFFSET_ADDR + BASE_RU_CLEAR_RO_FLAG_ADDR;
+localparam RU_CLEAR_RW_CTRL_ADDR = 32'h0000_0007;
+localparam RU_CLEAR_RO_FLAG_ADDR = 32'h0000_0008;
   
-localparam BASE_RU_SWTCH_RW_CTRL_ADDR = 32'h0000_0009; localparam REAL_RU_SWTCH_RW_CTRL_ADDR = OFFSET_ADDR + BASE_RU_SWTCH_RW_CTRL_ADDR;
-localparam BASE_RU_SWTCH_RO_FLAG_ADDR = 32'h0000_000A; localparam REAL_RU_SWTCH_RO_FLAG_ADDR = OFFSET_ADDR + BASE_RU_SWTCH_RO_FLAG_ADDR;
+localparam RU_SWTCH_RW_CTRL_ADDR = 32'h0000_0009;
+localparam RU_SWTCH_RO_FLAG_ADDR = 32'h0000_000A;
   
-localparam BASE_RU_HOTRS_RW_CTRL_ADDR = 32'h0000_000B; localparam REAL_RU_HOTRS_RW_CTRL_ADDR = OFFSET_ADDR + BASE_RU_HOTRS_RW_CTRL_ADDR;
+localparam RU_HOTRS_RW_CTRL_ADDR = 32'h0000_000B;
 
 
 assign SLAVE_CLK = clk;
@@ -251,7 +251,7 @@ end
 
 always @(posedge clk) begin
     if(~rstn) wr_addr <= 0;
-    else if(SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID) wr_addr <= SLAVE_WR_ADDR;
+    else if(SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID) wr_addr <= SLAVE_WR_ADDR - OFFSET_ADDR;
     else if((cu_wr_st == ST_WR_DATA) && SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -260,13 +260,13 @@ always @(posedge clk) begin
     if((~rstn) || (cu_wr_st == ST_WR_IDLE)) wr_error_detect <= 0;
     else if(cu_wr_st == ST_WR_DATA)begin
         if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_error_detect <= 1;
-        else if((wr_addr < REAL_RU_WRBIT_RW_CTRL_ADDR) || (wr_addr > REAL_RU_HOTRS_RW_CTRL_ADDR)) wr_error_detect <= 1;
-        else if((wr_addr == REAL_RU_WRBIT_RO_FLAG_ADDR) ||
-                (wr_addr == REAL_RU_RDBIT_RO_FIFO_ADDR) ||
-                (wr_addr == REAL_RU_RDBIT_RO_FLAG_ADDR) ||
-                (wr_addr == REAL_RU_RDBIT_RO__CRC_ADDR) ||
-                (wr_addr == REAL_RU_SWTCH_RO_FLAG_ADDR) ||
-                (wr_addr == REAL_RU_CLEAR_RO_FLAG_ADDR)) wr_error_detect <= 1;
+        else if((wr_addr < RU_WRBIT_RW_CTRL_ADDR) || (wr_addr > RU_HOTRS_RW_CTRL_ADDR)) wr_error_detect <= 1;
+        else if((wr_addr == RU_WRBIT_RO_FLAG_ADDR) ||
+                (wr_addr == RU_RDBIT_RO_FIFO_ADDR) ||
+                (wr_addr == RU_RDBIT_RO_FLAG_ADDR) ||
+                (wr_addr == RU_RDBIT_RO__CRC_ADDR) ||
+                (wr_addr == RU_SWTCH_RO_FLAG_ADDR) ||
+                (wr_addr == RU_CLEAR_RO_FLAG_ADDR)) wr_error_detect <= 1;
         else wr_error_detect <= 0;
     end else wr_error_detect <= wr_error_detect;
 end
@@ -280,7 +280,7 @@ assign SLAVE_WR_BACK_VALID = (cu_wr_st == ST_WR_RESP);
 
 // always @(posedge clk) begin
 //     if(~rstn) led <= 0;
-//     else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && (wr_addr == REAL_ADDR))begin
+//     else if(SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && (wr_addr == ADDR))begin
 //         led <= SLAVE_WR_DATA;
 //         $display("%m: at time %0t INFO: remote update slave recv write data %h", $time, SLAVE_WR_DATA);
 //     end else led <= led;
@@ -328,8 +328,8 @@ always @(*) begin
     if((~rstn) || (cu_rd_st == ST_RD_IDLE)) rd_error_detect <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_error_detect <= 1;
-        if((rd_addr < REAL_RU_WRBIT_RW_CTRL_ADDR) || (rd_addr > REAL_RU_HOTRS_RW_CTRL_ADDR)) rd_error_detect <= 1;
-        else if(rd_addr == REAL_RU_WRBIT_WO_FIFO_ADDR) rd_error_detect <= 1;
+        if((rd_addr < RU_WRBIT_RW_CTRL_ADDR) || (rd_addr > RU_HOTRS_RW_CTRL_ADDR)) rd_error_detect <= 1;
+        else if(rd_addr == RU_WRBIT_WO_FIFO_ADDR) rd_error_detect <= 1;
         else rd_error_detect <= 0;
     end else rd_error_detect <= 0;
 end
@@ -345,7 +345,7 @@ always @(*) begin
     if(~rstn || (cu_wr_st == ST_WR_IDLE) || (cu_wr_st == ST_WR_RESP)) SLAVE_WR_DATA_READY <= 0;
     else if(cu_wr_st == ST_WR_DATA)begin
         case (wr_addr)
-            REAL_RU_WRBIT_WO_FIFO_ADDR: SLAVE_WR_DATA_READY <= (~wr_fifo_full);
+            RU_WRBIT_WO_FIFO_ADDR: SLAVE_WR_DATA_READY <= (~wr_fifo_full);
             default                   : SLAVE_WR_DATA_READY <= 1;
         endcase
     end else SLAVE_WR_DATA_READY <= 0;
@@ -356,7 +356,7 @@ always @(*) begin
     if(~rstn || (cu_rd_st == ST_RD_IDLE)) SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         case (rd_addr)
-            REAL_RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA_VALID <= (rd_fifo_rd_data_valid);
+            RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA_VALID <= (rd_fifo_rd_data_valid);
             default                   : SLAVE_RD_DATA_VALID <= 1;
         endcase
     end else SLAVE_RD_DATA_VALID <= 0;
@@ -367,25 +367,25 @@ always @(*) begin
     if(~rstn || (cu_rd_st == ST_RD_IDLE)) SLAVE_RD_DATA <= 0;
     else if(cu_rd_st == ST_RD_DATA)begin
         case (rd_addr)
-            REAL_RU_WRBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{5'b0, bitstream_wr_num, flash_wr_en}  };
-            REAL_RU_WRBIT_WO_FIFO_ADDR: SLAVE_RD_DATA <= 32'hFFFF_FFFF;
-            REAL_RU_WRBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,wr_fifo_full} ,{7'b0,wr_fifo_empty}   ,{7'b0,bitstream_wr_done}       ,{7'b0, clear_bs_done}                  };
-            REAL_RU_RDBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{6'b0,bs_crc32_ok}  ,{7'b0,crc_check_en}    ,{7'b0,bitstream_up2cpu_en} ,{5'b0, bitstream_rd_num, flash_rd_en}  };
-            REAL_RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA <= rd_fifo_rd_data;
-            REAL_RU_RDBIT_RO__CRC_ADDR: SLAVE_RD_DATA <= bs_readback_crc;
-            REAL_RU_RDBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,rd_fifo_afull},{7'b0,rd_fifo_empty}   ,{6'b0,bitstream_rd_done}       ,{7'b0, bs_readback_crc_valid}          };
-            REAL_RU_CLEAR_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, clear_sw_en}                };
-            REAL_RU_CLEAR_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,time_out_reg} ,flash_flag_status[15:8],flash_flag_status[7:0]         ,{7'b0, clear_sw_done}                  };
-            REAL_RU_SWTCH_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{6'b0,open_sw_num}             ,{7'b0, write_sw_code_en}               };
-            REAL_RU_SWTCH_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{7'b0,ipal_busy}               ,{7'b0, open_sw_code_done}              };
-            REAL_RU_HOTRS_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, hotreset_en}                    };
+            RU_WRBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{5'b0, bitstream_wr_num, flash_wr_en}  };
+            RU_WRBIT_WO_FIFO_ADDR: SLAVE_RD_DATA <= 32'hFFFF_FFFF;
+            RU_WRBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,wr_fifo_full} ,{7'b0,wr_fifo_empty}   ,{7'b0,bitstream_wr_done}       ,{7'b0, clear_bs_done}                  };
+            RU_RDBIT_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{6'b0,bs_crc32_ok}  ,{7'b0,crc_check_en}    ,{7'b0,bitstream_up2cpu_en} ,{5'b0, bitstream_rd_num, flash_rd_en}  };
+            RU_RDBIT_RO_FIFO_ADDR: SLAVE_RD_DATA <= rd_fifo_rd_data;
+            RU_RDBIT_RO__CRC_ADDR: SLAVE_RD_DATA <= bs_readback_crc;
+            RU_RDBIT_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,rd_fifo_afull},{7'b0,rd_fifo_empty}   ,{6'b0,bitstream_rd_done}       ,{7'b0, bs_readback_crc_valid}          };
+            RU_CLEAR_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, clear_sw_en}                };
+            RU_CLEAR_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{7'b0,time_out_reg} ,flash_flag_status[15:8],flash_flag_status[7:0]         ,{7'b0, clear_sw_done}                  };
+            RU_SWTCH_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{6'b0,open_sw_num}             ,{7'b0, write_sw_code_en}               };
+            RU_SWTCH_RO_FLAG_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{7'b0,ipal_busy}               ,{7'b0, open_sw_code_done}              };
+            RU_HOTRS_RW_CTRL_ADDR: SLAVE_RD_DATA <= {{8'b0}              ,{8'b0}                 ,{8'b0}                         ,{7'b0, hotreset_en}                    };
             default                   : SLAVE_RD_DATA <= 32'hFFFF_FFFF;
         endcase
     end else SLAVE_RD_DATA <= 32'hFFFF_FFFF;
 end
 
 assign wr_fifo_rst     = (~rstn);
-assign wr_fifo_wr_en   = (cu_wr_st == ST_WR_DATA) && (wr_addr == REAL_RU_WRBIT_WO_FIFO_ADDR) && (SLAVE_WR_DATA_VALID) && (SLAVE_WR_DATA_READY);
+assign wr_fifo_wr_en   = (cu_wr_st == ST_WR_DATA) && (wr_addr == RU_WRBIT_WO_FIFO_ADDR) && (SLAVE_WR_DATA_VALID) && (SLAVE_WR_DATA_READY);
 assign wr_fifo_wr_data = SLAVE_WR_DATA;
 assign wr_fifo_rd_en   = (~wr_fifo_empty) && ((~wr_fifo_rd_data_valid) || (bitstream_valid));
 always @(posedge clk) begin
@@ -398,11 +398,11 @@ end
 assign rd_fifo_rst     = (~rstn);
 assign rd_fifo_wr_en   = flash_rd_valid;
 assign rd_fifo_wr_data = flash_rd_data;
-assign rd_fifo_rd_en   = (~rd_fifo_empty) && ((~rd_fifo_rd_data_valid) || ((cu_rd_st == ST_RD_DATA) && (rd_addr == REAL_RU_RDBIT_RO_FIFO_ADDR) && (SLAVE_RD_DATA_VALID) && (SLAVE_RD_DATA_READY)));
+assign rd_fifo_rd_en   = (~rd_fifo_empty) && ((~rd_fifo_rd_data_valid) || ((cu_rd_st == ST_RD_DATA) && (rd_addr == RU_RDBIT_RO_FIFO_ADDR) && (SLAVE_RD_DATA_VALID) && (SLAVE_RD_DATA_READY)));
 always @(posedge clk) begin
     if(~rstn) rd_fifo_rd_data_valid <= 0;
     else if((~rd_fifo_rd_data_valid) && (~rd_fifo_empty) && (rd_fifo_rd_en)) rd_fifo_rd_data_valid <= 1;
-    else if((rd_fifo_rd_data_valid) && (rd_fifo_empty) && ((cu_rd_st == ST_RD_DATA) && (rd_addr == REAL_RU_RDBIT_RO_FIFO_ADDR) && (SLAVE_RD_DATA_VALID) && (SLAVE_RD_DATA_READY)))
+    else if((rd_fifo_rd_data_valid) && (rd_fifo_empty) && ((cu_rd_st == ST_RD_DATA) && (rd_addr == RU_RDBIT_RO_FIFO_ADDR) && (SLAVE_RD_DATA_VALID) && (SLAVE_RD_DATA_READY)))
         rd_fifo_rd_data_valid <= 0;
     else rd_fifo_rd_data_valid <= rd_fifo_rd_data_valid;
 end
@@ -461,7 +461,7 @@ remote_update_rd_fifo remote_update_rd_fifo_inst(
 ///__________输出信号___________///
 always @(posedge clk) begin
     if(~rstn) {bitstream_wr_num, flash_wr_en} <= 0;
-    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == REAL_RU_WRBIT_RW_CTRL_ADDR)
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == RU_WRBIT_RW_CTRL_ADDR)
         {bitstream_wr_num, flash_wr_en} <= (SLAVE_WR_STRB[0])?(SLAVE_WR_DATA[2:0]):({bitstream_wr_num, flash_wr_en});
     else {bitstream_wr_num, flash_wr_en} <= {bitstream_wr_num, 1'b0};
 end
@@ -471,7 +471,7 @@ always @(posedge clk) begin
         crc_check_en                     <= 0;
         bitstream_up2cpu_en              <= 0;
         {{bitstream_rd_num},flash_rd_en} <= 0;
-    end else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == REAL_RU_RDBIT_RW_CTRL_ADDR)begin
+    end else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == RU_RDBIT_RW_CTRL_ADDR)begin
         bs_crc32_ok                      <= (SLAVE_WR_STRB[3])?(SLAVE_WR_DATA[25:24]):(bs_crc32_ok                     );
         crc_check_en                     <= (SLAVE_WR_STRB[2])?(SLAVE_WR_DATA[17]   ):(crc_check_en                    );
         bitstream_up2cpu_en              <= (SLAVE_WR_STRB[1])?(SLAVE_WR_DATA[8]    ):(bitstream_up2cpu_en             );
@@ -485,7 +485,7 @@ always @(posedge clk) begin
 end
 always @(posedge clk) begin
     if(~rstn) clear_sw_en <= 0;
-    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == REAL_RU_CLEAR_RW_CTRL_ADDR)
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == RU_CLEAR_RW_CTRL_ADDR)
         clear_sw_en <= (SLAVE_WR_STRB[0])?(SLAVE_WR_DATA[0]):(clear_sw_en);
     else begin
         clear_sw_en <= 0;//自动置0
@@ -495,7 +495,7 @@ always @(posedge clk) begin
     if(~rstn)begin
         open_sw_num      <= 0;
         write_sw_code_en <= 0;
-    end else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == REAL_RU_SWTCH_RW_CTRL_ADDR)begin
+    end else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == RU_SWTCH_RW_CTRL_ADDR)begin
         open_sw_num      <= (SLAVE_WR_STRB[1])?(SLAVE_WR_DATA[9:8]):(open_sw_num);
         write_sw_code_en <= (SLAVE_WR_STRB[0])?(SLAVE_WR_DATA[0]  ):(write_sw_code_en);
     end else begin
@@ -505,7 +505,7 @@ always @(posedge clk) begin
 end
 always @(posedge clk) begin
     if(~rstn) hotreset_en <= 0;
-    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == REAL_RU_HOTRS_RW_CTRL_ADDR)
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && wr_addr == RU_HOTRS_RW_CTRL_ADDR)
         hotreset_en <= (SLAVE_WR_STRB[0])?(SLAVE_WR_DATA[0]):(hotreset_en);
     else begin
         hotreset_en <= 0;//自动置0
