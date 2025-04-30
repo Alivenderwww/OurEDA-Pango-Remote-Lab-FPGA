@@ -97,7 +97,7 @@ module matrix_key #(
                     if((cu_st == ST_SCAN) && (delay_cnt == DELAY_TIME) && (row_cnt == i)) key[i][j] <= (col[j] == COL_PRESSED)?(1'b1):(1'b0);
                     else key[i][j] <= key[i][j]; // 其他情况不变
     end
-    
+
     always @(*) begin
         for(i=0;i<ROW_NUM;i=i+1) begin
             for(j=0;j<COL_NUM;j=j+1) begin
@@ -105,6 +105,7 @@ module matrix_key #(
             end
         end
     end
+
     always @(posedge clk or negedge rstn) begin
         if(!rstn) row <= {ROW_NUM{ROW_ACTIVE}};
         else if(cu_st == ST_IDLE && nt_st == ST_SCAN) row <= {{(ROW_NUM-1){ROW_INACTIVE}}, ROW_ACTIVE};

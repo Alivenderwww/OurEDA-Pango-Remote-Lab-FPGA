@@ -198,7 +198,7 @@ endgenerate
 
 // 从设备异步桥接模块批量例化
 generate
-for (genvar i = 0; i < 2**M_WIDTH; i++) begin : gen_slave_async
+for (genvar i = 0; i < 2**S_WIDTH; i++) begin : gen_slave_async
     slave_axi_async u_s_axi_async(
         .B_CLK            (BUS_CLK            ),
         .B_RSTN           (BUS_RSTN           ),

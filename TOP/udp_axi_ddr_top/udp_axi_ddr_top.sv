@@ -1,6 +1,6 @@
 module udp_axi_ddr_top #(
     parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
-    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //8'd169,8'd254,8'd103,8'd006
+    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
     parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
     parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
 )(

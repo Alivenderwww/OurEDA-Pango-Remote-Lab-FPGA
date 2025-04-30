@@ -9,7 +9,8 @@ module tap_FSM #(
 input  wire                clk           ,
 input  wire                rstn          ,
 
-output wire                tck           ,
+input  wire                jtag_rd_en    ,
+input  wire                jtag_wr_en    ,
 output reg                 tms           , //TMS在TCK上升沿被芯片读取，需要在下降沿改变值
 output reg                 tdi           , //TDI在TCK上升沿被芯片读取，需要在下降沿改变值
 input  wire                tdo           , //TDO在TCK下降沿被芯片改变值，需要在上升沿读取
@@ -25,9 +26,9 @@ output wire                 shift_out_wr , //移位出使能
 
 input  wire                 cmd_valid    , //cmd, cycle_num有效信号
 output wire                 cmd_ready    , //准备信号
+output wire   [15:0]        tap_state    , //当前TAP状态
 output wire                 cmd_done       //暂存列全空标志位
 );
-assign tck = clk;
 
 wire tap_rstn_sync;
 rstn_sync rstn_sync_tap(clk, rstn, tap_rstn_sync);
@@ -53,10 +54,12 @@ wire [CMD_LEN-1:0] cmd_running_now;
 wire [CYCLE_LEN-1:0] cycle_num_running_now;
 wire cycle_over;
 assign cycle_over = (cnt_cycle >= cycle_num_running_now);
+assign tap_state = cu_tap_state;
 
 //_____________与芯片内部完全同步的设计, 以上升沿为触发信号___________
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) cnt_cycle <= 0;
+    else if(~jtag_rd_en) cnt_cycle <= cnt_cycle;
     else if(cu_tap_state == `TAP_UNKNOWN) cnt_cycle <= (tms)?(cnt_cycle + 1):(1);
     else if(flag_cmd_one_done || cmd_done) cnt_cycle <= 0;
     else case (cmd_running_now)
@@ -95,13 +98,14 @@ end
 
 always @(posedge clk or negedge tap_rstn_sync)begin
     if(~tap_rstn_sync) cu_tap_state <= `TAP_UNKNOWN;
-    else cu_tap_state <= nt_tap_state;
+    else if(jtag_rd_en) cu_tap_state <= nt_tap_state;
+    else cu_tap_state <= cu_tap_state;
 end
 
 assign tdi_reg           = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(shift_in):(0);
 assign shift_out         = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(tdo):(0);
-assign shift_in_rd       = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREI || cmd_running_now == `CMD_JTAG_LOAD_IR):(0);
-assign shift_out_wr      = ((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREO):(0);
+assign shift_in_rd       = (((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR)))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREI || cmd_running_now == `CMD_JTAG_LOAD_IR):(0);
+assign shift_out_wr      = (((cu_tap_state == `TAP_SHIFT_DR) || (cu_tap_state == `TAP_SHIFT_IR)))?(cmd_running_now == `CMD_JTAG_LOAD_DR_CAREO):(0);
 
 //_______________CMD暂存列逻辑________________
 assign cmd_running_now = cmd_load[cmd_running_rd_pointer[CMD_STORE-1:0]];
@@ -113,20 +117,20 @@ assign cmd_ready = (tap_rstn_sync) && ((cmd_running_wr_pointer ^ cmd_running_rd_
 integer i;
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) cmd_running_wr_pointer <= 0;
-    else if(cmd_valid && cmd_ready) cmd_running_wr_pointer <= cmd_running_wr_pointer + 1;
+    else if(jtag_rd_en && cmd_valid && cmd_ready) cmd_running_wr_pointer <= cmd_running_wr_pointer + 1;
     else cmd_running_wr_pointer <= cmd_running_wr_pointer;
 end
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) for(i=0;i<CMD_STORE_NUM;i=i+1) cmd_load[i] <= 0;
-    else if(cmd_valid && cmd_ready) cmd_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cmd;
+    else if(jtag_rd_en && cmd_valid && cmd_ready) cmd_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cmd;
 end
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) for(i=0;i<CMD_STORE_NUM;i=i+1) cycle_num_load[i] <= 0;
-    else if(cmd_valid && cmd_ready) cycle_num_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cycle_num;
+    else if(jtag_rd_en && cmd_valid && cmd_ready) cycle_num_load[cmd_running_wr_pointer[CMD_STORE-1:0]] <= cycle_num;
 end
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync);
-    else if(cmd_valid && cmd_ready)$display("%m: at time %0t INFO: Jtag recv a cmd-%b, cyclenum-%u.", $time, cmd, cycle_num);
+    else if(jtag_rd_en && cmd_valid && cmd_ready)$display("%m: at time %0t INFO: Jtag recv a cmd-%b, cyclenum-%u.", $time, cmd, cycle_num);
 end
 
 always @(*) begin
@@ -143,14 +147,14 @@ end
 
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) cmd_running_rd_pointer <= 0;
-    else if(flag_cmd_one_done) cmd_running_rd_pointer <= cmd_running_rd_pointer + 1;
+    else if(jtag_rd_en && flag_cmd_one_done) cmd_running_rd_pointer <= cmd_running_rd_pointer + 1;
     else cmd_running_rd_pointer <= cmd_running_rd_pointer;
 end
 
 //tlr_or_rti切换逻辑 0为TLR 1为RTI
 always @(posedge clk or negedge tap_rstn_sync) begin
     if(~tap_rstn_sync) tlr_or_rti <= 0;
-    else if(flag_cmd_one_done) begin
+    else if(jtag_rd_en && flag_cmd_one_done) begin
         if(cmd_running_now == `CMD_JTAG_RUN_TEST) tlr_or_rti <= 1;
         else if(cmd_running_now == `CMD_JTAG_CLOSE_TEST) tlr_or_rti <= 0;
         else tlr_or_rti <= tlr_or_rti;
@@ -233,9 +237,17 @@ always @(*) begin
 end
 
 //_____________输出信号需要下降沿更新_________________
-always @(negedge clk) begin
-    tms <= tms_reg;
-    tdi <= tdi_reg;
+always @(posedge clk or negedge tap_rstn_sync) begin
+    if(~tap_rstn_sync) begin
+        tms <= 0;
+        tdi <= 0;
+    end else if(jtag_wr_en) begin
+        tms <= tms_reg;
+        tdi <= tdi_reg;
+    end else begin
+        tms <= tms;
+        tdi <= tdi;
+    end
 end
 
 endmodule
