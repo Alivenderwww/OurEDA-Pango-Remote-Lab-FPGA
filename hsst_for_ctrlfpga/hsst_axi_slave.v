@@ -470,45 +470,6 @@ always @(posedge rxclk_0 or negedge rstn) begin
     else debugger_statue <= debugger_statue;
 end
 
-reg clk;
-// reg txclk;
-// reg rxclk;
-// wire data_valid;
-// wire [31:0] data_af_align;
-// wire data_last;
-
-
-// initial begin
-//     clk = 0;
-//     rxclk = 0;
-//     txclk = 0;
-// end
-
-// Word_Alignment_32bit  Word_Alignment_32bit_inst (
-//     .clk(rxclk),
-//     .rstn(rstn),
-//     .data_bf_align(i_txd_0),
-//     .rxk(i_txk_0),
-//     .data_valid(data_valid),
-//     .data_af_align(data_af_align),
-//     .data_done(data_last)
-//   );
-wire debugger_init;
-reg clk_27M;
-debugtest_top # (
-    .PORT_NUM(2)
-  )
-  debugtest_top_inst (
-    .clk(clk),
-    .clk_27M(clk_27M),
-    .rstn(rstn),
-    // .txclk(txclk),
-    // .rxclk(rxclk),
-    // .sfp_rxdata(data_af_align),
-    // .sfp_rxdatavalid(data_valid),
-    // .sfp_rxdatalast(data_last),
-    .debugger_init(debugger_init)
-  );
 
 wire i_p_l0rxn;
 wire i_p_l0rxp;
