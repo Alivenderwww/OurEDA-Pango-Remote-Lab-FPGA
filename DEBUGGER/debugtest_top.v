@@ -8,6 +8,9 @@ module debugtest_top #(
     // input rxclk,
     input i_p_refckn_1,
     input i_p_refckp_1,
+    input [31:0] testport0,
+    input [31:0] testport1,
+    input [31:0] testport2,
     // input [31:0] sfp_rxdata,
     // input sfp_rxdatavalid,
     // input sfp_rxdatalast
@@ -35,7 +38,7 @@ wire       sfp_rxdatavalid;
 wire       sfp_rxdatalast;
 //***********
 localparam SAMPLE_DEPTH = 1024;
-reg  [31:0] testport      [PORT_NUM - 1 : 0];
+wire [31:0] testport      [PORT_NUM - 1 : 0];
 wire        porten        [PORT_NUM - 1 : 0];
 wire        tx_datavalid  [PORT_NUM - 1 : 0];
 wire [31:0] tx_portdata   [PORT_NUM - 1 : 0];
@@ -143,20 +146,11 @@ always @(posedge txclk or negedge rstn) begin
     endcase
   end
 end
+//************************************//
+assign testport[0] = testport0;
+assign testport[0] = testport1;
+assign testport[0] = testport2;
 
-
-
-generate
-  for (i = 0; i < PORT_NUM; i = i + 1) begin : generate_testdata
-    always @(posedge clk or negedge rstn) begin
-      if(~rstn)begin
-        testport[i] <= i * 2000;
-      end
-      else 
-        testport[i] <= testport[i] + 1;
-    end
-  end
-endgenerate
 //************************************//
 generate
   for (i = 0; i < PORT_NUM; i = i + 1) begin : array2vector
