@@ -57,7 +57,7 @@ localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
-localparam ALMOST_FULL_NUM = 63 ; // @IPC int
+localparam ALMOST_FULL_NUM = 40 ; // @IPC int
 
 localparam ALMOST_EMPTY_NUM = 4 ; // @IPC int
 

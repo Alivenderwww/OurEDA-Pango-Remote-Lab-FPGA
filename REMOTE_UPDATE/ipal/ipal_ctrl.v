@@ -15,11 +15,7 @@
 `timescale 1 ns / 1 ns
 module ipal_ctrl
 #(
-parameter USER_BITSTREAM_CNT    = 2'd3              ,   
 parameter IPAL_DATA_WIDTH       = 8                 ,   // 32 16 8 
-parameter USER_BITSTREAM1_ADDR  = 24'h20_b000       ,   // user bitstream1 start address  ---> [6*4KB+2068KB(2065),32MB- 2068KB(2065)],4KB align  // 24'h20_b000
-parameter USER_BITSTREAM2_ADDR  = 24'h41_0000       ,   // user bitstream2 start address  ---> 24'h41_0000 
-parameter USER_BITSTREAM3_ADDR  = 24'h61_5000       ,   // user bitstream3 start address  ---> 24'h61_5000
 parameter U_DLY                 = 1                 
 )(
 input               sys_clk                 ,
@@ -30,7 +26,7 @@ output              ipal_busy               ,
 input               crc_check_en            ,
 input       [1:0]   bs_crc32_ok             ,//[1]:valid   [0]:1'b0,OK  1'b1,error
 input               hotreset_en             ,//uart cofig register
-input               open_sw_code_done       
+input       [23:0]  hotreset_addr
 );
 //--------------------------------------------------------------------------------------------
 localparam FILL_DATA        = 32'hffff_ffff;
@@ -48,13 +44,10 @@ reg     [6:0]                   data_cnt                ;
 reg                             ipal_cs_n               ;//active low
 reg     [IPAL_DATA_WIDTH-1:0]   ipal_data_in            ;
 reg                             ipal_wr_rd              ;//1'b0:write , 1'b1:read
-reg                             open_sw_code_done_1dly  ;
-reg                             open_sw_code_done_2dly  ;
 reg                             hotreset_en_1dly        ;
 reg                             hotreset_en_2dly        ;
 reg                             irsadr_sel              ;//1'b0:user bitstream  1'b1:golden bitstream 
 
-reg     [23:0]                  user_bitstream_addr     ;
 wire                            ipal_clk                ;
 
 reg     [1:0]                   ipal_data_rd_cnt        ;
@@ -78,19 +71,6 @@ always@(posedge sys_clk or negedge sys_rst_n)
     else 
         ;
 
-
-always@(posedge sys_clk or negedge sys_rst_n)
-    if(sys_rst_n == 1'b0)
-    begin
-        open_sw_code_done_1dly  <= 1'b0;
-        open_sw_code_done_2dly  <= 1'b0;
-    end
-    else 
-    begin
-        open_sw_code_done_1dly  <= open_sw_code_done;
-        open_sw_code_done_2dly  <= open_sw_code_done_1dly;
-    end
-
 always@(posedge sys_clk or negedge sys_rst_n)
     if(sys_rst_n == 1'b0)
     begin
@@ -108,46 +88,10 @@ always@(posedge sys_clk or negedge sys_rst_n)
         data_cnt <= 7'd0;
     else if(data_cnt >= 7'd118)
         data_cnt <= data_cnt;
-    else if(hotreset_en_2dly == 1'b1 && open_sw_code_done_2dly == 1'b1)
+    else if(hotreset_en_2dly == 1'b1)
         data_cnt <= data_cnt + 7'd1;
     else
         ;
-
-generate
-    if(USER_BITSTREAM_CNT == 2'd3) 
-    begin:USER_BS_CNT_3 
-        always@(*)
-        begin
-            case(open_sw_num)
-            2'b01   : user_bitstream_addr <= USER_BITSTREAM1_ADDR;
-            2'b10   : user_bitstream_addr <= USER_BITSTREAM2_ADDR;
-            2'b11   : user_bitstream_addr <= USER_BITSTREAM3_ADDR;
-            default : user_bitstream_addr <= IRSTADR0_DATA;
-            endcase
-        end
-    end
-    else if(USER_BITSTREAM_CNT == 2'd2)
-    begin:USER_BS_CNT_2
-        always@(*)
-        begin
-            case(open_sw_num)
-            2'b01   : user_bitstream_addr <= USER_BITSTREAM1_ADDR;
-            2'b10   : user_bitstream_addr <= USER_BITSTREAM2_ADDR;
-            default : user_bitstream_addr <= IRSTADR0_DATA;
-            endcase
-        end
-    end
-    else
-    begin:USER_BS_CNT_1
-        always@(*)
-        begin
-            case(open_sw_num)
-            2'b01   : user_bitstream_addr <= USER_BITSTREAM1_ADDR;
-            default : user_bitstream_addr <= IRSTADR0_DATA;
-            endcase
-        end
-    end
-endgenerate
 
 always@(posedge sys_clk or negedge sys_rst_n)
     if(sys_rst_n == 1'b0)
@@ -160,7 +104,7 @@ always@(posedge sys_clk or negedge sys_rst_n)
 always@(posedge sys_clk or negedge sys_rst_n)
     if(sys_rst_n == 1'b0)
         ipal_fifo_wr_data   <= 32'h0;
-    else if(hotreset_en_2dly == 1'b1 && open_sw_code_done_2dly == 1'b1)
+    else if(hotreset_en_2dly == 1'b1)
     begin
         case(data_cnt)
         7'd000  :ipal_fifo_wr_data  <= FILL_DATA;
@@ -173,7 +117,7 @@ always@(posedge sys_clk or negedge sys_rst_n)
             if(irsadr_sel == 1'b1)
                 ipal_fifo_wr_data  <= IRSTADR0_DATA;             //golden bitstream
             else
-                ipal_fifo_wr_data  <= {8'h0,user_bitstream_addr};//user bitstream 
+                ipal_fifo_wr_data  <= {8'h0,hotreset_addr};//user bitstream 
             end
         7'd106  :ipal_fifo_wr_data  <= CMDRADRR;
         7'd107  :ipal_fifo_wr_data  <= IRSTCMD_DATA;

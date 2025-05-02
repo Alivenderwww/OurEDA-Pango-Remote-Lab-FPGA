@@ -1,6 +1,6 @@
 module remote_update_axi_slave #(
     parameter OFFSET_ADDR           = 32'h3000_0000     ,
-    parameter FPGA_VESION           = 48'h2024_1119_1943,   // year,month,day,hour,minute;
+    parameter FPGA_VERSION           = 48'h2024_1119_1943,   // year,month,day,hour,minute;
     parameter DEVICE                = "PG2L100H"        ,   // "PG2L200H":bitstream 8974KB;8c4_000 "PG2L100H":bitstream 3703KB;39e_000 "PG2L50H":bitstream 2065KB;204_400 "PG2L25H":bitstream 1168KB;124_000
     parameter USER_BITSTREAM_CNT    = 2'd1              ,   // user bitstream count,2'd1,2'd2,2'd3 ----> there are 1/2/3 user bitstream in the flash,at least 1 bitstream.
     parameter USER_BITSTREAM1_ADDR  = 24'h3a_0000       ,   // user bitstream1 start address  ---> [6*4KB+2068KB(2065),32MB- 2068KB(2065)],4KB align  // 24'h20_b000
@@ -12,6 +12,7 @@ module remote_update_axi_slave #(
     input  wire        rstn         ,
     
     output wire        spi_cs       ,
+    output wire        spi_clk      ,
     input  wire        spi_dq1      ,
     output wire        spi_dq0      ,
 
@@ -54,52 +55,53 @@ module remote_update_axi_slave #(
 
 
 //-----------------------------------------------------------
-wire        flash_rd_en             ;
-wire        flash_wr_en             ;
-
+wire spi_clk_en;
+//写入比特流-控制接口
+wire          flash_wr_en            ;
+wire  [11:0]  start_wr_sector    ;
+wire  [15:0]  wr_sector_num          ;
+wire          flash_wr_done          ;
+wire          flash_clear_done       ;
+//写入比特流-数据接口
+wire        bitstream_fifo_rd_rdy   ;
+wire        bitstream_fifo_rd_req   ;
+wire        bitstream_valid         ;
+wire [7:0]  bitstream_data          ;
+wire        bitstream_eop           ;
+//读出比特流-控制接口1
+wire          flash_rd_en            ;
+wire  [11:0]  start_rd_sub_sector    ;
+wire  [15:0]  rd_sector_num          ;
+wire          flash_rd_done          ;
+//读出比特流-控制接口2
+wire        bs_readback_crc_valid   ;
+wire [31:0] bs_readback_crc         ;
+//读出比特流-控制接口3
+wire        crc_check_en            ;
+wire [1:0]  bs_crc32_ok             ;//[1]:valid   [0]:1'b0,OK  1'b1,error
+//读出比特流-回读接口
+wire        bitstream_up2cpu_en     ;
+wire        flash_rd_data_fifo_afull;
+wire [7:0]  flash_rd_data           ;
+wire        flash_rd_valid          ;
+//热启动接口
+wire        hotreset_en             ;
+wire [23:0] hotreset_addr           ;
+//未知用途
+wire        ipal_busy               ;
+wire        time_out_reg            ;
+//弃用
+wire [15:0] flash_flag_status       ;
 wire        flash_cfg_cmd_en        ;
-wire [ 7:0] flash_cfg_cmd           ;
+wire [7:0]  flash_cfg_cmd           ;
 wire [15:0] flash_cfg_reg_wrdata    ;
 wire        flash_cfg_reg_rd_en     ;
 wire [15:0] flash_cfg_reg_rddata    ;
 
-wire [ 7:0]  flash_rd_data           ;
-wire         flash_rd_valid          ;
-wire         flash_rd_data_fifo_afull;
+assign spi_clk = clk;
 
-wire [31:0] bs_readback_crc         ;
-wire        bs_readback_crc_valid   ;
-
-wire        open_sw_code_done       ;
-wire        bitstream_wr_done       ;
-wire        bitstream_rd_done       ;
-wire [ 1:0] bitstream_wr_num        ;
-wire [ 1:0] bitstream_rd_num        ;
-
-wire        bitstream_fifo_rd_req   ;
-wire [ 7:0] bitstream_data          ;
-wire        bitstream_valid         ;
-wire        bitstream_eop           ;
-wire        bitstream_fifo_rd_rdy   ;
-
-wire       clear_bs_done           ;
-wire       clear_sw_done           ;
-
-wire [ 1:0] bs_crc32_ok             ;//[1]:valid   [0]:1'b0,OK  1'b1,error
-wire        write_sw_code_en        ;
-wire        bitstream_up2cpu_en     ;
-wire        crc_check_en            ;
-wire        clear_sw_en             ;
-wire        spi_clk_en              ;
-wire        hotreset_en             ;
-wire [ 1:0] open_sw_num             ;
-wire        ipal_busy               ;
-
-wire [15:0] flash_flag_status       ;
-wire        time_out_reg            ;
-
-
-
+wire RU_RSTN_SYNC;
+rstn_sync ru_top_rstn_sync(clk,rstn,RU_RSTN_SYNC);
 
 //--------------------------------------------------------------------------
 // clear is 4KB align , so the bitstream write data is 4KB align 
@@ -107,55 +109,51 @@ wire        time_out_reg            ;
 data_ctrl_slave
 #(
     .OFFSET_ADDR                (OFFSET_ADDR                ),
-    .FPGA_VESION                (FPGA_VESION                ),  
-    .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
-    .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
-    .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
-    .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
+    .FPGA_VERSION               (FPGA_VERSION               )
 )data_ctrl_master_inst(
-    .clk                        (clk                        ),
-    .rstn                      (rstn                       ),
+    .clk                        (clk                    ),
+    .rstn                       (RU_RSTN_SYNC           ),
 
-    .flash_rd_en                (flash_rd_en                ),
-    .flash_wr_en                (flash_wr_en                ),
-    .bitstream_wr_num           (bitstream_wr_num           ),
-    .bitstream_rd_num           (bitstream_rd_num           ),
-    .bs_crc32_ok                (bs_crc32_ok                ),
-    .write_sw_code_en           (write_sw_code_en           ),
+    .flash_wr_en                (flash_wr_en            ),
+    .start_wr_sector        (start_wr_sector    ),
+    .wr_sector_num              (wr_sector_num          ),
+    .flash_wr_done              (flash_wr_done          ),
+    .flash_clear_done           (flash_clear_done       ),
+
+    .bitstream_fifo_rd_req      (bitstream_fifo_rd_req  ),
+    .bitstream_data             (bitstream_data         ),
+    .bitstream_valid            (bitstream_valid        ),
+    .bitstream_eop              (bitstream_eop          ),
+    .bitstream_fifo_rd_rdy      (bitstream_fifo_rd_rdy  ),
+
+    .flash_rd_en                (flash_rd_en            ),
+    .start_rd_sub_sector        (start_rd_sub_sector    ),
+    .rd_sector_num              (rd_sector_num          ),
+    .flash_rd_done              (flash_rd_done          ),
+
+    .bs_readback_crc_valid      (bs_readback_crc_valid  ),
+    .bs_readback_crc            (bs_readback_crc        ),
+
+    .crc_check_en               (crc_check_en           ),
+    .bs_crc32_ok                (bs_crc32_ok            ),
+
     .bitstream_up2cpu_en        (bitstream_up2cpu_en        ),
-    .crc_check_en               (crc_check_en               ),
-    .clear_sw_en                (clear_sw_en                ),
+    .flash_rd_data              (flash_rd_data              ),
+    .flash_rd_valid             (flash_rd_valid             ),
+    .flash_rd_data_fifo_afull   (flash_rd_data_fifo_afull   ),
+
     .hotreset_en                (hotreset_en                ),
-    .open_sw_num                (open_sw_num                ),
+    .hotreset_addr              (hotreset_addr                ),
 
     .flash_flag_status          (flash_flag_status          ),
     .time_out_reg               (time_out_reg               ),
-
+    
+    .ipal_busy                  (ipal_busy                  ),
     .flash_cfg_cmd_en           (flash_cfg_cmd_en           ),
     .flash_cfg_cmd              (flash_cfg_cmd              ),
     .flash_cfg_reg_wrdata       (flash_cfg_reg_wrdata       ),
     .flash_cfg_reg_rd_en        (flash_cfg_reg_rd_en        ),
     .flash_cfg_reg_rddata       (flash_cfg_reg_rddata       ),
-
-    .flash_rd_data              (flash_rd_data              ),
-    .flash_rd_valid             (flash_rd_valid             ),
-    .flash_rd_data_fifo_afull   (flash_rd_data_fifo_afull   ),
-
-    .bs_readback_crc            (bs_readback_crc            ),
-    .bs_readback_crc_valid      (bs_readback_crc_valid      ),
-    
-    .ipal_busy                  (ipal_busy                  ),
-    .clear_sw_done              (clear_sw_done              ),
-    .clear_bs_done              (clear_bs_done              ),
-    .bitstream_wr_done          (bitstream_wr_done          ),
-    .bitstream_rd_done          (bitstream_rd_done          ),
-    .open_sw_code_done          (open_sw_code_done          ),
-
-    .bitstream_fifo_rd_req      (bitstream_fifo_rd_req      ),
-    .bitstream_data             (bitstream_data             ),
-    .bitstream_valid            (bitstream_valid            ),
-    .bitstream_eop              (bitstream_eop              ),
-    .bitstream_fifo_rd_rdy      (bitstream_fifo_rd_rdy      ),
 
     .SLAVE_CLK                  (SLAVE_CLK                  ),
     .SLAVE_RSTN                 (SLAVE_RSTN                 ),
@@ -190,18 +188,9 @@ data_ctrl_slave
 
 
 //-----------------------------------------------------------
-spi_top
-#(
-    .DEVICE                     (DEVICE                     ), 
-    .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
-    .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
-    .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
-    .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )                 
-)
-u_spi_top
-(
+spi_top u_spi_top(
     .sys_clk                    (clk                    ),
-    .sys_rst_n                  (rstn                   ),
+    .sys_rst_n                  (RU_RSTN_SYNC           ),
  
     .spi_cs                     (spi_cs                     ),
     .spi_clk_en                 (spi_clk_en                 ),
@@ -209,17 +198,21 @@ u_spi_top
     .spi_dq0                    (spi_dq0                    ),
 // ctrl 使能控制信号
     .flash_wr_en                (flash_wr_en                ), //写位流数据使能，上升沿有效
+    .start_wr_sector        (start_wr_sector        ),
+    .wr_sector_num              (wr_sector_num              ),
+    .flash_wr_done              (flash_wr_done              ),
+    .flash_clear_done           (flash_clear_done           ), //擦除应用位流完成指示，高有效
+
     .flash_rd_en                (flash_rd_en                ), //读位流数据使能，上升沿有效
-    .bitstream_wr_num           (bitstream_wr_num           ), //写位流序号，用于指定更新的应用位流。可支持1/2/3 号应用位流，且不超过参数 USER_BITSTREAM_CNT
-    .bitstream_rd_num           (bitstream_rd_num           ), //读位流序号，用于指定读取的应用位流。可支持1/2/3 号应用位流，且不超过参数 USER_BITSTREAM_CNT
+    .start_rd_sub_sector        (start_rd_sub_sector        ),
+    .rd_sector_num              (rd_sector_num              ),
+    .flash_rd_done              (flash_rd_done              ),
+    
     .bitstream_up2cpu_en        (bitstream_up2cpu_en        ), //位流上传上位机使能，高有效。使能后，回读校验时上传位流
     .crc_check_en               (crc_check_en               ), //CRC32 校验使能，高有效。若不使能，则不进行回读校验
-    .clear_sw_en                (clear_sw_en                ), //单独擦除开关使能，上升沿有效
     .bs_crc32_ok                (bs_crc32_ok                ), //[1]:为 1 则表示校验结果有效；[0]:校验结果，1’b0:校验正确，1’b1:校验错误
-    .write_sw_code_en           (write_sw_code_en           ), //写开关使能，上升沿有效
 // debug 读/写FLASH芯片配置寄存器及状态指示信号。不使用输入接0，输出悬空
     .flash_flag_status          (flash_flag_status          ),
-
     .flash_cfg_cmd_en           (flash_cfg_cmd_en           ),
     .flash_cfg_cmd              (flash_cfg_cmd              ),
     .flash_cfg_reg_wrdata       (flash_cfg_reg_wrdata       ),
@@ -232,13 +225,8 @@ u_spi_top
 // readback_crc & done 反馈指示信号
     .bs_readback_crc            (bs_readback_crc            ), //读位流校验 CRC 结果
     .bs_readback_crc_valid      (bs_readback_crc_valid      ), //为 1 表示读位流校验 CRC 结果有效
-    
-    .clear_sw_done              (clear_sw_done              ), //单独擦除开关完成指示，高有效
-    .clear_bs_done              (clear_bs_done              ), //擦除应用位流完成指示，高有效
-    .bitstream_wr_done          (bitstream_wr_done          ), //写位流文件完成，高有效
-    .bitstream_rd_done          (bitstream_rd_done          ), //读位流文件完成，高有效
-    .open_sw_code_done          (open_sw_code_done          ), //写开关程序完成，高有效
     .time_out_reg               (time_out_reg               ), //擦除 flash 超时指示，高有效
+
 // write bitstream 写 flash 数据接口(前级数据缓存需要用包 FIFO)
     .bitstream_fifo_rd_req      (bitstream_fifo_rd_req      ), //写入 flash 位流文件缓存 FIFO 读请求
     .bitstream_data             (bitstream_data             ), //写入 flash 位流文件缓存 FIFO 读出数据
@@ -248,93 +236,39 @@ u_spi_top
 );
 
 
-ipal_ctrl#(
-    .USER_BITSTREAM_CNT         (USER_BITSTREAM_CNT         ),
-    .USER_BITSTREAM1_ADDR       (USER_BITSTREAM1_ADDR       ),
-    .USER_BITSTREAM2_ADDR       (USER_BITSTREAM2_ADDR       ),
-    .USER_BITSTREAM3_ADDR       (USER_BITSTREAM3_ADDR       )
-)
-u_ipal_ctrl(
+ipal_ctrl u_ipal_ctrl(
     .sys_clk                    (clk                    ),
-    .sys_rst_n                  (rstn                   ),
+    .sys_rst_n                  (RU_RSTN_SYNC           ),
 
-    .open_sw_num                (open_sw_num                ),
-    .ipal_busy                  (ipal_busy                  ),
-    .crc_check_en               (crc_check_en               ),
-    .bs_crc32_ok                (bs_crc32_ok                ),
-    .hotreset_en                (hotreset_en                ),
-    .open_sw_code_done          (open_sw_code_done          )
+    .hotreset_addr              (hotreset_addr          ),
+    .ipal_busy                  (ipal_busy              ),
+    .crc_check_en               (crc_check_en           ),
+    .bs_crc32_ok                (bs_crc32_ok            ),
+    .hotreset_en                (hotreset_en            )
 );
 
 ////-----------------------------------------------------------
 
 GTP_CFGCLK u_gtp_cfgclk (
-    .CE_N                       (spi_clk_en                 ),   
+    .CE_N                       (spi_clk_en             ),   
     .CLKIN                      (clk                    )  
 );
 //-----------------------------------------------------------------------------------------------------
 
 /*
-spi_top控制逻辑（sys_clk时钟域下）
+大幅修改了spi_top的控制逻辑
 
-写入比特流-控制流程：
-0. 上位机将 bitstream_wr_num 修改为想要重新写的应用位流num号
-1. 上位机将 flash_wr_en 置1，模块自动置0
-2. 等待擦除开关程序和应用位流完成
-3. 模块将 clear_bs_done 置1，标志擦除完成指示
-4. 上位机发送比特流（详见写入比特流-数据流程）
-5. 模块将 bitstream_wr_done 置1，标志写位流完成，写入比特流流程结束
+上位机修改start_wr_sector为想要写入的Flash首扇区号，wr_sector_num为写入的扇区个数，同时拉高flash_wr_en。
+等待flash_clear_done拉高，擦除完成，可以写入。
+往写比特流入口写入数据。32bit需做翻转。
+写完后，等待flash_wr_done拉高，表示写入完成。
 
-写入比特流-数据流程：
-bitstream_fifo_rd_rdy 非空（ >256字节 ）
-收到 bitstream_fifo_rd_req ， bitstream_fifo_rd_valid立即拉高
-发送完256字节的同时拉高一下eop。rdy拉低。
+上位机配置读出控制bs_crc32_ok，crc_check_en，bitstream_up2cpu_en。
+上位机修改start_rd_sector为想要读出的Flash首扇区号，rd_sector_num为读出的扇区个数，同时拉高flash_rd_en。
+如果设置了bitstream_up2cpu_en，需要从读比特流入口读出数据。
+直到flash_rd_done拉高，表示读出完成。可完成CRC校验。
 
-
-读出比特流-控制流程：
-0. 上位机将 bitstream_rd_num 修改为想要读的应用位流num号
-1. 上位机将 flash_rd_en 置1，模块自动置0
-2. 等待读位流完成，如果 bitstream_up2cpu_en 为1，模块会同时把位流送进回读数据接口（详见读出比特流-数据流程）
-3. 模块将 bitstream_rd_done 置1，标志读位流完成
-4. 模块同时将 crc_valid 置1，修改 readback_crc 为读位流的CRC校验值，向上级模块提供本次读位流的CRC校验值
-5. 若 crc_check_en 为1，上位机需修改 bs_crc32_ok 为CRC校验结果，模块会接收；否则直接置 bs_crc32_ok = 2'b10。读出比特流流程结束
-
-读出比特流-数据流程：
-flash_rd_data_fifo_afull 为0（至少预留出256字节空余）
-flash_rd_valid 拉高，连续256周期写入数据
-写入后若flash_rd_data_fifo_afull 为1，则等待直至拉低。若为0则继续写入。
-
-单独擦除开关流程：
-0. 上位机将 clear_sw_en 置1 
-1. 等待擦除完毕
-2. 模块将 clear_sw_done 置1，单独擦除开关流程结束
-
-写开关流程：
-0. 配置 open_sw_num
-1. 上位机将 write_sw_code_en 置1 
-2. 等待打开开关程序
-3. 模块将 open_sw_code_done 置1，写开关流程结束
-
-热启动流程：
-0. 若 crc_check_en 为1，则会根据 bs_crc32_ok 选择启动哪一个位流。
-1. 若 crc_check_en 为0，则会根据 open_sw_num 选择启动的位流。
-2. 上位机将 hotreset_en 置1，开始热启动，系统复位。
-
-上位机完成一次更新比特流的顺序：
-1. 执行"写入比特流"流程
-2. crc_valid 置0，无需读回。
-3. 执行"读出比特流"流程，得到CRC校验值
-4. 上位机判断CRC校验值是否正确，若正确则继续，否则重新写入比特流
-5. 如果不想重新启动，到此结束。否则从"热启动顺序"开始。
-
-上位机完成一次热启动的顺序：
-1. 执行"单独擦除开关流程"流程
-1. 执行"写开关流程"流程，打开想要启动的位流
-2. 执行"热启动流程"流程
-
-上位机完成一次回读比特流的顺序：
-0. crc_valid 置1，设置读回。
-1. 执行"读出比特流"流程，得到回读文件和校验值。
+热启动需配置hotreset_addr，拉高hotreset_en。
 
 */
 

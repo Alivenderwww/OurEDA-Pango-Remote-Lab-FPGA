@@ -1,6 +1,7 @@
 ../../../AXI4/sim_file/*.sv
-../../../AXI4/sim_file/*.v
-../../../AXI4/*.v
+../../../AXI4/*.sv
+../../../COMMON/*.v
+../../../COMMON/*.sv
 ../../../REMOTE_UPDATE/*.v
 ../../../REMOTE_UPDATE/ipal/*.v
 ../../../REMOTE_UPDATE/spi/*.v

@@ -163,6 +163,8 @@ clk_pll_top U_clk_pll_top(
     
     .clkout2        (clkout2        ),
     
+    .clkout3        (clkout3        ),
+    
     .clkin1         (clkin1         ),
     
     .lock           (lock           )
