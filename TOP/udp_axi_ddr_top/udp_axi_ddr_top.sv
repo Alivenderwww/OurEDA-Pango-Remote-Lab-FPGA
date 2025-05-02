@@ -1,14 +1,14 @@
 module udp_axi_ddr_top #(
     parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
-<<<<<<< HEAD
+//<<<<<<< HEAD
     parameter BOARD_IP      = {8'd169,8'd254,8'd103,8'd006}  , //8'd169,8'd254,8'd103,8'd006
     parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
     parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
-=======
-    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
-    parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
->>>>>>> b49ff8219c38e00ba63d68310d807155fa9c3933
+//=======
+//    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
+//    parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
+//    parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
+//>>>>>>> b49ff8219c38e00ba63d68310d807155fa9c3933
 )(
 //system io
 input  wire        external_clk ,
@@ -31,6 +31,9 @@ output wire        rgmii_txc    ,
 output wire        rgmii_tx_ctl ,
 output wire [3:0]  rgmii_txd    ,
 output wire        eth_rst_n    ,
+//hsst io
+input  wire        i_p_refckn_0 ,
+input  wire        i_p_refckp_0 ,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -460,39 +463,74 @@ axi_slave_default S2(
     .SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
 );
 
-axi_slave_default S3(
-	.clk                 	( sys_clk           ),
-	.rstn                	( sys_rstn          ),
-	.SLAVE_CLK           	( S_CLK          [3]),
-	.SLAVE_RSTN          	( S_RSTN         [3]),
-	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [3]),
-	.SLAVE_WR_ADDR       	( S_WR_ADDR      [3]),
-	.SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [3]),
-	.SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[3]),
-	.SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[3]),
-	.SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[3]),
-	.SLAVE_WR_DATA       	( S_WR_DATA      [3]),
-	.SLAVE_WR_STRB       	( S_WR_STRB      [3]),
-	.SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [3]),
-	.SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[3]),
-	.SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[3]),
-	.SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [3]),
-	.SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [3]),
-	.SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[3]),
-	.SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[3]),
-	.SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [3]),
-	.SLAVE_RD_ADDR       	( S_RD_ADDR      [3]),
-	.SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [3]),
-	.SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[3]),
-	.SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[3]),
-	.SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[3]),
-	.SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [3]),
-	.SLAVE_RD_DATA       	( S_RD_DATA      [3]),
-	.SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [3]),
-	.SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [3]),
-	.SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[3]),
-	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[3])
-);
+// axi_slave_default S3(
+// 	.clk                 	( sys_clk           ),
+// 	.rstn                	( sys_rstn          ),
+// 	.SLAVE_CLK           	( S_CLK          [3]),
+// 	.SLAVE_RSTN          	( S_RSTN         [3]),
+// 	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [3]),
+// 	.SLAVE_WR_ADDR       	( S_WR_ADDR      [3]),
+// 	.SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [3]),
+// 	.SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[3]),
+// 	.SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[3]),
+// 	.SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[3]),
+// 	.SLAVE_WR_DATA       	( S_WR_DATA      [3]),
+// 	.SLAVE_WR_STRB       	( S_WR_STRB      [3]),
+// 	.SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [3]),
+// 	.SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[3]),
+// 	.SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[3]),
+// 	.SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [3]),
+// 	.SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [3]),
+// 	.SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[3]),
+// 	.SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[3]),
+// 	.SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [3]),
+// 	.SLAVE_RD_ADDR       	( S_RD_ADDR      [3]),
+// 	.SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [3]),
+// 	.SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[3]),
+// 	.SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[3]),
+// 	.SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[3]),
+// 	.SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [3]),
+// 	.SLAVE_RD_DATA       	( S_RD_DATA      [3]),
+// 	.SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [3]),
+// 	.SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [3]),
+// 	.SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[3]),
+// 	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[3])
+// );
+hsst_axi_slave  S3 (
+    .i_p_refckn_0           ( i_p_refckn_0      ),
+    .i_p_refckp_0           ( i_p_refckp_0      ),
+    .rstn                   ( sys_rstn          ),
+    .i_free_clk             ( sys_clk           ),
+    .SLAVE_CLK              ( S_CLK          [3]),
+    .SLAVE_RSTN             ( S_RSTN         [3]),
+    .SLAVE_WR_ADDR_ID       ( S_WR_ADDR_ID   [3]),
+    .SLAVE_WR_ADDR          ( S_WR_ADDR      [3]),
+    .SLAVE_WR_ADDR_LEN      ( S_WR_ADDR_LEN  [3]),
+    .SLAVE_WR_ADDR_BURST    ( S_WR_ADDR_BURST[3]),
+    .SLAVE_WR_ADDR_VALID    ( S_WR_ADDR_VALID[3]),
+    .SLAVE_WR_ADDR_READY    ( S_WR_ADDR_READY[3]),
+    .SLAVE_WR_DATA          ( S_WR_DATA      [3]),
+    .SLAVE_WR_STRB          ( S_WR_STRB      [3]),
+    .SLAVE_WR_DATA_LAST     ( S_WR_DATA_LAST [3]),
+    .SLAVE_WR_DATA_VALID    ( S_WR_DATA_VALID[3]),
+    .SLAVE_WR_DATA_READY    ( S_WR_DATA_READY[3]),
+    .SLAVE_WR_BACK_ID       ( S_WR_BACK_ID   [3]),
+    .SLAVE_WR_BACK_RESP     ( S_WR_BACK_RESP [3]),
+    .SLAVE_WR_BACK_VALID    ( S_WR_BACK_VALID[3]),
+    .SLAVE_WR_BACK_READY    ( S_WR_BACK_READY[3]),
+    .SLAVE_RD_ADDR_ID       ( S_RD_ADDR_ID   [3]),
+    .SLAVE_RD_ADDR          ( S_RD_ADDR      [3]),
+    .SLAVE_RD_ADDR_LEN      ( S_RD_ADDR_LEN  [3]),
+    .SLAVE_RD_ADDR_BURST    ( S_RD_ADDR_BURST[3]),
+    .SLAVE_RD_ADDR_VALID    ( S_RD_ADDR_VALID[3]),
+    .SLAVE_RD_ADDR_READY    ( S_RD_ADDR_READY[3]),
+    .SLAVE_RD_BACK_ID       ( S_RD_BACK_ID   [3]),
+    .SLAVE_RD_DATA          ( S_RD_DATA      [3]),
+    .SLAVE_RD_DATA_RESP     ( S_RD_DATA_RESP [3]),
+    .SLAVE_RD_DATA_LAST     ( S_RD_DATA_LAST [3]),
+    .SLAVE_RD_DATA_VALID    ( S_RD_DATA_VALID[3]),
+    .SLAVE_RD_DATA_READY    ( S_RD_DATA_READY[3])
+  );
 
 axi_bus #(
 	.M_ID       	( M_ID      ),

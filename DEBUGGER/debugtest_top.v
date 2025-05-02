@@ -148,8 +148,8 @@ always @(posedge txclk or negedge rstn) begin
 end
 //************************************//
 assign testport[0] = testport0;
-assign testport[0] = testport1;
-assign testport[0] = testport2;
+assign testport[1] = testport1;
+assign testport[2] = testport2;
 
 //************************************//
 generate
