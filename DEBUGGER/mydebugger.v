@@ -13,15 +13,16 @@ module mydebugger #(
     input wire [ 9:0]               rdnum        ,//rxclk 1023+1
     input wire                      trigger      ,//rxclk 不一定拉高多久,检测上升沿吧
     input wire                      tx_sel       ,//txclk
-    output reg                      trigdone     ,//txclk
+    output wire                     trigdone     ,//txclk
     output reg                      tx_datavalid ,//txclk
     output reg                      tx_datalast  ,//txclk
     output wire [31:0]              tx_portdata   //txclk 传输的数据
 );
     //问题
     //有关数据位宽的问题，hsst传输是32位，如果检测的数据位宽大于32位怎么办 //采用异步fifo且端口位宽不相同，输出端口永远是32位
-reg trigdone_reg;           //clk
-reg trigdone_reg_d0,trigdone_reg_d1;
+reg trigdone_reg/* synthesis PAP_MARK_DEBUG="1" */;           //clk
+reg trigdone_txclk_reg/* synthesis PAP_MARK_DEBUG="1" */;
+reg trigdone_d0,trigdone_d1/* synthesis PAP_MARK_DEBUG="1" */;
 reg tx_en;                  //rxclk
 reg tx_en_reg;              //txclk
 reg rx_en;                  //rxclk
@@ -46,26 +47,27 @@ always @(posedge clk or negedge rstn) begin
     else rx_en_reg <= rx_en_reg;
 end
 //trigdone_reg 和 trigdone跨时钟,相互钳制
+assign trigdone = trigdone_d0 && ~ trigdone_d1;
 always @(posedge clk or negedge rstn) begin
     if(~rstn) trigdone_reg <= 0;
     else if(rxaddr == SAMPLE_DEPTH-1) trigdone_reg <= 1;
-    else if(trigdone) trigdone_reg <= 0;
+    else if(trigdone_txclk_reg) trigdone_reg <= 0;
     else trigdone_reg <= trigdone_reg;
 end
 always @(posedge txclk or negedge rstn) begin
     if(~rstn)begin
-        trigdone_reg_d0 <= 0;
-        trigdone_reg_d1 <= 0;
+        trigdone_d0 <= 0;
+        trigdone_d1 <= 0;
     end
     else begin
-        trigdone_reg_d0 <= trigdone_reg;
-        trigdone_reg_d1 <= trigdone_reg_d0;
+        trigdone_d0 <= trigdone_txclk_reg;
+        trigdone_d1 <= trigdone_d0;
     end
 end
 always @(posedge txclk or negedge rstn) begin
-    if(~rstn) trigdone <= 0;
-    else if(trigdone_reg_d0 && ~trigdone_reg_d1) trigdone <= 1;
-    else trigdone <= 0;
+    if(~rstn) trigdone_txclk_reg <= 0;
+    else if(trigdone_reg) trigdone_txclk_reg <= 1;
+    else trigdone_txclk_reg <= 0;
 end
 //rxaddr
 always @(posedge clk or negedge rstn) begin

@@ -51,7 +51,7 @@ wire [31:0] tx_portdata   [PORT_NUM - 1 : 0];
 wire        tx_sel        [PORT_NUM - 1 : 0];
 wire        tx_datalast   [PORT_NUM - 1 : 0]; 
 wire [PORT_NUM - 1 : 0] trigdone; 
-reg  [PORT_NUM - 1 : 0] trigdone_reg; 
+reg  [PORT_NUM - 1 : 0] trigdone_reg/* synthesis PAP_MARK_DEBUG="1" */; 
 wire [PORT_NUM - 1 : 0] porten_wire;
 wire [PORT_NUM - 1 : 0] tx_datalast_wire;
 wire [PORT_NUM - 1 : 0] portsel_wire;
