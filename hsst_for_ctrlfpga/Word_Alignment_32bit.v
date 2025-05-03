@@ -1,11 +1,11 @@
 module Word_Alignment_32bit (
     input wire          clk             ,
     input wire          rstn            ,
-    input wire [31:0]   data_bf_align   ,
-    input wire [ 3:0]   rxk             ,
-    output reg          data_valid      ,
-    output reg [31:0]   data_af_align   ,
-    output reg          data_done
+    input wire [31:0]   data_bf_align   /* synthesis PAP_MARK_DEBUG="1" */,
+    input wire [ 3:0]   rxk             /* synthesis PAP_MARK_DEBUG="1" */,
+    output reg          data_valid      /* synthesis PAP_MARK_DEBUG="1" */,
+    output reg [31:0]   data_af_align   /* synthesis PAP_MARK_DEBUG="1" */,
+    output reg          data_done/* synthesis PAP_MARK_DEBUG="1" */
 );
 //************************ 8b10b    K_Code ********************************************
 //K28.0     1C
@@ -186,7 +186,7 @@ always @(posedge clk or negedge rstn) begin
                 else error <= 1;
                 
                 if(skip)                data_done <= 0;
-                else if(rxk == 4'b1111) data_done <= 1;
+                else if(rxk == 4'b1000) data_done <= 1;
                 else                    data_done <= 0;
 
                 if(skip)  data_valid <= 0;
@@ -201,7 +201,7 @@ always @(posedge clk or negedge rstn) begin
                 else error <= 1;
                 
                 if(skip)                data_done <= 0;
-                else if(rxk == 4'b1111) data_done <= 1;
+                else if(rxk == 4'b1100) data_done <= 1;
                 else                    data_done <= 0;
 
                 if(skip)  data_valid <= 0;
@@ -216,7 +216,7 @@ always @(posedge clk or negedge rstn) begin
                 else error <= 1;
                 
                 if(skip)                data_done <= 0;
-                else if(rxk == 4'b1111) data_done <= 1;
+                else if(rxk == 4'b1110) data_done <= 1;
                 else                    data_done <= 0;
 
                 if(skip)  data_valid <= 0;

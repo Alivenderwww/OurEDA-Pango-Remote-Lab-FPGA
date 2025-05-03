@@ -80,8 +80,8 @@ B. CMD_JTAG_CLOSE_TEST                  0
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 2;
 localparam M_ID     = 2;
-localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000};
-localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF};
+localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'ha0000000};
+localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'haFFFFFFF};
 
 wire [(2**M_WIDTH-1):0]            M_CLK          ;
 wire [(2**M_WIDTH-1):0]            M_RSTN         ;

@@ -36,8 +36,8 @@ module hsst_axi_slave (
     output wire [31:0]  SLAVE_RD_DATA      ,
     output wire [ 1:0]  SLAVE_RD_DATA_RESP ,
     output wire         SLAVE_RD_DATA_LAST ,
-    output wire         SLAVE_RD_DATA_VALID,
-    input  wire         SLAVE_RD_DATA_READY
+    output wire         SLAVE_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="1" */,
+    input  wire         SLAVE_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="1" */
 );
 //32位地址,前16位,a0是以命令方式访问ctrlfpga,a1是访问labfpga
 //ctrlfpga会监测labfpga的状态,比如有没有采样完成
@@ -55,21 +55,24 @@ wire o_p_rx_sigdet_sta_0;
 wire o_p_rx_sigdet_sta_1;
 wire o_p_lx_cdr_align_0;
 wire o_p_lx_cdr_align_1;
-wire txclk_0;
+wire txclk_0/* synthesis PAP_MARK_DEBUG="1" */;
 wire txclk_1;
-wire rxclk_0;
+wire rxclk_0/* synthesis PAP_MARK_DEBUG="1" */;
 wire rxclk_1;
 reg  [31:0] i_txd_0;
 reg  [ 3:0] i_txk_0;
 reg  [31:0] i_txd_1;
 reg  [ 3:0] i_txk_1;
-wire data_valid_0;
+wire data_valid_0/* synthesis PAP_MARK_DEBUG="1" */;
 wire data_valid_1;
-wire [31:0] data_af_align_0;
+wire [31:0] data_af_align_0/* synthesis PAP_MARK_DEBUG="1" */;
 wire [31:0] data_af_align_1;
-wire data_last_0;                   //rxclk
+wire data_last_0/* synthesis PAP_MARK_DEBUG="1" */;                   //rxclk
 wire data_last_1;
-
+wire rstn_sync_for_rxclk;
+wire rstn_sync_for_txclk;
+rstn_sync rstn_sync_hsst_rxclk(rxclk_0, rstn, rstn_sync_for_rxclk);
+rstn_sync rstn_sync_hsst_txclk(txclk_0, rstn, rstn_sync_for_txclk);
 // assign data_af_align_0 = debugtest_top_inst.sfp_txdata;
 // assign data_last_0 = debugtest_top_inst.sfp_txdatalast;
 // assign data_valid_0 = debugtest_top_inst.sfp_txdatavalid;
@@ -97,7 +100,7 @@ reg [31:0] localtask_wr_cmd;
 //sfprxtask
 localparam RXPORTDATA = 1;
 localparam RXCMD = 2;
-reg [ 7:0] sfprxstate;
+reg [ 7:0] sfprxstate/* synthesis PAP_MARK_DEBUG="1" */;
 reg [31:0] sfprxstate_cmd;
 reg        sfprxtask;
 reg [31:0] debugger_statue;
@@ -110,8 +113,8 @@ wire sfpfifo_empty;
 wire sfpfifo_rden;
 reg sfpfifo_rden_reg;
 reg rd_addr_ready_d0,rd_addr_ready_d1;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk)begin
         rd_addr_ready_d0 <= 0;
         rd_addr_ready_d1 <= 0;
     end
@@ -122,8 +125,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
 end
 //////
 // reg [1:0] rd_addr_ready_flag;
-// always @(posedge SLAVE_CLK or negedge rstn) begin
-//     if(~rstn) rd_addr_ready_flag <= 0;
+// always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+//     if(~rstn_sync_for_txclk) rd_addr_ready_flag <= 0;
 //     else if(rd_addr_ready_flag == 0) begin
 //         if(sfpfifo_almostfull)
 //             rd_addr_ready_flag <= 1;
@@ -150,14 +153,14 @@ wire       txtask_wr;
 assign txtask_wr    = task_wraddr && task_wrdata && txtask_state       == IDLE && wraddr[24] == 1;
 assign localtask_wr = task_wraddr && task_wrdata && localtask_state == IDLE && wraddr[24] == 0;
 assign SLAVE_WR_BACK_ID = wraddrid;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) SLAVE_WR_ADDR_READY <= 1;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) SLAVE_WR_ADDR_READY <= 1;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) SLAVE_WR_ADDR_READY <= 0;
     else if(txtask_wr || localtask_wr) SLAVE_WR_ADDR_READY <= 1;
     else SLAVE_WR_ADDR_READY <= SLAVE_WR_ADDR_READY;
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk)begin
         wraddrid         <= 0;
         wraddr           <= 0;
         wraddrlen        <= 0;
@@ -179,8 +182,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
         task_wraddrdelay <= 0;
     end
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) task_wraddr <= 0;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) task_wraddr <= 0;
     else if(task_wraddrdelay) task_wraddr <= 1;
     else if(txtask_wr || localtask_wr) task_wraddr <= 0;
     else task_wraddr <= task_wraddr;
@@ -188,14 +191,14 @@ end
 //wrdata
 reg [31:0] wrdata;
 reg [ 3:0] wrstrb;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) SLAVE_WR_DATA_READY <= 1;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) SLAVE_WR_DATA_READY <= 1;
     else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY) SLAVE_WR_DATA_READY <= 0;
     else if(txtask_wr || localtask_wr) SLAVE_WR_DATA_READY <= 1;
     else SLAVE_WR_DATA_READY <= SLAVE_WR_DATA_READY;
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk)begin
         wrdata <= 0;
         wrstrb <= 0;
     end
@@ -208,8 +211,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
         wrstrb <= wrstrb;
     end
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) task_wrdata <= 0;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) task_wrdata <= 0;
     else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY) task_wrdata <= 1;
     else if(txtask_wr || localtask_wr) task_wrdata <= 0;
     else task_wrdata <= task_wrdata;
@@ -217,10 +220,10 @@ end
 //wrback
 assign SLAVE_WR_BACK_ID = wraddrid;
 assign SLAVE_WR_BACK_RESP = 2'b00;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) SLAVE_WR_BACK_VALID <= 0;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) SLAVE_WR_BACK_VALID <= 0;
     else if(SLAVE_WR_BACK_READY && SLAVE_WR_BACK_VALID) SLAVE_WR_BACK_VALID <= 0;
-    else if(txtask_wr) SLAVE_WR_BACK_VALID <= 1;
+    else if(txtask_wr || localtask_wr) SLAVE_WR_BACK_VALID <= 1;
     else SLAVE_WR_BACK_VALID <= SLAVE_WR_BACK_VALID;
 end
 //rdaddr
@@ -235,15 +238,15 @@ wire       txtask_rd;
 assign txtask_rd    = task_rdaddr && txtask_state       == IDLE && rdaddr[24] == 1;
 assign localtask_rd = task_rdaddr && localtask_state == IDLE && rdaddr[24] == 0;
 assign SLAVE_RD_BACK_ID = rdaddrid;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) SLAVE_RD_ADDR_READY <= 1;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) SLAVE_RD_ADDR_READY <= 1;
     else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) SLAVE_RD_ADDR_READY <= 0;
     // else if(rd_addr_ready_flag == 3) SLAVE_RD_ADDR_READY <= 1;
     else if(rd_addr_ready_d0 && ~rd_addr_ready_d1) SLAVE_RD_ADDR_READY <= 1;
     else SLAVE_RD_ADDR_READY <= SLAVE_RD_ADDR_READY;
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk)begin
         rdaddrid     <= 0;
         rdaddr       <= 0;
         rdaddrlen    <= 0;
@@ -265,8 +268,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
         task_rddelay <= 0;
     end
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) task_rdaddr <= 0;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) task_rdaddr <= 0;
     else if(task_rddelay) task_rdaddr <= 1;
     else if(txtask_rd || localtask_rd) task_rdaddr <= 0;
     else task_rdaddr <= task_rdaddr;
@@ -278,8 +281,8 @@ assign SLAVE_RD_DATA = localtask_state == HANDSHAKE ? debugger_statue : rddata_s
 assign SLAVE_RD_DATA_LAST = localtask_state == HANDSHAKE ? rd_local_data_last : rddata_state == 3 ? sfpfifo_data_last : 1'b0;
 assign sfpfifo_rden = sfpfifo_rden_reg || (rd_fifo_data_valid && SLAVE_RD_DATA_READY && ~SLAVE_RD_DATA_LAST && ~sfpfifo_empty);
 assign SLAVE_RD_DATA_RESP = 2'b00;
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk)begin
         sfpfifo_rden_reg <= 0;
         rddata_state <= 0;
         rd_fifo_data_valid <= 0;
@@ -310,27 +313,27 @@ end
 assign sfpfifo_wren = (sfprxstate == RXPORTDATA) ? data_valid_0 : 1'b0;
 fifo_sfp_rd fifo_sfp_rd_inst (
   .wr_clk(rxclk_0),                // input
-  .wr_rst(~rstn),                // input
+  .wr_rst(~rstn_sync_for_txclk),                // input
   .wr_en(sfpfifo_wren),                  // input
   .wr_data({data_last_0,data_af_align_0}),              // input [32:0]
   .wr_full(),              // output
   .almost_full(sfpfifo_almostfull),      // output   200
   .rd_clk(SLAVE_CLK),                // input
-  .rd_rst(~rstn),                // input
+  .rd_rst(~rstn_sync_for_txclk),                // input
   .rd_en(sfpfifo_rden),                  // input
   .rd_data({sfpfifo_data_last,sfpfifo_data}),              // output [32:0]
   .rd_empty(sfpfifo_empty),            // output
   .almost_empty(sfpfifo_almostempty)     // output
 );
 //****************txtask********************//
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) task_cmd <= 0;
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) task_cmd <= 0;
     else if(txtask_rd) task_cmd <= {8'b0,rdaddrlen,rdaddr[15:0]};
     else if(txtask_wr) task_cmd <= {wraddr[15:0],wrdata[15:0]};
     else task_cmd <= task_cmd;
 end
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) begin
         i_txd_0 <= 32'hBCBCBCBC;
         i_txk_0 <= 4'b1111;
         txtask_state <= 0;
@@ -366,8 +369,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
     end
 end
 //****************localtask********************//
-always @(posedge SLAVE_CLK or negedge rstn) begin
-    if(~rstn) begin
+always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
+    if(~rstn_sync_for_txclk) begin
         localtask_state <= IDLE;
         trigdone_clear <= 0;
         rd_local_data_valid <= 0;
@@ -420,8 +423,8 @@ always @(posedge SLAVE_CLK or negedge rstn) begin
     end
 end
 //*****************rxcmd********************//rxclk_0
-always @(posedge rxclk_0 or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge rxclk_0 or negedge rstn_sync_for_rxclk) begin
+    if(~rstn_sync_for_rxclk)begin
         sfprxstate <= IDLE;
         sfprxtask  <= 0;
         sfprxstate_cmd <= 0;
@@ -455,8 +458,8 @@ always @(posedge rxclk_0 or negedge rstn) begin
     end
 end
 
-always @(posedge rxclk_0 or negedge rstn) begin
-    if(~rstn)begin
+always @(posedge rxclk_0 or negedge rstn_sync_for_rxclk) begin
+    if(~rstn_sync_for_rxclk)begin
         debugger_statue <= 0;
     end
     else if(sfprxtask)begin
@@ -480,7 +483,7 @@ wire o_p_l0txp;
 wire o_p_l1txn;
 wire o_p_l1txp;
 assign hsstinit = o_txlane_done_0 & o_rxlane_done_0 & o_p_pll_lock_0 ;
-assign SLAVE_RSTN = hsstinit && rstn;
+assign SLAVE_RSTN = rstn_sync_for_rxclk && rstn_sync_for_txclk;
 hsst_for_ctrlfpga_dut_top  hsst_for_ctrlfpga_dut_top_inst (
     .i_free_clk(i_free_clk),
     .rstn(rstn),

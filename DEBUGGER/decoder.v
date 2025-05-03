@@ -20,8 +20,8 @@ module decoder #(
 localparam IDLE  = 0;
 localparam READ  = 1;
 localparam WRITE = 2;
-reg [3:0] state;
-reg [3:0] nextstate;
+reg [3:0] state/* synthesis PAP_MARK_DEBUG="1" */;
+reg [3:0] nextstate/* synthesis PAP_MARK_DEBUG="1" */;
 always @(posedge rxclk or negedge rstn) begin
     if(~rstn)
         state <= IDLE;
@@ -68,8 +68,10 @@ always @(posedge rxclk or negedge rstn) begin
                 trigger <= 0;
             end
             WRITE : begin
-                if(sfp_rxdata == 32'h0000FFFF)
+                if(sfp_rxdata == 32'h0000FFFF)begin
                     trigger <= 1;
+                end
+                    
             end
         endcase
     end

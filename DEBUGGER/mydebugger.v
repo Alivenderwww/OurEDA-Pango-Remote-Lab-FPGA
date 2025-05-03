@@ -21,6 +21,7 @@ module mydebugger #(
     //问题
     //有关数据位宽的问题，hsst传输是32位，如果检测的数据位宽大于32位怎么办 //采用异步fifo且端口位宽不相同，输出端口永远是32位
 reg trigdone_reg;           //clk
+reg trigdone_reg_d0,trigdone_reg_d1;
 reg tx_en;                  //rxclk
 reg tx_en_reg;              //txclk
 reg rx_en;                  //rxclk
@@ -52,8 +53,18 @@ always @(posedge clk or negedge rstn) begin
     else trigdone_reg <= trigdone_reg;
 end
 always @(posedge txclk or negedge rstn) begin
+    if(~rstn)begin
+        trigdone_reg_d0 <= 0;
+        trigdone_reg_d1 <= 0;
+    end
+    else begin
+        trigdone_reg_d0 <= trigdone_reg;
+        trigdone_reg_d1 <= trigdone_reg_d0;
+    end
+end
+always @(posedge txclk or negedge rstn) begin
     if(~rstn) trigdone <= 0;
-    else if(trigdone_reg) trigdone <= 1;
+    else if(trigdone_reg_d0 && ~trigdone_reg_d1) trigdone <= 1;
     else trigdone <= 0;
 end
 //rxaddr
