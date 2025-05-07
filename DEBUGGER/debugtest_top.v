@@ -14,10 +14,16 @@ module debugtest_top #(
     // input [31:0] sfp_rxdata,
     // input sfp_rxdatavalid,
     // input sfp_rxdatalast
-    output debugger_init
+    output debugger_init,
+    output o_pll_done_0,
+    output o_txlane_done_2,
+    output o_rxlane_done_2,
+    output o_p_pll_lock_0,
+    output o_p_rx_sigdet_sta_2,
+    output o_p_lx_cdr_align_2
 );
-wire rxclk;
-wire txclk;
+wire rxclk/* synthesis PAP_MARK_DEBUG="1" */;
+wire txclk/* synthesis PAP_MARK_DEBUG="1" */;
 //**********
 localparam IDLE     = 0;
 // localparam HEAD     = 1;
@@ -29,13 +35,13 @@ reg [ 7:0] txstate;
 reg [ 7:0] txnextstate;
 reg [31:0] headdata;
 reg [31:0] cmddata;
-reg [31:0] sfp_txdata;
-reg [ 3:0] sfp_txk;
-reg        sfp_txdatavalid;
-reg        sfp_txdatalast;
-wire[31:0] sfp_rxdata;
-wire       sfp_rxdatavalid;
-wire       sfp_rxdatalast;
+reg [31:0] sfp_txdata/* synthesis PAP_MARK_DEBUG="1" */;
+reg [ 3:0] sfp_txk/* synthesis PAP_MARK_DEBUG="1" */;
+reg        sfp_txdatavalid/* synthesis PAP_MARK_DEBUG="1" */;
+reg        sfp_txdatalast/* synthesis PAP_MARK_DEBUG="1" */;
+wire[31:0] sfp_rxdata/* synthesis PAP_MARK_DEBUG="1" */;
+wire       sfp_rxdatavalid/* synthesis PAP_MARK_DEBUG="1" */;
+wire       sfp_rxdatalast/* synthesis PAP_MARK_DEBUG="1" */;
 //***********
 localparam SAMPLE_DEPTH = 1024;
 wire [31:0] testport      [PORT_NUM - 1 : 0];
@@ -45,13 +51,13 @@ wire [31:0] tx_portdata   [PORT_NUM - 1 : 0];
 wire        tx_sel        [PORT_NUM - 1 : 0];
 wire        tx_datalast   [PORT_NUM - 1 : 0]; 
 wire [PORT_NUM - 1 : 0] trigdone; 
-reg  [PORT_NUM - 1 : 0] trigdone_reg; 
+reg  [PORT_NUM - 1 : 0] trigdone_reg/* synthesis PAP_MARK_DEBUG="1" */; 
 wire [PORT_NUM - 1 : 0] porten_wire;
 wire [PORT_NUM - 1 : 0] tx_datalast_wire;
 wire [PORT_NUM - 1 : 0] portsel_wire;
 wire [15:0] addr;
 wire [ 9:0] rdnum;
-wire trigger;
+wire trigger/* synthesis PAP_MARK_DEBUG="1" */;
 wire txidle;
 assign txidle = txstate == IDLE;
 //***************mux_txportdata*************//
@@ -148,8 +154,8 @@ always @(posedge txclk or negedge rstn) begin
 end
 //************************************//
 assign testport[0] = testport0;
-assign testport[0] = testport1;
-assign testport[0] = testport2;
+assign testport[1] = testport1;
+assign testport[2] = testport2;
 
 //************************************//
 generate
@@ -213,12 +219,12 @@ mux_inst (
   .tx_datalast        (tx_datalast_wire ),
   .portsel            (portsel_wire     )
 );
-wire o_pll_done_0;
-wire o_txlane_done_2;
-wire o_rxlane_done_2;
-wire o_p_pll_lock_0;
-wire o_p_rx_sigdet_sta_2;
-wire o_p_lx_cdr_align_2;
+// wire o_pll_done_0;
+// wire o_txlane_done_2;
+// wire o_rxlane_done_2;
+// wire o_p_pll_lock_0;
+// wire o_p_rx_sigdet_sta_2;
+// wire o_p_lx_cdr_align_2;
 wire i_p_l2rxn;
 wire i_p_l2rxp;
 wire o_p_l2txn;

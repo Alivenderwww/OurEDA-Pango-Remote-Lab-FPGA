@@ -20,8 +20,8 @@ module decoder #(
 localparam IDLE  = 0;
 localparam READ  = 1;
 localparam WRITE = 2;
-reg [3:0] state;
-reg [3:0] nextstate;
+reg [3:0] state/* synthesis PAP_MARK_DEBUG="1" */;
+reg [3:0] nextstate/* synthesis PAP_MARK_DEBUG="1" */;
 always @(posedge rxclk or negedge rstn) begin
     if(~rstn)
         state <= IDLE;
@@ -68,34 +68,31 @@ always @(posedge rxclk or negedge rstn) begin
                 trigger <= 0;
             end
             WRITE : begin
-                if(sfp_rxdata == 32'h0000FFFF)
+                if(sfp_rxdata == 32'h0000FFFF)begin
                     trigger <= 1;
+                end
+                    
             end
         endcase
     end
 end
 
 //读
-genvar i;
-generate
-    for (i = 0;i < PORT_NUM ;i = i + 1 ) begin
-        always @(posedge rxclk or negedge rstn) begin
-            if(~rstn)begin
-                porten[i] <= 0;
-                addr <= 0;
-                num <= 0;
-            end
-            else if(state == READ && sfp_rxdata[15:0] <= MAX_SAMPLE_DEPTH * (i+1) - 1 && sfp_rxdata[15:0] >= MAX_SAMPLE_DEPTH * i)begin
+integer i;
+always @(posedge rxclk or negedge rstn) begin
+    if (~rstn) begin
+        porten <= 0;
+        addr <= 0;
+        num <= 0;
+    end else begin
+        porten <= 0;
+        for (i = 0; i < PORT_NUM; i = i + 1) begin
+            if (state == READ && sfp_rxdata[15:0] <= MAX_SAMPLE_DEPTH * (i+1) - 1 && sfp_rxdata[15:0] >= MAX_SAMPLE_DEPTH * i) begin
                 porten[i] <= 1;
                 addr <= sfp_rxdata[15:0] - MAX_SAMPLE_DEPTH * i;
-                num <= sfp_rxdata[25:16];
-            end
-            else begin
-                porten[i] <= 0;
-                // addr <= 0;//注释掉是因为另一个会触发else,,,,,,,,,,,,
-                // num <= 0;
+                num  <= sfp_rxdata[25:16];
             end
         end
     end
-endgenerate
+end
 endmodule
