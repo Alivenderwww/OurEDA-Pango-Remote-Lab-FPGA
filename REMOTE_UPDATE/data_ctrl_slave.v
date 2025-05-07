@@ -173,6 +173,7 @@ wire        wr_fifo_rd_en;
 wire [ 7:0] wr_fifo_rd_data;
 reg         wr_fifo_rd_data_valid;
 wire        wr_fifo_full;
+wire        wr_fifo_afull;
 wire        wr_fifo_empty;
 wire [11:0] wr_fifo_bytes_num;
 reg  [11:0] wr_fifo_trans_cnt;
@@ -318,7 +319,7 @@ always @(*) begin
     if(~SLAVE_RSTN_SYNC || (cu_wr_st == ST_WR_IDLE) || (cu_wr_st == ST_WR_RESP)) SLAVE_WR_DATA_READY <= 0;
     else if(cu_wr_st == ST_WR_DATA)begin
         case (wr_addr)
-            RU_WRBIT_WO_FIFO_ADDR: SLAVE_WR_DATA_READY <= (~wr_fifo_full);
+            RU_WRBIT_WO_FIFO_ADDR     : SLAVE_WR_DATA_READY <= (~wr_fifo_full);
             default                   : SLAVE_WR_DATA_READY <= 1;
         endcase
     end else SLAVE_WR_DATA_READY <= 0;
@@ -416,6 +417,7 @@ remote_update_wr_fifo remote_update_wr_fifo_inst(
     .rd_data       (wr_fifo_rd_data),
 
     .wr_full       (wr_fifo_full),
+    .almost_full   (wr_fifo_afull),
     .rd_empty      (wr_fifo_empty),
     .rd_water_level(wr_fifo_bytes_num)
 );
@@ -495,7 +497,7 @@ always @(posedge clk or negedge SLAVE_RSTN_SYNC) begin
         hotreset_en   <= (SLAVE_WR_STRB[0])?(SLAVE_WR_DATA[0]):(hotreset_en);
     end else begin
         hotreset_addr <= hotreset_addr;
-        hotreset_en <= 0;//自动置0
+        hotreset_en <= hotreset_en;//自动置0
     end
 end
 

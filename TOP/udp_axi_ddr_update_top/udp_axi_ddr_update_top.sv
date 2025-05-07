@@ -22,6 +22,9 @@ output wire        spi_cs       ,
 // output wire        spi_clk      ,
 input  wire        spi_dq1      ,
 output wire        spi_dq0      ,
+//i2c io
+inout  wire        scl,
+inout  wire        sda,
 //eth io
 input  wire        rgmii_rxc    ,
 input  wire        rgmii_rx_ctl ,
@@ -72,6 +75,12 @@ B. CMD_JTAG_CLOSE_TEST                  0
 4. CMD_JTAG_LOAD_DR    NOTCARE          32
 5. CMD_JTAG_CLOSE_TEST                  0
 */
+
+wire scl_out, scl_enable;
+wire sda_out, sda_enable;
+
+assign scl = (scl_enable)?(scl_out):(1'bz);
+assign sda = (sda_enable)?(sda_out):(1'bz);
 
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 2;
@@ -461,9 +470,17 @@ remote_update_axi_slave #(
     .SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
 );
 
-axi_slave_default S3(
+i2c_master_axi_slave #(
+    .OFFSET_ADDR(START_ADDR[3])
+)S3(
 	.clk                 	( sys_clk           ),
 	.rstn                	( sys_rstn          ),
+    .scl_in                 ( scl               ),
+    .scl_out                ( scl_out           ),
+    .scl_enable             ( scl_enable        ),
+    .sda_in                 ( sda               ),
+    .sda_out                ( sda_out           ),
+    .sda_enable             ( sda_enable        ),
 	.SLAVE_CLK           	( S_CLK          [3]),
 	.SLAVE_RSTN          	( S_RSTN         [3]),
 	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [3]),
