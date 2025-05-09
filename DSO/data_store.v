@@ -1,5 +1,5 @@
 module data_store #(
-    localparam HORIZONTAL = 640 //水平采样点数 最大1023
+    parameter HORIZONTAL = 640 //水平采样点数 最大1023
 )(
     input               rstn,      // 复位信号
 
