@@ -13,7 +13,7 @@ reg  [9:0]  deci_rate;
 wire         ram_rd_clk;
 wire        ram_rd_over;
 wire         ram_rd_en;
-wire [8:0]  wave_rd_addr;
+wire [9:0]  wave_rd_addr;
 
 // outports wire
 wire [7:0]  	wave_rd_data;

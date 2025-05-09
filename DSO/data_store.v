@@ -15,7 +15,7 @@ module data_store #(
     input               ram_rd_clk,
     input               ram_rd_over,
     input               ram_rd_en,
-    input       [8:0]   wave_rd_addr,
+    input       [9:0]   wave_rd_addr,
     output      [7:0]   wave_rd_data,
     output reg          outrange    //水平偏移超出范围
 );

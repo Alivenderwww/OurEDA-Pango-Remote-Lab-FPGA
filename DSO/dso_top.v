@@ -14,7 +14,7 @@ module dso_top(
     input         ram_rd_clk,
     input         ram_rd_over,
     input         ram_rd_en,
-    input  [8:0]  wave_rd_addr, // RAM读地址 0-299
+    input  [9:0]  wave_rd_addr, // RAM读地址 0-299
     output [7:0]  wave_rd_data, // RAM读数据
 
     output        outrange,     //水平偏移超出范围

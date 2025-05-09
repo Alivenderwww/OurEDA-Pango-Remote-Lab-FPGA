@@ -19,7 +19,7 @@ module  vga_ctrl
     output  wire            vsync       ,   //输出场同步信号
     output  wire            rgb_valid   ,
     output  wire            ram_rd_en   ,
-    output  wire    [ 8:0]  wave_rd_addr,
+    output  wire    [ 9:0]  wave_rd_addr,
     output  wire            ram_rd_over ,
     output  wire    [15:0]  rgb             //输出像素点色彩信息
 );

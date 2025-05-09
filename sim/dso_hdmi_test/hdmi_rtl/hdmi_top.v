@@ -31,7 +31,7 @@ module hdmi_top(
     output              ram_rd_clk    ,
     output              ram_rd_over   ,
     output              ram_rd_en     , 
-    output  [8:0]       wave_rd_addr  , // RAM读地址 0-299
+    output  [9:0]       wave_rd_addr  , // RAM读地址 0-299
     input   [7:0]       wave_rd_data  , // RAM读数据
 
 //hdmi_out 
