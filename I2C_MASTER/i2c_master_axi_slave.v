@@ -53,7 +53,7 @@ rstn_sync i2c_rstn_sync(clk,rstn,I2C_MASTER_AXI_SLAVE_RSTN_SYNC);
 //i2c读写注意事项：1. I2C是8bit数据存储的，数据通道32bit位宽，写操作会直接抛弃高24bit数据，读操作高24bit数据为0
 //                 2. EEPROM一次读写最多8个字节，超过部分会从起始地址重新读写，因此需控制突发长度不超过7.
 //                 3. I2C读写较慢，且失败概率较高，总线会等待读写完毕后再返回RESP。
-//                 4. I2C读写仅支持增量突发（01），传入的所有突发类型都是增量突发
+//                 4. I2C读写不支持突发类型设置
 
 reg [ 6:0] i2c_slave_addr;
 reg        i2c_read_write;

@@ -145,6 +145,17 @@ B. CMD_JTAG_CLOSE_TEST                  0
 5. CMD_JTAG_CLOSE_TEST                  0
 */
 
+/*
+边界扫描顺序：
+0. CMD_JTAG_CLOSE_TEST                  0
+1. CMD_JTAG_RUN_TEST                    0
+2. CMD_JTAG_LOAD_IR    `JTAG_DR_SAMPLE  10
+4. CMD_JTAG_LOAD_DR    NOTCARE          645向上取整到32的整数
+6. CMD_JTAG_CLOSE_TEST                  0
+
+读fifo
+*/
+
 initial begin
     #300 M0.set_clk(5);
     #300 S3.set_clk(15);

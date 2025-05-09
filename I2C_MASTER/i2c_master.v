@@ -19,6 +19,7 @@ module i2c_master(
 
     input  wire [ 6:0] i2c_slave_addr,
     input  wire        i2c_read_write,
+    input  wire        i2c_read_ifstop, //读操作时，是否在DUMMY数据发完后先STOP再START，还是直接START
     input  wire        i2c_addr_length,
     input  wire [15:0] i2c_start_addr,
     input  wire [15:0] i2c_data_length,
@@ -37,6 +38,7 @@ module i2c_master(
 
 reg [ 6:0] i2c_slave_addr_reg;
 reg        i2c_read_write_reg;
+reg        i2c_read_ifstop_reg;
 reg        i2c_addr_length_reg;
 reg [15:0] i2c_start_addr_reg;
 reg [15:0] i2c_data_length_reg;
@@ -81,10 +83,11 @@ localparam ST_MODULE_TRANS_WR_DATA                 = 4'b0110;
 localparam ST_MODULE_TRANS_RD_IIC_ADDR_DUMMY       = 4'b0111;
 localparam ST_MODULE_TRANS_RD_START_ADDR_D10_DUMMY = 4'b1000;
 localparam ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY  = 4'b1001;
-localparam ST_MODULE_RESTART                       = 4'b1010;
-localparam ST_MODULE_TRANS_RD_IIC_ADDR             = 4'b1011;
-localparam ST_MODULE_TRANS_RD_DATA                 = 4'b1100;
-localparam ST_MODULE_STOP                          = 4'b1101;
+localparam ST_MODULE_RESTOP                        = 4'b1010;
+localparam ST_MODULE_RESTART                       = 4'b1011;
+localparam ST_MODULE_TRANS_RD_IIC_ADDR             = 4'b1100;
+localparam ST_MODULE_TRANS_RD_DATA                 = 4'b1101;
+localparam ST_MODULE_STOP                          = 4'b1110;
 
 reg [7:0] subcmd_byte_data;
 reg       subcmd_sda_ctrl ;
@@ -105,6 +108,7 @@ always @(posedge clk or negedge rstn) begin
     end else if(cmd_valid && cmd_ready) begin
         i2c_slave_addr_reg  <= i2c_slave_addr;
         i2c_read_write_reg  <= i2c_read_write;
+        i2c_read_ifstop_reg <= i2c_read_ifstop;
         i2c_addr_length_reg <= i2c_addr_length;
         i2c_start_addr_reg  <= i2c_start_addr;
     end else begin
@@ -178,7 +182,7 @@ always @(*) begin
     if(i2c_error_flag) st_iic_nt <= ST_IIC_IDLE;
     else if(i2c_start_flag) st_iic_nt <= ST_IIC_IDLE;
     else case(st_iic_cu)
-        ST_IIC_IDLE         : st_iic_nt <= ((st_module_cu != ST_MODULE_IDLE) && (st_module_cu != ST_MODULE_START) && (st_module_cu != ST_MODULE_STOP) && (st_module_cu != ST_MODULE_RESTART)) ? (ST_IIC_GET_SUBCMD) : (ST_IIC_IDLE);
+        ST_IIC_IDLE         : st_iic_nt <= ((st_module_cu != ST_MODULE_IDLE) && (st_module_cu != ST_MODULE_START) && (st_module_cu != ST_MODULE_STOP) && (st_module_cu != ST_MODULE_RESTOP) && (st_module_cu != ST_MODULE_RESTART)) ? (ST_IIC_GET_SUBCMD) : (ST_IIC_IDLE);
         ST_IIC_GET_SUBCMD   : st_iic_nt <= ST_IIC_BYTE7_UPDATE;
         ST_IIC_BYTE7_UPDATE : st_iic_nt <= (i2c_data_update ) ? (ST_IIC_BYTE7_CAPTURE) : (ST_IIC_BYTE7_UPDATE );
         ST_IIC_BYTE7_CAPTURE: st_iic_nt <= (i2c_data_capture) ? (ST_IIC_BYTE6_UPDATE ) : (ST_IIC_BYTE7_CAPTURE);
@@ -199,7 +203,7 @@ always @(*) begin
         ST_IIC_ACK_UPDATE   : st_iic_nt <= (i2c_data_update ) ? (ST_IIC_ACK_CAPTURE  ) : (ST_IIC_ACK_UPDATE   );
         ST_IIC_ACK_CAPTURE  : st_iic_nt <= (i2c_data_capture) ? (ST_IIC_BYTE_DONE    ) : (ST_IIC_ACK_CAPTURE  );
         ST_IIC_BYTE_DONE    : st_iic_nt <= ST_IIC_BYTE_DONE_D;
-        ST_IIC_BYTE_DONE_D  : st_iic_nt <= ((st_module_cu != ST_MODULE_IDLE) && (st_module_cu != ST_MODULE_START) && (st_module_cu != ST_MODULE_STOP) && (st_module_cu != ST_MODULE_RESTART)) ? (ST_IIC_GET_SUBCMD) : (ST_IIC_IDLE);
+        ST_IIC_BYTE_DONE_D  : st_iic_nt <= ((st_module_cu != ST_MODULE_IDLE) && (st_module_cu != ST_MODULE_START) && (st_module_cu != ST_MODULE_STOP) && (st_module_cu != ST_MODULE_RESTOP) && (st_module_cu != ST_MODULE_RESTART)) ? (ST_IIC_GET_SUBCMD) : (ST_IIC_IDLE);
         default             : st_iic_nt <= ST_IIC_IDLE;
     endcase
 end
@@ -209,6 +213,8 @@ always @(posedge clk or negedge rstn) begin
     if(~rstn) sda_out <= 1'b1;
     else if(st_module_cu == ST_MODULE_START && (~scl_in) && scl_enable) sda_out <= 1'b1;
     else if(st_module_cu == ST_MODULE_START && (scl_in) && scl_enable) sda_out <= 1'b0;
+    else if(st_module_cu == ST_MODULE_RESTOP && (~scl_in) && scl_enable) sda_out <= 1'b0;
+    else if(st_module_cu == ST_MODULE_RESTOP && i2c_data_capture) sda_out <= 1'b1;
     else if(st_module_cu == ST_MODULE_RESTART && (~scl_in) && scl_enable) sda_out <= 1'b1;
     else if(st_module_cu == ST_MODULE_RESTART && i2c_data_capture) sda_out <= 1'b0;
     else if(st_module_cu == ST_MODULE_STOP && (~scl_in) && scl_enable) sda_out <= 1'b0;
@@ -236,7 +242,7 @@ always @(posedge clk or negedge rstn) begin
     else if(i2c_data_update) begin
         if(st_iic_cu == ST_IIC_BYTE7_UPDATE) sda_enable <= subcmd_sda_ctrl;
         else if(st_iic_cu == ST_IIC_ACK_UPDATE) sda_enable <= ~subcmd_sda_ctrl;
-        else if(st_module_cu == ST_MODULE_STOP || st_module_cu == ST_MODULE_RESTART) sda_enable <= 1'b1;
+        else if(st_module_cu == ST_MODULE_STOP || st_module_cu == ST_MODULE_RESTOP || st_module_cu == ST_MODULE_RESTART) sda_enable <= 1'b1;
         else sda_enable <= sda_enable;
     end else sda_enable <= sda_enable;
 end
@@ -262,7 +268,8 @@ always @(*) begin
         ST_MODULE_TRANS_WR_DATA                : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE) && (i2c_data_length_reg == 0)) ? (ST_MODULE_STOP) : (ST_MODULE_TRANS_WR_DATA);
         ST_MODULE_TRANS_RD_IIC_ADDR_DUMMY      : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE)) ? ((i2c_addr_length_reg)?(ST_MODULE_TRANS_RD_START_ADDR_D10_DUMMY):(ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY)) : (ST_MODULE_TRANS_RD_IIC_ADDR_DUMMY);
         ST_MODULE_TRANS_RD_START_ADDR_D10_DUMMY: st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE)) ? (ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY) : (ST_MODULE_TRANS_RD_START_ADDR_D10_DUMMY);
-        ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE)) ? (ST_MODULE_RESTART) : (ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY);
+        ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE)) ? ((i2c_read_ifstop_reg)?(ST_MODULE_RESTOP):(ST_MODULE_RESTART)) : (ST_MODULE_TRANS_RD_START_ADDR_D7_DUMMY);
+        ST_MODULE_RESTOP                       : st_module_nt <= (i2c_stop_flag) ? (ST_MODULE_RESTART) : (ST_MODULE_RESTOP);
         ST_MODULE_RESTART                      : st_module_nt <= (i2c_start_flag) ? (ST_MODULE_TRANS_RD_IIC_ADDR) : (ST_MODULE_RESTART);
         ST_MODULE_TRANS_RD_IIC_ADDR            : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE)) ? (ST_MODULE_TRANS_RD_DATA) : (ST_MODULE_TRANS_RD_IIC_ADDR);
         ST_MODULE_TRANS_RD_DATA                : st_module_nt <= ((st_iic_cu == ST_IIC_BYTE_DONE) && (i2c_data_length_reg == 0)) ? (ST_MODULE_STOP) : (ST_MODULE_TRANS_RD_DATA);
