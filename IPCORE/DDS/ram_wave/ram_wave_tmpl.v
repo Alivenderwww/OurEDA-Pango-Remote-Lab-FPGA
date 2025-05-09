@@ -7,13 +7,13 @@
 
 
 ram_wave the_instance_name (
-  .wr_data(wr_data),    // input [23:0]
+  .wr_data(wr_data),    // input [7:0]
   .wr_addr(wr_addr),    // input [13:0]
   .wr_en(wr_en),        // input
   .wr_clk(wr_clk),      // input
   .wr_rst(wr_rst),      // input
   .rd_addr(rd_addr),    // input [13:0]
-  .rd_data(rd_data),    // output [23:0]
+  .rd_data(rd_data),    // output [7:0]
   .rd_clk(rd_clk),      // input
   .rd_rst(rd_rst)       // input
 );

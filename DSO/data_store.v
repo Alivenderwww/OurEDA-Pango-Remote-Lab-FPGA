@@ -1,4 +1,6 @@
-module data_store(
+module data_store #(
+    localparam HORIZONTAL = 640 //水平采样点数 最大1023
+)(
     input               rstn,      // 复位信号
 
     input       [7:0]   trig_level, // 触发电平
@@ -19,16 +21,16 @@ module data_store(
 );
 
 //reg define
-reg [8:0] wr_addr;      //RAM写地址
+reg [9:0] wr_addr;      //RAM写地址
 
 reg       trig_flag;    //触发标志 
 reg       trig_en;      //触发使能
-reg [8:0] trig_addr;    //触发地址
+reg [9:0] trig_addr;    //触发地址
 
 reg [7:0] pre_data;
 reg [7:0] pre_data1;
 reg [7:0] pre_data2;
-reg [8:0] data_cnt;
+reg [9:0] data_cnt;
 
 //wire define
 wire       wr_en;       //RAM写使能
@@ -41,7 +43,7 @@ wire [7:0] ram_rd_data;
 //*****************************************************
 //**                    main code
 //*****************************************************
-assign wr_en    = deci_valid && (data_cnt <= 299) && wave_run;
+assign wr_en    = deci_valid && (data_cnt <= HORIZONTAL-1) && wave_run;
 
 //计算波形水平偏移后的RAM数据地址
 assign shift_addr = h_shift[9] ? (wave_rd_addr-h_shift[8:0]) : //右移
@@ -49,9 +51,9 @@ assign shift_addr = h_shift[9] ? (wave_rd_addr-h_shift[8:0]) : //右移
 
 //根据触发地址，计算像素横坐标所映射的RAM地址
 assign rel_addr = trig_addr + shift_addr;
-assign rd_addr = (rel_addr<150) ? (rel_addr+150) : 
-                    (rel_addr>150+300-1) ? (rel_addr-(150+300)) :
-                        (rel_addr-150);
+assign rd_addr = (rel_addr<HORIZONTAL/2) ? (rel_addr+HORIZONTAL/2) : 
+                    (rel_addr>HORIZONTAL/2+HORIZONTAL-1) ? (rel_addr-(HORIZONTAL/2+HORIZONTAL)) :
+                        (rel_addr-HORIZONTAL/2);
 
 //满足触发条件时输出脉冲信号
 assign trig_pulse = trig_edge ? 
@@ -68,44 +70,44 @@ always @(posedge ram_rd_clk or negedge rstn)begin
     if(!rstn) outrange <= 1'b0;
     else if(h_shift[9] && (wave_rd_addr<h_shift[8:0]))//右移时判断左边界
             outrange <= 1'b1;          
-    else if((~h_shift[9]) && (wave_rd_addr+h_shift[8:0]>299)) //左移时判断右边界
+    else if((~h_shift[9]) && (wave_rd_addr+h_shift[8:0]>HORIZONTAL-1)) //左移时判断右边界
         outrange <= 1'b1; 
     else outrange <= 1'b0;
 end
 
 //写RAM地址累加
 always @(posedge ad_clk or negedge rstn)begin
-    if(!rstn) wr_addr  <= 9'd0;
+    if(!rstn) wr_addr  <= 0;
     else if(deci_valid) begin
-        if(wr_addr < 9'd299) wr_addr <= wr_addr + 1'b1;
-        else wr_addr  <= 9'd0;
+        if(wr_addr < HORIZONTAL-1) wr_addr <= wr_addr + 1;
+        else wr_addr  <= 0;
     end
 end
 
 //触发使能
 always @(posedge ad_clk or negedge rstn)begin
     if(!rstn) begin
-        data_cnt <= 9'd0;
+        data_cnt <= 0;
         trig_en  <= 1'b0;
     end
     else begin
         if(deci_valid) begin
-            if(data_cnt < 149) begin    //触发前至少接收150个数据
-                data_cnt <= data_cnt + 1'b1;
+            if(data_cnt < HORIZONTAL/2-1) begin    //触发前至少接收150个数据
+                data_cnt <= data_cnt + 1;
                 trig_en  <= 1'b0;
             end else begin
                 trig_en <= 1'b1;        //打开触发使能
                 if(trig_flag) begin     //检测到触发信号
                     trig_en <= 1'b0;
-                    if(data_cnt < 300)  //继续接收150个数据
-                        data_cnt <= data_cnt + 1'b1;
+                    if(data_cnt < HORIZONTAL)  //继续接收150个数据
+                        data_cnt <= data_cnt + 1;
                 end
             end
 
         end
                                         //波形绘制完成后重新计数
-        if((data_cnt == 300) && ram_rd_over & wave_run)
-            data_cnt <= 9'd0;
+        if((data_cnt == HORIZONTAL) && ram_rd_over & wave_run)
+            data_cnt <= 0;
     end
 end
 
@@ -125,7 +127,7 @@ end
 //触发检测
 always @(posedge ad_clk or negedge rstn)begin
     if(!rstn) begin
-        trig_addr <= 9'd0;
+        trig_addr <= 0;
         trig_flag <= 1'b0;
     end
     else begin
@@ -133,7 +135,7 @@ always @(posedge ad_clk or negedge rstn)begin
             trig_flag <= 1'b1;
             trig_addr <= wr_addr + 2;
         end
-        if(trig_flag && (data_cnt == 300) && ram_rd_over && wave_run)
+        if(trig_flag && (data_cnt == HORIZONTAL) && ram_rd_over && wave_run)
             trig_flag <= 1'b0;
     end
 end
@@ -142,11 +144,11 @@ dso_ram_2port u_dso_ram_2port (
   .wr_clk   (ad_clk     ),    // input
   .wr_rst   (~rstn      ),    // input
   .wr_en    (wr_en      ),    // input
-  .wr_addr  (wr_addr    ),    // input [8:0]
+  .wr_addr  (wr_addr    ),    // input [9:0]
   .wr_data  (ad_data    ),    // input [7:0]
   .rd_clk   (ram_rd_clk ),    // input
   .rd_rst   (~rstn      ),    // input
-  .rd_addr  (rd_addr    ),    // input [8:0]
+  .rd_addr  (rd_addr    ),    // input [9:0]
   .rd_data  (ram_rd_data)     // output [7:0]
 );
 

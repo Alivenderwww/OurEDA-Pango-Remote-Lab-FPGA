@@ -32,7 +32,7 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_ADDR_WIDTH = 14 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 24 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 8 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 2,128
 
@@ -42,7 +42,7 @@ localparam WR_ADDR_STROBE_EN = 0 ; // @IPC bool
 
 localparam RD_ADDR_WIDTH = 14 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 24 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 8 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 2,128
 
@@ -56,11 +56,11 @@ localparam RD_OCE_EN = 0 ; // @IPC bool
 
 localparam RD_CLK_OR_POL_INV = 0 ; // @IPC bool
 
-localparam INIT_EN = 0 ; // @IPC bool
+localparam INIT_EN = 1 ; // @IPC bool
 
-localparam INIT_FILE = "NONE" ; // @IPC string
+localparam INIT_FILE = "C:/_Project/Pangu/DDS/test.dat" ; // @IPC string
 
-localparam INIT_FORMAT = "BIN" ; // @IPC enum BIN,HEX
+localparam INIT_FORMAT = "HEX" ; // @IPC enum BIN,HEX
 
 localparam RST_VAL_EN = 0 ; // @IPC bool
 

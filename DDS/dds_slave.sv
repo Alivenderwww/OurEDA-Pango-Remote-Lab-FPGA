@@ -1,7 +1,7 @@
 module dds_slave#(
    parameter CHANNEL_NUM = 2, //共有2条输出通道，可并行输出2路波形。
    parameter VERTICAL_RESOLUTION = 8 ,
-   parameter OFFSER_ADDR = 32'h4000_0000
+   parameter OFFSET_ADDR = 32'h4000_0000
 )(
    input wire clk,
    input wire rstn,
@@ -128,7 +128,7 @@ end
 
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) wr_addr <= 0;
-    else if(DDS_SLAVE_WR_ADDR_READY && DDS_SLAVE_WR_ADDR_VALID) wr_addr <= DDS_SLAVE_WR_ADDR - OFFSER_ADDR;
+    else if(DDS_SLAVE_WR_ADDR_READY && DDS_SLAVE_WR_ADDR_VALID) wr_addr <= DDS_SLAVE_WR_ADDR - OFFSET_ADDR;
     else if((cu_wr_st == ST_WR_DATA) && DDS_SLAVE_WR_DATA_READY && DDS_SLAVE_WR_DATA_VALID && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -181,7 +181,7 @@ end
 
 always @(posedge clk or negedge DDS_SLAVE_RSTN_SYNC) begin
     if(~DDS_SLAVE_RSTN_SYNC) rd_addr <= 0;
-    else if(DDS_SLAVE_RD_ADDR_READY && DDS_SLAVE_RD_ADDR_VALID) rd_addr <= DDS_SLAVE_RD_ADDR-OFFSER_ADDR;
+    else if(DDS_SLAVE_RD_ADDR_READY && DDS_SLAVE_RD_ADDR_VALID) rd_addr <= DDS_SLAVE_RD_ADDR-OFFSET_ADDR;
     else if((cu_rd_st == ST_RD_DATA) && DDS_SLAVE_RD_DATA_READY && DDS_SLAVE_RD_DATA_VALID && (rd_addr_burst == 2'b01)) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
