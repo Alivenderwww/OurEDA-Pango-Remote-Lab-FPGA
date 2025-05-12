@@ -30,6 +30,7 @@ reg [9:0] trig_addr;    //触发地址
 reg [7:0] pre_data;
 reg [7:0] pre_data1;
 reg [7:0] pre_data2;
+reg [7:0] pre_data3;
 reg [9:0] data_cnt;
 
 //wire define
@@ -56,11 +57,8 @@ assign rd_addr = (rel_addr<HORIZONTAL/2) ? (rel_addr+HORIZONTAL/2) :
                         (rel_addr-HORIZONTAL/2);
 
 //满足触发条件时输出脉冲信号
-assign trig_pulse = trig_edge ? 
-                    ((pre_data2<trig_level) && (pre_data1<trig_level) 
-                        && (pre_data>=trig_level) && (ad_data>trig_level)) :
-                    ((pre_data2>trig_level) && (pre_data1>trig_level) 
-                        && (pre_data<=trig_level) && (ad_data<trig_level));        
+assign trig_pulse = trig_edge ? ((pre_data3<trig_level) && (pre_data2<trig_level) && (pre_data1>=trig_level) && (pre_data>trig_level)) :
+                                ((pre_data3>trig_level) && (pre_data2>trig_level) && (pre_data1<=trig_level) && (pre_data<trig_level));        
 
 //读出的数据为255时超出波形显示范围
 assign wave_rd_data = outrange ? 8'd255 : (ram_rd_data); 
@@ -117,10 +115,12 @@ always @(posedge ad_clk or negedge rstn)begin
         pre_data  <= 8'd0;
         pre_data1 <= 8'd0;
         pre_data2 <= 8'd0;
+        pre_data3 <= 8'd0;
     end else if(deci_valid) begin
         pre_data  <= ad_data;
         pre_data1 <= pre_data;
         pre_data2 <= pre_data1;
+        pre_data3 <= pre_data2;
     end
 end
 
