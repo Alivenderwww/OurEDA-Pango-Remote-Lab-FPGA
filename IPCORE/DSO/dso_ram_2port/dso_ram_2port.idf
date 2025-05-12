@@ -15,23 +15,15 @@
     </header>
     <param_list>
         <param>
-            <name>RST_VAL_EN</name>
-            <value>false</value>
-        </param>
-        <param>
             <name>CAS_MODE</name>
             <value>18K</value>
         </param>
         <param>
-            <name>WR_ADDR_WIDTH</name>
-            <value>10</value>
+            <name>RST_VAL</name>
+            <value>0</value>
         </param>
         <param>
-            <name>INIT_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>RD_ADDR_STROBE_EN</name>
+            <name>RD_CLK_EN</name>
             <value>false</value>
         </param>
         <param>
@@ -39,35 +31,11 @@
             <value>1</value>
         </param>
         <param>
-            <name>INIT_FILE</name>
-            <value>NONE</value>
-        </param>
-        <param>
-            <name>RESET_TYPE</name>
-            <value>ASYNC</value>
-        </param>
-        <param>
-            <name>RD_ADDR_WIDTH</name>
-            <value>10</value>
-        </param>
-        <param>
             <name>WR_DATA_WIDTH</name>
             <value>8</value>
         </param>
         <param>
-            <name>POWER_OPT</name>
-            <value>false</value>
-        </param>
-        <param>
             <name>WR_CLK_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>BYTE_SIZE</name>
-            <value>8</value>
-        </param>
-        <param>
-            <name>RD_CLK_OR_POL_INV</name>
             <value>false</value>
         </param>
         <param>
@@ -75,7 +43,39 @@
             <value>false</value>
         </param>
         <param>
-            <name>RD_OCE_EN</name>
+            <name>WR_BYTE_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>INIT_FORMAT</name>
+            <value>BIN</value>
+        </param>
+        <param>
+            <name>INIT_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>SAMEWIDTH_EN</name>
+            <value>true</value>
+        </param>
+        <param>
+            <name>RESET_TYPE</name>
+            <value>ASYNC</value>
+        </param>
+        <param>
+            <name>BE_WIDTH</name>
+            <value>1</value>
+        </param>
+        <param>
+            <name>RD_CLK_OR_POL_INV</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RD_ADDR_STROBE_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>WR_ADDR_STROBE_EN</name>
             <value>false</value>
         </param>
         <param>
@@ -83,36 +83,36 @@
             <value>AUTO</value>
         </param>
         <param>
-            <name>SAMEWIDTH_EN</name>
-            <value>true</value>
+            <name>INIT_FILE</name>
+            <value>NONE</value>
         </param>
         <param>
-            <name>BE_WIDTH</name>
-            <value>1</value>
+            <name>WR_ADDR_WIDTH</name>
+            <value>11</value>
         </param>
         <param>
-            <name>INIT_FORMAT</name>
-            <value>BIN</value>
-        </param>
-        <param>
-            <name>WR_ADDR_STROBE_EN</name>
+            <name>RD_OCE_EN</name>
             <value>false</value>
         </param>
         <param>
-            <name>RD_CLK_EN</name>
+            <name>RST_VAL_EN</name>
             <value>false</value>
         </param>
         <param>
-            <name>RST_VAL</name>
-            <value>0</value>
+            <name>POWER_OPT</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RD_ADDR_WIDTH</name>
+            <value>11</value>
         </param>
         <param>
             <name>OUTPUT_REG</name>
             <value>false</value>
         </param>
         <param>
-            <name>WR_BYTE_EN</name>
-            <value>false</value>
+            <name>BYTE_SIZE</name>
+            <value>8</value>
         </param>
         <param>
             <name>RD_DATA_WIDTH</name>
@@ -133,7 +133,7 @@
             <text>wr_addr</text>
             <dir>input</dir>
             <pos>left</pos>
-            <msb>9</msb>
+            <msb>10</msb>
             <lsb>0</lsb>
         </pin>
         <pin>
@@ -159,7 +159,7 @@
             <text>rd_addr</text>
             <dir>input</dir>
             <pos>right</pos>
-            <msb>9</msb>
+            <msb>10</msb>
             <lsb>0</lsb>
         </pin>
         <pin>
