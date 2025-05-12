@@ -36,12 +36,12 @@ reg [ADDR_WIDTH-1:0] data_cnt;
 reg                  wr_pingpong;  //pingpong写标志
 
 //wire define
-wire                  wr_en;       //RAM写使能
-wire [ADDR_WIDTH-1:0] rd_addr;     //RAM地址
-wire [ADDR_WIDTH-1:0] rel_addr;    //相对触发地址
-wire [ADDR_WIDTH-1:0] shift_addr;  //偏移后的地址
-wire                  trig_pulse;  //满足触发条件时产生脉冲
-wire [7:0]            ram_rd_data;
+wire                      wr_en;       //RAM写使能
+wire [ADDR_WIDTH-1+1:0]   rd_addr;     //RAM地址
+wire [ADDR_WIDTH-1+1:0]   rel_addr;    //相对触发地址
+wire [ADDR_WIDTH-1+1:0]   shift_addr;  //偏移后的地址
+wire                      trig_pulse;  //满足触发条件时产生脉冲
+wire [7:0]                ram_rd_data;
 
 //*****************************************************
 //**                    main code
@@ -149,11 +149,11 @@ dso_ram_2port u_dso_ram_2port ( //addr width is ADDR_WIDTH+1()pingpong
   .wr_clk   (ad_clk                  ),    // input
   .wr_rst   (~rstn                   ),    // input
   .wr_en    (wr_en                   ),    // input
-  .wr_addr  ({wr_pingpong,wr_addr}   ),    // input [10:0]
+  .wr_addr  ({wr_pingpong,wr_addr[0+:ADDR_WIDTH]}   ),    // input [10:0]
   .wr_data  (ad_data                 ),    // input [7:0]
   .rd_clk   (ram_rd_clk              ),    // input
   .rd_rst   (~rstn                   ),    // input
-  .rd_addr  ({(~wr_pingpong),rd_addr}),    // input  [10:0]
+  .rd_addr  ({(~wr_pingpong),rd_addr[0+:ADDR_WIDTH]}),    // input  [10:0]
   .rd_data  (ram_rd_data             )     // output [7:0]
 );
 

@@ -5,7 +5,7 @@ reg         clk;
 reg         rstn;       
 reg         ad_clk;     
 reg  [7:0]  ad_data;    
-reg         wave_run;   
+reg         wave_run;
 reg  [7:0]  trig_level; 
 reg         trig_edge;  
 reg  [9:0]  h_shift;    
@@ -13,7 +13,7 @@ reg  [9:0]  deci_rate;
 reg         ram_rd_clk;
 wire        ram_rd_over;
 reg         ram_rd_en;
-wire [8:0]  wave_rd_addr;
+wire [9:0]  wave_rd_addr;
 
 // outports wire
 wire [7:0]  	wave_rd_data;
@@ -24,13 +24,13 @@ wire [7:0]  	ad_vpp;
 wire [7:0]  	ad_max;
 wire [7:0]  	ad_min;
 
-real freq = 1e6;    // 1 MHz
+real freq = 500;    // 500 Hz
 real amp = 127.0;   // Full scale
 real phase = 0.0;   // 0 degree phase
 
 always #10 clk = ~clk; // 50MHz
-always #4 ad_clk = ~ad_clk; // 125MHz
-always #20 ram_rd_clk = ~ram_rd_clk; // 25MHz
+always #20 ad_clk = ~ad_clk; // 25MHz
+always #10 ram_rd_clk = ~ram_rd_clk; // 50MHz
 initial begin
     clk = 1'b0;
 	ad_clk = 1'b0;
@@ -52,7 +52,7 @@ initial begin
 	trig_level = 8'd128;
 	trig_edge = 1'b0;
 	h_shift = 10'd0;
-	deci_rate = 10'd2;
+	deci_rate = 10'd250;
 	ram_rd_en = 1'b0;
 end
 
@@ -91,12 +91,12 @@ end
 reg [31:0] cnt;
 always @(posedge ram_rd_clk) begin
 	if(~rstn) cnt <= 0;
-	else if(cnt >= 299) cnt <= 0;
+	else if(cnt >= 640-1) cnt <= 0;
 	else if(ram_rd_en) cnt <= cnt + 1;
 	else cnt <= cnt;
 end
-assign ram_rd_over = (cnt == 299) ? 1'b1 : 1'b0; // 300个时钟周期后ram_rd_over信号拉高
-assign wave_rd_addr = cnt[8:0]; // 9位地址线
+assign ram_rd_over = (cnt == 640-1) ? 1'b1 : 1'b0; // 300个时钟周期后ram_rd_over信号拉高
+assign wave_rd_addr = cnt[9:0]; // 10位地址线
 
 
 reg grs_n;
