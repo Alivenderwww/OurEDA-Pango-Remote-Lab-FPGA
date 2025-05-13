@@ -57,8 +57,8 @@ led_display_ctrl #(
 matrix_key #(
 	.ROW_NUM       	( 4     ),
 	.COL_NUM       	( 4     ),
-	.DEBOUNCE_TIME 	( 2000  ),
-	.DELAY_TIME    	( 200   ))
+	.DEBOUNCE_TIME 	( 10000 ),
+	.DELAY_TIME    	( 2000  ))
 u_matrix_key(
 	.clk     	( external_clk  ),
 	.rstn    	( external_rstn ),
