@@ -1,6 +1,7 @@
 create_clock -name {external_clk} [get_ports {external_clk        }] -period {20.000} -waveform {0.000 10.000}
-create_clock -name {rgmii_rxc}    [get_ports {rgmii_rxc           }] -period {8.000} -waveform {0.000 4.000}
-create_clock -name {rgmii_txc}    [get_ports {rgmii_txc           }] -period {8.000} -waveform {0.000 4.000} 
+create_clock -name {rgmii_rxc}    [get_ports {rgmii_rxc           }] -period {8.000 } -waveform {0.000 4.000}
+create_clock -name {rgmii_txc}    [get_ports {rgmii_txc           }] -period {8.000 } -waveform {0.000 4.000} 
+create_clock -name {ddr_ref_clk}  [get_pins  {S0.ddr_ref_clk      }] -period {20.0  } -waveform {0 10.0}
 define_attribute   {n:rgmii_rxc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:rgmii_txc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 
@@ -92,6 +93,32 @@ set_max_delay {6.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slav
 set_max_delay {8.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[0].u_s_axi_async_3.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[0].u_s_axi_async_3.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
 set_max_delay {6.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[0].u_s_axi_async_3.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[0].u_s_axi_async_3.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
 
+
+###==== BEGIN "Generated Clocks"
+#ads
+create_generated_clock -name {rst_clk} -source [get_clocks {ddr_ref_clk}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.rst_clk_gpll/clkout0}] -master_clock [get_clocks {ddr_ref_clk}] -multiply_by {36} -divide_by {36}
+create_generated_clock -name {ddrphy_sysclk} -source [get_clocks {ddr_ref_clk}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_gpll/clkout0}] -master_clock [get_clocks {ddr_ref_clk}] -multiply_by {36} -divide_by {24}
+create_generated_clock -name {phy_dq_clk_0} -source [get_clocks {ddr_ref_clk}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll/clkoutphy}] -master_clock [get_clocks {ddr_ref_clk}] -multiply_by {36} -divide_by {3}
+create_generated_clock -name {phy_dq_sysclk_0} -source [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll/clkoutphy}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].u_ddrphy_ioclkdiv/CLKDIVOUT}] -master_clock [get_clocks {phy_dq_clk_0}] -edges {5 13 21} -edge_shift {0 0 0}
+set_multicycle_path 2 -from [get_clocks ddrphy_sysclk] -to [get_clocks phy_dq_sysclk_0]
+create_generated_clock -name {phy_dq_clk_1} -source [get_clocks {ddr_ref_clk}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[1].ddrphy_ppll/clkoutphy}] -master_clock [get_clocks {ddr_ref_clk}] -multiply_by {36} -divide_by {3}
+create_generated_clock -name {phy_dq_sysclk_1} -source [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[1].ddrphy_ppll/clkoutphy}] [get_pins {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[1].u_ddrphy_ioclkdiv/CLKDIVOUT}] -master_clock [get_clocks {phy_dq_clk_1}] -edges {5 13 21} -edge_shift {0 0 0}
+set_multicycle_path 2 -from [get_clocks ddrphy_sysclk] -to [get_clocks phy_dq_sysclk_1]
+set_clock_uncertainty {0.4} -from [get_clocks {ddrphy_sysclk}] -to [get_clocks {phy_dq_sysclk_0}] -setup -hold
+set_clock_uncertainty {0.4} -from [get_clocks {phy_dq_sysclk_0}] -to [get_clocks {ddrphy_sysclk}] -setup -hold
+set_clock_uncertainty {0.4} -from [get_clocks {ddrphy_sysclk}] -to [get_clocks {phy_dq_sysclk_1}] -setup -hold
+set_clock_uncertainty {0.4} -from [get_clocks {phy_dq_sysclk_1}] -to [get_clocks {ddrphy_sysclk}] -setup -hold
+###==== BEGIN Logical
+define_attribute {i:S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.u_ddrphy_cpd} {PAP_LOC} {DDRPHY_CPD_369_466}
+define_attribute {i:S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[0]} {PAP_LOC} {CLMA_357_354:FF3}
+define_attribute {i:S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[1]} {PAP_LOC} {CLMA_357_660:FF3}
+
+
+set_clock_groups -name external_clk -asynchronous -group [get_clocks {external_clk}]
+set_clock_groups -name ddr_ref_clk -asynchronous -group [get_clocks {ddr_ref_clk}]
+set_clock_groups -name rst_clk -asynchronous -group [get_clocks {rst_clk}]
+set_clock_groups -name phy_dq_clk_0 -asynchronous -group [get_clocks {phy_dq_clk_0}]
+set_clock_groups -name phy_dq_clk_1 -asynchronous -group [get_clocks {phy_dq_clk_1}]
 
 define_attribute {p:external_clk} {PAP_IO_DIRECTION} {INPUT}
 define_attribute {p:external_clk} {PAP_IO_LOC} {R3}
