@@ -46,10 +46,10 @@ module hsst_axi_slave (
 //一共有4种任务形式,写本地localtask_wr,读本地localtask_rd,向labfpga传输数据(txtask_wr,txtask_rd),接收来自labfpga的cmd
 wire hsstinit;
 wire o_pll_done_0;
-wire o_txlane_done_0;
-wire o_txlane_done_1;
-wire o_rxlane_done_0;
-wire o_rxlane_done_1;
+wire o_txlane_done_0/* synthesis PAP_MARK_DEBUG="1" */;
+wire o_txlane_done_1/* synthesis PAP_MARK_DEBUG="1" */;
+wire o_rxlane_done_0/* synthesis PAP_MARK_DEBUG="1" */;
+wire o_rxlane_done_1/* synthesis PAP_MARK_DEBUG="1" */;
 wire o_p_pll_lock_0;
 wire o_p_rx_sigdet_sta_0;
 wire o_p_rx_sigdet_sta_1;
@@ -61,14 +61,14 @@ wire rxclk_0/* synthesis PAP_MARK_DEBUG="1" */;
 wire rxclk_1;
 reg  [31:0] i_txd_0;
 reg  [ 3:0] i_txk_0;
-reg  [31:0] i_txd_1;
-reg  [ 3:0] i_txk_1;
+reg  [31:0] i_txd_1/* synthesis PAP_MARK_DEBUG="1" */;
+reg  [ 3:0] i_txk_1/* synthesis PAP_MARK_DEBUG="1" */;
 wire data_valid_0/* synthesis PAP_MARK_DEBUG="1" */;
-wire data_valid_1;
+wire data_valid_1/* synthesis PAP_MARK_DEBUG="1" */;
 wire [31:0] data_af_align_0/* synthesis PAP_MARK_DEBUG="1" */;
-wire [31:0] data_af_align_1;
+wire [31:0] data_af_align_1/* synthesis PAP_MARK_DEBUG="1" */;
 wire data_last_0/* synthesis PAP_MARK_DEBUG="1" */;                   //rxclk
-wire data_last_1;
+wire data_last_1/* synthesis PAP_MARK_DEBUG="1" */;
 wire rstn_sync_for_rxclk;
 wire rstn_sync_for_txclk;
 rstn_sync rstn_sync_hsst_rxclk(rxclk_0, rstn, rstn_sync_for_rxclk);
@@ -528,4 +528,19 @@ hsst_for_ctrlfpga_dut_top  hsst_for_ctrlfpga_dut_top_inst (
     .data_last_0(data_last_0),
     .data_last_1(data_last_1)
   );    
+
+always@(posedge txclk_1 or negedge rstn)begin
+    if(~rstn)begin
+        i_txd_1 <= 32'hBCBCBCBC;
+        i_txk_1 <= 4'b1111;
+    end
+    else if(data_valid_1)begin
+        i_txd_1 <= data_af_align_1;
+        i_txk_1 <= 4'b0000;
+    end
+    else begin
+        i_txd_1 <= 32'hBCBCBCBC;
+        i_txk_1 <= 4'b1111;
+    end
+end
 endmodule

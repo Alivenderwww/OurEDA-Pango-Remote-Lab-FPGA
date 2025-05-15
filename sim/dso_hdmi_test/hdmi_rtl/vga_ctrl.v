@@ -113,8 +113,8 @@ assign wave_rd_addr = (ram_rd_en == 1'b1)? (cnt_h - (H_SYNC + H_BACK + H_LEFT - 
 assign ram_rd_over  = ((cnt_v == V_TOTAL - 1'd1) && (cnt_h == H_TOTAL-1'd1)) ? 1'b1 : 1'b0;
 //ram_rd_en:比pix_x，pix_data_req提前1个时钟周期，比rgb_valid提前2个
 assign  ram_rd_en   = (((cnt_h >= H_SYNC + H_BACK + H_LEFT - 2)
-                    && (cnt_h < H_SYNC + H_BACK + H_LEFT - 2 + 300))
+                    && (cnt_h < H_SYNC + H_BACK + H_LEFT - 2 + 640))
                     &&((cnt_v >= V_SYNC + V_BACK + V_TOP)
-                    && (cnt_v < V_SYNC + V_BACK + V_TOP + V_VALID)))
+                    && (cnt_v < V_SYNC + V_BACK + V_TOP + 256)))
                     ? 1'b1 : 1'b0;
 endmodule

@@ -13,12 +13,11 @@ module  vga_pic
     input   wire            sys_rst_n   ,   //输入复位信号,低电平有效
     input   wire    [11:0]  pix_x       ,   //输入VGA有效显示区域像素点X轴坐标
     input   wire    [11:0]  pix_y       ,   //输入VGA有效显示区域像素点Y轴坐标
-    input   wire    [ 7:0]  wave_rd_data,   // RAM读数据
     output  wire    [15:0]  pix_data_out        //输出像素点色彩信息
 );
 
 reg [15:0]  pix_data;
-
+assign pix_data_out = pix_data;
 //********************************************************************//
 //****************** Parameter and Internal Signal *******************//
 //********************************************************************//
@@ -70,18 +69,4 @@ end
 //********************************************************************//
 //********************************************************************//
 //********************************************************************//
-reg [15:0]  pix_wave_data;
-assign pix_data_out = (pix_x < 300 && pix_y < 256) ? pix_wave_data : pix_data;
-always@(posedge vga_clk or negedge sys_rst_n) begin
-    if(sys_rst_n == 1'b0)
-        pix_wave_data <= 16'd0;
-    else if(pix_x >= 0 && pix_x < 300 && pix_y < 256)begin
-        if(wave_rd_data == 255 - pix_y)
-            pix_wave_data <= WHITE;
-        else 
-            pix_wave_data <= BLACK;
-    end
-    else 
-        pix_wave_data <= GRAY;
-end
 endmodule

@@ -21,15 +21,26 @@ module Word_Alignment_32bit (
 //K29.7     FD
 //K30.7     FE
 //********************** Pattern Controller ********************************************
-// 8B10B Pattern Format:
-//    0        4        8        12       16       20       24       28       32
-// __ ________ ________ ________ ________ ________ ________ ________ ________ ________
-// __X___a____X__idle__X__idle__X__idle__X__idle__X__idle__X__skip__X___pl___X___a____
+// txdata format
+// data_x = {data_x_1,data_x_2,data_x_3,data_x_4}
+// 假如发送数据是data_1，data_2，data_3
+// 接收数据很可能会出现
+// {data_1}
+//
+//
+//
+//
+//
+//
+// data Format:
 // 
-// a:    4 bytes Channel Bonding Special Code //no bonding >>>> a    <= idle
-// idle: 4 bytes Idle Special Code            //idle       >>>> idle <= K28.3
-// skip: 4 bytes Skip Special Code            //no skip    >>>> skip <= idle
-// pl:   4 bytes Payload                      // pl        >>>> pl   <= real_data
+// __ ________ ________ ________ ________          ________ ________ ________ ________ ________
+// __X_ idle__X__idle__X__idle__X__data__x ……………… x__data__X__idle__X__idle__X__idle__X___idle_
+// 
+// idle   <=  K28.5
+// 空闲时发送K28.5，有数据时发送数据，
+// 本模块根据以上格式实现32位数据对齐，使得接收数据与发送数据一致，不会出现错位。
+// 
 // 
 //**************************************************************************************
 
