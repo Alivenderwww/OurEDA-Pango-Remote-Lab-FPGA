@@ -1,0 +1,102 @@
+##### Written on 2025/05/13 20:44:38 ###############################
+
+
+##### INFO ##################################################
+
+Current device : 
+	PG2L100H-6FBG676
+
+Top Module : 
+	hdmi_top
+
+Constraint File(s) : 
+	E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc
+
+##### SUMMARY ######################################################
+
+Found 0 error(s), 21 critical warning(s), 0 warning(s), out of 268 constraint(s)
+
+
+Inapplicable constraints(except overwritten constraints):
+********************************************
+
+define_attribute {p:b_out[7]} {PAP_IO_LOC} {T22}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 2)] | Port b_out[7] has been placed at location T22, whose type is share pin.
+
+define_attribute {p:b_out[6]} {PAP_IO_LOC} {R22}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 9)] | Port b_out[6] has been placed at location R22, whose type is share pin.
+
+define_attribute {p:b_out[5]} {PAP_IO_LOC} {N18}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 16)] | Port b_out[5] has been placed at location N18, whose type is share pin.
+
+define_attribute {p:b_out[0]} {PAP_IO_LOC} {P19}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 51)] | Port b_out[0] has been placed at location P19, whose type is share pin.
+
+define_attribute {p:g_out[6]} {PAP_IO_LOC} {N23}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 65)] | Port g_out[6] has been placed at location N23, whose type is share pin.
+
+define_attribute {p:g_out[5]} {PAP_IO_LOC} {N24}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 72)] | Port g_out[5] has been placed at location N24, whose type is share pin.
+
+define_attribute {p:g_out[4]} {PAP_IO_LOC} {P23}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 79)] | Port g_out[4] has been placed at location P23, whose type is share pin.
+
+define_attribute {p:g_out[3]} {PAP_IO_LOC} {P24}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 86)] | Port g_out[3] has been placed at location P24, whose type is share pin.
+
+define_attribute {p:g_out[2]} {PAP_IO_LOC} {R25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 93)] | Port g_out[2] has been placed at location R25, whose type is share pin.
+
+define_attribute {p:g_out[1]} {PAP_IO_LOC} {P25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 100)] | Port g_out[1] has been placed at location P25, whose type is share pin.
+
+define_attribute {p:g_out[0]} {PAP_IO_LOC} {T25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 107)] | Port g_out[0] has been placed at location T25, whose type is share pin.
+
+define_attribute {p:r_out[7]} {PAP_IO_LOC} {P16}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 114)] | Port r_out[7] has been placed at location P16, whose type is share pin.
+
+define_attribute {p:r_out[6]} {PAP_IO_LOC} {K25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 121)] | Port r_out[6] has been placed at location K25, whose type is share pin.
+
+define_attribute {p:r_out[5]} {PAP_IO_LOC} {K26}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 128)] | Port r_out[5] has been placed at location K26, whose type is share pin.
+
+define_attribute {p:r_out[3]} {PAP_IO_LOC} {L25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 142)] | Port r_out[3] has been placed at location L25, whose type is share pin.
+
+define_attribute {p:hd_sda} {PAP_IO_LOC} {K23}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 170)] | Port hd_sda has been placed at location K23, whose type is share pin.
+
+define_attribute {p:de_out} {PAP_IO_LOC} {N19}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 177)] | Port de_out has been placed at location N19, whose type is share pin.
+
+define_attribute {p:hd_scl} {PAP_IO_LOC} {K22}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 184)] | Port hd_scl has been placed at location K22, whose type is share pin.
+
+define_attribute {p:hs_out} {PAP_IO_LOC} {R20}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 191)] | Port hs_out has been placed at location R20, whose type is share pin.
+
+define_attribute {p:rstn_out} {PAP_IO_LOC} {G25}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 212)] | Port rstn_out has been placed at location G25, whose type is share pin.
+
+define_attribute {p:vs_out} {PAP_IO_LOC} {R21}
+	C: ConstraintEditor-2002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/hdmi/rtl/hdmi_out.fdc(line number: 219)] | Port vs_out has been placed at location R21, whose type is share pin.
+
+
+Constraints with issues:
+********************************************
+
+
+Issues without commands:
+********************************************
+
+
+Unconstrained ports:
+********************************************
+
+
+Constraints with matching wildcard expressions:
+********************************************
+
+

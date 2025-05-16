@@ -1,0 +1,174 @@
+# //  ModelSim SE-64 10.5 Feb 13 2016 
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do sim.tcl
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap work work 
+# Modifying modelsim.ini
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
+# Start time: 16:20:45 on May 08,2025
+# vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
+# -- Compiling module pwm
+# -- Compiling module pwm_tb
+# 
+# Top level modules:
+# 	pwm_tb
+# End time: 16:20:45 on May 08,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
+# vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva pwm_tb 
+# Start time: 16:20:45 on May 08,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading sv_std.std
+# Loading work.pwm_tb(fast)
+# Loading work.pwm(fast)
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+add wave -position end  sim:/pwm_tb/pwm_inst/PWM_PERIOD
+add wave -position end  sim:/pwm_tb/pwm_inst/sysclk
+add wave -position end  sim:/pwm_tb/pwm_inst/rstn
+add wave -position end  sim:/pwm_tb/pwm_inst/led
+add wave -position end  sim:/pwm_tb/pwm_inst/pwm_cnt
+add wave -position end  sim:/pwm_tb/pwm_inst/duty
+add wave -position end  sim:/pwm_tb/pwm_inst/inc_dec_flag
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.pwm_tb(fast)
+# Loading work.pwm(fast)
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.pwm_tb(fast)
+# Loading work.pwm(fast)
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+# End time: 19:35:17 on May 08,2025, Elapsed time: 3:14:32
+# Errors: 0, Warnings: 1

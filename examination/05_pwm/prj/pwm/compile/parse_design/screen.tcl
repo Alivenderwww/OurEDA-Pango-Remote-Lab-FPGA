@@ -1,0 +1,1 @@
+.rtl_screen -top_module {pwm} -include_path {<E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/prj/pwm>} -design_files {<E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/rtl/pwm.v|work>}

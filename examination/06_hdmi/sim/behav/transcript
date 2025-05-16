@@ -1,0 +1,98 @@
+# //  ModelSim SE-64 10.5 Feb 13 2016 
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do sim.tcl
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap work work 
+# Modifying modelsim.ini
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
+# Start time: 20:12:51 on May 13,2025
+# vlog -reportprogress 300 -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f 
+# -- Compiling module hdmi_top
+# -- Compiling module iic_dri
+# -- Compiling module ms7210_ctl
+# -- Compiling module ms7210_ctrl_iic_top
+# -- Compiling module vga_ctrl
+# -- Compiling module vga_pic
+# -- Compiling module hdmi_top_tb
+# 
+# Top level modules:
+# 	ms7210_ctrl_iic_top
+# 	hdmi_top_tb
+# End time: 20:12:51 on May 13,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# ** Warning: (vsim-53) Cannot suppress or change severity level of message number 1.
+# vsim -suppress 3486,3680,3781 -voptargs=""+acc"" "+nowarn1" -c -sva hdmi_top_tb 
+# Start time: 20:12:51 on May 13,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# Loading sv_std.std
+# Loading work.hdmi_top_tb(fast)
+# Loading work.hdmi_top(fast)
+# Loading work.vga_ctrl(fast)
+# Loading work.vga_pic(fast)
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_SYNC
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_BACK
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_LEFT
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_VALID
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_RIGHT
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_FRONT
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/H_TOTAL
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_SYNC
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_BACK
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_TOP
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_VALID
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_BOTTOM
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_FRONT
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/V_TOTAL
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/vga_clk
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/sys_rst_n
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/pix_data
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/pix_x
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/pix_y
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/hsync
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/vsync
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/rgb_valid
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/rgb
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/pix_data_req
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/cnt_h
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_ctrl_inst/cnt_v
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/H_VALID
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/V_VALID
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/RED
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/ORANGE
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/YELLOW
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/GREEN
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/CYAN
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/BLUE
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/PURPPLE
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/BLACK
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/WHITE
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/GRAY
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/vga_clk
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/sys_rst_n
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/pix_x
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/pix_y
+add wave -position end  sim:/hdmi_top_tb/hdmi_top_inst/vga_pic_inst/pix_data
+restart
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading work.hdmi_top_tb(fast)
+# Loading work.hdmi_top(fast)
+# Loading work.vga_ctrl(fast)
+# Loading work.vga_pic(fast)
+run -all
+# End time: 20:49:57 on May 13,2025, Elapsed time: 0:37:06
+# Errors: 0, Warnings: 1

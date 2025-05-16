@@ -1,0 +1,20 @@
+define_attribute {p:led} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:led} {PAP_IO_LOC} {A20}
+define_attribute {p:led} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:led} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:led} {PAP_IO_DRIVE} {8}
+define_attribute {p:led} {PAP_IO_NONE} {TRUE}
+define_attribute {p:led} {PAP_IO_SLEW} {SLOW}
+
+define_attribute {p:sysclk} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:sysclk} {PAP_IO_LOC} {D18}
+define_attribute {p:sysclk} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:sysclk} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:sysclk} {PAP_IO_NONE} {TRUE}
+
+
+define_attribute {p:rstn} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:rstn} {PAP_IO_LOC} {C22}
+define_attribute {p:rstn} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:rstn} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rstn} {PAP_IO_NONE} {TRUE}

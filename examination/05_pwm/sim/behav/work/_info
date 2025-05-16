@@ -1,0 +1,67 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/sim/behav
+T_opt
+!s110 1746692446
+V00WRU8e=1fR@AnlT5]JlZ2
+04 6 4 work pwm_tb fast 0
+=1-002b6709ff5e-681c695e-18-3fd8
+o-quiet -auto_acc_if_foreign -work work -suppress 3486,3680,3781 +acc
+Z1 tCvgOpt 0
+n@_opt
+OL;O;10.5;63
+vpwm
+Z2 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z3 !s110 1746692445
+!i10b 1
+!s100 noU5=;onc1IieSh1o;mKc1
+I]n[meo48z7kDIoKQ2`<Lz2
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 !s105 pwm_v_unit
+S1
+R0
+w1746690410
+8../../rtl/pwm.v
+F../../rtl/pwm.v
+L0 1
+Z6 OL;L;10.5;63
+r1
+!s85 0
+31
+Z7 !s108 1746692445.000000
+Z8 !s107 ../pwm_tb.v|../../rtl/pwm.v|
+Z9 !s90 -reportprogress|300|-sv|-work|work|-mfcu|-incr|-suppress|2902|-f|sim_file_list.f|
+!i113 0
+Z10 o-suppress 2902 -sv -work work -mfcu -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R1
+vpwm_tb
+R2
+R3
+!i10b 1
+!s100 JOAAR;JH_o9o0]1Di89[M1
+IQh1Q2gRGkh7BZn3kKf<o21
+R4
+R5
+S1
+R0
+w1746692259
+8../pwm_tb.v
+F../pwm_tb.v
+L0 2
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 0
+R10
+R1
