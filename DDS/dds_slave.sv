@@ -42,15 +42,15 @@ assign DDS_SLAVE_CLK = clk;
 assign DDS_SLAVE_RSTN = DDS_SLAVE_RSTN_SYNC;
 rstn_sync dds_rstn_sync(clk,rstn,DDS_SLAVE_RSTN_SYNC);
 /*地址定义：（以2路输出，4波形存储为例）
-00    R/W   CHANNEL0        wave_sel
-01    R/W   CHANNEL0 STORE0 freq_ctrl
-02    R/W   CHANNEL0 STORE1 freq_ctrl
-03    R/W   CHANNEL0 STORE2 freq_ctrl
-04    R/W   CHANNEL0 STORE3 freq_ctrl
-05    R/W   CHANNEL0 STORE0 phase_ctrl
-06    R/W   CHANNEL0 STORE1 phase_ctrl
-07    R/W   CHANNEL0 STORE2 phase_ctrl
-08    R/W   CHANNEL0 STORE3 phase_ctrl
+00    R/W   CHANNEL0        wave_sel   0-3
+01    R/W   CHANNEL0 STORE0 freq_ctrl  0-32'FFFFFFFF
+02    R/W   CHANNEL0 STORE1 freq_ctrl  0-32'FFFFFFFF
+03    R/W   CHANNEL0 STORE2 freq_ctrl  0-32'FFFFFFFF
+04    R/W   CHANNEL0 STORE3 freq_ctrl  0-32'FFFFFFFF
+05    R/W   CHANNEL0 STORE0 phase_ctrl 0-2048
+06    R/W   CHANNEL0 STORE1 phase_ctrl 0-2048
+07    R/W   CHANNEL0 STORE2 phase_ctrl 0-2048
+08    R/W   CHANNEL0 STORE3 phase_ctrl 0-2048
 09    R/W   CHANNEL0        dds_wr_enable
 0A     WO   CHANNEL0        data
 
@@ -325,9 +325,14 @@ genvar dds_channel;
 generate
    for(dds_channel=0; dds_channel<CHANNEL_NUM; dds_channel=dds_channel+1) //例化CHANNEL_NUM个DDS模块
    begin:dds_inst
-      dds dds_inst (
+      dds #(
+         .HORIZON_RESOLUTION  (HORIZON_RESOLUTION  ), //水平分辨率
+         .VERTICAL_RESOLUTION (VERTICAL_RESOLUTION ), //垂直分辨率
+         .ADDER_LOWBIT        (ADDER_LOWBIT        ), //相位累加器低位宽度
+         .WAVE_STORE          (WAVE_STORE          )  //波形存储数目
+      )dds_inst (
          .clk       (clk                     ), //系统时钟,50MHz
-         .rstn      (rstn                    ), //复位信号,低电平有效
+         .rstn      (DDS_SLAVE_RSTN_SYNC     ), //复位信号,低电平有效
          .wave_sel  (wave_sel   [dds_channel]), //波形选通，共WAVE_STORE组
          .freq_ctrl (freq_ctrl  [dds_channel]), //频率控制，位宽与相位累加器位宽相同，共WAVE_STORE组
          .phase_ctrl(phase_ctrl [dds_channel]), //相位控制，位宽与一个周期的地址位相同，共WAVE_STORE组

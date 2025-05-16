@@ -1,5 +1,5 @@
 module axi_udp_cmd  (
-    input  wire        gmii_rx_clk         ,//125M
+    input  wire        gmii_rx_clk         /* synthesis PAP_MARK_DEBUG="true" */,//125M
     input  wire        rstn                ,
 
     output wire  [7:0]  cmdled              ,
@@ -20,10 +20,10 @@ module axi_udp_cmd  (
     output wire        MASTER_WR_DATA_VALID, //写数据通道-握手信号-有效
     input  wire        MASTER_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    input  wire [ 1:0] MASTER_WR_BACK_ID   , //写响应通道-ID
-    input  wire [ 1:0] MASTER_WR_BACK_RESP , //写响应通道-响应
-    input  wire        MASTER_WR_BACK_VALID, //写响应通道-握手信号-有效
-    output reg         MASTER_WR_BACK_READY, //写响应通道-握手信号-准备
+    input  wire [ 1:0] MASTER_WR_BACK_ID    /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-ID
+    input  wire [ 1:0] MASTER_WR_BACK_RESP  /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-响应
+    input  wire        MASTER_WR_BACK_VALID /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-有效
+    output reg         MASTER_WR_BACK_READY /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-准备
 
     output wire [ 1:0] MASTER_RD_ADDR_ID   , //读地址通道-ID
     output wire [31:0] MASTER_RD_ADDR      , //读地址通道-地址
@@ -32,12 +32,12 @@ module axi_udp_cmd  (
     output reg         MASTER_RD_ADDR_VALID, //读地址通道-握手信号-有效
     input  wire        MASTER_RD_ADDR_READY, //读地址通道-握手信号-准备
 
-    input  wire [ 1:0] MASTER_RD_BACK_ID   , //读数据通道-ID
-    input  wire [31:0] MASTER_RD_DATA      , //读数据通道-数据
-    input  wire [ 1:0] MASTER_RD_DATA_RESP , //读数据通道-响应
-    input  wire        MASTER_RD_DATA_LAST , //读数据通道-last信号
-    input  wire        MASTER_RD_DATA_VALID, //读数据通道-握手信号-有效
-    output reg         MASTER_RD_DATA_READY, //读数据通道-握手信号-准备
+    input  wire [ 1:0] MASTER_RD_BACK_ID   /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-ID
+    input  wire [31:0] MASTER_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-数据
+    input  wire [ 1:0] MASTER_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-响应
+    input  wire        MASTER_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-last信号
+    input  wire        MASTER_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-有效
+    output reg         MASTER_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-准备
     //___________________UDP接口_____________________//
     input  wire        udp_rx_done    ,
     input  wire [31:0] udp_rx_data    ,
@@ -85,16 +85,16 @@ reg [63:0] rdaddr_fifo_wr_data;
 wire[63:0] rdaddr_fifo_rd_data;
 reg [4 :0] rdaddr_fifo_rd_cnt; //类似状态机
 //wrback_fifo
-reg [31:0] wrback_fifo_wr_data; 
-reg wrback_fifo_wr_en;
-wire wrback_fifo_rd_en;
-wire wrback_fifo_full;
-wire wrback_fifo_empty;
-wire [6:0] wrback_fifo_wr_water_level;
-reg [4:0] wrback_fifo_rd_cnt;//类似状态机
-wire [31:0] wrback_fifo_rd_data;
-reg wrback_tx_start_req;
-wire [6:0] wrback_fifo_rd_water_level;
+reg [31:0] wrback_fifo_wr_data /* synthesis PAP_MARK_DEBUG="true" */; 
+reg wrback_fifo_wr_en /* synthesis PAP_MARK_DEBUG="true" */;
+wire wrback_fifo_rd_en /* synthesis PAP_MARK_DEBUG="true" */;
+wire wrback_fifo_full /* synthesis PAP_MARK_DEBUG="true" */;
+wire wrback_fifo_empty /* synthesis PAP_MARK_DEBUG="true" */;
+wire [6:0] wrback_fifo_wr_water_level /* synthesis PAP_MARK_DEBUG="true" */;
+reg [4:0] wrback_fifo_rd_cnt /* synthesis PAP_MARK_DEBUG="true" */;//类似状态机
+wire [31:0] wrback_fifo_rd_data /* synthesis PAP_MARK_DEBUG="true" */;
+reg wrback_tx_start_req /* synthesis PAP_MARK_DEBUG="true" */;
+wire [6:0] wrback_fifo_rd_water_level /* synthesis PAP_MARK_DEBUG="true" */;
 //wrdata_fifo
 wire wrdata_fifo_empty;
 wire wrdata_fifo_wr_en; reg wrdata_fifo_wr_en_reg;

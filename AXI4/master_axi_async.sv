@@ -62,9 +62,11 @@ input          M_RD_DATA_READY,
 output wire [4:0] fifo_empty_flag
 );
 
-wire BUS_RSTN_SYNC, MASTER_RSTN_SYNC;
-rstn_sync rstn_sync_bus   (B_CLK, B_RSTN, BUS_RSTN_SYNC);
-rstn_sync rstn_sync_master(M_CLK, M_RSTN, MASTER_RSTN_SYNC);
+wire BUS_RSTN_SYNC, MASTER_RSTN_SYNC, RD_BUS_RSTN_SYNC, RD_MASTER_RSTN_SYNC;
+rstn_sync #(32) rstn_sync_bus   (B_CLK, B_RSTN, BUS_RSTN_SYNC);
+rstn_sync #(64) rstn_sync_rd_bus(B_CLK, B_RSTN, RD_BUS_RSTN_SYNC);
+rstn_sync #(32) rstn_sync_master(M_CLK, M_RSTN, MASTER_RSTN_SYNC);
+rstn_sync #(64) rstn_sync_rd_master(M_CLK, M_RSTN, RD_MASTER_RSTN_SYNC);
 
 wire                wr_addr_fifo_wr_rst  ;
 wire                wr_addr_fifo_wr_en   ;

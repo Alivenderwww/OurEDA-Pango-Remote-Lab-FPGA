@@ -260,8 +260,8 @@ always @(*) begin
     if(~jtag_rstn_sync) JTAG_SLAVE_WR_DATA_READY <= 0;
     else if(cu_wrchannel_st == ST_WR_DATA) begin
              if(wr_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_WR_DATA_READY <= 1; //状态寄存器可立即写
-        else if(wr_addr == JTAG_SHIFT_IN_ADDR ) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_data_full); //写FIFO未满可写
-        else if(wr_addr == JTAG_SHIFT_CMD_ADDR) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_cmd_full); //写FIFO未满可写
+        else if(wr_addr == JTAG_SHIFT_IN_ADDR ) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_data_almost_full); //写FIFO未满可写
+        else if(wr_addr == JTAG_SHIFT_CMD_ADDR) JTAG_SLAVE_WR_DATA_READY <= (~fifo_shift_cmd_almost_full); //写FIFO未满可写
         else JTAG_SLAVE_WR_DATA_READY <= 1; //ERROR，直接跳过不写
     end else JTAG_SLAVE_WR_DATA_READY <= 0;
     //读数据VALID选通

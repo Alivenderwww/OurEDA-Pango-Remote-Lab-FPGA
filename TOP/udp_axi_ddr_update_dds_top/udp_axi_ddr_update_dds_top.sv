@@ -170,13 +170,7 @@ clk_pll_top clk_pll_top_inst (
   .lock   (clk_lock),          // output
   .clkin1 (external_clk)       // input
 );
-wire sys_clk     = clk_50M;
-wire led_clk     = clk_50M;
-wire BUS_CLK     = clk_50M;
-wire ddr_ref_clk = clk_50M;
-wire jtag_clk    = clk_5M;
-wire ru_clk      = clk_10M;
-assign da_clk     = clk_10M;
+assign da_clk    = clk_10M;
 
 wire eth_rst_n   = 1;
 wire sys_rstn    = (external_rstn) && (clk_lock);
@@ -193,16 +187,15 @@ axi_udp_master #(
 	.DES_MAC   	(DES_MAC  ),
 	.DES_IP    	(DES_IP   )
 )M0(
-	.udp_in_rstn            ( udp_in_rstn     ),
-	.eth_rst_n              (                 ),
-	.rgmii_rxc            	( rgmii_rxc       ),
-	.rgmii_rx_ctl         	( rgmii_rx_ctl    ),
-	.rgmii_rxd            	( rgmii_rxd       ),
-	.rgmii_txc            	( rgmii_txc       ),
-	.rgmii_tx_ctl         	( rgmii_tx_ctl    ),
-	.rgmii_txd            	( rgmii_txd       ),
-
-    .udp_led                ( udp_led         ),
+	.udp_in_rstn                ( udp_in_rstn     ),
+	.eth_rst_n                  (                 ),
+	.rgmii_rxc            	    ( rgmii_rxc       ),
+	.rgmii_rx_ctl         	    ( rgmii_rx_ctl    ),
+	.rgmii_rxd            	    ( rgmii_rxd       ),
+	.rgmii_txc            	    ( rgmii_txc       ),
+	.rgmii_tx_ctl         	    ( rgmii_tx_ctl    ),
+	.rgmii_txd            	    ( rgmii_txd       ),
+    .udp_led                    ( udp_led         ),
 	.ETH_MASTER_CLK           	( M_CLK          [0]),
 	.ETH_MASTER_RSTN          	( M_RSTN         [0]),
 	.ETH_MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]),
@@ -236,7 +229,7 @@ axi_udp_master #(
 
 
 axi_master_default M1(
-    .clk                  (sys_clk          ),
+    .clk                  (clk_50M          ),
     .rstn                 (sys_rstn         ),
     .MASTER_CLK           (M_CLK          [1]),
     .MASTER_RSTN          (M_RSTN         [1]),
@@ -270,7 +263,7 @@ axi_master_default M1(
 );
 
 axi_master_default M2(
-    .clk                  (sys_clk          ),
+    .clk                  (clk_50M          ),
     .rstn                 (sys_rstn         ),
     .MASTER_CLK           (M_CLK          [2]),
     .MASTER_RSTN          (M_RSTN         [2]),
@@ -304,7 +297,7 @@ axi_master_default M2(
 );
 
 axi_master_default M3(
-    .clk                  (sys_clk          ),
+    .clk                  (clk_50M          ),
     .rstn                 (sys_rstn         ),
     .MASTER_CLK           (M_CLK          [3]),
     .MASTER_RSTN          (M_RSTN         [3]),
@@ -340,7 +333,7 @@ axi_master_default M3(
 slave_ddr3 #(
     .OFFSET_ADDR             (START_ADDR[0])
 )S0(
-    .ddr_ref_clk             (ddr_ref_clk      ),
+    .ddr_ref_clk             (clk_50M      ),
     .rst_n                   (ddr_rst_n        ),
     .DDR_SLAVE_CLK           (S_CLK          [0]),
     .DDR_SLAVE_RSTN          (S_RSTN         [0]),
@@ -391,7 +384,7 @@ slave_ddr3 #(
 JTAG_SLAVE  #(
     .OFFSET_ADDR              (START_ADDR[1])
 )S1(
-    .clk                      (jtag_clk        ),
+    .clk                      (clk_5M        ),
     .rstn                     (jtag_rstn       ),
     .tck                      (tck             ),
     .tdi                      (tdi             ),
@@ -437,7 +430,7 @@ remote_update_axi_slave #(
     .USER_BITSTREAM2_ADDR   (24'h74_2000        ),
     .USER_BITSTREAM3_ADDR   (24'hae_0000        )
 )S2(
-    .clk                 (ru_clk            ),
+    .clk                 (clk_10M            ),
     .rstn                (ru_rstn           ),
     .spi_cs              (spi_cs            ),
     .spi_clk             (spi_clk           ),
@@ -477,7 +470,7 @@ remote_update_axi_slave #(
 i2c_master_axi_slave #(
     .OFFSET_ADDR(START_ADDR[3])
 )S3(
-	.clk                 	( sys_clk           ),
+	.clk                 	( clk_50M           ),
 	.rstn                	( sys_rstn          ),
     .scl_in                 ( scl               ),
     .scl_out                ( scl_out           ),
@@ -556,7 +549,7 @@ dds_slave #(
 );
 
 axi_slave_default S5(
-	.clk                 	( sys_clk              ),
+	.clk                 	( clk_50M              ),
 	.rstn                	( sys_rstn             ),
 	.SLAVE_CLK           	( S_CLK          [5]   ),
 	.SLAVE_RSTN          	( S_RSTN         [5]   ),
@@ -590,7 +583,7 @@ axi_slave_default S5(
 );
 
 axi_slave_default S6(
-	.clk                 	( sys_clk              ),
+	.clk                 	( clk_50M              ),
 	.rstn                	( sys_rstn             ),
 	.SLAVE_CLK           	( S_CLK          [6]   ),
 	.SLAVE_RSTN          	( S_RSTN         [6]   ),
@@ -624,7 +617,7 @@ axi_slave_default S6(
 );
 
 axi_slave_default S7(
-	.clk                 	( sys_clk              ),
+	.clk                 	( clk_50M              ),
 	.rstn                	( sys_rstn             ),
 	.SLAVE_CLK           	( S_CLK          [7]   ),
 	.SLAVE_RSTN          	( S_RSTN         [7]   ),
@@ -664,7 +657,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( BUS_CLK          ),
+	.BUS_CLK              	( clk_50M          ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),
@@ -748,7 +741,7 @@ assign data_in[14]   = 8'b11110000;
 assign data_in[15]   = 8'b00001111;
 
 led8_btn u_led8_btn(
-	.clk      	( sys_clk   ),
+	.clk      	( clk_50M   ),
 	.rstn     	( sys_rstn  ),
 	.data_in  	( data_in   ),
 	.btn_up   	( btn[0]    ),

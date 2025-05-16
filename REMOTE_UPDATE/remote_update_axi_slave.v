@@ -115,7 +115,7 @@ data_ctrl_slave
     .rstn                       (RU_RSTN_SYNC           ),
 
     .flash_wr_en                (flash_wr_en            ),
-    .start_wr_sector        (start_wr_sector    ),
+    .start_wr_sector            (start_wr_sector        ),
     .wr_sector_num              (wr_sector_num          ),
     .flash_wr_done              (flash_wr_done          ),
     .flash_clear_done           (flash_clear_done       ),
@@ -198,7 +198,7 @@ spi_top u_spi_top(
     .spi_dq0                    (spi_dq0                    ),
 // ctrl 使能控制信号
     .flash_wr_en                (flash_wr_en                ), //写位流数据使能，上升沿有效
-    .start_wr_sector        (start_wr_sector        ),
+    .start_wr_sector            (start_wr_sector            ),
     .wr_sector_num              (wr_sector_num              ),
     .flash_wr_done              (flash_wr_done              ),
     .flash_clear_done           (flash_clear_done           ), //擦除应用位流完成指示，高有效
