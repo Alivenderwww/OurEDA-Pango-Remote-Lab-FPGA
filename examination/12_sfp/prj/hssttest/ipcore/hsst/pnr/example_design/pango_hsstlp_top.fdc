@@ -1,0 +1,78 @@
+###==== BEGIN Clocks 
+#create_clock -name {free_clk} [get_ports {i_free_clk}] -period {10} -waveform {0.000 5.000}
+#create_clock -name {p_clk2core_tx_0} [get_pins {U_INST.o_p_clk2core_tx_0}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_tx_1} [get_pins {U_INST.o_p_clk2core_tx_1}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_tx_2} [get_pins {U_INST.o_p_clk2core_tx_2}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_tx_3} [get_pins {U_INST.o_p_clk2core_tx_3}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_rx_0} [get_pins {U_INST.o_p_clk2core_rx_0}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_rx_1} [get_pins {U_INST.o_p_clk2core_rx_1}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_rx_2} [get_pins {U_INST.o_p_clk2core_rx_2}] -period {6.4} -waveform {0 3.2} 
+#create_clock -name {p_clk2core_rx_3} [get_pins {U_INST.o_p_clk2core_rx_3}] -period {6.4} -waveform {0 3.2} 
+###==== END Clocks
+###==== BEGIN "set_clock_groups"
+#set_clock_groups -name free_clk        -asynchronous -group [get_clocks {free_clk}]
+#set_clock_groups -name p_clk2core_tx_0 -asynchronous -group [get_clocks {p_clk2core_tx_0}]
+#set_clock_groups -name p_clk2core_tx_1 -asynchronous -group [get_clocks {p_clk2core_tx_1}]
+#set_clock_groups -name p_clk2core_tx_2 -asynchronous -group [get_clocks {p_clk2core_tx_2}]
+#set_clock_groups -name p_clk2core_tx_3 -asynchronous -group [get_clocks {p_clk2core_tx_3}]
+#set_clock_groups -name p_clk2core_rx_0 -asynchronous -group [get_clocks {p_clk2core_rx_0}]
+#set_clock_groups -name p_clk2core_rx_1 -asynchronous -group [get_clocks {p_clk2core_rx_1}]
+#set_clock_groups -name p_clk2core_rx_2 -asynchronous -group [get_clocks {p_clk2core_rx_2}]
+#set_clock_groups -name p_clk2core_rx_3 -asynchronous -group [get_clocks {p_clk2core_rx_3}]
+###==== END "set_clock_groups"
+###==== BEGIN "Inputs/Outpusts"
+###==== END "Inputs/Outpusts"
+###==== BEGIN "Delay Paths"
+###==== END "Delay Paths"
+###==== BEGIN Attributes - (Populated from tab in SCOPE, do not edit)
+### The Q3 Location Constraint
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL0_ENABLE.U_GTP_HSSTLP_LANE0} {PAP_LOC} {HSSTLP_364_918:U0_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL1_ENABLE.U_GTP_HSSTLP_LANE1} {PAP_LOC} {HSSTLP_364_918:U1_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL2_ENABLE.U_GTP_HSSTLP_LANE2} {PAP_LOC} {HSSTLP_364_918:U2_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL3_ENABLE.U_GTP_HSSTLP_LANE3} {PAP_LOC} {HSSTLP_364_918:U3_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.PLL0_ENABLE.U_GTP_HSSTLP_PLL0} {PAP_LOC} {HSSTLP_364_918:U0_HSSTLP_PLL}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.PLL1_ENABLE.U_GTP_HSSTLP_PLL1} {PAP_LOC} {HSSTLP_364_918:U1_HSSTLP_PLL}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_LOC} {E13}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_LOC} {F13}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_LOC} {E11}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_LOC} {F11}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_UNUSED} {TRUE}
+### The Q6 Location Constraint
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL0_ENABLE.U_GTP_HSSTLP_LANE0} {PAP_LOC} {HSSTLP_364_0:U0_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL1_ENABLE.U_GTP_HSSTLP_LANE1} {PAP_LOC} {HSSTLP_364_0:U1_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL2_ENABLE.U_GTP_HSSTLP_LANE2} {PAP_LOC} {HSSTLP_364_0:U2_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL3_ENABLE.U_GTP_HSSTLP_LANE3} {PAP_LOC} {HSSTLP_364_0:U3_HSSTLP_LANE}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.PLL0_ENABLE.U_GTP_HSSTLP_PLL0} {PAP_LOC} {HSSTLP_364_0:U0_HSSTLP_PLL}
+#define_attribute {i:U_INST.U_GTP_HSSTLP_WRAPPER.PLL1_ENABLE.U_GTP_HSSTLP_PLL1} {PAP_LOC} {HSSTLP_364_0:U1_HSSTLP_PLL}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_LOC} {AB11}
+#define_attribute {p:i_p_refckn_0} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_LOC} {AA11}
+#define_attribute {p:i_p_refckp_0} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_LOC} {AB13}
+#define_attribute {p:i_p_refckn_1} {PAP_IO_UNUSED} {TRUE}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_DIRECTION} {INPUT}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_LOC} {AA13}
+#define_attribute {p:i_p_refckp_1} {PAP_IO_UNUSED} {TRUE}
+###==== END Attributes
+#define_attribute {t:U_INST.o_p_clk2core_tx_0} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_tx_1} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_tx_2} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_tx_3} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_rx_0} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_rx_1} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_rx_2} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+#define_attribute {t:U_INST.o_p_clk2core_rx_3} {PAP_CLOCK_ASSIGN} {GTP_CLKBUFG}
+###==== BEGIN Attributes - (Populated from tab in SCOPE, do not edit)
+###==== END Attributes
+###==== BEGIN Attributes - IO table (Populated from tab in SCOPE, do not edit)
+####==== END Attributes(IO table)

@@ -1,0 +1,297 @@
+[Info] [2025-5-15 19:32:16] /***************************Start Configuration***************************/
+[Info] [2025-5-15 19:32:16] Path: C:/pango/PDS_2022.2-SP6.4/bin
+[Info] [2025-5-15 19:32:16] Version: 146967
+[Info] [2025-5-15 19:32:17] Current Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 19:32:17] PDS Dir Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 19:32:18] Configuration is not connect with server. connect first then scan chain.
+[Debug] [2025-5-15 19:32:18] Client Local host name:DESKTOP-FLDUJ87
+[Debug] [2025-5-15 19:32:18] Client Local Address:169.254.103.126
+[Debug] [2025-5-15 19:32:18] Client Local Address:172.6.1.36
+[Debug] [2025-5-15 19:32:18] Server Address:127.0.0.1, Port:65420
+[Debug] [2025-5-15 19:32:18] Log::Print : Connecting to server[127.0.0.1 : 65420].
+[Info] [2025-5-15 19:32:18] Connect OK, Server: 127.0.0.1  Port: 65420
+[Debug] [2025-5-15 19:32:18] Finish.
+[Info] [2025-5-15 19:32:18] Connect server succeeded
+[Debug] [2025-5-15 19:32:18] Send RPC:1
+[Debug] [2025-5-15 19:32:18] Send cmd [check version information:40004] OK
+[Debug] [2025-5-15 19:32:18] Send RPC:2
+[Debug] [2025-5-15 19:32:18] Send cmd [get_cable_paras:40010] OK
+[Debug] [2025-5-15 19:32:18] Begin to send initialize chain cmd...
+[Debug] [2025-5-15 19:32:18] Send RPC:3
+[Debug] [2025-5-15 19:32:18] Send cmd [Open config cable:20001] OK
+[Debug] [2025-5-15 19:32:18] End to send initialize chain cmd.
+[Debug] [2025-5-15 19:32:18] COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 19:32:18] Log::Print : Connect to server[127.0.0.1 : 65420] successfully.
+[Debug] [2025-5-15 19:32:18] Log::Print : COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 19:32:19] COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 19:32:19] Log::Print : The cable List : 
+Cable index 0:USB Cable II/3044374137353330 
+
+[Debug] [2025-5-15 19:32:19] Log::Print : COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 19:32:20] begin the exec of open cable cmd...
+[Debug] [2025-5-15 19:32:20] Begin to deal with chain from server...
+[Debug] [2025-5-15 19:32:20] Begin to set user chain...
+[Debug] [2025-5-15 19:32:20] End to set user chain.
+[Debug] [2025-5-15 19:32:20] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:20] End to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:20] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-5-15 19:32:20] Log::Print : PG2L100H
+[Debug] [2025-5-15 19:32:20] Log::Print : This device configure situation (done bit): 0
+[Info] [2025-5-15 19:32:21] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/generate_bitstream/hsst_top.sbit
+[Debug] [2025-5-15 19:32:21] begin to get device info from CFG file...
+[Debug] [2025-5-15 19:32:21] end to get device info from CFG file...
+[Debug] [2025-5-15 19:32:21] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:21] End to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:21] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:21] End to update graphic item and tree item ...
+[Debug] [2025-5-15 19:32:21] End to deal wiht chain from server.
+[Debug] [2025-5-15 19:32:21] end the exec of open cable cmd.
+[Debug] [2025-5-15 19:32:21] COMMAND[Open config cable] execute successfully, takes 3.3 secs.
+[Debug] [2025-5-15 19:32:22] Log::Print : COMMAND[Open config cable] execute successfully, takes 3.3 secs.
+[Debug] [2025-5-15 19:32:22] Begin to send programming cmd...
+[Debug] [2025-5-15 19:32:22] Send RPC:4
+[Debug] [2025-5-15 19:32:22] Begin to send program data.
+[Debug] [2025-5-15 19:32:22] End to send program data.
+[Debug] [2025-5-15 19:32:22] Send cmd [Program:20002] OK
+[Debug] [2025-5-15 19:32:23] The value of Progress is 6
+[Debug] [2025-5-15 19:32:23] The value of Progress is 10
+[Debug] [2025-5-15 19:32:23] The value of Progress is 15
+[Debug] [2025-5-15 19:32:23] The value of Progress is 20
+[Debug] [2025-5-15 19:32:23] The value of Progress is 25
+[Debug] [2025-5-15 19:32:24] The value of Progress is 30
+[Debug] [2025-5-15 19:32:24] The value of Progress is 35
+[Debug] [2025-5-15 19:32:24] The value of Progress is 40
+[Debug] [2025-5-15 19:32:24] The value of Progress is 45
+[Debug] [2025-5-15 19:32:24] The value of Progress is 50
+[Debug] [2025-5-15 19:32:24] The value of Progress is 55
+[Debug] [2025-5-15 19:32:24] The value of Progress is 60
+[Debug] [2025-5-15 19:32:25] The value of Progress is 65
+[Debug] [2025-5-15 19:32:25] The value of Progress is 70
+[Debug] [2025-5-15 19:32:25] The value of Progress is 75
+[Debug] [2025-5-15 19:32:25] The value of Progress is 80
+[Debug] [2025-5-15 19:32:25] The value of Progress is 85
+[Debug] [2025-5-15 19:32:25] The value of Progress is 90
+[Debug] [2025-5-15 19:32:26] The value of Progress is 95
+[Debug] [2025-5-15 19:32:26] The value of Progress is 100
+[Debug] [2025-5-15 19:32:26] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-5-15 19:32:26] End to send programming cmd.
+[Debug] [2025-5-15 19:32:26] Log::Print : The done bit is 1
+[Debug] [2025-5-15 19:32:26] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Info] [2025-5-15 20:05:58] /***************************End Configration***************************/
+[Info] [2025-5-15 20:06:43] /***************************Start Configuration***************************/
+[Info] [2025-5-15 20:06:43] Path: C:/pango/PDS_2022.2-SP6.4/bin
+[Info] [2025-5-15 20:06:43] Version: 146967
+[Info] [2025-5-15 20:06:44] Current Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 20:06:44] PDS Dir Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 20:07:06] Configuration is not connect with server. connect first then scan chain.
+[Debug] [2025-5-15 20:07:06] Client Local host name:DESKTOP-FLDUJ87
+[Debug] [2025-5-15 20:07:06] Client Local Address:169.254.103.126
+[Debug] [2025-5-15 20:07:06] Client Local Address:172.6.1.36
+[Debug] [2025-5-15 20:07:06] Server Address:127.0.0.1, Port:65420
+[Debug] [2025-5-15 20:07:06] Log::Print : Connecting to server[127.0.0.1 : 65420].
+[Info] [2025-5-15 20:07:06] Connect OK, Server: 127.0.0.1  Port: 65420
+[Debug] [2025-5-15 20:07:06] Finish.
+[Info] [2025-5-15 20:07:06] Connect server succeeded
+[Debug] [2025-5-15 20:07:06] Send RPC:1
+[Debug] [2025-5-15 20:07:06] Send cmd [check version information:40004] OK
+[Debug] [2025-5-15 20:07:06] Send RPC:2
+[Debug] [2025-5-15 20:07:06] Send cmd [get_cable_paras:40010] OK
+[Debug] [2025-5-15 20:07:06] Begin to send initialize chain cmd...
+[Debug] [2025-5-15 20:07:06] Send RPC:3
+[Debug] [2025-5-15 20:07:06] Send cmd [Open config cable:20001] OK
+[Debug] [2025-5-15 20:07:06] End to send initialize chain cmd.
+[Debug] [2025-5-15 20:07:06] COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 20:07:06] Log::Print : Connect to server[127.0.0.1 : 65420] successfully.
+[Debug] [2025-5-15 20:07:06] Log::Print : COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 20:07:07] COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 20:07:07] Log::Print : The cable List : 
+Cable index 0:USB Cable II/3044374137353330 
+
+[Debug] [2025-5-15 20:07:07] Log::Print : COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 20:07:08] begin the exec of open cable cmd...
+[Debug] [2025-5-15 20:07:08] Begin to deal with chain from server...
+[Debug] [2025-5-15 20:07:08] Begin to set user chain...
+[Debug] [2025-5-15 20:07:08] End to set user chain.
+[Debug] [2025-5-15 20:07:08] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:08] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:08] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-5-15 20:07:08] Log::Print : PG2L100H
+[Debug] [2025-5-15 20:07:08] Log::Print : This device configure situation (done bit): 0
+[Info] [2025-5-15 20:07:09] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/generate_bitstream/hsst_top.sbit
+[Debug] [2025-5-15 20:07:09] begin to get device info from CFG file...
+[Debug] [2025-5-15 20:07:09] end to get device info from CFG file...
+[Debug] [2025-5-15 20:07:09] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:09] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:09] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:09] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:07:09] End to deal wiht chain from server.
+[Debug] [2025-5-15 20:07:09] end the exec of open cable cmd.
+[Debug] [2025-5-15 20:07:09] COMMAND[Open config cable] execute successfully, takes 2.9 secs.
+[Debug] [2025-5-15 20:07:09] Log::Print : COMMAND[Open config cable] execute successfully, takes 2.9 secs.
+[Debug] [2025-5-15 20:07:11] Begin to send programming cmd...
+[Debug] [2025-5-15 20:07:11] Send RPC:4
+[Debug] [2025-5-15 20:07:11] Begin to send program data.
+[Debug] [2025-5-15 20:07:11] End to send program data.
+[Debug] [2025-5-15 20:07:11] Send cmd [Program:20002] OK
+[Debug] [2025-5-15 20:07:11] The value of Progress is 6
+[Debug] [2025-5-15 20:07:11] The value of Progress is 10
+[Debug] [2025-5-15 20:07:11] The value of Progress is 15
+[Debug] [2025-5-15 20:07:11] The value of Progress is 20
+[Debug] [2025-5-15 20:07:12] The value of Progress is 25
+[Debug] [2025-5-15 20:07:12] The value of Progress is 30
+[Debug] [2025-5-15 20:07:12] The value of Progress is 35
+[Debug] [2025-5-15 20:07:12] The value of Progress is 40
+[Debug] [2025-5-15 20:07:12] The value of Progress is 45
+[Debug] [2025-5-15 20:07:12] The value of Progress is 50
+[Debug] [2025-5-15 20:07:13] The value of Progress is 55
+[Debug] [2025-5-15 20:07:13] The value of Progress is 60
+[Debug] [2025-5-15 20:07:13] The value of Progress is 65
+[Debug] [2025-5-15 20:07:13] The value of Progress is 70
+[Debug] [2025-5-15 20:07:13] The value of Progress is 75
+[Debug] [2025-5-15 20:07:13] The value of Progress is 80
+[Debug] [2025-5-15 20:07:14] The value of Progress is 85
+[Debug] [2025-5-15 20:07:14] The value of Progress is 90
+[Debug] [2025-5-15 20:07:14] The value of Progress is 95
+[Debug] [2025-5-15 20:07:14] The value of Progress is 100
+[Debug] [2025-5-15 20:07:14] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-5-15 20:07:14] End to send programming cmd.
+[Debug] [2025-5-15 20:07:14] Log::Print : The done bit is 1
+[Debug] [2025-5-15 20:07:14] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Info] [2025-5-15 20:24:02] /***************************End Configration***************************/
+[Info] [2025-5-15 20:46:33] /***************************Start Configuration***************************/
+[Info] [2025-5-15 20:46:33] Path: C:/pango/PDS_2022.2-SP6.4/bin
+[Info] [2025-5-15 20:46:33] Version: 146967
+[Info] [2025-5-15 20:46:34] Current Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 20:46:34] PDS Dir Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest
+[Info] [2025-5-15 20:46:36] Configuration is not connect with server. connect first then scan chain.
+[Debug] [2025-5-15 20:46:36] Client Local host name:DESKTOP-FLDUJ87
+[Debug] [2025-5-15 20:46:36] Client Local Address:169.254.103.126
+[Debug] [2025-5-15 20:46:36] Client Local Address:172.6.1.36
+[Debug] [2025-5-15 20:46:36] Server Address:127.0.0.1, Port:65420
+[Debug] [2025-5-15 20:46:36] Log::Print : Connecting to server[127.0.0.1 : 65420].
+[Info] [2025-5-15 20:46:36] Connect OK, Server: 127.0.0.1  Port: 65420
+[Debug] [2025-5-15 20:46:36] Finish.
+[Info] [2025-5-15 20:46:36] Connect server succeeded
+[Debug] [2025-5-15 20:46:36] Send RPC:1
+[Debug] [2025-5-15 20:46:36] Send cmd [check version information:40004] OK
+[Debug] [2025-5-15 20:46:36] Send RPC:2
+[Debug] [2025-5-15 20:46:36] Send cmd [get_cable_paras:40010] OK
+[Debug] [2025-5-15 20:46:36] Begin to send initialize chain cmd...
+[Debug] [2025-5-15 20:46:36] Send RPC:3
+[Debug] [2025-5-15 20:46:36] Send cmd [Open config cable:20001] OK
+[Debug] [2025-5-15 20:46:36] End to send initialize chain cmd.
+[Debug] [2025-5-15 20:46:36] COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 20:46:36] Log::Print : Connect to server[127.0.0.1 : 65420] successfully.
+[Debug] [2025-5-15 20:46:36] Log::Print : COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-5-15 20:46:37] COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 20:46:37] Log::Print : The cable List : 
+Cable index 0:USB Cable II/3044374137353330 
+
+[Debug] [2025-5-15 20:46:37] Log::Print : COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-5-15 20:46:37] begin the exec of open cable cmd...
+[Debug] [2025-5-15 20:46:37] Begin to deal with chain from server...
+[Debug] [2025-5-15 20:46:37] Begin to set user chain...
+[Debug] [2025-5-15 20:46:37] End to set user chain.
+[Debug] [2025-5-15 20:46:37] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:37] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:37] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-5-15 20:46:37] Log::Print : PG2L100H
+[Debug] [2025-5-15 20:46:37] Log::Print : This device configure situation (done bit): 0
+[Info] [2025-5-15 20:46:39] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/generate_bitstream/hsst_top.sbit
+[Debug] [2025-5-15 20:46:39] begin to get device info from CFG file...
+[Debug] [2025-5-15 20:46:39] end to get device info from CFG file...
+[Debug] [2025-5-15 20:46:39] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:39] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:39] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:39] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:46:39] End to deal wiht chain from server.
+[Debug] [2025-5-15 20:46:39] end the exec of open cable cmd.
+[Debug] [2025-5-15 20:46:39] COMMAND[Open config cable] execute successfully, takes 2.7 secs.
+[Debug] [2025-5-15 20:46:39] Log::Print : COMMAND[Open config cable] execute successfully, takes 2.7 secs.
+[Debug] [2025-5-15 20:46:40] Begin to send programming cmd...
+[Debug] [2025-5-15 20:46:40] Send RPC:4
+[Debug] [2025-5-15 20:46:40] Begin to send program data.
+[Debug] [2025-5-15 20:46:40] End to send program data.
+[Debug] [2025-5-15 20:46:40] Send cmd [Program:20002] OK
+[Debug] [2025-5-15 20:46:40] The value of Progress is 6
+[Debug] [2025-5-15 20:46:40] The value of Progress is 10
+[Debug] [2025-5-15 20:46:40] The value of Progress is 15
+[Debug] [2025-5-15 20:46:40] The value of Progress is 20
+[Debug] [2025-5-15 20:46:41] The value of Progress is 25
+[Debug] [2025-5-15 20:46:41] The value of Progress is 30
+[Debug] [2025-5-15 20:46:41] The value of Progress is 35
+[Debug] [2025-5-15 20:46:41] The value of Progress is 40
+[Debug] [2025-5-15 20:46:41] The value of Progress is 45
+[Debug] [2025-5-15 20:46:41] The value of Progress is 50
+[Debug] [2025-5-15 20:46:41] The value of Progress is 55
+[Debug] [2025-5-15 20:46:42] The value of Progress is 60
+[Debug] [2025-5-15 20:46:42] The value of Progress is 65
+[Debug] [2025-5-15 20:46:42] The value of Progress is 70
+[Debug] [2025-5-15 20:46:42] The value of Progress is 75
+[Debug] [2025-5-15 20:46:42] The value of Progress is 80
+[Debug] [2025-5-15 20:46:42] The value of Progress is 85
+[Debug] [2025-5-15 20:46:43] The value of Progress is 90
+[Debug] [2025-5-15 20:46:43] The value of Progress is 95
+[Debug] [2025-5-15 20:46:43] The value of Progress is 100
+[Debug] [2025-5-15 20:46:43] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-5-15 20:46:43] End to send programming cmd.
+[Debug] [2025-5-15 20:46:43] Log::Print : The done bit is 1
+[Debug] [2025-5-15 20:46:43] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-5-15 20:49:28] Begin to send initialize chain cmd...
+[Debug] [2025-5-15 20:49:28] Send RPC:5
+[Debug] [2025-5-15 20:49:28] Send cmd [Open config cable:20001] OK
+[Debug] [2025-5-15 20:49:28] End to send initialize chain cmd.
+[Debug] [2025-5-15 20:49:29] begin the exec of open cable cmd...
+[Debug] [2025-5-15 20:49:29] Begin to deal with chain from server...
+[Debug] [2025-5-15 20:49:29] Begin to set user chain...
+[Debug] [2025-5-15 20:49:29] End to set user chain.
+[Debug] [2025-5-15 20:49:29] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:29] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:29] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-5-15 20:49:29] Log::Print : PG2L100H
+[Debug] [2025-5-15 20:49:29] Log::Print : This device configure situation (done bit): 0
+[Info] [2025-5-15 20:49:32] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/generate_bitstream/hsst_top.sbit
+[Debug] [2025-5-15 20:49:32] begin to get device info from CFG file...
+[Debug] [2025-5-15 20:49:32] end to get device info from CFG file...
+[Debug] [2025-5-15 20:49:32] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:32] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:32] Begin to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:32] End to update graphic item and tree item ...
+[Debug] [2025-5-15 20:49:32] End to deal wiht chain from server.
+[Debug] [2025-5-15 20:49:32] end the exec of open cable cmd.
+[Debug] [2025-5-15 20:49:32] COMMAND[Open config cable] execute successfully, takes 3.5 secs.
+[Debug] [2025-5-15 20:49:32] Log::Print : COMMAND[Open config cable] execute successfully, takes 3.5 secs.
+[Debug] [2025-5-15 20:49:33] Begin to send programming cmd...
+[Debug] [2025-5-15 20:49:33] Send RPC:6
+[Debug] [2025-5-15 20:49:33] Begin to send program data.
+[Debug] [2025-5-15 20:49:33] End to send program data.
+[Debug] [2025-5-15 20:49:33] Send cmd [Program:20002] OK
+[Debug] [2025-5-15 20:49:33] The value of Progress is 6
+[Debug] [2025-5-15 20:49:33] The value of Progress is 10
+[Debug] [2025-5-15 20:49:34] The value of Progress is 15
+[Debug] [2025-5-15 20:49:34] The value of Progress is 20
+[Debug] [2025-5-15 20:49:34] The value of Progress is 25
+[Debug] [2025-5-15 20:49:34] The value of Progress is 30
+[Debug] [2025-5-15 20:49:34] The value of Progress is 35
+[Debug] [2025-5-15 20:49:34] The value of Progress is 40
+[Debug] [2025-5-15 20:49:35] The value of Progress is 45
+[Debug] [2025-5-15 20:49:35] The value of Progress is 50
+[Debug] [2025-5-15 20:49:35] The value of Progress is 55
+[Debug] [2025-5-15 20:49:35] The value of Progress is 60
+[Debug] [2025-5-15 20:49:35] The value of Progress is 65
+[Debug] [2025-5-15 20:49:35] The value of Progress is 70
+[Debug] [2025-5-15 20:49:36] The value of Progress is 75
+[Debug] [2025-5-15 20:49:36] The value of Progress is 80
+[Debug] [2025-5-15 20:49:36] The value of Progress is 85
+[Debug] [2025-5-15 20:49:36] The value of Progress is 90
+[Debug] [2025-5-15 20:49:36] The value of Progress is 95
+[Debug] [2025-5-15 20:49:36] The value of Progress is 100
+[Debug] [2025-5-15 20:49:37] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-5-15 20:49:37] End to send programming cmd.
+[Debug] [2025-5-15 20:49:37] Log::Print : The done bit is 1
+[Debug] [2025-5-15 20:49:37] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Warn] [2025-5-16 12:19:48] the connection with server is timeout.
+[Warn] [2025-5-16 12:19:48] No response from the server in 60 secs, please check the connection with server
+[Warn] [2025-5-16 12:19:48] the connection with server is timeout.
+[Warn] [2025-5-16 12:19:48] MsgOut: CdtCommon-4003: No response from the server in 60 secs, please check the connection with server
+[Info] [2025-5-16 13:55:09] /***************************End Configration***************************/

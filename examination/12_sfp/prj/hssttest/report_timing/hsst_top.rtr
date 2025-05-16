@@ -1,0 +1,2122 @@
+
+----------------------------------------------------------------------------------------------------
+| Tool Version : Fabric Compiler (version 2022.2-SP6.4 <build 146967>)
+| Date         : Thu May 15 20:49:00 2025
+| Design       : hsst_top
+| Device       : PG2L100H
+| Speed Grade  : -6
+| Package      : FBG676
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+| Timing Models: Production
+| Tcl Command  : report_timing 
+----------------------------------------------------------------------------------------------------
+
+Timing analysis mode : multi corner
+
+ Clock Summary:                                                                                     
+****************************************************************************************************
+                                                                         Clock   Non-clock          
+ Clock                    Period       Waveform            Type          Loads       Loads  Sources 
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk             1000.0000    {0.0000 500.0000}   Declared        107          37  {clk}   
+====================================================================================================
+
+ Clock Groups:                                                                                      
+****************************************************************************************************
+ Clock Group                   Group Type                 Clocks                                    
+----------------------------------------------------------------------------------------------------
+ Inferred_clock_group_0        asynchronous               hsst_top|clk                              
+====================================================================================================
+
+ Performance Summary:                                                                               
+****************************************************************************************************
+                              Requested       Estimated      Requested      Estimated               
+ Clock                        Frequency       Frequency      Period         Period             Slack
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk                1.0000 MHz    261.9172 MHz      1000.0000         3.8180        996.182
+====================================================================================================
+
+Design Summary : All Constraints Met.
+
+Setup Summary(Slow Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk               996.182       0.000              0            630
+====================================================================================================
+
+Hold Summary(Slow Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk                 0.239       0.000              0            630
+====================================================================================================
+
+Recovery Summary(Slow Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk               997.169       0.000              0            106
+====================================================================================================
+
+Removal Summary(Slow Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk                 0.469       0.000              0            106
+====================================================================================================
+
+Minimum Pulse Width Summary(Slow Corner):
+****************************************************************************************************
+                                                                         WPWS Failing     WPWS Total
+ Clock                                            WPWS(ns)    TPWS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk                                      499.800       0.000              0            107
+====================================================================================================
+
+Setup Summary(Fast Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk               997.734       0.000              0            630
+====================================================================================================
+
+Hold Summary(Fast Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk                 0.162       0.000              0            630
+====================================================================================================
+
+Recovery Summary(Fast Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk               998.212       0.000              0            106
+====================================================================================================
+
+Removal Summary(Fast Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk           hsst_top|clk                 0.333       0.000              0            106
+====================================================================================================
+
+Minimum Pulse Width Summary(Fast Corner):
+****************************************************************************************************
+                                                                         WPWS Failing     WPWS Total
+ Clock                                            WPWS(ns)    TPWS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hsst_top|clk                                      499.800       0.000              0            107
+====================================================================================================
+
+Slow Corner
+****************************************************************************************************
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/CIN
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.000  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.248
+  Launch Clock Delay      :  3.794
+  Clock Pessimism Removal :  0.546
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.438       3.794         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.203       3.997 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.630       4.627         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.224       4.851 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.245       5.096         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.074       5.170 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.269       5.439         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/CR1                  td                    0.224       5.663 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_6/LUT6D_inst_perm/L5
+                                   net (fanout=2)        0.247       5.910         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N168 [1]
+ CLMA_219_516/CR0                  td                    0.224       6.134 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.520       6.654         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.074       6.728 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.396       7.124         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_504/COUT                 td                    0.327       7.451 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[12]/opit_0_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.451         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N273
+ CLMA_219_510/CIN                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/CIN
+
+ Data arrival time                                                   7.451         Logic Levels: 6  
+                                                                                   Logic: 1.350ns(36.916%), Route: 2.307ns(63.084%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515    1002.635         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.245    1002.880 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.368    1003.248         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+ clock pessimism                                         0.546    1003.794                          
+ clock uncertainty                                      -0.050    1003.744                          
+
+ Setup time                                             -0.111    1003.633                          
+
+ Data required time                                               1003.633                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.633                          
+ Data arrival time                                                   7.451                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       996.182                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/I2
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    -0.028  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.249
+  Launch Clock Delay      :  3.794
+  Clock Pessimism Removal :  0.517
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.438       3.794         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.203       3.997 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.630       4.627         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.224       4.851 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.245       5.096         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.074       5.170 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.269       5.439         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/CR1                  td                    0.224       5.663 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_6/LUT6D_inst_perm/L5
+                                   net (fanout=2)        0.247       5.910         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N168 [1]
+ CLMA_219_516/CR0                  td                    0.224       6.134 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.520       6.654         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.074       6.728 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.398       7.126         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_516/A2                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/I2
+
+ Data arrival time                                                   7.126         Logic Levels: 5  
+                                                                                   Logic: 1.023ns(30.702%), Route: 2.309ns(69.298%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515    1002.635         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.245    1002.880 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.369    1003.249         ntR244           
+ CLMA_219_516/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/CLK
+ clock pessimism                                         0.517    1003.766                          
+ clock uncertainty                                      -0.050    1003.716                          
+
+ Setup time                                             -0.222    1003.494                          
+
+ Data required time                                               1003.494                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.494                          
+ Data arrival time                                                   7.126                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       996.368                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[10]/opit_0_AQ_perm/I2
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    -0.030  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.247
+  Launch Clock Delay      :  3.794
+  Clock Pessimism Removal :  0.517
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.438       3.794         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.203       3.997 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.630       4.627         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.224       4.851 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.245       5.096         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.074       5.170 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.269       5.439         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/CR1                  td                    0.224       5.663 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_6/LUT6D_inst_perm/L5
+                                   net (fanout=2)        0.247       5.910         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N168 [1]
+ CLMA_219_516/CR0                  td                    0.224       6.134 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.520       6.654         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.074       6.728 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.396       7.124         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_504/B2                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[10]/opit_0_AQ_perm/I2
+
+ Data arrival time                                                   7.124         Logic Levels: 5  
+                                                                                   Logic: 1.023ns(30.721%), Route: 2.307ns(69.279%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515    1002.635         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.245    1002.880 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.367    1003.247         ntR244           
+ CLMA_219_504/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[12]/opit_0_AQ_perm/CLK
+ clock pessimism                                         0.517    1003.764                          
+ clock uncertainty                                      -0.050    1003.714                          
+
+ Setup time                                             -0.218    1003.496                          
+
+ Data required time                                               1003.496                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.496                          
+ Data arrival time                                                   7.124                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       996.372                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/I5
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.029  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.838
+  Launch Clock Delay      :  3.289
+  Clock Pessimism Removal :  -0.520
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530       2.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245       2.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.394       3.289         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+
+ CLMA_315_259/Q1                   tco                   0.158       3.447 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/L6Q
+                                   net (fanout=8)        0.090       3.537         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [1]
+ CLMA_315_258/A5                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/I5
+
+ Data arrival time                                                   3.537         Logic Levels: 0  
+                                                                                   Logic: 0.158ns(63.710%), Route: 0.090ns(36.290%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.620       3.087         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.287       3.374 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.464       3.838         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                        -0.520       3.318                          
+ clock uncertainty                                       0.000       3.318                          
+
+ Hold time                                              -0.020       3.298                          
+
+ Data required time                                                  3.298                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.298                          
+ Data arrival time                                                   3.537                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.239                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/I4
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.029  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.838
+  Launch Clock Delay      :  3.289
+  Clock Pessimism Removal :  -0.520
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530       2.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245       2.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.394       3.289         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+
+ CLMA_315_258/Q0                   tco                   0.158       3.447 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/L6Q
+                                   net (fanout=7)        0.090       3.537         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [4]
+ CLMA_315_259/D4                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/I4
+
+ Data arrival time                                                   3.537         Logic Levels: 0  
+                                                                                   Logic: 0.158ns(63.710%), Route: 0.090ns(36.290%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.620       3.087         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.287       3.374 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.464       3.838         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                        -0.520       3.318                          
+ clock uncertainty                                       0.000       3.318                          
+
+ Hold time                                              -0.036       3.282                          
+
+ Data required time                                                  3.282                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.282                          
+ Data arrival time                                                   3.537                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.255                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/I3
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.029  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.838
+  Launch Clock Delay      :  3.289
+  Clock Pessimism Removal :  -0.520
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530       2.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245       2.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.394       3.289         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+
+ CLMA_315_259/Q1                   tco                   0.158       3.447 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/L6Q
+                                   net (fanout=8)        0.090       3.537         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [1]
+ CLMA_315_258/C3                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/I3
+
+ Data arrival time                                                   3.537         Logic Levels: 0  
+                                                                                   Logic: 0.158ns(63.710%), Route: 0.090ns(36.290%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.620       3.087         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.287       3.374 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.464       3.838         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/CLK
+ clock pessimism                                        -0.520       3.318                          
+ clock uncertainty                                       0.000       3.318                          
+
+ Hold time                                              -0.041       3.277                          
+
+ Data required time                                                  3.277                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.277                          
+ Data arrival time                                                   3.537                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.260                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : async timing path
+Clock Skew  :    -0.158  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.291
+  Launch Clock Delay      :  3.796
+  Clock Pessimism Removal :  0.347
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.440       3.796         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.185       3.981 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       2.043       6.024         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.094       6.118 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       6.118         ntR127           
+ CLMA_315_265/RSCO                 td                    0.075       6.193 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       6.193         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   6.193         Logic Levels: 2  
+                                                                                   Logic: 0.354ns(14.768%), Route: 2.043ns(85.232%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530    1002.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245    1002.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.396    1003.291         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.347    1003.638                          
+ clock uncertainty                                      -0.050    1003.588                          
+
+ Recovery time                                          -0.226    1003.362                          
+
+ Data required time                                               1003.362                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.362                          
+ Data arrival time                                                   6.193                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.169                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : async timing path
+Clock Skew  :    -0.158  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.291
+  Launch Clock Delay      :  3.796
+  Clock Pessimism Removal :  0.347
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.440       3.796         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.185       3.981 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       2.043       6.024         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.094       6.118 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       6.118         ntR127           
+ CLMA_315_265/RSCO                 td                    0.075       6.193 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       6.193         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   6.193         Logic Levels: 2  
+                                                                                   Logic: 0.354ns(14.768%), Route: 2.043ns(85.232%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530    1002.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245    1002.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.396    1003.291         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.347    1003.638                          
+ clock uncertainty                                      -0.050    1003.588                          
+
+ Recovery time                                          -0.226    1003.362                          
+
+ Data required time                                               1003.362                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.362                          
+ Data arrival time                                                   6.193                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.169                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (slow corner)
+Path Class  : async timing path
+Clock Skew  :    -0.158  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.291
+  Launch Clock Delay      :  3.796
+  Clock Pessimism Removal :  0.347
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.440       3.796         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.185       3.981 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       2.043       6.024         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.094       6.118 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       6.118         ntR127           
+ CLMA_315_265/RSCO                 td                    0.075       6.193 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       6.193         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   6.193         Logic Levels: 2  
+                                                                                   Logic: 0.354ns(14.768%), Route: 2.043ns(85.232%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730    1000.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091    1000.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052    1001.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143    1002.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.530    1002.650         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.245    1002.895 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.396    1003.291         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.347    1003.638                          
+ clock uncertainty                                      -0.050    1003.588                          
+
+ Recovery time                                          -0.226    1003.362                          
+
+ Data required time                                               1003.362                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1003.362                          
+ Data arrival time                                                   6.193                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.169                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : async timing path
+Clock Skew  :    0.025  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.807
+  Launch Clock Delay      :  3.265
+  Clock Pessimism Removal :  -0.517
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515       2.635         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.245       2.880 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.385       3.265         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.173       3.438 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.257       3.695         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMS_171_541/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/RS
+
+ Data arrival time                                                   3.695         Logic Levels: 0  
+                                                                                   Logic: 0.173ns(40.233%), Route: 0.257ns(59.767%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.451       3.807         ntR243           
+ CLMS_171_541/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/CLK
+ clock pessimism                                        -0.517       3.290                          
+ clock uncertainty                                       0.000       3.290                          
+
+ Removal time                                           -0.064       3.226                          
+
+ Data required time                                                  3.226                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.226                          
+ Data arrival time                                                   3.695                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.469                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/RS
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : async timing path
+Clock Skew  :    0.026  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.808
+  Launch Clock Delay      :  3.265
+  Clock Pessimism Removal :  -0.517
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515       2.635         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.245       2.880 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.385       3.265         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.173       3.438 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.310       3.748         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMA_171_546/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/RS
+
+ Data arrival time                                                   3.748         Logic Levels: 0  
+                                                                                   Logic: 0.173ns(35.818%), Route: 0.310ns(64.182%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.452       3.808         ntR243           
+ CLMA_171_546/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/CLK
+ clock pessimism                                        -0.517       3.291                          
+ clock uncertainty                                       0.000       3.291                          
+
+ Removal time                                           -0.064       3.227                          
+
+ Data required time                                                  3.227                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.227                          
+ Data arrival time                                                   3.748                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.521                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_neg/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : min (slow corner)
+Path Class  : async timing path
+Clock Skew  :    0.026  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  3.808
+  Launch Clock Delay      :  3.265
+  Clock Pessimism Removal :  -0.517
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515       2.635         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.245       2.880 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.385       3.265         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.173       3.438 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.310       3.748         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMA_171_546/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_neg/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   3.748         Logic Levels: 0  
+                                                                                   Logic: 0.173ns(35.818%), Route: 0.310ns(64.182%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.452       3.808         ntR243           
+ CLMA_171_546/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_neg/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                        -0.517       3.291                          
+ clock uncertainty                                       0.000       3.291                          
+
+ Removal time                                           -0.064       3.227                          
+
+ Data required time                                                  3.227                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.227                          
+ Data arrival time                                                   3.748                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.521                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[4] (port)
+Path Group  : **default**
+Path Type   : max (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.453       3.809         ntR244           
+ CLMA_261_348/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMA_261_348/CR0                  tco                   0.249       4.058 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        4.639       8.697         nt_led[4]        
+ IOLHR_16_1116/DO_P                td                    0.611       9.308 r       led_obuf[4]/opit_1/DO_P
+                                   net (fanout=1)        0.000       9.308         led_obuf[4]/ntO  
+ IOBD_0_1116/PAD                   td                    2.381      11.689 r       led_obuf[4]/opit_0/O
+                                   net (fanout=1)        0.154      11.843         led[4]           
+ A17                                                                       r       led[4] (port)    
+
+ Data arrival time                                                  11.843         Logic Levels: 2  
+                                                                                   Logic: 3.241ns(40.341%), Route: 4.793ns(59.659%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[5] (port)
+Path Group  : **default**
+Path Type   : max (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.458       3.814         ntR244           
+ CLMS_267_325/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMS_267_325/CR0                  tco                   0.249       4.063 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        4.431       8.494         nt_led[5]        
+ IOLHR_16_1110/DO_P                td                    0.611       9.105 r       led_obuf[5]/opit_1/DO_P
+                                   net (fanout=1)        0.000       9.105         led_obuf[5]/ntO  
+ IOBS_0_1110/PAD                   td                    2.385      11.490 r       led_obuf[5]/opit_0/O
+                                   net (fanout=1)        0.156      11.646         led[5]           
+ A18                                                                       r       led[5] (port)    
+
+ Data arrival time                                                  11.646         Logic Levels: 2  
+                                                                                   Logic: 3.245ns(41.433%), Route: 4.587ns(58.567%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : led[7] (port)
+Path Group  : **default**
+Path Type   : max (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.855       0.959 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.959         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.064 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.235       2.299         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.168       2.467 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.602       3.069         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.287       3.356 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.440       3.796         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.203       3.999 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       3.067       7.066         nt_led[7]        
+ IOLHR_16_1134/DO_P                td                    0.611       7.677 r       led_obuf[7]/opit_1/DO_P
+                                   net (fanout=1)        0.000       7.677         led_obuf[7]/ntO  
+ IOBS_0_1134/PAD                   td                    2.385      10.062 r       led_obuf[7]/opit_0/O
+                                   net (fanout=1)        0.134      10.196         led[7]           
+ B17                                                                       r       led[7] (port)    
+
+ Data arrival time                                                  10.196         Logic Levels: 2  
+                                                                                   Logic: 3.199ns(49.984%), Route: 3.201ns(50.016%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : rstn (port)
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/RS
+Path Group  : **default**
+Path Type   : min (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+
+ C22                                                     0.000       0.000 f       rstn (port)      
+                                   net (fanout=1)        0.136       0.136         rstn             
+ IOBD_0_990/DIN                    td                    0.646       0.782 f       rstn_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.782         rstn_ibuf/ntD    
+ IOLHR_16_990/DI_TO_CLK            td                    0.091       0.873 f       rstn_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=2)        1.957       2.830         nt_rstn          
+ CLMA_165_558/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/RS
+
+ Data arrival time                                                   2.830         Logic Levels: 2  
+                                                                                   Logic: 0.737ns(26.042%), Route: 2.093ns(73.958%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : led[7] (port)
+Path Group  : **default**
+Path Type   : min (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515       2.635         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.245       2.880 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.370       3.250         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.158       3.408 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       2.425       5.833         nt_led[7]        
+ IOLHR_16_1134/DO_P                td                    0.373       6.206 f       led_obuf[7]/opit_1/DO_P
+                                   net (fanout=1)        0.000       6.206         led_obuf[7]/ntO  
+ IOBS_0_1134/PAD                   td                    2.037       8.243 f       led_obuf[7]/opit_0/O
+                                   net (fanout=1)        0.134       8.377         led[7]           
+ B17                                                                       f       led[7] (port)    
+
+ Data arrival time                                                   8.377         Logic Levels: 2  
+                                                                                   Logic: 2.568ns(50.088%), Route: 2.559ns(49.912%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[5] (port)
+Path Group  : **default**
+Path Type   : min (slow corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.730       0.834 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.834         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       0.925 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        1.052       1.977         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.143       2.120 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.515       2.635         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.245       2.880 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.388       3.268         ntR244           
+ CLMS_267_325/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMS_267_325/CR0                  tco                   0.173       3.441 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        3.363       6.804         nt_led[5]        
+ IOLHR_16_1110/DO_P                td                    0.373       7.177 f       led_obuf[5]/opit_1/DO_P
+                                   net (fanout=1)        0.000       7.177         led_obuf[5]/ntO  
+ IOBS_0_1110/PAD                   td                    2.037       9.214 f       led_obuf[5]/opit_0/O
+                                   net (fanout=1)        0.156       9.370         led[5]           
+ A18                                                                       f       led[5] (port)    
+
+ Data arrival time                                                   9.370         Logic Levels: 2  
+                                                                                   Logic: 2.583ns(42.330%), Route: 3.519ns(57.670%)
+====================================================================================================
+
+{hsst_top|clk} Minimum Pulse Width :
+****************************************************************************************************
+ Slack       Actual Width    Require Width   Type              Location                Pin          
+----------------------------------------------------------------------------------------------------
+ 499.800     500.000         0.200           High Pulse Width  CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[0]/opit_0_inv_L6QL5Q1_perm/CLK
+ 499.800     500.000         0.200           Low Pulse Width   CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[0]/opit_0_inv_L6QL5Q1_perm/CLK
+ 499.800     500.000         0.200           High Pulse Width  CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[3]/opit_0_inv_L6QL5Q_perm/CLK
+====================================================================================================
+
+====================================================================================================
+Fast Corner
+****************************************************************************************************
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/CIN
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.000  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.197
+  Launch Clock Delay      :  2.585
+  Clock Pessimism Removal :  0.388
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.295       2.585         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.125       2.710 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.366       3.076         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.122       3.198 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.147       3.345         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.039       3.384 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.229       3.613         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/Y0                   td                    0.070       3.683 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/pll_fsm_reg[2]/opit_0_L6Q_perm/L6
+                                   net (fanout=1)        0.148       3.831         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N9
+ CLMA_219_516/CR0                  td                    0.131       3.962 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.297       4.259         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.039       4.298 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.228       4.526         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_504/COUT                 td                    0.228       4.754 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[12]/opit_0_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.754         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N273
+ CLMA_219_510/CIN                                                          f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/CIN
+
+ Data arrival time                                                   4.754         Logic Levels: 6  
+                                                                                   Logic: 0.754ns(34.763%), Route: 1.415ns(65.237%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328    1001.755         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.195    1001.950 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.247    1002.197         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+ clock pessimism                                         0.388    1002.585                          
+ clock uncertainty                                      -0.050    1002.535                          
+
+ Setup time                                             -0.047    1002.488                          
+
+ Data required time                                               1002.488                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.488                          
+ Data arrival time                                                   4.754                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.734                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/I2
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    -0.014  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.198
+  Launch Clock Delay      :  2.585
+  Clock Pessimism Removal :  0.373
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.295       2.585         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.125       2.710 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.366       3.076         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.122       3.198 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.147       3.345         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.039       3.384 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.229       3.613         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/Y0                   td                    0.070       3.683 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/pll_fsm_reg[2]/opit_0_L6Q_perm/L6
+                                   net (fanout=1)        0.148       3.831         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N9
+ CLMA_219_516/CR0                  td                    0.131       3.962 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.297       4.259         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.040       4.299 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.228       4.527         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_516/A2                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/I2
+
+ Data arrival time                                                   4.527         Logic Levels: 5  
+                                                                                   Logic: 0.527ns(27.137%), Route: 1.415ns(72.863%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328    1001.755         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.195    1001.950 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.248    1002.198         ntR244           
+ CLMA_219_516/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/CLK
+ clock pessimism                                         0.373    1002.571                          
+ clock uncertainty                                      -0.050    1002.521                          
+
+ Setup time                                             -0.120    1002.401                          
+
+ Data required time                                               1002.401                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.401                          
+ Data arrival time                                                   4.527                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.874                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[10]/opit_0_AQ_perm/I2
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    -0.016  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.196
+  Launch Clock Delay      :  2.585
+  Clock Pessimism Removal :  0.373
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.295       2.585         ntR244           
+ CLMA_219_510/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[15]/opit_0_AQ_perm/CLK
+
+ CLMA_219_510/Q0                   tco                   0.125       2.710 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[13]/opit_0_AQ_perm/Q
+                                   net (fanout=2)        0.366       3.076         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr [13]
+ CLMA_219_523/Y0                   td                    0.122       3.198 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_17/LUT6_inst_perm/L6
+                                   net (fanout=3)        0.147       3.345         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1265
+ CLMA_219_523/Y2                   td                    0.039       3.384 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N109_19/gateop_perm/L6
+                                   net (fanout=3)        0.229       3.613         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N1277
+ CLMA_219_517/Y0                   td                    0.070       3.683 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/pll_fsm_reg[2]/opit_0_L6Q_perm/L6
+                                   net (fanout=1)        0.148       3.831         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N9
+ CLMA_219_516/CR0                  td                    0.131       3.962 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[0]/opit_0_L6Q_LUT6DQL5_perm/L5
+                                   net (fanout=6)        0.297       4.259         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N883
+ CLMA_219_511/Y0                   td                    0.040       4.299 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/N81_18_3/LUT6_inst_perm/L6
+                                   net (fanout=14)       0.225       4.524         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/_N442
+ CLMA_219_504/B2                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[10]/opit_0_AQ_perm/I2
+
+ Data arrival time                                                   4.524         Logic Levels: 5  
+                                                                                   Logic: 0.527ns(27.179%), Route: 1.412ns(72.821%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328    1001.755         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.195    1001.950 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.246    1002.196         ntR244           
+ CLMA_219_504/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/cntr[12]/opit_0_AQ_perm/CLK
+ clock pessimism                                         0.373    1002.569                          
+ clock uncertainty                                      -0.050    1002.519                          
+
+ Setup time                                             -0.118    1002.401                          
+
+ Data required time                                               1002.401                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.401                          
+ Data arrival time                                                   4.524                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       997.877                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/I5
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.015  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.622
+  Launch Clock Delay      :  2.232
+  Clock Pessimism Removal :  -0.375
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336       1.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195       1.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.274       2.232         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+
+ CLMA_315_259/Q1                   tco                   0.103       2.335 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/L6Q
+                                   net (fanout=8)        0.060       2.395         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [1]
+ CLMA_315_258/A5                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/I5
+
+ Data arrival time                                                   2.395         Logic Levels: 0  
+                                                                                   Logic: 0.103ns(63.190%), Route: 0.060ns(36.810%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.395       2.067         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.233       2.300 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.322       2.622         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                        -0.375       2.247                          
+ clock uncertainty                                       0.000       2.247                          
+
+ Hold time                                              -0.014       2.233                          
+
+ Data required time                                                  2.233                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.233                          
+ Data arrival time                                                   2.395                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.162                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/I4
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.015  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.622
+  Launch Clock Delay      :  2.232
+  Clock Pessimism Removal :  -0.375
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336       1.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195       1.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.274       2.232         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/CLK
+
+ CLMA_315_258/Q0                   tco                   0.103       2.335 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[4]/opit_0_inv_L6Q_perm/L6Q
+                                   net (fanout=7)        0.060       2.395         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [4]
+ CLMA_315_259/D4                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/I4
+
+ Data arrival time                                                   2.395         Logic Levels: 0  
+                                                                                   Logic: 0.103ns(63.190%), Route: 0.060ns(36.810%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.395       2.067         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.233       2.300 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.322       2.622         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[7]/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                        -0.375       2.247                          
+ clock uncertainty                                       0.000       2.247                          
+
+ Hold time                                              -0.021       2.226                          
+
+ Data required time                                                  2.226                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.226                          
+ Data arrival time                                                   2.395                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.169                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/I3
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.015  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.622
+  Launch Clock Delay      :  2.232
+  Clock Pessimism Removal :  -0.375
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336       1.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195       1.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.274       2.232         ntR245           
+ CLMA_315_259/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/CLK
+
+ CLMA_315_259/Q1                   tco                   0.103       2.335 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[2]/opit_0_inv_L6QL5Q_perm/L6Q
+                                   net (fanout=8)        0.060       2.395         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr [1]
+ CLMA_315_258/C3                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/I3
+
+ Data arrival time                                                   2.395         Logic Levels: 0  
+                                                                                   Logic: 0.103ns(63.190%), Route: 0.060ns(36.810%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.395       2.067         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.233       2.300 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.322       2.622         ntR245           
+ CLMA_315_258/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[3]/opit_0_inv_L5Q_perm/CLK
+ clock pessimism                                        -0.375       2.247                          
+ clock uncertainty                                       0.000       2.247                          
+
+ Hold time                                              -0.023       2.224                          
+
+ Data required time                                                  2.224                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.224                          
+ Data arrival time                                                   2.395                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.171                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : async timing path
+Clock Skew  :    -0.108  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.234
+  Launch Clock Delay      :  2.587
+  Clock Pessimism Removal :  0.245
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.297       2.587         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.125       2.712 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       1.288       4.000         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.052       4.052 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       4.052         ntR127           
+ CLMA_315_265/RSCO                 td                    0.049       4.101 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       4.101         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   4.101         Logic Levels: 2  
+                                                                                   Logic: 0.226ns(14.927%), Route: 1.288ns(85.073%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336    1001.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195    1001.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.276    1002.234         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_PCS_TX_RST/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.245    1002.479                          
+ clock uncertainty                                      -0.050    1002.429                          
+
+ Recovery time                                          -0.116    1002.313                          
+
+ Data required time                                               1002.313                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.313                          
+ Data arrival time                                                   4.101                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       998.212                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : async timing path
+Clock Skew  :    -0.108  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.234
+  Launch Clock Delay      :  2.587
+  Clock Pessimism Removal :  0.245
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.297       2.587         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.125       2.712 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       1.288       4.000         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.052       4.052 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       4.052         ntR127           
+ CLMA_315_265/RSCO                 td                    0.049       4.101 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       4.101         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   4.101         Logic Levels: 2  
+                                                                                   Logic: 0.226ns(14.927%), Route: 1.288ns(85.073%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336    1001.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195    1001.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.276    1002.234         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_CLKPATH/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.245    1002.479                          
+ clock uncertainty                                      -0.050    1002.429                          
+
+ Recovery time                                          -0.116    1002.313                          
+
+ Data required time                                               1002.313                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.313                          
+ Data arrival time                                                   4.101                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       998.212                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : max (fast corner)
+Path Class  : async timing path
+Clock Skew  :    -0.108  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.234
+  Launch Clock Delay      :  2.587
+  Clock Pessimism Removal :  0.245
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.297       2.587         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.125       2.712 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       1.288       4.000         nt_led[7]        
+ CLMA_315_259/RSCO                 td                    0.052       4.052 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/cntr[8]/opit_0_inv_L6Q_perm/RSCO
+                                   net (fanout=3)        0.000       4.052         ntR127           
+ CLMA_315_265/RSCO                 td                    0.049       4.101 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/txlane_rst_fsm_reg[2]/opit_0_inv_L5Q_perm/RSCO
+                                   net (fanout=4)        0.000       4.101         ntR126           
+ CLMA_315_271/RSCI                                                         r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/RS
+
+ Data arrival time                                                   4.101         Logic Levels: 2  
+                                                                                   Logic: 0.226ns(14.927%), Route: 1.288ns(85.073%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                     1000.000    1000.000 r                        
+ D18                                                     0.000    1000.000 r       clk (port)       
+                                   net (fanout=1)        0.104    1000.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445    1000.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000    1000.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073    1000.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708    1001.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097    1001.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.336    1001.763         ntclkbufg_1      
+ HCKB_213_188/CLKOUT               td                    0.195    1001.958 r       HCKBROUTE_3/CLKOUT
+                                   net (fanout=15)       0.276    1002.234         ntR245           
+ CLMA_315_271/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/P_TX_LANE_PD_PISO/opit_0_inv_L6Q_perm/CLK
+ clock pessimism                                         0.245    1002.479                          
+ clock uncertainty                                      -0.050    1002.429                          
+
+ Recovery time                                          -0.116    1002.313                          
+
+ Data required time                                               1002.313                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                               1002.313                          
+ Data arrival time                                                   4.101                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                       998.212                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : async timing path
+Clock Skew  :    0.011  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.598
+  Launch Clock Delay      :  2.214
+  Clock Pessimism Removal :  -0.373
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328       1.755         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.195       1.950 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.264       2.214         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.123       2.337 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.183       2.520         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMS_171_541/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/RS
+
+ Data arrival time                                                   2.520         Logic Levels: 0  
+                                                                                   Logic: 0.123ns(40.196%), Route: 0.183ns(59.804%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.308       2.598         ntR243           
+ CLMS_171_541/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg/cnt_2[4]/opit_0_inv_AQ_perm/CLK
+ clock pessimism                                        -0.373       2.225                          
+ clock uncertainty                                       0.000       2.225                          
+
+ Removal time                                           -0.038       2.187                          
+
+ Data required time                                                  2.187                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.187                          
+ Data arrival time                                                   2.520                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.333                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[11]/opit_0_inv_AQ_perm/RS
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : async timing path
+Clock Skew  :    0.042  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.596
+  Launch Clock Delay      :  2.214
+  Clock Pessimism Removal :  -0.340
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328       1.755         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.195       1.950 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.264       2.214         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.123       2.337 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.251       2.588         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMS_189_547/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[11]/opit_0_inv_AQ_perm/RS
+
+ Data arrival time                                                   2.588         Logic Levels: 0  
+                                                                                   Logic: 0.123ns(32.888%), Route: 0.251ns(67.112%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.306       2.596         ntR243           
+ CLMS_189_547/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[11]/opit_0_inv_AQ_perm/CLK
+ clock pessimism                                        -0.340       2.256                          
+ clock uncertainty                                       0.000       2.256                          
+
+ Removal time                                           -0.038       2.218                          
+
+ Data required time                                                  2.218                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.218                          
+ Data arrival time                                                   2.588                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.370                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/RS
+Path Group  : hsst_top|clk
+Path Type   : min (fast corner)
+Path Class  : async timing path
+Clock Skew  :    0.012  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  2.599
+  Launch Clock Delay      :  2.214
+  Clock Pessimism Removal :  -0.373
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328       1.755         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.195       1.950 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.264       2.214         ntR243           
+ CLMA_165_558/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CLK
+
+ CLMA_165_558/CR0                  tco                   0.123       2.337 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/CR0
+                                   net (fanout=17)       0.221       2.558         hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/s_pll_rstn_0
+ CLMA_171_546/RS                                                           f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/RS
+
+ Data arrival time                                                   2.558         Logic Levels: 0  
+                                                                                   Logic: 0.123ns(35.756%), Route: 0.221ns(64.244%)
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_475/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_1/CLKOUT
+                                   net (fanout=33)       0.309       2.599         ntR243           
+ CLMA_171_546/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/signal_b_ff/opit_0_inv/CLK
+ clock pessimism                                        -0.373       2.226                          
+ clock uncertainty                                       0.000       2.226                          
+
+ Removal time                                           -0.038       2.188                          
+
+ Data required time                                                  2.188                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  2.188                          
+ Data arrival time                                                   2.558                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.370                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[4] (port)
+Path Group  : **default**
+Path Type   : max (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.310       2.600         ntR244           
+ CLMA_261_348/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMA_261_348/CR0                  tco                   0.141       2.741 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/o_rxlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        2.896       5.637         nt_led[4]        
+ IOLHR_16_1116/DO_P                td                    0.353       5.990 f       led_obuf[4]/opit_1/DO_P
+                                   net (fanout=1)        0.000       5.990         led_obuf[4]/ntO  
+ IOBD_0_1116/PAD                   td                    2.007       7.997 f       led_obuf[4]/opit_0/O
+                                   net (fanout=1)        0.154       8.151         led[4]           
+ A17                                                                       f       led[4] (port)    
+
+ Data arrival time                                                   8.151         Logic Levels: 2  
+                                                                                   Logic: 2.501ns(45.055%), Route: 3.050ns(54.945%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[5] (port)
+Path Group  : **default**
+Path Type   : max (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.316       2.606         ntR244           
+ CLMS_267_325/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMS_267_325/CR0                  tco                   0.141       2.747 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        2.774       5.521         nt_led[5]        
+ IOLHR_16_1110/DO_P                td                    0.353       5.874 f       led_obuf[5]/opit_1/DO_P
+                                   net (fanout=1)        0.000       5.874         led_obuf[5]/ntO  
+ IOBS_0_1110/PAD                   td                    2.022       7.896 f       led_obuf[5]/opit_0/O
+                                   net (fanout=1)        0.156       8.052         led[5]           
+ A18                                                                       f       led[5] (port)    
+
+ Data arrival time                                                   8.052         Logic Levels: 2  
+                                                                                   Logic: 2.516ns(46.199%), Route: 2.930ns(53.801%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : led[7] (port)
+Path Group  : **default**
+Path Type   : max (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.521       0.625 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.625         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.087       0.712 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.845       1.557         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.115       1.672 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.385       2.057         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.233       2.290 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.297       2.587         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.125       2.712 f       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       2.046       4.758         nt_led[7]        
+ IOLHR_16_1134/DO_P                td                    0.353       5.111 f       led_obuf[7]/opit_1/DO_P
+                                   net (fanout=1)        0.000       5.111         led_obuf[7]/ntO  
+ IOBS_0_1134/PAD                   td                    2.022       7.133 f       led_obuf[7]/opit_0/O
+                                   net (fanout=1)        0.134       7.267         led[7]           
+ B17                                                                       f       led[7] (port)    
+
+ Data arrival time                                                   7.267         Logic Levels: 2  
+                                                                                   Logic: 2.500ns(53.419%), Route: 2.180ns(46.581%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : rstn (port)
+Endpoint    : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/RS
+Path Group  : **default**
+Path Type   : min (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+
+ C22                                                     0.000       0.000 r       rstn (port)      
+                                   net (fanout=1)        0.136       0.136         rstn             
+ IOBD_0_990/DIN                    td                    0.445       0.581 r       rstn_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.581         rstn_ibuf/ntD    
+ IOLHR_16_990/DI_TO_CLK            td                    0.073       0.654 r       rstn_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=2)        1.190       1.844         nt_rstn          
+ CLMA_165_558/RS                                                           r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_rstn_sync/sig_async_ff/opit_0_inv_srl/RS
+
+ Data arrival time                                                   1.844         Logic Levels: 2  
+                                                                                   Logic: 0.518ns(28.091%), Route: 1.326ns(71.909%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+Endpoint    : led[7] (port)
+Path Group  : **default**
+Path Type   : min (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328       1.755         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.195       1.950 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.249       2.199         ntR244           
+ CLMA_219_522/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/CLK
+
+ CLMA_219_522/Q0                   tco                   0.103       2.302 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0/o_pll_done/opit_0/Q
+                                   net (fanout=32)       1.459       3.761         nt_led[7]        
+ IOLHR_16_1134/DO_P                td                    0.220       3.981 r       led_obuf[7]/opit_1/DO_P
+                                   net (fanout=1)        0.000       3.981         led_obuf[7]/ntO  
+ IOBS_0_1134/PAD                   td                    1.933       5.914 r       led_obuf[7]/opit_0/O
+                                   net (fanout=1)        0.134       6.048         led[7]           
+ B17                                                                       r       led[7] (port)    
+
+ Data arrival time                                                   6.048         Logic Levels: 2  
+                                                                                   Logic: 2.256ns(58.613%), Route: 1.593ns(41.387%)
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+Endpoint    : led[5] (port)
+Path Group  : **default**
+Path Type   : min (fast corner)
+Path Class  : combinational timing path
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock hsst_top|clk (rising edge)                        0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       clk (port)       
+                                   net (fanout=1)        0.104       0.104         clk              
+ IOBD_0_1080/DIN                   td                    0.445       0.549 r       clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       0.549         clk_ibuf/ntD     
+ IOLHR_16_1080/DI_TO_CLK           td                    0.073       0.622 r       clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=1)        0.708       1.330         nt_clk           
+ USCM_215_624/CLKOUT               td                    0.097       1.427 r       clkbufg_1/gopclkbufg/CLKOUT
+                                   net (fanout=3)        0.328       1.755         ntclkbufg_1      
+ HCKB_213_495/CLKOUT               td                    0.195       1.950 r       HCKBROUTE_2/CLKOUT
+                                   net (fanout=96)       0.267       2.217         ntR244           
+ CLMS_267_325/CLK                                                          r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/CLK
+
+ CLMS_267_325/CR0                  tco                   0.122       2.339 r       hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3/o_txlane_done/opit_0_inv_L5Q_perm/L5Q
+                                   net (fanout=2)        2.081       4.420         nt_led[5]        
+ IOLHR_16_1110/DO_P                td                    0.220       4.640 r       led_obuf[5]/opit_1/DO_P
+                                   net (fanout=1)        0.000       4.640         led_obuf[5]/ntO  
+ IOBS_0_1110/PAD                   td                    1.933       6.573 r       led_obuf[5]/opit_0/O
+                                   net (fanout=1)        0.156       6.729         led[5]           
+ A18                                                                       r       led[5] (port)    
+
+ Data arrival time                                                   6.729         Logic Levels: 2  
+                                                                                   Logic: 2.275ns(50.421%), Route: 2.237ns(49.579%)
+====================================================================================================
+
+{hsst_top|clk} Minimum Pulse Width :
+****************************************************************************************************
+ Slack       Actual Width    Require Width   Type              Location                Pin          
+----------------------------------------------------------------------------------------------------
+ 499.800     500.000         0.200           High Pulse Width  CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[0]/opit_0_inv_L6QL5Q1_perm/CLK
+ 499.800     500.000         0.200           Low Pulse Width   CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[0]/opit_0_inv_L6QL5Q1_perm/CLK
+ 499.800     500.000         0.200           High Pulse Width  CLMS_183_535/CLK        hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb/rise_cnt[3]/opit_0_inv_L6QL5Q_perm/CLK
+====================================================================================================
+
+====================================================================================================
+
+Inputs and Outputs :
++----------------------------------------------------------------------------------------------------------------+
+| Type       | File Name                                                                                        
++----------------------------------------------------------------------------------------------------------------+
+| Input      | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/place_route/hsst_top_pnr.adf       
+| Output     | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/report_timing/hsst_top_rtp.adf     
+|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/report_timing/hsst_top.rtr         
+|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/report_timing/rtr.db               
++----------------------------------------------------------------------------------------------------------------+
+
+
+Flow Command: report_timing 
+Peak memory: 1,073 MB
+Total CPU time to report_timing completion : 0h:0m:10s
+Process Total CPU time to report_timing completion : 0h:0m:10s
+Total real time to report_timing completion : 0h:0m:17s

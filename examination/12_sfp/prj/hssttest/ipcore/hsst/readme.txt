@@ -1,0 +1,21 @@
+--/example_design                       //用于参考设计或者IP仿真的.v文件
+  --bench/*.v                           //用于参考设计或者IP仿真的testbench文件
+  --rtl/*.v                             //用于参考设计或者IP仿真所需的.v文件，包括激励的生成，检查等
+--/pnr                                  //综合布局布线工程
+  -- /example_design                    //Example Design的综合布局布线工程文件及约束文件
+     -- pango_hsstlp_top.prj            //HSSTLP IP Example Design PDS工程文件，作为用户工程的参考
+     -- pango_hsstlp_top.fdc            //HSSTLP IP Example Design PDS约束文件，作为用户工程的参考
+  -- /core_only                         //所生成IP核的综合布局布线工程文件及约束文件
+     -- $instname.prj                   //所生成IP核的PDS工程文件，作为用户工程的参考，其中$instname是用户输入的例化名
+     -- $instname.fdc                   //所生成IP和的PDS约束文件，作为用户工程的参考，其中$instname是用户输入的例化名
+--/rtl                                  //HSSTLP IP包含的设计代码
+  -- /ipm2l_hsstlp_apb_bridge_*.v       //APB bridge模块，完成对APB地址访问的映射
+  -- /ipm2l_hsstlp_wrapper_*.v          //HSSTLP模块的顶层.v文件
+  -- /ipm2l_hsstlp_rst/*.v              //复位序列相关全部.v文件
+--/sim                                  //simulation目录
+  -- /example_design                    //仿真运行的.do文件及filelist
+     -- pango_hsstlp_top_sim.do         //用于仿真运行的.do文件
+     -- pango_hsstlp_top_filelist.f     //用于仿真的filelist，被pango_hsstlp_top_sim.do调用
+     -- pango_hsstlp_top_sim_wave.do    //用于仿真运行的波形加载.do文件，被pango_hsstlp_top_sim.do调用
+--/sim_lib                              //加密代码，仅用于仿真
+  -- /modelsim                          //适用于ModelSim 10.2c的加密代码 _sim.vp

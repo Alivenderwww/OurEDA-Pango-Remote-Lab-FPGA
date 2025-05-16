@@ -1,0 +1,45 @@
+##### Written on 2025/05/15 20:48:00 ###############################
+
+
+##### INFO ##################################################
+
+Current device : 
+	PG2L100H-6FBG676
+
+Top Module : 
+	hsst_top
+
+Constraint File(s) : 
+	E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/IO.fdc
+
+##### SUMMARY ######################################################
+
+Found 0 error(s), 0 critical warning(s), 2 warning(s), out of 74 constraint(s)
+
+
+Inapplicable constraints(except overwritten constraints):
+********************************************
+
+define_attribute {p:i_p_refckn_0} {PAP_IO_LOC} {AB11}
+	W: ConstraintEditor-4024: Location AB11 is special io location. Only location will take effect. If the other io attribute have set on port p:i_p_refckn_0, will be ignored.
+
+define_attribute {p:i_p_refckp_0} {PAP_IO_LOC} {AA11}
+	W: ConstraintEditor-4024: Location AA11 is special io location. Only location will take effect. If the other io attribute have set on port p:i_p_refckp_0, will be ignored.
+
+
+Constraints with issues:
+********************************************
+
+
+Issues without commands:
+********************************************
+
+
+Unconstrained ports:
+********************************************
+
+
+Constraints with matching wildcard expressions:
+********************************************
+
+

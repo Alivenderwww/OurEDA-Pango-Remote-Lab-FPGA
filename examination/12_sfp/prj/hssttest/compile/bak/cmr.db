@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tables>
+    <table id="compile_source_files" title="Design Files Read" column_number="2">
+        <column_headers>
+            <data>File Name</data>
+            <data>File Type</data>
+        </column_headers>
+        <row>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v</data>
+            <data>Verilog</data>
+        </row>
+        <row>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/Word_Alignment_32bit.v</data>
+            <data>Verilog</data>
+        </row>
+        <row>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.idf</data>
+            <data>IP</data>
+        </row>
+    </table>
+    <table id="compile_runtime" title="Compile Runtime &amp; Memory" column_number="7">
+        <column_headers>
+            <data>Cpu Time</data>
+            <data>Process Cpu Time</data>
+            <data>Real Time</data>
+            <data>Peak Memory (MB)</data>
+            <data>Operation System</data>
+            <data>CPU</data>
+            <data>RAM(GB)</data>
+        </column_headers>
+        <row>
+            <data>0h:0m:1s</data>
+            <data>0h:0m:1s</data>
+            <data>0h:0m:5s</data>
+            <data>143</data>
+            <data>WINDOWS 10 x86_64</data>
+            <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
+            <data>31</data>
+        </row>
+    </table>
+    <table id="compile_messages" title="Compile Messages" column_number="1">
+        <column_headers/>
+        <row>
+            <data message="4">Enable Verilog2k features and keywords</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 1)] Analyzing module hsst_top (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/Word_Alignment_32bit.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/Word_Alignment_32bit.v(line number: 1)] Analyzing module Word_Alignment_32bit (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_fifo_clr_v1_3.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_fifo_clr_v1_3.v(line number: 16)] Analyzing module ipm2l_hsstlp_fifo_clr_v1_3 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 16)] Analyzing module ipm2l_hsstlp_pll_rst_fsm_v1_0 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_debounce_v1_0 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_pll_v1_0 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_rx_v1_6 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_sync_v1_0 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_tx_v1_6 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_v1_8 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v(line number: 16)] Analyzing module ipm2l_hsstlp_rst_wtchdg_v1_0 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 16)] Analyzing module ipm2l_hsstlp_rxlane_rst_fsm_v1_6 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 16)] Analyzing module ipm2l_hsstlp_txlane_rst_fsm_v1_6 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_apb_bridge_v1_2.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_apb_bridge_v1_2.v(line number: 17)] Analyzing module ipm2l_hsstlp_apb_bridge_v1_2 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 17)] Analyzing module ipm2l_hsstlp_wrapper_v1_9 (library work)</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 19)] Analyzing module hsst (library work)</data>
+        </row>
+        <row>
+            <data message="4">Module &quot;hsst_top&quot; is set as top module.</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 1)] Elaborating module hsst_top</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Elaborating instance hsst_inst</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 19)] Elaborating module hsst</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 1672)] Elaborating instance U_IPM2L_HSSTLP_RST</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_v1_8</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST} parameter value:
+    INNER_RST_EN = TRUE
+    FREE_CLOCK_FREQ = 27.000000
+    CH0_TX_ENABLE = FALSE
+    CH1_TX_ENABLE = FALSE
+    CH2_TX_ENABLE = FALSE
+    CH3_TX_ENABLE = TRUE
+    CH0_RX_ENABLE = FALSE
+    CH1_RX_ENABLE = FALSE
+    CH2_RX_ENABLE = FALSE
+    CH3_RX_ENABLE = TRUE
+    CH0_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH0_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH0_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH1_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH2_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH3_RXPCS_ALIGN_TIMER = 32'b00000000000000000111111111111111
+    PCS_CH0_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH1_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH2_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH3_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH0_BYPASS_BONDING = TRUE
+    PCS_CH1_BYPASS_BONDING = TRUE
+    PCS_CH2_BYPASS_BONDING = TRUE
+    PCS_CH3_BYPASS_BONDING = TRUE
+    PCS_CH0_BYPASS_CTC = TRUE
+    PCS_CH1_BYPASS_CTC = TRUE
+    PCS_CH2_BYPASS_CTC = TRUE
+    PCS_CH3_BYPASS_CTC = TRUE
+    P_LX_TX_CKDIV_0 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_1 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_2 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_3 = 32'b00000000000000000000000000000010
+    LX_RX_CKDIV_0 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_1 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_2 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_3 = 32'b00000000000000000000000000000010
+    CH0_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH1_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH2_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH3_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH0_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH1_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH2_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH3_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    PLL_NUBER = 32'b00000000000000000000000000000001
+    PCS_TX_CLK_EXPLL_USE_CH0 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH1 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH2 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH3 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH0 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH1 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH2 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH3 = FALSE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v(line number: 352)] Elaborating instance hsstlp_rst_pll</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_pll_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll} parameter value:
+    FREE_CLOCK_FREQ = 27.000000
+    PLL_NUBER = 32'b00000000000000000000000000000001</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 58)] Elaborating instance pll0_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 59)] Elaborating instance pll0_lock_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 63)] Elaborating instance pll0_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 66)] Elaborating instance pll0_lock_wtchdg</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_wtchdg_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll0_lock_wtchdg} parameter value:
+    ACTIVE_HIGH = 32'b00000000000000000000000000000000
+    WTCHDG_CNTR1_WIDTH = 32'b00000000000000000000000000001010
+    WTCHDG_CNTR2_WIDTH = 32'b00000000000000000000000000001010</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v(line number: 73)] Elaborating instance pll_rst_fsm_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_pll_rst_fsm_v1_0</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 30)] Rounding real from 810.000000 to 810.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 31)] Rounding real from 4.050000 to 4.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 32)] Rounding real from 224.100000 to 224.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v(line number: 33)] Rounding real from 27.000000 to 27.</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_pll/pll_rst_fsm_0} parameter value:
+    FREE_CLOCK_FREQ = 27.000000</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v(line number: 392)] Elaborating instance hsstlp_rst_tx</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_tx_v1_6</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx} parameter value:
+    FREE_CLOCK_FREQ = 27.000000
+    CH0_TX_ENABLE = FALSE
+    CH1_TX_ENABLE = FALSE
+    CH2_TX_ENABLE = FALSE
+    CH3_TX_ENABLE = TRUE
+    CH0_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    P_LX_TX_CKDIV_0 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_1 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_2 = 32'b00000000000000000000000000000000
+    P_LX_TX_CKDIV_3 = 32'b00000000000000000000000000000010
+    CH0_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH1_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH2_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH3_TX_PLL_SEL = 32'b00000000000000000000000000000000
+    PCS_TX_CLK_EXPLL_USE_CH0 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH1 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH2 = FALSE
+    PCS_TX_CLK_EXPLL_USE_CH3 = FALSE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 188)] Elaborating instance txlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 189)] Elaborating instance i_pll_lock_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 191)] Elaborating instance pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/SYNC_TXLANE[0].pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 188)] Elaborating instance txlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 189)] Elaborating instance i_pll_lock_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 191)] Elaborating instance pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/SYNC_TXLANE[1].pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 188)] Elaborating instance txlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 189)] Elaborating instance i_pll_lock_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 191)] Elaborating instance pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/SYNC_TXLANE[2].pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 188)] Elaborating instance txlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 189)] Elaborating instance i_pll_lock_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 191)] Elaborating instance pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/SYNC_TXLANE[3].pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 327)] Elaborating instance txlane_rst_fsm3</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 16)] Elaborating module ipm2l_hsstlp_txlane_rst_fsm_v1_6</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 46)] Rounding real from 27.000000 to 27.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 47)] Rounding real from 54.000000 to 54.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 48)] Rounding real from 81.000000 to 81.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 49)] Rounding real from 27.000000 to 27.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 52)] Rounding real from 5.400000 to 5.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 54)] Rounding real from 5.400000 to 5.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 55)] Rounding real from 16.200000 to 16.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 56)] Rounding real from 18.900000 to 19.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 57)] Rounding real from 21.600000 to 22.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 58)] Rounding real from 24.300000 to 24.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v(line number: 59)] Rounding real from 35.100000 to 35.</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/TXLANE3_ENABLE.txlane_rst_fsm3} parameter value:
+    LANE_BONDING = 32'b00000000000000000000000000000001
+    FREE_CLOCK_FREQ = 27.000000
+    P_LX_TX_CKDIV = 32'b00000000000000000000000000000010
+    PCS_TX_CLK_EXPLL_USE_CH = FALSE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_v1_8.v(line number: 488)] Elaborating instance hsstlp_rst_rx</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_rx_v1_6</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx} parameter value:
+    FREE_CLOCK_FREQ = 27.000000
+    CH0_RX_ENABLE = FALSE
+    CH1_RX_ENABLE = FALSE
+    CH2_RX_ENABLE = FALSE
+    CH3_RX_ENABLE = TRUE
+    CH0_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH0_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH1_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH2_RXPCS_ALIGN_TIMER = 32'b00000000000000001111111111111111
+    CH3_RXPCS_ALIGN_TIMER = 32'b00000000000000000111111111111111
+    PCS_CH0_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH1_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH2_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH3_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH0_BYPASS_BONDING = TRUE
+    PCS_CH1_BYPASS_BONDING = TRUE
+    PCS_CH2_BYPASS_BONDING = TRUE
+    PCS_CH3_BYPASS_BONDING = TRUE
+    PCS_CH0_BYPASS_CTC = TRUE
+    PCS_CH1_BYPASS_CTC = TRUE
+    PCS_CH2_BYPASS_CTC = TRUE
+    PCS_CH3_BYPASS_CTC = TRUE
+    LX_RX_CKDIV_0 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_1 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_2 = 32'b00000000000000000000000000000000
+    LX_RX_CKDIV_3 = 32'b00000000000000000000000000000010
+    CH0_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH1_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH2_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    CH3_RX_PLL_SEL = 32'b00000000000000000000000000000000
+    PCS_RX_CLK_EXPLL_USE_CH0 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH1 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH2 = FALSE
+    PCS_RX_CLK_EXPLL_USE_CH3 = FALSE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 284)] Elaborating instance rxlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 287)] Elaborating instance i_pll_lock_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 288)] Elaborating instance sigdet_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 289)] Elaborating instance cdr_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 290)] Elaborating instance word_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 291)] Elaborating instance bonding_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 295)] Elaborating instance sigdet_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[0].sigdet_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000000000000100
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 298)] Elaborating instance cdr_align_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[0].cdr_align_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 301)] Elaborating instance i_pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[0].i_pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 284)] Elaborating instance rxlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 287)] Elaborating instance i_pll_lock_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 288)] Elaborating instance sigdet_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 289)] Elaborating instance cdr_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 290)] Elaborating instance word_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 291)] Elaborating instance bonding_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 295)] Elaborating instance sigdet_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[1].sigdet_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000000000000100
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 298)] Elaborating instance cdr_align_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[1].cdr_align_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 301)] Elaborating instance i_pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[1].i_pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 284)] Elaborating instance rxlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 287)] Elaborating instance i_pll_lock_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 288)] Elaborating instance sigdet_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 289)] Elaborating instance cdr_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 290)] Elaborating instance word_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 291)] Elaborating instance bonding_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 295)] Elaborating instance sigdet_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[2].sigdet_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000000000000100
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 298)] Elaborating instance cdr_align_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[2].cdr_align_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 301)] Elaborating instance i_pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[2].i_pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 284)] Elaborating instance rxlane_rstn_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 287)] Elaborating instance i_pll_lock_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 288)] Elaborating instance sigdet_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 289)] Elaborating instance cdr_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 290)] Elaborating instance word_align_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 291)] Elaborating instance bonding_sync</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_sync_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_sync_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 295)] Elaborating instance sigdet_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[3].sigdet_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000000000000100
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 298)] Elaborating instance cdr_align_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[3].cdr_align_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 301)] Elaborating instance i_pll_lock_deb</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v(line number: 16)] Elaborating module ipm2l_hsstlp_rst_debounce_v1_0</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/SYNC_RXLANE[3].i_pll_lock_deb} parameter value:
+    RISE_CNTR_WIDTH = 32'b00000000000000000000000000001100
+    RISE_CNTR_VALUE = 32'b00000000000000000000100000000000
+    ACTIVE_HIGH = 1'b0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 477)] Elaborating instance rxlane_fsm3</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 16)] Elaborating module ipm2l_hsstlp_rxlane_rst_fsm_v1_6</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 62)] Rounding real from 2160.000000 to 2160.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 63)] Rounding real from 540.000000 to 540.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 65)] Rounding real from 8096.000000 to 8096.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 66)] Rounding real from 54.000000 to 54.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 69)] Rounding real from 2.700000 to 3.</data>
+        </row>
+        <row>
+            <data message="5">[E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 70)] Rounding real from 5.400000 to 5.</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3} parameter value:
+    FREE_CLOCK_FREQ = 27.000000
+    CH_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH_RXPCS_ALIGN_TIMER = 32'b00000000000000000111111111111111
+    CH_BYPASS_WORD_ALIGN = TRUE
+    CH_BYPASS_BONDING = TRUE
+    CH_BYPASS_CTC = TRUE
+    LX_RX_CKDIV = 32'b00000000000000000000000000000010
+    PCS_RX_CLK_EXPLL_USE = FALSE</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2021: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 204)] Net fifoclr_sig_0 in ipm2l_hsstlp_rst_rx_v1_6(original module ipm2l_hsstlp_rst_rx_v1_6) does not have a driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2021: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 205)] Net fifoclr_sig_1 in ipm2l_hsstlp_rst_rx_v1_6(original module ipm2l_hsstlp_rst_rx_v1_6) does not have a driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2021: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_rx_v1_6.v(line number: 206)] Net fifoclr_sig_2 in ipm2l_hsstlp_rst_rx_v1_6(original module ipm2l_hsstlp_rst_rx_v1_6) does not have a driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Elaborating instance U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 17)] Elaborating module ipm2l_hsstlp_wrapper_v1_9</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_GTP_HSSTLP_WRAPPER} parameter value:
+    PLL0_EN = TRUE
+    PLL1_EN = FALSE
+    CH0_EN = DISABLE
+    CH1_EN = DISABLE
+    CH2_EN = DISABLE
+    CH3_EN = Fullduplex
+    CHANNEL0_EN = FALSE
+    CHANNEL1_EN = FALSE
+    CHANNEL2_EN = FALSE
+    CHANNEL3_EN = TRUE
+    TX_CHANNEL0_PLL = 32'b00000000000000000000000000000000
+    TX_CHANNEL1_PLL = 32'b00000000000000000000000000000000
+    TX_CHANNEL2_PLL = 32'b00000000000000000000000000000000
+    TX_CHANNEL3_PLL = 32'b00000000000000000000000000000000
+    RX_CHANNEL0_PLL = 32'b00000000000000000000000000000000
+    RX_CHANNEL1_PLL = 32'b00000000000000000000000000000000
+    RX_CHANNEL2_PLL = 32'b00000000000000000000000000000000
+    RX_CHANNEL3_PLL = 32'b00000000000000000000000000000000
+    CH0_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_TX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH0_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH1_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH2_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    CH3_RX_MULT_LANE_MODE = 32'b00000000000000000000000000000001
+    PLL0_TXPCLK_PLL_SEL = 32'b00000000000000000000000000000011
+    PLL1_TXPCLK_PLL_SEL = 32'b00000000000000000000000000000011
+    PMA_PLL0_TX_SYNCK_PD = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_REFCLK_TERM_IMP_CTRL = TRUE
+    PMA_PLL0_REG_BG_TRIM = 32'b00000000000000000000000000000010
+    PMA_PLL0_REG_IBUP_A1 = 32'b00000000000000111111111111111111
+    PMA_PLL0_REG_IBUP_A2 = 32'b00000000000000000000110000000000
+    PMA_PLL0_REG_IBUP_PD = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_V2I_BIAS_SEL = FALSE
+    PMA_PLL0_REG_V2I_EN = TRUE
+    PMA_PLL0_REG_V2I_TB_SEL = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_V2I_RCALTEST_PD = FALSE
+    PMA_PLL0_REG_RES_CAL_TEST = 32'b00000000000000000000000000000000
+    PMA_PLL0_RES_CAL_DIV = 32'b00000000000000000000000000000000
+    PMA_PLL0_RES_CAL_CLK_SEL = FALSE
+    PMA_PLL0_REG_PLL_PFDDELAY_EN = TRUE
+    PMA_PLL0_REG_PFDDELAYSEL = 32'b00000000000000000000000000000001
+    PMA_PLL0_REG_PLL_VCTRL_SET = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_READY_OR_LOCK = FALSE
+    PMA_PLL0_REG_PLL_CP = 32'b00000000000000000000000000011111
+    PMA_PLL0_REG_PLL_REFDIV = 32'b00000000000000000000000000010000
+    PMA_PLL0_REG_PLL_LOCKDET_EN = FALSE
+    PMA_PLL0_REG_PLL_READY = FALSE
+    PMA_PLL0_REG_PLL_READY_OW = FALSE
+    PMA_PLL0_REG_PLL_FBDIV = 32'b00000000000000000000000000100110
+    PMA_PLL0_REG_LPF_RES = 32'b00000000000000000000000000000001
+    PMA_PLL0_REG_JTAG_OE = FALSE
+    PMA_PLL0_REG_JTAG_VHYSTSEL = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_PLL_LOCKDET_EN_OW = FALSE
+    PMA_PLL0_REG_PLL_LOCKDET_FBCT = 32'b00000000000000000000000000000011
+    PMA_PLL0_REG_PLL_LOCKDET_ITER = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_PLL_LOCKDET_MODE = FALSE
+    PMA_PLL0_REG_PLL_LOCKDET_LOCKCT = 32'b00000000000000000000000000000100
+    PMA_PLL0_REG_PLL_LOCKDET_REFCT = 32'b00000000000000000000000000000011
+    PMA_PLL0_REG_PLL_LOCKDET_RESET_N = TRUE
+    PMA_PLL0_REG_PLL_LOCKDET_RESET_N_OW = FALSE
+    PMA_PLL0_REG_PLL_LOCKED = FALSE
+    PMA_PLL0_REG_PLL_LOCKED_OW = FALSE
+    PMA_PLL0_REG_PLL_LOCKED_STICKY_CLEAR = FALSE
+    PMA_PLL0_REG_PLL_UNLOCKED = FALSE
+    PMA_PLL0_REG_PLL_UNLOCKDET_ITER = 32'b00000000000000000000000000000010
+    PMA_PLL0_REG_PLL_UNLOCKED_OW = FALSE
+    PMA_PLL0_REG_PLL_UNLOCKED_STICKY_CLEAR = FALSE
+    PMA_PLL0_REG_I_CTRL_MAX = 32'b00000000000000000000000000111111
+    PMA_PLL0_REG_REFCLK_TEST_EN = FALSE
+    PMA_PLL0_REG_RESCAL_EN = FALSE
+    PMA_PLL0_REG_I_CTRL_MIN = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_RESCAL_DONE_OW = FALSE
+    PMA_PLL0_REG_RESCAL_DONE_VAL = FALSE
+    PMA_PLL0_REG_RESCAL_I_CODE = 32'b00000000000000000000000000101110
+    PMA_PLL0_REG_RESCAL_I_CODE_OW = FALSE
+    PMA_PLL0_REG_RESCAL_I_CODE_PMA = FALSE
+    PMA_PLL0_REG_RESCAL_I_CODE_VAL = 32'b00000000000000000000000000101110
+    PMA_PLL0_REG_RESCAL_INT_R_SMALL_OW = FALSE
+    PMA_PLL0_REG_RESCAL_INT_R_SMALL_VAL = FALSE
+    PMA_PLL0_REG_RESCAL_ITER_VALID_SEL = 32'b00000000000000000000000000000000
+    PMA_PLL0_REG_RESCAL_RESET_N_OW = FALSE
+    PMA_PLL0_REG_RESCAL_RST_N_VAL = FALSE
+    PMA_PLL0_REG_RESCAL_WAIT_SEL = TRUE
+    PMA_PLL0_REFCLK2LANE_PD_L = FALSE
+    PMA_PLL0_REFCLK2LANE_PD_R = FALSE
+    PMA_PLL0_REG_LOCKDET_REPEAT = FALSE
+    PMA_PLL0_REG_NOFBCLK_STICKY_CLEAR = FALSE
+    PMA_PLL0_REG_NOREFCLK_STICKY_CLEAR = FALSE
+    PMA_PLL0_REG_TEST_SEL = 32'b00000000000000000000000000001111
+    PMA_PLL0_REG_TEST_V_EN = FALSE
+    PMA_PLL0_REG_TEST_SIG_HALF_EN = FALSE
+    PMA_PLL0_REG_REFCLK_PAD_SEL = FALSE
+    PMA_PLL0_PARM_PLL_POWERUP = ON
+    PMA_PLL1_TX_SYNCK_PD = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_REFCLK_TERM_IMP_CTRL = TRUE
+    PMA_PLL1_REG_BG_TRIM = 32'b00000000000000000000000000000010
+    PMA_PLL1_REG_IBUP_A1 = 32'b00000000000000111111111111111111
+    PMA_PLL1_REG_IBUP_A2 = 32'b00000000000000000000110000000000
+    PMA_PLL1_REG_IBUP_PD = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_V2I_BIAS_SEL = FALSE
+    PMA_PLL1_REG_V2I_EN = TRUE
+    PMA_PLL1_REG_V2I_TB_SEL = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_V2I_RCALTEST_PD = FALSE
+    PMA_PLL1_REG_RES_CAL_TEST = 32'b00000000000000000000000000000000
+    PMA_PLL1_RES_CAL_DIV = 32'b00000000000000000000000000000000
+    PMA_PLL1_RES_CAL_CLK_SEL = FALSE
+    PMA_PLL1_REG_PLL_PFDDELAY_EN = TRUE
+    PMA_PLL1_REG_PFDDELAYSEL = 32'b00000000000000000000000000000001
+    PMA_PLL1_REG_PLL_VCTRL_SET = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_READY_OR_LOCK = FALSE
+    PMA_PLL1_REG_PLL_CP = 32'b00000000000000000000000000011111
+    PMA_PLL1_REG_PLL_REFDIV = 32'b00000000000000000000000000010000
+    PMA_PLL1_REG_PLL_LOCKDET_EN = FALSE
+    PMA_PLL1_REG_PLL_READY = FALSE
+    PMA_PLL1_REG_PLL_READY_OW = FALSE
+    PMA_PLL1_REG_PLL_FBDIV = 32'b00000000000000000000000000000011
+    PMA_PLL1_REG_LPF_RES = 32'b00000000000000000000000000000001
+    PMA_PLL1_REG_JTAG_OE = FALSE
+    PMA_PLL1_REG_JTAG_VHYSTSEL = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_PLL_LOCKDET_EN_OW = FALSE
+    PMA_PLL1_REG_PLL_LOCKDET_FBCT = 32'b00000000000000000000000000000011
+    PMA_PLL1_REG_PLL_LOCKDET_ITER = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_PLL_LOCKDET_MODE = FALSE
+    PMA_PLL1_REG_PLL_LOCKDET_LOCKCT = 32'b00000000000000000000000000000100
+    PMA_PLL1_REG_PLL_LOCKDET_REFCT = 32'b00000000000000000000000000000011
+    PMA_PLL1_REG_PLL_LOCKDET_RESET_N = TRUE
+    PMA_PLL1_REG_PLL_LOCKDET_RESET_N_OW = FALSE
+    PMA_PLL1_REG_PLL_LOCKED = FALSE
+    PMA_PLL1_REG_PLL_LOCKED_OW = FALSE
+    PMA_PLL1_REG_PLL_LOCKED_STICKY_CLEAR = FALSE
+    PMA_PLL1_REG_PLL_UNLOCKED = FALSE
+    PMA_PLL1_REG_PLL_UNLOCKDET_ITER = 32'b00000000000000000000000000000010
+    PMA_PLL1_REG_PLL_UNLOCKED_OW = FALSE
+    PMA_PLL1_REG_PLL_UNLOCKED_STICKY_CLEAR = FALSE
+    PMA_PLL1_REG_I_CTRL_MAX = 32'b00000000000000000000000000111111
+    PMA_PLL1_REG_REFCLK_TEST_EN = FALSE
+    PMA_PLL1_REG_RESCAL_EN = FALSE
+    PMA_PLL1_REG_I_CTRL_MIN = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_RESCAL_DONE_OW = FALSE
+    PMA_PLL1_REG_RESCAL_DONE_VAL = FALSE
+    PMA_PLL1_REG_RESCAL_I_CODE = 32'b00000000000000000000000000101110
+    PMA_PLL1_REG_RESCAL_I_CODE_OW = FALSE
+    PMA_PLL1_REG_RESCAL_I_CODE_PMA = FALSE
+    PMA_PLL1_REG_RESCAL_I_CODE_VAL = 32'b00000000000000000000000000101110
+    PMA_PLL1_REG_RESCAL_INT_R_SMALL_OW = FALSE
+    PMA_PLL1_REG_RESCAL_INT_R_SMALL_VAL = FALSE
+    PMA_PLL1_REG_RESCAL_ITER_VALID_SEL = 32'b00000000000000000000000000000000
+    PMA_PLL1_REG_RESCAL_RESET_N_OW = FALSE
+    PMA_PLL1_REG_RESCAL_RST_N_VAL = FALSE
+    PMA_PLL1_REG_RESCAL_WAIT_SEL = TRUE
+    PMA_PLL1_REFCLK2LANE_PD_L = FALSE
+    PMA_PLL1_REFCLK2LANE_PD_R = FALSE
+    PMA_PLL1_REG_LOCKDET_REPEAT = FALSE
+    PMA_PLL1_REG_NOFBCLK_STICKY_CLEAR = FALSE
+    PMA_PLL1_REG_NOREFCLK_STICKY_CLEAR = FALSE
+    PMA_PLL1_REG_TEST_SEL = 32'b00000000000000000000000000001111
+    PMA_PLL1_REG_TEST_V_EN = FALSE
+    PMA_PLL1_REG_TEST_SIG_HALF_EN = FALSE
+    PMA_PLL1_REG_REFCLK_PAD_SEL = FALSE
+    PMA_PLL1_PARM_PLL_POWERUP = OFF
+    CH0_MUX_BIAS = 32'b00000000000000000000000000000010
+    CH0_PD_CLK = 32'b00000000000000000000000000000000
+    CH0_REG_SYNC = 32'b00000000000000000000000000000000
+    CH0_REG_SYNC_OW = 32'b00000000000000000000000000000000
+    CH0_PLL_LOCK_OW = 32'b00000000000000000000000000000000
+    CH0_PLL_LOCK_OW_EN = 32'b00000000000000000000000000000000
+    PCS_CH0_SLAVE = 32'b00000000000000000000000000000000
+    PCS_CH0_BYPASS_WORD_ALIGN = TRUE
+    PCS_CH0_BYPASS_DENC = TRUE
+    PCS_CH0_BYPASS_BONDING = TRUE
+    PCS_CH0_BYPASS_CTC = TRUE
+    PCS_CH0_BYPASS_GEAR = FALSE
+    PCS_CH0_BYPASS_BRIDGE = FALSE
+    PCS_CH0_BYPASS_BRIDGE_FIFO = FALSE
+    PCS_CH0_DATA_MODE = X8
+    PCS_CH0_RX_POLARITY_INV = DELAY
+    PCS_CH0_ALIGN_MODE = 1GB
+    PCS_CH0_SAMP_16B = X16
+    PCS_CH0_FARLP_PWR_REDUCTION = FALSE
+    PCS_CH0_COMMA_REG0 = 32'b00000000000000000000000000000000
+    PCS_CH0_COMMA_MASK = 32'b00000000000000000000000000000000
+    PCS_CH0_CEB_MODE = 10GB
+    PCS_CH0_CTC_MODE = 1SKIP
+    PCS_CH0_A_REG = 32'b00000000000000000000000001111100
+    PCS_CH0_GE_AUTO_EN = FALSE
+    PCS_CH0_SKIP_REG0 = 32'b00000000000000000000000000000000
+    PCS_CH0_SKIP_REG1 = 32'b00000000000000000000000000000000
+    PCS_CH0_SKIP_REG2 = 32'b00000000000000000000000000000000
+    PCS_CH0_SKIP_REG3 = 32'b00000000000000000000000000000000
+    PCS_CH0_DEC_DUAL = FALSE
+    PCS_CH0_SPLIT = TRUE
+    PCS_CH0_FIFOFLAG_CTC = FALSE
+    PCS_CH0_COMMA_DET_MODE = COMMA_PATTERN
+    PCS_CH0_ERRDETECT_SILENCE = TRUE
+    PCS_CH0_PMA_RCLK_POLINV = PMA_RCLK
+    PCS_CH0_PCS_RCLK_SEL = PMA_RCLK
+    PCS_CH0_CB_RCLK_SEL = PMA_RCLK
+    PCS_CH0_AFTER_CTC_RCLK_SEL = PMA_RCLK
+    PCS_CH0_RCLK_POLINV = RCLK
+    PCS_CH0_BRIDGE_RCLK_SEL = PMA_RCLK
+    PCS_CH0_PCS_RCLK_EN = FALSE
+    PCS_CH0_CB_RCLK_EN = FALSE
+    PCS_CH0_AFTER_CTC_RCLK_EN = FALSE
+    PCS_CH0_AFTER_CTC_RCLK_EN_GB = FALSE
+    PCS_CH0_PCS_RX_RSTN = TRUE
+    PCS_CH0_PCIE_SLAVE = MASTER
+    PCS_CH0_RX_64B66B_67B = NORMAL
+    PCS_CH0_RX_BRIDGE_CLK_POLINV = RX_BRIDGE_CLK
+    PCS_CH0_PCS_CB_RSTN = TRUE
+    PCS_CH0_TX_BRIDGE_GEAR_SEL = FALSE
+    PCS_CH0_TX_BYPASS_BRIDGE_UINT = FALSE
+    PCS_CH0_TX_BYPASS_BRIDGE_FIFO = FALSE
+    PCS_CH0_TX_BYPASS_GEAR = TRUE
+    PCS_CH0_TX_BYPASS_ENC = TRUE
+    PCS_CH0_TX_BYPASS_BIT_SLIP = TRUE
+    PCS_CH0_TX_GEAR_SPLIT = FALSE
+    PCS_CH0_TX_DRIVE_REG_MODE = NO_CHANGE
+    PCS_CH0_TX_BIT_SLIP_CYCLES = 32'b00000000000000000000000000000000
+    PCS_CH0_INT_TX_MASK_0 = FALSE
+    PCS_CH0_INT_TX_MASK_1 = FALSE
+    PCS_CH0_INT_TX_MASK_2 = FALSE
+    PCS_CH0_INT_TX_CLR_0 = FALSE
+    PCS_CH0_INT_TX_CLR_1 = FALSE
+    PCS_CH0_INT_TX_CLR_2 = FALSE
+    PCS_CH0_TX_PMA_TCLK_POLINV = PMA_TCLK
+    PCS_CH0_TX_PCS_CLK_EN_SEL = FALSE
+    PCS_CH0_TX_BRIDGE_TCLK_SEL = TCLK
+    PCS_CH0_TX_TCLK_POLINV = TCLK
+    PCS_CH0_PCS_TCLK_SEL = PMA_TCLK
+    PCS_CH0_TX_PCS_TX_RSTN = TRUE
+    PCS_CH0_TX_SLAVE = MASTER
+    PCS_CH0_TX_GEAR_CLK_EN_SEL = FALSE
+    PCS_CH0_DATA_WIDTH_MODE = X8
+    PCS_CH0_TX_64B66B_67B = NORMAL
+    PCS_CH0_GEAR_TCLK_SEL = PMA_TCLK
+    PCS_CH0_TX_TCLK2FABRIC_SEL = FALSE
+    PCS_CH0_TX_OUTZZ = FALSE
+    PCS_CH0_ENC_DUAL = TRUE
+    PCS_CH0_TX_BITSLIP_DATA_MODE = X10
+    PCS_CH0_TX_BRIDGE_CLK_POLINV = TX_BRIDGE_CLK
+    PCS_CH0_COMMA_REG1 = 32'b00000000000000000000001111111111
+    PCS_CH0_RAPID_IMAX = 32'b00000000000000000000000000000101
+    PCS_CH0_RAPID_VMIN_1 = 32'b00000000000000000000000011111010
+    PCS_CH0_RAPID_VMIN_2 = 32'b00000000000000000000000000000001
+    PCS_CH0_RX_PRBS_MODE = DISABLE
+    PCS_CH0_RX_ERRCNT_CLR = FALSE
+    PCS_CH0_PRBS_ERR_LPBK = FALSE
+    PCS_CH0_TX_PRBS_MODE = DISABLE
+    PCS_CH0_TX_INSERT_ER = FALSE
+    PCS_CH0_ENABLE_PRBS_GEN = FALSE
+    PCS_CH0_DEFAULT_RADDR = 32'b00000000000000000000000000000110
+    PCS_CH0_MASTER_CHECK_OFFSET = 32'b00000000000000000000000000000100
+    PCS_CH0_DELAY_SET = 32'b00000000000000000000000000000011
+    PCS_CH0_SEACH_OFFSET = 80BIT
+    PCS_CH0_CEB_RAPIDLS_MMAX = 32'b00000000000000000000000000000101
+    PCS_CH0_CTC_AFULL = 32'b00000000000000000000000000010100
+    PCS_CH0_CTC_AEMPTY = 32'b00000000000000000000000000001100
+    PCS_CH0_CTC_CONTI_SKP_SET = 32'b00000000000000000000000000000000
+    PCS_CH0_FAR_LOOP = FALSE
+    PCS_CH0_NEAR_LOOP = FALSE
+    PCS_CH0_PMA_TX2RX_PLOOP_EN = FALSE
+    PCS_CH0_PMA_TX2RX_SLOOP_EN = FALSE
+    PCS_CH0_PMA_RX2TX_PLOOP_EN = FALSE
+    PCS_CH0_INT_RX_MASK_0 = FALSE
+    PCS_CH0_INT_RX_MASK_1 = FALSE
+    PCS_CH0_INT_RX_MASK_2 = FALSE
+    PCS_CH0_INT_RX_MASK_3 = FALSE
+    PCS_CH0_INT_RX_MASK_4 = FALSE
+    PCS_CH0_INT_RX_MASK_5 = FALSE
+    PCS_CH0_INT_RX_MASK_6 = FALSE
+    PCS_CH0_INT_RX_MASK_7 = FALSE
+    PCS_CH0_INT_RX_CLR_0 = FALSE
+    PCS_CH0_INT_RX_CLR_1 = FALSE
+    PCS_CH0_INT_RX_CLR_2 = FALSE
+    PCS_CH0_INT_RX_CLR_3 = FALSE
+    PCS_CH0_INT_RX_CLR_4 = FALSE
+    PCS_CH0_INT_RX_CLR_5 = FALSE
+    PCS_CH0_INT_RX_CLR_6 = FALSE
+    PCS_CH0_INT_RX_CLR_7 = FALSE
+    PCS_CH0_CA_RSTN_RX = FALSE
+    PCS_CH0_CA_DYN_DLY_EN_RX = FALSE
+    PCS_CH0_CA_DYN_DLY_SEL_RX = FALSE
+    PCS_CH0_CA_RX = 32'b00000000000000000000000000000000
+    PCS_CH0_CA_RSTN_TX = FALSE
+    PCS_CH0_CA_DYN_DLY_EN_TX = FALSE
+    PCS_CH0_CA_DYN_DLY_SEL_TX = FALSE
+    PCS_CH0_CA_TX = 32'b00000000000000000000000000000000
+    PCS_CH0_RXPRBS_PWR_REDUCTION = NORMAL
+    PCS_CH0_WDALIGN_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXDEC_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXCB_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXCTC_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXGEAR_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXBRG_PWR_REDUCTION = NORMAL
+    PCS_CH0_RXTEST_PWR_REDUCTION = NORMAL
+    PCS_CH0_TXBRG_PWR_REDUCTION = NORMAL
+    PCS_CH0_TXGEAR_PWR_REDUCTION = NORMAL
+    PCS_CH0_TXENC_PWR_REDUCTION = NORMAL
+    PCS_CH0_TXBSLP_PWR_REDUCTION = NORMAL
+    PCS_CH0_TXPRBS_PWR_REDUCTION = NORMAL
+    PMA_CH0_REG_RX_PD = ON
+    PMA_CH0_REG_RX_PD_EN = FALSE
+    PMA_CH0_REG_RX_RESERVED_2 = FALSE
+    PMA_CH0_REG_RX_RESERVED_3 = FALSE
+    PMA_CH0_REG_RX_DATAPATH_PD = ON
+    PMA_CH0_REG_RX_DATAPATH_PD_EN = TRUE
+    PMA_CH0_REG_RX_SIGDET_PD = ON
+    PMA_CH0_REG_RX_SIGDET_PD_EN = FALSE
+    PMA_CH0_REG_RX_DCC_RST_N = TRUE
+    PMA_CH0_REG_RX_DCC_RST_N_EN = FALSE
+    PMA_CH0_REG_RX_CDR_RST_N = TRUE
+    PMA_CH0_REG_RX_CDR_RST_N_EN = FALSE
+    PMA_CH0_REG_RX_SIGDET_RST_N = TRUE
+    PMA_CH0_REG_RX_SIGDET_RST_N_EN = FALSE
+    PMA_CH0_REG_RXPCLK_SLIP = FALSE
+    PMA_CH0_REG_RXPCLK_SLIP_OW = FALSE
+    PMA_CH0_REG_RX_PCLKSWITCH_RST_N = TRUE
+    PMA_CH0_REG_RX_PCLKSWITCH_RST_N_EN = FALSE
+    PMA_CH0_REG_RX_PCLKSWITCH = FALSE
+    PMA_CH0_REG_RX_PCLKSWITCH_EN = FALSE
+    PMA_CH0_REG_RX_HIGHZ = FALSE
+    PMA_CH0_REG_RX_HIGHZ_EN = FALSE
+    PMA_CH0_REG_RX_SIGDET_CLK_WINDOW = FALSE
+    PMA_CH0_REG_RX_SIGDET_CLK_WINDOW_OW = FALSE
+    PMA_CH0_REG_RX_PD_BIAS_RX = FALSE
+    PMA_CH0_REG_RX_PD_BIAS_RX_OW = FALSE
+    PMA_CH0_REG_RX_RESET_N = FALSE
+    PMA_CH0_REG_RX_RESET_N_OW = FALSE
+    PMA_CH0_REG_RX_RESERVED_29_28 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_BUSWIDTH = 8BIT
+    PMA_CH0_REG_RX_BUSWIDTH_EN = TRUE
+    PMA_CH0_REG_RX_RATE = DIV1
+    PMA_CH0_REG_RX_RESERVED_36 = FALSE
+    PMA_CH0_REG_RX_RATE_EN = FALSE
+    PMA_CH0_REG_RX_RES_TRIM = 32'b00000000000000000000000000101110
+    PMA_CH0_REG_RX_RESERVED_44 = FALSE
+    PMA_CH0_REG_RX_RESERVED_45 = FALSE
+    PMA_CH0_REG_RX_SIGDET_STATUS_EN = FALSE
+    PMA_CH0_REG_RX_RESERVED_48_47 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_ICTRL_SIGDET = 32'b00000000000000000000000000000101
+    PMA_CH0_REG_CDR_READY_THD = 32'b00000000000000000000101010101110
+    PMA_CH0_REG_RX_RESERVED_65 = FALSE
+    PMA_CH0_REG_RX_PCLK_EDGE_SEL = POS_EDGE
+    PMA_CH0_REG_RX_PIBUF_IC = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_RX_RESERVED_69 = FALSE
+    PMA_CH0_REG_RX_DCC_IC_RX = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_CDR_READY_CHECK_CTRL = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_ICTRL_TRX = 100PCT
+    PMA_CH0_REG_RX_RESERVED_77_76 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_RESERVED_79_78 = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_RX_RESERVED_81_80 = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_RX_ICTRL_PIBUF = 100PCT
+    PMA_CH0_REG_RX_ICTRL_PI = 100PCT
+    PMA_CH0_REG_RX_ICTRL_DCC = 100PCT
+    PMA_CH0_REG_RX_RESERVED_89_88 = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_TX_RATE = DIV1
+    PMA_CH0_REG_RX_RESERVED_92 = FALSE
+    PMA_CH0_REG_TX_RATE_EN = FALSE
+    PMA_CH0_REG_RX_TX2RX_PLPBK_RST_N = TRUE
+    PMA_CH0_REG_RX_TX2RX_PLPBK_RST_N_EN = FALSE
+    PMA_CH0_REG_RX_TX2RX_PLPBK_EN = FALSE
+    PMA_CH0_REG_TXCLK_SEL = PLL
+    PMA_CH0_REG_RX_DATA_POLARITY = NORMAL
+    PMA_CH0_REG_RX_ERR_INSERT = FALSE
+    PMA_CH0_REG_UDP_CHK_EN = FALSE
+    PMA_CH0_REG_PRBS_SEL = PRBS7
+    PMA_CH0_REG_PRBS_CHK_EN = FALSE
+    PMA_CH0_REG_PRBS_CHK_WIDTH_SEL = 8BIT
+    PMA_CH0_REG_BIST_CHK_PAT_SEL = PRBS
+    PMA_CH0_REG_LOAD_ERR_CNT = FALSE
+    PMA_CH0_REG_CHK_COUNTER_EN = FALSE
+    PMA_CH0_REG_CDR_PROP_GAIN = 32'b00000000000000000000000000000111
+    PMA_CH0_REG_CDR_PROP_TURBO_GAIN = 32'b00000000000000000000000000000101
+    PMA_CH0_REG_CDR_INT_GAIN = 32'b00000000000000000000000000000100
+    PMA_CH0_REG_CDR_INT_TURBO_GAIN = 32'b00000000000000000000000000000101
+    PMA_CH0_REG_CDR_INT_SAT_MAX = 32'b00000000000000000000001100000000
+    PMA_CH0_REG_CDR_INT_SAT_MIN = 32'b00000000000000000000000011111111
+    PMA_CH0_REG_CDR_INT_RST = FALSE
+    PMA_CH0_REG_CDR_INT_RST_OW = FALSE
+    PMA_CH0_REG_CDR_PROP_RST = FALSE
+    PMA_CH0_REG_CDR_PROP_RST_OW = FALSE
+    PMA_CH0_REG_CDR_LOCK_RST = FALSE
+    PMA_CH0_REG_CDR_LOCK_RST_OW = FALSE
+    PMA_CH0_REG_CDR_RX_PI_FORCE_SEL = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_CDR_RX_PI_FORCE_D = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_CDR_LOCK_TIMER = 25_6U
+    PMA_CH0_REG_CDR_TURBO_MODE_TIMER = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_CDR_LOCK_VAL = FALSE
+    PMA_CH0_REG_CDR_LOCK_OW = FALSE
+    PMA_CH0_REG_CDR_INT_SAT_DET_EN = TRUE
+    PMA_CH0_REG_CDR_SAT_AUTO_DIS = TRUE
+    PMA_CH0_REG_CDR_GAIN_AUTO = FALSE
+    PMA_CH0_REG_CDR_TURBO_GAIN_AUTO = FALSE
+    PMA_CH0_REG_RX_RESERVED_171_167 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_RESERVED_175_172 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_CDR_SAT_DET_STATUS_EN = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_STATUS_RESET_EN = FALSE
+    PMA_CH0_REG_CDR_PI_CTRL_RST = FALSE
+    PMA_CH0_REG_CDR_PI_CTRL_RST_OW = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_RST = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_RST_OW = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_STICKY_RST = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_STICKY_RST_OW = FALSE
+    PMA_CH0_REG_CDR_SIGDET_STATUS_DIS = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_TIMER = 32'b00000000000000000000000000000010
+    PMA_CH0_REG_CDR_SAT_DET_STATUS_VAL = FALSE
+    PMA_CH0_REG_CDR_SAT_DET_STATUS_OW = FALSE
+    PMA_CH0_REG_CDR_TURBO_MODE_EN = TRUE
+    PMA_CH0_REG_RX_RESERVED_190 = FALSE
+    PMA_CH0_REG_RX_RESERVED_193_191 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_CDR_STATUS_FIFO_EN = TRUE
+    PMA_CH0_REG_PMA_TEST_SEL = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_OOB_COMWAKE_GAP_MIN = 32'b00000000000000000000000000000011
+    PMA_CH0_REG_OOB_COMWAKE_GAP_MAX = 32'b00000000000000000000000000001011
+    PMA_CH0_REG_OOB_COMINIT_GAP_MIN = 32'b00000000000000000000000000001111
+    PMA_CH0_REG_OOB_COMINIT_GAP_MAX = 32'b00000000000000000000000000100011
+    PMA_CH0_REG_RX_RESERVED_227_226 = 32'b00000000000000000000000000000001
+    PMA_CH0_REG_COMWAKE_STATUS_CLEAR = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_COMINIT_STATUS_CLEAR = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_SYNC_RST_N_EN = FALSE
+    PMA_CH0_REG_RX_SYNC_RST_N = TRUE
+    PMA_CH0_REG_RX_RESERVED_233_232 = 32'b00000000000000000000000000000000
+    PMA_CH0_REG_RX_RESERVED_235...</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 2709)] Elaborating instance U_APB_BRIDGE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_apb_bridge_v1_2.v(line number: 17)] Elaborating module ipm2l_hsstlp_apb_bridge_v1_2</data>
+        </row>
+        <row>
+            <data message="4">Module instance {hsst_top/hsst_inst/U_GTP_HSSTLP_WRAPPER/U_APB_BRIDGE} parameter value:
+    PLL0_EN = TRUE
+    PLL1_EN = FALSE
+    CHANNEL0_EN = FALSE
+    CHANNEL1_EN = FALSE
+    CHANNEL2_EN = FALSE
+    CHANNEL3_EN = TRUE</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 2863)] Elaborating instance U_GTP_HSSTLP_PLL0</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 5355)] Elaborating instance U_GTP_HSSTLP_LANE3</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2021: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_wrapper_v1_9.v(line number: 2528)] Net LANE_CIN_BUS_FORWARD_3 in ipm2l_hsstlp_wrapper_v1_9(original module ipm2l_hsstlp_wrapper_v1_9) does not have a driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin REFCLK_CML_N_1 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin REFCLK_CML_P_1 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDN_0 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDP_0 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDN_1 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDP_1 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDN_2 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/hsst.v(line number: 2290)] Give initial value 0 for the no drive pin P_RX_SDP_2 in module instance hsst_top/hsst_inst.U_GTP_HSSTLP_WRAPPER</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 128)] Elaborating instance Word_Alignment_32bit_inst</data>
+        </row>
+        <row>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/Word_Alignment_32bit.v(line number: 1)] Elaborating module Word_Alignment_32bit</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2023: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Give initial value 0 for the no drive pin i_wtchdg_clr_0 in module instance hsst_top.hsst_inst</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2036: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Net i_p_l3rxn connected to input port of module instance hsst_top.hsst_inst has no driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2036: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Net i_p_l3rxp connected to input port of module instance hsst_top.hsst_inst has no driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2036: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Net i_tdispsel_3 connected to input port of module instance hsst_top.hsst_inst has no driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Verilog-2036: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/hsst_top.v(line number: 41)] Net i_tdispctrl_3 connected to input port of module instance hsst_top.hsst_inst has no driver, tie it to 0</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/rtl/Word_Alignment_32bit.v(line number: 54)] Latch is generated for signal nextstate, possible missing assignment in an if or case statement.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 527)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/lane_sync_1_ff that is stuck at constant 0.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 527)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/P_LANE_SYNC_1 that is stuck at constant 0.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 527)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/rate_change_tclk_on_1_ff that is stuck at constant 1.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_tx_v1_6.v(line number: 527)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_tx/P_RATE_CHANGE_TCLK_ON_1 that is stuck at constant 1.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 308)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/P_LANE_PD that is stuck at constant 0.</data>
+        </row>
+        <row>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest/ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v(line number: 308)] Removed register node hsst_inst/U_IPM2L_HSSTLP_RST/AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/P_LANE_RST that is stuck at constant 0.</data>
+        </row>
+        <row>
+            <data message="4">FSM tx_state_fsm[2:0] inferred.</data>
+        </row>
+        <row>
+            <data message="4">FSM rxlane_rst_fsm_fsm[3:0] inferred.</data>
+        </row>
+        <row>
+            <data message="4">FSM pll_fsm_fsm[1:0] inferred.</data>
+        </row>
+        <row>
+            <data message="4">FSM txlane_rst_fsm_fsm[2:0] inferred.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N38 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N41_1 (bmsPMUX).</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N10 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N19 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N27 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N57 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N685_1 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N41_1 (bmsPMUX).</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="5">Loop was found during constant probe.</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N589_1 (bmsWIDEMUX).</data>
+        </row>
+        <row>
+            <data message="4">Constant propagation done on N315 (bmsWIDEMUX).</data>
+        </row>
+    </table>
+    <general_container id="compile_settings">
+        <table_container>
+            <table id="compile_settings" title="Compile Settings" column_number="2">
+                <column_headers>
+                    <data>Name</data>
+                    <data>Value</data>
+                </column_headers>
+                <row>
+                    <data>Part</data>
+                    <data>PG2L100H-6FBG676</data>
+                </row>
+                <row>
+                    <data>Top Module</data>
+                    <data>hsst_top</data>
+                </row>
+            </table>
+        </table_container>
+        <general_container align="3">
+            <table_container>
+                <data>Verilog</data>
+                <table id="" title="" column_number="2">
+                    <column_headers>
+                        <data>Name</data>
+                        <data>Value</data>
+                    </column_headers>
+                    <row>
+                        <data>SystemVerilog</data>
+                        <data>false</data>
+                    </row>
+                    <row>
+                        <data>Allow Duplicate Modules</data>
+                        <data>false</data>
+                    </row>
+                    <row>
+                        <data>Multiple File Compilation Unit</data>
+                        <data>true</data>
+                    </row>
+                    <row>
+                        <data>Include Path Order: 
+ (Relative to Verilog File)</data>
+                        <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/sfp/prj/hssttest	</data>
+                    </row>
+                    <row>
+                        <data>Parameters/Generics</data>
+                        <data></data>
+                    </row>
+                    <row>
+                        <data>Compiler Directives</data>
+                        <data></data>
+                    </row>
+                    <row>
+                        <data>Loop Limit</data>
+                        <data>2000</data>
+                    </row>
+                </table>
+            </table_container>
+            <table_container>
+                <data>Options</data>
+                <table id="" title="" column_number="2">
+                    <column_headers>
+                        <data>Name</data>
+                        <data>Value</data>
+                    </column_headers>
+                    <row>
+                        <data>FSM Compiler</data>
+                        <data>auto</data>
+                    </row>
+                </table>
+            </table_container>
+        </general_container>
+    </general_container>
+</tables>
