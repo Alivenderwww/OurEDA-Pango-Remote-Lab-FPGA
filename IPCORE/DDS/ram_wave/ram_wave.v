@@ -71,7 +71,7 @@ localparam FAB_REG = 0 ; // @IPC bool
 
 localparam INIT_EN = 1 ; // @IPC bool
 
-localparam INIT_FILE = "C:/_Project/Pangu/DDS/test.dat" ; // @IPC string
+localparam INIT_FILE = "C:/_Project/Pangu/DDS/wave_gen.dat" ; // @IPC string
 
 localparam INIT_FORMAT = "HEX" ; // @IPC enum BIN,HEX
 
