@@ -91,7 +91,7 @@ assign wr_addr_fifo_wr_en   = (M_WR_ADDR_VALID && M_WR_ADDR_READY);
 assign wr_addr_fifo_wr_data = {M_WR_ADDR_ID, M_WR_ADDR, M_WR_ADDR_LEN, M_WR_ADDR_BURST};
 assign M_WR_ADDR_READY = (MASTER_RSTN_SYNC) && (~wr_addr_fifo_almost_full);
 
-assign wr_addr_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
+assign wr_addr_fifo_rd_rst  =  (~BUS_RSTN_SYNC) || (~RD_BUS_RSTN_SYNC);
 assign wr_addr_fifo_rd_en   = (~wr_addr_fifo_rd_empty) && ((async_wr_addr_fifo_data_dont_care) || (B_WR_ADDR_VALID && B_WR_ADDR_READY));
 assign {B_WR_ADDR_ID, B_WR_ADDR, B_WR_ADDR_LEN, B_WR_ADDR_BURST} = wr_addr_fifo_rd_data;
 assign B_WR_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_wr_addr_fifo_data_dont_care);
@@ -137,7 +137,7 @@ assign rd_addr_fifo_wr_en   = (M_RD_ADDR_VALID && M_RD_ADDR_READY);
 assign rd_addr_fifo_wr_data = {M_RD_ADDR_ID, M_RD_ADDR, M_RD_ADDR_LEN, M_RD_ADDR_BURST};
 assign M_RD_ADDR_READY = (MASTER_RSTN_SYNC) && (~rd_addr_fifo_almost_full);
 
-assign rd_addr_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
+assign rd_addr_fifo_rd_rst  =  (~BUS_RSTN_SYNC) || (~RD_BUS_RSTN_SYNC);
 assign rd_addr_fifo_rd_en   = (~rd_addr_fifo_rd_empty) && ((async_rd_addr_fifo_data_dont_care) || (B_RD_ADDR_VALID && B_RD_ADDR_READY));
 assign {B_RD_ADDR_ID, B_RD_ADDR, B_RD_ADDR_LEN, B_RD_ADDR_BURST} = rd_addr_fifo_rd_data;
 assign B_RD_ADDR_VALID    = (BUS_RSTN_SYNC) && (~async_rd_addr_fifo_data_dont_care);
@@ -184,7 +184,7 @@ assign wr_data_fifo_wr_en   = (M_WR_DATA_VALID && M_WR_DATA_READY);
 assign wr_data_fifo_wr_data = {M_WR_DATA, M_WR_STRB, M_WR_DATA_LAST};
 assign M_WR_DATA_READY = (MASTER_RSTN_SYNC) && ~wr_data_fifo_almost_full;
 
-assign wr_data_fifo_rd_rst  =  ~BUS_RSTN_SYNC;
+assign wr_data_fifo_rd_rst  =  (~BUS_RSTN_SYNC) || (~RD_BUS_RSTN_SYNC);
 assign wr_data_fifo_rd_en   = (~wr_data_fifo_rd_empty) && ((async_wr_data_fifo_data_dont_care) || (B_WR_DATA_VALID && B_WR_DATA_READY));
 assign {B_WR_DATA, B_WR_STRB, B_WR_DATA_LAST} = wr_data_fifo_rd_data & ({(32+4+1){B_WR_DATA_VALID}});
 assign B_WR_DATA_VALID   = (BUS_RSTN_SYNC) && (~async_wr_data_fifo_data_dont_care);
@@ -229,7 +229,7 @@ assign rd_data_fifo_wr_en   = (B_RD_DATA_VALID && B_RD_DATA_READY);
 assign rd_data_fifo_wr_data = {B_RD_BACK_ID, B_RD_DATA, B_RD_DATA_RESP, B_RD_DATA_LAST};
 assign B_RD_DATA_READY    = (BUS_RSTN_SYNC) && ~rd_data_fifo_almost_full;
 
-assign rd_data_fifo_rd_rst  =  ~MASTER_RSTN_SYNC;
+assign rd_data_fifo_rd_rst  =  (~MASTER_RSTN_SYNC) || (~RD_MASTER_RSTN_SYNC);
 assign rd_data_fifo_rd_en   = (~rd_data_fifo_rd_empty) && ((async_rd_data_fifo_data_dont_care) || (M_RD_DATA_VALID && M_RD_DATA_READY));
 assign {M_RD_BACK_ID, M_RD_DATA, M_RD_DATA_RESP, M_RD_DATA_LAST} = rd_data_fifo_rd_data & ({(2+32+2+1){M_RD_DATA_VALID}});
 assign M_RD_DATA_VALID = (MASTER_RSTN_SYNC) && (~async_rd_data_fifo_data_dont_care);
@@ -275,7 +275,7 @@ assign wr_back_fifo_wr_en   = (B_WR_BACK_VALID && B_WR_BACK_READY);
 assign wr_back_fifo_wr_data = {B_WR_BACK_ID, B_WR_BACK_RESP};
 assign B_WR_BACK_READY    = (BUS_RSTN_SYNC) && ~wr_back_fifo_almost_full;
 
-assign wr_back_fifo_rd_rst  =  ~MASTER_RSTN_SYNC;
+assign wr_back_fifo_rd_rst  =  (~MASTER_RSTN_SYNC) || (~RD_MASTER_RSTN_SYNC);
 assign wr_back_fifo_rd_en   = (~wr_back_fifo_rd_empty) && ((async_wr_back_fifo_data_dont_care) || (M_WR_BACK_VALID && M_WR_BACK_READY));
 assign {M_WR_BACK_ID, M_WR_BACK_RESP} = wr_back_fifo_rd_data;
 assign M_WR_BACK_VALID = (MASTER_RSTN_SYNC) && (~async_wr_back_fifo_data_dont_care);
