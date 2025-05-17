@@ -164,6 +164,7 @@ define_attribute {i:S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctr
 
 
 set_clock_groups -name clk_50M -asynchronous -group [get_clocks {clk_50M}]
+set_clock_groups -name clk_200M -asynchronous -group [get_clocks {clk_200M}]
 set_clock_groups -name clk_5M -asynchronous -group [get_clocks {clk_5M}]
 set_clock_groups -name clk_10M -asynchronous -group [get_clocks {clk_10M}]
 set_clock_groups -name rst_clk -asynchronous -group [get_clocks {rst_clk}]
