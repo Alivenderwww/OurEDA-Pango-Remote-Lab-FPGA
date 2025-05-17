@@ -657,7 +657,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( clk_50M          ),
+	.BUS_CLK              	( clk_200M          ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),

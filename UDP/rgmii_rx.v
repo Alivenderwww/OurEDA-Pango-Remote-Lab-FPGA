@@ -36,16 +36,20 @@ wire  [ 7:0]    gmii_rxd_s;
 //*****************************************************
 //**                    main code
 //*****************************************************
-
+wire gmii_rx_clk_0;
 clk_phase u_clk_phase
 (
     .clkin1   (rgmii_rxc     ),  //以太网接收时钟
-    .clkout0  (gmii_rx_clk ),  //经过相位偏移后的时钟
+    .clkout0  (gmii_rx_clk_0 ),  //经过相位偏移后的时钟
     .clkout1  (gmii_tx_clk_phase),
     .rst  ( 1'b0 ),  //pll复位
     .lock (            )   //pll时钟稳定标识
 );
 
+GTP_CLKBUFG GTP_CLKBUFG_RXSHFT(
+    .CLKIN     (gmii_rx_clk_0),//rgmii_rxc_ibuf
+    .CLKOUT    (gmii_rx_clk)
+);
 
 
 

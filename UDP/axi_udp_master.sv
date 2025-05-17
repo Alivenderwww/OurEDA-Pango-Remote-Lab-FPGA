@@ -52,7 +52,7 @@ module axi_udp_master #(
     output wire        ETH_MASTER_RD_DATA_READY 
 );
 wire eth_rstn_sync;
-rstn_sync rstn_sync_eth(rgmii_rxc, udp_in_rstn, eth_rstn_sync);
+rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
 //assign eth_rst_n = eth_rstn_sync;
 
 wire            gmii_rx_clk     ;

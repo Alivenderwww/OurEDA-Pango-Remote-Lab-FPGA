@@ -244,14 +244,14 @@ always @(posedge gmii_rx_clk ) begin
                     cmd_fifo_rd_en <= 1'b1;
                     head_cnt <= head_cnt + 1;
                 end
-                else if(head_cnt == 1)begin//等待数据准备好
+                if(head_cnt == 1)begin//等待数据准备好
                     head_cnt <= head_cnt + 1;
                 end
-                else if(head_cnt == 2)begin//将第二个数据写入
+                if(head_cnt == 2)begin//将第二个数据写入
                     head_data[31: 0] <= cmd_fifo_rd_data[31:0];
                     head_cnt <= head_cnt + 1;
                 end
-                else if(head_cnt == 3)begin//判断是读地址还是写地址
+                if(head_cnt == 3)begin//判断是读地址还是写地址
                     if(head_data[63:56] == 8'h00 && head_data[48] == 1)begin
                         wraddr_fifo_wr_data <= head_data;
                         wraddr_fifo_wr_en <= 1'b1;
@@ -392,7 +392,7 @@ always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         MASTER_WR_BACK_READY <= 0;
         wrback_fifo_wr_en <= 0;
-        wrback_fifo_wr_data <= {8'hff,6'b000000,MASTER_WR_BACK_ID,6'b000000,MASTER_WR_BACK_RESP,8'h00};
+        wrback_fifo_wr_data <= 0;
     end
     else if(~wrback_fifo_full) begin
         MASTER_WR_BACK_READY <= 1;
