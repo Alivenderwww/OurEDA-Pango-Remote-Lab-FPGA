@@ -22,7 +22,7 @@ set_clock_uncertainty {0.4} -from [get_clocks {phy_dq_sysclk_0}] -to [get_clocks
 set_clock_uncertainty {0.4} -from [get_clocks {ddrphy_sysclk}] -to [get_clocks {phy_dq_sysclk_1}] -setup -hold
 set_clock_uncertainty {0.4} -from [get_clocks {phy_dq_sysclk_1}] -to [get_clocks {ddrphy_sysclk}] -setup -hold
 
-set_clock_groups -name clk_200M -asynchronous -group [get_clocks {clk_200M}]
+#set_clock_groups -name clk_200M -asynchronous -group [get_clocks {clk_200M}]
 
 set_max_delay {2.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_master_async[0].u_m_axi_async.master_async_wr_addr_fifo_inst.U_ipm2l_fifo_master_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_master_async[0].u_m_axi_async.master_async_wr_addr_fifo_inst.U_ipm2l_fifo_master_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
 set_max_delay {1.500} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_master_async[0].u_m_axi_async.master_async_wr_addr_fifo_inst.U_ipm2l_fifo_master_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_master_async[0].u_m_axi_async.master_async_wr_addr_fifo_inst.U_ipm2l_fifo_master_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]

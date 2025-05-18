@@ -1,0 +1,27 @@
+#系统时钟周期约束
+create_clock -name {clk} [get_ports {clk}] -period {20} -waveform {0.000 10.000}
+
+#系统时钟
+define_attribute {p:clk} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:clk} {PAP_IO_LOC} {R3}
+define_attribute {p:clk} {PAP_IO_VCCIO} {1.5}
+define_attribute {p:clk} {PAP_IO_STANDARD} {LVCMOS15}
+define_attribute {p:clk} {PAP_IO_PULLUP} {TRUE}
+
+define_attribute {p:tx} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:tx} {PAP_IO_LOC} {L24}
+define_attribute {p:tx} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:tx} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:tx} {PAP_IO_DRIVE} {4}
+define_attribute {p:tx} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:tx} {PAP_IO_SLEW} {FAST}
+define_attribute {p:rx} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:rx} {PAP_IO_LOC} {L25}
+define_attribute {p:rx} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:rx} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rx} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:rstn} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:rstn} {PAP_IO_LOC} {G25}
+define_attribute {p:rstn} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:rstn} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rstn} {PAP_IO_NONE} {TRUE}

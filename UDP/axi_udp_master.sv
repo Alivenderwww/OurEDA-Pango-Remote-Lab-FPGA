@@ -52,7 +52,7 @@ module axi_udp_master #(
     output wire        ETH_MASTER_RD_DATA_READY 
 );
 wire eth_rstn_sync;
-rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
+
 //assign eth_rst_n = eth_rstn_sync;
 
 wire            gmii_rx_clk     ;
@@ -71,6 +71,17 @@ wire            udp_tx_done     ;
 wire            tx_req          ;
 wire    [15:0]  udp_tx_byte_num ;
 
+wire            gmii_tx_en_udp;
+wire            gmii_tx_en_arp;
+wire    [7:0]   gmii_txd_udp;
+wire    [7:0]   gmii_txd_arp;
+wire            arp_working;
+
+assign gmii_tx_en = arp_working ? gmii_tx_en_arp : gmii_tx_en_udp;
+assign gmii_txd   = arp_working ? gmii_txd_arp   : gmii_txd_udp;
+
+
+rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
 //GMII接口与RGMII接口 互转
 gmii_to_rgmii u_gmii_to_rgmii(
     .gmii_rx_clk   (gmii_rx_clk  ),  //gmii接收
@@ -102,8 +113,8 @@ udp #(
     .gmii_rx_dv    (gmii_rx_dv  ),
     .gmii_rxd      (gmii_rxd    ),
     .gmii_tx_clk   (gmii_tx_clk ),//gmii发送
-    .gmii_tx_en    (gmii_tx_en  ),
-    .gmii_txd      (gmii_txd    ),
+    .gmii_tx_en    (gmii_tx_en_udp  ),
+    .gmii_txd      (gmii_txd_udp    ),
 
     .rec_pkt_done  (rec_pkt_done),  //数据包接收结束
     .rec_en        (rec_en      ),  //四字节接收使能
@@ -163,5 +174,18 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_tx_byte_num     (udp_tx_byte_num)
 );
 
-
+arp # (
+    .BOARD_MAC(BOARD_MAC),
+    .BOARD_IP(BOARD_IP)
+  )
+  arp_inst (
+    .rstn(rseth_rstn_synctn),
+    .gmii_rx_clk(gmii_rx_clk),
+    .gmii_rx_dv(gmii_rx_dv),
+    .gmii_rxd(gmii_rxd),
+    .gmii_tx_clk(gmii_tx_clk),
+    .gmii_tx_en(gmii_tx_en_arp),
+    .gmii_txd(gmii_txd_arp),
+    .arp_working(arp_working)
+  );
 endmodule //udp_axi_master_sim
