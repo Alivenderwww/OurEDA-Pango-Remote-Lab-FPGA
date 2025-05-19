@@ -21,7 +21,7 @@ always @(posedge external_clk or negedge external_rstn) begin
     if(!external_rstn) begin
         assic_seg <= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -_=+()";
         seg_point <= 8'b00000001;
-    end else if({clk_cnt[24]==1'b1} && (clk_cnt[23:0]==25'b0))begin
+    end else if({clk_cnt[24]==1'b1} && (clk_cnt[23:0]==24'b0))begin
         assic_seg <= {assic_seg[8*43-8-1:0], assic_seg[8*43-1 -: 8]};
         seg_point <= {seg_point[6:0], seg_point[7]};
     end else begin

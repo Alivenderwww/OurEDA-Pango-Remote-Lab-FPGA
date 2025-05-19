@@ -11,6 +11,7 @@ clk_pll_top the_instance_name (
   .clkout1(clkout1),    // output
   .clkout2(clkout2),    // output
   .clkout3(clkout3),    // output
+  .clkout4(clkout4),    // output
   .lock(lock),          // output
   .clkin1(clkin1)       // input
 );

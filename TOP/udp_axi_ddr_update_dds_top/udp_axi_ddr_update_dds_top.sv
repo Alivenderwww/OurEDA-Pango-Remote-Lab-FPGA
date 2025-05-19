@@ -1,6 +1,6 @@
 module udp_axi_ddr_update_top #(
     parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
-    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
+    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd006}  , //169.254.109.6  8'd169,8'd254,8'd103,8'd006
     parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
     parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
 )(
@@ -158,6 +158,7 @@ wire clk_50M;
 wire clk_200M;
 wire clk_5M;
 wire clk_10M;
+wire clk_25M;
 wire clk_lock;
 
 wire [7:0] udp_led;
@@ -167,6 +168,7 @@ clk_pll_top clk_pll_top_inst (
   .clkout1(clk_200M),    // output
   .clkout2(clk_5M),    // output
   .clkout3(clk_10M),
+  .clkout4(clk_25M),	// output
   .lock   (clk_lock),          // output
   .clkin1 (external_clk)       // input
 );
@@ -384,7 +386,7 @@ slave_ddr3 #(
 JTAG_SLAVE  #(
     .OFFSET_ADDR              (START_ADDR[1])
 )S1(
-    .clk                      (clk_5M        ),
+    .clk                      (clk_25M        ),
     .rstn                     (jtag_rstn       ),
     .tck                      (tck             ),
     .tdi                      (tdi             ),
@@ -657,7 +659,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( clk_200M          ),
+	.BUS_CLK              	( clk_50M          ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),

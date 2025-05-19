@@ -25,6 +25,8 @@ module clk_pll_top (
     
     output wire clkout3,
     
+    output wire clkout4,
+    
     input wire clkin1,
     
     output wire lock           
@@ -48,7 +50,7 @@ module clk_pll_top (
     
     localparam integer STATIC_RATIO3    = 60; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO4    = 60; //@IPC int 1,128 
+    localparam integer STATIC_RATIO4    = 24; //@IPC int 1,128 
     
     localparam integer STATIC_RATIO5    = 12; //@IPC int 1,128 
     
@@ -66,7 +68,7 @@ module clk_pll_top (
     
     localparam integer STATIC_DUTY3     = 60; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY4     = 60; //@IPC int 2,255
+    localparam integer STATIC_DUTY4     = 24; //@IPC int 2,255
     
     localparam integer STATIC_DUTY5     = 12; //@IPC int 2,255
     
@@ -321,8 +323,8 @@ module clk_pll_top (
     	
     .CLKOUT3N       (               ),
     
-    .CLKOUT4        (               ),
-    
+    .CLKOUT4        (clkout4        ),
+        
     .CLKOUT5        (               ),
         
     .CLKOUT6        (               ),

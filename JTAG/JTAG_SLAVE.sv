@@ -88,11 +88,14 @@ localparam JTAG_STATE_ADDR     = 32'h0;
 localparam JTAG_SHIFT_OUT_ADDR = 32'h1;
 localparam JTAG_SHIFT_IN_ADDR  = 32'h2;
 localparam JTAG_SHIFT_CMD_ADDR = 32'h3;
+localparam JTAG_SPEED_ADDR     = 32'h4;
 
 reg  [31:0] JTAG_STATE_REG_WR;
 reg  [31:0] JTAG_STATE_REG_READ;
 wire jtag_wr_en, jtag_rd_en;
 wire [15:0] tap_state;
+
+reg [15:0] tck_high_period, tck_low_period;
 /*
 [0]    移位数据读fifo清空，1为有效，清空后自动置0                     
 [1]    移位数据fifo读入口-空标识，只读，对JTAG_STATE_REG的写不改变其值
@@ -201,7 +204,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > JTAG_SHIFT_CMD_ADDR)) wr_transcript_error <= 1;
+    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > JTAG_SPEED_ADDR)) wr_transcript_error <= 1;
     else if(wr_addr == JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -276,6 +279,7 @@ always @(*) begin
     else if(cu_rdchannel_st == ST_RD_DATA) begin
              if(rd_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读  
         else if(rd_addr == JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
+        else if(rd_addr == JTAG_SPEED_ADDR    ) JTAG_SLAVE_RD_DATA <= {tck_high_period, tck_low_period};
         else JTAG_SLAVE_RD_DATA <= 32'hFFFFFFFF;
     end else JTAG_SLAVE_RD_DATA <= 0;
 end
@@ -283,7 +287,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < JTAG_STATE_ADDR) || (rd_addr > JTAG_SHIFT_OUT_ADDR)) rd_transcript_error <= 1;
+    else if((rd_addr == JTAG_SHIFT_IN_ADDR) || (rd_addr == JTAG_SHIFT_CMD_ADDR)) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
@@ -411,6 +415,21 @@ jtag_fifo_shift_cmd jtag_fifo_shift_cmd_inst(
     .almost_full(fifo_shift_cmd_almost_full),
     .rd_empty   (fifo_shift_cmd_empty   )
 );
+//_______32'h10000004_______//
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
+        tck_high_period <= 5;
+        tck_low_period  <= 5;
+    end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == JTAG_SPEED_ADDR)) begin
+        tck_high_period[15:8] <= (JTAG_SLAVE_WR_STRB[3])?(JTAG_SLAVE_WR_DATA[31:24]):(tck_high_period[15:8]);
+        tck_high_period[7:0]  <= (JTAG_SLAVE_WR_STRB[2])?(JTAG_SLAVE_WR_DATA[23:16]):(tck_high_period[7:0] );
+        tck_low_period[15:8]  <= (JTAG_SLAVE_WR_STRB[1])?(JTAG_SLAVE_WR_DATA[15:08]):(tck_low_period[15:8] );
+        tck_low_period[7:0]   <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[07:00]):(tck_low_period[7:0]  );
+    end else begin
+        tck_high_period <= tck_high_period;
+        tck_low_period  <= tck_low_period;
+    end
+end
 
 //TAP FSM implementation
 tap_FSM #(
@@ -442,14 +461,13 @@ tap_FSM #(
 .cmd_done     (cmd_done                )  //暂存列全空标志位
 );
 
-jtag_tck_gen #(
-    .TCK_HIGH_PERIOD (1),
-    .TCK_LOW_PERIOD (1)
-)jtag_tck_gen_inst(
-    .ref_clk    (clk),
-    .rstn       (jtag_rstn_sync),
-    .tck        (tck),
-    .jtag_rd_en (jtag_rd_en),
-    .jtag_wr_en (jtag_wr_en)
+jtag_tck_gen jtag_tck_gen_inst(
+    .ref_clk            (clk),
+    .rstn               (jtag_rstn_sync),
+    .tck_high_period    (tck_high_period),
+    .tck_low_period     (tck_low_period ),
+    .tck                (tck),
+    .jtag_rd_en         (jtag_rd_en),
+    .jtag_wr_en         (jtag_wr_en)
 );
 endmodule
