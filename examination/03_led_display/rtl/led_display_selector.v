@@ -1,7 +1,7 @@
 module led_display_selector #(
-    parameter NUM = 4,
-    parameter VALID_SIGNAL = 1'b0,
-    parameter CLK_CYCLE = 1000
+    parameter [7:0]  NUM = 4,
+    parameter [0:0]  VALID_SIGNAL = 1'b0,
+    parameter [31:0] CLK_CYCLE = 1000
 )(
     input  wire             clk,
     input  wire             rstn,
