@@ -179,7 +179,7 @@ arp # (
     .BOARD_IP(BOARD_IP)
   )
   arp_inst (
-    .rstn(rseth_rstn_synctn),
+    .rstn(eth_rstn_sync),
     .gmii_rx_clk(gmii_rx_clk),
     .gmii_rx_dv(gmii_rx_dv),
     .gmii_rxd(gmii_rxd),
