@@ -29,7 +29,7 @@ wire       	deci_valid;
 
 //参数测量模块
 param_measure #(
-	.CLK_FS 	( 32'd50_000_000  ))
+	.CLK_FS 	( 32'd27000000  ))
 u_param_measure(
 	.clk        	( clk         ),
 	.rstn       	( rstn        ),

@@ -28,7 +28,7 @@ module frequency_meter_tb;
     rstn = 1;
   end
 
-
+always #(500/27) clk = ~ clk;
 //正弦波生成器
 real freq = 1e6;    // 1x10^6 所以是1Mhz
 real amp = 127.0;   // 8bit满振幅值+-127

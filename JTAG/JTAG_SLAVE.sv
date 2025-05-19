@@ -9,6 +9,9 @@ module JTAG_SLAVE #(
     output wire tms,
     input  wire tdo,
 
+    output wire [3:0] matrix_key_col,
+    input  wire [3:0] matrix_key_row,
+
     output logic             JTAG_SLAVE_CLK          ,
     output logic             JTAG_SLAVE_RSTN         ,
     input  logic [4-1:0]     JTAG_SLAVE_WR_ADDR_ID   ,
@@ -71,6 +74,9 @@ wire cmd_done;
 wire shift_in_rd;
 wire shift_out_wr;
 
+reg key_ctrl_enable;
+reg [31:0] key_in;
+
 /*
 JTAG从机地址规定
 0   JTAG状态标识位，可读可写
@@ -89,6 +95,8 @@ localparam JTAG_SHIFT_OUT_ADDR = 32'h1;
 localparam JTAG_SHIFT_IN_ADDR  = 32'h2;
 localparam JTAG_SHIFT_CMD_ADDR = 32'h3;
 localparam JTAG_SPEED_ADDR     = 32'h4;
+localparam MATRIX_KEY_EN_ADDR  = 32'h5;
+localparam MATRIX_KEY_ADDR     = 32'h6;
 
 reg  [31:0] JTAG_STATE_REG_WR;
 reg  [31:0] JTAG_STATE_REG_READ;
@@ -204,7 +212,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > JTAG_SPEED_ADDR)) wr_transcript_error <= 1;
+    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > MATRIX_KEY_ADDR)) wr_transcript_error <= 1;
     else if(wr_addr == JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -277,16 +285,21 @@ always @(*) begin
     //读数据DATA选通
     if(~jtag_rstn_sync) JTAG_SLAVE_RD_DATA <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
-             if(rd_addr == JTAG_STATE_ADDR    ) JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读  
-        else if(rd_addr == JTAG_SHIFT_OUT_ADDR) JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
-        else if(rd_addr == JTAG_SPEED_ADDR    ) JTAG_SLAVE_RD_DATA <= {tck_high_period, tck_low_period};
-        else JTAG_SLAVE_RD_DATA <= 32'hFFFFFFFF;
+        case(rd_addr)
+            JTAG_STATE_ADDR    : JTAG_SLAVE_RD_DATA <= JTAG_STATE_REG_READ; //状态寄存器可立即读
+            JTAG_SHIFT_OUT_ADDR: JTAG_SLAVE_RD_DATA <= fifo_shift_out_rd_data; //读FIFO数据有效可读
+            JTAG_SPEED_ADDR    : JTAG_SLAVE_RD_DATA <= {tck_high_period, tck_low_period};
+            MATRIX_KEY_EN_ADDR : JTAG_SLAVE_RD_DATA <= {31'b0,key_ctrl_enable};
+            MATRIX_KEY_ADDR    : JTAG_SLAVE_RD_DATA <= key_in;
+            default            : JTAG_SLAVE_RD_DATA <= 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
+        endcase
     end else JTAG_SLAVE_RD_DATA <= 0;
 end
 
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
+    else if(rd_addr > MATRIX_KEY_ADDR) rd_transcript_error <= 1;
     else if((rd_addr == JTAG_SHIFT_IN_ADDR) || (rd_addr == JTAG_SHIFT_CMD_ADDR)) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -418,8 +431,8 @@ jtag_fifo_shift_cmd jtag_fifo_shift_cmd_inst(
 //_______32'h10000004_______//
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) begin
-        tck_high_period <= 5;
-        tck_low_period  <= 5;
+        tck_high_period <= 1;
+        tck_low_period  <= 1;
     end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == JTAG_SPEED_ADDR)) begin
         tck_high_period[15:8] <= (JTAG_SLAVE_WR_STRB[3])?(JTAG_SLAVE_WR_DATA[31:24]):(tck_high_period[15:8]);
         tck_high_period[7:0]  <= (JTAG_SLAVE_WR_STRB[2])?(JTAG_SLAVE_WR_DATA[23:16]):(tck_high_period[7:0] );
@@ -428,6 +441,31 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
     end else begin
         tck_high_period <= tck_high_period;
         tck_low_period  <= tck_low_period;
+    end
+end
+
+//_______32'h10000005_______//
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
+        key_ctrl_enable <= 0;
+    end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == MATRIX_KEY_EN_ADDR)) begin
+        key_ctrl_enable <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[0]):(key_ctrl_enable);
+    end else begin
+        key_ctrl_enable <= key_ctrl_enable;
+    end
+end
+
+//_______32'h10000006_______//
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
+        key_in <= 0;
+    end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == MATRIX_KEY_ADDR)) begin
+        key_in[24+:8] <= (JTAG_SLAVE_WR_STRB[3])?(JTAG_SLAVE_WR_DATA[24+:8]):(key_in[24+:8]);
+        key_in[16+:8] <= (JTAG_SLAVE_WR_STRB[2])?(JTAG_SLAVE_WR_DATA[16+:8]):(key_in[16+:8]);
+        key_in[ 8+:8] <= (JTAG_SLAVE_WR_STRB[1])?(JTAG_SLAVE_WR_DATA[ 8+:8]):(key_in[ 8+:8]);
+        key_in[ 0+:8] <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[ 0+:8]):(key_in[ 0+:8]);
+    end else begin
+        key_in <= key_in;
     end
 end
 
@@ -470,4 +508,16 @@ jtag_tck_gen jtag_tck_gen_inst(
     .jtag_rd_en         (jtag_rd_en),
     .jtag_wr_en         (jtag_wr_en)
 );
+
+//为了方便 把矩阵键盘控制也放里面了
+matrix_key_ctrl #(
+	.ROW_NUM 	( 4  ),
+	.COL_NUM 	( 4  ))
+u_matrix_key_ctrl(
+	.key_ctrl_enable 	( key_ctrl_enable  ),
+	.key_in          	( key_in[4*4-1:0]  ),
+	.row             	( matrix_key_row   ),
+	.col             	( matrix_key_col   )
+);
+
 endmodule

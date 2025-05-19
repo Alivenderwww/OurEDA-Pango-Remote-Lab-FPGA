@@ -24,11 +24,11 @@ wire [7:0]  	ad_vpp;
 wire [7:0]  	ad_max;
 wire [7:0]  	ad_min;
 
-real freq = 500;    // 500 Hz
+real freq = 1e6;    // 500 Hz
 real amp = 127.0;   // Full scale
 real phase = 0.0;   // 0 degree phase
 
-always #10 clk = ~clk; // 50MHz
+always #(500/27) clk = ~clk; // 50MHz
 always #20 ad_clk = ~ad_clk; // 25MHz
 always #10 ram_rd_clk = ~ram_rd_clk; // 50MHz
 initial begin

@@ -1,0 +1,143 @@
+# Reading E:/modeltech64_10.5/tcl/vsim/pref.tcl
+# //  ModelSim SE-64 10.5 Feb 13 2016 
+# //
+# //  Copyright 1991-2016 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  ModelSim SE-64 and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# do {run_behav_compile.tcl}
+# ** Error: (vlib-35) Failed to create directory "work".
+# File exists. (errno = EEXIST)
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap work ./work 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap usim E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/usim 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap adc_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/adc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ddc_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/ddc_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap dll_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/dll_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap hsstlp_lane E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/hsstlp_lane 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap hsstlp_pll E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/hsstlp_pll 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap iolhr_dft E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/iolhr_dft 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ipal_e1 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/ipal_e1 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap ipal_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/ipal_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap iserdes_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/iserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap oserdes_e2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/oserdes_e2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vmap 10.5 Lib Mapping Utility 2016.02 Feb 13 2016
+# vmap pciegen2 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/pango_sim_libraries/pciegen2 
+# Modifying modelsim.ini
+# Model Technology ModelSim SE-64 vlog 10.5 Compiler 2016.02 Feb 13 2016
+# Start time: 22:05:55 on May 19,2025
+# vlog -reportprogress 300 -work work E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bcd2ascii.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bin2bcd.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/cymometer.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/frequency_meter.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_driver.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/pulse_gen.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_selector.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/ipcore/PLL/PLL.v E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv 
+# -- Compiling module bcd2ascii
+# -- Compiling module bin2bcd
+# -- Compiling module cymometer
+# -- Compiling module frequency_meter
+# -- Compiling module led_display_driver
+# -- Compiling module pulse_gen
+# -- Compiling module led_display_selector
+# -- Compiling module PLL
+# -- Compiling module frequency_meter_tb
+# 
+# Top level modules:
+# 	frequency_meter_tb
+# End time: 22:05:55 on May 19,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# do {run_behav_simulate.tcl}
+# vsim -novopt -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2 frequency_meter_tb usim.GTP_GRS 
+# Start time: 22:05:55 on May 19,2025
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.frequency_meter_tb
+# Loading sv_std.std
+# Loading work.frequency_meter_tb
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.frequency_meter
+# Loading work.frequency_meter
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.PLL
+# Loading work.PLL
+# Loading usim.GTP_GPLL
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.pulse_gen
+# Loading work.pulse_gen
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.cymometer
+# Loading work.cymometer
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.bin2bcd
+# Loading work.bin2bcd
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.led_display_driver
+# Loading work.led_display_driver
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.led_display_selector
+# Loading work.led_display_selector
+# Loading usim.GTP_GRS
+# Refreshing E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav/work.bcd2ascii
+# Loading work.bcd2ascii
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/clk
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/rstn
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/ad_clk
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/ad_data
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/led_display_seg
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/led_display_sel
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/ad_pulse
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/data_fx
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/bcd
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/data_bcd
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/asciidata
+restart
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+run -all
+run -all
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/CLK_FS
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/MAX
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/GATE_TIME
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/clk_fs
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/rstn
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/clk_fx
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/data_fx
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fs
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fs_r
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fs_d0
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fs_d1
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fx_d0
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_fx_d1
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/data_fx_t
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/gate_cnt
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/fs_cnt
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/fs_cnt_temp
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/fx_cnt
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/fx_cnt_temp
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/neg_gate_fs
+add wave -position end  sim:/frequency_meter_tb/frequency_meter_inst/cymometer_inst/neg_gate_fx
+restart
+# ** Warning: (vsim-8891) All optimizations are turned off because the -novopt switch is in effect. This will cause your simulation to run very slowly. If you are using this switch to preserve visibility for Debug or PLI features please see the User's Manual section on Preserving Object Visibility with vopt.
+run -all
+run -all
+# unknown option "-rowmargin"

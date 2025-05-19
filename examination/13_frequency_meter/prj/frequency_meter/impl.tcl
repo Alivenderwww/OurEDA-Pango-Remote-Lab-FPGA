@@ -27,3 +27,4 @@ dev_map
 pnr 
 report_timing 
 gen_bit_stream 
+add_simulation "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv"

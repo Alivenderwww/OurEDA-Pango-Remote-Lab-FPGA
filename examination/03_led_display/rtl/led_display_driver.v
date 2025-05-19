@@ -66,7 +66,7 @@ end
 led_display_selector #(
 	.NUM          	( 8     ),
 	.VALID_SIGNAL 	( 1'b0  ), //阳极管，低电平亮
-	.CLK_CYCLE    	( 27000000 ))
+	.CLK_CYCLE    	( 2700000 ))
 u_led_display_selector(
 	.clk             	( clk              ),
 	.rstn            	( rstn             ),

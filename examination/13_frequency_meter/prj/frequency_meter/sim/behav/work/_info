@@ -1,0 +1,194 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/sim/behav
+vbcd2ascii
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 nT2Ak[G1RNm8zD06eQUO63
+I1e=<I[`UhB>8YSZZbAOI53
+R0
+w1747631571
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bcd2ascii.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bcd2ascii.v
+L0 1
+Z2 OL;L;10.5;63
+Z3 !s108 1747663555.000000
+Z4 !s107 E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/ipcore/PLL/PLL.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_selector.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/pulse_gen.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_driver.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/frequency_meter.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/cymometer.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bin2bcd.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bcd2ascii.v|
+Z5 !s90 -reportprogress|300|-work|work|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bcd2ascii.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bin2bcd.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/cymometer.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/frequency_meter.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_driver.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/pulse_gen.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_selector.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/ipcore/PLL/PLL.v|E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv|
+!i113 0
+Z6 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z7 tCvgOpt 0
+vbin2bcd
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 ]c[9LlCa?WF;<5Qb_Q`z>3
+I]mO;MHN2ag7j1hkSA>Tf?1
+R0
+w1747630838
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bin2bcd.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/bin2bcd.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vcymometer
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 oBdo5m2F`:<o6MJo_^^`Y0
+ITDU6CN7=;FN;5FdHCj;z61
+R0
+w1746777080
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/cymometer.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/cymometer.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vfrequency_meter
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 9g^c33GPlC:iS4BS?GV7_0
+IW6?kQ>DURD_jN93lMn9KM2
+R0
+w1747658872
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/frequency_meter.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/frequency_meter.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vfrequency_meter_tb
+DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 9VgmEc:DGi_?::`Ue>aL93
+ICD^B6JQ]K6bA[bH=SljoU2
+!s105 frequency_meter_tb_sv_unit
+S1
+R0
+w1747663532
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv
+L0 2
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vled_display_driver
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 CPZ9cVo6@n[9aONk]hGAg3
+IgKQl68cM<133hA9OL;FDV1
+R0
+Z8 w1746777081
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_driver.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_driver.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vled_display_selector
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 Wog9f35eKgHz4Oo?So]Qj3
+Ic>4M?D01=?I2^>6IDRgX;1
+R0
+R8
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_selector.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/led_display_selector.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+vPLL
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 Rh5[nf:MXIk4^R@d2Z6g13
+IEYQEVV5d;5d5T[9DS9Qj83
+R0
+w1747632372
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/ipcore/PLL/PLL.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/prj/frequency_meter/ipcore/PLL/PLL.v
+L0 18
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
+n@p@l@l
+vpulse_gen
+R1
+r1
+!s85 0
+31
+!i10b 1
+!s100 e]Gk6NZBJAiYDKBQI0Fcd0
+IkiLmXNh:i>DlRP5klHQOa0
+R0
+w1747657625
+8E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/pulse_gen.v
+FE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/rtl/pulse_gen.v
+L0 1
+R2
+R3
+R4
+R5
+!i113 0
+R6
+R7
