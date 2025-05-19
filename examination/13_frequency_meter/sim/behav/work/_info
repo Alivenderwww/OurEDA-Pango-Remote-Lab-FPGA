@@ -1,0 +1,210 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/behav
+vbcd2ascii
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1747660966
+!i10b 1
+!s100 mRU:D^XojhSnCF<53CJ<h3
+I?Vz>o61h00I3@Y7A]U]LT2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+Z4 !s105 bcd2ascii_v_unit
+S1
+R0
+w1747631571
+8../../rtl/bcd2ascii.v
+F../../rtl/bcd2ascii.v
+L0 1
+Z5 OL;L;10.5;63
+r1
+!s85 0
+31
+Z6 !s108 1747660966.000000
+Z7 !s107 ../frequency_meter_tb.sv|../../rtl/pulse_gen.v|../../rtl/led_display_selector.v|../../rtl/led_display_driver.v|../../rtl/frequency_meter.v|../../rtl/cymometer.v|../../rtl/bin2bcd.v|../../rtl/bcd2ascii.v|
+Z8 !s90 -reportprogress|300|-sv|-work|work|-mfcu|-incr|-suppress|2902|-f|sim_file_list.f|
+!i113 0
+Z9 o-suppress 2902 -sv -work work -mfcu -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z10 !s92 -suppress 2902 -sv -work work -mfcu +define+SIM -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z11 tCvgOpt 0
+vbin2bcd
+R1
+R2
+!i10b 1
+!s100 PLYR04?5[1ikbnlO]PSKQ1
+I`KAZdMVM0V1<2ebzLhGli1
+R3
+R4
+S1
+R0
+w1747630838
+8../../rtl/bin2bcd.v
+F../../rtl/bin2bcd.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vcymometer
+R1
+R2
+!i10b 1
+!s100 ShIQhKa;2b2M6`5]:Mh0h0
+IVzh8zClJR1F4>N4OX_;NO2
+R3
+R4
+S1
+R0
+w1746777080
+8../../rtl/cymometer.v
+F../../rtl/cymometer.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vfrequency_meter
+R1
+R2
+!i10b 1
+!s100 bz=>i;aFMKjRo2f8hkCnX2
+IVRzDTSkMmN]_doO8J2e_]2
+R3
+R4
+S1
+R0
+w1747658872
+8../../rtl/frequency_meter.v
+F../../rtl/frequency_meter.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vfrequency_meter_tb
+R1
+R2
+!i10b 1
+!s100 D@b@YdmlSo_dbH<fVomkP1
+Ic@1fP?BK4BjRiIJBnJ]`d2
+R3
+R4
+S1
+R0
+w1747659796
+8../frequency_meter_tb.sv
+F../frequency_meter_tb.sv
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vled_display_driver
+R1
+R2
+!i10b 1
+!s100 aA[88JC3lmaRIdo0XR^eK3
+IE7=J;;;KIVIK[L`Wa^oee1
+R3
+R4
+S1
+R0
+Z12 w1746777081
+8../../rtl/led_display_driver.v
+F../../rtl/led_display_driver.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vled_display_selector
+R1
+R2
+!i10b 1
+!s100 18gHo9R43FD>7HgV0MR9^3
+I<o2ell8Y?UlzP3eMdekCM2
+R3
+R4
+S1
+R0
+R12
+8../../rtl/led_display_selector.v
+F../../rtl/led_display_selector.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
+vpulse_gen
+R1
+R2
+!i10b 1
+!s100 m57;02<4?o1g[AQ7WjjB]3
+Ik<S>N=zDYm@`OVSY;0C?42
+R3
+R4
+S1
+R0
+w1747657625
+8../../rtl/pulse_gen.v
+F../../rtl/pulse_gen.v
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+R7
+R8
+!i113 0
+R9
+R10
+R11
