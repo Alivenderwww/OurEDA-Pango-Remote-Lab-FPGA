@@ -97,43 +97,43 @@ initial begin
     #300 M0.send_wr_data(32'd100000, 4'b1111);
     #300 M0.send_wr_addr(2'b00, 32'h00000004, 8'd000, 2'b00);
     #300 M0.send_wr_data(32'd200000, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000009, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'hFFFF_FFFF, 4'b1111);
-    for(i=0;i<16;i=i+1)begin
-        #300 M0.send_wr_addr(2'b00, 32'h0000000A, 8'd255, 2'b00);
-        #300 M0.send_wr_data(256*i, 4'b1111);
-    end
     // #300 M0.send_wr_addr(2'b00, 32'h00000009, 8'd000, 2'b00);
-    // #300 M0.send_wr_data(32'h0000_0000, 4'b1111);
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd10000, 4'b1111);
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd50000, 4'b1111);
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd200000, 4'b1111);
+    // #300 M0.send_wr_data(32'hFFFF_FFFF, 4'b1111);
+    // for(i=0;i<16;i=i+1)begin
+    //     #300 M0.send_wr_addr(2'b00, 32'h0000000A, 8'd255, 2'b00);
+    //     #300 M0.send_wr_data(256*i, 4'b1111);
+    // end
+    // // #300 M0.send_wr_addr(2'b00, 32'h00000009, 8'd000, 2'b00);
+    // // #300 M0.send_wr_data(32'h0000_0000, 4'b1111);
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd10000, 4'b1111);
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd50000, 4'b1111);
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000001, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd200000, 4'b1111);
     
-    #300 M0.send_wr_addr(2'b00, 32'h00000010, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd0, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd20000, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000012, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd50000, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000013, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd100000, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000014, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd200000, 4'b1111);
-    #300 M0.send_wr_addr(2'b00, 32'h00000019, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'hFFFF_FFFF, 4'b1111);
-    for(i=0;i<16*256;i=i+1)begin
-        #300 M0.send_wr_addr(2'b00, 32'h0000001A, 8'd0, 2'b00);
-        #300 M0.send_wr_data(square_wave(i), 4'b1111);
-    end
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd10000, 4'b1111);
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd50000, 4'b1111);
-    #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
-    #300 M0.send_wr_data(32'd200000, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000010, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd0, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd20000, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000012, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd50000, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000013, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd100000, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000014, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd200000, 4'b1111);
+    // #300 M0.send_wr_addr(2'b00, 32'h00000019, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'hFFFF_FFFF, 4'b1111);
+    // for(i=0;i<16*256;i=i+1)begin
+    //     #300 M0.send_wr_addr(2'b00, 32'h0000001A, 8'd0, 2'b00);
+    //     #300 M0.send_wr_data(square_wave(i), 4'b1111);
+    // end
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd10000, 4'b1111);
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd50000, 4'b1111);
+    // #4000000 M0.send_wr_addr(2'b00, 32'h00000011, 8'd000, 2'b00);
+    // #300 M0.send_wr_data(32'd200000, 4'b1111);
 end
 
 axi_master_sim M0(
