@@ -421,6 +421,15 @@ define_attribute {p:led8[0]} {PAP_IO_DRIVE} {4}
 define_attribute {p:led8[0]} {PAP_IO_UNUSED} {TRUE}
 define_attribute {p:led8[0]} {PAP_IO_SLEW} {FAST}
 
+#lab_fpga_power_on
+define_attribute {p:lab_fpga_power_on} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_LOC} {C18}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_DRIVE} {12}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_NONE} {TRUE}
+define_attribute {p:lab_fpga_power_on} {PAP_IO_SLEW} {SLOW}
+
 #MATRIX_KEY
 define_attribute {p:matrix_col[3]} {PAP_IO_DIRECTION} {OUTPUT}
 define_attribute {p:matrix_col[3]} {PAP_IO_LOC} {E20}

@@ -77,8 +77,8 @@ wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
 wire            arp_working;
 
-assign gmii_tx_en = arp_working ? gmii_tx_en_arp : gmii_tx_en_udp;
-assign gmii_txd   = arp_working ? gmii_txd_arp   : gmii_txd_udp;
+assign gmii_tx_en = gmii_tx_en_udp;
+assign gmii_txd   = gmii_txd_udp;
 
 
 rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
@@ -174,18 +174,18 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_tx_byte_num     (udp_tx_byte_num)
 );
 
-arp # (
-    .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP)
-  )
-  arp_inst (
-    .rstn(eth_rstn_sync),
-    .gmii_rx_clk(gmii_rx_clk),
-    .gmii_rx_dv(gmii_rx_dv),
-    .gmii_rxd(gmii_rxd),
-    .gmii_tx_clk(gmii_tx_clk),
-    .gmii_tx_en(gmii_tx_en_arp),
-    .gmii_txd(gmii_txd_arp),
-    .arp_working(arp_working)
-  );
+// arp # (
+//     .BOARD_MAC(BOARD_MAC),
+//     .BOARD_IP(BOARD_IP)
+//   )
+//   arp_inst (
+//     .rstn(eth_rstn_sync),
+//     .gmii_rx_clk(gmii_rx_clk),
+//     .gmii_rx_dv(gmii_rx_dv),
+//     .gmii_rxd(gmii_rxd),
+//     .gmii_tx_clk(gmii_tx_clk),
+//     .gmii_tx_en(gmii_tx_en_arp),
+//     .gmii_txd(gmii_txd_arp),
+//     .arp_working(arp_working)
+//   );
 endmodule //udp_axi_master_sim

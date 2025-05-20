@@ -11,6 +11,7 @@ module JTAG_SLAVE #(
 
     output wire [3:0] matrix_key_col,
     input  wire [3:0] matrix_key_row,
+    output logic      lab_fpga_power_on,
 
     output logic             JTAG_SLAVE_CLK          ,
     output logic             JTAG_SLAVE_RSTN         ,
@@ -97,6 +98,7 @@ localparam JTAG_SHIFT_CMD_ADDR = 32'h3;
 localparam JTAG_SPEED_ADDR     = 32'h4;
 localparam MATRIX_KEY_EN_ADDR  = 32'h5;
 localparam MATRIX_KEY_ADDR     = 32'h6;
+localparam LAB_FPGA_POWER_ADDR = 32'h7;
 
 reg  [31:0] JTAG_STATE_REG_WR;
 reg  [31:0] JTAG_STATE_REG_READ;
@@ -212,7 +214,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > MATRIX_KEY_ADDR)) wr_transcript_error <= 1;
+    else if((wr_addr < JTAG_STATE_ADDR) || (wr_addr > LAB_FPGA_POWER_ADDR)) wr_transcript_error <= 1;
     else if(wr_addr == JTAG_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -291,6 +293,7 @@ always @(*) begin
             JTAG_SPEED_ADDR    : JTAG_SLAVE_RD_DATA <= {tck_high_period, tck_low_period};
             MATRIX_KEY_EN_ADDR : JTAG_SLAVE_RD_DATA <= {31'b0,key_ctrl_enable};
             MATRIX_KEY_ADDR    : JTAG_SLAVE_RD_DATA <= key_in;
+            LAB_FPGA_POWER_ADDR: JTAG_SLAVE_RD_DATA <= {31'b0,lab_fpga_power_on};
             default            : JTAG_SLAVE_RD_DATA <= 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
         endcase
     end else JTAG_SLAVE_RD_DATA <= 0;
@@ -299,7 +302,7 @@ end
 always @(*) begin
     if((~jtag_rstn_sync) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if(rd_addr > MATRIX_KEY_ADDR) rd_transcript_error <= 1;
+    else if(rd_addr > LAB_FPGA_POWER_ADDR) rd_transcript_error <= 1;
     else if((rd_addr == JTAG_SHIFT_IN_ADDR) || (rd_addr == JTAG_SHIFT_CMD_ADDR)) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -468,6 +471,18 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
         key_in <= key_in;
     end
 end
+
+//_______32'h10000007_______//
+always @(posedge clk or negedge jtag_rstn_sync) begin
+    if(~jtag_rstn_sync) begin
+        lab_fpga_power_on <= 0;
+    end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == LAB_FPGA_POWER_ADDR)) begin
+        lab_fpga_power_on <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[0]):(lab_fpga_power_on);
+    end else begin
+        lab_fpga_power_on <= lab_fpga_power_on;
+    end
+end
+
 
 //TAP FSM implementation
 tap_FSM #(

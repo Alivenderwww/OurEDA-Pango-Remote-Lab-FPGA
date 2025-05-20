@@ -256,8 +256,6 @@ GTP_CFGCLK u_gtp_cfgclk (
 //-----------------------------------------------------------------------------------------------------
 
 /*
-大幅修改了spi_top的控制逻辑
-
 上位机修改start_wr_sector为想要写入的Flash首扇区号，wr_sector_num为写入的扇区个数，同时拉高flash_wr_en。
 等待flash_clear_done拉高，擦除完成，可以写入。
 往写比特流入口写入数据。32bit需做翻转。
@@ -269,7 +267,6 @@ GTP_CFGCLK u_gtp_cfgclk (
 直到flash_rd_done拉高，表示读出完成。可完成CRC校验。
 
 热启动需配置hotreset_addr，拉高hotreset_en。
-
 */
 
 
