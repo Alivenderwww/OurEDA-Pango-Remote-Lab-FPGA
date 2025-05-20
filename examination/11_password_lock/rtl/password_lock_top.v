@@ -1,7 +1,7 @@
 
 module password_lock_top #(
     parameter VALID_SIGNAL = 1'b0,
-    parameter CLK_CYCLE = 5000
+    parameter CLK_CYCLE = 27000
 )(
 //system io
 input  wire       external_clk ,

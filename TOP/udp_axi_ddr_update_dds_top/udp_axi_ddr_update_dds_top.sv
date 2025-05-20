@@ -1,8 +1,8 @@
 module udp_axi_ddr_update_top #(
     parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
     // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
-    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd009}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    // parameter BOARD_IP      = {8'd169,8'd254,8'd169,8'd009}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
+    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.9  8'd169,8'd254,8'd103,8'd006
+    // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
     parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
     //parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
     parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
@@ -21,6 +21,8 @@ output wire [7:0]  da_data      ,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
+//lab fpga power io
+output wire        lab_fpga_power_on,
 //jtag io
 output wire        tck          ,
 output wire        tms          ,
@@ -403,6 +405,7 @@ JTAG_SLAVE  #(
     .tdo                      (tdo             ),
 	.matrix_key_col		      (matrix_col       ),
 	.matrix_key_row		      (matrix_row       ),
+	.lab_fpga_power_on	      (lab_fpga_power_on ),
     .JTAG_SLAVE_CLK           (S_CLK          [1]),
     .JTAG_SLAVE_RSTN          (S_RSTN         [1]),
     .JTAG_SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   [1]),
@@ -443,7 +446,7 @@ remote_update_axi_slave #(
     .USER_BITSTREAM2_ADDR   (24'h74_2000        ),
     .USER_BITSTREAM3_ADDR   (24'hae_0000        )
 )S2(
-    .clk                 (clk_10M            ),
+    .clk                 (clk_10M           ),
     .rstn                (ru_rstn           ),
     .spi_cs              (spi_cs            ),
     .spi_clk             (spi_clk           ),
