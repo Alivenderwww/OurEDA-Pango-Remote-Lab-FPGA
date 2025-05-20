@@ -8,6 +8,7 @@ vlib work
 vmap work work         
                            
 vlib work
+vmap  work ./work
 vmap  usim        "../../prj/frequency_meter/pango_sim_libraries/usim"
 vmap  adc_e2      "../../prj/frequency_meter/pango_sim_libraries/adc_e2"
 vmap  ddc_e2      "../../prj/frequency_meter/pango_sim_libraries/ddc_e2"
@@ -22,7 +23,8 @@ vmap  oserdes_e2  "../../prj/frequency_meter/pango_sim_libraries/oserdes_e2"
 vmap  pciegen2    "../../prj/frequency_meter/pango_sim_libraries/pciegen2"
 vlog -sv -work work -mfcu -incr -suppress 2902 -f sim_file_list.f
 vsim -suppress 3486,3680,3781 -voptargs="+acc" +nowarn1 -c -sva \
-     frequency_meter_tb
+     -L work -L usim -L adc_e2 -L ddc_e2 -L dll_e2 -L hsstlp_lane -L hsstlp_pll -L iolhr_dft -L ipal_e1 -L ipal_e2 -L iserdes_e2 -L oserdes_e2 -L pciegen2\
+     frequency_meter_tb usim.GTP_GRS
 add wave *
 view wave
 view structure
