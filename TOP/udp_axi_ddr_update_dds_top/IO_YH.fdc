@@ -186,8 +186,18 @@ define_attribute {p:external_rstn} {PAP_IO_LOC} {G25}
 define_attribute {p:external_rstn} {PAP_IO_VCCIO} {3.3}
 define_attribute {p:external_rstn} {PAP_IO_STANDARD} {LVCMOS33}
 define_attribute {p:external_rstn} {PAP_IO_UNUSED} {TRUE}
-
-
+#hsst
+define_attribute {i:S5.hsst_for_ctrlfpga_dut_top_inst.U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL0_ENABLE.U_GTP_HSSTLP_LANE0} {PAP_LOC} {HSSTLP_364_0:U0_HSSTLP_LANE}
+define_attribute {i:S5.hsst_for_ctrlfpga_dut_top_inst.U_INST.U_GTP_HSSTLP_WRAPPER.CHANNEL1_ENABLE.U_GTP_HSSTLP_LANE1} {PAP_LOC} {HSSTLP_364_0:U1_HSSTLP_LANE}
+define_attribute {i:S5.hsst_for_ctrlfpga_dut_top_inst.U_INST.U_GTP_HSSTLP_WRAPPER.PLL0_ENABLE.U_GTP_HSSTLP_PLL0} {PAP_LOC} {HSSTLP_364_0:U0_HSSTLP_PLL}
+define_attribute {p:i_p_refckn_0} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:i_p_refckn_0} {PAP_IO_LOC} {AB11}
+define_attribute {p:i_p_refckn_0} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:i_p_refckp_0} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:i_p_refckp_0} {PAP_IO_LOC} {AA11}
+define_attribute {p:i_p_refckp_0} {PAP_IO_UNUSED} {TRUE}
+create_clock -name {i_p_refckn_0}          [get_ports {i_p_refckn_0              }] -period {8.00  } -waveform {0 4.0}
+create_clock -name {i_p_refckp_0}          [get_ports {i_p_refckp_0              }] -period {8.00  } -waveform {0 4.0}
 #DAC
 define_attribute {p:da_clk} {PAP_IO_DIRECTION} {OUTPUT}
 define_attribute {p:da_clk} {PAP_IO_LOC} {AA23}
