@@ -1,5 +1,4 @@
 module data_ctrl_slave #(
-parameter OFFSET_ADDR           = 32'h3000_0000     ,
 parameter FPGA_VERSION          = 48'h2000_0101_1200    // year,month,day,hour,minute;
 )(
 input  wire        clk                     ,
@@ -218,7 +217,7 @@ end
 
 always @(posedge clk or negedge SLAVE_RSTN_SYNC) begin
     if(~SLAVE_RSTN_SYNC) wr_addr <= 0;
-    else if(SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID) wr_addr <= SLAVE_WR_ADDR - OFFSET_ADDR;
+    else if(SLAVE_WR_ADDR_READY && SLAVE_WR_ADDR_VALID) wr_addr <= SLAVE_WR_ADDR;
     else if((cu_wr_st == ST_WR_DATA) && SLAVE_WR_DATA_READY && SLAVE_WR_DATA_VALID && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -283,7 +282,7 @@ end
 
 always @(posedge clk or negedge SLAVE_RSTN_SYNC) begin
     if(~SLAVE_RSTN_SYNC) rd_addr <= 0;
-    else if(SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID) rd_addr <= SLAVE_RD_ADDR - OFFSET_ADDR;
+    else if(SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID) rd_addr <= SLAVE_RD_ADDR;
     else if((cu_rd_st == ST_RD_DATA) && SLAVE_RD_DATA_READY && SLAVE_RD_DATA_VALID && (rd_addr_burst == 2'b01)) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end

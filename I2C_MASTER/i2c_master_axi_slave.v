@@ -1,6 +1,4 @@
-module i2c_master_axi_slave #(
-    parameter OFFSET_ADDR = 32'h0000_0000
-)(
+module i2c_master_axi_slave (
     input  wire         clk,
     input  wire         rstn,
 
@@ -159,7 +157,7 @@ always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     end
 end
 
-wire [31:0] wr_addr_offset = SLAVE_WR_ADDR - OFFSET_ADDR; // 计算偏移地址
+wire [31:0] wr_addr_offset = SLAVE_WR_ADDR; // 计算偏移地址
 // 写地址计算逻辑（）
 always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     if(~I2C_MASTER_AXI_SLAVE_RSTN_SYNC) wr_addr <= 0;
@@ -226,7 +224,7 @@ always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     end
 end
 
-wire [31:0] rd_addr_offset = SLAVE_RD_ADDR - OFFSET_ADDR; // 计算偏移地址
+wire [31:0] rd_addr_offset = SLAVE_RD_ADDR; // 计算偏移地址
 // 读地址计算逻辑
 always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     if(~I2C_MASTER_AXI_SLAVE_RSTN_SYNC) rd_addr <= 0;

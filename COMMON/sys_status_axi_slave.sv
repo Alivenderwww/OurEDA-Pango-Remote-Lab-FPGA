@@ -1,6 +1,4 @@
-module sys_status_axi_slave#(
-    parameter OFFSET_ADDR = 32'h3000_0000  // 模块基地址偏移量
-)(
+module sys_status_axi_slave(
     // 时钟和复位信号
     input                clk,              // 系统时钟
     input                rstn,             // 系统复位，低电平有效
@@ -200,7 +198,7 @@ end
 // 写地址计算逻辑
 always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
     if(~STATUS_SLAVE_RSTN_SYNC) wr_addr <= 0;
-    else if(STATUS_SLAVE_WR_ADDR_VALID && STATUS_SLAVE_WR_ADDR_READY) wr_addr <= STATUS_SLAVE_WR_ADDR - OFFSET_ADDR;
+    else if(STATUS_SLAVE_WR_ADDR_VALID && STATUS_SLAVE_WR_ADDR_READY) wr_addr <= STATUS_SLAVE_WR_ADDR;
     else if((wr_addr_burst == 2'b01) && STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -333,7 +331,7 @@ end
 // 读地址计算逻辑
 always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
     if(~STATUS_SLAVE_RSTN_SYNC) rd_addr <= 0;
-    else if(STATUS_SLAVE_RD_ADDR_VALID && STATUS_SLAVE_RD_ADDR_READY) rd_addr <= STATUS_SLAVE_RD_ADDR - OFFSET_ADDR;
+    else if(STATUS_SLAVE_RD_ADDR_VALID && STATUS_SLAVE_RD_ADDR_READY) rd_addr <= STATUS_SLAVE_RD_ADDR;
     else if(STATUS_SLAVE_RD_DATA_VALID && STATUS_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end

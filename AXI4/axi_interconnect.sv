@@ -94,6 +94,9 @@ wire                	  B_RD_DATA_LAST ;
 wire                	  B_RD_DATA_VALID;
 wire                	  B_RD_DATA_READY;
 
+wire [31:0]               TRANS_B_WR_ADDR;
+wire [31:0]               TRANS_B_RD_ADDR;
+
 wire [M_WIDTH-1:0]  wr_addr_master_sel;
 wire [M_WIDTH-1:0]  wr_data_master_sel;
 wire [M_WIDTH-1:0]  wr_resp_master_sel;
@@ -207,7 +210,7 @@ axi_slave_switch #(
 	.SLAVE_RD_DATA_VALID (S_RD_DATA_VALID),
 	.SLAVE_RD_DATA_READY (S_RD_DATA_READY),
 	.BUS_WR_ADDR_ID      (B_WR_ADDR_ID   ),
-	.BUS_WR_ADDR         (B_WR_ADDR      ),
+	.BUS_WR_ADDR         (TRANS_B_WR_ADDR),
 	.BUS_WR_ADDR_LEN     (B_WR_ADDR_LEN  ),
 	.BUS_WR_ADDR_BURST   (B_WR_ADDR_BURST),
 	.BUS_WR_ADDR_VALID   (B_WR_ADDR_VALID),
@@ -222,7 +225,7 @@ axi_slave_switch #(
 	.BUS_WR_BACK_VALID   (B_WR_BACK_VALID),
 	.BUS_WR_BACK_READY   (B_WR_BACK_READY),
 	.BUS_RD_ADDR_ID      (B_RD_ADDR_ID   ),
-	.BUS_RD_ADDR         (B_RD_ADDR      ),
+	.BUS_RD_ADDR         (TRANS_B_WR_ADDR),
 	.BUS_RD_ADDR_LEN     (B_RD_ADDR_LEN  ),
 	.BUS_RD_ADDR_BURST   (B_RD_ADDR_BURST),
 	.BUS_RD_ADDR_VALID   (B_RD_ADDR_VALID),
@@ -272,6 +275,8 @@ axi_slave_arbiter #(
     .BUS_WR_BACK_VALID	( B_WR_BACK_VALID	 ),
     .BUS_WR_BACK_READY	( B_WR_BACK_READY	 ),
     .BUS_RD_ADDR		( B_RD_ADDR			 ),
+	.TRANS_WR_ADDR      ( TRANS_B_WR_ADDR    ),
+	.TRANS_RD_ADDR		( TRANS_B_RD_ADDR    ),
 	.wr_addr_slave_sel 	( wr_addr_slave_sel  ),
 	.wr_data_slave_sel 	( wr_data_slave_sel  ),
 	.wr_resp_slave_sel 	( wr_resp_slave_sel  ),

@@ -119,6 +119,8 @@ module axi_slave_arbiter #(
     input  wire                     BUS_WR_BACK_VALID,
     input  wire                     BUS_WR_BACK_READY,
     input  wire  [31:0]             BUS_RD_ADDR,
+    output logic [31:0]             TRANS_WR_ADDR,
+    output logic [31:0]             TRANS_RD_ADDR,
     output logic [S_WIDTH-1:0]      wr_addr_slave_sel,
     output logic [S_WIDTH-1:0]      wr_data_slave_sel,
     output logic [S_WIDTH-1:0]      wr_resp_slave_sel,
@@ -138,6 +140,13 @@ always_comb begin: wr_addr_slave
 end
 always_comb begin
     wr_data_slave_sel = wr_addr_slave_sel;
+end
+
+always_comb begin: wr_addr_calculate
+    int rev_i;
+    TRANS_WR_ADDR = 0;
+    for(rev_i=0; rev_i<(2**S_WIDTH); rev_i++) if((BUS_WR_ADDR >= START_ADDR[rev_i]) && (BUS_WR_ADDR <= END_ADDR[rev_i]))
+        TRANS_WR_ADDR = BUS_RD_ADDR - START_ADDR[rev_i];
 end
 
 /**************************写响应接口**********************/
@@ -180,6 +189,13 @@ always_comb begin: rd_data_slave
     rd_data_slave_sel = 0;
     for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if(S_RD_DATA_VALID[rev_i])
         rd_data_slave_sel = rev_i[S_WIDTH-1:0];
+end
+
+always_comb begin: rd_addr_calculate
+    int rev_i;
+    TRANS_RD_ADDR = 0;
+    for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if((BUS_RD_ADDR >= START_ADDR[rev_i]) && (BUS_RD_ADDR <= END_ADDR[rev_i]))
+        TRANS_RD_ADDR = BUS_RD_ADDR - START_ADDR[rev_i];
 end
 
 endmodule //axi_slave_arbiter

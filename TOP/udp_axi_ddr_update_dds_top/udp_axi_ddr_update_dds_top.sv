@@ -343,9 +343,7 @@ axi_master_default M3(
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[3])
 );
 
-slave_ddr3 #(
-    .OFFSET_ADDR             (START_ADDR[0])
-)S0(
+slave_ddr3 S0(
     .ddr_ref_clk             (clk_50M      ),
     .rst_n                   (ddr_rst_n        ),
     .DDR_SLAVE_CLK           (S_CLK          [0]),
@@ -394,9 +392,7 @@ slave_ddr3 #(
     .mem_ba                  (mem_ba           )
 );
 
-JTAG_SLAVE  #(
-    .OFFSET_ADDR              (START_ADDR[1])
-)S1(
+JTAG_SLAVE S1(
     .clk                      (clk_25M        ),
     .rstn                     (jtag_rstn       ),
     .tck                      (tck             ),
@@ -438,7 +434,6 @@ JTAG_SLAVE  #(
 );
 
 remote_update_axi_slave #(
-    .OFFSET_ADDR            (START_ADDR[2]      ),
     .FPGA_VERSION           (48'h2024_1119_1943 ),
     .DEVICE                 ("PG2L100H"         ),
     .USER_BITSTREAM_CNT     (2'd3               ),
@@ -483,9 +478,7 @@ remote_update_axi_slave #(
     .SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
 );
 
-i2c_master_axi_slave #(
-    .OFFSET_ADDR(START_ADDR[3])
-)S3(
+i2c_master_axi_slave S3(
 	.clk                 	( clk_50M           ),
 	.rstn                	( sys_rstn          ),
     .scl_in                 ( scl               ),
@@ -525,11 +518,7 @@ i2c_master_axi_slave #(
 	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[3])
 );
 
-dds_slave #(
-    .CHANNEL_NUM(1),
-    .VERTICAL_RESOLUTION(8),
-    .OFFSET_ADDR(START_ADDR[4])
-)S4(
+dds_slave S4(
 	.clk                 	    ( da_clk            ),
 	.rstn                	    ( sys_rstn          ),
     .wave_out            	    ( da_data           ),

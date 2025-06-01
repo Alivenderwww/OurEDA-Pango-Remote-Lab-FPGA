@@ -626,9 +626,7 @@ axi_slave_sim S7(
     .SLAVE_RD_DATA_READY(S_RD_DATA_READY[7])
 );
 
-ddr3_slave_sim #(
-    .OFFSET_ADDR(START_ADDR[0]))
-    S0(    //DDR时钟/复位/初始化接口
+ddr3_slave_sim S0(    //DDR时钟/复位/初始化接口
     .ddr_ref_clk            (ddr_ref_clk),
     .rst_n                  (ddr_rst_n  ),
     .DDR_SLAVE_CLK          (S_CLK          [0]),
@@ -662,9 +660,7 @@ ddr3_slave_sim #(
     .DDR_SLAVE_RD_DATA_READY(S_RD_DATA_READY[0])
 );
 
-JTAG_SLAVE #(
-    .OFFSET_ADDR              (START_ADDR[1]))
-    S1(
+JTAG_SLAVE S1(
     .clk                      (jtag_clk  ),
     .rstn                     (jtag_rst_n),
     .tck                      (tck       ),

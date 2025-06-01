@@ -1,6 +1,4 @@
-module slave_ddr3 #(
-    parameter OFFSET_ADDR = 32'h00000000
-)(
+module slave_ddr3 (
     //DDR时钟/复位/初始化接口
     input wire     ddr_ref_clk            ,
     input wire     rst_n                  ,
@@ -80,9 +78,6 @@ wire         READ_DATA_VALID; //读数据有效
 assign DDR_SLAVE_CLK  = ddr_core_clk;
 assign DDR_SLAVE_RSTN = (ddr_init_done);
 
-wire [31:0] WR_ADDR_CONVERTED = DDR_SLAVE_WR_ADDR - OFFSET_ADDR;
-wire [31:0] RD_ADDR_CONVERTED = DDR_SLAVE_RD_ADDR - OFFSET_ADDR;
-
 /*
 首先地址要对齐，低3位始终为0
 如果要读写中间的，需要转换一下STRB
@@ -100,7 +95,7 @@ ddr3_read ddr3_read_inst(
     .rstn                (DDR_SLAVE_RSTN          ),
 
     .SLAVE_RD_ADDR_ID    (DDR_SLAVE_RD_ADDR_ID    ),
-    .SLAVE_RD_ADDR       (RD_ADDR_CONVERTED[27:0] ),
+    .SLAVE_RD_ADDR       (DDR_SLAVE_RD_ADDR[27:0] ),
     .SLAVE_RD_ADDR_LEN   (DDR_SLAVE_RD_ADDR_LEN   ),
     .SLAVE_RD_ADDR_BURST (DDR_SLAVE_RD_ADDR_BURST ),
     .SLAVE_RD_ADDR_VALID (DDR_SLAVE_RD_ADDR_VALID ),
@@ -128,7 +123,7 @@ ddr3_write ddr3_write_inst(
     .clk                 (DDR_SLAVE_CLK           ),
     .rstn                (DDR_SLAVE_RSTN          ),
     .SLAVE_WR_ADDR_ID    (DDR_SLAVE_WR_ADDR_ID    ),
-    .SLAVE_WR_ADDR       (WR_ADDR_CONVERTED[27:0] ),
+    .SLAVE_WR_ADDR       (DDR_SLAVE_WR_ADDR[27:0] ),
     .SLAVE_WR_ADDR_LEN   (DDR_SLAVE_WR_ADDR_LEN   ),
     .SLAVE_WR_ADDR_BURST (DDR_SLAVE_WR_ADDR_BURST ),
     .SLAVE_WR_ADDR_VALID (DDR_SLAVE_WR_ADDR_VALID ),
