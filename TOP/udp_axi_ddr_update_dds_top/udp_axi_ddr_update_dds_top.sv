@@ -518,7 +518,10 @@ i2c_master_axi_slave S3(
 	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[3])
 );
 
-dds_slave S4(
+dds_slave #(
+    .CHANNEL_NUM(1),
+    .VERTICAL_RESOLUTION(8)
+)S4(
 	.clk                 	    ( da_clk            ),
 	.rstn                	    ( sys_rstn          ),
     .wave_out            	    ( da_data           ),

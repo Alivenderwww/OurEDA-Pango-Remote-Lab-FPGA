@@ -146,7 +146,7 @@ always_comb begin: wr_addr_calculate
     int rev_i;
     TRANS_WR_ADDR = 0;
     for(rev_i=0; rev_i<(2**S_WIDTH); rev_i++) if((BUS_WR_ADDR >= START_ADDR[rev_i]) && (BUS_WR_ADDR <= END_ADDR[rev_i]))
-        TRANS_WR_ADDR = BUS_RD_ADDR - START_ADDR[rev_i];
+        TRANS_WR_ADDR = BUS_WR_ADDR - START_ADDR[rev_i];
 end
 
 /**************************写响应接口**********************/
