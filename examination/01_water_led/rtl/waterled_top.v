@@ -3,7 +3,7 @@ module waterled_top(
     input rst_n,      //active low reset
     output [7:0] led
    );
-    parameter CNT_MAX = 32'd13_499_999;
+    parameter CNT_MAX = 32'd5_499_999;
     reg [7:0] led_reg;
     reg [31:0] cnt;
     //cnt 当cnt == CNT_MAX时变为0，计数0.5秒
