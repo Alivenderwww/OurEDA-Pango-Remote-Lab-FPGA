@@ -1,8 +1,6 @@
 `timescale 1ns/1ps
 `include "ddr3_parameters.vh"
-module ddr3_slave_sim #(
-    parameter OFFSET_ADDR = 32'h00000000
-)(
+module ddr3_slave_sim (
     //DDR时钟/复位/初始化接口
     input wire         ddr_ref_clk   ,
     input wire         rst_n         ,
@@ -68,9 +66,7 @@ wire [ 2:0]               mem_ba       ; //Bank地址总线
 
 wire [ADDR_BITS-1:0]      mem_addr;
 
-slave_ddr3 #(
-	.OFFSET_ADDR 	( OFFSET_ADDR  ))
-u_slave_ddr3(
+slave_ddr3 u_slave_ddr3(
 	.ddr_ref_clk   	( ddr_ref_clk    ),
 	.rst_n         	( rst_n          ),
     .DDR_SLAVE_CLK          (DDR_SLAVE_CLK          ),

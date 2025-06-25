@@ -256,9 +256,7 @@ axi_master_sim M3(
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[3] )
 );
 
-i2c_master_general_axi_slave #(
-	.OFFSET_ADDR 	( START_ADDR[0]  )
-)S0(
+i2c_master_general_axi_slave S0(
 	.clk                    ( iic_axi_clk       ),
 	.rstn                   ( iic_axi_rstn      ),
 

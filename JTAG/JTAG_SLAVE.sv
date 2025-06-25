@@ -1,6 +1,4 @@
-module JTAG_SLAVE #(
-    parameter OFFSET_ADDR = 32'h1000_0000
-)(
+module JTAG_SLAVE (
     input wire clk,
     input wire rstn,
 
@@ -207,7 +205,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) wr_addr <= 0;
-    else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) wr_addr <= JTAG_SLAVE_WR_ADDR - OFFSET_ADDR;
+    else if(JTAG_SLAVE_WR_ADDR_VALID && JTAG_SLAVE_WR_ADDR_READY) wr_addr <= JTAG_SLAVE_WR_ADDR;
     else if((wr_addr_burst == 2'b01) && JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -255,7 +253,7 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) rd_addr <= 0;
-    else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR - OFFSET_ADDR;
+    else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR;
     else if(JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end

@@ -1,6 +1,4 @@
-module i2c_master_general_axi_slave #(
-    parameter OFFSET_ADDR = 32'h0000_0000
-)(
+module i2c_master_general_axi_slave (
     input  wire         clk,
     input  wire         rstn,
 
@@ -165,7 +163,7 @@ end
 // 写地址计算逻辑
 always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     if(~I2C_MASTER_AXI_SLAVE_RSTN_SYNC) wr_addr <= 0;
-    else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) wr_addr <= SLAVE_WR_ADDR - OFFSET_ADDR;
+    else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) wr_addr <= SLAVE_WR_ADDR;
     else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && (wr_addr_burst == 2'b01)) wr_addr <= wr_addr + 1;
     else wr_addr <= wr_addr;
 end
@@ -229,7 +227,7 @@ end
 // 读地址计算逻辑
 always @(posedge clk or negedge I2C_MASTER_AXI_SLAVE_RSTN_SYNC) begin
     if(~I2C_MASTER_AXI_SLAVE_RSTN_SYNC) rd_addr <= 0;
-    else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) rd_addr <= SLAVE_RD_ADDR - OFFSET_ADDR;
+    else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) rd_addr <= SLAVE_RD_ADDR;
     else if(SLAVE_RD_DATA_VALID && SLAVE_RD_DATA_READY && (rd_addr_burst == 2'b01)) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end

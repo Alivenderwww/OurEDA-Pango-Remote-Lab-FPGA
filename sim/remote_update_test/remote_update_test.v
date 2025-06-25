@@ -273,7 +273,6 @@ axi_master_default M3(
 );
 
 remote_update_axi_slave #(
-    .OFFSET_ADDR            (START_ADDR[0]        ),
 	.FPGA_VERSION          	( 48'h2024_1119_1943  ),
 	.DEVICE               	( "PG2L100H"          ),
 	.USER_BITSTREAM_CNT   	( 2'd3                ),

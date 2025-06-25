@@ -332,9 +332,7 @@ axi_master_default M3(
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[3])
 );
 
-slave_ddr3 #(
-    .OFFSET_ADDR             (START_ADDR[0])
-)S0(
+slave_ddr3 S0(
     .ddr_ref_clk             (ddr_ref_clk      ),
     .rst_n                   (ddr_rst_n        ),
     .DDR_SLAVE_CLK           (S_CLK          [0]),
@@ -383,9 +381,7 @@ slave_ddr3 #(
     .mem_ba                  (mem_ba           )
 );
 
-JTAG_SLAVE  #(
-    .OFFSET_ADDR              (START_ADDR[1])
-)S1(
+JTAG_SLAVE S1(
     .clk                      (jtag_clk        ),
     .rstn                     (jtag_rstn       ),
     .tck                      (tck             ),
