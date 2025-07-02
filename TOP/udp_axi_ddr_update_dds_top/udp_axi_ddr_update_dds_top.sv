@@ -99,6 +99,8 @@ assign sda = (sda_enable)?(sda_out):(1'bz);
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 3;
 localparam M_ID     = 2;
+localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1},
+localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1},
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'ha0000000, 32'h60000000, 32'h70000000 };
 localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'haFFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF };
 
@@ -664,6 +666,8 @@ axi_bus #(
 	.M_ID       	( M_ID      ),
 	.M_WIDTH    	( M_WIDTH   ),
 	.S_WIDTH    	( S_WIDTH   ),
+    .M_ASYNC_ON     ( M_ASYNC_ON),
+    .S_ASYNC_ON     ( S_ASYNC_ON),
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(

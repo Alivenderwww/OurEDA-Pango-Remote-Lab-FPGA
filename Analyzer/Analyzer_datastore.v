@@ -1,14 +1,15 @@
 module Analyzer_datastore #(
-    parameter WAVE_ADDR_WIDTH = 12 // 波形存储地址宽度
+    parameter WAVE_ADDR_WIDTH = 12, // 波形存储地址宽度
+    parameter DIGITAL_IN_NUM = 8   // 数字输入引脚数量
     )(
     input  wire                       clk,
     input  wire                       rstn,
-    input  wire [7:0]                 digital_in, // 输入数字信号
+    input  wire [DIGITAL_IN_NUM-1:0]  digital_in, // 输入数字信号
     input  wire                       trig,       // 触发信号，##高电平##触发
     output wire                       busy,       // 采集忙
     output wire                       done,       // 采集完成
     input  wire [WAVE_ADDR_WIDTH-1:0] wave_addr,  // 读存储地址
-    output wire [7:0]                 wave_out    // 输出数据，延迟wave_addr一个周期
+    output wire [DIGITAL_IN_NUM-1:0]  wave_out    // 输出数据
 );
 /*
 逻辑分析仪组件
@@ -23,7 +24,7 @@ localparam ST_IDLE       = 2'b00,
            ST_DONE       = 2'b10;
 reg [1:0] current_state, next_state;
 
-reg [WAVE_ADDR_WIDTH-1:0] ram_data [0: SAVE_CNT - 1]; // RAM数据存储
+reg [DIGITAL_IN_NUM-1:0] ram_data [0: SAVE_CNT - 1]; // RAM数据存储
 reg [WAVE_ADDR_WIDTH-1:0] write_addr; // 写地址
 
 always @(posedge clk or negedge rstn) begin
@@ -45,6 +46,7 @@ always @(posedge clk) begin
         if(current_state == ST_COLLECTING) ram_data[write_addr] <= digital_in;
     end
 end
+assign wave_out = ram_data[wave_addr];
 
 always @(posedge clk) begin
     if(!rstn) write_addr <= 0;
@@ -52,7 +54,6 @@ always @(posedge clk) begin
     else if(current_state == ST_DONE) write_addr <= 0; // 完成后重置写地址
     else write_addr <= write_addr;
 end
-assign wave_out = ram_data[wave_addr];
 
 assign busy = (current_state == ST_COLLECTING);
 assign done = (current_state == ST_DONE);

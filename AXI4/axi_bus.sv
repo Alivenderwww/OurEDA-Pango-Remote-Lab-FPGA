@@ -2,11 +2,13 @@ module axi_bus #( //AXI顶层总线。支持主从机自设时钟域，内部设
 	parameter M_ID     = 2,
     parameter M_WIDTH  = 2,
     parameter S_WIDTH  = 3,
+    parameter [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1},
+    parameter [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1},
     parameter [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000},
     parameter [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'h5FFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF}
 )(
-	input				  BUS_CLK								,
-	input				  BUS_RSTN								,
+	input				                      BUS_CLK			  ,
+	input				                      BUS_RSTN			  ,
     input  [(2**M_WIDTH-1):0]  				  MASTER_CLK          ,
     input  [(2**M_WIDTH-1):0]  				  MASTER_RSTN         ,
     input  [(2**M_WIDTH-1):0]  [M_ID-1:0]     MASTER_WR_ADDR_ID   ,
@@ -126,11 +128,11 @@ wire [(2**S_WIDTH-1):0]                 	  S_B_RD_DATA_LAST ;
 wire [(2**S_WIDTH-1):0]                 	  S_B_RD_DATA_VALID;
 wire [(2**S_WIDTH-1):0]                 	  S_B_RD_DATA_READY;
 
-
-
 axi_clock_converter #(
 	.M_WIDTH 	( M_WIDTH  ),
-	.S_WIDTH 	( S_WIDTH  ))
+	.S_WIDTH 	( S_WIDTH  ),
+    .M_ASYNC_ON ( M_ASYNC_ON ),
+    .S_ASYNC_ON ( S_ASYNC_ON ))
 u_axi_clock_converter(
 	.BUS_CLK           	( BUS_CLK            ),
 	.BUS_RSTN          	( BUS_RSTN           ),
