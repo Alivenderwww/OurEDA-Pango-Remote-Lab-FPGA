@@ -1,7 +1,11 @@
-module sys_status_axi_slave(
+module sys_status_axi_slave #(
+    parameter DEFAULT_MAC_ADDR = 48'h12_34_56_78_9A_BC, // 默认MAC地址
+    parameter DEFAULT_BOARD_IP_ADDR  = {8'd192, 8'd168, 8'd1, 8'd100},  // 默认IP地址
+    parameter DEFAULT_HOST_IP_ADDR = {8'd192, 8'd168, 8'd1, 8'd1} // 默认上位机IP地址
+)(
     // 时钟和复位信号
-    input                clk,              // 系统时钟
-    input                rstn,             // 系统复位，低电平有效
+    input                clk                       , // 系统时钟
+    input                rstn                      , // 系统复位，低电平有效
     output logic         STATUS_SLAVE_CLK          , // AXI从机时钟输出
     output logic         STATUS_SLAVE_RSTN         , // AXI从机复位输出
     
@@ -42,30 +46,20 @@ module sys_status_axi_slave(
     output logic         STATUS_SLAVE_RD_DATA_VALID, // 读数据有效
     input  logic         STATUS_SLAVE_RD_DATA_READY, // 读数据就绪
 
-    // 系统状态输入接口
+    // 系统状态接口
     input  logic [15:0]  axi_master_rstn_status,   // AXI主机复位状态
     input  logic [15:0]  axi_slave_rstn_status,    // AXI从机复位状态
     output logic [15:0]  axi_master_reset,         // AXI主机复位控制
     output logic [15:0]  axi_slave_reset,          // AXI从机复位控制
     input  logic [31:0]  uid_high,                 // UID高32位
-    input  logic [31:0]  uid_middle,               // UID中32位
     input  logic [31:0]  uid_low,                  // UID低32位
     output logic [ 7:0]  power_status,             // POWER上电状态
     output logic [ 7:0]  power_reset,              // POWER复位控制
     
     // MAC/IP配置接口
-    input  logic [47:0]  default_mac_addr,         // 默认MAC地址
-    input  logic [31:0]  default_ip_addr,          // 默认IP地址
-    input  logic [31:0]  default_host_ip_addr,     // 默认上位机IP地址
     output logic [47:0]  mac_addr,                 // 当前MAC地址
     output logic [31:0]  ip_addr,                  // 当前IP地址
-    output logic [31:0]  host_ip_addr,             // 当前上位机IP地址
-    
-    // EEPROM接口
-    output logic         eeprom_cs,                // EEPROM片选
-    output logic         eeprom_sk,                // EEPROM时钟
-    output logic         eeprom_di,                // EEPROM数据输入
-    input  logic         eeprom_do                 // EEPROM数据输出
+    output logic [31:0]  host_ip_addr              // 当前上位机IP地址
 );//系统状态AXI从机，用于读取和配置CTRL_FPGA系统的各项基本参数，如AXI总线复位情况，LAB_FPGA的上电、复位，UID，EEPROM，MAC地址，IP地址等等
 
 // 复位同步逻辑
@@ -75,50 +69,41 @@ assign STATUS_SLAVE_RSTN = STATUS_SLAVE_RSTN_SYNC;
 rstn_sync status_rstn_sync(clk,rstn,STATUS_SLAVE_RSTN_SYNC);
 
 /* 地址映射说明
-32'h0000_0000:  只读    AXI总线主从机复位情况，[31:16]为16-1号主机，[15:0]为16-1号从机，1为复位结束，0为正在复位
-32'h0000_0001:  只写    AXI总线主从机手动复位，[31:16]为16-1号主机，[15:0]为16-1号从机，1为重新复位，0为不影响。复位后自动置零
+32'h0000_0000:  只读    AXI总线主从机复位情况，[31:16]为16-1号主机，[15:0]为16-1号从机，1为复位结束（即正常运行中），0为正在复位
+32'h0000_0001:  只写    AXI总线主从机手动复位，[31:16]为16-1号主机，[15:0]为16-1号从机，1为重新复位，0为不影响。复位后自动置零。对从机自身无效。
 32'h0000_0002:  只读    UID高32位
-32'h0000_0003:  只读    UID中32位
-32'h0000_0004:  只读    CTRL_FPGA的UID低32位，格式为{0x02,0x03,0x04}={UID}。UID是唯一器件标识符
-32'h0000_0005:  读写    [7:0]位为电源管理模块8个供电口的状态，1为供电，0为不供电，可读取或更改
-32'h0000_0006:  只写    [7:0]位为电源管理模块8个供电口对应器件的复位，1为重新复位，0为不影响。复位后自动置零
+32'h0000_0003:  只读    CTRL_FPGA的UID低32位，格式为{0x02,0x03}={UID}。UID是唯一器件标识符
+32'h0000_0004:  读写    [7:0]位为电源管理模块8个供电口的状态，1为供电，0为不供电，可读取或更改
+32'h0000_0005:  只写    [7:0]位为电源管理模块8个供电口对应器件的复位，1为重新复位，0为不影响。复位后自动置零
 
-32'h0000_0007:  读写    CTRL_FPGA的MAC地址高16位
-32'h0000_0008:  读写    CTRL_FPGA的MAC地址低32位，格式为{0x07,0x08}={16'b0,MAC}
+32'h0000_0006:  读写    CTRL_FPGA的MAC地址高16位
+32'h0000_0007:  读写    CTRL_FPGA的MAC地址低32位，格式为{0x07,0x08}={16'b0,MAC}
                         上电后的默认以太网MAC配置优先级顺序为：EEPROM配置 > 取UID低48位 > 12-34-56-78-AB-CD
                         上位机可以通过写地址07,08来动态重分配MAC地址，但下次复位后仍会以EEPROM中存放的MAC地址配置
                         如想永久更改MAC地址，建议写EEPROM+写地址07,08执行两次
                         MAC地址的更改会在AXI总线和UDP完全空闲后执行，因此写响应数据包仍是原MAC配置
 
-32'h0000_0009:  读写    CTRL_FPGA的IP地址
+32'h0000_0008:  读写    CTRL_FPGA的IP地址
                         上电后的默认以太网IP地址配置优先级顺序为：EEPROM配置 > 取UID低32位 > 169.254.109.5
                         上位机可以通过写地址09来动态重分配IP地址，但下次复位后仍会以EEPROM中存放的IP地址配置
                         如想永久更改IP地址，建议写EEPROM+写地址09执行两次
                         IP地址的更改会在AXI总线和UDP完全空闲后执行，因此写响应数据包仍是原IP配置
 
-32'h0000_000A:  读写    上位机的IP地址
+32'h0000_0009:  读写    上位机的IP地址
                         配置方式同CTRL_FPGA的IP地址
-
-32'h0000_000B - 32'h0000_000F: 保留，不可读不可写
-32'h0000_0010 - 32'h0000_004F: 读写    板载EEPROM地址空间
-                                       小眼睛的PG2L100H BASE板板载AT24C02C-SSHM-T芯片
-                                       容量2048bit = 256 x 8bit = 64 x 32bit
 */
 
 // 地址定义
 localparam ADDR_AXI_INIT            = 32'h0000_0000, // AXI总线初始化状态
            ADDR_AXI_RESET           = 32'h0000_0001, // AXI总线复位控制
-           ADDR_UID_3               = 32'h0000_0002, // UID高32位
-           ADDR_UID_2               = 32'h0000_0003, // UID中32位
-           ADDR_UID_1               = 32'h0000_0004, // UID低32位
-           ADDR_POWER_STATUS        = 32'h0000_0005, // POWER上电状态
-           ADDR_POWER_RESET         = 32'h0000_0006, // POWER对应器件的复位控制
-           ADDR_CTRL_FPGA_MAC_2     = 32'h0000_0007, // CTRL_FPGA MAC地址高16位
-           ADDR_CTRL_FPGA_MAC_1     = 32'h0000_0008, // CTRL_FPGA MAC地址低32位
-           ADDR_CTRL_FPGA_IP        = 32'h0000_0009, // CTRL_FPGA IP地址
-           ADDR_HOST_IP             = 32'h0000_000A, // 上位机IP地址
-           ADDR_EEPROM_START        = 32'h0000_0010, // EEPROM起始地址
-           ADDR_EEPROM_END          = 32'h0000_004F; // EEPROM结束地址
+           ADDR_UID_2               = 32'h0000_0002, // UID高32位
+           ADDR_UID_1               = 32'h0000_0003, // UID低32位
+           ADDR_POWER_STATUS        = 32'h0000_0004, // POWER上电状态
+           ADDR_POWER_RESET         = 32'h0000_0005, // POWER对应器件的复位控制
+           ADDR_CTRL_FPGA_MAC_2     = 32'h0000_0006, // CTRL_FPGA MAC地址高16位
+           ADDR_CTRL_FPGA_MAC_1     = 32'h0000_0007, // CTRL_FPGA MAC地址低32位
+           ADDR_CTRL_FPGA_IP        = 32'h0000_0008, // CTRL_FPGA IP地址
+           ADDR_HOST_IP             = 32'h0000_0009; // 上位机IP地址
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -145,13 +130,6 @@ reg        rd_transcript_error, rd_transcript_error_reg; // 读传输错误标�
 reg [ 1:0] cu_rdchannel_st, nt_rdchannel_st;  // 当前状态和下一状态
 localparam ST_RD_IDLE = 2'b00, // 发送完LAST和RESP，读通道空闲
            ST_RD_DATA = 2'b01; // 地址线握手成功，数据线通道开启
-
-// 内部寄存器
-reg [31:0] eeprom_addr;    // EEPROM访问地址
-reg [7:0]  eeprom_data;    // EEPROM数据寄存器
-reg        eeprom_wr_en;   // EEPROM写使能
-reg        eeprom_rd_en;   // EEPROM读使能
-reg [2:0]  eeprom_state;   // EEPROM状态机
 
 // 系统状态寄存器
 reg [47:0] mac_addr_reg;    // MAC地址寄存器
@@ -207,8 +185,8 @@ end
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_EEPROM_END)) wr_transcript_error <= 1;
-    else if(wr_addr == ADDR_UID_3 || wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
+    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_HOST_IP)) wr_transcript_error <= 1;
+    else if(wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
 
@@ -222,10 +200,7 @@ end
 always @(*) begin
     if(~STATUS_SLAVE_RSTN_SYNC) STATUS_SLAVE_WR_DATA_READY <= 0;
     else if(cu_wrchannel_st == ST_WR_DATA) begin
-        if(wr_addr >= ADDR_EEPROM_START && wr_addr <= ADDR_EEPROM_END) 
-            STATUS_SLAVE_WR_DATA_READY <= ~eeprom_wr_en; // EEPROM写操作需等待
-        else 
-            STATUS_SLAVE_WR_DATA_READY <= 1; // 其他寄存器可以直接写入
+        STATUS_SLAVE_WR_DATA_READY <= 1; // 其他寄存器可以直接写入
     end else STATUS_SLAVE_WR_DATA_READY <= 0;
 end
 
@@ -233,16 +208,16 @@ end
 always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
     if(~STATUS_SLAVE_RSTN_SYNC) begin
         axi_master_reset <= 0;
-        axi_slave_reset <= 0;
-        power_status <= 0;
-        mac_addr_reg <= default_mac_addr;
-        ip_addr_reg <= default_ip_addr;
-        host_ip_reg <= default_host_ip_addr;
+        axi_slave_reset  <= 0;
+        power_status     <= 0;
+        mac_addr_reg     <= DEFAULT_MAC_ADDR;
+        ip_addr_reg      <= DEFAULT_BOARD_IP_ADDR;
+        host_ip_reg      <= DEFAULT_HOST_IP_ADDR;
     end else if(STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_AXI_RESET: begin
-                if(STATUS_SLAVE_WR_STRB[3]) axi_master_reset[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) axi_master_reset[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[3]) axi_master_reset[15:8] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) axi_master_reset[7:0] <= STATUS_SLAVE_WR_DATA[23:16];
                 if(STATUS_SLAVE_WR_STRB[1]) axi_slave_reset[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
                 if(STATUS_SLAVE_WR_STRB[0]) axi_slave_reset[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
@@ -275,18 +250,12 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
                 if(STATUS_SLAVE_WR_STRB[0]) host_ip_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
             default: begin
-                if(wr_addr >= ADDR_EEPROM_START && wr_addr <= ADDR_EEPROM_END) begin
-                    eeprom_addr <= wr_addr - ADDR_EEPROM_START;
-                    eeprom_data <= STATUS_SLAVE_WR_DATA[7:0];
-                    eeprom_wr_en <= 1;
-                end
             end
         endcase
     end else begin
         axi_master_reset <= 0;
         axi_slave_reset <= 0;
         power_reset <= 0;
-        eeprom_wr_en <= 0;
     end
 end
 
@@ -350,7 +319,7 @@ assign STATUS_SLAVE_RD_DATA_LAST = (STATUS_SLAVE_RD_DATA_VALID) && (rd_data_tran
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_EEPROM_END)) rd_transcript_error <= 1;
+    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_HOST_IP)) rd_transcript_error <= 1;
     else if(rd_addr == ADDR_AXI_RESET || rd_addr == ADDR_POWER_RESET) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -365,10 +334,7 @@ end
 always @(*) begin
     if(~STATUS_SLAVE_RSTN_SYNC) STATUS_SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
-        if(rd_addr >= ADDR_EEPROM_START && rd_addr <= ADDR_EEPROM_END)
-            STATUS_SLAVE_RD_DATA_VALID <= ~eeprom_rd_en; // EEPROM读操作需等待
-        else
-            STATUS_SLAVE_RD_DATA_VALID <= 1; // 其他寄存器可以直接读取
+        STATUS_SLAVE_RD_DATA_VALID <= 1; // 其他寄存器可以直接读取
     end else STATUS_SLAVE_RD_DATA_VALID <= 0;
 end
 
@@ -378,8 +344,7 @@ always @(*) begin
     else if(cu_rdchannel_st == ST_RD_DATA) begin
         case(rd_addr)
             ADDR_AXI_INIT       : STATUS_SLAVE_RD_DATA <= {axi_master_rstn_status, axi_slave_rstn_status};
-            ADDR_UID_3          : STATUS_SLAVE_RD_DATA <= uid_high;
-            ADDR_UID_2          : STATUS_SLAVE_RD_DATA <= uid_middle;
+            ADDR_UID_2          : STATUS_SLAVE_RD_DATA <= uid_high;
             ADDR_UID_1          : STATUS_SLAVE_RD_DATA <= uid_low;
             ADDR_POWER_STATUS   : STATUS_SLAVE_RD_DATA <= {24'b0, power_status};
             ADDR_CTRL_FPGA_MAC_2: STATUS_SLAVE_RD_DATA <= {16'b0, mac_addr_reg[47:32]};
@@ -387,110 +352,10 @@ always @(*) begin
             ADDR_CTRL_FPGA_IP   : STATUS_SLAVE_RD_DATA <= ip_addr_reg;
             ADDR_HOST_IP        : STATUS_SLAVE_RD_DATA <= host_ip_reg;
             default: begin
-                if(rd_addr >= ADDR_EEPROM_START && rd_addr <= ADDR_EEPROM_END) begin
-                    eeprom_addr <= rd_addr - ADDR_EEPROM_START;
-                    eeprom_rd_en <= 1;
-                    STATUS_SLAVE_RD_DATA <= {24'b0, eeprom_data};
-                end else STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
+                STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
             end
         endcase
     end else STATUS_SLAVE_RD_DATA <= 0;
-end
-
-//_______________________________________________________________________________//
-// EEPROM控制逻辑
-localparam EEPROM_IDLE = 3'b000,
-           EEPROM_START = 3'b001,
-           EEPROM_ADDR = 3'b010,
-           EEPROM_DATA = 3'b011,
-           EEPROM_STOP = 3'b100;
-
-reg [3:0] eeprom_bit_cnt;
-reg [7:0] eeprom_shift_reg;
-
-always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
-    if(~STATUS_SLAVE_RSTN_SYNC) begin
-        eeprom_state <= EEPROM_IDLE;
-        eeprom_bit_cnt <= 0;
-        eeprom_shift_reg <= 0;
-        eeprom_cs <= 1;
-        eeprom_sk <= 1;
-        eeprom_di <= 1;
-    end else begin
-        case(eeprom_state)
-            EEPROM_IDLE: begin
-                if(eeprom_wr_en || eeprom_rd_en) begin
-                    eeprom_state <= EEPROM_START;
-                    eeprom_cs <= 0;
-                    eeprom_shift_reg <= eeprom_wr_en ? 8'b10100000 : 8'b10100001; // Write/Read command
-                end else begin
-                    eeprom_cs <= 1;
-                    eeprom_sk <= 1;
-                    eeprom_di <= 1;
-                end
-            end
-            
-            EEPROM_START: begin
-                if(eeprom_bit_cnt == 8) begin
-                    eeprom_state <= EEPROM_ADDR;
-                    eeprom_bit_cnt <= 0;
-                    eeprom_shift_reg <= eeprom_addr[7:0];
-                end else begin
-                    eeprom_sk <= ~eeprom_sk;
-                    if(eeprom_sk) begin
-                        eeprom_di <= eeprom_shift_reg[7];
-                        eeprom_shift_reg <= {eeprom_shift_reg[6:0], 1'b0};
-                        eeprom_bit_cnt <= eeprom_bit_cnt + 1;
-                    end
-                end
-            end
-            
-            EEPROM_ADDR: begin
-                if(eeprom_bit_cnt == 8) begin
-                    eeprom_state <= EEPROM_DATA;
-                    eeprom_bit_cnt <= 0;
-                    if(eeprom_wr_en)
-                        eeprom_shift_reg <= eeprom_data;
-                end else begin
-                    eeprom_sk <= ~eeprom_sk;
-                    if(eeprom_sk) begin
-                        eeprom_di <= eeprom_shift_reg[7];
-                        eeprom_shift_reg <= {eeprom_shift_reg[6:0], 1'b0};
-                        eeprom_bit_cnt <= eeprom_bit_cnt + 1;
-                    end
-                end
-            end
-            
-            EEPROM_DATA: begin
-                if(eeprom_bit_cnt == 8) begin
-                    eeprom_state <= EEPROM_STOP;
-                    eeprom_bit_cnt <= 0;
-                end else begin
-                    eeprom_sk <= ~eeprom_sk;
-                    if(eeprom_sk) begin
-                        if(eeprom_wr_en) begin
-                            eeprom_di <= eeprom_shift_reg[7];
-                            eeprom_shift_reg <= {eeprom_shift_reg[6:0], 1'b0};
-                        end else begin
-                            eeprom_shift_reg <= {eeprom_shift_reg[6:0], eeprom_do};
-                        end
-                        eeprom_bit_cnt <= eeprom_bit_cnt + 1;
-                    end
-                end
-            end
-            
-            EEPROM_STOP: begin
-                eeprom_state <= EEPROM_IDLE;
-                eeprom_cs <= 1;
-                if(eeprom_rd_en)
-                    eeprom_data <= eeprom_shift_reg;
-                eeprom_wr_en <= 0;
-                eeprom_rd_en <= 0;
-            end
-            
-            default: eeprom_state <= EEPROM_IDLE;
-        endcase
-    end
 end
 
 // 输出信号连接

@@ -1,9 +1,16 @@
 ../../../AXI4/sim_file/*.sv
 ../../../AXI4/*.sv
 ../../../DDR3/*.v
+../../../DDR3/*.sv
 ../../../DDR3/sim_file/ddr3.v
+../../../DDR3/sim_file/ddr3_slave_sim.sv
+../../../JTAG/*.v
+../../../JTAG/*.sv
+../../../DDS/*.sv
 ../../../COMMON/*.v
-../axi_bus_ddr_test.v
+../../../OV5640/*.v
+../../../OV5640/sim/*.sv
+../axi_bus_ov5640_axi_master_ddr_test.sv
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v
@@ -59,6 +66,29 @@
 ../../../IPCORE/DDR3/fifo_ddr3_write_strb/rtl/ipm2l_sdpram_v1_10_fifo_ddr3_write_strb.v
 ../../../IPCORE/DDR3/fifo_ddr3_write_strb/rtl/ipm2l_fifo_v1_10_fifo_ddr3_write_strb.v
 ../../../IPCORE/DDR3/fifo_ddr3_write_strb/fifo_ddr3_write_strb.v
+
+../../../IPCORE/JTAG/jtag_fifo_shift_cmd/rtl/ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_cmd.v
+../../../IPCORE/JTAG/jtag_fifo_shift_cmd/rtl/ipm2l_sdpram_v1_10_jtag_fifo_shift_cmd.v
+../../../IPCORE/JTAG/jtag_fifo_shift_cmd/rtl/ipm2l_fifo_v1_10_jtag_fifo_shift_cmd.v
+../../../IPCORE/JTAG/jtag_fifo_shift_cmd/jtag_fifo_shift_cmd.v
+
+../../../IPCORE/JTAG/jtag_fifo_shift_data/rtl/ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_data.v
+../../../IPCORE/JTAG/jtag_fifo_shift_data/rtl/ipm2l_sdpram_v1_10_jtag_fifo_shift_data.v
+../../../IPCORE/JTAG/jtag_fifo_shift_data/rtl/ipm2l_fifo_v1_10_jtag_fifo_shift_data.v
+../../../IPCORE/JTAG/jtag_fifo_shift_data/jtag_fifo_shift_data.v
+
+../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_fifo_ctrl_v1_1_jtag_fifo_shift_out.v
+../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_sdpram_v1_10_jtag_fifo_shift_out.v
+../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_fifo_v1_10_jtag_fifo_shift_out.v
+../../../IPCORE/JTAG/jtag_fifo_shift_out/jtag_fifo_shift_out.v
+
+../../../IPCORE/OV5640/fifo_camera_data/rtl/ipm2l_fifo_ctrl_v1_1_fifo_camera_data.v
+../../../IPCORE/OV5640/fifo_camera_data/rtl/ipm2l_sdpram_v1_10_fifo_camera_data.v
+../../../IPCORE/OV5640/fifo_camera_data/rtl/ipm2l_fifo_v1_10_fifo_camera_data.v
+../../../IPCORE/OV5640/fifo_camera_data/fifo_camera_data.v
+
+../../../IPCORE/DDS/ram_wave/rtl/ipm2l_sdpram_v1_10_ram_wave.v
+../../../IPCORE/DDS/ram_wave/ram_wave.v
 
 ../../../IPCORE/DDR3/axi_ddr3/sim_lib/ips2l_rst_sync_v1_3.v
 ../../../IPCORE/DDR3/axi_ddr3/sim_lib/ddrphy/ips2l_ddrphy_wrlvl_v1_14.vp
@@ -156,6 +186,7 @@
 
 
 +incdir+../../../DDR3/sim_file
++incdir+../../../JTAG
 +define+IPS_DDR_SPEEDUP_SIM  
 +define+RTL_SIM 
 +define+den4096Mb   

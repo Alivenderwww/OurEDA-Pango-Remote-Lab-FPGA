@@ -4,7 +4,7 @@ module axi_clock_converter #(
     parameter [0:(2**M_WIDTH-1)] M_ASYNC_ON = {1'b1, 1'b1, 1'b1, 1'b1},
     parameter [0:(2**S_WIDTH-1)] S_ASYNC_ON = {1'b1, 1'b1, 1'b1, 1'b1}
 )(
-    input wire BUS_CLK ,        
+    input wire BUS_CLK ,
     input wire BUS_RSTN,
     output [(2**M_WIDTH-1):0] [2-1:0] M_B_WR_ADDR_ID   ,
     output [(2**M_WIDTH-1):0] [31:0]  M_B_WR_ADDR      ,
@@ -290,34 +290,34 @@ for (i = 0; i < 2**S_WIDTH; i++) begin : gen_slave_async
             .S_RD_DATA_READY  (S_RD_DATA_READY  [i]),
             .fifo_empty_flag  (S_fifo_empty_flag[i]));
     end else begin
-        S_B_WR_ADDR_READY[i] = S_WR_ADDR_READY[i];
-        S_B_WR_DATA_READY[i] = S_WR_DATA_READY[i];
-        S_B_WR_BACK_ID   [i] = S_WR_BACK_ID   [i];
-        S_B_WR_BACK_RESP [i] = S_WR_BACK_RESP [i];
-        S_B_WR_BACK_VALID[i] = S_WR_BACK_VALID[i];
-        S_B_RD_ADDR_READY[i] = S_RD_ADDR_READY[i];
-        S_B_RD_BACK_ID   [i] = S_RD_BACK_ID   [i];
-        S_B_RD_DATA      [i] = S_RD_DATA      [i];
-        S_B_RD_DATA_RESP [i] = S_RD_DATA_RESP [i];
-        S_B_RD_DATA_LAST [i] = S_RD_DATA_LAST [i];
-        S_B_RD_DATA_VALID[i] = S_RD_DATA_VALID[i];
-        S_WR_ADDR_ID     [i] = S_B_WR_ADDR_ID     [i];
-        S_WR_ADDR        [i] = S_B_WR_ADDR        [i];
-        S_WR_ADDR_LEN    [i] = S_B_WR_ADDR_LEN    [i];
-        S_WR_ADDR_BURST  [i] = S_B_WR_ADDR_BURST  [i];
-        S_WR_ADDR_VALID  [i] = S_B_WR_ADDR_VALID  [i];
-        S_WR_DATA        [i] = S_B_WR_DATA        [i];
-        S_WR_STRB        [i] = S_B_WR_STRB        [i];
-        S_WR_DATA_LAST   [i] = S_B_WR_DATA_LAST   [i];
-        S_WR_DATA_VALID  [i] = S_B_WR_DATA_VALID  [i];
-        S_WR_BACK_READY  [i] = S_B_WR_BACK_READY  [i];
-        S_RD_ADDR_ID     [i] = S_B_RD_ADDR_ID     [i];
-        S_RD_ADDR        [i] = S_B_RD_ADDR        [i];
-        S_RD_ADDR_LEN    [i] = S_B_RD_ADDR_LEN    [i];
-        S_RD_ADDR_BURST  [i] = S_B_RD_ADDR_BURST  [i];
-        S_RD_ADDR_VALID  [i] = S_B_RD_ADDR_VALID  [i];
-        S_RD_DATA_READY  [i] = S_B_RD_DATA_READY  [i];
-        S_fifo_empty_flag[i] = 0;
+        assign S_B_WR_ADDR_READY[i] = S_WR_ADDR_READY[i];
+        assign S_B_WR_DATA_READY[i] = S_WR_DATA_READY[i];
+        assign S_B_WR_BACK_ID   [i] = S_WR_BACK_ID   [i];
+        assign S_B_WR_BACK_RESP [i] = S_WR_BACK_RESP [i];
+        assign S_B_WR_BACK_VALID[i] = S_WR_BACK_VALID[i];
+        assign S_B_RD_ADDR_READY[i] = S_RD_ADDR_READY[i];
+        assign S_B_RD_BACK_ID   [i] = S_RD_BACK_ID   [i];
+        assign S_B_RD_DATA      [i] = S_RD_DATA      [i];
+        assign S_B_RD_DATA_RESP [i] = S_RD_DATA_RESP [i];
+        assign S_B_RD_DATA_LAST [i] = S_RD_DATA_LAST [i];
+        assign S_B_RD_DATA_VALID[i] = S_RD_DATA_VALID[i];
+        assign S_WR_ADDR_ID     [i] = S_B_WR_ADDR_ID     [i];
+        assign S_WR_ADDR        [i] = S_B_WR_ADDR        [i];
+        assign S_WR_ADDR_LEN    [i] = S_B_WR_ADDR_LEN    [i];
+        assign S_WR_ADDR_BURST  [i] = S_B_WR_ADDR_BURST  [i];
+        assign S_WR_ADDR_VALID  [i] = S_B_WR_ADDR_VALID  [i];
+        assign S_WR_DATA        [i] = S_B_WR_DATA        [i];
+        assign S_WR_STRB        [i] = S_B_WR_STRB        [i];
+        assign S_WR_DATA_LAST   [i] = S_B_WR_DATA_LAST   [i];
+        assign S_WR_DATA_VALID  [i] = S_B_WR_DATA_VALID  [i];
+        assign S_WR_BACK_READY  [i] = S_B_WR_BACK_READY  [i];
+        assign S_RD_ADDR_ID     [i] = S_B_RD_ADDR_ID     [i];
+        assign S_RD_ADDR        [i] = S_B_RD_ADDR        [i];
+        assign S_RD_ADDR_LEN    [i] = S_B_RD_ADDR_LEN    [i];
+        assign S_RD_ADDR_BURST  [i] = S_B_RD_ADDR_BURST  [i];
+        assign S_RD_ADDR_VALID  [i] = S_B_RD_ADDR_VALID  [i];
+        assign S_RD_DATA_READY  [i] = S_B_RD_DATA_READY  [i];
+        assign S_fifo_empty_flag[i] = 0;
     end
 end
 endgenerate

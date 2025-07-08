@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 `include "JTAG_CMD.vh"
-module axi_bus_ddr_jtag_test ();
+module axi_bus_ov5640_axi_master_ddr_test ();
 //DDR，JTAG和AXI-MASTER-SIM，AXI_SLAVE_SIM，AXI-BUS，AXI-INTERCONNECT，AXI_CLOCK_CONVERTER模块的配合
 
 localparam M_WIDTH  = 2;
@@ -76,6 +76,8 @@ wire [7:0] dds_wave1, dds_wave0;
 
 reg  ddr_ref_clk;
 reg  ddr_rst_n  ;
+reg  ov_clk     ;
+reg  ov_rst_n   ;
 reg  jtag_clk   ;
 reg  jtag_rst_n ;
 reg  dds_clk    ;
@@ -90,6 +92,7 @@ wire tdo      ;
 assign tdo = 0;
 
 always #10 ddr_ref_clk = ~ddr_ref_clk;
+always #8  ov_clk = ~ov_clk;
 always #7  jtag_clk = ~jtag_clk;
 always #30 dds_clk = ~dds_clk;
 always #15 BUS_CLK = ~BUS_CLK;
@@ -98,7 +101,13 @@ initial begin
     ddr_ref_clk = 0;
     ddr_rst_n = 0;
   #300000;
-    ddr_rst_n = 0;
+    ddr_rst_n = 1;
+end
+
+initial begin
+     ov_clk = 0;
+     ov_rst_n = 0;
+#500 ov_rst_n = 1;
 end
 
 initial begin
@@ -119,6 +128,17 @@ initial begin
 #50000  BUS_RSTN = 1;
 end
 
+reg        CCD_RSTN;
+wire       CCD_PCLK;
+wire       CCD_VSYNC;
+wire       CCD_HSYNC;
+wire [7:0] CCD_DATA;
+
+
+initial begin
+    CCD_RSTN = 0;
+    #1000 CCD_RSTN = 1; //CCD复位
+end
 /*
 装载比特流的顺序：
 0. CMD_JTAG_CLOSE_TEST                  0
@@ -339,6 +359,11 @@ initial begin
     // #300 M1.send_wr_data(32'd200000, 4'b1111);
 end
 
+initial begin
+    ov5640_sim_u.set_clk(5);
+    ov5640_sim_u.set_ccd_size(640, 480);
+end
+
 axi_master_sim M0(
 .MASTER_CLK          (M_CLK          [0]),
 .MASTER_RSTN         (M_RSTN         [0]),
@@ -403,7 +428,17 @@ axi_master_sim M1(
 .MASTER_RD_DATA_READY(M_RD_DATA_READY[1])
 );
 
-axi_master_sim M2(
+ov5640_axi_master M2(
+.clk                 (ov_clk),
+.rstn                (ov_rst_n),
+.CCD_RSTN            (CCD_RSTN ),
+.CCD_PCLK            (CCD_PCLK ),
+.CCD_VSYNC           (CCD_VSYNC),
+.CCD_HSYNC           (CCD_HSYNC),
+.CCD_DATA            (CCD_DATA ),
+.STORE_BASE_ADDR     (START_ADDR[0]),
+.STORE_NUM           (((640*480)*16)/32),
+
 .MASTER_CLK          (M_CLK          [2]),
 .MASTER_RSTN         (M_RSTN         [2]),
 .MASTER_WR_ADDR_ID   (M_WR_ADDR_ID   [2]),
@@ -819,5 +854,12 @@ begin
     square_wave = ((in0 % 500) > 250)?(8'hFF):(8'h00);
 end
 endfunction
+
+ov5640_sim ov5640_sim_u(
+    .CCD_PCLK   (CCD_PCLK ),
+    .CCD_VSYNC  (CCD_VSYNC),
+    .CCD_HSYNC  (CCD_HSYNC),
+    .CCD_DATA   (CCD_DATA )
+);
 
 endmodule

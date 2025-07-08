@@ -298,7 +298,7 @@ end
 
 always @(*) begin
     case(rd_addr)
-        ADDR_I2C_SETUP0: SLAVE_RD_DATA <= {7'b0, i2c_trans_start, 7'b0, i2c_read_write, 7'b0, i2c_sccb_sel, 1'b0, i2c_slave_addr};
+        ADDR_I2C_SETUP0: SLAVE_RD_DATA <= {7'b0, i2c_trans_start, 7'b0, i2c_sccb_sel, 7'b0, i2c_read_write, 1'b0, i2c_slave_addr};
         ADDR_I2C_SETUP1: SLAVE_RD_DATA <= {i2c_read_trans_dummy_length, i2c_trans_length};
         ADDR_I2C_FLAG:   SLAVE_RD_DATA <= {24'b0, cmd_done, 7'b0, cmd_error};
         ADDR_I2C_FIFO_WR:SLAVE_RD_DATA <= 32'b0;
@@ -360,30 +360,30 @@ assign cmd_valid = (I2C_MASTER_AXI_SLAVE_RSTN_SYNC) && (i2c_trans_start);
 
 
 i2c_master_general i2c_master_general_inst(
-    .clk            (clk            ),
-    .rstn           (I2C_MASTER_AXI_SLAVE_RSTN_SYNC),
-    .scl_in         (scl_in         ),
-    .scl_out        (scl_out        ),
-    .scl_enable     (scl_enable     ),
-    .sda_in         (sda_in         ),
-    .sda_out        (sda_out        ),
-    .sda_enable     (sda_enable     ),
+    .clk                        (clk                            ),
+    .rstn                       (I2C_MASTER_AXI_SLAVE_RSTN_SYNC ),
+    .scl_in                     (scl_in                         ),
+    .scl_out                    (scl_out                        ),
+    .scl_enable                 (scl_enable                     ),
+    .sda_in                     (sda_in                         ),
+    .sda_out                    (sda_out                        ),
+    .sda_enable                 (sda_enable                     ),
 
-    .cmd_valid      (cmd_valid      ),
-    .cmd_ready      (cmd_ready      ),
-    .cmd_done       (cmd_done       ),
-    .cmd_error      (cmd_error      ),
-    .cmd_rollback   (cmd_rollback   ),
+    .cmd_valid                  (cmd_valid                      ),
+    .cmd_ready                  (cmd_ready                      ),
+    .cmd_done                   (cmd_done                       ),
+    .cmd_error                  (cmd_error                      ),
+    .cmd_rollback               (cmd_rollback                   ),
 
-    .i2c_slave_addr (i2c_slave_addr ),
-    .i2c_read_write (i2c_read_write ),
-    .i2c_sccb_sel   (i2c_sccb_sel),
-    .i2c_trans_length (i2c_trans_length ),
-    .i2c_read_trans_dummy_length(i2c_read_trans_dummy_length),
-    .wr_data_ready  (i2c_wr_fifo_rd_en  ),
-    .wr_data        (i2c_wr_fifo_rd_data),
-    .rd_data_valid  (i2c_rd_fifo_wr_en  ),
-    .rd_data        (i2c_rd_fifo_wr_data)
+    .i2c_slave_addr             (i2c_slave_addr                 ),
+    .i2c_read_write             (i2c_read_write                 ),
+    .i2c_sccb_sel               (i2c_sccb_sel                   ),
+    .i2c_trans_length           (i2c_trans_length               ),
+    .i2c_read_trans_dummy_length(i2c_read_trans_dummy_length    ),
+    .wr_data_ready              (i2c_wr_fifo_rd_en              ),
+    .wr_data                    (i2c_wr_fifo_rd_data            ),
+    .rd_data_valid              (i2c_rd_fifo_wr_en              ),
+    .rd_data                    (i2c_rd_fifo_wr_data            )
 );
 
 endmodule

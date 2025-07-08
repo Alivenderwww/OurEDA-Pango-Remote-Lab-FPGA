@@ -52,7 +52,7 @@ module clk_pll_top (
     
     localparam integer STATIC_RATIO4    = 24; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO5    = 12; //@IPC int 1,128 
+    localparam integer STATIC_RATIO5    = 25; //@IPC int 1,128 
     
     localparam integer STATIC_RATIO6    = 12; //@IPC int 1,128 
     
@@ -70,7 +70,7 @@ module clk_pll_top (
     
     localparam integer STATIC_DUTY4     = 24; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY5     = 12; //@IPC int 2,255
+    localparam integer STATIC_DUTY5     = 25; //@IPC int 2,255
     
     localparam integer STATIC_DUTY6     = 12; //@IPC int 2,255
     

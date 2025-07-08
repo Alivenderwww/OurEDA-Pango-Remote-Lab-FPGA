@@ -4,8 +4,8 @@ module udp_axi_ddr_update_top #(
     parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.9  8'd169,8'd254,8'd103,8'd006
     // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
     parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
-    //parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
-    parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
+    parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
+    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
 )(
 //system io
 input  wire        external_clk ,
@@ -34,8 +34,18 @@ output wire        spi_cs       ,
 input  wire        spi_dq1      ,
 output wire        spi_dq0      ,
 //i2c io
-inout  wire        scl,
-inout  wire        sda,
+inout  wire        scl_eeprom,
+inout  wire        sda_eeprom,
+inout  wire        scl_camera,
+inout  wire        sda_camera,
+//ov5640 io
+output wire        CCD_PDN,
+output wire        CCD_RSTN,
+// output wire        CCD_CLKIN,
+input  wire        CCD_PCLK,
+input  wire        CCD_VSYNC,
+input  wire        CCD_HSYNC,
+input  wire [7:0]  CCD_DATA,
 //eth io
 input  wire        rgmii_rxc    ,
 input  wire        rgmii_rx_ctl ,
@@ -64,43 +74,25 @@ output wire        mem_cas_n    ,
 output wire        mem_we_n     ,
 output wire [ 2:0] mem_ba       
 );
-/*
-装载比特流的顺序：
-0. CMD_JTAG_CLOSE_TEST                  0
-1. CMD_JTAG_RUN_TEST                    0
-2. CMD_JTAG_LOAD_IR    `JTAG_DR_JRST    10
-3. CMD_JTAG_RUN_TEST                    0
-4. CMD_JTAG_LOAD_IR    `JTAG_DR_CFGI    10
-5. CMD_JTAG_IDLE_DELAY                  75000
-6. CMD_JTAG_LOAD_DR    "BITSTREAM"      取决于比特流大小
-7. CMD_JTAG_CLOSE_TEST                  0
-8. CMD_JTAG_RUN_TEST                    0
-9. CMD_JTAG_LOAD_IR    `JTAG_DR_JWAKEUP 10
-A. CMD_JTAG_IDLE_DELAY                  1000
-B. CMD_JTAG_CLOSE_TEST                  0
-*/
+assign CCD_RSTN = 1'b1; //CCD复位信号，暂时不使用
+assign CCD_PDN  = 1'b0; //CCD电源使能信号，暂时不使用
 
-/*
-获取IDCODE的顺序：
-0. CMD_JTAG_CLOSE_TEST                  0
-1. CMD_JTAG_RUN_TEST                    0
-2. CMD_JTAG_LOAD_IR    `JTAG_DR_IDCODE  10
-3. CMD_JTAG_RUN_TEST                    0
-4. CMD_JTAG_LOAD_DR    NOTCARE          32
-5. CMD_JTAG_CLOSE_TEST                  0
-*/
+wire scl_eeprom_out, scl_eeprom_enable;
+wire sda_eeprom_out, sda_eeprom_enable;
+wire scl_camera_out, scl_camera_enable;
+wire sda_camera_out, sda_camera_enable;
 
-wire scl_out, scl_enable;
-wire sda_out, sda_enable;
+assign scl_eeprom = (scl_eeprom_enable)?(scl_eeprom_out):(1'bz);
+assign sda_eeprom = (sda_eeprom_enable)?(sda_eeprom_out):(1'bz);
 
-assign scl = (scl_enable)?(scl_out):(1'bz);
-assign sda = (sda_enable)?(sda_out):(1'bz);
+assign scl_camera = (scl_camera_enable)?(scl_camera_out):(1'bz);
+assign sda_camera = (sda_camera_enable)?(sda_camera_out):(1'bz);
 
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 3;
 localparam M_ID     = 2;
-localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1},
-localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1,1'b1},
+localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b0,1'b0};//M0 UDP需要, M1 M2 M3 没用上，不需要
+localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0,1'b1,1'b1,1'b0,1'b0};//S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要, S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'ha0000000, 32'h60000000, 32'h70000000 };
 localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'haFFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF };
 
@@ -242,40 +234,47 @@ axi_udp_master #(
 	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0])
 );
 
-
-axi_master_default M1(
-    .clk                  (clk_50M          ),
-    .rstn                 (sys_rstn         ),
-    .MASTER_CLK           (M_CLK          [1]),
-    .MASTER_RSTN          (M_RSTN         [1]),
-    .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [1]),
-    .MASTER_WR_ADDR       (M_WR_ADDR      [1]),
-    .MASTER_WR_ADDR_LEN   (M_WR_ADDR_LEN  [1]),
-    .MASTER_WR_ADDR_BURST (M_WR_ADDR_BURST[1]),
-    .MASTER_WR_ADDR_VALID (M_WR_ADDR_VALID[1]),
-    .MASTER_WR_ADDR_READY (M_WR_ADDR_READY[1]),
-    .MASTER_WR_DATA       (M_WR_DATA      [1]),
-    .MASTER_WR_STRB       (M_WR_STRB      [1]),
-    .MASTER_WR_DATA_LAST  (M_WR_DATA_LAST [1]),
-    .MASTER_WR_DATA_VALID (M_WR_DATA_VALID[1]),
-    .MASTER_WR_DATA_READY (M_WR_DATA_READY[1]),
-    .MASTER_WR_BACK_ID    (M_WR_BACK_ID   [1]),
-    .MASTER_WR_BACK_RESP  (M_WR_BACK_RESP [1]),
-    .MASTER_WR_BACK_VALID (M_WR_BACK_VALID[1]),
-    .MASTER_WR_BACK_READY (M_WR_BACK_READY[1]),
-    .MASTER_RD_ADDR_ID    (M_RD_ADDR_ID   [1]),
-    .MASTER_RD_ADDR       (M_RD_ADDR      [1]),
-    .MASTER_RD_ADDR_LEN   (M_RD_ADDR_LEN  [1]),
-    .MASTER_RD_ADDR_BURST (M_RD_ADDR_BURST[1]),
-    .MASTER_RD_ADDR_VALID (M_RD_ADDR_VALID[1]),
-    .MASTER_RD_ADDR_READY (M_RD_ADDR_READY[1]),
-    .MASTER_RD_BACK_ID    (M_RD_BACK_ID   [1]),
-    .MASTER_RD_DATA       (M_RD_DATA      [1]),
-    .MASTER_RD_DATA_RESP  (M_RD_DATA_RESP [1]),
-    .MASTER_RD_DATA_LAST  (M_RD_DATA_LAST [1]),
-    .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[1]),
-    .MASTER_RD_DATA_READY (M_RD_DATA_READY[1])
+ov5640_axi_master M1(
+	.clk                  	( clk_50M             ),
+	.rstn                 	( sys_rstn            ),
+	.CCD_RSTN              	( CCD_RSTN            ),
+	.CCD_PCLK             	( CCD_PCLK            ),
+	.CCD_VSYNC            	( CCD_VSYNC           ),
+	.CCD_HSYNC            	( CCD_HSYNC           ),
+	.CCD_DATA             	( CCD_DATA            ),
+	.STORE_BASE_ADDR      	( 32'h0000_0000       ),
+	.STORE_NUM            	( ((640*480)*16)/32   ),
+	.MASTER_CLK           	( M_CLK          [1]  ),
+	.MASTER_RSTN          	( M_RSTN         [1]  ),
+	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
+	.MASTER_WR_ADDR       	( M_WR_ADDR      [1]  ),
+	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [1]  ),
+	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[1]  ),
+	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[1]  ),
+	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[1]  ),
+	.MASTER_WR_DATA       	( M_WR_DATA      [1]  ),
+	.MASTER_WR_STRB       	( M_WR_STRB      [1]  ),
+	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [1]  ),
+	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[1]  ),
+	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[1]  ),
+	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [1]  ),
+	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [1]  ),
+	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[1]  ),
+	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[1]  ),
+	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [1]  ),
+	.MASTER_RD_ADDR       	( M_RD_ADDR      [1]  ),
+	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [1]  ),
+	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[1]  ),
+	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[1]  ),
+	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[1]  ),
+	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [1]  ),
+	.MASTER_RD_DATA       	( M_RD_DATA      [1]  ),
+	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [1]  ),
+	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [1]  ),
+	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[1]  ),
+	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
 );
+
 
 axi_master_default M2(
     .clk                  (clk_50M          ),
@@ -395,14 +394,14 @@ slave_ddr3 S0(
 );
 
 JTAG_SLAVE S1(
-    .clk                      (clk_25M        ),
-    .rstn                     (jtag_rstn       ),
-    .tck                      (tck             ),
-    .tdi                      (tdi             ),
-    .tms                      (tms             ),
-    .tdo                      (tdo             ),
-	.matrix_key_col		      (matrix_col       ),
-	.matrix_key_row		      (matrix_row       ),
+    .clk                      (clk_25M           ),
+    .rstn                     (jtag_rstn         ),
+    .tck                      (tck               ),
+    .tdi                      (tdi               ),
+    .tms                      (tms               ),
+    .tdo                      (tdo               ),
+	.matrix_key_col		      (matrix_col        ),
+	.matrix_key_row		      (matrix_row        ),
 	.lab_fpga_power_on	      (lab_fpga_power_on ),
     .JTAG_SLAVE_CLK           (S_CLK          [1]),
     .JTAG_SLAVE_RSTN          (S_RSTN         [1]),
@@ -482,13 +481,13 @@ remote_update_axi_slave #(
 
 i2c_master_axi_slave S3(
 	.clk                 	( clk_50M           ),
-	.rstn                	( sys_rstn          ),
-    .scl_in                 ( scl               ),
-    .scl_out                ( scl_out           ),
-    .scl_enable             ( scl_enable        ),
-    .sda_in                 ( sda               ),
-    .sda_out                ( sda_out           ),
-    .sda_enable             ( sda_enable        ),
+	.rstn                	( BUS_RSTN          ),
+    .scl_in                 ( scl_eeprom        ),
+    .scl_out                ( scl_eeprom_out    ),
+    .scl_enable             ( scl_eeprom_enable ),
+    .sda_in                 ( sda_eeprom        ),
+    .sda_out                ( sda_eeprom_out    ),
+    .sda_enable             ( sda_eeprom_enable ),
 	.SLAVE_CLK           	( S_CLK          [3]),
 	.SLAVE_RSTN          	( S_RSTN         [3]),
 	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [3]),
@@ -594,72 +593,103 @@ hsst_axi_slave  S5 (
     .SLAVE_RD_DATA_READY    ( S_RD_DATA_READY[5])
   );
 
-axi_slave_default S6(
-	.clk                 	( clk_50M              ),
-	.rstn                	( sys_rstn             ),
-	.SLAVE_CLK           	( S_CLK          [6]   ),
-	.SLAVE_RSTN          	( S_RSTN         [6]   ),
-	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [6]   ),
-	.SLAVE_WR_ADDR       	( S_WR_ADDR      [6]   ),
-	.SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [6]   ),
-	.SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[6]   ),
-	.SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[6]   ),
-	.SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[6]   ),
-	.SLAVE_WR_DATA       	( S_WR_DATA      [6]   ),
-	.SLAVE_WR_STRB       	( S_WR_STRB      [6]   ),
-	.SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [6]   ),
-	.SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[6]   ),
-	.SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[6]   ),
-	.SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [6]   ),
-	.SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [6]   ),
-	.SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[6]   ),
-	.SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[6]   ),
-	.SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [6]   ),
-	.SLAVE_RD_ADDR       	( S_RD_ADDR      [6]   ),
-	.SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [6]   ),
-	.SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[6]   ),
-	.SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[6]   ),
-	.SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[6]   ),
-	.SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [6]   ),
-	.SLAVE_RD_DATA       	( S_RD_DATA      [6]   ),
-	.SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [6]   ),
-	.SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [6]   ),
-	.SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[6]   ),
-	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[6]   )
+i2c_master_general_axi_slave S6(
+	.clk                 	( clk_50M           ),
+	.rstn                	( BUS_RSTN          ),
+    .scl_in                 ( scl_camera        ),
+    .scl_out                ( scl_camera_out    ),
+    .scl_enable             ( scl_camera_enable ),
+    .sda_in                 ( sda_camera        ),
+    .sda_out                ( sda_camera_out    ),
+    .sda_enable             ( sda_camera_enable ),
+	.SLAVE_CLK           	( S_CLK          [6]),
+	.SLAVE_RSTN          	( S_RSTN         [6]),
+	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [6]),
+	.SLAVE_WR_ADDR       	( S_WR_ADDR      [6]),
+	.SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [6]),
+	.SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[6]),
+	.SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[6]),
+	.SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[6]),
+	.SLAVE_WR_DATA       	( S_WR_DATA      [6]),
+	.SLAVE_WR_STRB       	( S_WR_STRB      [6]),
+	.SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [6]),
+	.SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[6]),
+	.SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[6]),
+	.SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [6]),
+	.SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [6]),
+	.SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[6]),
+	.SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[6]),
+	.SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [6]),
+	.SLAVE_RD_ADDR       	( S_RD_ADDR      [6]),
+	.SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [6]),
+	.SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[6]),
+	.SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[6]),
+	.SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[6]),
+	.SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [6]),
+	.SLAVE_RD_DATA       	( S_RD_DATA      [6]),
+	.SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [6]),
+	.SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [6]),
+	.SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[6]),
+	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[6])
 );
 
-axi_slave_default S7(
-	.clk                 	( clk_50M              ),
-	.rstn                	( sys_rstn             ),
-	.SLAVE_CLK           	( S_CLK          [7]   ),
-	.SLAVE_RSTN          	( S_RSTN         [7]   ),
-	.SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [7]   ),
-	.SLAVE_WR_ADDR       	( S_WR_ADDR      [7]   ),
-	.SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [7]   ),
-	.SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[7]   ),
-	.SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[7]   ),
-	.SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[7]   ),
-	.SLAVE_WR_DATA       	( S_WR_DATA      [7]   ),
-	.SLAVE_WR_STRB       	( S_WR_STRB      [7]   ),
-	.SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [7]   ),
-	.SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[7]   ),
-	.SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[7]   ),
-	.SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [7]   ),
-	.SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [7]   ),
-	.SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[7]   ),
-	.SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[7]   ),
-	.SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [7]   ),
-	.SLAVE_RD_ADDR       	( S_RD_ADDR      [7]   ),
-	.SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [7]   ),
-	.SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[7]   ),
-	.SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[7]   ),
-	.SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[7]   ),
-	.SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [7]   ),
-	.SLAVE_RD_DATA       	( S_RD_DATA      [7]   ),
-	.SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [7]   ),
-	.SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [7]   ),
-	.SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[7]   ),
-	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[7]   )
+wire [15:0]     axi_master_rstn_status;
+wire [15:0]     axi_slave_rstn_status;
+wire [63:0]     uid;
+wire [47:0]     default_mac_addr;
+wire [31:0]     default_ip_addr;
+wire [31:0]     default_host_ip_addr;
+wire [15:0]  	axi_master_reset;
+wire [15:0]  	axi_slave_reset;
+wire [7:0]   	power_status;
+wire [7:0]   	power_reset;
+wire [47:0]  	mac_addr;
+wire [31:0]  	ip_addr;
+wire [31:0]  	host_ip_addr;
+
+sys_status_axi_slave S7(
+	.clk                        	( clk_50M               ),
+	.rstn                       	( BUS_RSTN              ),
+	.STATUS_SLAVE_CLK           	( S_CLK          [7]    ),
+	.STATUS_SLAVE_RSTN          	( S_RSTN         [7]    ),
+	.STATUS_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [7]    ),
+	.STATUS_SLAVE_WR_ADDR       	( S_WR_ADDR      [7]    ),
+	.STATUS_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [7]    ),
+	.STATUS_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[7]    ),
+	.STATUS_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[7]    ),
+	.STATUS_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[7]    ),
+	.STATUS_SLAVE_WR_DATA       	( S_WR_DATA      [7]    ),
+	.STATUS_SLAVE_WR_STRB       	( S_WR_STRB      [7]    ),
+	.STATUS_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [7]    ),
+	.STATUS_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[7]    ),
+	.STATUS_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[7]    ),
+	.STATUS_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [7]    ),
+	.STATUS_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [7]    ),
+	.STATUS_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[7]    ),
+	.STATUS_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[7]    ),
+	.STATUS_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [7]    ),
+	.STATUS_SLAVE_RD_ADDR       	( S_RD_ADDR      [7]    ),
+	.STATUS_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [7]    ),
+	.STATUS_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[7]    ),
+	.STATUS_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[7]    ),
+	.STATUS_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[7]    ),
+	.STATUS_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [7]    ),
+	.STATUS_SLAVE_RD_DATA       	( S_RD_DATA      [7]    ),
+	.STATUS_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [7]    ),
+	.STATUS_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [7]    ),
+	.STATUS_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[7]    ),
+	.STATUS_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[7]    ),
+	.axi_master_rstn_status     	( axi_master_rstn_status),
+	.axi_slave_rstn_status      	( axi_slave_rstn_status ),
+	.axi_master_reset           	( axi_master_reset      ),
+	.axi_slave_reset            	( axi_slave_reset       ),
+	.uid_high                   	( uid[63:32]            ),
+	.uid_low                    	( uid[31:0]             ),
+	.power_status               	( power_status          ),
+	.power_reset                	( power_reset           ),
+	.mac_addr                   	( mac_addr              ),
+	.ip_addr                    	( ip_addr               ),
+	.host_ip_addr               	( host_ip_addr          )
 );
 
 axi_bus #(
@@ -765,6 +795,7 @@ led8_btn u_led8_btn(
 	.bcd      	( led4      ),
 	.bcd_n    	(           )
 );
+
 
 
 endmodule
