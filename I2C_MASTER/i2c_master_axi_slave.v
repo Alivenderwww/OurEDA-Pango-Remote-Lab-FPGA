@@ -46,7 +46,7 @@ assign SLAVE_CLK = clk;
 assign SLAVE_RSTN = I2C_MASTER_AXI_SLAVE_RSTN_SYNC;
 rstn_sync i2c_rstn_sync(clk,rstn,I2C_MASTER_AXI_SLAVE_RSTN_SYNC);
 
-// 地址定义-{0000_0000_{0000_000}{0}_{0000_0000_0000_0000}
+// 地址定义-{0000_0000_{1010_011}{1}_{0000_0000_0000_0000}
 //           保留      -i2c地址-16b寻址---字节地址----
 //i2c读写注意事项：1. I2C是8bit数据存储的，数据通道32bit位宽，写操作会直接抛弃高24bit数据，读操作高24bit数据为0
 //                 2. EEPROM一次读写最多8个字节，超过部分会从起始地址重新读写，因此需控制突发长度不超过7.

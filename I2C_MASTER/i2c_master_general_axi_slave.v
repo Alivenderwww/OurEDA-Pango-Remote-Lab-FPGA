@@ -52,7 +52,7 @@ rstn_sync i2c_rstn_sync(clk,rstn,I2C_MASTER_AXI_SLAVE_RSTN_SYNC);
 0x0000_0002: [0] cmd_done; [8] cmd_error;
 0x0000_0003: FIFO写入口，仅低8位有效，只写
 0x0000_0004: FIFO读出口，仅低8位有效，只读
-0x0000_0005: [0] FIFO写入口清空；[8] FIFO读出口清空；
+// 0x0000_0005: [0] FIFO写入口清空；[8] FIFO读出口清空；
 */
 
 localparam ADDR_I2C_SETUP0  = 32'h0000_0000;
@@ -300,7 +300,7 @@ always @(*) begin
     case(rd_addr)
         ADDR_I2C_SETUP0: SLAVE_RD_DATA <= {7'b0, i2c_trans_start, 7'b0, i2c_sccb_sel, 7'b0, i2c_read_write, 1'b0, i2c_slave_addr};
         ADDR_I2C_SETUP1: SLAVE_RD_DATA <= {i2c_read_trans_dummy_length, i2c_trans_length};
-        ADDR_I2C_FLAG:   SLAVE_RD_DATA <= {24'b0, cmd_done, 7'b0, cmd_error};
+        ADDR_I2C_FLAG:   SLAVE_RD_DATA <= {24'b0, cmd_error, 7'b0, cmd_done};
         ADDR_I2C_FIFO_WR:SLAVE_RD_DATA <= 32'b0;
         ADDR_I2C_FIFO_RD:SLAVE_RD_DATA <= {24'b0, i2c_rd_fifo_rd_data};
         default:         SLAVE_RD_DATA <= 32'b0;

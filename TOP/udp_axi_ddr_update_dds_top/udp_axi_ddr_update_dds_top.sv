@@ -77,6 +77,16 @@ output wire [ 2:0] mem_ba
 assign CCD_RSTN = 1'b1; //CCD复位信号，暂时不使用
 assign CCD_PDN  = 1'b0; //CCD电源使能信号，暂时不使用
 
+wire [31:0]  eeprom_host_ip  ;
+wire [47:0]  eeprom_host_mac ;
+wire [31:0]  eeprom_board_ip ;
+wire [47:0]  eeprom_board_mac;
+
+wire [31:0]  host_ip       ;
+wire [47:0]  host_mac      ;
+wire [31:0]  board_ip      ;
+wire [47:0]  board_mac     ;
+
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
 wire scl_camera_out, scl_camera_enable;
@@ -91,7 +101,7 @@ assign sda_camera = (sda_camera_enable)?(sda_camera_out):(1'bz);
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 3;
 localparam M_ID     = 2;
-localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b0,1'b0};//M0 UDP需要, M1 M2 M3 没用上，不需要
+localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b0,1'b0,1'b0};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0,1'b1,1'b1,1'b0,1'b0};//S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要, S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000, 32'h40000000, 32'ha0000000, 32'h60000000, 32'h70000000 };
 localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF, 32'h4FFFFFFF, 32'haFFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF };
@@ -242,7 +252,7 @@ ov5640_axi_master M1(
 	.CCD_VSYNC            	( CCD_VSYNC           ),
 	.CCD_HSYNC            	( CCD_HSYNC           ),
 	.CCD_DATA             	( CCD_DATA            ),
-	.STORE_BASE_ADDR      	( 32'h0000_0000       ),
+	.STORE_BASE_ADDR      	( START_ADDR[0]       ),
 	.STORE_NUM            	( ((640*480)*16)/32   ),
 	.MASTER_CLK           	( M_CLK          [1]  ),
 	.MASTER_RSTN          	( M_RSTN         [1]  ),
@@ -275,10 +285,15 @@ ov5640_axi_master M1(
 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
 );
 
-
-axi_master_default M2(
-    .clk                  (clk_50M          ),
-    .rstn                 (sys_rstn         ),
+axi_master_auto_dma #(
+	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
+)M2(
+    .clk                  (clk_50M           ),
+    .rstn                 (sys_rstn          ),
+    .eeprom_host_ip  	  (eeprom_host_ip    ),
+    .eeprom_host_mac 	  (eeprom_host_mac   ),
+    .eeprom_board_ip 	  (eeprom_board_ip   ),
+    .eeprom_board_mac	  (eeprom_board_mac  ),
     .MASTER_CLK           (M_CLK          [2]),
     .MASTER_RSTN          (M_RSTN         [2]),
     .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [2]),
@@ -307,8 +322,7 @@ axi_master_default M2(
     .MASTER_RD_DATA_RESP  (M_RD_DATA_RESP [2]),
     .MASTER_RD_DATA_LAST  (M_RD_DATA_LAST [2]),
     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[2]),
-    .MASTER_RD_DATA_READY (M_RD_DATA_READY[2])
-);
+    .MASTER_RD_DATA_READY (M_RD_DATA_READY[2]));
 
 axi_master_default M3(
     .clk                  (clk_50M          ),
@@ -643,9 +657,6 @@ wire [15:0]  	axi_master_reset;
 wire [15:0]  	axi_slave_reset;
 wire [7:0]   	power_status;
 wire [7:0]   	power_reset;
-wire [47:0]  	mac_addr;
-wire [31:0]  	ip_addr;
-wire [31:0]  	host_ip_addr;
 
 sys_status_axi_slave S7(
 	.clk                        	( clk_50M               ),
@@ -687,9 +698,14 @@ sys_status_axi_slave S7(
 	.uid_low                    	( uid[31:0]             ),
 	.power_status               	( power_status          ),
 	.power_reset                	( power_reset           ),
-	.mac_addr                   	( mac_addr              ),
-	.ip_addr                    	( ip_addr               ),
-	.host_ip_addr               	( host_ip_addr          )
+	.host_ip_addr			 	    ( host_ip               ),
+	.board_ip_addr			 	    ( board_ip              ),
+	.host_mac_addr			 	    ( host_mac              ),
+	.board_mac_addr			 	    ( board_mac             ),
+	.default_host_ip_addr           ( eeprom_host_ip        ),
+	.default_board_ip_addr          ( eeprom_board_ip       ),
+	.default_host_mac_addr          ( eeprom_host_mac       ),
+	.default_board_mac_addr         ( eeprom_board_mac      )
 );
 
 axi_bus #(

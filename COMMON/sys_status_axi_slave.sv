@@ -57,9 +57,14 @@ module sys_status_axi_slave #(
     output logic [ 7:0]  power_reset,              // POWER复位控制
     
     // MAC/IP配置接口
-    output logic [47:0]  mac_addr,                 // 当前MAC地址
-    output logic [31:0]  ip_addr,                  // 当前IP地址
-    output logic [31:0]  host_ip_addr              // 当前上位机IP地址
+    output logic [31:0]  host_ip_addr,             // 当前上位机IP地址
+    output logic [31:0]  board_ip_addr,            // 当前本机IP地址
+    output logic [47:0]  host_mac_addr,            // 当前上位机MAC地址
+    output logic [31:0]  board_mac_addr,           // 当前本机MAC地址
+    input  logic [31:0]  default_host_ip_addr,     // 默认上位机IP地址
+    input  logic [31:0]  default_board_ip_addr,    // 默认本机IP地址
+    input  logic [47:0]  default_host_mac_addr,    // 默认上位机MAC地址
+    input  logic [47:0]  default_board_mac_addr    // 默认本机MAC地址
 );//系统状态AXI从机，用于读取和配置CTRL_FPGA系统的各项基本参数，如AXI总线复位情况，LAB_FPGA的上电、复位，UID，EEPROM，MAC地址，IP地址等等
 
 // 复位同步逻辑
@@ -76,21 +81,18 @@ rstn_sync status_rstn_sync(clk,rstn,STATUS_SLAVE_RSTN_SYNC);
 32'h0000_0004:  读写    [7:0]位为电源管理模块8个供电口的状态，1为供电，0为不供电，可读取或更改
 32'h0000_0005:  只写    [7:0]位为电源管理模块8个供电口对应器件的复位，1为重新复位，0为不影响。复位后自动置零
 
-32'h0000_0006:  读写    CTRL_FPGA的MAC地址高16位
-32'h0000_0007:  读写    CTRL_FPGA的MAC地址低32位，格式为{0x07,0x08}={16'b0,MAC}
-                        上电后的默认以太网MAC配置优先级顺序为：EEPROM配置 > 取UID低48位 > 12-34-56-78-AB-CD
-                        上位机可以通过写地址07,08来动态重分配MAC地址，但下次复位后仍会以EEPROM中存放的MAC地址配置
-                        如想永久更改MAC地址，建议写EEPROM+写地址07,08执行两次
-                        MAC地址的更改会在AXI总线和UDP完全空闲后执行，因此写响应数据包仍是原MAC配置
-
-32'h0000_0008:  读写    CTRL_FPGA的IP地址
-                        上电后的默认以太网IP地址配置优先级顺序为：EEPROM配置 > 取UID低32位 > 169.254.109.5
-                        上位机可以通过写地址09来动态重分配IP地址，但下次复位后仍会以EEPROM中存放的IP地址配置
-                        如想永久更改IP地址，建议写EEPROM+写地址09执行两次
-                        IP地址的更改会在AXI总线和UDP完全空闲后执行，因此写响应数据包仍是原IP配置
-
-32'h0000_0009:  读写    上位机的IP地址
-                        配置方式同CTRL_FPGA的IP地址
+32'h0000_0006:  读写    上位机IP地址
+32'h0000_0007:  读写    本机IP地址
+32'h0000_0008:  读写    上位机MAC地址高16位
+32'h0000_0009:  读写    上位机MAC地址低32位
+32'h0000_000A:  读写    本机MAC地址高16位
+32'h0000_000B:  读写    本机MAC地址低32位
+32'h0000_000C:  只读    默认上位机IP地址
+32'h0000_000D:  只读    默认本机IP地址
+32'h0000_000E:  只读    默认上位机MAC地址高16位
+32'h0000_000F:  只读    默认上位机MAC地址低32位
+32'h0000_0010:  只读    默认本机MAC地址高16位
+32'h0000_0011:  只读    默认本机MAC地址低32位
 */
 
 // 地址定义
@@ -100,10 +102,18 @@ localparam ADDR_AXI_INIT            = 32'h0000_0000, // AXI总线初始化状态
            ADDR_UID_1               = 32'h0000_0003, // UID低32位
            ADDR_POWER_STATUS        = 32'h0000_0004, // POWER上电状态
            ADDR_POWER_RESET         = 32'h0000_0005, // POWER对应器件的复位控制
-           ADDR_CTRL_FPGA_MAC_2     = 32'h0000_0006, // CTRL_FPGA MAC地址高16位
-           ADDR_CTRL_FPGA_MAC_1     = 32'h0000_0007, // CTRL_FPGA MAC地址低32位
-           ADDR_CTRL_FPGA_IP        = 32'h0000_0008, // CTRL_FPGA IP地址
-           ADDR_HOST_IP             = 32'h0000_0009; // 上位机IP地址
+           ADDR_HOST_IP             = 32'h0000_0006, // 上位机IP地址
+           ADDR_BOARD_IP            = 32'h0000_0007, // 本机IP地址
+           ADDR_HOST_MAC_2          = 32'h0000_0008, // 上位机MAC地址高16位
+           ADDR_HOST_MAC_1          = 32'h0000_0009, // 上位机MAC地址低32位
+           ADDR_BOARD_MAC_2         = 32'h0000_000A, // 本机MAC地址高16位
+           ADDR_BOARD_MAC_1         = 32'h0000_000B, // 本机MAC地址低32位
+           ADDR_DEFAULT_HOST_IP     = 32'h0000_000C, // 默认上位机IP地址
+           ADDR_DEFAULT_BOARD_IP    = 32'h0000_000D, // 默认本机IP地址
+           ADDR_DEFAULT_HOST_MAC_2  = 32'h0000_000E, // 默认上位机MAC地址高16位
+           ADDR_DEFAULT_HOST_MAC_1  = 32'h0000_000F, // 默认上位机MAC地址低32位
+           ADDR_DEFAULT_BOARD_MAC_2 = 32'h0000_0010, // 默认本机MAC地址
+           ADDR_DEFAULT_BOARD_MAC_1 = 32'h0000_0011; // 默认本机MAC地址低32位
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -132,9 +142,10 @@ localparam ST_RD_IDLE = 2'b00, // 发送完LAST和RESP，读通道空闲
            ST_RD_DATA = 2'b01; // 地址线握手成功，数据线通道开启
 
 // 系统状态寄存器
-reg [47:0] mac_addr_reg;    // MAC地址寄存器
-reg [31:0] ip_addr_reg;     // IP地址寄存器
-reg [31:0] host_ip_reg;     // 上位机IP地址寄存器
+reg [31:0] host_ip_addr_reg;
+reg [31:0] board_ip_addr_reg;
+reg [47:0] host_mac_addr_reg;
+reg [47:0] board_mac_addr_reg;
 
 //_______________________________________________________________________________//
 // 写通道状态机状态转换逻辑
@@ -185,7 +196,7 @@ end
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_HOST_IP)) wr_transcript_error <= 1;
+    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_BOARD_MAC_1)) wr_transcript_error <= 1;
     else if(wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -210,9 +221,10 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
         axi_master_reset <= 0;
         axi_slave_reset  <= 0;
         power_status     <= 0;
-        mac_addr_reg     <= DEFAULT_MAC_ADDR;
-        ip_addr_reg      <= DEFAULT_BOARD_IP_ADDR;
-        host_ip_reg      <= DEFAULT_HOST_IP_ADDR;
+        host_ip_addr_reg   <= 0;
+        host_mac_addr_reg  <= 0;
+        board_ip_addr_reg  <= 0;
+        board_mac_addr_reg <= 0;
     end else if(STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_AXI_RESET: begin
@@ -227,27 +239,37 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
             ADDR_POWER_RESET: begin
                 if(STATUS_SLAVE_WR_STRB[0]) power_reset <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_CTRL_FPGA_MAC_2: begin
-                if(STATUS_SLAVE_WR_STRB[1]) mac_addr_reg[47:40] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) mac_addr_reg[39:32] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_CTRL_FPGA_MAC_1: begin
-                if(STATUS_SLAVE_WR_STRB[3]) mac_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_CTRL_FPGA_IP: begin
-                if(STATUS_SLAVE_WR_STRB[3]) ip_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) ip_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) ip_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) ip_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
             ADDR_HOST_IP: begin
-                if(STATUS_SLAVE_WR_STRB[3]) host_ip_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) host_ip_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) host_ip_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) host_ip_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+                if(STATUS_SLAVE_WR_STRB[3]) host_ip_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) host_ip_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) host_ip_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) host_ip_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_HOST_MAC_2: begin
+                if(STATUS_SLAVE_WR_STRB[1]) host_mac_addr_reg[47:40] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) host_mac_addr_reg[39:32] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_HOST_MAC_1: begin
+                if(STATUS_SLAVE_WR_STRB[3]) host_mac_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) host_mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) host_mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) host_mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_BOARD_IP: begin
+                if(STATUS_SLAVE_WR_STRB[3]) board_ip_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) board_ip_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) board_ip_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) board_ip_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_BOARD_MAC_2: begin
+                if(STATUS_SLAVE_WR_STRB[1]) board_mac_addr_reg[47:40] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) board_mac_addr_reg[39:32] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_BOARD_MAC_1: begin
+                if(STATUS_SLAVE_WR_STRB[3]) board_mac_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) board_mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) board_mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) board_mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
             default: begin
             end
@@ -319,7 +341,7 @@ assign STATUS_SLAVE_RD_DATA_LAST = (STATUS_SLAVE_RD_DATA_VALID) && (rd_data_tran
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_HOST_IP)) rd_transcript_error <= 1;
+    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_DEFAULT_BOARD_MAC_1)) rd_transcript_error <= 1;
     else if(rd_addr == ADDR_AXI_RESET || rd_addr == ADDR_POWER_RESET) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -343,14 +365,22 @@ always @(*) begin
     if(~STATUS_SLAVE_RSTN_SYNC) STATUS_SLAVE_RD_DATA <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
         case(rd_addr)
-            ADDR_AXI_INIT       : STATUS_SLAVE_RD_DATA <= {axi_master_rstn_status, axi_slave_rstn_status};
-            ADDR_UID_2          : STATUS_SLAVE_RD_DATA <= uid_high;
-            ADDR_UID_1          : STATUS_SLAVE_RD_DATA <= uid_low;
-            ADDR_POWER_STATUS   : STATUS_SLAVE_RD_DATA <= {24'b0, power_status};
-            ADDR_CTRL_FPGA_MAC_2: STATUS_SLAVE_RD_DATA <= {16'b0, mac_addr_reg[47:32]};
-            ADDR_CTRL_FPGA_MAC_1: STATUS_SLAVE_RD_DATA <= mac_addr_reg[31:0];
-            ADDR_CTRL_FPGA_IP   : STATUS_SLAVE_RD_DATA <= ip_addr_reg;
-            ADDR_HOST_IP        : STATUS_SLAVE_RD_DATA <= host_ip_reg;
+            ADDR_AXI_INIT           : STATUS_SLAVE_RD_DATA <= {axi_master_rstn_status, axi_slave_rstn_status};
+            ADDR_UID_2              : STATUS_SLAVE_RD_DATA <= uid_high;
+            ADDR_UID_1              : STATUS_SLAVE_RD_DATA <= uid_low;
+            ADDR_POWER_STATUS       : STATUS_SLAVE_RD_DATA <= {24'b0, power_status};
+            ADDR_HOST_IP            : STATUS_SLAVE_RD_DATA <= host_ip_addr_reg;
+            ADDR_HOST_MAC_2         : STATUS_SLAVE_RD_DATA <= {16'b0, host_mac_addr_reg[47:32]};
+            ADDR_HOST_MAC_1         : STATUS_SLAVE_RD_DATA <= host_mac_addr_reg[31:0];
+            ADDR_BOARD_IP           : STATUS_SLAVE_RD_DATA <= board_ip_addr_reg;
+            ADDR_BOARD_MAC_2        : STATUS_SLAVE_RD_DATA <= {16'b0, board_mac_addr_reg[47:32]};
+            ADDR_BOARD_MAC_1        : STATUS_SLAVE_RD_DATA <= board_mac_addr_reg[31:0];
+            ADDR_DEFAULT_HOST_IP    : STATUS_SLAVE_RD_DATA <= default_host_ip_addr;
+            ADDR_DEFAULT_HOST_MAC_2 : STATUS_SLAVE_RD_DATA <= {16'b0, default_host_mac_addr[47:32]};
+            ADDR_DEFAULT_HOST_MAC_1 : STATUS_SLAVE_RD_DATA <= default_host_mac_addr[31:0];
+            ADDR_DEFAULT_BOARD_IP   : STATUS_SLAVE_RD_DATA <= default_board_ip_addr;
+            ADDR_DEFAULT_BOARD_MAC_2: STATUS_SLAVE_RD_DATA <= {16'b0, default_board_mac_addr[47:32]};
+            ADDR_DEFAULT_BOARD_MAC_1: STATUS_SLAVE_RD_DATA <= default_board_mac_addr[31:0];
             default: begin
                 STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
             end
@@ -358,9 +388,9 @@ always @(*) begin
     end else STATUS_SLAVE_RD_DATA <= 0;
 end
 
-// 输出信号连接
-assign mac_addr = mac_addr_reg;
-assign ip_addr = ip_addr_reg;
-assign host_ip_addr = host_ip_reg;
+assign host_ip_addr    = host_ip_addr_reg;
+assign host_mac_addr   = host_mac_addr_reg;
+assign board_ip_addr   = board_ip_addr_reg;
+assign board_mac_addr  = board_mac_addr_reg;
 
 endmodule //sys_status_axi_slave
