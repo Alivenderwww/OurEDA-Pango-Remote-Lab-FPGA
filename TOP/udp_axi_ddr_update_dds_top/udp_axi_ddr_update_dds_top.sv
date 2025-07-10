@@ -90,6 +90,10 @@ wire [47:0]  host_mac      ;
 wire [31:0]  board_ip      ;
 wire [47:0]  board_mac     ;
 
+wire [31:0] OV_STORE_BASE_ADDR;
+wire [31:0] OV_STORE_NUM      ;
+wire        OV_capture_on     ;
+
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
 wire scl_camera_out, scl_camera_enable;
@@ -265,8 +269,9 @@ ov5640_axi_master M1(
 	.CCD_VSYNC            	( CCD_VSYNC           ),
 	.CCD_HSYNC            	( CCD_HSYNC           ),
 	.CCD_DATA             	( CCD_DATA            ),
-	.STORE_BASE_ADDR      	( START_ADDR[0]       ),
-	.STORE_NUM            	( ((640*480)*16)/32   ),
+	.STORE_BASE_ADDR      	( OV_STORE_BASE_ADDR  ),//START_ADDR[0]       
+	.STORE_NUM            	( OV_STORE_NUM        ),//((640*480)*16)/32   
+	.capture_on		 	    ( OV_capture_on       ),//1'b1                
 	.MASTER_CLK           	( M_CLK          [1]  ),
 	.MASTER_RSTN          	( M_RSTN         [1]  ),
 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
@@ -718,7 +723,10 @@ sys_status_axi_slave S7(
 	.default_host_ip_addr           ( eeprom_host_ip        ),
 	.default_board_ip_addr          ( eeprom_board_ip       ),
 	.default_host_mac_addr          ( eeprom_host_mac       ),
-	.default_board_mac_addr         ( eeprom_board_mac      )
+	.default_board_mac_addr         ( eeprom_board_mac      ),
+	.OV_STORE_BASE_ADDR				( OV_STORE_BASE_ADDR    ),
+	.OV_STORE_NUM      				( OV_STORE_NUM          ),
+	.OV_capture_on					( OV_capture_on         )
 );
 
 dso_axi_slave #(

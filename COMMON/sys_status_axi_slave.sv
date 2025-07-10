@@ -64,7 +64,11 @@ module sys_status_axi_slave #(
     input  logic [31:0]  default_host_ip_addr,     // 默认上位机IP地址
     input  logic [31:0]  default_board_ip_addr,    // 默认本机IP地址
     input  logic [47:0]  default_host_mac_addr,    // 默认上位机MAC地址
-    input  logic [47:0]  default_board_mac_addr    // 默认本机MAC地址
+    input  logic [47:0]  default_board_mac_addr,   // 默认本机MAC地址
+
+    output logic [31:0]  OV_STORE_BASE_ADDR,       // OV5640存储起始地址
+    output logic [31:0]  OV_STORE_NUM,             // OV5640存储数量
+    output logic         OV_capture_on             // OV5640捕获使能信号
 );//系统状态AXI从机，用于读取和配置CTRL_FPGA系统的各项基本参数，如AXI总线复位情况，LAB_FPGA的上电、复位，UID，EEPROM，MAC地址，IP地址等等
 
 // 复位同步逻辑
@@ -93,6 +97,10 @@ rstn_sync status_rstn_sync(clk,rstn,STATUS_SLAVE_RSTN_SYNC);
 32'h0000_000F:  只读    默认上位机MAC地址低32位
 32'h0000_0010:  只读    默认本机MAC地址高16位
 32'h0000_0011:  只读    默认本机MAC地址低32位
+
+32'h0000_0012:  读写    OV5640存储起始地址，32位地址线
+32'h0000_0013:  读写    OV5640存储数量，32位地址线，单位为32bit
+32'h0000_0014:  读写    OV5640捕获使能信号，1为使能，0为禁止
 */
 
 // 地址定义
@@ -113,7 +121,10 @@ localparam ADDR_AXI_INIT            = 32'h0000_0000, // AXI总线初始化状态
            ADDR_DEFAULT_HOST_MAC_2  = 32'h0000_000E, // 默认上位机MAC地址高16位
            ADDR_DEFAULT_HOST_MAC_1  = 32'h0000_000F, // 默认上位机MAC地址低32位
            ADDR_DEFAULT_BOARD_MAC_2 = 32'h0000_0010, // 默认本机MAC地址
-           ADDR_DEFAULT_BOARD_MAC_1 = 32'h0000_0011; // 默认本机MAC地址低32位
+           ADDR_DEFAULT_BOARD_MAC_1 = 32'h0000_0011, // 默认本机MAC地址低32位
+           ADDR_OV_STORE_BASE_ADDR  = 32'h0000_0012, // OV5640存储起始地址
+           ADDR_OV_STORE_NUM        = 32'h0000_0013, // OV5640存储数量
+           ADDR_OV_CAPTURE_ON       = 32'h0000_0014; // OV5640捕获使能信号
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -196,7 +207,7 @@ end
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_BOARD_MAC_1)) wr_transcript_error <= 1;
+    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_OV_CAPTURE_ON)) wr_transcript_error <= 1;
     else if(wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -225,6 +236,9 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
         host_mac_addr_reg  <= 0;
         board_ip_addr_reg  <= 0;
         board_mac_addr_reg <= 0;
+        OV_STORE_BASE_ADDR <= 32'h0000_0000;
+        OV_STORE_NUM       <= ((640*480)*16)/32;
+        OV_capture_on      <= 0;
     end else if(STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_AXI_RESET: begin
@@ -270,6 +284,21 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
                 if(STATUS_SLAVE_WR_STRB[2]) board_mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
                 if(STATUS_SLAVE_WR_STRB[1]) board_mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
                 if(STATUS_SLAVE_WR_STRB[0]) board_mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_OV_STORE_BASE_ADDR: begin
+                if(STATUS_SLAVE_WR_STRB[3]) OV_STORE_BASE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) OV_STORE_BASE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) OV_STORE_BASE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) OV_STORE_BASE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_OV_STORE_NUM: begin
+                if(STATUS_SLAVE_WR_STRB[3]) OV_STORE_NUM[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) OV_STORE_NUM[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) OV_STORE_NUM[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) OV_STORE_NUM[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            end
+            ADDR_OV_CAPTURE_ON: begin
+                if(STATUS_SLAVE_WR_STRB[0]) OV_capture_on <= STATUS_SLAVE_WR_DATA[0];
             end
             default: begin
             end
@@ -341,7 +370,7 @@ assign STATUS_SLAVE_RD_DATA_LAST = (STATUS_SLAVE_RD_DATA_VALID) && (rd_data_tran
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_DEFAULT_BOARD_MAC_1)) rd_transcript_error <= 1;
+    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_OV_CAPTURE_ON)) rd_transcript_error <= 1;
     else if(rd_addr == ADDR_AXI_RESET || rd_addr == ADDR_POWER_RESET) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -381,6 +410,9 @@ always @(*) begin
             ADDR_DEFAULT_BOARD_IP   : STATUS_SLAVE_RD_DATA <= default_board_ip_addr;
             ADDR_DEFAULT_BOARD_MAC_2: STATUS_SLAVE_RD_DATA <= {16'b0, default_board_mac_addr[47:32]};
             ADDR_DEFAULT_BOARD_MAC_1: STATUS_SLAVE_RD_DATA <= default_board_mac_addr[31:0];
+            ADDR_OV_STORE_BASE_ADDR : STATUS_SLAVE_RD_DATA <= OV_STORE_BASE_ADDR;
+            ADDR_OV_STORE_NUM       : STATUS_SLAVE_RD_DATA <= OV_STORE_NUM;
+            ADDR_OV_CAPTURE_ON      : STATUS_SLAVE_RD_DATA <= {31'b0, OV_capture_on};
             default: begin
                 STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
             end

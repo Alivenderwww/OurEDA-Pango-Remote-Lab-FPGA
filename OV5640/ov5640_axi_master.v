@@ -12,6 +12,7 @@ module ov5640_axi_master(
     //input base and end address
     input  wire [31:0] STORE_BASE_ADDR,
     input  wire [31:0] STORE_NUM, //256*4bytes
+    input  wire        capture_on,
 
     //AXI MASTER interface
     output wire         MASTER_CLK          ,
@@ -76,7 +77,7 @@ always @(posedge clk or negedge ov_rstn_sync) begin
 end
 always @(*) begin
     case (axi_cu_st)
-        AXI_ST_IDLE   : axi_nt_st = (~almost_empty) ? (AXI_ST_WR_ADDR) : (AXI_ST_IDLE);
+        AXI_ST_IDLE   : axi_nt_st = ((capture_on) && (~almost_empty)) ? (AXI_ST_WR_ADDR) : (AXI_ST_IDLE);
         AXI_ST_WR_ADDR: axi_nt_st = (MASTER_WR_ADDR_VALID && MASTER_WR_ADDR_READY) ? (AXI_ST_WR_DATA) : (AXI_ST_WR_ADDR);
         AXI_ST_WR_DATA: axi_nt_st = (MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST) ? (AXI_ST_WR_RESP) : (AXI_ST_WR_DATA);
         AXI_ST_WR_RESP: axi_nt_st = (MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY) ? (AXI_ST_IDLE) : (AXI_ST_WR_RESP);
@@ -119,6 +120,7 @@ ov56450_data_store u_ov56450_data_store(
 	.CCD_VSYNC    	( CCD_VSYNC     ),
 	.CCD_HSYNC    	( CCD_HSYNC     ),
 	.CCD_DATA     	( CCD_DATA      ),
+    .capture_on  	( capture_on    ),
 	.rd_data_en   	( rd_data_en    ),
 	.almost_empty 	( almost_empty  ),
 	.rd_data 	    ( rd_data       )

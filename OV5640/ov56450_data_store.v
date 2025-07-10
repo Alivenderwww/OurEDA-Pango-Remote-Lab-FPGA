@@ -9,6 +9,7 @@ module ov56450_data_store (
     input  wire       CCD_HSYNC, //原理图把HREF和HSYNC搞混了
     input  wire [7:0] CCD_DATA,
 
+    input  wire        capture_on,
     input  wire        rd_data_en,
     output wire        almost_empty,
     output wire [31:0] rd_data
@@ -57,8 +58,10 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     else camera_vcount <= camera_vcount;
 end
 
-reg cu_st_store, nt_st_store;
-localparam ST_STORE = 1'b0, ST_PAUSE = 1'b1;
+reg [1:0] cu_st_store, nt_st_store;
+localparam ST_IDLE = 2'b00, 
+           ST_STORE = 2'b01, 
+           ST_PAUSE = 2'b10;
 //如果FIFO数据有反压，则记录反压时的hcount和vcount并停止存储，等FIFO不再反压并且hcount和vcount与记录的相同后再继续存储。
 reg [31:0] pause_camera_hcount, pause_camera_vcount;
 always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
@@ -76,11 +79,13 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     end
 end
 always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
-    if(~CCD_RSTN) cu_st_store <= ST_STORE;
+    if(~CCD_RSTN) cu_st_store <= ST_IDLE;
     else cu_st_store <= nt_st_store;
 end
 always @(*) begin
-    case (cu_st_store)
+    if(~capture_on) nt_st_store = ST_IDLE;
+    else case (cu_st_store)
+        ST_IDLE: nt_st_store = (CCD_VSYNC_neg && capture_on)?(ST_STORE):(ST_IDLE);
         ST_STORE: nt_st_store = (almost_full)?(ST_PAUSE):(ST_STORE);
         ST_PAUSE: nt_st_store = ((~almost_full) && (pause_camera_hcount == camera_hcount) && (pause_camera_vcount == camera_vcount))?(ST_STORE):(ST_PAUSE);
     endcase
@@ -89,14 +94,15 @@ end
 reg fifo_rd_data_valid;
 always @(posedge clk or negedge rstn) begin
     if(~rstn) fifo_rd_data_valid <= 1'b0;
+    else if(~capture_on) fifo_rd_data_valid <= 1'b0;
     else if(rd_data_en && rd_empty && fifo_rd_data_valid) fifo_rd_data_valid <= 1'b0;
     else if(fifo_rd_en && (~rd_empty) && (~fifo_rd_data_valid)) fifo_rd_data_valid <= 1'b1;
     else fifo_rd_data_valid <= fifo_rd_data_valid;
 end
 
-assign fifo_wr_rst = (~CCD_RSTN);
+assign fifo_wr_rst = (~CCD_RSTN) || (~capture_on);
 assign fifo_wr_en = (CCD_HSYNC_d1) && (~CCD_VSYNC_d1) && (nt_st_store == ST_STORE);
-assign fifo_rd_rst = (~rstn);
+assign fifo_rd_rst = (~rstn) || (~capture_on);
 assign fifo_rd_en = (~rd_empty) && ((rd_data_en) || (~fifo_rd_data_valid));
 //8bit存入，32bit读出，直接怼到AXI上，发给DDR。
 //每次都攒满32bit x 256再发出去，效率最高。
