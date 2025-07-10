@@ -1,4 +1,6 @@
-module param_measure(
+module param_measure #(
+    parameter CLK_FS = 32'd50_000_000 // 基准时钟频率值
+)(
     input               clk ,       // 时钟
     input               rstn  ,    // 复位信号
 
@@ -14,9 +16,6 @@ module param_measure(
     output     [7:0]    ad_max,     // AD最大值
     output     [7:0]    ad_min      // AD最小值
 );
-
-//parameter define
-parameter CLK_FS = 26'd50_000_000;  // 基准时钟频率值
 
 //脉冲生成模块
 pulse_gen u_pulse_gen(

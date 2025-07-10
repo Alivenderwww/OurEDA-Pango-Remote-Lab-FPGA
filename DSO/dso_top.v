@@ -1,4 +1,6 @@
-module dso_top(
+module dso_top #(
+    parameter CLK_FS = 32'd50_000_000 // 基准时钟频率值
+)(
     input         clk,
     input         rstn,       // 复位信号
 
@@ -12,8 +14,7 @@ module dso_top(
     input  [9:0]  deci_rate,  // 抽样率
 
     input         ram_rd_clk,
-    input         ram_rd_over,
-    input         ram_rd_en,
+    input         ram_refresh,
     input  [9:0]  wave_rd_addr, // RAM读地址 0-299
     output [7:0]  wave_rd_data, // RAM读数据
 
@@ -29,7 +30,7 @@ wire       	deci_valid;
 
 //参数测量模块
 param_measure #(
-	.CLK_FS 	( 32'd27000000  ))
+	.CLK_FS 	( CLK_FS  ))
 u_param_measure(
 	.clk        	( clk         ),
 	.rstn       	( rstn        ),
@@ -54,8 +55,7 @@ data_store u_data_store(
 	.ad_data       	( ad_data        ),
 	.deci_valid    	( deci_valid     ),
 	.ram_rd_clk     ( ram_rd_clk     ),
-	.ram_rd_over   	( ram_rd_over    ),
-	.ram_rd_en 	    ( ram_rd_en      ),
+	.ram_refresh   	( ram_refresh    ),
 	.wave_rd_addr  	( wave_rd_addr   ),
 	.wave_rd_data  	( wave_rd_data   ),
 	.outrange      	( outrange       )

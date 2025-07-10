@@ -14,8 +14,7 @@ module data_store #(
     input                        deci_valid, // 抽样有效信号
     
     input                        ram_rd_clk,
-    input                        ram_rd_over,
-    input                        ram_rd_en,
+    input                        ram_refresh,
     input       [ADDR_WIDTH-1:0] wave_rd_addr,
     output      [7:0]            wave_rd_data,
     output reg                   outrange    //水平偏移超出范围
@@ -34,6 +33,7 @@ reg [7:0]            pre_data2;
 reg [7:0]            pre_data3;
 reg [ADDR_WIDTH-1:0] data_cnt;
 reg                  wr_pingpong;  //pingpong写标志
+reg                  ram_refresh_d; //RAM读完成标志寄存器
 
 //wire define
 wire                      wr_en;       //RAM写使能
@@ -106,7 +106,7 @@ always @(posedge ad_clk or negedge rstn)begin
 
         end
                                         //波形绘制完成后重新计数
-        if((data_cnt == HORIZONTAL) && ram_rd_over & wave_run)
+        if((data_cnt == HORIZONTAL) && ram_refresh_d & wave_run)
             data_cnt <= 0;
     end
 end
@@ -138,11 +138,19 @@ always @(posedge ad_clk or negedge rstn)begin
             trig_flag <= 1'b1;
             trig_addr <= wr_addr + 2;
         end
-        if(trig_flag && (data_cnt == HORIZONTAL) && ram_rd_over && wave_run) begin
+        if(trig_flag && (data_cnt == HORIZONTAL) && ram_refresh_d && wave_run) begin
             trig_flag <= 1'b0;
             wr_pingpong <= ~wr_pingpong;
         end
     end
+end
+
+always @(posedge ram_rd_clk or negedge rstn) begin
+    if(!rstn) ram_refresh_d <= 1'b0;
+    else if(ram_refresh == 1) ram_refresh_d <= 1;
+    else if(trig_flag && (data_cnt == HORIZONTAL) && ram_refresh && wave_run)
+         ram_refresh_d <= 0;
+    else ram_refresh_d <= ram_refresh_d;
 end
 
 dso_ram_2port u_dso_ram_2port ( //addr width is ADDR_WIDTH+1()pingpong

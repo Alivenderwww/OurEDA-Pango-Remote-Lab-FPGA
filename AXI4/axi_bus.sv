@@ -134,8 +134,8 @@ axi_clock_converter #(
     .M_ASYNC_ON ( M_ASYNC_ON ),
     .S_ASYNC_ON ( S_ASYNC_ON ))
 u_axi_clock_converter(
-	.BUS_CLK           	( BUS_CLK            ),
-	.BUS_RSTN          	( BUS_RSTN           ),
+	.BUS_CLK           	(BUS_CLK             ),
+	.BUS_RSTN          	(BUS_RSTN            ),
     .M_B_WR_ADDR_ID     (M_B_WR_ADDR_ID      ),
     .M_B_WR_ADDR        (M_B_WR_ADDR         ),
     .M_B_WR_ADDR_LEN    (M_B_WR_ADDR_LEN     ),
@@ -262,8 +262,8 @@ axi_interconnect #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_interconnect(
-	.BUS_CLK  	( BUS_CLK   ),
-	.BUS_RSTN 	( BUS_RSTN  ),
+	.BUS_CLK  	    (BUS_CLK          ),
+	.BUS_RSTN 	    (BUS_RSTN         ),
 	.M_WR_ADDR_ID   (M_B_WR_ADDR_ID   ),
 	.M_WR_ADDR      (M_B_WR_ADDR      ),
 	.M_WR_ADDR_LEN  (M_B_WR_ADDR_LEN  ),

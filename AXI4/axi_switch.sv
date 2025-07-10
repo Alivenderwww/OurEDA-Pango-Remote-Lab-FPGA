@@ -68,11 +68,11 @@ module axi_master_switch #(
 for (genvar i=0; i<(2**M_WIDTH); i++) begin: AXI_MASTER_OUT
     assign MASTER_WR_ADDR_READY[i] = (wr_addr_sel==i)?(BUS_WR_ADDR_READY):(0);
     assign MASTER_WR_DATA_READY[i] = (wr_data_sel==i)?(BUS_WR_DATA_READY):(0);
-    assign MASTER_WR_BACK_ID   [i] = (wr_resp_sel==i)?(BUS_WR_BACK_ID   ):(0);
+    assign MASTER_WR_BACK_ID   [i] = (wr_resp_sel==i)?(BUS_WR_BACK_ID[0+:M_ID]   ):(0);
     assign MASTER_WR_BACK_RESP [i] = (wr_resp_sel==i)?(BUS_WR_BACK_RESP ):(0);
     assign MASTER_WR_BACK_VALID[i] = (wr_resp_sel==i)?(BUS_WR_BACK_VALID):(0);
     assign MASTER_RD_ADDR_READY[i] = (rd_addr_sel==i)?(BUS_RD_ADDR_READY):(0);
-    assign MASTER_RD_BACK_ID   [i] = (rd_data_sel==i)?(BUS_RD_BACK_ID   ):(0);
+    assign MASTER_RD_BACK_ID   [i] = (rd_data_sel==i)?(BUS_RD_BACK_ID[0+:M_ID]   ):(0);
     assign MASTER_RD_DATA      [i] = (rd_data_sel==i)?(BUS_RD_DATA      ):(0);
     assign MASTER_RD_DATA_RESP [i] = (rd_data_sel==i)?(BUS_RD_DATA_RESP ):(0);
     assign MASTER_RD_DATA_LAST [i] = (rd_data_sel==i)?(BUS_RD_DATA_LAST ):(0);

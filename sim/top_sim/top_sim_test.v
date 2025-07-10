@@ -75,10 +75,10 @@ parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  ;
 parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}  ;
 initial begin
     #5000
-    while (~u_udp_axi_ddr_top.M_RSTN[0]) #1000;
-    while (~u_udp_axi_ddr_top.S_RSTN[1]) #1000;
+    // while (~u_udp_axi_ddr_update_top.M_RSTN[0]) #1000;
+    while (~u_udp_axi_ddr_update_top.S_RSTN[1]) #10000;
     #10000 u_rgmii_sim.send_rd_addr(2'b01, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态 (32'h01020202)
-    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
+    #10000 u_rgmii_sim.send_wr_addr(2'b10, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入
     #10000 u_rgmii_sim.send_rd_addr(2'b10, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态是否空标志拉低 (32'h01020002)
     #10000 u_rgmii_sim.send_wr_addr(2'b10, 2'b00, 3'd0, 32'h1000_0000); //写JTAG状态寄存器
@@ -87,7 +87,7 @@ initial begin
     #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd3, 32'h1000_0010); //对JTAG写入错误地址的数据，测试RESP响应
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 
-    while (~u_udp_axi_ddr_top.S_RSTN[0]) #1000;
+    while (~u_udp_axi_ddr_update_top.S_RSTN[0]) #1000;
     #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
     #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
     #1000;
@@ -126,45 +126,63 @@ rgmii_sim #(
 	.rgmii_txd    	( rgmii_txd     )
 );
 
-
-
-udp_axi_ddr_top #(
-    .BOARD_IP       (BOARD_IP),
-    .BOARD_MAC      (BOARD_MAC),
-    .DES_IP         (DES_IP),
-    .DES_MAC        (DES_MAC)
-)u_udp_axi_ddr_top(
-	.external_clk  	( external_clk   ),
-	.external_rstn 	( external_rstn  ),
-	.btn           	( btn            ),
-    .led8           ( led8           ),
-    .led4           ( led4           ),
-	.tck           	( tck            ),
-	.tms           	( tms            ),
-	.tdi           	( tdi            ),
-	.tdo           	( tdo            ),
-	.rgmii_rxc     	( rgmii_rxc      ),
-	.rgmii_rx_ctl  	( rgmii_rx_ctl   ),
-	.rgmii_rxd     	( rgmii_rxd      ),
-	.rgmii_txc     	( rgmii_txc      ),
-	.rgmii_tx_ctl  	( rgmii_tx_ctl   ),
-	.rgmii_txd     	( rgmii_txd      ),
-	.eth_rst_n     	( eth_rst_n      ),
-	.mem_rst_n     	( mem_rst_n      ),
-	.mem_ck        	( mem_ck         ),
-	.mem_ck_n      	( mem_ck_n       ),
-	.mem_cs_n      	( mem_cs_n       ),
-	.mem_a         	( mem_a          ),
-	.mem_dq        	( mem_dq         ),
-	.mem_dqs       	( mem_dqs        ),
-	.mem_dqs_n     	( mem_dqs_n      ),
-	.mem_dm        	( mem_dm         ),
-	.mem_cke       	( mem_cke        ),
-	.mem_odt       	( mem_odt        ),
-	.mem_ras_n     	( mem_ras_n      ),
-	.mem_cas_n     	( mem_cas_n      ),
-	.mem_we_n      	( mem_we_n       ),
-	.mem_ba        	( mem_ba         )
+udp_axi_ddr_update_top #(
+	.BOARD_MAC 	( BOARD_MAC   ),
+	.BOARD_IP  	( BOARD_IP  ),
+	.DES_MAC   	( DES_MAC     ),
+	.DES_IP    	( DES_IP   ))
+u_udp_axi_ddr_update_top(
+	.external_clk      	( external_clk       ),
+	.external_rstn     	( external_rstn      ),
+	.btn               	( btn                ),
+	.led8              	( led8               ),
+	.led4              	( led4               ),
+	.da_clk            	( da_clk             ),
+	.da_data           	( da_data            ),
+	.matrix_col        	( matrix_col         ),
+	.matrix_row        	( 0         ),
+	.lab_fpga_power_on 	( lab_fpga_power_on  ),
+	.tck               	( tck                ),
+	.tms               	( tms                ),
+	.tdi               	( tdi                ),
+	.tdo               	( tdo                ),
+	.spi_cs            	( spi_cs             ),
+	.spi_dq1           	( 0            ),
+	.spi_dq0           	( spi_dq0            ),
+	.scl_eeprom        	(          ),
+	.sda_eeprom        	(          ),
+	.scl_camera        	(          ),
+	.sda_camera        	(          ),
+	.CCD_PDN           	( CCD_PDN            ),
+	.CCD_RSTN          	( CCD_RSTN           ),
+	.CCD_PCLK          	( external_clk           ),
+	.CCD_VSYNC         	( 0          ),
+	.CCD_HSYNC         	( 0          ),
+	.CCD_DATA          	( 0           ),
+	.rgmii_rxc         	( rgmii_rxc          ),
+	.rgmii_rx_ctl      	( rgmii_rx_ctl       ),
+	.rgmii_rxd         	( rgmii_rxd          ),
+	.rgmii_txc         	( rgmii_txc          ),
+	.rgmii_tx_ctl      	( rgmii_tx_ctl       ),
+	.rgmii_txd         	( rgmii_txd          ),
+	.eth_rst_n         	( eth_rst_n          ),
+	.i_p_refckn_0      	( 0       ),
+	.i_p_refckp_0      	( 0       ),
+	.mem_rst_n         	( mem_rst_n          ),
+	.mem_ck            	( mem_ck             ),
+	.mem_ck_n          	( mem_ck_n           ),
+	.mem_cs_n          	( mem_cs_n           ),
+	.mem_a             	( mem_a              ),
+	.mem_dq            	( mem_dq             ),
+	.mem_dqs           	( mem_dqs            ),
+	.mem_dqs_n         	( mem_dqs_n          ),
+	.mem_dm            	( mem_dm             ),
+	.mem_cke           	( mem_cke            ),
+	.mem_odt           	( mem_odt            ),
+	.mem_ras_n         	( mem_ras_n          ),
+	.mem_cas_n         	( mem_cas_n          ),
+	.mem_we_n          	( mem_we_n           ),
+	.mem_ba            	( mem_ba             )
 );
 
 wire [MEM_DQS_WIDTH+1:0] mem_ck_dly;
@@ -244,12 +262,12 @@ end
 
 wire b0_gate;
 wire b1_gate;
-assign b1_gate = top_sim_test.u_udp_axi_ddr_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[1];
+assign b1_gate = top_sim_test.u_udp_axi_ddr_update_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctrl.ddrphy_ioclk_gate[1];
 assign #OUT_SYNC_DLY b0_gate =  b1_gate;
 initial 
 begin    
-    force top_sim_test.u_udp_axi_ddr_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll.clkoutphy_gate = b0_gate;
-//    force top_sim_test.u_udp_axi_ddr_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[2].ddrphy_ppll.clkoutphy_gate = b0_gate;
+    force top_sim_test.u_udp_axi_ddr_update_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll.clkoutphy_gate = b0_gate;
+//    force top_sim_test.u_udp_axi_ddr_update_top.S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[2].ddrphy_ppll.clkoutphy_gate = b0_gate;
 end
 
 

@@ -170,10 +170,10 @@ initial begin
     //JTAG读取IDCODE的流程：
     while (~S_RSTN[1]) #500;
     
-    #300 M0.send_wr_addr(2'b00, 32'h10000004, 8'd1023, 2'b00);      //写JTAG的data_in_fifo入口，突发长度256*666/32
+    #300 M0.send_wr_addr(2'b10, 32'h10000004, 8'd1023, 2'b00);      //写JTAG的data_in_fifo入口，突发长度256*666/32
     #300 M0.send_wr_data(32'h00000000, 4'b1111);                  //写入比特流
     
-    #300 M0.send_wr_addr(2'b00, 32'h10000004, 8'd1023, 2'b00);      //写JTAG的data_in_fifo入口，突发长度256*666/32
+    #300 M0.send_wr_addr(2'b11, 32'h10000004, 8'd1023, 2'b00);      //写JTAG的data_in_fifo入口，突发长度256*666/32
     #300 M0.send_wr_data(32'h10002000, 4'b1111);                  //写入比特流
 
     // #300 M0.send_wr_addr(2'b00, 32'h10000000, 8'd000, 2'b01); //写JTAG状态寄存器
@@ -182,7 +182,10 @@ initial begin
 
     // #300 M0.send_wr_addr(2'b00, 32'h10000003, 8'd000, 2'b00);    //写JTAG的cmd_fifo入口
     // #300 M0.send_wr_data({{`CMD_JTAG_RUN_TEST}, 28'd00}, 4'b1111);//`CMD_JTAG_RUN_TEST，JTAG启动
-    // #8000 M0.send_rd_addr(2'b00, 32'h10000000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+    #8000 M0.send_rd_addr(2'b10, 32'h10000000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+    #8000 M0.send_rd_addr(2'b11, 32'h10000000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
+
+    #80000 M0.send_rd_addr(2'b11, 32'h00003000, 8'd000, 2'b00);    //读取JTAG状态寄存器确认CMD_DONE执行完毕，这里上位机做等待机制
 
     // #300 M0.send_wr_addr(2'b00, 32'h10000002, 8'd000, 2'b00);    //写JTAG的data_in_fifo入口
     // #300 M0.send_wr_data({22'b0,{`JTAG_DR_IDCODE}}, 4'b1111);    //写入JTAG指令`JTAG_DR_IDCODE，低10位有效，高22位无效

@@ -2,11 +2,13 @@ create_clock -name {external_clk}    [get_ports {external_clk        }] -period 
 create_clock -name {rgmii_rxc}       [get_ports {rgmii_rxc           }] -period {8.000 } -waveform {0.000 4.000 }
 create_clock -name {rgmii_txc}       [get_ports {rgmii_txc           }] -period {8.000 } -waveform {0.000 4.000 }
 create_clock -name {da_clk}          [get_ports {da_clk              }] -period {100.0 } -waveform {0 50.0      }
+create_clock -name {ad_clk}          [get_ports {ad_clk              }] -period {100.0 } -waveform {0 50.0      }
 create_clock -name {CCD_PCLK}        [get_ports {CCD_PCLK            }] -period {42    } -waveform {0.000 21.000}
 define_attribute   {n:rgmii_rxc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:rgmii_txc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
-define_attribute   {n:da_clk} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
-define_attribute   {n:CCD_PCLK} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
+define_attribute   {n:da_clk}    {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
+define_attribute   {n:ad_clk}    {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
+define_attribute   {n:CCD_PCLK}  {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 create_generated_clock -name {clk_50M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout0}] -master_clock [get_clocks {external_clk}] -multiply_by {50} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {clk_200M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout1}] -master_clock [get_clocks {external_clk}] -multiply_by {200} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {clk_5M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout2}] -master_clock [get_clocks {external_clk}] -multiply_by {5} -divide_by {50} -duty_cycle {50.000}
@@ -264,6 +266,54 @@ define_attribute {p:da_data[0]} {PAP_IO_STANDARD} {LVCMOS33}
 define_attribute {p:da_data[0]} {PAP_IO_DRIVE} {8}
 define_attribute {p:da_data[0]} {PAP_IO_NONE} {TRUE}
 define_attribute {p:da_data[0]} {PAP_IO_SLEW} {SLOW}
+#ADC
+define_attribute {p:ad_clk} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:ad_clk} {PAP_IO_LOC} {A20}
+define_attribute {p:ad_clk} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_clk} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_clk} {PAP_IO_DRIVE} {8}
+define_attribute {p:ad_clk} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_clk} {PAP_IO_SLEW} {FAST}
+define_attribute {p:ad_data[7]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[7]} {PAP_IO_LOC} {C19}
+define_attribute {p:ad_data[7]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[7]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[7]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[6]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[6]} {PAP_IO_LOC} {D19}
+define_attribute {p:ad_data[6]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[6]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[6]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[5]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[5]} {PAP_IO_LOC} {C18}
+define_attribute {p:ad_data[5]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[5]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[5]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[4]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[4]} {PAP_IO_LOC} {D18}
+define_attribute {p:ad_data[4]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[4]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[4]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[3]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[3]} {PAP_IO_LOC} {A19}
+define_attribute {p:ad_data[3]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[3]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[3]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[2]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[2]} {PAP_IO_LOC} {B19}
+define_attribute {p:ad_data[2]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[2]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[2]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[1]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[1]} {PAP_IO_LOC} {A18}
+define_attribute {p:ad_data[1]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[1]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[1]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:ad_data[0]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:ad_data[0]} {PAP_IO_LOC} {A17}
+define_attribute {p:ad_data[0]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ad_data[0]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ad_data[0]} {PAP_IO_NONE} {TRUE}
 
 define_attribute {p:btn[0]} {PAP_IO_DIRECTION} {INPUT}
 define_attribute {p:btn[0]} {PAP_IO_LOC} {P26}
