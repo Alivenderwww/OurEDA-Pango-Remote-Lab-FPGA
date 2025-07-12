@@ -2,8 +2,8 @@ module ov56450_data_store (
     input wire        clk,
     input wire        rstn,
 
-    input wire [31:0] expect_width, //期望宽度
-    input wire [31:0] expect_height, //期望高度
+    input wire [15:0] expect_width, //期望宽度
+    input wire [15:0] expect_height, //期望高度
 
     //camera interface (no need iic)
     input  wire       CCD_PCLK,
@@ -26,7 +26,7 @@ wire rd_empty;
 reg CCD_VSYNC_d1, CCD_VSYNC_d2;
 reg CCD_HSYNC_d1, CCD_HSYNC_d2;
 reg [7:0] CCD_DATA_d1;
-reg [31:0] camera_hcount, camera_vcount;
+reg [15:0] camera_hcount, camera_vcount;
 reg [3:0] expect_width_cnt, expect_height_cnt; //帧计数
 
 wire CCD_VSYNC_pos = (CCD_VSYNC_d1 == 1'b1 && CCD_VSYNC_d2 == 1'b0);
@@ -65,7 +65,7 @@ end
 always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     if(~CCD_RSTN) expect_width_cnt <= 0;
     else if(CCD_VSYNC_neg) begin
-        if((camera_vcount + 1) == expect_width) begin
+        if((camera_vcount + 0) == expect_height) begin
             if(expect_width_cnt < 4'd15)
                  expect_width_cnt <= expect_width_cnt + 1;
             else expect_width_cnt <= 4'd15;
@@ -75,7 +75,7 @@ end
 always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     if(~CCD_RSTN) expect_height_cnt <= 0;
     else if(CCD_HSYNC_neg) begin
-        if((camera_hcount + 1) == expect_height) begin
+        if((camera_hcount + 0) == expect_width) begin
             if(expect_height_cnt < 4'd15)
                  expect_height_cnt <= expect_height_cnt + 1;
             else expect_height_cnt <= 4'd15;
