@@ -2,6 +2,9 @@ module ov56450_data_store (
     input wire        clk,
     input wire        rstn,
 
+    input wire [31:0] expect_width, //期望宽度
+    input wire [31:0] expect_height, //期望高度
+
     //camera interface (no need iic)
     input  wire       CCD_PCLK,
     input  wire       CCD_RSTN,
@@ -23,6 +26,9 @@ wire rd_empty;
 reg CCD_VSYNC_d1, CCD_VSYNC_d2;
 reg CCD_HSYNC_d1, CCD_HSYNC_d2;
 reg [7:0] CCD_DATA_d1;
+reg [31:0] camera_hcount, camera_vcount;
+reg [3:0] expect_width_cnt, expect_height_cnt; //帧计数
+
 wire CCD_VSYNC_pos = (CCD_VSYNC_d1 == 1'b1 && CCD_VSYNC_d2 == 1'b0);
 wire CCD_VSYNC_neg = (CCD_VSYNC_d1 == 1'b0 && CCD_VSYNC_d2 == 1'b1);
 wire CCD_HSYNC_pos = (CCD_HSYNC_d1 == 1'b1 && CCD_HSYNC_d2 == 1'b0);
@@ -44,7 +50,6 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     end
 end
 
-reg [31:0] camera_hcount, camera_vcount;
 always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     if(~CCD_RSTN) camera_hcount <= 0;
     else if(CCD_VSYNC_neg || CCD_HSYNC_neg) camera_hcount <= 0;
@@ -56,6 +61,26 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     else if(CCD_VSYNC_neg) camera_vcount <= 0;
     else if(CCD_HSYNC_neg) camera_vcount <= camera_vcount + 1;
     else camera_vcount <= camera_vcount;
+end
+always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
+    if(~CCD_RSTN) expect_width_cnt <= 0;
+    else if(CCD_VSYNC_neg) begin
+        if((camera_vcount + 1) == expect_width) begin
+            if(expect_width_cnt < 4'd15)
+                 expect_width_cnt <= expect_width_cnt + 1;
+            else expect_width_cnt <= 4'd15;
+        end else expect_width_cnt <= 0;
+    end else     expect_width_cnt <= expect_width_cnt;
+end
+always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
+    if(~CCD_RSTN) expect_height_cnt <= 0;
+    else if(CCD_HSYNC_neg) begin
+        if((camera_hcount + 1) == expect_height) begin
+            if(expect_height_cnt < 4'd15)
+                 expect_height_cnt <= expect_height_cnt + 1;
+            else expect_height_cnt <= 4'd15;
+        end else expect_height_cnt <= 0;
+    end else     expect_height_cnt <= expect_height_cnt;
 end
 
 reg [1:0] cu_st_store, nt_st_store;
@@ -83,9 +108,9 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     else cu_st_store <= nt_st_store;
 end
 always @(*) begin
-    if(~capture_on) nt_st_store = ST_IDLE;
+    if((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15)) nt_st_store = ST_IDLE;
     else case (cu_st_store)
-        ST_IDLE: nt_st_store = (CCD_VSYNC_neg && capture_on)?(ST_STORE):(ST_IDLE);
+        ST_IDLE : nt_st_store = (CCD_VSYNC_neg)?(ST_STORE):(ST_IDLE);
         ST_STORE: nt_st_store = (almost_full)?(ST_PAUSE):(ST_STORE);
         ST_PAUSE: nt_st_store = ((~almost_full) && (pause_camera_hcount == camera_hcount) && (pause_camera_vcount == camera_vcount))?(ST_STORE):(ST_PAUSE);
     endcase
@@ -94,15 +119,15 @@ end
 reg fifo_rd_data_valid;
 always @(posedge clk or negedge rstn) begin
     if(~rstn) fifo_rd_data_valid <= 1'b0;
-    else if(~capture_on) fifo_rd_data_valid <= 1'b0;
+    else if((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15)) fifo_rd_data_valid <= 1'b0;
     else if(rd_data_en && rd_empty && fifo_rd_data_valid) fifo_rd_data_valid <= 1'b0;
     else if(fifo_rd_en && (~rd_empty) && (~fifo_rd_data_valid)) fifo_rd_data_valid <= 1'b1;
     else fifo_rd_data_valid <= fifo_rd_data_valid;
 end
 
-assign fifo_wr_rst = (~CCD_RSTN) || (~capture_on);
+assign fifo_wr_rst = (~CCD_RSTN) || ((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15));
 assign fifo_wr_en = (CCD_HSYNC_d1) && (~CCD_VSYNC_d1) && (nt_st_store == ST_STORE);
-assign fifo_rd_rst = (~rstn) || (~capture_on);
+assign fifo_rd_rst = (~rstn) || ((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15));
 assign fifo_rd_en = (~rd_empty) && ((rd_data_en) || (~fifo_rd_data_valid));
 //8bit存入，32bit读出，直接怼到AXI上，发给DDR。
 //每次都攒满32bit x 256再发出去，效率最高。

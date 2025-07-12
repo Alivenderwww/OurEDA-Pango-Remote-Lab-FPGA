@@ -137,12 +137,26 @@ always @(posedge clk_fs or negedge rstn) begin
         data_fx_t <= CLK_FS * fx_cnt ;
 end
 
-always @(posedge clk_fs or negedge rstn) begin
-    if(!rstn) begin
-        data_fx <= 20'd0;
-    end
-    else if(gate_fs == 1'b0)
-        data_fx <= data_fx_t / fs_cnt ;
-end
+// always @(posedge clk_fs or negedge rstn) begin
+//     if(!rstn) begin
+//         data_fx <= 20'd0;
+//     end
+//     else if(gate_fs == 1'b0)
+//         data_fx <= data_fx_t / fs_cnt ;
+// end
+
+divider #(
+	.DIVIDEND 	( 58  ),
+	.DIVISOR  	( MAX ))
+u_divider(
+	.clock    	( clk_fs   ),
+	.reset    	( ~rstn    ),
+	.ivalid   	( ~gate_fs ),
+	.divisor  	( fs_cnt   ),
+	.dividend 	( data_fx_t),
+	.ovalid   	(          ),
+	.quotient 	( data_fx  )
+);
+
 
 endmodule 

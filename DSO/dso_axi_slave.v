@@ -213,7 +213,7 @@ always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
                 if(DSO_SLAVE_WR_STRB[0]) deci_rate[7:0] <= DSO_SLAVE_WR_DATA[7:0];
             end
             ADDR_RAM_REFRESH: begin
-                if(DSO_SLAVE_WR_STRB[0]) ram_refresh[0] <= DSO_SLAVE_WR_DATA[0];
+                if(DSO_SLAVE_WR_STRB[0]) ram_refresh <= DSO_SLAVE_WR_DATA[0];
             end
             default: begin
             end

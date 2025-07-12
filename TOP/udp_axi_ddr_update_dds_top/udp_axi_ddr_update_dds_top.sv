@@ -20,7 +20,7 @@ output wire        da_clk       ,
 output wire [7:0]  da_data      ,
 //adc io
 output wire        ad_clk       ,
-input  wire [7:0]  ad_data      ,
+// input  wire [7:0]  ad_data      ,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
@@ -77,8 +77,6 @@ output wire        mem_cas_n    ,
 output wire        mem_we_n     ,
 output wire [ 2:0] mem_ba       
 );
-assign CCD_RSTN = 1'b1; //CCD复位信号，暂时不使用
-assign CCD_PDN  = 1'b0; //CCD电源使能信号，暂时不使用
 
 wire [31:0]  eeprom_host_ip  ;
 wire [47:0]  eeprom_host_mac ;
@@ -93,6 +91,8 @@ wire [47:0]  board_mac     ;
 wire [31:0] OV_STORE_BASE_ADDR;
 wire [31:0] OV_STORE_NUM      ;
 wire        OV_capture_on     ;
+wire [31:0] OV_expect_width   ; //期望宽度
+wire [31:0] OV_expect_height  ; //期望高度
 
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
@@ -108,7 +108,7 @@ assign sda_camera = (sda_camera_enable)?(sda_camera_out):(1'bz);
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 4;
 localparam M_ID     = 2;
-localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b0,1'b0,1'b0};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
+localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
 								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
 								 				  1'b0,1'b0,1'b0,1'b0, //
@@ -215,6 +215,9 @@ wire ddr_rst_n   = (external_rstn) && (clk_lock);
 wire jtag_rstn   = (external_rstn) && (clk_lock);
 wire ru_rstn     = (external_rstn) && (clk_lock);
 
+wire OV_ccd_rstn;
+assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
+
 axi_udp_master #(
 	.BOARD_MAC 	(BOARD_MAC),
 	.BOARD_IP  	(BOARD_IP ),
@@ -271,7 +274,9 @@ ov5640_axi_master M1(
 	.CCD_DATA             	( CCD_DATA            ),
 	.STORE_BASE_ADDR      	( OV_STORE_BASE_ADDR  ),//START_ADDR[0]       
 	.STORE_NUM            	( OV_STORE_NUM        ),//((640*480)*16)/32   
-	.capture_on		 	    ( OV_capture_on       ),//1'b1                
+	.capture_on		 	    ( OV_capture_on       ),//1'b1             
+	.expect_width         	( OV_expect_width     ),//期望宽度
+	.expect_height        	( OV_expect_height    ),//期望高度   
 	.MASTER_CLK           	( M_CLK          [1]  ),
 	.MASTER_RSTN          	( M_RSTN         [1]  ),
 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
@@ -303,7 +308,7 @@ ov5640_axi_master M1(
 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
 );
 
-axi_master_auto_dma #(
+axi_master_initial_boot #(
 	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
 )M2(
     .clk                  (clk_50M           ),
@@ -726,7 +731,11 @@ sys_status_axi_slave S7(
 	.default_board_mac_addr         ( eeprom_board_mac      ),
 	.OV_STORE_BASE_ADDR				( OV_STORE_BASE_ADDR    ),
 	.OV_STORE_NUM      				( OV_STORE_NUM          ),
-	.OV_capture_on					( OV_capture_on         )
+	.OV_EXPECT_WIDTH			    ( OV_expect_width      ),
+	.OV_EXPECT_HEIGHT			    ( OV_expect_height     ),
+	.OV_capture_on					( OV_capture_on         ),
+	.OV_ccd_rstn					( OV_ccd_rstn           ),
+	.OV_ccd_pdn					    ( CCD_PDN               )
 );
 
 dso_axi_slave #(
@@ -735,7 +744,7 @@ dso_axi_slave #(
 	.clk                     	( clk_50M                  ),
 	.rstn                    	( BUS_RSTN                 ),
 	.ad_clk                  	( ad_clk                   ),
-	.ad_data                 	( ad_data                  ),
+	.ad_data                 	( 8'b0                     ),
 	.DSO_SLAVE_CLK           	( S_CLK          [8]       ),
 	.DSO_SLAVE_RSTN          	( S_RSTN         [8]       ),
 	.DSO_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [8]       ),

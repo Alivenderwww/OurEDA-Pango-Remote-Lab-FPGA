@@ -36,8 +36,8 @@ initial begin
     CCD_VSYNC = 1;
     CCD_HSYNC = 0;
     CCD_DATA_integer = 0;
-    CCD_HPIXEL = 640; //默认640*480
-    CCD_VPIXEL = 480;
+    CCD_HPIXEL = 64; //默认640*480
+    CCD_VPIXEL = 24;
 end
 
 always begin

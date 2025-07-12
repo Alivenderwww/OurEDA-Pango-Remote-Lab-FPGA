@@ -13,6 +13,8 @@ module ov5640_axi_master(
     input  wire [31:0] STORE_BASE_ADDR,
     input  wire [31:0] STORE_NUM, //256*4bytes
     input  wire        capture_on,
+    input  wire [31:0] expect_width, //期望宽度
+    input  wire [31:0] expect_height, //期望高度
 
     //AXI MASTER interface
     output wire         MASTER_CLK          ,
@@ -86,9 +88,10 @@ end
 
 always @(posedge clk or negedge ov_rstn_sync) begin
     if(~ov_rstn_sync) wr_addr_load <= STORE_BASE_ADDR;
-    else if(axi_cu_st == AXI_ST_IDLE && (~almost_empty)) begin
-        if((wr_addr_load + 256) < (STORE_BASE_ADDR + STORE_NUM)) wr_addr_load <= wr_addr_load + 256;
-        else wr_addr_load <= STORE_BASE_ADDR;
+    else if(axi_cu_st == AXI_ST_IDLE) begin
+        if(~capture_on) wr_addr_load <= STORE_BASE_ADDR;
+        else if((~almost_empty) && (wr_addr_load + 256) < (STORE_BASE_ADDR + STORE_NUM)) wr_addr_load <= wr_addr_load + 256;
+        else wr_addr_load <= wr_addr_load;
     end else wr_addr_load <= wr_addr_load;
 end
 
@@ -98,7 +101,7 @@ always @(posedge clk or negedge ov_rstn_sync) begin
     else if((axi_cu_st == AXI_ST_WR_DATA) && MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY)
         wr_len_load <= (MASTER_WR_DATA_LAST) ? (wr_len_load) : (wr_len_load - 1);
     else wr_len_load <= wr_len_load;
-end 
+end
 
 assign MASTER_WR_ADDR_ID    = 0;
 assign MASTER_WR_ADDR       = wr_addr_load;
@@ -121,6 +124,8 @@ ov56450_data_store u_ov56450_data_store(
 	.CCD_HSYNC    	( CCD_HSYNC     ),
 	.CCD_DATA     	( CCD_DATA      ),
     .capture_on  	( capture_on    ),
+    .expect_height  ( expect_height ),
+    .expect_width   ( expect_width  ),
 	.rd_data_en   	( rd_data_en    ),
 	.almost_empty 	( almost_empty  ),
 	.rd_data 	    ( rd_data       )

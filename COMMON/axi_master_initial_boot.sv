@@ -1,4 +1,4 @@
-module axi_master_auto_dma #(
+module axi_master_initial_boot #(
     parameter [31:0] I2C_EEPROM_SLAVE_BASEADDR = 32'h3000_0000 // I2C对应SLAVE的BASEADDR
 )(
     input  wire          clk                 ,

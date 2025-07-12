@@ -17,6 +17,14 @@ parameter MEM_DQ_WIDTH = 32;
 parameter MEM_DQS_WIDTH = MEM_DQ_WIDTH/8;
 parameter MEM_ROW_WIDTH = 15;
 
+wire CCD_PCLK, CCD_VSYNC, CCD_HSYNC;
+wire [7:0] CCD_DATA;
+
+initial begin
+    ov5640_sim_u.set_clk(5);
+    ov5640_sim_u.set_ccd_size(64, 24);
+end
+
 ///////////////////////////test WRLVL case///////////////////////////
 parameter CA_FIRST_DLY          = 0.15;
 parameter CA_GROUP_TO_GROUP_DLY = 0.05;
@@ -88,18 +96,28 @@ initial begin
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入，查看RESP响应是否为2'b10
 
     while (~u_udp_axi_ddr_update_top.S_RSTN[0]) #1000;
-    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
-    #1000;
-    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    #1000;
-    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
-    #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h0000_0001); //写入
-    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
 
-    #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
-    #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h1234_5678); //写入
-    #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
+    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h7000_0012);
+    #10000 u_rgmii_sim.send_wr_data(              3'd0, 32'h0000_0000); //写入
+
+    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h7000_0013);
+    #10000 u_rgmii_sim.send_wr_data(              3'd0, (64*24*16)/32); //写入
+
+    #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h7000_0014);
+    #10000 u_rgmii_sim.send_wr_data(              3'd0, 32'h0000_0001); //写入
+
+    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
+    // #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
+    // #1000;
+    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
+    // #1000;
+    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
+    // #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h0000_0001); //写入
+    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
+
+    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
+    // #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h1234_5678); //写入
+    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
 end
 
 // outports wire
@@ -155,10 +173,10 @@ u_udp_axi_ddr_update_top(
 	.sda_camera        	(          ),
 	.CCD_PDN           	( CCD_PDN            ),
 	.CCD_RSTN          	( CCD_RSTN           ),
-	.CCD_PCLK          	( external_clk           ),
-	.CCD_VSYNC         	( 0          ),
-	.CCD_HSYNC         	( 0          ),
-	.CCD_DATA          	( 0           ),
+	.CCD_PCLK          	( CCD_PCLK           ),
+	.CCD_VSYNC         	( CCD_VSYNC          ),
+	.CCD_HSYNC         	( CCD_HSYNC          ),
+	.CCD_DATA          	( CCD_DATA           ),
 	.rgmii_rxc         	( rgmii_rxc          ),
 	.rgmii_rx_ctl      	( rgmii_rx_ctl       ),
 	.rgmii_rxd         	( rgmii_rxd          ),
@@ -294,5 +312,12 @@ task automatic btn3_neg;
     #200
     btn[3] = 1;
 endtask //automatic
+
+ov5640_sim ov5640_sim_u(
+    .CCD_PCLK   (CCD_PCLK ),
+    .CCD_VSYNC  (CCD_VSYNC),
+    .CCD_HSYNC  (CCD_HSYNC),
+    .CCD_DATA   (CCD_DATA )
+);
 
 endmodule //top_sim_test

@@ -14,6 +14,7 @@
 ../../../hsst_for_labfpga/rst/*.v
 ../../../I2C_MASTER/*.v
 ../../../OV5640/*.v
+../../../OV5640/sim/*.sv
 ../../../REMOTE_UPDATE/*.v
 ../../../REMOTE_UPDATE/ipal/*.v
 ../../../REMOTE_UPDATE/spi/*.v
