@@ -91,8 +91,8 @@ wire [47:0]  board_mac     ;
 wire [31:0] OV_STORE_BASE_ADDR;
 wire [31:0] OV_STORE_NUM      ;
 wire        OV_capture_on     ;
-wire [31:0] OV_expect_width   ; //期望宽度
-wire [31:0] OV_expect_height  ; //期望高度
+wire [15:0] OV_expect_width   ; //期望宽度
+wire [15:0] OV_expect_height  ; //期望高度
 
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
@@ -190,18 +190,20 @@ wire clk_200M;
 wire clk_5M;
 wire clk_10M;
 wire clk_25M;
+wire clk_120M;
 wire clk_lock;
 
 wire [7:0] udp_led;
 
 clk_pll_top clk_pll_top_inst (
-  .clkout0(clk_50M),    // output
-  .clkout1(clk_200M),    // output
-  .clkout2(clk_5M),    // output
+  .clkout0(clk_50M),
+  .clkout1(clk_200M),
+  .clkout2(clk_5M),
   .clkout3(clk_10M),
-  .clkout4(clk_25M),	// output
-  .lock   (clk_lock),          // output
-  .clkin1 (external_clk)       // input
+  .clkout4(clk_25M),
+  .clkout5(clk_120M),
+  .lock   (clk_lock),
+  .clkin1 (external_clk)
 );
 assign da_clk    = clk_10M;
 assign ad_clk    = clk_10M;
@@ -223,7 +225,7 @@ axi_udp_master #(
 	.BOARD_IP  	(BOARD_IP ),
 	.DES_MAC   	(DES_MAC  ),
 	.DES_IP    	(DES_IP   )
-)M0(
+)M1(
 	.udp_in_rstn                ( udp_in_rstn     ),
 	.eth_rst_n                  (                 ),
 	.rgmii_rxc            	    ( rgmii_rxc       ),
@@ -233,39 +235,39 @@ axi_udp_master #(
 	.rgmii_tx_ctl         	    ( rgmii_tx_ctl    ),
 	.rgmii_txd            	    ( rgmii_txd       ),
     .udp_led                    ( udp_led         ),
-	.ETH_MASTER_CLK           	( M_CLK          [0]),
-	.ETH_MASTER_RSTN          	( M_RSTN         [0]),
-	.ETH_MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]),
-	.ETH_MASTER_WR_ADDR       	( M_WR_ADDR      [0]),
-	.ETH_MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [0]),
-	.ETH_MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[0]),
-	.ETH_MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[0]),
-	.ETH_MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[0]),
-	.ETH_MASTER_WR_DATA       	( M_WR_DATA      [0]),
-	.ETH_MASTER_WR_STRB       	( M_WR_STRB      [0]),
-	.ETH_MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [0]),
-	.ETH_MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[0]),
-	.ETH_MASTER_WR_DATA_READY 	( M_WR_DATA_READY[0]),
-	.ETH_MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [0]),
-	.ETH_MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [0]),
-	.ETH_MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[0]),
-	.ETH_MASTER_WR_BACK_READY 	( M_WR_BACK_READY[0]),
-	.ETH_MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [0]),
-	.ETH_MASTER_RD_ADDR       	( M_RD_ADDR      [0]),
-	.ETH_MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [0]),
-	.ETH_MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[0]),
-	.ETH_MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[0]),
-	.ETH_MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[0]),
-	.ETH_MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [0]),
-	.ETH_MASTER_RD_DATA       	( M_RD_DATA      [0]),
-	.ETH_MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [0]),
-	.ETH_MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [0]),
-	.ETH_MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[0]),
-	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0])
+	.ETH_MASTER_CLK           	( M_CLK          [1]),
+	.ETH_MASTER_RSTN          	( M_RSTN         [1]),
+	.ETH_MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]),
+	.ETH_MASTER_WR_ADDR       	( M_WR_ADDR      [1]),
+	.ETH_MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [1]),
+	.ETH_MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[1]),
+	.ETH_MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[1]),
+	.ETH_MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[1]),
+	.ETH_MASTER_WR_DATA       	( M_WR_DATA      [1]),
+	.ETH_MASTER_WR_STRB       	( M_WR_STRB      [1]),
+	.ETH_MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [1]),
+	.ETH_MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[1]),
+	.ETH_MASTER_WR_DATA_READY 	( M_WR_DATA_READY[1]),
+	.ETH_MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [1]),
+	.ETH_MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [1]),
+	.ETH_MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[1]),
+	.ETH_MASTER_WR_BACK_READY 	( M_WR_BACK_READY[1]),
+	.ETH_MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [1]),
+	.ETH_MASTER_RD_ADDR       	( M_RD_ADDR      [1]),
+	.ETH_MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [1]),
+	.ETH_MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[1]),
+	.ETH_MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[1]),
+	.ETH_MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[1]),
+	.ETH_MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [1]),
+	.ETH_MASTER_RD_DATA       	( M_RD_DATA      [1]),
+	.ETH_MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [1]),
+	.ETH_MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [1]),
+	.ETH_MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[1]),
+	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1])
 );
 
-ov5640_axi_master M1(
-	.clk                  	( clk_50M             ),
+ov5640_axi_master M0(
+	.clk                  	( clk_120M            ),
 	.rstn                 	( sys_rstn            ),
 	.CCD_RSTN              	( CCD_RSTN            ),
 	.CCD_PCLK             	( CCD_PCLK            ),
@@ -277,41 +279,41 @@ ov5640_axi_master M1(
 	.capture_on		 	    ( OV_capture_on       ),//1'b1             
 	.expect_width         	( OV_expect_width     ),//期望宽度
 	.expect_height        	( OV_expect_height    ),//期望高度   
-	.MASTER_CLK           	( M_CLK          [1]  ),
-	.MASTER_RSTN          	( M_RSTN         [1]  ),
-	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
-	.MASTER_WR_ADDR       	( M_WR_ADDR      [1]  ),
-	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [1]  ),
-	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[1]  ),
-	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[1]  ),
-	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[1]  ),
-	.MASTER_WR_DATA       	( M_WR_DATA      [1]  ),
-	.MASTER_WR_STRB       	( M_WR_STRB      [1]  ),
-	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [1]  ),
-	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[1]  ),
-	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[1]  ),
-	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [1]  ),
-	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [1]  ),
-	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[1]  ),
-	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[1]  ),
-	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [1]  ),
-	.MASTER_RD_ADDR       	( M_RD_ADDR      [1]  ),
-	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [1]  ),
-	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[1]  ),
-	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[1]  ),
-	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[1]  ),
-	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [1]  ),
-	.MASTER_RD_DATA       	( M_RD_DATA      [1]  ),
-	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [1]  ),
-	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [1]  ),
-	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[1]  ),
-	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
+	.MASTER_CLK           	( M_CLK          [0]  ),
+	.MASTER_RSTN          	( M_RSTN         [0]  ),
+	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]  ),
+	.MASTER_WR_ADDR       	( M_WR_ADDR      [0]  ),
+	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [0]  ),
+	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[0]  ),
+	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[0]  ),
+	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[0]  ),
+	.MASTER_WR_DATA       	( M_WR_DATA      [0]  ),
+	.MASTER_WR_STRB       	( M_WR_STRB      [0]  ),
+	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [0]  ),
+	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[0]  ),
+	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[0]  ),
+	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [0]  ),
+	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [0]  ),
+	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[0]  ),
+	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[0]  ),
+	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [0]  ),
+	.MASTER_RD_ADDR       	( M_RD_ADDR      [0]  ),
+	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [0]  ),
+	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[0]  ),
+	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[0]  ),
+	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[0]  ),
+	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [0]  ),
+	.MASTER_RD_DATA       	( M_RD_DATA      [0]  ),
+	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [0]  ),
+	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [0]  ),
+	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[0]  ),
+	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0]  )
 );
 
 axi_master_initial_boot #(
 	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
 )M2(
-    .clk                  (clk_50M           ),
+    .clk                  (clk_120M          ),
     .rstn                 (sys_rstn          ),
     .eeprom_host_ip  	  (eeprom_host_ip    ),
     .eeprom_host_mac 	  (eeprom_host_mac   ),
@@ -348,7 +350,7 @@ axi_master_initial_boot #(
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[2]));
 
 axi_master_default M3(
-    .clk                  (clk_50M          ),
+    .clk                  (clk_120M         ),
     .rstn                 (sys_rstn         ),
     .MASTER_CLK           (M_CLK          [3]),
     .MASTER_RSTN          (M_RSTN         [3]),
@@ -517,7 +519,7 @@ remote_update_axi_slave #(
 );
 
 i2c_master_axi_slave S3(
-	.clk                 	( clk_50M           ),
+	.clk                 	( clk_120M          ),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_eeprom        ),
     .scl_out                ( scl_eeprom_out    ),
@@ -631,7 +633,7 @@ hsst_axi_slave  S5 (
   );
 
 i2c_master_general_axi_slave S6(
-	.clk                 	( clk_50M           ),
+	.clk                 	( clk_120M          ),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_camera        ),
     .scl_out                ( scl_camera_out    ),
@@ -682,7 +684,7 @@ wire [7:0]   	power_status;
 wire [7:0]   	power_reset;
 
 sys_status_axi_slave S7(
-	.clk                        	( clk_50M               ),
+	.clk                        	( clk_120M              ),
 	.rstn                       	( BUS_RSTN              ),
 	.STATUS_SLAVE_CLK           	( S_CLK          [7]    ),
 	.STATUS_SLAVE_RSTN          	( S_RSTN         [7]    ),
@@ -731,8 +733,8 @@ sys_status_axi_slave S7(
 	.default_board_mac_addr         ( eeprom_board_mac      ),
 	.OV_STORE_BASE_ADDR				( OV_STORE_BASE_ADDR    ),
 	.OV_STORE_NUM      				( OV_STORE_NUM          ),
-	.OV_EXPECT_WIDTH			    ( OV_expect_width      ),
-	.OV_EXPECT_HEIGHT			    ( OV_expect_height     ),
+	.OV_EXPECT_WIDTH			    ( OV_expect_width       ),
+	.OV_EXPECT_HEIGHT			    ( OV_expect_height      ),
 	.OV_capture_on					( OV_capture_on         ),
 	.OV_ccd_rstn					( OV_ccd_rstn           ),
 	.OV_ccd_pdn					    ( CCD_PDN               )
@@ -777,7 +779,7 @@ dso_axi_slave #(
 );
 
 axi_slave_default S9(
-    .clk 				(clk_50M           ),
+    .clk 				(clk_120M          ),
     .rstn 				(BUS_RSTN          ),
     .SLAVE_CLK          (S_CLK          [9]),
     .SLAVE_RSTN         (S_RSTN         [9]),
@@ -811,7 +813,7 @@ axi_slave_default S9(
 );
 
 axi_slave_default S10(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [10]),
 	.SLAVE_RSTN         (S_RSTN         [10]),
@@ -845,7 +847,7 @@ axi_slave_default S10(
 );
 
 axi_slave_default S11(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
@@ -879,7 +881,7 @@ axi_slave_default S11(
 );
 
 axi_slave_default S12(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [12]),
 	.SLAVE_RSTN         (S_RSTN         [12]),
@@ -913,7 +915,7 @@ axi_slave_default S12(
 );
 
 axi_slave_default S13(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [13]),
 	.SLAVE_RSTN         (S_RSTN         [13]),
@@ -947,7 +949,7 @@ axi_slave_default S13(
 );
 
 axi_slave_default S14(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [14]),
 	.SLAVE_RSTN         (S_RSTN         [14]),
@@ -981,7 +983,7 @@ axi_slave_default S14(
 );
 
 axi_slave_default S15(
-	.clk 				(clk_50M           ),
+	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [15]),
 	.SLAVE_RSTN         (S_RSTN         [15]),
@@ -1024,7 +1026,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( clk_50M          ),
+	.BUS_CLK              	( clk_120M         ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),
