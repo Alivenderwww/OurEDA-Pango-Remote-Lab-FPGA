@@ -22,6 +22,9 @@ module udp_tx#(
     input        [15:0]  tx_byte_num/* synthesis PAP_MARK_DEBUG=”true” */, //以太网发送的有效字节数
     input        [31:0]  crc_data   , //CRC校验数据
     input         [7:0]  crc_next   , //CRC下次校验完成数据
+    input                udp_tx_sel /* synthesis PAP_MARK_DEBUG=”true” */,
+    output  reg          udp_tx_req /* synthesis PAP_MARK_DEBUG=”true” */,
+    output  reg          udp_tx_working,
     output  reg          tx_done    /* synthesis PAP_MARK_DEBUG=”true” */, //以太网发送完成信号
     output  reg          tx_req     /* synthesis PAP_MARK_DEBUG=”true” */, //读数据请求信号
     output  reg          gmii_tx_en /* synthesis PAP_MARK_DEBUG=”true” */, //GMII输出数据有效信号
@@ -39,7 +42,7 @@ module udp_tx#(
 //parameter  DES_MAC   = 48'hff_ff_ff_ff_ff_ff;
 ////目的IP地址
 //parameter  DES_IP    = {8'd0,8'd0,8'd0,8'd0};
-
+localparam  st_wait      = 7'b000_0000; //等待仲裁器响应
 localparam  st_idle      = 7'b000_0001; //初始状态，等待开始发送信号
 localparam  st_check_sum = 7'b000_0010; //IP首部校验和
 localparam  st_preamble  = 7'b000_0100; //发送前导码+帧起始界定符
@@ -138,9 +141,16 @@ always @(*) begin
     case(cur_state)
         st_idle     : begin                               //等待发送数据
             if(skip_en)
-                next_state = st_check_sum;
+                next_state = st_wait;
             else
                 next_state = st_idle;
+        end
+        st_wait : begin                                  //等待仲裁器响应
+            if(skip_en)
+                next_state = st_check_sum;
+            else
+                next_state = st_wait;
+
         end
         st_check_sum: begin                               //IP首部校验
             if(skip_en)
@@ -197,6 +207,8 @@ always @(posedge clk or negedge rst_n) begin
         tx_done_t <= 1'b0;
         data_cnt <= 16'd0;
         real_add_cnt <= 5'd0;
+        udp_tx_working <= 0;
+        udp_tx_req <= 0;
         //初始化数组
         //前导码 7个8'h55 + 1个8'hd5
         preamble[0] <= 8'h55;
@@ -233,6 +245,7 @@ always @(posedge clk or negedge rst_n) begin
         tx_done_t <= 1'b0;
         case(next_state)
             st_idle     : begin
+                udp_tx_working <= 0;
                 if(trig_tx_en) begin
                     skip_en <= 1'b1;
                     //版本号：4 首部长度：5(单位:32bit,20byte/4=5)
@@ -251,6 +264,18 @@ always @(posedge clk or negedge rst_n) begin
                     ip_head[5] <= {16'd1234,16'd1234};
                     //16位udp长度，16位udp校验和
                     ip_head[6] <= {udp_num,16'h0000};
+                end
+            end
+            st_wait : begin
+                if(udp_tx_sel)begin
+                    udp_tx_working <= 1;
+                    skip_en <= 1;
+                    udp_tx_req <= 0;
+                end
+                else begin
+                    udp_tx_working <= 0;
+                    skip_en <= 0;
+                    udp_tx_req <= 1;
                 end
             end
             st_check_sum: begin                           //IP首部校验

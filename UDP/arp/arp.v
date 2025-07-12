@@ -10,6 +10,9 @@ module arp #(
     input                gmii_tx_clk , //GMII发送数据时钟
     output               gmii_tx_en  , //GMII输出数据有效信号
     output       [7:0]   gmii_txd    , //GMII输出数据
+    input                arp_tx_sel  ,
+    output               arp_tx_done ,
+    output               arp_tx_req  ,
     output               arp_working
 );
     
@@ -55,7 +58,9 @@ arp_tx # (
     .crc_next(crc_next[31:24]),
     .crc_en(crc_en),
     .crc_clr(crc_clr),
-
+    .arp_tx_sel(arp_tx_sel),
+    .arp_tx_done(arp_tx_done),
+    .arp_tx_req(arp_tx_req),
     .arp_working(arp_working)
   );
 

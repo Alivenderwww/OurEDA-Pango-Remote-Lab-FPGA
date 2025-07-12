@@ -5,14 +5,9 @@
 // 公司    : http://www.embedfire.com
 // 论坛    : http://www.firebbs.cn
 // 淘宝    : https://fire-stm32.taobao.com
+////////////////////////////////////////////////////////////////////////
 
-
-module udp#(
-    parameter BOARD_MAC = 48'h12_34_56_78_9a_bc,
-    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0},
-    parameter DES_MAC  = 48'h2c_f0_5d_32_f1_07,
-    parameter DES_IP   = {8'd0,8'd0,8'd0,8'd0}
-)(
+module udp(
     input                rst_n       , //复位信号，低电平有效
     //GMII接口
     input                gmii_rx_clk , //GMII接收数据时钟
@@ -29,19 +24,22 @@ module udp#(
     input                tx_start_en , //以太网开始发送信号
     input        [31:0]  tx_data     , //以太网待发送数据
     input        [15:0]  tx_byte_num , //以太网发送的有效字节数 单位:byte
+    input                udp_tx_sel,
+    output               udp_tx_req,
+    output               udp_tx_working,
     output               tx_done     , //以太网发送完成信号
     output               tx_req        //读数据请求信号
     );
 
-// //parameter define
-// //开发板MAC地址
-// parameter BOARD_MAC = 48'h12_34_56_78_9a_bc;   //最终具体的MAC地址和IP地址由顶层传入，这里只需要定义就好
-// //开发板IP地址
-// parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0};
-// //目的MAC地址
-// parameter  DES_MAC  = 48'h2c_f0_5d_32_f1_07;
-// //目的IP地址
-// parameter  DES_IP   = {8'd0,8'd0,8'd0,8'd0};
+//parameter define
+//开发板MAC地址
+parameter BOARD_MAC = 48'h12_34_56_78_9a_bc;   //最终具体的MAC地址和IP地址由顶层传入，这里只需要定义就好
+//开发板IP地址
+parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0};
+//目的MAC地址
+parameter  DES_MAC  = 48'h2c_f0_5d_32_f1_07;
+//目的IP地址
+parameter  DES_IP   = {8'd0,8'd0,8'd0,8'd0};
 
 //wire define
 wire          crc_en  ; //CRC开始校验使能
@@ -90,6 +88,9 @@ udp_tx
     .tx_byte_num     (tx_byte_num),
     .crc_data        (crc_data   ),
     .crc_next        (crc_next[31:24]),
+    .udp_tx_sel      (udp_tx_sel),
+    .udp_tx_req      (udp_tx_req),
+    .udp_tx_working  (udp_tx_working),
     .tx_done         (tx_done    ),
     .tx_req          (tx_req     ),
     .gmii_tx_en      (gmii_tx_en ),

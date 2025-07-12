@@ -68,18 +68,25 @@ wire    [15:0]  rec_byte_num    ;
 wire            tx_start_en     ;
 wire    [31:0]  tx_data         ;
 wire            udp_tx_done     ;
-wire            tx_req          ;
+wire            tx_data_req          ;
 wire    [15:0]  udp_tx_byte_num ;
 
 wire            gmii_tx_en_udp;
 wire            gmii_tx_en_arp;
 wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
-wire            arp_working;
 
-assign gmii_tx_en = gmii_tx_en_udp;
-assign gmii_txd   = gmii_txd_udp;
-
+wire udp_tx_sel;
+wire udp_tx_req;
+wire udp_tx_working;
+wire arp_tx_done;
+wire arp_tx_sel;
+wire arp_tx_req;
+wire arp_working;
+// assign gmii_tx_en = gmii_tx_en_udp;
+// assign gmii_txd   = gmii_txd_udp;
+assign gmii_tx_en = arp_working ? gmii_tx_en_arp : gmii_tx_en_udp;
+assign gmii_txd   = arp_working ? gmii_txd_arp   : gmii_txd_udp;
 
 rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
 //GMII接口与RGMII接口 互转
@@ -99,15 +106,41 @@ gmii_to_rgmii u_gmii_to_rgmii(
     .rgmii_txd     (rgmii_txd   )
 );
 
-//UDP通信
+// //UDP通信
+// udp #(
+//     .BOARD_MAC     (BOARD_MAC   ),      //参数例化
+//     .BOARD_IP      (BOARD_IP    ),
+//     .DES_MAC       (DES_MAC     ),
+//     .DES_IP        (DES_IP      )
+//     )
+//    u_udp(
+//     .rst_n         (eth_rstn_sync),
+
+//     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
+//     .gmii_rx_dv    (gmii_rx_dv  ),
+//     .gmii_rxd      (gmii_rxd    ),
+//     .gmii_tx_clk   (gmii_tx_clk ),//gmii发送
+//     .gmii_tx_en    (gmii_tx_en_udp  ),
+//     .gmii_txd      (gmii_txd_udp    ),
+
+//     .rec_pkt_done  (rec_pkt_done),  //数据包接收结束
+//     .rec_en        (rec_en      ),  //四字节接收使能
+//     .rec_data      (rec_data    ),  //接收数据
+//     .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
+//     .tx_start_en   (tx_start_en ),  //发送使能
+//     .tx_data       (tx_data     ),  //发送数据
+//     .tx_byte_num   (udp_tx_byte_num),  //发送长度
+//     .tx_done       (udp_tx_done ),  //发送结束
+//     .tx_req        (tx_data_req      )   //四字节发送使能
+// );
 udp #(
-    .BOARD_MAC     (BOARD_MAC   ),      //参数例化
-    .BOARD_IP      (BOARD_IP    ),
-    .DES_MAC       (DES_MAC     ),
-    .DES_IP        (DES_IP      )
+    .BOARD_MAC     (BOARD_MAC),      //参数例化
+    .BOARD_IP      (BOARD_IP ),
+    .DES_MAC       (DES_MAC  ),
+    .DES_IP        (DES_IP   )
     )
    u_udp(
-    .rst_n         (eth_rstn_sync),
+    .rst_n         (eth_rstn_sync   ),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
     .gmii_rx_dv    (gmii_rx_dv  ),
@@ -120,12 +153,15 @@ udp #(
     .rec_en        (rec_en      ),  //四字节接收使能
     .rec_data      (rec_data    ),  //接收数据
     .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
-    .tx_start_en   (tx_start_en ),  //发送使能
+    .tx_start_en   (tx_start_en),  //发送使能
     .tx_data       (tx_data     ),  //发送数据
     .tx_byte_num   (udp_tx_byte_num),  //发送长度
+    .udp_tx_sel    (udp_tx_sel),
+    .udp_tx_req    (udp_tx_req),
+    .udp_tx_working(udp_tx_working),
     .tx_done       (udp_tx_done ),  //发送结束
-    .tx_req        (tx_req      )   //四字节发送使能
-);
+    .tx_req        (tx_data_req      )   //四字节发送使能
+    );
 
 axi_udp_cmd axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
@@ -167,7 +203,7 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_rx_data         (rec_data    ),
     .udp_rx_en           (rec_en      ),
 
-    .udp_tx_req          (tx_req      ),
+    .udp_tx_req          (tx_data_req      ),
     .udp_tx_start        (tx_start_en ),
     .udp_tx_data         (tx_data     ),
     .udp_tx_done         (udp_tx_done ),
@@ -188,4 +224,35 @@ axi_udp_cmd axi_udp_cmd_inst(
 //     .gmii_txd(gmii_txd_arp),
 //     .arp_working(arp_working)
 //   );
+
+arp # (
+    .BOARD_MAC(BOARD_MAC),
+    .BOARD_IP(BOARD_IP)
+  )
+  arp_inst (
+    .rstn(eth_rstn_sync),
+    .gmii_rx_clk(gmii_rx_clk),
+    .gmii_rx_dv(gmii_rx_dv),
+    .gmii_rxd(gmii_rxd),
+    .gmii_tx_clk(gmii_tx_clk),
+    .gmii_tx_en(gmii_tx_en_arp),
+    .gmii_txd(gmii_txd_arp),
+    .arp_tx_sel(arp_tx_sel),
+    .arp_tx_done(arp_tx_done),
+    .arp_tx_req(arp_tx_req),
+    .arp_working(arp_working)
+  );
+
+
+eth_Arbiter  eth_Arbiter_inst (
+  .clk(gmii_rx_clk),
+  .rstn(sys_rst_n),
+  .port0_req(arp_tx_req),
+  .port0_done(arp_tx_done),
+  .port0_sel(arp_tx_sel),
+  .port1_req(udp_tx_req),
+  .port1_done(udp_tx_done),
+  .port1_sel(udp_tx_sel)
+);
+
 endmodule //udp_axi_master_sim

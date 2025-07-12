@@ -9,13 +9,15 @@ module arp_tx #(
     output  reg  [7:0]    gmii_txd,
     input   wire [47:0]   dec_mac,
     input   wire [31:0]   dec_ip,
-    input   wire          refresh,
+    input   wire          refresh/* synthesis PAP_MARK_DEBUG=”true” */,
 
     input        [31:0]  crc_data   , //CRC校验数据
     input         [7:0]  crc_next   , //CRC下次校验完成数据
     output  reg          crc_en     , //CRC开始校验使能
     output  reg          crc_clr    , //CRC数据复位信号
-
+    input                arp_tx_sel /* synthesis PAP_MARK_DEBUG=”true” */,
+    output  reg          arp_tx_done/* synthesis PAP_MARK_DEBUG=”true” */,
+    output  reg          arp_tx_req /* synthesis PAP_MARK_DEBUG=”true” */,
     output  reg          arp_working
 );
 reg  [7:0]   preamble[7:0]  ; //前导码
@@ -36,7 +38,7 @@ localparam  st_arp_head   = 7'b000_1000; //发送IP首部+UDP首部
 localparam  st_tx_data    = 7'b001_0000; //发送数据
 localparam  st_tx_00      = 7'b010_0000; //发送补充数据
 localparam  st_crc        = 7'b100_0000; //发送CRC校验值
-
+localparam  st_wait       = 7'b000_0000; //等待仲裁器回应
 always @(posedge gmii_tx_clk or negedge rstn) begin
     if(~rstn)begin
         arp_data[ 0] <= BOARD_MAC[47:40];
@@ -90,8 +92,9 @@ reg  [6:0]   next_state     ;
 reg          skip_en        /* synthesis PAP_MARK_DEBUG=”true” */; //控制状态跳转使能信号
 reg  [5:0]   cnt;
 reg  [1:0]   tx_bit_sel     ;
-reg          tx_done;
+//reg          arp_tx_done;
 reg          tx_done_t;
+//assign arp_tx_working = (next_state[0] == 1) ? 0 : 1;
 always @(posedge gmii_tx_clk or negedge rstn) begin
     if(!rstn)
         cur_state <= st_idle;
@@ -103,9 +106,15 @@ always @(*) begin
     case(cur_state)
         st_idle     : begin                               //等待发送数据
             if(skip_en)
-                next_state = st_preamble;
+                next_state = st_wait;
             else
                 next_state = st_idle;
+        end
+        st_wait : begin                                   //等待仲裁器回应
+            if(skip_en)
+                next_state = st_preamble;
+            else
+                next_state = st_wait;
         end
         st_preamble : begin                               //发送前导码+帧起始界定符
             if(skip_en)
@@ -153,6 +162,7 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
         crc_en <= 1'b0;
         tx_done_t <= 0;
         arp_working <= 0;
+        arp_tx_req <= 0;
         //初始化数组
         //前导码 7个8'h55 + 1个8'hd5
         preamble[0] <= 8'h55;
@@ -205,8 +215,19 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
                 else 
                     skip_en <= 0;
             end
+            st_wait : begin
+                if(arp_tx_sel)begin
+                    arp_working <= 1;
+                    arp_tx_req <= 0;
+                    skip_en <= 1;
+                end
+                else begin
+                    arp_tx_req <= 1;
+                    skip_en <= 0;
+                    arp_working <= 0;
+                end
+            end
             st_preamble : begin                           //发送前导码+帧起始界定符
-                arp_working <= 1;
                 gmii_tx_en <= 1'b1;
                 gmii_txd <= preamble[cnt];
                 if(cnt == 5'd7) begin
@@ -289,11 +310,11 @@ end
 //发送完成信号及crc值复位信号
 always @(posedge gmii_tx_clk or negedge rstn) begin
     if(!rstn) begin
-        tx_done <= 1'b0;
+        arp_tx_done <= 1'b0;
         crc_clr <= 1'b0;
     end
     else begin
-        tx_done <= tx_done_t;
+        arp_tx_done <= tx_done_t;
         crc_clr <= tx_done_t;
     end
 end
