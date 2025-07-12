@@ -87,6 +87,7 @@ localparam IDLE    = 0;
 localparam WRHEAD  = 1;
 localparam RDHEAD  = 2;
 localparam CMDDATA = 3;
+localparam MODE    = 4;
 reg [ 7:0] txtask_state;
 reg [31:0] task_cmd;
 //loacltask
@@ -150,7 +151,7 @@ reg        task_wraddrdelay;//延迟为了消除亚稳态
 reg        task_wraddr;
 reg        task_wrdata;
 wire       txtask_wr;
-assign txtask_wr    = task_wraddr && task_wrdata && txtask_state       == IDLE && wraddr[24] == 1;
+assign txtask_wr    = task_wraddr && task_wrdata && txtask_state    == IDLE && wraddr[24] == 1;
 assign localtask_wr = task_wraddr && task_wrdata && localtask_state == IDLE && wraddr[24] == 0;
 assign SLAVE_WR_BACK_ID = wraddrid;
 always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
@@ -346,7 +347,10 @@ always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
                 if(txtask_rd)      
                     txtask_state <= RDHEAD;
                 else if(txtask_wr) 
-                    txtask_state <= WRHEAD;
+                    if(wraddr[16] == 1'b0)
+                        txtask_state <= WRHEAD;
+                    else 
+                        txtask_state <= MODE;
                 else
                     txtask_state <= IDLE;
             end
@@ -357,6 +361,11 @@ always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
             end
             WRHEAD : begin
                 i_txd_0 <= 32'h00_000000;
+                i_txk_0 <= 4'b0000;
+                txtask_state <= CMDDATA;
+            end
+            MODE : begin
+                i_txd_0 <= 32'h55_000000;
                 i_txk_0 <= 4'b0000;
                 txtask_state <= CMDDATA;
             end
