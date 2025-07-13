@@ -39,9 +39,9 @@ module axi_udp_cmd  (
     input  wire        MASTER_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-有效
     output reg         MASTER_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-准备
     //___________________UDP接口_____________________//
-    input  wire        udp_rx_done    ,
-    input  wire [31:0] udp_rx_data    ,
-    input  wire        udp_rx_en      ,
+    input  wire        udp_rx_done    /* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [31:0] udp_rx_data    /* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire        udp_rx_en      /* synthesis PAP_MARK_DEBUG="true" */,
  
     input              udp_tx_done    ,
     input  wire        udp_tx_req     ,
@@ -54,10 +54,11 @@ localparam IDLE      = 0;
 localparam WAIT      = 1;
 localparam ADDR      = 2;
 localparam DATA      = 3;
-reg [4:0] head_cnt;
-reg [4:0] state;
-reg [4:0] next_state;
-reg [63:0] head_data;
+reg [4:0] head_cnt/* synthesis PAP_MARK_DEBUG="true" */;
+reg [4:0] state/* synthesis PAP_MARK_DEBUG="true" */;
+reg [4:0] next_state/* synthesis PAP_MARK_DEBUG="true" */;
+reg [63:0] head_data/* synthesis PAP_MARK_DEBUG="true" */;
+reg  head_rx_done/* synthesis PAP_MARK_DEBUG="true" */;
 //仲裁
 localparam TXIDLE   = 0;
 localparam TXWRBACK = 1; // 优先级高
@@ -70,6 +71,7 @@ wire cmd_fifo_wr_en;
 wire cmd_fifo_empty;
 reg cmd_fifo_rd_en;
 wire [32:0] cmd_fifo_rd_data;
+
 //wr_addr_fifo
 wire wraddr_fifo_empty;
 reg wraddr_fifo_wr_en;
@@ -198,7 +200,7 @@ always @(*) begin
                 next_state <= WAIT;
         end
         ADDR : begin
-            if(cmd_fifo_rd_data[32] && head_cnt == 4)
+            if(head_cnt == 4)
                 next_state <= IDLE;
             else 
                 next_state <= ADDR;
@@ -222,15 +224,17 @@ always @(posedge gmii_rx_clk ) begin
         head_cnt <= 0;
         head_data <= 0;
         rdaddr_fifo_wr_data <= 0;
+        head_rx_done <= 0;
     end
     else begin
-        cmd_fifo_rd_en <= 1'b0;
+//        cmd_fifo_rd_en <= 1'b0;
         wraddr_fifo_wr_en <= 1'b0;
         rdaddr_fifo_wr_en <= 1'b0;
         case(state)
             IDLE : begin                                //取出第一个数据
                 wrdata_fifo_wr_en_reg <= 0;
                 head_cnt <= 0;
+                head_rx_done <= 0;
                 if(cmd_fifo_wr_en) begin 
                     cmd_fifo_rd_en <= 1'b1;//提前拉高
                 end
@@ -238,6 +242,10 @@ always @(posedge gmii_rx_clk ) begin
                     cmd_fifo_rd_en <= 1'b0;
                 end
             end
+            WAIT : begin
+                 cmd_fifo_rd_en <= 1'b0;
+
+                end
             ADDR : begin    
                 if(head_cnt == 0)begin                  //取数据
                     head_data[63:32] <= cmd_fifo_rd_data[31:0];
@@ -250,6 +258,9 @@ always @(posedge gmii_rx_clk ) begin
                 if(head_cnt == 2)begin//将第二个数据写入
                     head_data[31: 0] <= cmd_fifo_rd_data[31:0];
                     head_cnt <= head_cnt + 1;
+                    rdaddr_fifo_wr_en <= 1'b0;
+                    wraddr_fifo_wr_en <= 1'b0;
+                    head_rx_done      <= cmd_fifo_rd_data[32];
                 end
                 if(head_cnt == 3)begin//判断是读地址还是写地址
                     if(head_data[63:56] == 8'h00 && head_data[48] == 1)begin
@@ -260,8 +271,15 @@ always @(posedge gmii_rx_clk ) begin
                         rdaddr_fifo_wr_data <= head_data;
                         rdaddr_fifo_wr_en <= 1'b1;
                     end
-                    if(cmd_fifo_rd_data[32]) head_cnt <= 4;
-                    else head_cnt <= 0;
+                    if(head_rx_done)begin
+                        head_cnt <= 4;
+                        cmd_fifo_rd_en <= 1'b0;
+                    end 
+                    else begin
+                        head_data[63:32] <= cmd_fifo_rd_data[31:0];
+                        cmd_fifo_rd_en <= 1'b1;
+                        head_cnt <= 2;
+                    end
                 end
             end
             DATA : begin                                 
