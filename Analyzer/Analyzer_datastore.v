@@ -9,7 +9,7 @@ module Analyzer_datastore #(
     output wire                       busy,       // 采集忙
     output wire                       done,       // 采集完成
     input  wire [WAVE_ADDR_WIDTH-1:0] wave_addr,  // 读存储地址
-    output wire [DIGITAL_IN_NUM-1:0]  wave_out    // 输出数据
+    output wire [31:0]                wave_out    // 输出数据
 );
 /*
 逻辑分析仪组件
@@ -25,7 +25,6 @@ localparam ST_IDLE       = 2'b00,
 reg [1:0] current_state, next_state;
 
 reg [DIGITAL_IN_NUM-1:0] ram_data [0: SAVE_CNT - 1]; // RAM数据存储
-reg [WAVE_ADDR_WIDTH-1:0] write_addr; // 写地址
 
 always @(posedge clk or negedge rstn) begin
     if (!rstn) current_state <= ST_IDLE;
@@ -42,13 +41,6 @@ always @(*) begin
 end
 
 always @(posedge clk) begin
-    if(!rstn) begin
-        if(current_state == ST_COLLECTING) ram_data[write_addr] <= digital_in;
-    end
-end
-assign wave_out = ram_data[wave_addr];
-
-always @(posedge clk) begin
     if(!rstn) write_addr <= 0;
     else if(current_state == ST_COLLECTING) write_addr <= write_addr + 1;
     else if(current_state == ST_DONE) write_addr <= 0; // 完成后重置写地址
@@ -57,5 +49,19 @@ end
 
 assign busy = (current_state == ST_COLLECTING);
 assign done = (current_state == ST_DONE);
+
+wire wr_en = (current_state == ST_COLLECTING);
+analyzer_ram analyzer_ram_u (
+  .wr_clk (clk),
+  .wr_rst (~rstn),
+  .wr_en  (wr_en),
+  .wr_addr(write_addr),
+  .wr_data(digital_in),
+
+  .rd_clk (clk),
+  .rd_rst (~rstn),
+  .rd_addr(wave_addr),
+  .rd_data(wave_out)
+);
 
 endmodule //Analyzer

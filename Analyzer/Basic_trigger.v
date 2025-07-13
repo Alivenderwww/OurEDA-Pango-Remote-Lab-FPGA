@@ -28,10 +28,10 @@ localparam VAL_LOGIC0 = 3'b000, // 0
            VAL_RISE   = 3'b011, // R
            VAL_FALL   = 3'b100, // F
            VAL_RF     = 3'b101, // B
-           VAL_NC     = 3'b110; // N
+           VAL_NC     = 3'b110, // N
            VAL_NUM    = 3'b111; // some number
 
-generate
+always @(*) begin
     if(WIDTH == 1) begin
         if(op[5:3] != OP_EQ) trig = 0;
         else case (op[2:0])
@@ -58,7 +58,7 @@ generate
             endcase
         end else trig = 0;
     end
-endgenerate
+end
 
 
 endmodule //Basic_trigger

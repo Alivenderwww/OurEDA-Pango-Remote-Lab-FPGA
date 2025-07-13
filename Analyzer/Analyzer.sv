@@ -36,19 +36,32 @@ module Analazer #(
     input  logic             ANALYZER_SLAVE_RD_DATA_READY
 );
 /*
-0x0000_0000    R/W [ 0] 读写 捕获启动位，1为等待捕获，0为停止捕获。捕获到信号后该位自动清零。 
-                   [ 8] 读写 强制捕获位，置1则强制捕获信号，随时自动清零。
-                   [16] 只读 忙标志位，1为逻辑分析仪正在捕获信号，0为空闲。
-                   [24] 只读 完成标志位，1为逻辑分析仪内存完整存储了此次捕获的信号，0为未完成。
-配置顺序：若[0]为0，则将其置1，随后不断获取[0]，若其变为0则表示触发成功，开始捕获（或将[8]置1强制触发捕获）。随后不断获取[24]，若其为1则表示捕获完成。
-0x0000_0001    R/W [ 1:0] 全局触发模式，00为全局与，所有信号都满足触发条件才触发，01为全局或，任意一个信号满足触发条件即可触发
-                                     10为全局非与，所有信号都不满足触发条件才触发，11为全局非或，任意一个信号不满足触发条件即可触发。
-0x0000_0010 - 0x0000_002F R/W [5:0] 信号M的触发操作符，最多32个信号
-                                [2:0] M's Operator: 000 ==, 001 !=, 010 <, 011 <=, 100 >, 101 >=
-                                [5:3] M's Value:    000 LOGIC 0, 001 LOGIC 1, 010 X, 011 RISE, 100 FALL, 101 RISE OR FALL, 110 NOCHANGE, 111 SOME NUMBER
-0x0000_0030 - 0x0000_004F R/W [31:0] 信号M的触发值，仅在Value为111时有效。最多32个信号（对于逻辑分析仪这个是没用的，所以直接不要了）
-
-0x0100_0000 - 0x01FF_FFFF 只读 32位波形存储地址，0x0100_0000最先存储。逻辑分析仪最多支持32个引脚采样，以8个引脚为例，则只有[7:0]的数据有效。
+0x0000_0000    R/W [ 0]      capture on:    置1开始等待捕获，0停止捕获。捕获到信号后该位自动清零。 
+                   [ 8]      capture force: 置1则强制捕获信号，自动置0。
+                   [16]      capture busy:  1为逻辑分析仪正在捕获信号。
+                   [24]      capture done:  1为逻辑分析仪内存完整存储了此次捕获的信号。
+配置顺序：若[0]为0，则将其置1，随后不断获取[0]，若其变为0则表示触发成功。随后不断获取[24]，若其为1则表示捕获完成。
+0x0000_0001    R/W [1:0] global trig mode:  00: 全局与  (&)
+                                            01: 全局或  (|)
+                                            10: 全局非与(~&)
+                                            11: 全局非或(~|)
+0x0000_0010 - 0x0000_0017 R/W [5:0] 信号M的触发操作符，共8路
+                              [2:0] M's Operator: 000 ==
+                                                  001 !=
+                                                  010 <
+                                                  011 <=
+                                                  100 >
+                                                  101 >=
+                              [5:3] M's Value:    000 LOGIC 0
+                                                  001 LOGIC 1
+                                                  010 X(not care)
+                                                  011 RISE
+                                                  100 FALL
+                                                  101 RISE OR FALL
+                                                  110 NOCHANGE
+                                                  111 SOME NUMBER
+0x0100_0000 - 0x0100_03FF 只读 32位波形存储，得到的32位数据中低八位最先捕获，高八位最后捕获。
+                               共1024个地址，每个地址存储4组，深度为4096。
 */
 
 wire analyzer_rstn_sync;
@@ -61,15 +74,14 @@ reg analyzer_on;
 reg [1:0] global_trig_mode;
 
 // inports wire
-wire        trig;       // 触发信号，##高电平##触发
+reg         trig;       // 触发信号，##高电平##触发
 wire [11:0] wave_addr;  // 读存储地址
 // outports wire
-wire       busy;
-wire       done;
-wire [DIGITAL_IN_NUM-1:0] wave_out;
+wire        busy;
+wire        done;
+wire [31:0] wave_out;
 // outports wire
 wire [DIGITAL_IN_NUM-1:0] multi_trig;
-wire trig;
 reg [5:0] op[0:DIGITAL_IN_NUM-1]; // 触发操作符
 
 //_________________写___通___道_________________//
@@ -82,7 +94,10 @@ reg [ 1:0] cu_wrchannel_st, nt_wrchannel_st;
 localparam ST_WR_IDLE = 2'b00, //写通道空闲
            ST_WR_DATA = 2'b01, //地址线握手成功，数据线通道开启
            ST_WR_RESP = 2'b10; //写响应
-
+localparam GLOBAL_AND = 2'b00, //全局与
+           GLOBAL_OR  = 2'b01, //全局或
+           GLOBAL_NAND= 2'b10, //全局非与
+           GLOBAL_NOR = 2'b11; //全局非或
 //_________________读___通___道_________________//
 reg [ 3:0] rd_addr_id;
 reg [31:0] rd_addr;
@@ -133,7 +148,6 @@ always @(*) begin
     if((~analyzer_rstn_sync) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
     else if(wr_addr >= 32'h0100_0000 && wr_addr <= 32'h01FF_FFFF) wr_transcript_error <= 1;
-    else if(wr_addr == ANALYZER_SHIFT_OUT_ADDR) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
 always @(posedge clk or negedge analyzer_rstn_sync) begin
@@ -171,11 +185,18 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
         rd_addr_len   <= rd_addr_len;
     end
 end
+reg addr_change;
 always @(posedge clk or negedge analyzer_rstn_sync) begin
     if(~analyzer_rstn_sync) rd_addr <= 0;
     else if(ANALYZER_SLAVE_RD_ADDR_VALID && ANALYZER_SLAVE_RD_ADDR_READY) rd_addr <= ANALYZER_SLAVE_RD_ADDR;
     else if(ANALYZER_SLAVE_RD_DATA_VALID && ANALYZER_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
+end
+always @(posedge clk or negedge analyzer_rstn_sync) begin
+    if(~analyzer_rstn_sync) addr_change <= 0;
+    else if(ANALYZER_SLAVE_RD_ADDR_VALID && ANALYZER_SLAVE_RD_ADDR_READY) addr_change <= 1;
+    else if(ANALYZER_SLAVE_RD_DATA_VALID && ANALYZER_SLAVE_RD_DATA_READY) addr_change <= 1;
+    else addr_change <= 0;
 end
 always @(posedge clk or negedge analyzer_rstn_sync) begin
     if(~analyzer_rstn_sync || (cu_rdchannel_st == ST_RD_IDLE)) rd_data_trans_num <= 0;
@@ -195,7 +216,7 @@ always @(*) begin
     //读数据VALID选通
     if(~analyzer_rstn_sync) ANALYZER_SLAVE_RD_DATA_VALID <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
-             if(rd_addr[31:24] == 8'h01) ANALYZER_SLAVE_RD_DATA_VALID <= 1; //延迟一个周期的读？好像不用延迟？？
+             if(rd_addr[31:24] == 8'h01) ANALYZER_SLAVE_RD_DATA_VALID <= (~addr_change); //延迟一个周期的读
         else ANALYZER_SLAVE_RD_DATA_VALID <= 1;
     end else ANALYZER_SLAVE_RD_DATA_VALID <= 0;
     //读数据DATA选通
@@ -255,7 +276,7 @@ end
 //_______32'h1000001X_______//
 integer i;
 always @(posedge clk or negedge analyzer_rstn_sync) begin
-    if(~analyzer_rstn_sync) for(i=0;i<DIGITAL_IN_NUM;i=i+1) op[i] <= 0;
+    if(~analyzer_rstn_sync) for(i=0;i<DIGITAL_IN_NUM;i=i+1) op[i] <= {3'b010,3'b000};
     else if(ANALYZER_SLAVE_WR_DATA_VALID && ANALYZER_SLAVE_WR_DATA_READY && (wr_addr[31:4] == 32'h0000_001))begin
         for(i=0;i<DIGITAL_IN_NUM;i=i+1) if(wr_addr[3:0] == i)
             op[i] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[5:0]):(op[i]);
