@@ -1,11 +1,11 @@
 `timescale 1ns/1ps
 module axi_analyzer_sim ();
 
-localparam M_WIDTH  = 2;
-localparam S_WIDTH  = 2;
+localparam M_WIDTH  = 1;
+localparam S_WIDTH  = 1;
 localparam M_ID     = 2;
-localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = '{32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000};
-localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = '{32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF};
+localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = '{32'h00000000, 32'h10000000};
+localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = '{32'h0FFFFFFF, 32'h1FFFFFFF};
 
 wire [(2**M_WIDTH-1):0]            M_CLK          ;
 wire [(2**M_WIDTH-1):0]            M_RSTN         ;
@@ -85,9 +85,12 @@ end
 
 initial begin
     #300 M0.set_clk(5);
+    #300 M1.set_clk(5);
     #5000
     #300 M0.set_rd_data_channel(31);
     #300 M0.set_wr_data_channel(31);
+    #300 M1.set_rd_data_channel(31);
+    #300 M1.set_wr_data_channel(31);
     while (~S_RSTN[0]) #500;
     
     #300 M0.send_wr_addr(2'b10, 32'h00000000, 8'd0, 2'b00);
@@ -96,16 +99,16 @@ initial begin
     #300 M0.send_wr_addr(2'b11, 32'h00000001, 8'd0, 2'b00);
     #300 M0.send_wr_data({30'b0, 2'b00}, 4'b1111); //00: 全局与
 
-    #300 M0.send_wr_addr(2'b11, 32'h00000002, 8'd0, 2'b00);
+    #300 M0.send_wr_addr(2'b11, 32'h00000012, 8'd0, 2'b00);
     #300 M0.send_wr_data({26'b0, 3'b000, 3'b000}, 4'b1111); //[0]==0
 
-    #300 M0.send_wr_addr(2'b11, 32'h00000003, 8'd0, 2'b00);
-    #300 M0.send_wr_data({26'b0, 3'b001, 3'b001}, 4'b1111); //[1]!=1
+    #300 M0.send_wr_addr(2'b11, 32'h00000013, 8'd0, 2'b00);
+    #300 M0.send_wr_data({26'b0, 3'b000, 3'b011}, 4'b1111); //[1]==up
 
     #8000 M0.send_wr_addr(2'b10, 32'h00000000, 8'd0, 2'b00);
 	#300 M0.send_wr_data(32'h00000001, 4'b1111);
 
-	#500000
+	#5000000
 	#80000 M0.send_rd_addr(2'b10, 32'h01000000, 8'd255, 2'b01);
 	#80000 M0.send_rd_addr(2'b10, 32'h01000100, 8'd255, 2'b01);
 	#80000 M0.send_rd_addr(2'b10, 32'h01000200, 8'd255, 2'b01);
@@ -325,5 +328,16 @@ grs_n = 1'b0;
 #5 grs_n = 1'b1;
 end
 
+initial digital_in = 8'h00;
+always begin
+	#50000 digital_in[0] = $random;
+	#50000 digital_in[1] = $random;
+	#50000 digital_in[2] = $random;
+	#50000 digital_in[3] = $random;
+	#50000 digital_in[4] = $random;
+	#50000 digital_in[5] = $random;
+	#50000 digital_in[6] = $random;
+	#50000 digital_in[7] = $random;
+end
 
 endmodule
