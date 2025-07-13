@@ -246,7 +246,7 @@ arp # (
 
 eth_Arbiter  eth_Arbiter_inst (
   .clk(gmii_rx_clk),
-  .rstn(sys_rst_n),
+  .rstn(eth_rstn_sync),
   .port0_req(arp_tx_req),
   .port0_done(arp_tx_done),
   .port0_sel(arp_tx_sel),
