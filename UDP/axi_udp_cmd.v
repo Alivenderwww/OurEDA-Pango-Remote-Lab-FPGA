@@ -292,7 +292,7 @@ always @(posedge gmii_rx_clk ) begin
         endcase
     end
 end
-udp_cmd_fifo u_sync_fifo_64x33b_cmd (
+udp_cmd_fifo u_sync_fifo_512x33b_cmd (
     .clk             (gmii_rx_clk  ),              // input
     .rst             (~rstn        ),              // input
     .wr_en           (cmd_fifo_wr_en    ),            // input
@@ -340,7 +340,7 @@ always @(posedge gmii_rx_clk ) begin
         end
     end
 end
-wr_addr_fifo u_sync_fifo_64x64b_wraddr (
+wr_addr_fifo u_sync_fifo_512x64b_wraddr (
   .clk             (gmii_rx_clk  ),              // input
   .rst             (~rstn        ),              // input
   .wr_en           ( wraddr_fifo_wr_en   ),            // input
@@ -387,7 +387,7 @@ always @(posedge gmii_rx_clk ) begin
         end
     end
 end
-rd_addr_fifo u_sync_fifo_64x64b_rdaddr (
+rd_addr_fifo u_sync_fifo_512x64b_rdaddr (
     .clk             (gmii_rx_clk  ),              // input
     .rst             (~rstn        ),              // input
     .wr_en           ( rdaddr_fifo_wr_en   ),            // input
