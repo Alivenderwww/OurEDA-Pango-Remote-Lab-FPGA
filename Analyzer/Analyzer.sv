@@ -46,13 +46,13 @@ module Analazer #(
                                             10: 全局非与(~&)
                                             11: 全局非或(~|)
 0x0000_0010 - 0x0000_0017 R/W [5:0] 信号M的触发操作符，共8路
-                              [2:0] M's Operator: 000 ==
+                              [5:3] M's Operator: 000 ==
                                                   001 !=
                                                   010 <
                                                   011 <=
                                                   100 >
                                                   101 >=
-                              [5:3] M's Value:    000 LOGIC 0
+                              [2:0] M's Value:    000 LOGIC 0
                                                   001 LOGIC 1
                                                   010 X(not care)
                                                   011 RISE
@@ -63,7 +63,6 @@ module Analazer #(
 0x0100_0000 - 0x0100_03FF 只读 32位波形存储，得到的32位数据中低八位最先捕获，高八位最后捕获。
                                共1024个地址，每个地址存储4组，深度为4096。
 */
-
 wire analyzer_rstn_sync;
 rstn_sync rstn_sync_analyzer(clk, rstn, analyzer_rstn_sync);
 assign ANALYZER_SLAVE_CLK  = clk;
@@ -276,7 +275,7 @@ end
 //_______32'h1000001X_______//
 integer i;
 always @(posedge clk or negedge analyzer_rstn_sync) begin
-    if(~analyzer_rstn_sync) for(i=0;i<DIGITAL_IN_NUM;i=i+1) op[i] <= {3'b010,3'b000};
+    if(~analyzer_rstn_sync) for(i=0;i<DIGITAL_IN_NUM;i=i+1) op[i] <= {3'b000,3'b010};
     else if(ANALYZER_SLAVE_WR_DATA_VALID && ANALYZER_SLAVE_WR_DATA_READY && (wr_addr[31:4] == 32'h0000_001))begin
         for(i=0;i<DIGITAL_IN_NUM;i=i+1) if(wr_addr[3:0] == i)
             op[i] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[5:0]):(op[i]);
@@ -292,7 +291,8 @@ endgenerate
 
 
 always @(*) begin
-    if(trig_force) trig = 1;
+    if(~analyzer_on) trig = 0;
+    else if(trig_force) trig = 1;
     else case (global_trig_mode)
         GLOBAL_AND : trig = &multi_trig;
         GLOBAL_OR  : trig = |multi_trig;

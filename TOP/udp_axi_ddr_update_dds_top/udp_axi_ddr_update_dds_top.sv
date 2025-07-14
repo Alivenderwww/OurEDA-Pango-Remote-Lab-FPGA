@@ -22,7 +22,7 @@ output wire [7:0]  da_data      ,
 output wire        ad_clk       ,
 // input  wire [7:0]  ad_data      ,
 // analyzer io
-input  wire [7:0]  digital_in   ,
+// input  wire [7:0]  digital_in   ,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
@@ -785,7 +785,7 @@ Analazer #(
 )S9(
 	.clk                          	( clk_5M              ),
 	.rstn                         	( sys_rstn            ),
-	.digital_in                   	( digital_in          ),
+	.digital_in                   	( 8'b0                ),
 	.ANALYZER_SLAVE_CLK           	( S_CLK          [9]  ),
 	.ANALYZER_SLAVE_RSTN          	( S_RSTN         [9]  ),
 	.ANALYZER_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [9]  ),
