@@ -33,9 +33,9 @@ module hsst_axi_slave (
     output reg          SLAVE_RD_ADDR_READY,
     output wire [4-1:0] SLAVE_RD_BACK_ID   ,
 
-    output wire [31:0]  SLAVE_RD_DATA      ,
-    output wire [ 1:0]  SLAVE_RD_DATA_RESP ,
-    output wire         SLAVE_RD_DATA_LAST ,
+    output wire [31:0]  SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="1" */,
+    output wire [ 1:0]  SLAVE_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="1" */,
+    output wire         SLAVE_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="1" */,
     output wire         SLAVE_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="1" */,
     input  wire         SLAVE_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="1" */
 );
@@ -77,11 +77,11 @@ rstn_sync rstn_sync_hsst_txclk(txclk_0, rstn, rstn_sync_for_txclk);
 // assign data_last_0 = debugtest_top_inst.sfp_txdatalast;
 // assign data_valid_0 = debugtest_top_inst.sfp_txdatavalid;
 //
-reg rd_fifo_data_valid;
-wire [31:0] sfpfifo_data;
-wire sfpfifo_data_last;
-reg rd_local_data_valid;
-reg rd_local_data_last;
+reg rd_fifo_data_valid/* synthesis PAP_MARK_DEBUG="1" */;
+wire [31:0] sfpfifo_data/* synthesis PAP_MARK_DEBUG="1" */;
+wire sfpfifo_data_last/* synthesis PAP_MARK_DEBUG="1" */;
+reg rd_local_data_valid/* synthesis PAP_MARK_DEBUG="1" */;
+reg rd_local_data_last/* synthesis PAP_MARK_DEBUG="1" */;
 //txtask
 localparam IDLE    = 0;
 localparam WRHEAD  = 1;
@@ -102,10 +102,10 @@ reg [31:0] localtask_wr_cmd;
 localparam RXPORTDATA = 1;
 localparam RXCMD = 2;
 reg [ 7:0] sfprxstate/* synthesis PAP_MARK_DEBUG="1" */;
-reg [31:0] sfprxstate_cmd;
-reg        sfprxtask;
-reg [31:0] debugger_statue;
-reg        trigdone_clear;
+reg [31:0] sfprxstate_cmd/* synthesis PAP_MARK_DEBUG="1" */;
+reg        sfprxtask/* synthesis PAP_MARK_DEBUG="1" */;
+reg [31:0] debugger_statue/* synthesis PAP_MARK_DEBUG="1" */;
+reg        trigdone_clear/* synthesis PAP_MARK_DEBUG="1" */;
 //fifo
 wire       sfpfifo_wren;
 wire sfpfifo_almostempty;
