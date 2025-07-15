@@ -47,6 +47,8 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
         CCD_HSYNC_d1 <= CCD_HSYNC;
         CCD_HSYNC_d2 <= CCD_HSYNC_d1;
         CCD_DATA_d1 <= CCD_DATA;
+        // if(CCD_VSYNC_neg) CCD_DATA_d1 <= 0;
+        // else CCD_DATA_d1 <= (~CCD_VSYNC)&&(CCD_HSYNC)?(CCD_DATA_d1+1):(CCD_DATA_d1);
     end
 end
 

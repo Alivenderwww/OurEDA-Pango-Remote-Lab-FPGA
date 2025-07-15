@@ -1,6 +1,8 @@
 module arp #(
     parameter BOARD_MAC = 48'h12_34_56_78_9a_bc,
-    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0}
+    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0},
+    parameter DES_MAC  = 48'h2c_f0_5d_32_f1_07,
+    parameter DES_IP   = {8'd0,8'd0,8'd0,8'd0}
 ) (
     input                rstn        , //复位信号，低电平有效
     //GMII接口 
@@ -13,13 +15,12 @@ module arp #(
     input                arp_tx_sel  ,
     output               arp_tx_done ,
     output               arp_tx_req  ,
-    output               arp_working
+    output               arp_working ,
+    output      [47:0]   dec_mac     ,
+    output               refresh     
 );
-    
 
-wire [47:0]   dec_mac ;
 wire [31:0]   dec_ip  ; 
-wire          refresh ; //arp接收成功
 wire          crc_en  ; //CRC开始校验使能
 wire          crc_clr ; //CRC数据复位信号
 wire  [7:0]   crc_d8  ; //输入待校验8位数据
@@ -30,7 +31,9 @@ assign crc_d8 = gmii_txd;
 
 arp_rx # (
     .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP)
+    .BOARD_IP(BOARD_IP),
+    .DES_MAC(DES_MAC),
+    .DES_IP(DES_IP)
   )
   arp_rx_inst (
     .rstn(rstn),

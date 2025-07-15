@@ -9,6 +9,8 @@
 
 module udp(
     input                rst_n       , //复位信号，低电平有效
+    input        [47:0]  dec_mac     , //上位机MAC地址
+    input                refresh     ,
     //GMII接口
     input                gmii_rx_clk , //GMII接收数据时钟
     input                gmii_rx_dv  , //GMII输入数据有效信号
@@ -96,7 +98,9 @@ udp_tx
     .gmii_tx_en      (gmii_tx_en ),
     .gmii_txd        (gmii_txd   ),
     .crc_en          (crc_en     ),
-    .crc_clr         (crc_clr    )
+    .crc_clr         (crc_clr    ),
+    .dec_mac         (dec_mac    ),
+    .refresh         (refresh    )
     );
 
 //以太网发送CRC校验模块

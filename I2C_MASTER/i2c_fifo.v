@@ -11,7 +11,6 @@ module i2c_fifo #(
 
     input  wire rd_en,
     output  reg [7:0] rd_data,
-    output  reg rd_data_valid,
     output wire rd_empty,
     input  wire rd_snapshot, //读快照信号
     input  wire rd_rollback  //读回退信号
@@ -23,13 +22,6 @@ reg [FIFO_DEPTH:0] rd_ptr, rd_ptr_snapshot; //读指针
 
 assign rd_empty = (wr_ptr == rd_ptr);
 assign wr_full  = (wr_ptr[FIFO_DEPTH] != rd_ptr[FIFO_DEPTH]) && (wr_ptr[FIFO_DEPTH-1:0] == rd_ptr[FIFO_DEPTH-1:0]);
-
-always @(posedge clk or negedge rstn) begin
-    if(~rstn) rd_data_valid <= 0;
-    else if(rd_rollback || (rd_en && (~rd_empty))) rd_data_valid <= 0;
-    else if(~rd_empty) rd_data_valid <= 1;
-    else rd_data_valid <= 0;
-end
 
 always @(posedge clk or negedge rstn) begin
     if(~rstn) wr_ptr_snapshot <= 0;

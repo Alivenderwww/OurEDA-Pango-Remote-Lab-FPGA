@@ -75,6 +75,8 @@ wire            gmii_tx_en_udp;
 wire            gmii_tx_en_arp;
 wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
+wire    [47:0]  dec_mac;
+wire            refresh;
 
 wire udp_tx_sel;
 wire udp_tx_req;
@@ -141,6 +143,8 @@ udp #(
     )
    u_udp(
     .rst_n         (eth_rstn_sync   ),
+    .dec_mac       (dec_mac         ),
+    .refresh       (refresh         ),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmiiΩ” ’
     .gmii_rx_dv    (gmii_rx_dv  ),
@@ -227,7 +231,9 @@ axi_udp_cmd axi_udp_cmd_inst(
 
 arp # (
     .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP)
+    .BOARD_IP(BOARD_IP),
+    .DES_MAC(DES_MAC),
+    .DES_IP(DES_IP)
   )
   arp_inst (
     .rstn(eth_rstn_sync),
@@ -240,7 +246,9 @@ arp # (
     .arp_tx_sel(arp_tx_sel),
     .arp_tx_done(arp_tx_done),
     .arp_tx_req(arp_tx_req),
-    .arp_working(arp_working)
+    .arp_working(arp_working),
+    .dec_mac(dec_mac),
+    .refresh(refresh)
   );
 
 

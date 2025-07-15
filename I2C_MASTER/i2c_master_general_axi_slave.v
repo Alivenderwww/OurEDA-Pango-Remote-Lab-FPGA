@@ -81,7 +81,6 @@ wire       i2c_wr_fifo_wr_snapshot  ;
 wire       i2c_wr_fifo_wr_rollback  ;
 wire       i2c_wr_fifo_rd_en        ;
 wire [7:0] i2c_wr_fifo_rd_data      ;
-wire       i2c_wr_fifo_rd_data_valid;
 wire       i2c_wr_fifo_rd_empty     ;
 wire       i2c_wr_fifo_rd_snapshot  ;
 wire       i2c_wr_fifo_rd_rollback  ;
@@ -93,7 +92,6 @@ wire       i2c_rd_fifo_wr_snapshot  ;
 wire       i2c_rd_fifo_wr_rollback  ;
 wire       i2c_rd_fifo_rd_en        ;
 wire [7:0] i2c_rd_fifo_rd_data      ;
-wire       i2c_rd_fifo_rd_data_valid;
 wire       i2c_rd_fifo_rd_empty     ;
 wire       i2c_rd_fifo_rd_snapshot  ;
 wire       i2c_rd_fifo_rd_rollback  ;
@@ -260,9 +258,8 @@ end
 
 // 读数据VALID选通
 always @(*) begin
-    if(~I2C_MASTER_AXI_SLAVE_RSTN_SYNC) SLAVE_RD_DATA_VALID <= 0;
-    else if(cu_rdchannel_st == ST_RD_DATA) case (rd_addr)
-        ADDR_I2C_FIFO_RD: SLAVE_RD_DATA_VALID <= ((i2c_rd_fifo_rd_data_valid) && (~i2c_rd_fifo_rd_empty)) || (rd_transcript_error || rd_transcript_error_reg);
+    if(cu_rdchannel_st == ST_RD_DATA) case (rd_addr)
+        ADDR_I2C_FIFO_RD: SLAVE_RD_DATA_VALID <= (~i2c_rd_fifo_rd_empty) || (rd_transcript_error || rd_transcript_error_reg);
         default: SLAVE_RD_DATA_VALID <= 1;
     endcase else SLAVE_RD_DATA_VALID <= 0;
 end
@@ -308,7 +305,7 @@ always @(*) begin
 end
 
 i2c_fifo #(
-	.FIFO_DEPTH 	(10))
+	.FIFO_DEPTH 	(13))
 i2c_wr_fifo(
 	.clk           	( clk                      ),
 	.rstn          	( I2C_MASTER_AXI_SLAVE_RSTN_SYNC),
@@ -319,13 +316,12 @@ i2c_wr_fifo(
 	.wr_rollback   	( i2c_wr_fifo_wr_rollback  ),//不接
 	.rd_en         	( i2c_wr_fifo_rd_en        ),//接i2c写进去的
 	.rd_data       	( i2c_wr_fifo_rd_data      ),//接i2c写进去的
-	.rd_data_valid 	( i2c_wr_fifo_rd_data_valid),//不接
 	.rd_empty      	( i2c_wr_fifo_rd_empty     ),//不接
 	.rd_snapshot   	( i2c_wr_fifo_rd_snapshot  ),//done就拉高
 	.rd_rollback   	( i2c_wr_fifo_rd_rollback  ) //rollback且处于写状态就拉高
 );
 
-assign i2c_wr_fifo_wr_en = SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && (wr_addr == ADDR_I2C_FIFO_WR);
+assign i2c_wr_fifo_wr_en = SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && (wr_addr == ADDR_I2C_FIFO_WR) && (cu_wrchannel_st == ST_WR_DATA);
 assign i2c_wr_fifo_wr_data = SLAVE_WR_DATA[7:0];
 assign i2c_wr_fifo_wr_snapshot = cmd_done;
 assign i2c_wr_fifo_wr_rollback = 1'b0;
@@ -344,7 +340,6 @@ i2c_rd_fifo(
 	.wr_rollback   	( i2c_rd_fifo_wr_rollback   ),//rollback且处于读状态就拉高
 	.rd_en         	( i2c_rd_fifo_rd_en         ),//接AXI_READY&AXI_VALID信号
 	.rd_data       	( i2c_rd_fifo_rd_data       ),//接AXI_DATA信号
-	.rd_data_valid 	( i2c_rd_fifo_rd_data_valid ),//接AXI_VALID信号
 	.rd_empty      	( i2c_rd_fifo_rd_empty      ),//接AXI_VALID信号
 	.rd_snapshot   	( i2c_rd_fifo_rd_snapshot   ),//done就拉高
 	.rd_rollback   	( i2c_rd_fifo_rd_rollback   ) //不接
@@ -352,7 +347,7 @@ i2c_rd_fifo(
 
 assign i2c_rd_fifo_wr_snapshot = cmd_done;
 assign i2c_rd_fifo_wr_rollback = cmd_rollback;
-assign i2c_rd_fifo_rd_en = SLAVE_RD_DATA_VALID && SLAVE_RD_DATA_READY;
+assign i2c_rd_fifo_rd_en = SLAVE_RD_DATA_VALID && SLAVE_RD_DATA_READY && (rd_addr == ADDR_I2C_FIFO_RD) && (cu_rdchannel_st == ST_RD_DATA);
 assign i2c_rd_fifo_rd_snapshot = cmd_done;
 assign i2c_rd_fifo_rd_rollback = 1'b0;
 

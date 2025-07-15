@@ -30,7 +30,9 @@ module udp_tx#(
     output  reg          gmii_tx_en /* synthesis PAP_MARK_DEBUG=”true” */, //GMII输出数据有效信号
     output  reg  [7:0]   gmii_txd   /* synthesis PAP_MARK_DEBUG=”true” */, //GMII输出数据
     output  reg          crc_en     , //CRC开始校验使能
-    output  reg          crc_clr      //CRC数据复位信号
+    output  reg          crc_clr    , //CRC数据复位信号
+    input        [47:0]  dec_mac    ,
+    input                refresh
     );
 
 ////parameter define
@@ -42,6 +44,7 @@ module udp_tx#(
 //parameter  DES_MAC   = 48'hff_ff_ff_ff_ff_ff;
 ////目的IP地址
 //parameter  DES_IP    = {8'd0,8'd0,8'd0,8'd0};
+////
 localparam  st_wait      = 7'b000_0000; //等待仲裁器响应
 localparam  st_idle      = 7'b000_0001; //初始状态，等待开始发送信号
 localparam  st_check_sum = 7'b000_0010; //IP首部校验和
@@ -51,7 +54,10 @@ localparam  st_ip_head   = 7'b001_0000; //发送IP首部+UDP首部
 localparam  st_tx_data   = 7'b010_0000; //发送数据
 localparam  st_crc       = 7'b100_0000; //发送CRC校验值
 
-localparam  ETH_TYPE     = 16'h0800  ;  //以太网协议类型 IP协议
+localparam  ETH_TYPE      = 16'h0800  ;  //以太网协议类型 IP协议
+localparam  SOURCE_PORT   = 16'd1234; //源端口号
+localparam  DEST_PORT_MIN = 16'd1234; //目的端口号范围最小值
+localparam  DEST_PORT_MAX = 16'd1244; //目的端口号范围最大值
 //以太网数据最小46个字节，IP首部20个字节+UDP首部8个字节
 //所以数据至少46-20-8=18个字节
 localparam  MIN_DATA_NUM = 16'd18    ;
@@ -77,6 +83,8 @@ reg  [1:0]   tx_bit_sel     ;
 reg  [15:0]  data_cnt       ; //发送数据个数计数器
 reg          tx_done_t      ;
 reg  [4:0]   real_add_cnt   ; //以太网数据实际多发的字节数
+reg  [15:0]  des_port       ; //目的端口号
+reg  [47:0]  des_mac        ;
 
 //wire define
 wire         pos_start_en    ;//开始发送数据上升沿
@@ -84,6 +92,12 @@ wire [15:0]  real_tx_data_num;//实际发送的字节数(以太网最少字节要求)
 //*****************************************************
 //**                    main code
 //*****************************************************
+always @(posedge clk or negedge rst_n) begin
+    if(!rst_n) des_mac <= DES_MAC;
+    else if(refresh) des_mac <= dec_mac;
+    // else des_mac <= des_mac;
+    else des_mac <= dec_mac;
+end
 
 assign  pos_start_en = (~start_en_d1) & start_en_d0;
 assign  real_tx_data_num = (tx_data_num >= MIN_DATA_NUM)
@@ -209,6 +223,7 @@ always @(posedge clk or negedge rst_n) begin
         real_add_cnt <= 5'd0;
         udp_tx_working <= 0;
         udp_tx_req <= 0;
+        des_port <= DEST_PORT_MIN; //初始化目的端口号
         //初始化数组
         //前导码 7个8'h55 + 1个8'hd5
         preamble[0] <= 8'h55;
@@ -220,12 +235,12 @@ always @(posedge clk or negedge rst_n) begin
         preamble[6] <= 8'h55;
         preamble[7] <= 8'hd5;
         //目的MAC地址
-        eth_head[0] <= DES_MAC[47:40];
-        eth_head[1] <= DES_MAC[39:32];
-        eth_head[2] <= DES_MAC[31:24];
-        eth_head[3] <= DES_MAC[23:16];
-        eth_head[4] <= DES_MAC[15:8];
-        eth_head[5] <= DES_MAC[7:0];
+        eth_head[0] <= des_mac[47:40];
+        eth_head[1] <= des_mac[39:32];
+        eth_head[2] <= des_mac[31:24];
+        eth_head[3] <= des_mac[23:16];
+        eth_head[4] <= des_mac[15:8];
+        eth_head[5] <= des_mac[7:0];
         //源MAC地址
         eth_head[6] <= BOARD_MAC[47:40];
         eth_head[7] <= BOARD_MAC[39:32];
@@ -261,7 +276,9 @@ always @(posedge clk or negedge rst_n) begin
                     //目的IP地址
                     ip_head[4] <= DES_IP;
                     //16位源端口号：1234  16位目的端口号：1234
-                    ip_head[5] <= {16'd1234,16'd1234};
+                    ip_head[5] <= {SOURCE_PORT,des_port};
+                    des_port <= (des_port < DEST_PORT_MAX) ? (des_port + 1'b1) : (DEST_PORT_MIN);
+                    // des_port <= DEST_PORT_MIN;
                     //16位udp长度，16位udp校验和
                     ip_head[6] <= {udp_num,16'h0000};
                 end
