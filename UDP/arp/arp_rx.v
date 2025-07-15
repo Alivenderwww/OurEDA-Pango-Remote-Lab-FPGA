@@ -98,7 +98,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
         arp_rx_des_mac <= 0;
         arp_rx_src_mac <= DES_MAC;
         arp_rx_des_ip  <= 0;
-        arp_rx_src_ip  <= 0;
+        arp_rx_src_ip  <= DES_IP;
     end
     else begin
         skip_en <= 0;

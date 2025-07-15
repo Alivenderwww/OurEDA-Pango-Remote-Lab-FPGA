@@ -32,6 +32,7 @@ module udp_tx#(
     output  reg          crc_en     , //CRC开始校验使能
     output  reg          crc_clr    , //CRC数据复位信号
     input        [47:0]  dec_mac    ,
+    input        [31:0]  dec_ip     ,
     input                refresh
     );
 
@@ -85,7 +86,7 @@ reg          tx_done_t      ;
 reg  [4:0]   real_add_cnt   ; //以太网数据实际多发的字节数
 reg  [15:0]  des_port       ; //目的端口号
 //reg  [47:0]  des_mac        ;
-
+reg  [31:0]  dec_ip_reg     ;
 //wire define
 wire         pos_start_en    ;//开始发送数据上升沿
 wire [15:0]  real_tx_data_num;//实际发送的字节数(以太网最少字节要求)
@@ -107,6 +108,7 @@ always @(posedge clk or negedge rst_n) begin
         eth_head[3] <= DES_MAC[23:16];
         eth_head[4] <= DES_MAC[15:8];
         eth_head[5] <= DES_MAC[7:0];
+        dec_ip_reg  <= DES_IP;
     end
     else if(refresh)begin
         eth_head[0] <= dec_mac[47:40];
@@ -115,6 +117,16 @@ always @(posedge clk or negedge rst_n) begin
         eth_head[3] <= dec_mac[23:16];
         eth_head[4] <= dec_mac[15:8];
         eth_head[5] <= dec_mac[7:0];
+        dec_ip_reg  <= dec_ip;
+    end
+    else begin
+        eth_head[0] <= eth_head[0];
+        eth_head[1] <= eth_head[1];
+        eth_head[2] <= eth_head[2];
+        eth_head[3] <= eth_head[3];
+        eth_head[4] <= eth_head[4];
+        eth_head[5] <= eth_head[5];
+        dec_ip_reg  <= dec_ip_reg ;
     end
 end
 assign  pos_start_en = (~start_en_d1) & start_en_d0;

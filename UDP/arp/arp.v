@@ -17,10 +17,11 @@ module arp #(
     output               arp_tx_req  ,
     output               arp_working ,
     output      [47:0]   dec_mac     ,
+    output      [31:0]   dec_ip      ,
     output               refresh     
 );
 
-wire [31:0]   dec_ip  ; 
+//wire [31:0]   dec_ip  ; 
 wire          crc_en  ; //CRC开始校验使能
 wire          crc_clr ; //CRC数据复位信号
 wire  [7:0]   crc_d8  ; //输入待校验8位数据

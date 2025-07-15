@@ -76,6 +76,7 @@ wire            gmii_tx_en_arp;
 wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
 wire    [47:0]  dec_mac;
+wire    [31:0]   dec_ip; 
 wire            refresh;
 
 wire udp_tx_sel;
@@ -144,6 +145,7 @@ udp #(
    u_udp(
     .rst_n         (eth_rstn_sync   ),
     .dec_mac       (dec_mac         ),
+    .dec_ip        (dec_ip          ),
     .refresh       (refresh         ),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmiiΩ” ’
@@ -248,6 +250,7 @@ arp # (
     .arp_tx_req(arp_tx_req),
     .arp_working(arp_working),
     .dec_mac(dec_mac),
+    .dec_ip(dec_ip),
     .refresh(refresh)
   );
 

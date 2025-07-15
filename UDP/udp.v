@@ -10,6 +10,7 @@
 module udp(
     input                rst_n       , //复位信号，低电平有效
     input        [47:0]  dec_mac     , //上位机MAC地址
+    input        [31:0]  dec_ip      ,
     input                refresh     ,
     //GMII接口
     input                gmii_rx_clk , //GMII接收数据时钟
@@ -100,6 +101,7 @@ udp_tx
     .crc_en          (crc_en     ),
     .crc_clr         (crc_clr    ),
     .dec_mac         (dec_mac    ),
+    .dec_ip          (dec_ip     ),
     .refresh         (refresh    )
     );
 
