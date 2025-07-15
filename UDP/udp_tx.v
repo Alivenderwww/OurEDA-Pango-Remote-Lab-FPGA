@@ -84,7 +84,7 @@ reg  [15:0]  data_cnt       ; //发送数据个数计数器
 reg          tx_done_t      ;
 reg  [4:0]   real_add_cnt   ; //以太网数据实际多发的字节数
 reg  [15:0]  des_port       ; //目的端口号
-reg  [47:0]  des_mac        ;
+//reg  [47:0]  des_mac        ;
 
 //wire define
 wire         pos_start_en    ;//开始发送数据上升沿
@@ -92,13 +92,31 @@ wire [15:0]  real_tx_data_num;//实际发送的字节数(以太网最少字节要求)
 //*****************************************************
 //**                    main code
 //*****************************************************
-always @(posedge clk or negedge rst_n) begin
-    if(!rst_n) des_mac <= DES_MAC;
-    else if(refresh) des_mac <= dec_mac;
-    // else des_mac <= des_mac;
-    else des_mac <= dec_mac;
-end
+// always @(posedge clk or negedge rst_n) begin
+//     if(!rst_n) des_mac <= DES_MAC;
+//     else if(refresh) des_mac <= dec_mac;
+//     // else des_mac <= des_mac;
+//     else des_mac <= dec_mac;
+// end
 
+always @(posedge clk or negedge rst_n) begin
+    if(~rst_n)begin
+        eth_head[0] <= DES_MAC[47:40];
+        eth_head[1] <= DES_MAC[39:32];
+        eth_head[2] <= DES_MAC[31:24];
+        eth_head[3] <= DES_MAC[23:16];
+        eth_head[4] <= DES_MAC[15:8];
+        eth_head[5] <= DES_MAC[7:0];
+    end
+    else if(refresh)begin
+        eth_head[0] <= dec_mac[47:40];
+        eth_head[1] <= dec_mac[39:32];
+        eth_head[2] <= dec_mac[31:24];
+        eth_head[3] <= dec_mac[23:16];
+        eth_head[4] <= dec_mac[15:8];
+        eth_head[5] <= dec_mac[7:0];
+    end
+end
 assign  pos_start_en = (~start_en_d1) & start_en_d0;
 assign  real_tx_data_num = (tx_data_num >= MIN_DATA_NUM)
                            ? tx_data_num : MIN_DATA_NUM;
@@ -235,12 +253,12 @@ always @(posedge clk or negedge rst_n) begin
         preamble[6] <= 8'h55;
         preamble[7] <= 8'hd5;
         //目的MAC地址
-        eth_head[0] <= des_mac[47:40];
-        eth_head[1] <= des_mac[39:32];
-        eth_head[2] <= des_mac[31:24];
-        eth_head[3] <= des_mac[23:16];
-        eth_head[4] <= des_mac[15:8];
-        eth_head[5] <= des_mac[7:0];
+        // eth_head[0] <= des_mac[47:40];
+        // eth_head[1] <= des_mac[39:32];
+        // eth_head[2] <= des_mac[31:24];
+        // eth_head[3] <= des_mac[23:16];
+        // eth_head[4] <= des_mac[15:8];
+        // eth_head[5] <= des_mac[7:0];
         //源MAC地址
         eth_head[6] <= BOARD_MAC[47:40];
         eth_head[7] <= BOARD_MAC[39:32];
