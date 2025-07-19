@@ -32,6 +32,8 @@ module fifo_camera_data
     almost_full     ,  // output write almost full
     rd_empty        ,  // output read empty
     
+    rd_water_level  ,  // output read water level
+    
     almost_empty       // output write almost empty
    );
 
@@ -72,7 +74,7 @@ localparam FAB_REG = 0 ; // @IPC bool
 
 localparam FULL_WL_EN = 0 ; // @IPC bool
 
-localparam EMPTY_WL_EN = 0 ; // @IPC bool
+localparam EMPTY_WL_EN = 1 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "1" ; // @IPC bool
 
@@ -104,6 +106,8 @@ input                          rd_rst          ;    // input read reset
 output                         rd_empty        ;    // output read empty
 
 output                         almost_empty    ;    // output read water level
+
+output [RD_DEPTH_WIDTH : 0]    rd_water_level  ;
 
 
 wire  [WR_DATA_WIDTH-1 : 0]                   wr_data         ;    // input write data

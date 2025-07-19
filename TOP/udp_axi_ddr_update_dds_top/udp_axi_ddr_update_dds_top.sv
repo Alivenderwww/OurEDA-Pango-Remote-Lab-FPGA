@@ -1,12 +1,12 @@
 module udp_axi_ddr_update_top #(
-    parameter BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
+    parameter ADMIN_BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
     // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
-    parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.9  8'd169,8'd254,8'd103,8'd006
+    parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0  8'd169,8'd254,8'd103,8'd006
     // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    parameter DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
+    parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
     // parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
-    // parameter DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
-    parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
+    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
+    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
     // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
 )(
 //system io
@@ -24,7 +24,9 @@ output wire [7:0]  da_data      ,
 output wire        ad_clk       ,
 // input  wire [7:0]  ad_data      ,
 // analyzer io
-// input  wire [7:0]  digital_in   ,
+input  wire [7:0]  digital_in   ,
+output wire        test_capture0,
+output wire        test_capture1,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
@@ -87,14 +89,10 @@ wire [47:0]  eeprom_host_mac ;
 wire [31:0]  eeprom_board_ip ;
 wire [47:0]  eeprom_board_mac;
 
-wire [31:0]  host_ip       ;
-wire [47:0]  host_mac      ;
-wire [31:0]  board_ip      ;
-wire [47:0]  board_mac     ;
-
-wire [31:0] OV_STORE_BASE_ADDR;
-wire [31:0] OV_STORE_NUM      ;
-wire        OV_capture_on     ;
+wire [31:0] DMA0_START_WRITE_ADDR;
+wire [31:0] DMA0_END_WRITE_ADDR  ;
+wire        DMA0_capture_on     ;
+wire		DMA0_capture_rst    ;
 wire [15:0] OV_expect_width   ; //期望宽度
 wire [15:0] OV_expect_height  ; //期望高度
 
@@ -108,6 +106,13 @@ assign sda_eeprom = (sda_eeprom_enable)?(sda_eeprom_out):(1'bz);
 
 assign scl_camera = (scl_camera_enable)?(scl_camera_out):(1'bz);
 assign sda_camera = (sda_camera_enable)?(sda_camera_out):(1'bz);
+
+assign test_capture0 = scl_camera;
+assign test_capture1 = sda_camera;
+
+wire timestamp_rst;
+wire booting;
+wire admin_mode;
 
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 4;
@@ -225,10 +230,10 @@ wire OV_ccd_rstn;
 assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
 
 axi_udp_master #(
-	.BOARD_MAC 	(BOARD_MAC),
-	.BOARD_IP  	(BOARD_IP ),
-	.DES_MAC   	(DES_MAC  ),
-	.DES_IP    	(DES_IP   )
+	.ADMIN_BOARD_MAC 	(ADMIN_BOARD_MAC),
+	.ADMIN_BOARD_IP  	(ADMIN_BOARD_IP ),
+	.ADMIN_DES_MAC   	(ADMIN_DES_MAC  ),
+	.ADMIN_DES_IP    	(ADMIN_DES_IP   )
 )M0(
 	.udp_in_rstn                ( udp_in_rstn     ),
 	.eth_rst_n                  (                 ),
@@ -239,6 +244,13 @@ axi_udp_master #(
 	.rgmii_tx_ctl         	    ( rgmii_tx_ctl    ),
 	.rgmii_txd            	    ( rgmii_txd       ),
     .udp_led                    ( udp_led         ),
+	.timestamp_rst              ( timestamp_rst   ),
+	.booting				    ( booting         ),
+	.admin_mode			        ( admin_mode      ),
+	.eeprom_des_ip              ( eeprom_host_ip  ),
+	.eeprom_des_mac             ( eeprom_host_mac ),
+	.eeprom_board_ip            ( eeprom_board_ip ),
+	.eeprom_board_mac           ( eeprom_board_mac),
 	.ETH_MASTER_CLK           	( M_CLK          [0]),
 	.ETH_MASTER_RSTN          	( M_RSTN         [0]),
 	.ETH_MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]),
@@ -271,16 +283,17 @@ axi_udp_master #(
 );
 
 ov5640_axi_master M1(
-	.clk                  	( clk_120M            ),
-	.rstn                 	( sys_rstn            ),
-	.CCD_RSTN              	( CCD_RSTN            ),
-	.CCD_PCLK             	( CCD_PCLK            ),
-	.CCD_VSYNC            	( CCD_VSYNC           ),
-	.CCD_HSYNC            	( CCD_HSYNC           ),
-	.CCD_DATA             	( CCD_DATA            ),
-	.STORE_BASE_ADDR      	( OV_STORE_BASE_ADDR  ),//START_ADDR[0]       
-	.STORE_NUM            	( OV_STORE_NUM        ),//((640*480)*16)/32   
-	.capture_on		 	    ( OV_capture_on       ),//1'b1             
+	.clk                  	( clk_120M              ),
+	.rstn                 	( sys_rstn              ),
+	.CCD_RSTN              	( CCD_RSTN              ),
+	.CCD_PCLK             	( CCD_PCLK              ),
+	.CCD_VSYNC            	( CCD_VSYNC             ),
+	.CCD_HSYNC            	( CCD_HSYNC             ),
+	.CCD_DATA             	( CCD_DATA              ),
+	.START_WRITE_ADDR      	( DMA0_START_WRITE_ADDR ),//START_ADDR[0]       
+	.END_WRITE_ADDR         ( DMA0_END_WRITE_ADDR   ),//((640*480)*16)/32   
+	.capture_on		    	( DMA0_capture_on       ),
+	.capture_rst		 	( DMA0_capture_rst      ),        
 	.expect_width         	( OV_expect_width     ),//期望宽度
 	.expect_height        	( OV_expect_height    ),//期望高度   
 	.MASTER_CLK           	( M_CLK          [1]  ),
@@ -727,21 +740,19 @@ sys_status_axi_slave S7(
 	.uid_low                    	( uid[31:0]             ),
 	.power_status               	( power_status          ),
 	.power_reset                	( power_reset           ),
-	.host_ip_addr			 	    ( host_ip               ),
-	.board_ip_addr			 	    ( board_ip              ),
-	.host_mac_addr			 	    ( host_mac              ),
-	.board_mac_addr			 	    ( board_mac             ),
-	.default_host_ip_addr           ( eeprom_host_ip        ),
-	.default_board_ip_addr          ( eeprom_board_ip       ),
-	.default_host_mac_addr          ( eeprom_host_mac       ),
-	.default_board_mac_addr         ( eeprom_board_mac      ),
-	.OV_STORE_BASE_ADDR				( OV_STORE_BASE_ADDR    ),
-	.OV_STORE_NUM      				( OV_STORE_NUM          ),
+	.eeprom_host_ip_addr            ( eeprom_host_ip        ),
+	.eeprom_board_ip_addr           ( eeprom_board_ip       ),
+	.eeprom_host_mac_addr           ( eeprom_host_mac       ),
+	.eeprom_board_mac_addr          ( eeprom_board_mac      ),
+	.DMA0_START_WRITE_ADDR    		( DMA0_START_WRITE_ADDR     ),
+	.DMA0_END_WRITE_ADDR      		( DMA0_END_WRITE_ADDR       ),
+	.DMA0_capture_on			    ( DMA0_capture_on          ),
+	.DMA0_capture_rst 		        ( DMA0_capture_rst         ),
 	.OV_EXPECT_WIDTH			    ( OV_expect_width       ),
 	.OV_EXPECT_HEIGHT			    ( OV_expect_height      ),
-	.OV_capture_on					( OV_capture_on         ),
 	.OV_ccd_rstn					( OV_ccd_rstn           ),
-	.OV_ccd_pdn					    ( CCD_PDN               )
+	.OV_ccd_pdn					    ( CCD_PDN               ),
+	.ETH_timestamp_rst 			    ( timestamp_rst         )
 );
 
 dso_axi_slave #(
@@ -787,7 +798,7 @@ Analazer #(
 )S9(
 	.clk                          	( clk_5M              ),
 	.rstn                         	( sys_rstn            ),
-	.digital_in                   	( 8'b0                ),
+	.digital_in                   	( digital_in          ),
 	.ANALYZER_SLAVE_CLK           	( S_CLK          [9]  ),
 	.ANALYZER_SLAVE_RSTN          	( S_RSTN         [9]  ),
 	.ANALYZER_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [9]  ),
@@ -1117,18 +1128,26 @@ assign data_in[13]   = 8'b01010101;
 assign data_in[14]   = 8'b11110000;
 assign data_in[15]   = 8'b00001111;
 
-led8_btn u_led8_btn(
-	.clk      	( clk_50M   ),
-	.rstn     	( sys_rstn  ),
-	.data_in  	( data_in   ),
-	.btn_up   	( btn[0]    ),
-	.btn_down 	( btn[1]    ),
-	.led      	(           ),
-	.led_n    	( led8      ),
-	.bcd      	( led4      ),
-	.bcd_n    	(           )
-);
+// led8_btn u_led8_btn(
+// 	.clk      	( clk_50M   ),
+// 	.rstn     	( sys_rstn  ),
+// 	.data_in  	( data_in   ),
+// 	.btn_up   	( btn[0]    ),
+// 	.btn_down 	( btn[1]    ),
+// 	.led      	(           ),
+// 	.led_n    	( led8      ),
+// 	.bcd      	( led4      ),
+// 	.bcd_n    	(           )
+// );
 
+btn_led_boot_ctrl u_btn_led_boot_ctrl(
+	.clk        	( clk_50M     ),
+	.rstn       	( sys_rstn    ),
+	.btn        	( &btn        ),
+	.booting		( booting     ),
+	.admin_mode 	( admin_mode  ),
+	.led        	( led4        )
+);
 
 
 endmodule

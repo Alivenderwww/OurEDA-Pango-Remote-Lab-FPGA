@@ -1,14 +1,21 @@
 `timescale 1ns/1ps
 module axi_udp_master #(
-    parameter BOARD_MAC = 48'h12_34_56_78_9a_bc         ,
-    parameter BOARD_IP  = {8'd192,8'd168,8'd0,8'd234}   ,
-    parameter DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
-    parameter DES_IP    = {8'd169,8'd254,8'd103,8'd126} 
+    parameter ADMIN_BOARD_MAC = 48'h12_34_56_78_9a_bc         ,
+    parameter ADMIN_BOARD_IP  = {8'd192,8'd168,8'd0,8'd234}   ,
+    parameter ADMIN_DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
+    parameter ADMIN_DES_IP    = {8'd169,8'd254,8'd103,8'd126} 
 )(
-    input  wire        udp_in_rstn  , //连什么线？
-    output wire        eth_rst_n    ,
+    input  wire        udp_in_rstn     , //连什么线？
+    output wire        eth_rst_n       ,
 
-    output wire [7:0]  udp_led      ,
+    output wire [7:0]  udp_led         ,
+    input  wire        timestamp_rst   , //时间戳复位信号
+    input  wire        booting        , //系统上电后自动从EEPROM中获取板卡的IP地址
+    input  wire        admin_mode      ,
+    input  wire [31:0] eeprom_des_ip   ,
+    input  wire [47:0] eeprom_des_mac  ,
+    input  wire [31:0] eeprom_board_ip ,
+    input  wire [47:0] eeprom_board_mac,
     //以太网rgmii外部接口
     input  wire        rgmii_rxc    ,
     input  wire        rgmii_rx_ctl ,
@@ -53,7 +60,10 @@ module axi_udp_master #(
 );
 wire eth_rstn_sync;
 
-//assign eth_rst_n = eth_rstn_sync;
+wire [31:0] des_ip    = (admin_mode) ? ADMIN_DES_IP : eeprom_des_ip;
+wire [47:0] des_mac   = (admin_mode) ? ADMIN_DES_MAC : eeprom_des_mac;
+wire [31:0] board_ip  = (admin_mode) ? ADMIN_BOARD_IP : eeprom_board_ip;
+wire [47:0] board_mac = (admin_mode) ? ADMIN_BOARD_MAC : eeprom_board_mac;
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
@@ -76,8 +86,8 @@ wire            gmii_tx_en_arp;
 wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
 wire    [47:0]  dec_mac;
-wire    [31:0]   dec_ip; 
-wire            refresh;
+wire    [31:0]  dec_ip; 
+wire            arp_refresh;
 
 wire udp_tx_sel;
 wire udp_tx_req;
@@ -92,6 +102,8 @@ assign gmii_tx_en = arp_working ? gmii_tx_en_arp : gmii_tx_en_udp;
 assign gmii_txd   = arp_working ? gmii_txd_arp   : gmii_txd_udp;
 
 rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
+
+assign eth_rst_n = 1'b1; //暂时不使用复位信号
 //GMII接口与RGMII接口 互转
 gmii_to_rgmii u_gmii_to_rgmii(
     .gmii_rx_clk   (gmii_rx_clk  ),  //gmii接收
@@ -109,44 +121,17 @@ gmii_to_rgmii u_gmii_to_rgmii(
     .rgmii_txd     (rgmii_txd   )
 );
 
-// //UDP通信
-// udp #(
-//     .BOARD_MAC     (BOARD_MAC   ),      //参数例化
-//     .BOARD_IP      (BOARD_IP    ),
-//     .DES_MAC       (DES_MAC     ),
-//     .DES_IP        (DES_IP      )
-//     )
-//    u_udp(
-//     .rst_n         (eth_rstn_sync),
-
-//     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
-//     .gmii_rx_dv    (gmii_rx_dv  ),
-//     .gmii_rxd      (gmii_rxd    ),
-//     .gmii_tx_clk   (gmii_tx_clk ),//gmii发送
-//     .gmii_tx_en    (gmii_tx_en_udp  ),
-//     .gmii_txd      (gmii_txd_udp    ),
-
-//     .rec_pkt_done  (rec_pkt_done),  //数据包接收结束
-//     .rec_en        (rec_en      ),  //四字节接收使能
-//     .rec_data      (rec_data    ),  //接收数据
-//     .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
-//     .tx_start_en   (tx_start_en ),  //发送使能
-//     .tx_data       (tx_data     ),  //发送数据
-//     .tx_byte_num   (udp_tx_byte_num),  //发送长度
-//     .tx_done       (udp_tx_done ),  //发送结束
-//     .tx_req        (tx_data_req      )   //四字节发送使能
-// );
-udp #(
-    .BOARD_MAC     (BOARD_MAC),      //参数例化
-    .BOARD_IP      (BOARD_IP ),
-    .DES_MAC       (DES_MAC  ),
-    .DES_IP        (DES_IP   )
-    )
-   u_udp(
+udp u_udp(
     .rst_n         (eth_rstn_sync   ),
+
+    .des_ip        (des_ip          ),
+    .des_mac       (des_mac         ),
+    .board_ip      (board_ip        ),
+    .board_mac     (board_mac       ),
     .dec_mac       (dec_mac         ),
     .dec_ip        (dec_ip          ),
-    .refresh       (refresh         ),
+
+    .arp_refresh   (arp_refresh     ),
 
     .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
     .gmii_rx_dv    (gmii_rx_dv  ),
@@ -166,7 +151,8 @@ udp #(
     .udp_tx_req    (udp_tx_req),
     .udp_tx_working(udp_tx_working),
     .tx_done       (udp_tx_done ),  //发送结束
-    .tx_req        (tx_data_req      )   //四字节发送使能
+    .tx_req        (tx_data_req      ),  //四字节发送使能
+    .timestamp_rst (timestamp_rst)
     );
 
 axi_udp_cmd axi_udp_cmd_inst(
@@ -216,28 +202,7 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_tx_byte_num     (udp_tx_byte_num)
 );
 
-// arp # (
-//     .BOARD_MAC(BOARD_MAC),
-//     .BOARD_IP(BOARD_IP)
-//   )
-//   arp_inst (
-//     .rstn(eth_rstn_sync),
-//     .gmii_rx_clk(gmii_rx_clk),
-//     .gmii_rx_dv(gmii_rx_dv),
-//     .gmii_rxd(gmii_rxd),
-//     .gmii_tx_clk(gmii_tx_clk),
-//     .gmii_tx_en(gmii_tx_en_arp),
-//     .gmii_txd(gmii_txd_arp),
-//     .arp_working(arp_working)
-//   );
-
-arp # (
-    .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP),
-    .DES_MAC(DES_MAC),
-    .DES_IP(DES_IP)
-  )
-  arp_inst (
+arp arp_inst (
     .rstn(eth_rstn_sync),
     .gmii_rx_clk(gmii_rx_clk),
     .gmii_rx_dv(gmii_rx_dv),
@@ -249,9 +214,15 @@ arp # (
     .arp_tx_done(arp_tx_done),
     .arp_tx_req(arp_tx_req),
     .arp_working(arp_working),
+
+    .des_ip(des_ip),
+    .des_mac(des_mac),
+    .board_ip(board_ip),
+    .board_mac(board_mac),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .refresh(refresh)
+
+    .arp_refresh(arp_refresh)
   );
 
 

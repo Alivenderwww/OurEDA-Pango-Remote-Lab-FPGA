@@ -1,15 +1,14 @@
-module arp_tx #(
-    parameter BOARD_MAC = 48'h12_34_56_78_9a_bc,
-    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0}
-) (
+module arp_tx (
     
     input   wire          rstn,
     input   wire          gmii_tx_clk,
     output  reg           gmii_tx_en,
     output  reg  [7:0]    gmii_txd,
+    input   wire [31:0]   board_ip,
+    input   wire [47:0]   board_mac,
     input   wire [47:0]   dec_mac,
     input   wire [31:0]   dec_ip,
-    input   wire          refresh/* synthesis PAP_MARK_DEBUG=”true” */,
+    input   wire          arp_refresh/* synthesis PAP_MARK_DEBUG=”true” */,
 
     input        [31:0]  crc_data   , //CRC校验数据
     input         [7:0]  crc_next   , //CRC下次校验完成数据
@@ -39,51 +38,62 @@ localparam  st_tx_data    = 7'b001_0000; //发送数据
 localparam  st_tx_00      = 7'b010_0000; //发送补充数据
 localparam  st_crc        = 7'b100_0000; //发送CRC校验值
 localparam  st_wait       = 7'b000_0000; //等待仲裁器回应
-always @(posedge gmii_tx_clk or negedge rstn) begin
-    if(~rstn)begin
-        arp_data[ 0] <= BOARD_MAC[47:40];
-        arp_data[ 1] <= BOARD_MAC[39:32];
-        arp_data[ 2] <= BOARD_MAC[31:24];
-        arp_data[ 3] <= BOARD_MAC[23:16];
-        arp_data[ 4] <= BOARD_MAC[15: 8];
-        arp_data[ 5] <= BOARD_MAC[ 7: 0];
-        arp_data[ 6] <= BOARD_IP[31:24];
-        arp_data[ 7] <= BOARD_IP[23:16];
-        arp_data[ 8] <= BOARD_IP[15: 8];
-        arp_data[ 9] <= BOARD_IP[ 7: 0];
-        arp_data[10] <= 8'h00;
-        arp_data[11] <= 8'h00;
-        arp_data[12] <= 8'h00;
-        arp_data[13] <= 8'h00;
-        arp_data[14] <= 8'h00;
-        arp_data[15] <= 8'h00;
-        arp_data[16] <= 8'h00;
-        arp_data[17] <= 8'h00;
-        arp_data[18] <= 8'h00;
-        arp_data[19] <= 8'h00;
-    end
-    else if(refresh)begin
-        arp_data[ 0] <= BOARD_MAC[47:40];
-        arp_data[ 1] <= BOARD_MAC[39:32];
-        arp_data[ 2] <= BOARD_MAC[31:24];
-        arp_data[ 3] <= BOARD_MAC[23:16];
-        arp_data[ 4] <= BOARD_MAC[15: 8];
-        arp_data[ 5] <= BOARD_MAC[ 7: 0];
-        arp_data[ 6] <= BOARD_IP[31:24];
-        arp_data[ 7] <= BOARD_IP[23:16];
-        arp_data[ 8] <= BOARD_IP[15: 8];
-        arp_data[ 9] <= BOARD_IP[ 7: 0];
-        arp_data[10] <= dec_mac[47:40];
-        arp_data[11] <= dec_mac[39:32];
-        arp_data[12] <= dec_mac[31:24];
-        arp_data[13] <= dec_mac[23:16];
-        arp_data[14] <= dec_mac[15: 8];
-        arp_data[15] <= dec_mac[ 7: 0];
-        arp_data[16] <= dec_ip[31:24];
-        arp_data[17] <= dec_ip[23:16];
-        arp_data[18] <= dec_ip[15: 8];
-        arp_data[19] <= dec_ip[ 7: 0];
-    end
+always @(*) begin
+    //初始化数组
+    //前导码 7个8'h55 + 1个8'hd5
+    preamble[0] <= 8'h55;
+    preamble[1] <= 8'h55;
+    preamble[2] <= 8'h55;
+    preamble[3] <= 8'h55;
+    preamble[4] <= 8'h55;
+    preamble[5] <= 8'h55;
+    preamble[6] <= 8'h55;
+    preamble[7] <= 8'hd5;
+    arp_data[ 0] <= board_mac[47:40];
+    arp_data[ 1] <= board_mac[39:32];
+    arp_data[ 2] <= board_mac[31:24];
+    arp_data[ 3] <= board_mac[23:16];
+    arp_data[ 4] <= board_mac[15: 8];
+    arp_data[ 5] <= board_mac[ 7: 0];
+    arp_data[ 6] <= board_ip[31:24];
+    arp_data[ 7] <= board_ip[23:16];
+    arp_data[ 8] <= board_ip[15: 8];
+    arp_data[ 9] <= board_ip[ 7: 0];
+    arp_data[10] <= dec_mac[47:40];
+    arp_data[11] <= dec_mac[39:32];
+    arp_data[12] <= dec_mac[31:24];
+    arp_data[13] <= dec_mac[23:16];
+    arp_data[14] <= dec_mac[15: 8];
+    arp_data[15] <= dec_mac[ 7: 0];
+    arp_data[16] <= dec_ip[31:24];
+    arp_data[17] <= dec_ip[23:16];
+    arp_data[18] <= dec_ip[15: 8];
+    arp_data[19] <= dec_ip[ 7: 0];
+    //目的MAC地址
+    eth_head[0] <= 8'hFF;//广播
+    eth_head[1] <= 8'hFF;//广播
+    eth_head[2] <= 8'hFF;//广播
+    eth_head[3] <= 8'hFF;//广播
+    eth_head[4] <= 8'hFF;//广播
+    eth_head[5] <= 8'hFF;//广播
+    eth_head[6]  <= board_mac[47:40];
+    eth_head[7]  <= board_mac[39:32];
+    eth_head[8]  <= board_mac[31:24];
+    eth_head[9]  <= board_mac[23:16];
+    eth_head[10] <= board_mac[15:8] ;
+    eth_head[11] <= board_mac[7:0]  ;
+    //以太网类型
+    eth_head[12] <= ETH_TYPE[15:8];
+    eth_head[13] <= ETH_TYPE[7:0];
+    //arp报头
+    arp_head[0]  <= HARD_TYPE[15:8];
+    arp_head[1]  <= HARD_TYPE[ 7:0];
+    arp_head[2]  <= PROTOCOL_TYPE[15:8];
+    arp_head[3]  <= PROTOCOL_TYPE[ 7:0];
+    arp_head[4]  <= MAC_LENGTH;
+    arp_head[5]  <= IP_LENGTH;
+    arp_head[6]  <= OP_REP[15:8];
+    arp_head[7]  <= OP_REP[ 7:0];
 end
 
 
@@ -163,44 +173,7 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
         tx_done_t <= 0;
         arp_working <= 0;
         arp_tx_req <= 0;
-        //初始化数组
-        //前导码 7个8'h55 + 1个8'hd5
-        preamble[0] <= 8'h55;
-        preamble[1] <= 8'h55;
-        preamble[2] <= 8'h55;
-        preamble[3] <= 8'h55;
-        preamble[4] <= 8'h55;
-        preamble[5] <= 8'h55;
-        preamble[6] <= 8'h55;
-        preamble[7] <= 8'hd5;
-        //目的MAC地址
-        eth_head[0] <= 8'hFF;//广播
-        eth_head[1] <= 8'hFF;//广播
-        eth_head[2] <= 8'hFF;//广播
-        eth_head[3] <= 8'hFF;//广播
-        eth_head[4] <= 8'hFF;//广播
-        eth_head[5] <= 8'hFF;//广播
-        //源MAC地址
-        eth_head[6]  <= BOARD_MAC[47:40];
-        eth_head[7]  <= BOARD_MAC[39:32];
-        eth_head[8]  <= BOARD_MAC[31:24];
-        eth_head[9]  <= BOARD_MAC[23:16];
-        eth_head[10] <= BOARD_MAC[15:8] ;
-        eth_head[11] <= BOARD_MAC[7:0]  ;
-        //以太网类型
-        eth_head[12] <= ETH_TYPE[15:8];
-        eth_head[13] <= ETH_TYPE[7:0];
-        //arp报头
-        arp_head[0]  <= HARD_TYPE[15:8];
-        arp_head[1]  <= HARD_TYPE[ 7:0];
-        arp_head[2]  <= PROTOCOL_TYPE[15:8];
-        arp_head[3]  <= PROTOCOL_TYPE[ 7:0];
-        arp_head[4]  <= MAC_LENGTH;
-        arp_head[5]  <= IP_LENGTH;
-        arp_head[6]  <= OP_REP[15:8];
-        arp_head[7]  <= OP_REP[ 7:0];
-    end
-    else begin
+    end else begin
         skip_en <= 0;
         crc_en <= 1'b0;
         gmii_tx_en <= 1'b0;
@@ -210,7 +183,7 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
             st_idle : begin
                 tx_bit_sel <= 0;
                 arp_working <= 0;
-                if(refresh)
+                if(arp_refresh)
                     skip_en <= 1;
                 else 
                     skip_en <= 0;

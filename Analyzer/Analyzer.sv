@@ -250,9 +250,9 @@ end
 
 //_______32'h00000000_______//
 always @(posedge clk or negedge analyzer_rstn_sync) begin
+    if(~analyzer_rstn_sync) begin
         analyzer_on <= 0;
         trig_force  <= 0;
-    if(~analyzer_rstn_sync) begin
     end else if(ANALYZER_SLAVE_WR_DATA_VALID && ANALYZER_SLAVE_WR_DATA_READY && (wr_addr == 32'h0000_0000))begin
         analyzer_on <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[0]):(analyzer_on);
         trig_force  <= (ANALYZER_SLAVE_WR_STRB[1])?(ANALYZER_SLAVE_WR_DATA[8]):(trig_force);
@@ -310,6 +310,7 @@ Analyzer_datastore #(
 	.rstn       	( rstn        ),
 	.digital_in 	( digital_in  ),
 	.trig       	( trig        ),
+    .start          ( analyzer_on ),
 	.busy       	( busy        ),
 	.done       	( done        ),
 	.wave_addr  	( wave_addr   ),

@@ -20,7 +20,13 @@ reg [7:0] fifo_mem [0:(2**FIFO_DEPTH)-1]; //FIFO存储器
 reg [FIFO_DEPTH:0] wr_ptr, wr_ptr_snapshot; //写指针
 reg [FIFO_DEPTH:0] rd_ptr, rd_ptr_snapshot; //读指针
 
-assign rd_empty = (wr_ptr == rd_ptr);
+wire rd_empty_wire = (wr_ptr == rd_ptr);
+reg rd_empty_reg;
+always @(posedge clk or negedge rstn) begin
+    if(~rstn) rd_empty_reg <= 1;
+    else rd_empty_reg <= (wr_ptr == rd_ptr);
+end
+assign rd_empty = rd_empty_reg || rd_empty_wire;
 assign wr_full  = (wr_ptr[FIFO_DEPTH] != rd_ptr[FIFO_DEPTH]) && (wr_ptr[FIFO_DEPTH-1:0] == rd_ptr[FIFO_DEPTH-1:0]);
 
 always @(posedge clk or negedge rstn) begin
@@ -54,7 +60,7 @@ initial for(i=0; i<2**(FIFO_DEPTH)-1; i=i+1) fifo_mem[i] = 0;
 always @(posedge clk) begin
     if(rstn) begin
         if(wr_en && (~wr_full)) fifo_mem[wr_ptr[FIFO_DEPTH-1:0]] <= wr_data;
-        rd_data <= fifo_mem[rd_ptr[FIFO_DEPTH-1:0]];
+        rd_data <= fifo_mem[rd_ptr[FIFO_DEPTH-1:0] + rd_en];
     end
 end
 

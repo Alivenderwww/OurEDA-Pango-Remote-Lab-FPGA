@@ -47,16 +47,16 @@ assign DSO_SLAVE_RSTN = DSO_SLAVE_RSTN_SYNC;
 rstn_sync dso_rstn_sync(clk,rstn,DSO_SLAVE_RSTN_SYNC);
 
 /*
-0x0000_0000: R/W [0]    wave_run
-0x0000_0001: R/W [7:0]  trig_level
-0x0000_0002: R/W [0]    trig_edge
-0x0000_0003: R/W [9:0]  h_shift
-0x0000_0004: R/W [9:0]  deci_rate
-0x0000_0005: R/W [0]    ram_refresh
-0x0000_0006: R   [19:0] ad_freq
-0x0000_0007: R   [7:0]  ad_vpp
-0x0000_0008: R   [7:0]  ad_max
-0x0000_0009: R   [7:0]  ad_min
+0x0000_0000: R/W [0]    wave_run    启动捕获/关闭
+0x0000_0001: R/W [7:0]  trig_level  触发电平
+0x0000_0002: R/W [0]    trig_edge   触发边沿，0-下降沿，1-上升沿
+0x0000_0003: R/W [9:0]  h_shift     水平偏移量
+0x0000_0004: R/W [9:0]  deci_rate   抽样率，0-1023
+0x0000_0005: R/W [0]    ram_refresh RAM刷新
+0x0000_0006: R   [19:0] ad_freq     AD采样频率
+0x0000_0007: R   [7:0]  ad_vpp      AD采样幅度
+0x0000_0008: R   [7:0]  ad_max      AD采样最大值
+0x0000_0009: R   [7:0]  ad_min      AD采样最小值
 
 0x0000_1000-0x0000_13FF: R [7:0] wave_rd_data 共1024个字节
 */

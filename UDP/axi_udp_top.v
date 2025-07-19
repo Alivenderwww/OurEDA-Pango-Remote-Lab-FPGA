@@ -34,46 +34,46 @@ module axi_udp_top #(
     input  wire        MASTER_RD_DATA_VALID,
     output wire        MASTER_RD_DATA_READY     
 );
-//udpæ¥å£ä¿¡å·
-wire            rec_pkt_done; //ä»¥å¤ªç½‘å•åŒ…æ•°æ®æ¥æ”¶å®Œæˆä¿¡å·
-wire            rec_en      ; //ä»¥å¤ªç½‘æ¥æ”¶çš„æ•°æ®ä½¿èƒ½ä¿¡å·
-wire  [31:0]    rec_data    ; //ä»¥å¤ªç½‘æ¥æ”¶çš„æ•°æ®
-wire  [15:0]    rec_byte_num; //ä»¥å¤ªç½‘æ¥æ”¶çš„æœ‰æ•ˆå­—èŠ‚æ•° å•ä½:byte
-wire            tx_start_en ; //ä»¥å¤ªç½‘å¼€å§‹å‘é€ä¿¡å·
-wire  [31:0]    tx_data     ; //ä»¥å¤ªç½‘å¾…å‘é€æ•°æ®
-wire  [15:0]    tx_byte_num ; //ä»¥å¤ªç½‘å‘é€çš„æœ‰æ•ˆå­—èŠ‚æ•° å•ä½:byte
-wire            tx_done     ; //ä»¥å¤ªç½‘å‘é€å®Œæˆä¿¡å·
-wire            tx_req      ; //è¯»æ•°æ®è¯·æ±‚ä¿¡å·
+//udp½Ó¿ÚĞÅºÅ
+wire            rec_pkt_done; //ÒÔÌ«Íøµ¥°üÊı¾İ½ÓÊÕÍê³ÉĞÅºÅ
+wire            rec_en      ; //ÒÔÌ«Íø½ÓÊÕµÄÊı¾İÊ¹ÄÜĞÅºÅ
+wire  [31:0]    rec_data    ; //ÒÔÌ«Íø½ÓÊÕµÄÊı¾İ
+wire  [15:0]    rec_byte_num; //ÒÔÌ«Íø½ÓÊÕµÄÓĞĞ§×Ö½ÚÊı µ¥Î»:byte
+wire            tx_start_en ; //ÒÔÌ«Íø¿ªÊ¼·¢ËÍĞÅºÅ
+wire  [31:0]    tx_data     ; //ÒÔÌ«Íø´ı·¢ËÍÊı¾İ
+wire  [15:0]    tx_byte_num ; //ÒÔÌ«Íø·¢ËÍµÄÓĞĞ§×Ö½ÚÊı µ¥Î»:byte
+wire            tx_done     ; //ÒÔÌ«Íø·¢ËÍÍê³ÉĞÅºÅ
+wire            tx_req      ; //¶ÁÊı¾İÇëÇóĞÅºÅ
 
-wire            crc_en      ; //CRCå¼€å§‹æ ¡éªŒä½¿èƒ½
-wire            crc_clr     ; //CRCæ•°æ®å¤ä½ä¿¡å·
-wire  [ 7:0]    crc_d8      ; //è¾“å…¥å¾…æ ¡éªŒ8ä½æ•°æ®
-wire  [31:0]    crc_data    ; //CRCæ ¡éªŒæ•°æ®
-wire  [31:0]    crc_next    ; //CRCä¸‹æ¬¡æ ¡éªŒå®Œæˆæ•°æ®
-
-
+wire            crc_en      ; //CRC¿ªÊ¼Ğ£ÑéÊ¹ÄÜ
+wire            crc_clr     ; //CRCÊı¾İ¸´Î»ĞÅºÅ
+wire  [ 7:0]    crc_d8      ; //ÊäÈë´ıĞ£Ñé8Î»Êı¾İ
+wire  [31:0]    crc_data    ; //CRCĞ£ÑéÊı¾İ
+wire  [31:0]    crc_next    ; //CRCÏÂ´ÎĞ£ÑéÍê³ÉÊı¾İ
 
 
-//GMIIæ¥å£ä¸RGMIIæ¥å£ äº’è½¬
+
+
+//GMII½Ó¿ÚÓëRGMII½Ó¿Ú »¥×ª
 gmii_to_rgmii u_gmii_to_rgmii(
-    .gmii_rx_clk   (gmii_rx_clk  ),  //gmiiæ¥æ”¶
+    .gmii_rx_clk   (gmii_rx_clk  ),  //gmii½ÓÊÕ
     .gmii_rx_dv    (gmii_rx_dv   ),
     .gmii_rxd      (gmii_rxd     ),
-    .gmii_tx_clk   (gmii_tx_clk  ),  //gmiiå‘é€
+    .gmii_tx_clk   (gmii_tx_clk  ),  //gmii·¢ËÍ
     .gmii_tx_en    (gmii_tx_en   ),
     .gmii_txd      (gmii_txd     ),
  
-    .rgmii_rxc     (eth_rxc      ),  //rgmiiæ¥æ”¶
+    .rgmii_rxc     (eth_rxc      ),  //rgmii½ÓÊÕ
     .rgmii_rx_ctl  (eth_rxdv     ),
     .rgmii_rxd     (eth_rx_data  ),
-    .rgmii_txc     (eth_txc      ),  //rgmiiå‘é€
+    .rgmii_txc     (eth_txc      ),  //rgmii·¢ËÍ
     .rgmii_tx_ctl  (eth_tx_en_r  ),
     .rgmii_txd     (eth_tx_data_r)
 );
 
-//UDPé€šä¿¡
+//UDPÍ¨ĞÅ
 udp #(
-    .BOARD_MAC     (BOARD_MAC   ),      //å‚æ•°ä¾‹åŒ–
+    .BOARD_MAC     (BOARD_MAC   ),      //²ÎÊıÀı»¯
     .BOARD_IP      (BOARD_IP    ),
     .DES_MAC       (DES_MAC     ),
     .DES_IP        (DES_IP      )
@@ -81,22 +81,22 @@ udp #(
    u_udp(
     .rst_n         (sys_rst_n   ),
 
-    .gmii_rx_clk   (gmii_rx_clk ),//gmiiæ¥æ”¶
+    .gmii_rx_clk   (gmii_rx_clk ),//gmii½ÓÊÕ
     .gmii_rx_dv    (gmii_rx_dv  ),
     .gmii_rxd      (gmii_rxd    ),
-    .gmii_tx_clk   (gmii_tx_clk ),//gmiiå‘é€
+    .gmii_tx_clk   (gmii_tx_clk ),//gmii·¢ËÍ
     .gmii_tx_en    (gmii_tx_en  ),
     .gmii_txd      (gmii_txd    ),
 
-    .rec_pkt_done  (rec_pkt_done),  //æ•°æ®åŒ…æ¥æ”¶ç»“æŸ
-    .rec_en        (rec_en      ),  //å››å­—èŠ‚æ¥æ”¶ä½¿èƒ½
-    .rec_data      (rec_data    ),  //æ¥æ”¶æ•°æ®
-    .rec_byte_num  (rec_byte_num),  //æ¥æ”¶åˆ°çš„æœ‰æ•ˆæ•°æ®é•¿åº¦
-    .tx_start_en   (tx_start_en ),  //å‘é€ä½¿èƒ½
-    .tx_data       (tx_data     ),  //å‘é€æ•°æ®
-    .tx_byte_num   (udp_tx_byte_num),  //å‘é€é•¿åº¦
-    .tx_done       (udp_tx_done ),  //å‘é€ç»“æŸ
-    .tx_req        (tx_req      )   //å››å­—èŠ‚å‘é€ä½¿èƒ½
+    .rec_pkt_done  (rec_pkt_done),  //Êı¾İ°ü½ÓÊÕ½áÊø
+    .rec_en        (rec_en      ),  //ËÄ×Ö½Ú½ÓÊÕÊ¹ÄÜ
+    .rec_data      (rec_data    ),  //½ÓÊÕÊı¾İ
+    .rec_byte_num  (rec_byte_num),  //½ÓÊÕµ½µÄÓĞĞ§Êı¾İ³¤¶È
+    .tx_start_en   (tx_start_en ),  //·¢ËÍÊ¹ÄÜ
+    .tx_data       (tx_data     ),  //·¢ËÍÊı¾İ
+    .tx_byte_num   (udp_tx_byte_num),  //·¢ËÍ³¤¶È
+    .tx_done       (udp_tx_done ),  //·¢ËÍ½áÊø
+    .tx_req        (tx_req      )   //ËÄ×Ö½Ú·¢ËÍÊ¹ÄÜ
 );
 
 axi_udp_cmd axi_udp_cmd_inst(

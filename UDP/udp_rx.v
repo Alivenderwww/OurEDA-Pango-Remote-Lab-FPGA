@@ -7,20 +7,19 @@
 // 淘宝    : https://fire-stm32.taobao.com
 ////////////////////////////////////////////////////////////////////////
 
-module udp_rx#(
-    parameter BOARD_MAC = 48'hff_ff_ff_ff_ff_ff,
-    parameter BOARD_IP = {8'd0,8'd0,8'd0,8'd0}
-)(
+module udp_rx (
     input                clk         ,    //时钟信号
     input                rst_n       ,    //复位信号，低电平有效
 
+    input        [31:0]  board_ip   ,    //开发板IP地址
+    input        [47:0]  board_mac  ,    //开发板MAC地址
     input                gmii_rx_dv  /* synthesis PAP_MARK_DEBUG=”true” */,    //GMII输入数据有效信号
     input        [7:0]   gmii_rxd    /* synthesis PAP_MARK_DEBUG=”true” */,    //GMII输入数据
     output  reg          rec_pkt_done,    //以太网单包数据接收完成信号
     output  reg          rec_en      /* synthesis PAP_MARK_DEBUG=”true” */,    //以太网接收的数据使能信号
     output  reg  [31:0]  rec_data    /* synthesis PAP_MARK_DEBUG=”true” */,    //以太网接收的数据
     output  reg  [15:0]  rec_byte_num     //以太网接收的有效字数 单位:byte
-    );
+);
 
 ////parameter define
 ////开发板MAC地址
@@ -176,7 +175,7 @@ always @(posedge clk or negedge rst_n) begin
                         eth_type[7:0] <= gmii_rxd;
                         cnt <= 5'd0;
                         //判断MAC地址是否为开发板MAC地址或者公共地址
-                        if(((des_mac == BOARD_MAC) ||(des_mac == 48'hff_ff_ff_ff_ff_ff))
+                        if(((des_mac == board_mac) ||(des_mac == 48'hff_ff_ff_ff_ff_ff))
                        && eth_type[15:8] == ETH_TYPE[15:8] && gmii_rxd == ETH_TYPE[7:0])
                             skip_en <= 1'b1;
                         else
@@ -194,8 +193,8 @@ always @(posedge clk or negedge rst_n) begin
                     else if(cnt == 5'd19) begin
                         des_ip <= {des_ip[23:0],gmii_rxd};
                         //判断IP地址是否为开发板IP地址
-                        if((des_ip[23:0] == BOARD_IP[31:8])
-                            && (gmii_rxd == BOARD_IP[7:0])) begin
+                        if((des_ip[23:0] == board_ip[31:8])
+                            && (gmii_rxd == board_ip[7:0])) begin
                             if(cnt == ip_head_byte_num - 1'b1) begin
                                 skip_en <=1'b1;
                                 cnt <= 5'd0;

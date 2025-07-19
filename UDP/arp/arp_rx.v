@@ -1,14 +1,10 @@
-module arp_rx #(
-    parameter BOARD_MAC = 48'h12_34_56_78_9a_bc,
-    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0},
-    parameter DES_MAC  = 48'h2c_f0_5d_32_f1_07,
-    parameter DES_IP   = {8'd0,8'd0,8'd0,8'd0}
-) (
+module arp_rx (
     
     input  wire          rstn,
     input  wire          gmii_rx_clk,
     input  wire          gmii_rx_dv,
     input  wire [7:0]    gmii_rxd,
+    input  wire [31:0]   board_ip,
     output wire [47:0]   dec_mac,
     output wire [31:0]   dec_ip,
     output reg           refresh
@@ -96,9 +92,9 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
         cnt <= 0;
         refresh <= 0;
         arp_rx_des_mac <= 0;
-        arp_rx_src_mac <= DES_MAC;
+        arp_rx_src_mac <= 0;
         arp_rx_des_ip  <= 0;
-        arp_rx_src_ip  <= DES_IP;
+        arp_rx_src_ip  <= 0;
     end
     else begin
         skip_en <= 0;
@@ -176,7 +172,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
                         arp_rx_des_ip <= {arp_rx_des_ip[23:0],gmii_rxd};//接收完一次arp报文
                     else if(cnt == 20)begin
                         cnt <= 0;
-                        if(arp_rx_des_ip == BOARD_IP)begin//是自己的ip地址
+                        if(arp_rx_des_ip == board_ip)begin//是自己的ip地址
                             skip_en <= 1;
                             refresh <= 1;
                         end

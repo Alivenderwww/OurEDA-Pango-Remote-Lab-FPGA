@@ -19,6 +19,7 @@ COMPONENT fifo_camera_data
     rd_en : IN STD_LOGIC;
     rd_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     rd_empty : OUT STD_LOGIC;
+    rd_water_level : OUT STD_LOGIC_VECTOR(13 DOWNTO 0);
     almost_empty : OUT STD_LOGIC
   );
 END COMPONENT;
@@ -37,5 +38,6 @@ the_instance_name : fifo_camera_data
     rd_en => rd_en,
     rd_data => rd_data,
     rd_empty => rd_empty,
+    rd_water_level => rd_water_level,
     almost_empty => almost_empty
   );

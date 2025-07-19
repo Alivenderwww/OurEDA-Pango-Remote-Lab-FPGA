@@ -1,9 +1,4 @@
-module arp #(
-    parameter BOARD_MAC = 48'h12_34_56_78_9a_bc,
-    parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0},
-    parameter DES_MAC  = 48'h2c_f0_5d_32_f1_07,
-    parameter DES_IP   = {8'd0,8'd0,8'd0,8'd0}
-) (
+module arp (
     input                rstn        , //复位信号，低电平有效
     //GMII接口 
     input                gmii_rx_clk , //GMII接收数据时钟
@@ -16,9 +11,15 @@ module arp #(
     output               arp_tx_done ,
     output               arp_tx_req  ,
     output               arp_working ,
+
+    input       [31:0]   des_ip      ,
+    input       [47:0]   des_mac     ,
+    input       [31:0]   board_ip    ,
+    input       [47:0]   board_mac   ,
     output      [47:0]   dec_mac     ,
     output      [31:0]   dec_ip      ,
-    output               refresh     
+
+    output               arp_refresh 
 );
 
 //wire [31:0]   dec_ip  ; 
@@ -30,34 +31,28 @@ wire  [31:0]  crc_next; //CRC下次校验完成数据
 
 assign crc_d8 = gmii_txd;
 
-arp_rx # (
-    .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP),
-    .DES_MAC(DES_MAC),
-    .DES_IP(DES_IP)
-  )
-  arp_rx_inst (
+arp_rx arp_rx_inst (
     .rstn(rstn),
     .gmii_rx_clk(gmii_rx_clk),
     .gmii_rx_dv(gmii_rx_dv),
     .gmii_rxd(gmii_rxd),
+
+    .board_ip(board_ip),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .refresh(refresh)
+    .refresh(arp_refresh)
   );
 
-arp_tx # (
-    .BOARD_MAC(BOARD_MAC),
-    .BOARD_IP(BOARD_IP)
-  )
-  arp_tx_inst (
+arp_tx arp_tx_inst (
     .rstn(rstn),
     .gmii_tx_clk(gmii_tx_clk),
     .gmii_tx_en(gmii_tx_en),
     .gmii_txd(gmii_txd),
+    .board_ip(board_ip),
+    .board_mac(board_mac),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .refresh(refresh),
+    .arp_refresh(arp_refresh),
     .crc_data(crc_data),
     .crc_next(crc_next[31:24]),
     .crc_en(crc_en),

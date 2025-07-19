@@ -1,8 +1,4 @@
-module sys_status_axi_slave #(
-    parameter DEFAULT_MAC_ADDR = 48'h12_34_56_78_9A_BC, // 默认MAC地址
-    parameter DEFAULT_BOARD_IP_ADDR  = {8'd192, 8'd168, 8'd1, 8'd100},  // 默认IP地址
-    parameter DEFAULT_HOST_IP_ADDR = {8'd192, 8'd168, 8'd1, 8'd1} // 默认上位机IP地址
-)(
+module sys_status_axi_slave (
     // 时钟和复位信号
     input                clk                       , // 系统时钟
     input                rstn                      , // 系统复位，低电平有效
@@ -57,22 +53,20 @@ module sys_status_axi_slave #(
     output logic [ 7:0]  power_reset,              // POWER复位控制
     
     // MAC/IP配置接口
-    output logic [31:0]  host_ip_addr,             // 当前上位机IP地址
-    output logic [31:0]  board_ip_addr,            // 当前本机IP地址
-    output logic [47:0]  host_mac_addr,            // 当前上位机MAC地址
-    output logic [31:0]  board_mac_addr,           // 当前本机MAC地址
-    input  logic [31:0]  default_host_ip_addr,     // 默认上位机IP地址
-    input  logic [31:0]  default_board_ip_addr,    // 默认本机IP地址
-    input  logic [47:0]  default_host_mac_addr,    // 默认上位机MAC地址
-    input  logic [47:0]  default_board_mac_addr,   // 默认本机MAC地址
+    input  logic [31:0]  eeprom_host_ip_addr,     // 默认上位机IP地址
+    input  logic [31:0]  eeprom_board_ip_addr,    // 默认本机IP地址
+    input  logic [47:0]  eeprom_host_mac_addr,    // 默认上位机MAC地址
+    input  logic [47:0]  eeprom_board_mac_addr,   // 默认本机MAC地址
 
-    output logic [31:0]  OV_STORE_BASE_ADDR,       // OV5640存储起始地址
-    output logic [31:0]  OV_STORE_NUM,             // OV5640存储数量
+    output logic [31:0]  DMA0_START_WRITE_ADDR,    // DMA0存储起始地址
+    output logic [31:0]  DMA0_END_WRITE_ADDR,      // DMA0存储结束地址
+    output logic         DMA0_capture_on,          // DMA0捕获使能信号
+    output logic         DMA0_capture_rst,         // DMA0捕获复位信号
     output logic [15:0]  OV_EXPECT_WIDTH,          // OV5640期望宽度
     output logic [15:0]  OV_EXPECT_HEIGHT,         // OV5640期望高度
-    output logic         OV_capture_on,            // OV5640捕获使能信号
     output logic         OV_ccd_rstn,              // OV5640 CCD复位信号
-    output logic         OV_ccd_pdn                // OV5640 CCD休眠信号
+    output logic         OV_ccd_pdn,               // OV5640 CCD休眠信号
+    output logic         ETH_timestamp_rst         // 以太网时间戳复位信号
 );//系统状态AXI从机，用于读取和配置CTRL_FPGA系统的各项基本参数，如AXI总线复位情况，LAB_FPGA的上电、复位，UID，EEPROM，MAC地址，IP地址等等
 
 // 复位同步逻辑
@@ -89,51 +83,41 @@ rstn_sync status_rstn_sync(clk,rstn,STATUS_SLAVE_RSTN_SYNC);
 32'h0000_0004:  读写    [7:0]位为电源管理模块8个供电口的状态，1为供电，0为不供电，可读取或更改
 32'h0000_0005:  只写    [7:0]位为电源管理模块8个供电口对应器件的复位，1为重新复位，0为不影响。复位后自动置零
 
-32'h0000_0006:  读写    上位机IP地址
-32'h0000_0007:  读写    本机IP地址
-32'h0000_0008:  读写    上位机MAC地址高16位
-32'h0000_0009:  读写    上位机MAC地址低32位
-32'h0000_000A:  读写    本机MAC地址高16位
-32'h0000_000B:  读写    本机MAC地址低32位
-32'h0000_000C:  只读    默认上位机IP地址
-32'h0000_000D:  只读    默认本机IP地址
-32'h0000_000E:  只读    默认上位机MAC地址高16位
-32'h0000_000F:  只读    默认上位机MAC地址低32位
-32'h0000_0010:  只读    默认本机MAC地址高16位
-32'h0000_0011:  只读    默认本机MAC地址低32位
+32'h0000_0006:  只读    默认上位机IP地址
+32'h0000_0007:  只读    默认本机IP地址
+32'h0000_0008:  只读    默认上位机MAC地址高16位
+32'h0000_0009:  只读    默认上位机MAC地址低32位
+32'h0000_000A:  只读    默认本机MAC地址高16位
+32'h0000_000B:  只读    默认本机MAC地址低32位
 
-32'h0000_0012:  读写    OV5640存储起始地址，32位地址线              //0x0000_0000
-32'h0000_0013:  读写    OV5640存储数量，32位地址线，单位为32bit     //(640x480)*16/32
-32'h0000_0014:  读写    OV5640期望{V,H}
-32'h0000_0015:  读写    OV5640捕获使能信号，1为使能，0为禁止        //1
-32'h0000_0016:  读写    [0]为OV5640 CCD复位信号，低电平复位，重新上电后需要初始化SCCB寄存器。默认高电平
+32'h0000_000C:  读写    DMA0存储起始地址，32位地址线              //0x0000_0000
+32'h0000_000D:  读写    DMA0存储结束地址，32位地址线，单位为32bit     //(640x480)*16/32
+32'h0000_000E:  读写    DMA0捕获使能和复位信号，[0]为capture_on，[8]为capture_rst
+32'h0000_000F:  读写    OV5640期望{V,H}
+32'h0000_0010:  读写    [0]为OV5640 CCD复位信号，低电平复位，重新上电后需要初始化SCCB寄存器。默认高电平
                         [8]为OV5640 CCD休眠信号，高电平休眠，重新唤醒后仍保留之前的寄存器配置。默认低电平
+32'h0000_0011:  读写    [0]为ETH时间戳复位信号，1为复位，0为不影响。复位后自动置零
 */
 
 // 地址定义
-localparam ADDR_AXI_INIT            = 32'h0000_0000, // AXI总线初始化状态
-           ADDR_AXI_RESET           = 32'h0000_0001, // AXI总线复位控制
-           ADDR_UID_2               = 32'h0000_0002, // UID高32位
-           ADDR_UID_1               = 32'h0000_0003, // UID低32位
-           ADDR_POWER_STATUS        = 32'h0000_0004, // POWER上电状态
-           ADDR_POWER_RESET         = 32'h0000_0005, // POWER对应器件的复位控制
-           ADDR_HOST_IP             = 32'h0000_0006, // 上位机IP地址
-           ADDR_BOARD_IP            = 32'h0000_0007, // 本机IP地址
-           ADDR_HOST_MAC_2          = 32'h0000_0008, // 上位机MAC地址高16位
-           ADDR_HOST_MAC_1          = 32'h0000_0009, // 上位机MAC地址低32位
-           ADDR_BOARD_MAC_2         = 32'h0000_000A, // 本机MAC地址高16位
-           ADDR_BOARD_MAC_1         = 32'h0000_000B, // 本机MAC地址低32位
-           ADDR_DEFAULT_HOST_IP     = 32'h0000_000C, // 默认上位机IP地址
-           ADDR_DEFAULT_BOARD_IP    = 32'h0000_000D, // 默认本机IP地址
-           ADDR_DEFAULT_HOST_MAC_2  = 32'h0000_000E, // 默认上位机MAC地址高16位
-           ADDR_DEFAULT_HOST_MAC_1  = 32'h0000_000F, // 默认上位机MAC地址低32位
-           ADDR_DEFAULT_BOARD_MAC_2 = 32'h0000_0010, // 默认本机MAC地址
-           ADDR_DEFAULT_BOARD_MAC_1 = 32'h0000_0011, // 默认本机MAC地址低32位
-           ADDR_OV_STORE_BASE_ADDR  = 32'h0000_0012, // OV5640存储起始地址
-           ADDR_OV_STORE_NUM        = 32'h0000_0013, // OV5640存储数量
-           ADDR_OV_EXPECT_VH        = 32'h0000_0014, // OV5640期望宽度和高度时钟周期
-           ADDR_OV_CAPTURE_ON       = 32'h0000_0015, // OV5640捕获使能信号
-           ADDR_OV_POWER_CONTROL    = 32'h0000_0016; // OV5640 CCD复位和休眠控制
+localparam ADDR_AXI_INIT              = 32'h0000_0000, // AXI总线初始化状态
+           ADDR_AXI_RESET             = 32'h0000_0001, // AXI总线复位控制
+           ADDR_UID_2                 = 32'h0000_0002, // UID高32位
+           ADDR_UID_1                 = 32'h0000_0003, // UID低32位
+           ADDR_POWER_STATUS          = 32'h0000_0004, // POWER上电状态
+           ADDR_POWER_RESET           = 32'h0000_0005, // POWER对应器件的复位控制
+           ADDR_DEFAULT_HOST_IP       = 32'h0000_0006, // 默认上位机IP地址
+           ADDR_DEFAULT_BOARD_IP      = 32'h0000_0007, // 默认本机IP地址
+           ADDR_DEFAULT_HOST_MAC_2    = 32'h0000_0008, // 默认上位机MAC地址高16位
+           ADDR_DEFAULT_HOST_MAC_1    = 32'h0000_0009, // 默认上位机MAC地址低32位
+           ADDR_DEFAULT_BOARD_MAC_2   = 32'h0000_000A, // 默认本机MAC地址
+           ADDR_DEFAULT_BOARD_MAC_1   = 32'h0000_000B, // 默认本机MAC地址低32位
+           ADDR_DMA0_START_WRITE_ADDR = 32'h0000_000C, // OV5640存储起始地址
+           ADDR_DMA0_END_WRITE_ADDR   = 32'h0000_000D, // OV5640存储数量
+           ADDR_DMA0_CAPTURE_CTRL     = 32'h0000_000E, // DMA0捕获使能和复位信号
+           ADDR_OV_EXPECT_VH          = 32'h0000_000F, // OV5640期望宽度和高度时钟周期
+           ADDR_OV_POWER_CONTROL      = 32'h0000_0010, // OV5640 CCD复位和休眠控制
+           ADDR_ETH_TIMESTAMP_RST     = 32'h0000_0011; // ETH时间戳复位信号
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -162,10 +146,7 @@ localparam ST_RD_IDLE = 2'b00, // 发送完LAST和RESP，读通道空闲
            ST_RD_DATA = 2'b01; // 地址线握手成功，数据线通道开启
 
 // 系统状态寄存器
-reg [31:0] host_ip_addr_reg;
-reg [31:0] board_ip_addr_reg;
-reg [47:0] host_mac_addr_reg;
-reg [47:0] board_mac_addr_reg;
+reg [ 5:0] ETH_timestamp_rst_wait;
 
 //_______________________________________________________________________________//
 // 写通道状态机状态转换逻辑
@@ -216,7 +197,7 @@ end
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_OV_POWER_CONTROL)) wr_transcript_error <= 1;
+    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_ETH_TIMESTAMP_RST)) wr_transcript_error <= 1;
     else if(wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -238,20 +219,17 @@ end
 // 写数据处理逻辑
 always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
     if(~STATUS_SLAVE_RSTN_SYNC) begin
-        axi_master_reset <= 0;
-        axi_slave_reset  <= 0;
-        power_status     <= 0;
-        host_ip_addr_reg   <= 0;
-        host_mac_addr_reg  <= 0;
-        board_ip_addr_reg  <= 0;
-        board_mac_addr_reg <= 0;
-        OV_STORE_BASE_ADDR <= 32'h0000_0000;
-        OV_STORE_NUM       <= ((640*480)*16)/32;
-        OV_EXPECT_WIDTH    <= 640; // 默认640x480
-        OV_EXPECT_HEIGHT   <= 480; // 默认640x480
-        OV_capture_on      <= 0;
-        OV_ccd_rstn        <= 1;
-        OV_ccd_pdn         <= 0;
+        axi_master_reset      <= 0;
+        axi_slave_reset       <= 0;
+        power_status          <= 0;
+        DMA0_START_WRITE_ADDR <= 32'h0000_0000;
+        DMA0_END_WRITE_ADDR   <= ((640*480)*16)/32;
+        OV_EXPECT_WIDTH       <= 640; // 默认640x480
+        OV_EXPECT_HEIGHT      <= 480; // 默认640x480
+        OV_ccd_rstn           <= 1;
+        OV_ccd_pdn            <= 0;
+        ETH_timestamp_rst     <= 0;
+        ETH_timestamp_rst_wait <= 0;
     end else if(STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_AXI_RESET: begin
@@ -266,49 +244,21 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
             ADDR_POWER_RESET: begin
                 if(STATUS_SLAVE_WR_STRB[0]) power_reset <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_HOST_IP: begin
-                if(STATUS_SLAVE_WR_STRB[3]) host_ip_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) host_ip_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) host_ip_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) host_ip_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            ADDR_DMA0_START_WRITE_ADDR: begin
+                if(STATUS_SLAVE_WR_STRB[3]) DMA0_START_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) DMA0_START_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) DMA0_START_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) DMA0_START_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_HOST_MAC_2: begin
-                if(STATUS_SLAVE_WR_STRB[1]) host_mac_addr_reg[47:40] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) host_mac_addr_reg[39:32] <= STATUS_SLAVE_WR_DATA[7:0];
+            ADDR_DMA0_END_WRITE_ADDR: begin
+                if(STATUS_SLAVE_WR_STRB[3]) DMA0_END_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
+                if(STATUS_SLAVE_WR_STRB[2]) DMA0_END_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
+                if(STATUS_SLAVE_WR_STRB[1]) DMA0_END_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
+                if(STATUS_SLAVE_WR_STRB[0]) DMA0_END_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_HOST_MAC_1: begin
-                if(STATUS_SLAVE_WR_STRB[3]) host_mac_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) host_mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) host_mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) host_mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_BOARD_IP: begin
-                if(STATUS_SLAVE_WR_STRB[3]) board_ip_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) board_ip_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) board_ip_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) board_ip_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_BOARD_MAC_2: begin
-                if(STATUS_SLAVE_WR_STRB[1]) board_mac_addr_reg[47:40] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) board_mac_addr_reg[39:32] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_BOARD_MAC_1: begin
-                if(STATUS_SLAVE_WR_STRB[3]) board_mac_addr_reg[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) board_mac_addr_reg[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) board_mac_addr_reg[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) board_mac_addr_reg[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_OV_STORE_BASE_ADDR: begin
-                if(STATUS_SLAVE_WR_STRB[3]) OV_STORE_BASE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) OV_STORE_BASE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) OV_STORE_BASE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) OV_STORE_BASE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_OV_STORE_NUM: begin
-                if(STATUS_SLAVE_WR_STRB[3]) OV_STORE_NUM[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) OV_STORE_NUM[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) OV_STORE_NUM[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) OV_STORE_NUM[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
+            ADDR_DMA0_CAPTURE_CTRL: begin
+                if(STATUS_SLAVE_WR_STRB[1]) DMA0_capture_rst <= STATUS_SLAVE_WR_DATA[8];
+                if(STATUS_SLAVE_WR_STRB[0]) DMA0_capture_on <= STATUS_SLAVE_WR_DATA[0];
             end
             ADDR_OV_EXPECT_VH: begin
                 if(STATUS_SLAVE_WR_STRB[3]) OV_EXPECT_HEIGHT[15:8] <= STATUS_SLAVE_WR_DATA[31:24];
@@ -316,12 +266,12 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
                 if(STATUS_SLAVE_WR_STRB[1]) OV_EXPECT_WIDTH[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
                 if(STATUS_SLAVE_WR_STRB[0]) OV_EXPECT_WIDTH[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_OV_CAPTURE_ON: begin
-                if(STATUS_SLAVE_WR_STRB[0]) OV_capture_on <= STATUS_SLAVE_WR_DATA[0];
-            end
             ADDR_OV_POWER_CONTROL: begin
                 if(STATUS_SLAVE_WR_STRB[1]) OV_ccd_pdn <= STATUS_SLAVE_WR_DATA[8];
                 if(STATUS_SLAVE_WR_STRB[0]) OV_ccd_rstn <= STATUS_SLAVE_WR_DATA[0];
+            end
+            ADDR_ETH_TIMESTAMP_RST: begin
+                if(STATUS_SLAVE_WR_STRB[0]) ETH_timestamp_rst <= STATUS_SLAVE_WR_DATA[0];
             end
             default: begin
             end
@@ -330,6 +280,8 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
         axi_master_reset <= 0;
         axi_slave_reset <= 0;
         power_reset <= 0;
+        ETH_timestamp_rst_wait <= (ETH_timestamp_rst)?(ETH_timestamp_rst_wait + 1):(0);
+        ETH_timestamp_rst <= (ETH_timestamp_rst_wait >= 64)?(0):(ETH_timestamp_rst); // 等待64个时钟周期后复位信号自动清零
     end
 end
 
@@ -393,7 +345,7 @@ assign STATUS_SLAVE_RD_DATA_LAST = (STATUS_SLAVE_RD_DATA_VALID) && (rd_data_tran
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_OV_POWER_CONTROL)) rd_transcript_error <= 1;
+    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_ETH_TIMESTAMP_RST)) rd_transcript_error <= 1;
     else if(rd_addr == ADDR_AXI_RESET || rd_addr == ADDR_POWER_RESET) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -417,37 +369,27 @@ always @(*) begin
     if(~STATUS_SLAVE_RSTN_SYNC) STATUS_SLAVE_RD_DATA <= 0;
     else if(cu_rdchannel_st == ST_RD_DATA) begin
         case(rd_addr)
-            ADDR_AXI_INIT           : STATUS_SLAVE_RD_DATA <= {axi_master_rstn_status, axi_slave_rstn_status};
-            ADDR_UID_2              : STATUS_SLAVE_RD_DATA <= uid_high;
-            ADDR_UID_1              : STATUS_SLAVE_RD_DATA <= uid_low;
-            ADDR_POWER_STATUS       : STATUS_SLAVE_RD_DATA <= {24'b0, power_status};
-            ADDR_HOST_IP            : STATUS_SLAVE_RD_DATA <= host_ip_addr_reg;
-            ADDR_HOST_MAC_2         : STATUS_SLAVE_RD_DATA <= {16'b0, host_mac_addr_reg[47:32]};
-            ADDR_HOST_MAC_1         : STATUS_SLAVE_RD_DATA <= host_mac_addr_reg[31:0];
-            ADDR_BOARD_IP           : STATUS_SLAVE_RD_DATA <= board_ip_addr_reg;
-            ADDR_BOARD_MAC_2        : STATUS_SLAVE_RD_DATA <= {16'b0, board_mac_addr_reg[47:32]};
-            ADDR_BOARD_MAC_1        : STATUS_SLAVE_RD_DATA <= board_mac_addr_reg[31:0];
-            ADDR_DEFAULT_HOST_IP    : STATUS_SLAVE_RD_DATA <= default_host_ip_addr;
-            ADDR_DEFAULT_HOST_MAC_2 : STATUS_SLAVE_RD_DATA <= {16'b0, default_host_mac_addr[47:32]};
-            ADDR_DEFAULT_HOST_MAC_1 : STATUS_SLAVE_RD_DATA <= default_host_mac_addr[31:0];
-            ADDR_DEFAULT_BOARD_IP   : STATUS_SLAVE_RD_DATA <= default_board_ip_addr;
-            ADDR_DEFAULT_BOARD_MAC_2: STATUS_SLAVE_RD_DATA <= {16'b0, default_board_mac_addr[47:32]};
-            ADDR_DEFAULT_BOARD_MAC_1: STATUS_SLAVE_RD_DATA <= default_board_mac_addr[31:0];
-            ADDR_OV_STORE_BASE_ADDR : STATUS_SLAVE_RD_DATA <= OV_STORE_BASE_ADDR;
-            ADDR_OV_STORE_NUM       : STATUS_SLAVE_RD_DATA <= OV_STORE_NUM;
-            ADDR_OV_EXPECT_VH       : STATUS_SLAVE_RD_DATA <= {OV_EXPECT_HEIGHT, OV_EXPECT_WIDTH};
-            ADDR_OV_CAPTURE_ON      : STATUS_SLAVE_RD_DATA <= {31'b0, OV_capture_on};
-            ADDR_OV_POWER_CONTROL   : STATUS_SLAVE_RD_DATA <= {23'b0, OV_ccd_pdn, 7'b0, OV_ccd_rstn};
+            ADDR_AXI_INIT              : STATUS_SLAVE_RD_DATA <= {axi_master_rstn_status, axi_slave_rstn_status};
+            ADDR_UID_2                 : STATUS_SLAVE_RD_DATA <= uid_high;
+            ADDR_UID_1                 : STATUS_SLAVE_RD_DATA <= uid_low;
+            ADDR_POWER_STATUS          : STATUS_SLAVE_RD_DATA <= {24'b0, power_status};
+            ADDR_DEFAULT_HOST_IP       : STATUS_SLAVE_RD_DATA <= eeprom_host_ip_addr;
+            ADDR_DEFAULT_HOST_MAC_2    : STATUS_SLAVE_RD_DATA <= {16'b0, eeprom_host_mac_addr[47:32]};
+            ADDR_DEFAULT_HOST_MAC_1    : STATUS_SLAVE_RD_DATA <= eeprom_host_mac_addr[31:0];
+            ADDR_DEFAULT_BOARD_IP      : STATUS_SLAVE_RD_DATA <= eeprom_board_ip_addr;
+            ADDR_DEFAULT_BOARD_MAC_2   : STATUS_SLAVE_RD_DATA <= {16'b0, eeprom_board_mac_addr[47:32]};
+            ADDR_DEFAULT_BOARD_MAC_1   : STATUS_SLAVE_RD_DATA <= eeprom_board_mac_addr[31:0];
+            ADDR_DMA0_START_WRITE_ADDR : STATUS_SLAVE_RD_DATA <= DMA0_START_WRITE_ADDR;
+            ADDR_DMA0_END_WRITE_ADDR   : STATUS_SLAVE_RD_DATA <= DMA0_END_WRITE_ADDR;
+            ADDR_DMA0_CAPTURE_CTRL     : STATUS_SLAVE_RD_DATA <= {16'b0, 7'b0, DMA0_capture_rst, 7'b0, DMA0_capture_on};
+            ADDR_OV_EXPECT_VH          : STATUS_SLAVE_RD_DATA <= {OV_EXPECT_HEIGHT, OV_EXPECT_WIDTH};
+            ADDR_OV_POWER_CONTROL      : STATUS_SLAVE_RD_DATA <= {23'b0, OV_ccd_pdn, 7'b0, OV_ccd_rstn};
+            ADDR_ETH_TIMESTAMP_RST     : STATUS_SLAVE_RD_DATA <= {31'b0, ETH_timestamp_rst};
             default: begin
                 STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
             end
         endcase
     end else STATUS_SLAVE_RD_DATA <= 0;
 end
-
-assign host_ip_addr    = host_ip_addr_reg;
-assign host_mac_addr   = host_mac_addr_reg;
-assign board_ip_addr   = board_ip_addr_reg;
-assign board_mac_addr  = board_mac_addr_reg;
 
 endmodule //sys_status_axi_slave

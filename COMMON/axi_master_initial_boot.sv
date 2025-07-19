@@ -188,7 +188,7 @@ end
 
 always @(posedge clk or negedge dma_rstn_sync) begin
     if(~dma_rstn_sync) eeprom_board_mac <= 0;
-    else if((dma_cu_st == DMA_ST_GET_HOST_MAC) && (axi_cu_st == AXI_ST_RD_DATA) && (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY)) begin
+    else if((dma_cu_st == DMA_ST_GET_BOARD_MAC) && (axi_cu_st == AXI_ST_RD_DATA) && (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY)) begin
         eeprom_board_mac <= {eeprom_board_mac[39:0],MASTER_RD_DATA[7:0]};
     end else eeprom_board_mac <= eeprom_board_mac;
 end

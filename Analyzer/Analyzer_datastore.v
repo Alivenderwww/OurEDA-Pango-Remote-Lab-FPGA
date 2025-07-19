@@ -7,6 +7,7 @@ module Analyzer_datastore #(
     input  wire [DIGITAL_IN_NUM-1:0]  digital_in, // 输入数字信号
     input  wire                       trig,       // 触发信号，##高电平##触发
     output wire                       busy,       // 采集忙
+    input  wire                       start,
     output wire                       done,       // 采集完成
     input  wire [WAVE_ADDR_WIDTH-1:0] wave_addr,  // 读存储地址
     output wire [31:0]                wave_out    // 输出数据
@@ -35,7 +36,7 @@ always @(*) begin
     case (current_state)
         ST_IDLE      : next_state = (trig)?(ST_COLLECTING):(ST_IDLE);
         ST_COLLECTING: next_state = (write_addr >= SAVE_CNT - 1)?(ST_DONE):(ST_COLLECTING);
-        ST_DONE      : next_state = (trig)?(ST_COLLECTING):(ST_DONE);
+        ST_DONE      : next_state = (start)?(ST_IDLE):(ST_DONE);
         default      : next_state = ST_IDLE;
     endcase
 end

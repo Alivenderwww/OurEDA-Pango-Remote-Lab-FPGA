@@ -53,7 +53,7 @@ localparam RD_CLK_OR_POL_INV = 0 ; // @IPC bool
 
 localparam FULL_WL_EN = 0 ; // @IPC bool
 
-localparam EMPTY_WL_EN = 0 ; // @IPC bool
+localparam EMPTY_WL_EN = 1 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "1" ; // @IPC bool
 
@@ -274,6 +274,8 @@ fifo_camera_data U_fifo_camera_data (
     .rd_rst         ( tb_rst            ) ,
 
     .rd_empty       ( tb_rd_empty       ) ,
+
+    .rd_water_level ( tb_rd_water_level ) ,
 
     .almost_empty   ( tb_almost_empty   )
 ) ;

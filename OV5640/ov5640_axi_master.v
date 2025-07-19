@@ -10,9 +10,10 @@ module ov5640_axi_master(
     input  wire [7:0] CCD_DATA,
 
     //input base and end address
-    input  wire [31:0] STORE_BASE_ADDR,
-    input  wire [31:0] STORE_NUM, //256*4bytes
+    input  wire [31:0] START_WRITE_ADDR,
+    input  wire [31:0] END_WRITE_ADDR,
     input  wire        capture_on,
+    input  wire        capture_rst,
     input  wire [15:0] expect_width, //期望宽度
     input  wire [15:0] expect_height, //期望高度
 
@@ -50,73 +51,56 @@ module ov5640_axi_master(
 wire ov_rstn_sync;
 rstn_sync rstn_sync_ov(clk, rstn, ov_rstn_sync);
 
-assign MASTER_CLK  = clk;
-assign MASTER_RSTN = ov_rstn_sync;
+wire rd_clk;
+wire rd_data_ready;
+wire rd_data_valid;
+wire [31:0] rd_data;
 
-//OV5640作为AXI主机只需要维护写地址通道、写数据通道和写响应通道。
-assign MASTER_RD_ADDR_ID    = 0;
-assign MASTER_RD_ADDR       = 0;
-assign MASTER_RD_ADDR_LEN   = 0;
-assign MASTER_RD_ADDR_BURST = 0;
-assign MASTER_RD_ADDR_VALID = 0;
-assign MASTER_RD_DATA_READY = 1;
+axi_master_write_dma u_axi_master_write_dma(
+	.START_WRITE_ADDR     	( START_WRITE_ADDR      ),
+	.END_WRITE_ADDR       	( END_WRITE_ADDR        ),
+	.clk                  	( clk                   ),
+	.rstn                 	( ov_rstn_sync          ),
+	.rd_clk               	( rd_clk                ),
+	.rd_capture_on        	( capture_on            ),
+	.rd_capture_rst       	( capture_rst           ),
+	.rd_data_ready        	( rd_data_ready         ),
+	.rd_data_valid        	( rd_data_valid         ),
+	.rd_data              	( rd_data               ),
+	.MASTER_CLK           	( MASTER_CLK            ),
+	.MASTER_RSTN          	( MASTER_RSTN           ),
+	.MASTER_WR_ADDR_ID    	( MASTER_WR_ADDR_ID     ),
+	.MASTER_WR_ADDR       	( MASTER_WR_ADDR        ),
+	.MASTER_WR_ADDR_LEN   	( MASTER_WR_ADDR_LEN    ),
+	.MASTER_WR_ADDR_BURST 	( MASTER_WR_ADDR_BURST  ),
+	.MASTER_WR_ADDR_VALID 	( MASTER_WR_ADDR_VALID  ),
+	.MASTER_WR_ADDR_READY 	( MASTER_WR_ADDR_READY  ),
+	.MASTER_WR_DATA       	( MASTER_WR_DATA        ),
+	.MASTER_WR_STRB       	( MASTER_WR_STRB        ),
+	.MASTER_WR_DATA_LAST  	( MASTER_WR_DATA_LAST   ),
+	.MASTER_WR_DATA_VALID 	( MASTER_WR_DATA_VALID  ),
+	.MASTER_WR_DATA_READY 	( MASTER_WR_DATA_READY  ),
+	.MASTER_WR_BACK_ID    	( MASTER_WR_BACK_ID     ),
+	.MASTER_WR_BACK_RESP  	( MASTER_WR_BACK_RESP   ),
+	.MASTER_WR_BACK_VALID 	( MASTER_WR_BACK_VALID  ),
+	.MASTER_WR_BACK_READY 	( MASTER_WR_BACK_READY  ),
+	.MASTER_RD_ADDR_ID    	( MASTER_RD_ADDR_ID     ),
+	.MASTER_RD_ADDR       	( MASTER_RD_ADDR        ),
+	.MASTER_RD_ADDR_LEN   	( MASTER_RD_ADDR_LEN    ),
+	.MASTER_RD_ADDR_BURST 	( MASTER_RD_ADDR_BURST  ),
+	.MASTER_RD_ADDR_VALID 	( MASTER_RD_ADDR_VALID  ),
+	.MASTER_RD_ADDR_READY 	( MASTER_RD_ADDR_READY  ),
+	.MASTER_RD_BACK_ID    	( MASTER_RD_BACK_ID     ),
+	.MASTER_RD_DATA       	( MASTER_RD_DATA        ),
+	.MASTER_RD_DATA_RESP  	( MASTER_RD_DATA_RESP   ),
+	.MASTER_RD_DATA_LAST  	( MASTER_RD_DATA_LAST   ),
+	.MASTER_RD_DATA_VALID 	( MASTER_RD_DATA_VALID  ),
+	.MASTER_RD_DATA_READY 	( MASTER_RD_DATA_READY  )
+);
 
-wire            rd_data_en;
-wire        	almost_empty;
-wire [31:0] 	rd_data;
-
-reg [31:0] wr_addr_load;
-reg [7:0] wr_len_load;
-
-reg [1:0] axi_cu_st, axi_nt_st;
-localparam AXI_ST_IDLE    = 2'b00,
-           AXI_ST_WR_ADDR = 2'b01,
-           AXI_ST_WR_DATA = 2'b10,
-           AXI_ST_WR_RESP = 2'b11;
-always @(posedge clk or negedge ov_rstn_sync) begin
-    if(~ov_rstn_sync) axi_cu_st <= AXI_ST_IDLE;
-    else axi_cu_st <= axi_nt_st;
-end
-always @(*) begin
-    case (axi_cu_st)
-        AXI_ST_IDLE   : axi_nt_st = ((capture_on) && (~almost_empty)) ? (AXI_ST_WR_ADDR) : (AXI_ST_IDLE);
-        AXI_ST_WR_ADDR: axi_nt_st = (MASTER_WR_ADDR_VALID && MASTER_WR_ADDR_READY) ? (AXI_ST_WR_DATA) : (AXI_ST_WR_ADDR);
-        AXI_ST_WR_DATA: axi_nt_st = (MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY && MASTER_WR_DATA_LAST) ? (AXI_ST_WR_RESP) : (AXI_ST_WR_DATA);
-        AXI_ST_WR_RESP: axi_nt_st = (MASTER_WR_BACK_VALID && MASTER_WR_BACK_READY) ? (AXI_ST_IDLE) : (AXI_ST_WR_RESP);
-    endcase
-end
-
-always @(posedge clk or negedge ov_rstn_sync) begin
-    if(~ov_rstn_sync) wr_addr_load <= 0;
-    else if((axi_cu_st == AXI_ST_IDLE) && (~capture_on)) wr_addr_load <= STORE_BASE_ADDR;
-    else if((axi_cu_st == AXI_ST_WR_RESP) && (axi_nt_st == AXI_ST_IDLE)) begin
-        if((wr_addr_load + 256) < (STORE_BASE_ADDR + STORE_NUM)) wr_addr_load <= wr_addr_load + 256;
-        else wr_addr_load <= STORE_BASE_ADDR;
-    end else wr_addr_load <= wr_addr_load;
-end
-
-always @(posedge clk or negedge ov_rstn_sync) begin
-    if(~ov_rstn_sync) wr_len_load <= 0;
-    else if((axi_cu_st == AXI_ST_IDLE) && (~almost_empty)) wr_len_load <= ~0;
-    else if((axi_cu_st == AXI_ST_WR_DATA) && MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY)
-        wr_len_load <= (MASTER_WR_DATA_LAST) ? (wr_len_load) : (wr_len_load - 1);
-    else wr_len_load <= wr_len_load;
-end
-
-assign MASTER_WR_ADDR_ID    = 0;
-assign MASTER_WR_ADDR       = wr_addr_load;
-assign MASTER_WR_ADDR_LEN   = ~0;
-assign MASTER_WR_ADDR_BURST = 2'b01;
-assign MASTER_WR_ADDR_VALID = (axi_cu_st == AXI_ST_WR_ADDR);
-assign MASTER_WR_DATA_VALID = (axi_cu_st == AXI_ST_WR_DATA);
-assign MASTER_WR_DATA_LAST  = (MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY) && (wr_len_load == 0);
-assign MASTER_WR_DATA       = rd_data;
-assign MASTER_WR_STRB       = 4'b1111; //always write 32bit
-assign MASTER_WR_BACK_READY = (axi_cu_st == AXI_ST_WR_RESP);
-
-assign rd_data_en = (axi_cu_st == AXI_ST_WR_DATA) && MASTER_WR_DATA_READY && MASTER_WR_DATA_VALID;
+wire trans_once_done = MASTER_WR_DATA_LAST && MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY;
 ov56450_data_store u_ov56450_data_store(
-	.clk          	( clk           ),
+	.clk          	( rd_clk        ),
 	.rstn         	( ov_rstn_sync  ),
 	.CCD_RSTN      	( CCD_RSTN      ),
 	.CCD_PCLK     	( CCD_PCLK      ),
@@ -126,8 +110,9 @@ ov56450_data_store u_ov56450_data_store(
     .capture_on  	( capture_on    ),
     .expect_width   ( expect_width  ),
     .expect_height  ( expect_height ),
-	.rd_data_en   	( rd_data_en    ),
-	.almost_empty 	( almost_empty  ),
+    .trans_once_done( trans_once_done),
+	.rd_data_valid  ( rd_data_valid ),
+    .rd_data_ready  ( rd_data_ready ),
 	.rd_data 	    ( rd_data       )
 );
 

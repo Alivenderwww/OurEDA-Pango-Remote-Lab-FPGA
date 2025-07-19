@@ -12,9 +12,10 @@ module ov56450_data_store (
     input  wire       CCD_HSYNC, //原理图把HREF和HSYNC搞混了
     input  wire [7:0] CCD_DATA,
 
+    input  wire        trans_once_done,
     input  wire        capture_on,
-    input  wire        rd_data_en,
-    output wire        almost_empty,
+    input  wire        rd_data_valid,
+    output wire        rd_data_ready,
     output wire [31:0] rd_data
 );
 
@@ -22,12 +23,18 @@ wire fifo_wr_rst, fifo_wr_en;
 wire fifo_rd_rst, fifo_rd_en;
 wire almost_full;
 wire rd_empty;
+wire [13:0] rd_water_level; //读水位线
 
 reg CCD_VSYNC_d1, CCD_VSYNC_d2;
 reg CCD_HSYNC_d1, CCD_HSYNC_d2;
 reg [7:0] CCD_DATA_d1;
 reg [15:0] camera_hcount, camera_vcount;
 reg [3:0] expect_width_cnt, expect_height_cnt; //帧计数
+wire frame_notready = 0;
+reg trans_state;
+localparam TRANS_ST_WAIT = 1'b0,
+           TRANS_ST_TRANS = 1'b1;
+// wire frame_notready = (expect_height_cnt <= 4'd2) || (expect_width_cnt <= 4'd2);
 
 wire CCD_VSYNC_pos = (CCD_VSYNC_d1 == 1'b1 && CCD_VSYNC_d2 == 1'b0);
 wire CCD_VSYNC_neg = (CCD_VSYNC_d1 == 1'b0 && CCD_VSYNC_d2 == 1'b1);
@@ -110,7 +117,7 @@ always @(posedge CCD_PCLK or negedge CCD_RSTN) begin
     else cu_st_store <= nt_st_store;
 end
 always @(*) begin
-    if((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15)) nt_st_store = ST_IDLE;
+    if((~capture_on) || (frame_notready)) nt_st_store = ST_IDLE;
     else case (cu_st_store)
         ST_IDLE : nt_st_store = (CCD_VSYNC_neg)?(ST_STORE):(ST_IDLE);
         ST_STORE: nt_st_store = (almost_full)?(ST_PAUSE):(ST_STORE);
@@ -121,16 +128,27 @@ end
 reg fifo_rd_data_valid;
 always @(posedge clk or negedge rstn) begin
     if(~rstn) fifo_rd_data_valid <= 1'b0;
-    else if((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15)) fifo_rd_data_valid <= 1'b0;
-    else if(rd_data_en && rd_empty && fifo_rd_data_valid) fifo_rd_data_valid <= 1'b0;
+    else if((~capture_on) || (frame_notready)) fifo_rd_data_valid <= 1'b0;
+    else if(rd_data_valid && rd_empty && fifo_rd_data_valid) fifo_rd_data_valid <= 1'b0;
     else if(fifo_rd_en && (~rd_empty) && (~fifo_rd_data_valid)) fifo_rd_data_valid <= 1'b1;
     else fifo_rd_data_valid <= fifo_rd_data_valid;
 end
 
-assign fifo_wr_rst = (~CCD_RSTN) || ((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15));
+assign fifo_wr_rst = (~CCD_RSTN) || ((~capture_on) || (frame_notready));
 assign fifo_wr_en = (CCD_HSYNC_d1) && (~CCD_VSYNC_d1) && (nt_st_store == ST_STORE);
-assign fifo_rd_rst = (~rstn) || ((~capture_on) || (expect_height_cnt != 4'd15) || (expect_width_cnt != 4'd15));
-assign fifo_rd_en = (~rd_empty) && ((rd_data_en) || (~fifo_rd_data_valid));
+assign fifo_rd_rst = (~rstn) || ((~capture_on) || (frame_notready));
+assign fifo_rd_en = (~rd_empty) && ((rd_data_valid) || (~fifo_rd_data_valid));
+
+always @(posedge clk or negedge rstn) begin
+    if(~rstn) trans_state <= TRANS_ST_WAIT;
+    else if((trans_state == TRANS_ST_WAIT) && (rd_water_level >= 14'd512))
+        trans_state <= TRANS_ST_TRANS;
+    else if((trans_state == TRANS_ST_TRANS) && (trans_once_done))
+        trans_state <= TRANS_ST_WAIT;
+    else trans_state <= trans_state;
+end
+assign rd_data_ready = (trans_state == TRANS_ST_TRANS);
+
 //8bit存入，32bit读出，直接怼到AXI上，发给DDR。
 //每次都攒满32bit x 256再发出去，效率最高。
 fifo_camera_data u_fifo_camera_data(
@@ -146,7 +164,8 @@ fifo_camera_data u_fifo_camera_data(
     .rd_en   (fifo_rd_en),
     .rd_data (rd_data),
     .rd_empty(rd_empty),
-    .almost_empty(almost_empty) //同样反压，攒一波再发出去
+    .rd_water_level(rd_water_level),
+    .almost_empty()
 );
 
 endmodule

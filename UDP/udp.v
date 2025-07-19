@@ -9,9 +9,13 @@
 
 module udp(
     input                rst_n       , //复位信号，低电平有效
-    input        [47:0]  dec_mac     , //上位机MAC地址
-    input        [31:0]  dec_ip      ,
-    input                refresh     ,
+    input        [31:0]  des_ip      ,
+    input        [47:0]  des_mac     ,
+    input        [31:0]  board_ip    ,
+    input        [47:0]  board_mac   ,
+    input        [47:0]  dec_mac     , //这是ARP解析后的目的MAC地址
+    input        [31:0]  dec_ip      , //这是ARP解析后的目的IP地址
+    input                arp_refresh ,
     //GMII接口
     input                gmii_rx_clk , //GMII接收数据时钟
     input                gmii_rx_dv  , //GMII输入数据有效信号
@@ -31,18 +35,9 @@ module udp(
     output               udp_tx_req,
     output               udp_tx_working,
     output               tx_done     , //以太网发送完成信号
-    output               tx_req        //读数据请求信号
+    output               tx_req      , //读数据请求信号
+    input                timestamp_rst //时间戳复位信号
     );
-
-//parameter define
-//开发板MAC地址
-parameter BOARD_MAC = 48'h12_34_56_78_9a_bc;   //最终具体的MAC地址和IP地址由顶层传入，这里只需要定义就好
-//开发板IP地址
-parameter BOARD_IP  = {8'd0,8'd0,8'd0,8'd0};
-//目的MAC地址
-parameter  DES_MAC  = 48'h2c_f0_5d_32_f1_07;
-//目的IP地址
-parameter  DES_IP   = {8'd0,8'd0,8'd0,8'd0};
 
 //wire define
 wire          crc_en  ; //CRC开始校验使能
@@ -59,14 +54,11 @@ wire  [31:0]  crc_next; //CRC下次校验完成数据
 assign  crc_d8 = gmii_txd;
 
 //以太网接收模块
-udp_rx
-   #(
-    .BOARD_MAC       (BOARD_MAC),         //参数例化
-    .BOARD_IP        (BOARD_IP )
-    )
-   u_udp_rx(
+udp_rx u_udp_rx(
     .clk             (gmii_rx_clk ),
     .rst_n           (rst_n       ),
+    .board_ip        (board_ip    ),
+    .board_mac       (board_mac   ),
     .gmii_rx_dv      (gmii_rx_dv  ),
     .gmii_rxd        (gmii_rxd    ),
     .rec_pkt_done    (rec_pkt_done),
@@ -76,14 +68,7 @@ udp_rx
     );
 
 //以太网发送模块
-udp_tx
-   #(
-    .BOARD_MAC       (BOARD_MAC ),         //参数例化
-    .BOARD_IP        (BOARD_IP  ),
-    .DES_MAC         (DES_MAC   ),
-    .DES_IP          (DES_IP    )
-    )
-   u_udp_tx(
+udp_tx u_udp_tx(
     .clk             (gmii_tx_clk),
     .rst_n           (rst_n      ),
     .tx_start_en     (tx_start_en),
@@ -100,10 +85,15 @@ udp_tx
     .gmii_txd        (gmii_txd   ),
     .crc_en          (crc_en     ),
     .crc_clr         (crc_clr    ),
+    .board_ip        (board_ip   ),
+    .board_mac       (board_mac  ),
+    .des_ip          (des_ip     ),
+    .des_mac         (des_mac    ),
     .dec_mac         (dec_mac    ),
     .dec_ip          (dec_ip     ),
-    .refresh         (refresh    )
-    );
+    .arp_refresh     (arp_refresh),
+    .timestamp_rst   (timestamp_rst)
+);
 
 //以太网发送CRC校验模块
 crc32_d8   u_crc32_d8(
