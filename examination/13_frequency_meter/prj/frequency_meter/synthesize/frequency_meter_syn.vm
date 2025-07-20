@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Mon May 19 14:47:35 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Sun Jul 20 00:18:00 2025
 //
 
 module PLL
@@ -39888,7 +39888,7 @@ module frequency_meter
     PLL PLLinst (
             .clkout0 (nt_ad_clk),
             .clkin1 (nt_clk));
-	// ../../../rtl/frequency_meter.v:15
+	// ../../../rtl/frequency_meter.v:16
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="U22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* ad_clk_obuf */ #(
             .IOSTANDARD("DEFAULT"), 
@@ -39899,7 +39899,7 @@ module frequency_meter
             .I (nt_ad_clk));
 	// ../../../rtl/frequency_meter.v:4
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AA25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[0]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U16", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[0]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[0]  (
@@ -39907,7 +39907,7 @@ module frequency_meter
             .I (ad_data[0]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="Y25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[1]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U15", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[1]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[1]  (
@@ -39915,7 +39915,7 @@ module frequency_meter
             .I (ad_data[1]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="V21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[2]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AC26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[2]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[2]  (
@@ -39923,7 +39923,7 @@ module frequency_meter
             .I (ad_data[2]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[3]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AB26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[3]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[3]  (
@@ -39931,7 +39931,7 @@ module frequency_meter
             .I (ad_data[3]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AC26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[4]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="V21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[4]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[4]  (
@@ -39939,7 +39939,7 @@ module frequency_meter
             .I (ad_data[4]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AB26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[5]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[5]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[5]  (
@@ -39947,7 +39947,7 @@ module frequency_meter
             .I (ad_data[5]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U16", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[6]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AA25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[6]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[6]  (
@@ -39955,7 +39955,7 @@ module frequency_meter
             .I (ad_data[6]));
 	// ../../../rtl/frequency_meter.v:5
 
-(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="U15", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[7]  */ #(
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="Y25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* \ad_data_ibuf[7]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .TERM_DDR("ON"))
         \ad_data_ibuf[7]  (
@@ -39988,7 +39988,7 @@ module frequency_meter
             .N493 (\bin2bcd_inst/N493 ),
             ._N2206_1 (_N2206_1),
             ._N2207_7 (_N2207_7));
-	// ../../../rtl/frequency_meter.v:42
+	// ../../../rtl/frequency_meter.v:43
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="D18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* clk_ibuf */ #(
             .IOSTANDARD("DEFAULT"), 
@@ -40005,28 +40005,28 @@ module frequency_meter
             .clk_fs (nt_clk),
             .clk_fx (ad_pulse),
             .rstn (nt_rstn));
-	// ../../../rtl/frequency_meter.v:32
+	// ../../../rtl/frequency_meter.v:33
 
     bcd2ascii \generate_module[1].bcd2ascii_inst  (
             .asciidata ({\generate_module[1].bcd2ascii_inst_asciidata[7]_floating , \generate_module[1].bcd2ascii_inst_asciidata[6]_floating , \generate_module[1].bcd2ascii_inst_asciidata[5]_floating , \generate_module[1].bcd2ascii_inst_asciidata[4]_floating , asciidata[11], \generate_module[1].bcd2ascii_inst_asciidata[2]_floating , \generate_module[1].bcd2ascii_inst_asciidata[1]_floating , \generate_module[1].bcd2ascii_inst_asciidata[0]_floating }),
             .\bin2bcd_inst/N449  ({\bin2bcd_inst/N449 [3] , 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N460  ({1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, \bin2bcd_inst/N460 [9] , \bin2bcd_inst/N460 [8] , \bin2bcd_inst/N460 [7] , 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N496  ({\bin2bcd_inst/N496 [3] , 1'bx, 1'bx, 1'bx}));
-	// ../../../rtl/frequency_meter.v:49
+	// ../../../rtl/frequency_meter.v:51
 
     bcd2ascii_unq16 \generate_module[2].bcd2ascii_inst  (
             .asciidata ({\generate_module[2].bcd2ascii_inst_asciidata[7]_floating , \generate_module[2].bcd2ascii_inst_asciidata[6]_floating , \generate_module[2].bcd2ascii_inst_asciidata[5]_floating , \generate_module[2].bcd2ascii_inst_asciidata[4]_floating , asciidata[19], \generate_module[2].bcd2ascii_inst_asciidata[2]_floating , \generate_module[2].bcd2ascii_inst_asciidata[1]_floating , \generate_module[2].bcd2ascii_inst_asciidata[0]_floating }),
             .\bin2bcd_inst/N458  ({\bin2bcd_inst/N458 [3] , 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N469  ({1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, \bin2bcd_inst/N469 [13] , \bin2bcd_inst/N469 [12] , \bin2bcd_inst/N469 [11] , 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N505  ({\bin2bcd_inst/N505 [3] , 1'bx, 1'bx, 1'bx}));
-	// ../../../rtl/frequency_meter.v:49
+	// ../../../rtl/frequency_meter.v:51
 
     bcd2ascii_unq18 \generate_module[3].bcd2ascii_inst  (
             .asciidata ({\generate_module[3].bcd2ascii_inst_asciidata[7]_floating , \generate_module[3].bcd2ascii_inst_asciidata[6]_floating , \generate_module[3].bcd2ascii_inst_asciidata[5]_floating , \generate_module[3].bcd2ascii_inst_asciidata[4]_floating , asciidata[27], \generate_module[3].bcd2ascii_inst_asciidata[2]_floating , \generate_module[3].bcd2ascii_inst_asciidata[1]_floating , \generate_module[3].bcd2ascii_inst_asciidata[0]_floating }),
             .\bin2bcd_inst/N467  ({\bin2bcd_inst/N467 [3] , 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N478  ({1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, \bin2bcd_inst/N478 [17] , \bin2bcd_inst/N478 [16] , \bin2bcd_inst/N478 [15] , 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N514  ({\bin2bcd_inst/N514 [3] , 1'bx, 1'bx, 1'bx}));
-	// ../../../rtl/frequency_meter.v:49
+	// ../../../rtl/frequency_meter.v:51
 
     bcd2ascii_unq20 \generate_module[4].bcd2ascii_inst  (
             .asciidata ({\generate_module[4].bcd2ascii_inst_asciidata[7]_floating , \generate_module[4].bcd2ascii_inst_asciidata[6]_floating , \generate_module[4].bcd2ascii_inst_asciidata[5]_floating , \generate_module[4].bcd2ascii_inst_asciidata[4]_floating , asciidata[35], \generate_module[4].bcd2ascii_inst_asciidata[2]_floating , \generate_module[4].bcd2ascii_inst_asciidata[1]_floating , \generate_module[4].bcd2ascii_inst_asciidata[0]_floating }),
@@ -40035,13 +40035,13 @@ module frequency_meter
             .\bin2bcd_inst/N523  ({\bin2bcd_inst/N523 [3] , 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N532  ({\bin2bcd_inst/N532 [3] , 1'bx, 1'bx, 1'bx}),
             .\bin2bcd_inst/N588  ({\bin2bcd_inst/N588 [3] , 1'bx, 1'bx, 1'bx}));
-	// ../../../rtl/frequency_meter.v:49
+	// ../../../rtl/frequency_meter.v:51
 
     bcd2ascii_unq22 \generate_module[5].bcd2ascii_inst  (
             .data_fx ({1'bx, 1'bx, data_fx[17], data_fx[16], data_fx[15], data_fx[14], data_fx[13], data_fx[12], data_fx[11], data_fx[10], data_fx[9], data_fx[8], 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx}),
             ._N2203_3 (_N2203_3),
             ._N2207_7 (_N2207_7));
-	// ../../../rtl/frequency_meter.v:49
+	// ../../../rtl/frequency_meter.v:51
 
     led_display_driver led_display_driver_inst (
             .led_display_seg ({\led_display_driver_inst_led_display_seg[7]_floating , nt_led_display_seg[6], nt_led_display_seg[5], nt_led_display_seg[4], nt_led_display_seg[3], nt_led_display_seg[2], nt_led_display_seg[1], nt_led_display_seg[0]}),
@@ -40054,9 +40054,9 @@ module frequency_meter
             .\bin2bcd_inst/N493  (\bin2bcd_inst/N493 ),
             .clk (nt_clk),
             .\cymometer_inst/N4_1  (\cymometer_inst/N4_1 ));
-	// ../../../rtl/frequency_meter.v:55
+	// ../../../rtl/frequency_meter.v:58
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[0]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[0]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40065,7 +40065,7 @@ module frequency_meter
             .I (nt_led_display_seg[0]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AB24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[1]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[1]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40074,7 +40074,7 @@ module frequency_meter
             .I (nt_led_display_seg[1]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[2]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[2]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40083,7 +40083,7 @@ module frequency_meter
             .I (nt_led_display_seg[2]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V14", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[3]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[3]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40092,7 +40092,7 @@ module frequency_meter
             .I (nt_led_display_seg[3]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AC24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[4]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T14", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[4]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40101,7 +40101,7 @@ module frequency_meter
             .I (nt_led_display_seg[4]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[5]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AA24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[5]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40110,7 +40110,7 @@ module frequency_meter
             .I (nt_led_display_seg[5]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T15", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[6]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="U20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[6]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40119,7 +40119,7 @@ module frequency_meter
             .I (nt_led_display_seg[6]));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[7]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_seg_obuf[7]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40128,7 +40128,7 @@ module frequency_meter
             .I (1'b1));
 	// ../../../rtl/frequency_meter.v:6
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="U20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[0]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T15", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[0]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40137,7 +40137,7 @@ module frequency_meter
             .I (nt_led_display_sel[0]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[1]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AB25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[1]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40146,7 +40146,7 @@ module frequency_meter
             .I (nt_led_display_sel[1]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[2]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[2]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40155,7 +40155,7 @@ module frequency_meter
             .I (nt_led_display_sel[2]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y23", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[3]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[3]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40164,7 +40164,7 @@ module frequency_meter
             .I (nt_led_display_sel[3]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W21", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[4]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V23", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[4]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40173,7 +40173,7 @@ module frequency_meter
             .I (nt_led_display_sel[4]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="U14", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[5]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W23", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[5]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40182,7 +40182,7 @@ module frequency_meter
             .I (nt_led_display_sel[5]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T14", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[6]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AA23", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[6]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40191,7 +40191,7 @@ module frequency_meter
             .I (nt_led_display_sel[6]));
 	// ../../../rtl/frequency_meter.v:7
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[7]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AA22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_UNUSED="TRUE", PAP_IO_SLEW="FAST" *)    GTP_OUTBUF /* \led_display_sel_obuf[7]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -40205,7 +40205,7 @@ module frequency_meter
             .ad_pulse (ad_pulse),
             .ad_clk (nt_ad_clk),
             .\cymometer_inst/N4_1  (\cymometer_inst/N4_1 ));
-	// ../../../rtl/frequency_meter.v:21
+	// ../../../rtl/frequency_meter.v:22
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="C22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* rstn_ibuf */ #(
             .IOSTANDARD("DEFAULT"), 

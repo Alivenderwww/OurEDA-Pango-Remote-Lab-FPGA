@@ -5,11 +5,12 @@ input  wire       external_rstn,
 
 input  wire [ 3:0] col,
 output wire [ 3:0] row,
-output wire [15:0] led
+output wire [15:0] led,
+output wire [ 7:0] led_display_sel
 );
 
 wire [15:0] key_out;
-
+assign led_display_sel = 8'b01111111;
 assign led = key_out;
 matrix_key #(
 	.ROW_NUM       	( 4     ),

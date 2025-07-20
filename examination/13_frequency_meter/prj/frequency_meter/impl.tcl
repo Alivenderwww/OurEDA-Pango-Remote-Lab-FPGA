@@ -28,3 +28,18 @@ pnr
 report_timing 
 gen_bit_stream 
 add_simulation "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/13_frequency_meter/sim/frequency_meter_tb.sv"
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module frequency_meter
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module frequency_meter
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+gen_bit_stream 

@@ -1334,8 +1334,9 @@ UPD0_SHIFT;1
 UPD1_SHIFT;1
 
 Inst
-bin2bcd_inst/N143_sum3_2/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N83_sum3_2/LUT6D_inst_perm;gopLUT6L5
 Pin
+L5;2
 L6;2
 I0;1
 I1;1
@@ -1345,7 +1346,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/data_fx[15]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
+cymometer_inst/data_fx[16]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
 Pin
 CECO;2
 L5;2
@@ -1363,7 +1364,7 @@ I5;1
 RS;1
 
 Inst
-bin2bcd_inst/N319[6]_0[1]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N96[14]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1374,7 +1375,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N243[8]_0[2]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N241_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1385,7 +1386,29 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N134_sum3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N154_sum3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N143_sum3_2/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N165[15]_0[2]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1407,31 +1430,8 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N160_mux3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N221_sum3/gateop_perm;gopLUT6
 Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N156[11]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N223[13]_0[0]/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
 L6;2
 I0;1
 I1;1
@@ -1442,28 +1442,6 @@ I5;1
 
 Inst
 bin2bcd_inst/N156[11]_0[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N599[21]_0[1]_5/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N317_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1485,7 +1463,19 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N326_sum3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N183_sum3/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N279_sum3/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1496,9 +1486,8 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N192_sum3/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N328[10]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
-L5;2
 L6;2
 I0;1
 I1;1
@@ -1520,76 +1509,47 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N299[15]_0[2]_1/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N599[21]_0[3]_1_4/LUT6_inst_perm;gopLUT6
 Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N261[16]_0[1]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/data_fx[18]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
+Pin
+CECO;2
 L5;2
 L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
-bin2bcd_inst/N214[9]_0[0]/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N328[10]_0[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N221_sum3/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N357[5]_0[0]/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N451[3]_0[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N599[21]_0[3]_4/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N223[13]_0[0]/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -1612,30 +1572,9 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N243[8]_0[0]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N357[5]_0[0]/LUT6D_inst_perm;gopLUT6L5
 Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N355_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N279_sum3/gateop_perm;gopLUT6
-Pin
+L5;2
 L6;2
 I0;1
 I1;1
@@ -1656,29 +1595,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N328[10]_0[2]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N261[16]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N261[16]_0[2]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N328[10]_0[0]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1700,7 +1617,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N335_sum3/gateop_perm;gopLUT6
+led_display_driver_inst/N362_6:0_13[1]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1711,7 +1628,40 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N344_sum3_2/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N243[8]_0[1]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N355_sum3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N319[6]_0[1]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N599[21]_0[3]_4/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -1723,7 +1673,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N352_mux3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N467_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1734,8 +1684,9 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N154_sum3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N299[15]_0[2]_1/LUT6D_inst_perm;gopLUT6L5
 Pin
+L5;2
 L6;2
 I0;1
 I1;1
@@ -1745,7 +1696,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N420_sum3/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N261[16]_0[2]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1768,51 +1719,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N243[8]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N599[21]_0[1]_10/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N451[3]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N328[10]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N364_sum3/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N523_sum3/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -1824,7 +1731,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N94_sum3_2/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N317_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1835,7 +1742,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N599[21]_0[3]_1_4/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N328[10]_0[2]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1846,106 +1753,8 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N373_sum3/LUT6_inst_perm;gopLUT6
+generate_module[2].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
 Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/data_fx[5]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
-Pin
-CECO;2
-L5;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-bin2bcd_inst/N478[15]_0[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N487[19]_0[0]/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/N16_mux4/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N449_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N402_sum3/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N58_mux2/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N169_mux2/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
 L6;2
 I0;1
 I1;1
@@ -1956,6 +1765,41 @@ I5;1
 
 Inst
 bin2bcd_inst/N458_sum3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N6_1_3/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N451[3]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N493_mux3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1977,7 +1821,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N460[7]_0[2]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N134_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1988,7 +1832,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N599[21]_0[0]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[4]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -1999,47 +1843,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/data_fx[4]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
-Pin
-CECO;2
-L5Q;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-bin2bcd_inst/N493_mux3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N496_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N505_sum3/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N58_mux2/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -2051,107 +1855,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N460[7]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-generate_module[1].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N467_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N165[15]_0[2]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N469[11]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N469[11]_0[2]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_2[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N478[15]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N588_sum3_1/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N478[15]_0[2]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N373_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2174,7 +1878,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N2172_46:40_13[2]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N420_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2185,7 +1889,7 @@ I4;1
 I5;1
 
 Inst
-generate_module[5].bcd2ascii_inst/N50_1[0]_22/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N429_sum3/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2196,18 +1900,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N96[14]_0[1]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N563[5]_0[0]/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N588_sum3_1/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -2219,7 +1912,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_3[1]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N599[21]_0[3]_7_3/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2230,7 +1923,25 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N581[13]_0[0]/LUT6D_inst_perm;gopLUT6L5
+cymometer_inst/data_fx[8]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
+Pin
+CECO;2
+L5;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
+
+Inst
+bin2bcd_inst/N402_sum3/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -2242,7 +1953,73 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N2170_14/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N460[7]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_3[3]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N478[15]_0[2]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N552_sum3/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N469[11]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N532_sum3_2/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N451[3]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2264,7 +2041,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N460[7]_0[0]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N496_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2275,7 +2052,7 @@ I4;1
 I5;1
 
 Inst
-generate_module[2].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
+bin2bcd_inst/N469[11]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2286,7 +2063,7 @@ I4;1
 I5;1
 
 Inst
-generate_module[3].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
+bin2bcd_inst/N460[7]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2297,7 +2074,18 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N346[18]_0[0]/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N460[7]_0[2]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N192_sum3/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -2309,7 +2097,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[3]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N335_sum3/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2320,7 +2108,87 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N2172_46:40_13[4]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N165[15]_0[0]/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N364_sum3/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N514_sum3/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N478[15]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_4[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N588_sum3_2/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_3[1]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N599[21]_0[0]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2342,9 +2210,171 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N599[21]_0[3]_7_3/gateop_perm;gopLUT6
+cymometer_inst/N10_1_2/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N563[5]_0[0]/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N572[9]_0[0]/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N581[13]_0[0]/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_5[4]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/N362_6:0_13[2]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+generate_module[1].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_3[5]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N590[17]_0[1]_1/gateop_LUT6DL5_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_5[5]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_4[2]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N382_sum3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+generate_module[3].bcd2ascii_inst/N50_1[0]_2_3/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N599[21]_0[1]_10/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/N64_sub56.faddsub_1/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -2364,9 +2394,8 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N83_sum3_2/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N114_sum3/LUT6_inst_perm;gopLUT6
 Pin
-L5;2
 L6;2
 I0;1
 I1;1
@@ -2376,10 +2405,10 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/data_fx[7]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
+cymometer_inst/data_fx[14]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
 Pin
 CECO;2
-L5;2
+L5Q;2
 L6;2
 L6Q;2
 RSCO;2
@@ -2540,24 +2569,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/gate_cnt[0]/opit_0_inv_L6Q_perm;gopLUT6Q
-Pin
-CECO;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-cymometer_inst/N16_mux9_3/LUT6_inst_perm;gopLUT6
+cymometer_inst/N16_mux4/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -2577,6 +2589,24 @@ I2;1
 I3;1
 I4;1
 I5;1
+
+Inst
+cymometer_inst/data_fx[3]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
+Pin
+CECO;2
+L5;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
 
 Inst
 cymometer_inst/N57_m1/gopapm;gopAPM
@@ -3868,7 +3898,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub2.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub1.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -3920,7 +3950,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub2.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub1.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -3972,7 +4002,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub2.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub1.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4024,7 +4054,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub2.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub1.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4431,7 +4461,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub1.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub2.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4483,7 +4513,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub1.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub2.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4535,7 +4565,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub1.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub2.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4587,7 +4617,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub1.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub2.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -4626,7 +4656,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub1.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub0.faddsub_2/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5029,7 +5059,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub0.faddsub_2/gateop_perm;gopA
+cymometer_inst/N64_sub1.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5081,7 +5111,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5133,7 +5163,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5185,7 +5215,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5237,7 +5267,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5289,7 +5319,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5341,7 +5371,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5393,7 +5423,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub4.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5432,7 +5462,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub11.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub2.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5835,21 +5865,17 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/data_fx[2]/opit_0_inv_L6Q_perm;gopLUT6Q
+cymometer_inst/N64_sub3.faddsub_1/gateop_perm;gopA
 Pin
-CECO;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/N64_sub6.faddsub_2/gateop_perm;gopA
@@ -5891,7 +5917,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub6.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5943,7 +5969,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub6.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -5995,7 +6021,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub6.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -6047,7 +6073,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub6.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7048,9 +7074,11 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N259_sum3/LUT6_inst_perm;gopLUT6
+cymometer_inst/N64_sub6.faddsub_1/gateop_perm;gopA
 Pin
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -7449,9 +7477,11 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N114_sum3/LUT6_inst_perm;gopLUT6
+cymometer_inst/N64_sub7.faddsub_1/gateop_perm;gopA
 Pin
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -7499,7 +7529,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7551,7 +7581,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7603,7 +7633,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7655,7 +7685,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7707,7 +7737,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7759,7 +7789,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7811,7 +7841,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub10.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7850,7 +7880,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub17.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub8.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7902,7 +7932,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -7954,7 +7984,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8006,7 +8036,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8058,7 +8088,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8110,7 +8140,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8162,7 +8192,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8214,7 +8244,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub4.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub11.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -8253,11 +8283,9 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub2.faddsub_1/gateop_perm;gopA
+cymometer_inst/N16_mux9_3/LUT6_inst_perm;gopLUT6
 Pin
-COUT;2
-Y;2
-CIN;1
+L6;2
 I0;1
 I1;1
 I2;1
@@ -8656,11 +8684,9 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub50.faddsub_1/gateop_perm;gopA
+cymometer_inst/N14_mux9_6/LUT6_inst_perm;gopLUT6
 Pin
-COUT;2
-Y;2
-CIN;1
+L6;2
 I0;1
 I1;1
 I2;1
@@ -9059,16 +9085,21 @@ I4;1
 I5;1
 
 Inst
-pulse_gen_inst/N22_mux6_2/LUT6D_inst_perm;gopLUT6L5
+cymometer_inst/data_fx[2]/opit_0_inv_L6Q_perm;gopLUT6Q
 Pin
-L5;2
+CECO;2
 L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub14.faddsub_2/gateop_perm;gopA
@@ -9513,7 +9544,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9565,7 +9596,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9617,7 +9648,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9669,7 +9700,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9721,7 +9752,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9825,7 +9856,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9864,7 +9895,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub28.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub13.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9916,7 +9947,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub16.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -9968,7 +9999,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub16.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10319,7 +10350,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10371,7 +10402,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10423,7 +10454,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10475,7 +10506,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10527,7 +10558,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10579,7 +10610,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10631,7 +10662,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10670,7 +10701,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub30.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10709,7 +10740,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub18.faddsub_4/gateop_perm;gopA
+cymometer_inst/N64_sub18.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -10722,7 +10753,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub18.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub18.faddsub_4/gateop;gopA
 Pin
 COUT;2
 Y;2
@@ -11073,7 +11104,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub16.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub25.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11125,7 +11156,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub19.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub20.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11177,7 +11208,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub19.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub20.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11229,7 +11260,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub19.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub20.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11281,7 +11312,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub19.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub20.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11476,11 +11507,9 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub3.faddsub_1/gateop_perm;gopA
+led_display_driver_inst/N2172_46:40_13[5]/LUT6_inst_perm;gopLUT6
 Pin
-COUT;2
-Y;2
-CIN;1
+L6;2
 I0;1
 I1;1
 I2;1
@@ -11684,7 +11713,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub20.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub19.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11736,7 +11765,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub20.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub19.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11788,7 +11817,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub20.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub19.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11840,7 +11869,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub20.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub19.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11879,7 +11908,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub19.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11931,7 +11960,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub21.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub22.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -11983,7 +12012,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub21.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub22.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12035,7 +12064,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub21.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub22.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12087,7 +12116,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub21.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub22.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12282,7 +12311,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub19.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub20.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12490,7 +12519,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub22.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub21.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12542,7 +12571,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub22.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub21.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12594,7 +12623,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub22.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub21.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12646,7 +12675,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub22.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub21.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -12685,7 +12714,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub13.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub21.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13088,11 +13117,10 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub7.faddsub_1/gateop_perm;gopA
+pulse_gen_inst/N22_mux6_2/LUT6D_inst_perm;gopLUT6L5
 Pin
-COUT;2
-Y;2
-CIN;1
+L5;2
+L6;2
 I0;1
 I1;1
 I2;1
@@ -13140,7 +13168,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13192,7 +13220,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13244,7 +13272,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13296,7 +13324,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13348,7 +13376,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13400,7 +13428,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13452,7 +13480,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13491,7 +13519,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub21.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub43.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13894,7 +13922,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub23.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub34.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13946,7 +13974,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -13998,7 +14026,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14050,7 +14078,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14102,7 +14130,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14154,7 +14182,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14206,7 +14234,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14258,7 +14286,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14297,7 +14325,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub24.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub45.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14700,7 +14728,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub57.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub46.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14752,7 +14780,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14908,7 +14936,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub6.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -14960,7 +14988,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub6.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15012,7 +15040,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub6.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15064,7 +15092,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub6.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15103,7 +15131,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub6.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub50.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15662,7 +15690,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15714,7 +15742,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15766,7 +15794,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15818,7 +15846,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15870,7 +15898,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -15909,7 +15937,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub15.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub28.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -16715,7 +16743,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub9.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub30.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -17521,7 +17549,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub25.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub32.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -17924,7 +17952,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub20.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub57.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -17976,7 +18004,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18028,7 +18056,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18080,7 +18108,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18132,7 +18160,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18184,7 +18212,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18236,7 +18264,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub36.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -18327,9 +18355,11 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N105_6/gateop_perm;gopLUT6
+cymometer_inst/N64_sub11.faddsub_1/gateop_perm;gopA
 Pin
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -18728,7 +18758,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub22.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub35.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19131,7 +19161,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub35.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub15.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19183,7 +19213,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19235,7 +19265,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19287,7 +19317,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19339,7 +19369,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19391,7 +19421,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19443,7 +19473,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19495,7 +19525,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -19534,7 +19564,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub10.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub37.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -20340,7 +20370,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub26.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub39.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -20795,7 +20825,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -20847,7 +20877,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -20899,7 +20929,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -20951,7 +20981,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21003,7 +21033,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21055,7 +21085,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21107,7 +21137,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21146,7 +21176,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub36.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub22.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21549,7 +21579,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub8.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub23.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21601,7 +21631,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21653,7 +21683,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21705,7 +21735,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21757,7 +21787,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21809,7 +21839,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21861,7 +21891,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21913,7 +21943,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub45.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -21952,7 +21982,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub43.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub24.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22355,7 +22385,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub37.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub44.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22407,7 +22437,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub47.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub48.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22459,7 +22489,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub47.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub48.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22511,7 +22541,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub47.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub48.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22563,7 +22593,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub47.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub48.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22758,7 +22788,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub18.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub26.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -22966,7 +22996,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub48.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub47.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23018,7 +23048,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub48.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub47.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23070,7 +23100,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub48.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub47.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23122,7 +23152,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub48.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub47.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23161,7 +23191,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub46.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub47.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23213,7 +23243,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub49.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub50.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23265,7 +23295,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub49.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub50.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23317,7 +23347,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub49.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub50.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23369,7 +23399,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub49.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub50.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23564,10 +23594,11 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N84/LUT6D_inst_perm;gopLUT6L5
+cymometer_inst/N64_sub48.faddsub_1/gateop_perm;gopA
 Pin
-L5;2
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -23771,7 +23802,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub50.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub49.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23823,7 +23854,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub50.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub49.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23875,7 +23906,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub50.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub49.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23927,7 +23958,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub50.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub49.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -23966,7 +23997,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub48.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub49.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24018,7 +24049,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub52.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24070,7 +24101,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub52.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24122,7 +24153,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub52.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24174,7 +24205,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub52.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24226,7 +24257,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24278,7 +24309,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub16.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24330,7 +24361,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub16.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24369,7 +24400,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub39.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub16.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24577,7 +24608,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub52.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24629,7 +24660,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub52.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24681,7 +24712,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub52.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_9/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24733,7 +24764,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub52.faddsub_29/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -24772,7 +24803,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub32.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub51.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -25175,7 +25206,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub34.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub17.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -25227,23 +25258,17 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[1]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub54.faddsub_5/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/N64_sub54.faddsub_6/gateop_perm;gopA
@@ -25285,23 +25310,16 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[5]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N67/LUT6D_inst_perm;gopLUT6L5
 Pin
-CECO;2
-COUT;2
-Q;2
-RSCO;2
-Y;2
-CE;1
-CIN;1
-CLK;1
+L5;2
+L6;2
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/N64_sub54.faddsub_10/gateop_perm;gopA
@@ -25343,7 +25361,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[9]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[1]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -25401,7 +25419,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[13]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[5]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -25459,7 +25477,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[17]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[9]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -25517,7 +25535,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[21]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[13]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -25575,7 +25593,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[25]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[17]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -25620,7 +25638,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fx_cnt_temp[29]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/fx_cnt_temp[21]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -26029,21 +26047,17 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/fs_cnt_temp[0]/opit_0_inv_L5Q_perm;gopLUT6L5Q
+cymometer_inst/N64_sub53.faddsub_1/gateop_perm;gopA
 Pin
-CECO;2
-L5Q;2
-L6;2
-RSCO;2
-CE;1
-CLK;1
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_2/gateop_perm;gopA
@@ -26085,17 +26099,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_5/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[1]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_6/gateop_perm;gopA
@@ -26137,17 +26157,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_9/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[5]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_10/gateop_perm;gopA
@@ -26189,17 +26215,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_13/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[9]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_14/gateop_perm;gopA
@@ -26241,17 +26273,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_17/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[13]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_18/gateop_perm;gopA
@@ -26293,17 +26331,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_21/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[17]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_22/gateop_perm;gopA
@@ -26345,14 +26389,15 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/clk_cnt[3]/opit_0_inv_L6QL5Q_perm;gopLUT6QL5Q
+cymometer_inst/fs_cnt_temp[21]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
-L5Q;2
-L6;2
-L6Q;2
+COUT;2
+Q;2
 RSCO;2
+Y;2
 CE;1
+CIN;1
 CLK;1
 I0;1
 I1;1
@@ -26402,17 +26447,23 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_29/gateop_perm;gopA
+cymometer_inst/fs_cnt_temp[25]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub56.faddsub_30/gateop_perm;gopA
@@ -26441,13 +26492,15 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/clk_cnt[9]/opit_0_inv_L6Q_perm;gopLUT6Q
+cymometer_inst/fs_cnt_temp[29]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
-L6;2
-L6Q;2
+COUT;2
+Q;2
 RSCO;2
+Y;2
 CE;1
+CIN;1
 CLK;1
 I0;1
 I1;1
@@ -26848,17 +26901,22 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_1/gateop_perm;gopA
+cymometer_inst/data_fx[12]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
 Pin
-COUT;2
-Y;2
-CIN;1
+CECO;2
+L5Q;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/N64_sub58.faddsub_3/gateop_perm;gopA
@@ -27225,7 +27283,18 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub55.faddsub_1/gateop_perm;gopA
+bin2bcd_inst/N599[21]_0[1]_5/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/N64_sub58.faddsub_31/gateop;gopA
 Pin
 COUT;2
 Y;2
@@ -27238,7 +27307,76 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub58.faddsub_31/gateop;gopA
+cymometer_inst/fs_cnt_temp[0]/opit_0_inv_L5Q_perm;gopLUT6L5Q
+Pin
+CECO;2
+L5Q;2
+L6;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
+
+Inst
+cymometer_inst/gate_cnt[0]/opit_0_inv_L6Q_perm;gopLUT6Q
+Pin
+CECO;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
+
+Inst
+cymometer_inst/N64_sub18.faddsub_1/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_4[4]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_4[6]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/N64_sub58.faddsub_2/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -27269,114 +27407,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N77_8/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/N64_sub52.faddsub_1/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/N64_sub47.faddsub_1/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N6_1_3/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/N64_sub58.faddsub_2/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/fs_cnt_temp[1]/opit_0_inv_AQ_perm;gopAL6Q
-Pin
-CECO;2
-COUT;2
-Q;2
-RSCO;2
-Y;2
-CE;1
-CIN;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-cymometer_inst/N64_sub44.faddsub_1/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N165[15]_0[0]/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/data_fx[12]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
+cymometer_inst/data_fx[7]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
 Pin
 CECO;2
 L5Q;2
@@ -27392,6 +27423,17 @@ I3;1
 I4;1
 I5;1
 RS;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N92_11/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
 
 Inst
 cymometer_inst/data_fx[10]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
@@ -27412,7 +27454,35 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/data_fx[14]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
+cymometer_inst/gate_cnt[2]/opit_0_inv_L6Q_perm;gopLUT6Q
+Pin
+CECO;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
+
+Inst
+bin2bcd_inst/N243[8]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/data_fx[15]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
 Pin
 CECO;2
 L5Q;2
@@ -27430,65 +27500,9 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/data_fx[8]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
+bin2bcd_inst/N243[8]_0[2]_1/LUT6_inst_perm;gopLUT6
 Pin
-CECO;2
-L5Q;2
 L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-cymometer_inst/data_fx[17]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
-Pin
-CECO;2
-L5Q;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-cymometer_inst/data_fx[18]/opit_0_inv_L6Q_LUT6DQL5_perm;gopLUT6QL5
-Pin
-CECO;2
-L5;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
-cymometer_inst/N10_1_2/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
 I0;1
 I1;1
 I2;1
@@ -27515,9 +27529,19 @@ I5;1
 RS;1
 
 Inst
-bin2bcd_inst/N183_sum3/LUT6D_inst_perm;gopLUT6L5
+generate_module[5].bcd2ascii_inst/N50_1[0]_22/LUT6_inst_perm;gopLUT6
 Pin
-L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N123_sum3/LUT6_inst_perm;gopLUT6
+Pin
 L6;2
 I0;1
 I1;1
@@ -28044,10 +28068,11 @@ D;1
 RS;1
 
 Inst
-cymometer_inst/N67/LUT6D_inst_perm;gopLUT6L5
+cymometer_inst/N64_sub54.faddsub_9/gateop_perm;gopA
 Pin
-L5;2
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -28113,23 +28138,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[5]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_5/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[6]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28189,23 +28208,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[9]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_9/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[10]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28265,23 +28278,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[13]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_13/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[14]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28341,23 +28348,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[17]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_17/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[18]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28417,23 +28418,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[21]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_21/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[22]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28493,23 +28488,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[25]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_25/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/fs_cnt_temp[26]/opit_0_inv_AQ_perm;gopAL6Q
@@ -28569,28 +28558,24 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/fs_cnt_temp[29]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/N64_sub56.faddsub_29/gateop_perm;gopA
 Pin
-CECO;2
 COUT;2
-Q;2
-RSCO;2
 Y;2
-CE;1
 CIN;1
-CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N92_9/gateop_perm;gopLUT6
+cymometer_inst/N64_sub54.faddsub_1/gateop_perm;gopA
 Pin
-L6;2
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
@@ -28742,7 +28727,7 @@ D;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub41.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub33.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -28812,7 +28797,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_5/gateop_perm;gopA
+cymometer_inst/N64_sub54.faddsub_13/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -28882,7 +28867,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_9/gateop_perm;gopA
+cymometer_inst/N64_sub54.faddsub_17/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -28952,7 +28937,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_13/gateop_perm;gopA
+cymometer_inst/N64_sub54.faddsub_21/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -29022,7 +29007,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_17/gateop_perm;gopA
+cymometer_inst/N64_sub54.faddsub_25/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -29092,7 +29077,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_21/gateop_perm;gopA
+cymometer_inst/N64_sub54.faddsub_29/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -29162,17 +29147,23 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_25/gateop_perm;gopA
+cymometer_inst/fx_cnt_temp[25]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
+CECO;2
 COUT;2
+Q;2
+RSCO;2
 Y;2
+CE;1
 CIN;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 cymometer_inst/fx_cnt_temp[26]/opit_0_inv_AQ_perm;gopAL6Q
@@ -29232,7 +29223,26 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_29/gateop_perm;gopA
+cymometer_inst/fx_cnt_temp[29]/opit_0_inv_AQ_perm;gopAL6Q
+Pin
+CECO;2
+COUT;2
+Q;2
+RSCO;2
+Y;2
+CE;1
+CIN;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
+
+Inst
+cymometer_inst/N64_sub52.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -29245,24 +29255,12 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub51.faddsub_1/gateop_perm;gopA
-Pin
-COUT;2
-Y;2
-CIN;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-cymometer_inst/gate_cnt[2]/opit_0_inv_L6Q_perm;gopLUT6Q
+cymometer_inst/gate_fx_d0/opit_0_inv_L6QQ_perm;gopLUT6QQ
 Pin
 CECO;2
 L6;2
 L6Q;2
+L6QQ;2
 RSCO;2
 CE;1
 CLK;1
@@ -29294,22 +29292,17 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/gate_fx_d0/opit_0_inv_L6QQ_perm;gopLUT6QQ
+cymometer_inst/N64_sub55.faddsub_1/gateop_perm;gopA
 Pin
-CECO;2
-L6;2
-L6Q;2
-L6QQ;2
-RSCO;2
-CE;1
-CLK;1
+COUT;2
+Y;2
+CIN;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
-RS;1
 
 Inst
 cymometer_inst/gate_cnt[4]/opit_0_inv_AQ_perm;gopAL6Q
@@ -29369,7 +29362,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/gate_cnt[7]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/gate_cnt[8]/opit_0_inv_AQ_perm;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -29388,7 +29381,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/gate_cnt[8]/opit_0_inv_AQ_perm;gopAL6Q
+cymometer_inst/gate_cnt[7]/opit_0_inv_AQ;gopAL6Q
 Pin
 CECO;2
 COUT;2
@@ -29445,7 +29438,7 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub33.faddsub_1/gateop_perm;gopA
+cymometer_inst/N64_sub41.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -29482,11 +29475,10 @@ D;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub53.faddsub_1/gateop_perm;gopA
+cymometer_inst/N84/LUT6D_inst_perm;gopLUT6L5
 Pin
-COUT;2
-Y;2
-CIN;1
+L5;2
+L6;2
 I0;1
 I1;1
 I2;1
@@ -29506,7 +29498,7 @@ D;1
 RS;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[0]_1/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[2]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29517,7 +29509,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[5]_1/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_3[0]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29528,7 +29520,40 @@ I4;1
 I5;1
 
 Inst
-generate_module[4].bcd2ascii_inst/N50_1[0]_2_1/gateop_LUT6DL5_perm;gopLUT6L5
+led_display_driver_inst/u_led_display_selector/N106_4[1]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N156[11]_0[1]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N94_sum3_2/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N214[9]_0[0]/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -29540,19 +29565,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N514_sum3/LUT6D_inst_perm;gopLUT6L5
-Pin
-L5;2
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N123_sum3/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N92_9/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29563,40 +29576,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N14_mux9_6/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/N362_6:0_13[1]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N241_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/N362_6:0_13[4]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N352_mux3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29618,7 +29598,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N532_sum3_2/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/N362_6:0_13[4]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29640,15 +29620,22 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N429_sum3/gateop_perm;gopLUT6
+cymometer_inst/data_fx[6]/opit_0_inv_L6Q_LUT6DQL5Q_perm;gopLUT6QL5Q
 Pin
+CECO;2
+L5Q;2
 L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 led_display_driver_inst/N2172_46:40_13[0]/LUT6_inst_perm;gopLUT6
@@ -29662,7 +29649,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N2172_46:40_13[1]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/N2172_46:40_13[2]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29673,9 +29660,8 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N265_mux2/LUT6D_inst_perm;gopLUT6L5
+led_display_driver_inst/u_led_display_selector/N105_6/gateop_perm;gopLUT6
 Pin
-L5;2
 L6;2
 I0;1
 I1;1
@@ -29696,7 +29682,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N261[16]_0[0]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N487[19]_0[0]/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29707,7 +29693,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N2172_46:40_13[5]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[0]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29718,7 +29704,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N476_sum3/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[2]/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29799,17 +29785,6 @@ I5;1
 RS;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N92_11/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
 led_display_driver_inst/u_led_display_selector/N92_13/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
@@ -29821,31 +29796,42 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub49.faddsub_1/gateop_perm;gopA
+led_display_driver_inst/u_led_display_selector/clk_cnt[9]/opit_0_inv_L6Q_perm;gopLUT6Q
 Pin
-COUT;2
-Y;2
-CIN;1
+CECO;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/clk_cnt[3]/opit_0_inv_L6QL5Q_perm;gopLUT6QL5Q
+Pin
+CECO;2
+L5Q;2
+L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+RS;1
 
 Inst
 led_display_driver_inst/u_led_display_selector/N105_inv/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_2[2]/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29867,7 +29853,7 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N552_sum3/gateop_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[4]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29878,7 +29864,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_4[0]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_2[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29889,7 +29875,62 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/N362_6:0_13[2]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/N2172_46:40_13[4]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_2[3]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_2[3]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N160_mux3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_2[6]/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_2[5]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29922,7 +29963,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[4]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N478[15]_0[1]_1/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29933,7 +29974,19 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[4]_1/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N505_sum3/LUT6D_inst_perm;gopLUT6L5
+Pin
+L5;2
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+pulse_gen_inst/N0/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29944,7 +29997,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[6]/gateop_perm;gopLUT6
+bin2bcd_inst/N326_sum3/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -29955,95 +30008,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_4[1]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_4[4]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_3[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_3[3]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N469[11]_0[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N382_sum3/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_3[4]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_2[3]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_3[5]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/u_led_display_selector/N106_3[2]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -30065,6 +30030,83 @@ I4;1
 I5;1
 
 Inst
+bin2bcd_inst/N261[16]_0[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_3[4]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N337[14]_0[1]_1/gateop_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_2[0]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N469[11]_0[2]_1/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_4[5]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N476_sum3/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
 led_display_driver_inst/u_led_display_selector/N106_4[3]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
@@ -30076,7 +30118,66 @@ I4;1
 I5;1
 
 Inst
-bin2bcd_inst/N572[9]_0[0]/LUT6D_inst_perm;gopLUT6L5
+cymometer_inst/N64_sub9.faddsub_1/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_5[0]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+cymometer_inst/N64_sub10.faddsub_1/gateop_perm;gopA
+Pin
+COUT;2
+Y;2
+CIN;1
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_5[1]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+led_display_driver_inst/u_led_display_selector/N106_5[2]/LUT6_inst_perm;gopLUT6
+Pin
+L6;2
+I0;1
+I1;1
+I2;1
+I3;1
+I4;1
+I5;1
+
+Inst
+bin2bcd_inst/N346[18]_0[0]/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -30099,8 +30200,9 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_5[1]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N344_sum3_2/LUT6D_inst_perm;gopLUT6L5
 Pin
+L5;2
 L6;2
 I0;1
 I1;1
@@ -30110,96 +30212,9 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_4[5]/LUT6_inst_perm;gopLUT6
+bin2bcd_inst/N169_mux2/LUT6D_inst_perm;gopLUT6L5
 Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_4[6]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_5[0]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_5[2]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_2[2]_1/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_5[5]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-led_display_driver_inst/u_led_display_selector/N106_5[4]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-pulse_gen_inst/N0/gateop_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N588_sum3_2/LUT6_inst_perm;gopLUT6
-Pin
+L5;2
 L6;2
 I0;1
 I1;1
@@ -30220,18 +30235,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_3[2]/LUT6_inst_perm;gopLUT6
-Pin
-L6;2
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-
-Inst
-bin2bcd_inst/N523_sum3/LUT6D_inst_perm;gopLUT6L5
+bin2bcd_inst/N265_mux2/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -30344,7 +30348,7 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub56.faddsub_25/gateop_perm;gopA
+cymometer_inst/N64_sub42.faddsub_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -30357,11 +30361,9 @@ I4;1
 I5;1
 
 Inst
-cymometer_inst/N64_sub54.faddsub_1/gateop_perm;gopA
+bin2bcd_inst/N259_sum3/LUT6_inst_perm;gopLUT6
 Pin
-COUT;2
-Y;2
-CIN;1
+L6;2
 I0;1
 I1;1
 I2;1
@@ -30408,11 +30410,9 @@ I5;1
 RS;1
 
 Inst
-cymometer_inst/N64_sub42.faddsub_1/gateop_perm;gopA
+bin2bcd_inst/N449_sum3/LUT6_inst_perm;gopLUT6
 Pin
-COUT;2
-Y;2
-CIN;1
+L6;2
 I0;1
 I1;1
 I2;1
@@ -32348,7 +32348,7 @@ UPD0_SHIFT;1
 UPD1_SHIFT;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_2[0]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/N2170_14/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -32370,7 +32370,7 @@ I4;1
 I5;1
 
 Inst
-led_display_driver_inst/u_led_display_selector/N106_4[2]/LUT6_inst_perm;gopLUT6
+led_display_driver_inst/N2172_46:40_13[1]/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -33413,6 +33413,11 @@ Pin
 Z;2
 
 Inst
+GND_96;gopGND
+Pin
+Z;2
+
+Inst
 CLKROUTE_0;gopCLKROUTE
 Pin
 CR;2
@@ -33888,36 +33893,6 @@ M;1
 
 Inst
 CLKROUTE_79;gopCLKROUTE
-Pin
-CR;2
-M;1
-
-Inst
-CLKROUTE_80;gopCLKROUTE
-Pin
-CR;2
-M;1
-
-Inst
-CLKROUTE_81;gopCLKROUTE
-Pin
-CR;2
-M;1
-
-Inst
-CLKROUTE_82;gopCLKROUTE
-Pin
-CR;2
-M;1
-
-Inst
-CLKROUTE_83;gopCLKROUTE
-Pin
-CR;2
-M;1
-
-Inst
-CLKROUTE_84;gopCLKROUTE
 Pin
 CR;2
 M;1
@@ -38505,16 +38480,6 @@ ntR314;
 ntR315;
 ntR316;
 ntR317;
-ntR318;
-ntR319;
-ntR320;
-ntR321;
-ntR322;
-ntR323;
-ntR324;
-ntR325;
-ntR326;
-ntR327;
 
 Clock
 frequency_meter|clk;1000
