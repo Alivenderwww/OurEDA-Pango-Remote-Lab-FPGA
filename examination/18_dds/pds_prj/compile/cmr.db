@@ -29,8 +29,8 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:0s</data>
-            <data>0h:0m:0s</data>
+            <data>0h:0m:1s</data>
+            <data>0h:0m:1s</data>
             <data>0h:0m:4s</data>
             <data>138</data>
             <data>WINDOWS 10 x86_64</data>
@@ -196,7 +196,7 @@
     squ_wave = 4'b0010
     tri_wave = 4'b0100
     saw_wave = 4'b1000
-    FREQ_CTRL = 32'b00000000000001000000110100111111
+    FREQ_CTRL = 32'b00000000000000001111111111111111
     PHASE_CTRL = 12'b010000000000</data>
         </row>
         <row>

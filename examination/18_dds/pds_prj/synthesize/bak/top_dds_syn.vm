@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Sun Jul 20 01:29:01 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Sun Jul 20 01:53:57 2025
 //
 
 module ipm2l_spram_v1_8_rom_wave
@@ -237,8 +237,8 @@ module ipm2l_spram_v1_8_rom_wave
             .DOB ({QB_bus[35], QB_bus[34], QB_bus[33], QB_bus[32], QB_bus[31], QB_bus[30], QB_bus[29], QB_bus[28], QB_bus[27], QB_bus[26], QB_bus[25], QB_bus[24], QB_bus[23], QB_bus[22], QB_bus[21], QB_bus[20], QB_bus[19], QB_bus[18], QB_bus[17], QB_bus[16], QB_bus[15], QB_bus[14], QB_bus[13], QB_bus[12], QB_bus[11], QB_bus[10], QB_bus[9], QB_bus[8], QB_bus[7], QB_bus[6], QB_bus[5], QB_bus[4], QB_bus[3], QB_bus[2], QB_bus[1], QB_bus[0]}),
             .ECC_PARITY (),
             .ECC_RDADDR (),
-            .ADDRA ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
-            .ADDRB ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRA ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRB ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
             .BWEA ({1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1}),
             .BWEB ({1'b0, 1'b0, 1'b0, 1'b0}),
             .CSA ({1'b0, 1'b0, 1'b0}),
@@ -425,8 +425,8 @@ module ipm2l_spram_v1_8_rom_wave
             .DOB ({QB_bus[71], QB_bus[70], QB_bus[69], QB_bus[68], QB_bus[67], QB_bus[66], QB_bus[65], QB_bus[64], QB_bus[63], QB_bus[62], QB_bus[61], QB_bus[60], QB_bus[59], QB_bus[58], QB_bus[57], QB_bus[56], QB_bus[55], QB_bus[54], QB_bus[53], QB_bus[52], QB_bus[51], QB_bus[50], QB_bus[49], QB_bus[48], QB_bus[47], QB_bus[46], QB_bus[45], QB_bus[44], QB_bus[43], QB_bus[42], QB_bus[41], QB_bus[40], QB_bus[39], QB_bus[38], QB_bus[37], QB_bus[36]}),
             .ECC_PARITY (),
             .ECC_RDADDR (),
-            .ADDRA ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
-            .ADDRB ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRA ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRB ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
             .BWEA ({1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1}),
             .BWEB ({1'b0, 1'b0, 1'b0, 1'b0}),
             .CSA ({1'b0, 1'b0, 1'b0}),
@@ -613,8 +613,8 @@ module ipm2l_spram_v1_8_rom_wave
             .DOB ({QB_bus[107], QB_bus[106], QB_bus[105], QB_bus[104], QB_bus[103], QB_bus[102], QB_bus[101], QB_bus[100], QB_bus[99], QB_bus[98], QB_bus[97], QB_bus[96], QB_bus[95], QB_bus[94], QB_bus[93], QB_bus[92], QB_bus[91], QB_bus[90], QB_bus[89], QB_bus[88], QB_bus[87], QB_bus[86], QB_bus[85], QB_bus[84], QB_bus[83], QB_bus[82], QB_bus[81], QB_bus[80], QB_bus[79], QB_bus[78], QB_bus[77], QB_bus[76], QB_bus[75], QB_bus[74], QB_bus[73], QB_bus[72]}),
             .ECC_PARITY (),
             .ECC_RDADDR (),
-            .ADDRA ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
-            .ADDRB ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRA ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRB ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
             .BWEA ({1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1}),
             .BWEB ({1'b0, 1'b0, 1'b0, 1'b0}),
             .CSA ({1'b0, 1'b0, 1'b0}),
@@ -801,8 +801,8 @@ module ipm2l_spram_v1_8_rom_wave
             .DOB ({QB_bus[143], QB_bus[142], QB_bus[141], QB_bus[140], QB_bus[139], QB_bus[138], QB_bus[137], QB_bus[136], QB_bus[135], QB_bus[134], QB_bus[133], QB_bus[132], QB_bus[131], QB_bus[130], QB_bus[129], QB_bus[128], QB_bus[127], QB_bus[126], QB_bus[125], QB_bus[124], QB_bus[123], QB_bus[122], QB_bus[121], QB_bus[120], QB_bus[119], QB_bus[118], QB_bus[117], QB_bus[116], QB_bus[115], QB_bus[114], QB_bus[113], QB_bus[112], QB_bus[111], QB_bus[110], QB_bus[109], QB_bus[108]}),
             .ECC_PARITY (),
             .ECC_RDADDR (),
-            .ADDRA ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
-            .ADDRB ({1'b1, 1'b0, 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRA ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
+            .ADDRB ({1'b1, addr[13], 1'b0, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0], 1'b0}),
             .BWEA ({1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1}),
             .BWEB ({1'b0, 1'b0, 1'b0, 1'b0}),
             .CSA ({1'b0, 1'b0, 1'b0}),
@@ -844,7 +844,7 @@ module ipm2l_rom_v1_8_rom_wave
 
     ipm2l_spram_v1_8_rom_wave U_ipm2l_spram (
             .rd_data (rd_data),
-            .addr ({1'bx, 1'bx, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0]}),
+            .addr ({addr[13], 1'bx, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0]}),
             .clk (clk));
 	// ../ipcore/rom_wave/rtl/ipm2l_rom_v1_8_rom_wave.v:60
 
@@ -861,7 +861,7 @@ module rom_wave
 
     ipm2l_rom_v1_8_rom_wave U_ipm2l_rom_rom_wave (
             .rd_data (rd_data),
-            .addr ({1'bx, 1'bx, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0]}),
+            .addr ({addr[13], 1'bx, addr[11], addr[10], addr[9], addr[8], addr[7], addr[6], addr[5], addr[4], addr[3], addr[2], addr[1], addr[0]}),
             .clk (clk));
 	// ../ipcore/rom_wave/rom_wave.v:105
 
@@ -878,6 +878,7 @@ module dds
     wire [31:0] N3;
     wire [11:0] N10;
     wire N44;
+    wire _N2;
     wire _N3;
     wire _N4;
     wire _N5;
@@ -907,7 +908,6 @@ module dds
     wire _N29;
     wire _N30;
     wire _N31;
-    wire _N32;
     wire [31:0] fre_add;
     wire \fre_add[0]_inv ;
     wire \fre_add[30]_inv ;
@@ -919,7 +919,7 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("TRUE"))
         N3_1_1 (
-            .COUT (_N3),
+            .COUT (_N2),
             .Z (N3[1]),
             .CIN (),
             .I0 (fre_add[0]),
@@ -937,9 +937,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_2 (
-            .COUT (_N4),
+            .COUT (_N3),
             .Z (N3[2]),
-            .CIN (_N3),
+            .CIN (_N2),
             .I0 (fre_add[0]),
             .I1 (fre_add[1]),
             .I2 (fre_add[2]),
@@ -955,9 +955,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_3 (
-            .COUT (_N5),
+            .COUT (_N4),
             .Z (N3[3]),
-            .CIN (_N4),
+            .CIN (_N3),
             .I0 (fre_add[3]),
             .I1 (),
             .I2 (),
@@ -973,9 +973,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_4 (
-            .COUT (_N6),
+            .COUT (_N5),
             .Z (N3[4]),
-            .CIN (_N5),
+            .CIN (_N4),
             .I0 (fre_add[4]),
             .I1 (),
             .I2 (),
@@ -991,9 +991,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_5 (
-            .COUT (_N7),
+            .COUT (_N6),
             .Z (N3[5]),
-            .CIN (_N6),
+            .CIN (_N5),
             .I0 (fre_add[5]),
             .I1 (),
             .I2 (),
@@ -1009,9 +1009,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_6 (
-            .COUT (_N8),
+            .COUT (_N7),
             .Z (N3[6]),
-            .CIN (_N7),
+            .CIN (_N6),
             .I0 (fre_add[6]),
             .I1 (),
             .I2 (),
@@ -1027,9 +1027,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_7 (
-            .COUT (_N9),
+            .COUT (_N8),
             .Z (N3[7]),
-            .CIN (_N8),
+            .CIN (_N7),
             .I0 (fre_add[7]),
             .I1 (),
             .I2 (),
@@ -1045,9 +1045,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_8 (
-            .COUT (_N10),
+            .COUT (_N9),
             .Z (N3[8]),
-            .CIN (_N9),
+            .CIN (_N8),
             .I0 (fre_add[8]),
             .I1 (),
             .I2 (),
@@ -1063,9 +1063,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_9 (
-            .COUT (_N11),
+            .COUT (_N10),
             .Z (N3[9]),
-            .CIN (_N10),
+            .CIN (_N9),
             .I0 (fre_add[9]),
             .I1 (),
             .I2 (),
@@ -1081,9 +1081,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_10 (
-            .COUT (_N12),
+            .COUT (_N11),
             .Z (N3[10]),
-            .CIN (_N11),
+            .CIN (_N10),
             .I0 (fre_add[10]),
             .I1 (),
             .I2 (),
@@ -1099,9 +1099,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_11 (
-            .COUT (_N13),
+            .COUT (_N12),
             .Z (N3[11]),
-            .CIN (_N12),
+            .CIN (_N11),
             .I0 (fre_add[11]),
             .I1 (),
             .I2 (),
@@ -1117,9 +1117,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_12 (
-            .COUT (_N14),
+            .COUT (_N13),
             .Z (N3[12]),
-            .CIN (_N13),
+            .CIN (_N12),
             .I0 (fre_add[12]),
             .I1 (),
             .I2 (),
@@ -1135,9 +1135,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_13 (
-            .COUT (_N15),
+            .COUT (_N14),
             .Z (N3[13]),
-            .CIN (_N14),
+            .CIN (_N13),
             .I0 (fre_add[13]),
             .I1 (),
             .I2 (),
@@ -1153,9 +1153,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_14 (
-            .COUT (_N16),
+            .COUT (_N15),
             .Z (N3[14]),
-            .CIN (_N15),
+            .CIN (_N14),
             .I0 (fre_add[14]),
             .I1 (),
             .I2 (),
@@ -1171,9 +1171,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_15 (
-            .COUT (_N17),
+            .COUT (_N16),
             .Z (N3[15]),
-            .CIN (_N16),
+            .CIN (_N15),
             .I0 (fre_add[15]),
             .I1 (),
             .I2 (),
@@ -1189,9 +1189,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_16 (
-            .COUT (_N18),
+            .COUT (_N17),
             .Z (N3[16]),
-            .CIN (_N17),
+            .CIN (_N16),
             .I0 (fre_add[16]),
             .I1 (),
             .I2 (),
@@ -1207,9 +1207,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_17 (
-            .COUT (_N19),
+            .COUT (_N18),
             .Z (N3[17]),
-            .CIN (_N18),
+            .CIN (_N17),
             .I0 (fre_add[17]),
             .I1 (),
             .I2 (),
@@ -1225,9 +1225,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_18 (
-            .COUT (_N20),
+            .COUT (_N19),
             .Z (N3[18]),
-            .CIN (_N19),
+            .CIN (_N18),
             .I0 (fre_add[18]),
             .I1 (),
             .I2 (),
@@ -1243,9 +1243,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_19 (
-            .COUT (_N21),
+            .COUT (_N20),
             .Z (N3[19]),
-            .CIN (_N20),
+            .CIN (_N19),
             .I0 (fre_add[19]),
             .I1 (),
             .I2 (),
@@ -1261,9 +1261,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_20 (
-            .COUT (_N22),
+            .COUT (_N21),
             .Z (N3[20]),
-            .CIN (_N21),
+            .CIN (_N20),
             .I0 (fre_add[20]),
             .I1 (),
             .I2 (),
@@ -1279,9 +1279,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_21 (
-            .COUT (_N23),
+            .COUT (_N22),
             .Z (N3[21]),
-            .CIN (_N22),
+            .CIN (_N21),
             .I0 (fre_add[21]),
             .I1 (),
             .I2 (),
@@ -1297,9 +1297,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_22 (
-            .COUT (_N24),
+            .COUT (_N23),
             .Z (N3[22]),
-            .CIN (_N23),
+            .CIN (_N22),
             .I0 (fre_add[22]),
             .I1 (),
             .I2 (),
@@ -1315,9 +1315,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_23 (
-            .COUT (_N25),
+            .COUT (_N24),
             .Z (N3[23]),
-            .CIN (_N24),
+            .CIN (_N23),
             .I0 (fre_add[23]),
             .I1 (),
             .I2 (),
@@ -1333,9 +1333,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_24 (
-            .COUT (_N26),
+            .COUT (_N25),
             .Z (N3[24]),
-            .CIN (_N25),
+            .CIN (_N24),
             .I0 (fre_add[24]),
             .I1 (),
             .I2 (),
@@ -1351,9 +1351,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_25 (
-            .COUT (_N27),
+            .COUT (_N26),
             .Z (N3[25]),
-            .CIN (_N26),
+            .CIN (_N25),
             .I0 (fre_add[25]),
             .I1 (),
             .I2 (),
@@ -1369,9 +1369,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_26 (
-            .COUT (_N28),
+            .COUT (_N27),
             .Z (N3[26]),
-            .CIN (_N27),
+            .CIN (_N26),
             .I0 (fre_add[26]),
             .I1 (),
             .I2 (),
@@ -1387,9 +1387,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_27 (
-            .COUT (_N29),
+            .COUT (_N28),
             .Z (N3[27]),
-            .CIN (_N28),
+            .CIN (_N27),
             .I0 (fre_add[27]),
             .I1 (),
             .I2 (),
@@ -1405,9 +1405,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_28 (
-            .COUT (_N30),
+            .COUT (_N29),
             .Z (N3[28]),
-            .CIN (_N29),
+            .CIN (_N28),
             .I0 (fre_add[28]),
             .I1 (),
             .I2 (),
@@ -1423,9 +1423,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_29 (
-            .COUT (_N31),
+            .COUT (_N30),
             .Z (N3[29]),
-            .CIN (_N30),
+            .CIN (_N29),
             .I0 (fre_add[29]),
             .I1 (),
             .I2 (),
@@ -1441,9 +1441,9 @@ module dds
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_30 (
-            .COUT (_N32),
+            .COUT (_N31),
             .Z (N3[30]),
-            .CIN (_N31),
+            .CIN (_N30),
             .I0 (fre_add[30]),
             .I1 (),
             .I2 (),
@@ -1461,7 +1461,7 @@ module dds
         N3_1_31 (
             .COUT (),
             .Z (N3[31]),
-            .CIN (_N32),
+            .CIN (_N31),
             .I0 (fre_add[31]),
             .I1 (),
             .I2 (),
@@ -1938,6 +1938,16 @@ module dds
             .D (rom_addr_reg[11]));
 	// ../../rtl/dds.v:56
 
+    GTP_DFF_C /* \rom_addr[13]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \rom_addr[13]  (
+            .Q (rom_addr[13]),
+            .C (N44),
+            .CLK (sys_clk),
+            .D (1'b1));
+	// ../../rtl/dds.v:56
+
     GTP_DFF_C /* \rom_addr_reg[0]  */ #(
             .GRS_EN("TRUE"), 
             .INIT(1'b0))
@@ -2060,7 +2070,7 @@ module dds
 
     rom_wave rom_wave_inst (
             .rd_data (data_out),
-            .addr ({1'bx, 1'bx, rom_addr[11], rom_addr[10], rom_addr[9], rom_addr[8], rom_addr[7], rom_addr[6], rom_addr[5], rom_addr[4], rom_addr[3], rom_addr[2], rom_addr[1], rom_addr[0]}),
+            .addr ({rom_addr[13], 1'bx, rom_addr[11], rom_addr[10], rom_addr[9], rom_addr[8], rom_addr[7], rom_addr[6], rom_addr[5], rom_addr[4], rom_addr[3], rom_addr[2], rom_addr[1], rom_addr[0]}),
             .clk (sys_clk));
 	// ../../rtl/dds.v:95
 

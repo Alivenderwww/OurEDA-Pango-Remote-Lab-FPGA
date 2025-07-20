@@ -3133,7 +3133,7 @@
             <data>sys_clk_ibuf</data>
             <data>clkbufg_0</data>
             <data>ntclkbufg_0</data>
-            <data>64</data>
+            <data>65</data>
         </row>
     </table>
     <table id="device_map_reset_signal" title="Reset Signal" column_number="3">
@@ -3145,7 +3145,7 @@
         <row>
             <data>dds_inst/N44</data>
             <data>dds_inst/N44</data>
-            <data>56</data>
+            <data>57</data>
         </row>
         <row>
             <data>_$$_GND_$$_</data>
@@ -3162,12 +3162,17 @@
         <row>
             <data>ntclkbufg_0</data>
             <data>clkbufg_0</data>
-            <data>64</data>
+            <data>65</data>
         </row>
         <row>
             <data>dds_inst/N44</data>
             <data>dds_inst/N44</data>
-            <data>56</data>
+            <data>57</data>
+        </row>
+        <row>
+            <data>dds_inst/rom_addr [10]</data>
+            <data>dds_inst/rom_addr[10]</data>
+            <data>8</data>
         </row>
         <row>
             <data>dds_inst/rom_addr [9]</data>
@@ -3190,13 +3195,13 @@
             <data>8</data>
         </row>
         <row>
-            <data>dds_inst/rom_addr [5]</data>
-            <data>dds_inst/rom_addr[5]</data>
+            <data>dds_inst/rom_addr [11]</data>
+            <data>dds_inst/rom_addr[11]</data>
             <data>8</data>
         </row>
         <row>
-            <data>dds_inst/rom_addr [10]</data>
-            <data>dds_inst/rom_addr[10]</data>
+            <data>dds_inst/rom_addr [4]</data>
+            <data>dds_inst/rom_addr[4]</data>
             <data>8</data>
         </row>
         <row>
@@ -3220,13 +3225,13 @@
             <data>8</data>
         </row>
         <row>
-            <data>dds_inst/rom_addr [11]</data>
-            <data>dds_inst/rom_addr[11]</data>
+            <data>dds_inst/rom_addr [13]</data>
+            <data>dds_inst/rom_addr[13]</data>
             <data>8</data>
         </row>
         <row>
-            <data>dds_inst/rom_addr [4]</data>
-            <data>dds_inst/rom_addr[4]</data>
+            <data>dds_inst/rom_addr [5]</data>
+            <data>dds_inst/rom_addr[5]</data>
             <data>8</data>
         </row>
         <row>
@@ -3245,13 +3250,13 @@
             <data>2</data>
         </row>
         <row>
-            <data>dds_inst/fre_add [27]</data>
-            <data>dds_inst/fre_add[27]</data>
+            <data>nt_sys_clk</data>
+            <data>sys_clk_ibuf</data>
             <data>2</data>
         </row>
         <row>
-            <data>nt_sys_clk</data>
-            <data>sys_clk_ibuf</data>
+            <data>dds_inst/fre_add [27]</data>
+            <data>dds_inst/fre_add[27]</data>
             <data>2</data>
         </row>
         <row>
@@ -3303,11 +3308,6 @@
             <data>dds_inst/fre_add [30]</data>
             <data>dds_inst/fre_add[30]</data>
             <data>2</data>
-        </row>
-        <row>
-            <data>dds_inst/N3 [8]</data>
-            <data>dds_inst/N3_1_8</data>
-            <data>1</data>
         </row>
         <row>
             <data>dds_inst/N3 [9]</data>
@@ -3430,58 +3430,158 @@
             <data>1</data>
         </row>
         <row>
+            <data>nt_dac_data[4]</data>
+            <data>dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N2</data>
+            <data>dds_inst/N3_1_1</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N3</data>
+            <data>dds_inst/N3_1_2</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N4</data>
+            <data>dds_inst/N3_1_3</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N5</data>
+            <data>dds_inst/N3_1_4</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N6</data>
+            <data>dds_inst/N3_1_5</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N7</data>
+            <data>dds_inst/N3_1_6</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N8</data>
+            <data>dds_inst/N3_1_7</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N9</data>
+            <data>dds_inst/N3_1_8</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N10</data>
+            <data>dds_inst/N3_1_9</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N11</data>
+            <data>dds_inst/N3_1_10</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/N3 [8]</data>
+            <data>dds_inst/N3_1_8</data>
+            <data>1</data>
+        </row>
+        <row>
             <data>nt_dac_data[3]</data>
             <data>dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N3</data>
-            <data>dds_inst/N3_1_1</data>
+            <data>dds_inst/_N14</data>
+            <data>dds_inst/N3_1_13</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N4</data>
-            <data>dds_inst/N3_1_2</data>
+            <data>dds_inst/_N15</data>
+            <data>dds_inst/N3_1_14</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N5</data>
-            <data>dds_inst/N3_1_3</data>
+            <data>dds_inst/_N16</data>
+            <data>dds_inst/N3_1_15</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N6</data>
-            <data>dds_inst/N3_1_4</data>
+            <data>dds_inst/_N17</data>
+            <data>dds_inst/N3_1_16</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N7</data>
-            <data>dds_inst/N3_1_5</data>
+            <data>dds_inst/_N18</data>
+            <data>dds_inst/N3_1_17</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N8</data>
-            <data>dds_inst/N3_1_6</data>
+            <data>dds_inst/_N19</data>
+            <data>dds_inst/N3_1_18</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N9</data>
-            <data>dds_inst/N3_1_7</data>
+            <data>dds_inst/_N20</data>
+            <data>dds_inst/N3_1_19</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N10</data>
-            <data>dds_inst/N3_1_8</data>
+            <data>dds_inst/_N21</data>
+            <data>dds_inst/N3_1_20</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N11</data>
-            <data>dds_inst/N3_1_9</data>
+            <data>dds_inst/_N22</data>
+            <data>dds_inst/N3_1_21</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N12</data>
-            <data>dds_inst/N3_1_10</data>
+            <data>dds_inst/_N23</data>
+            <data>dds_inst/N3_1_22</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N24</data>
+            <data>dds_inst/N3_1_23</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N25</data>
+            <data>dds_inst/N3_1_24</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N26</data>
+            <data>dds_inst/N3_1_25</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N27</data>
+            <data>dds_inst/N3_1_26</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N28</data>
+            <data>dds_inst/N3_1_27</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N29</data>
+            <data>dds_inst/N3_1_28</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N30</data>
+            <data>dds_inst/N3_1_29</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>dds_inst/_N31</data>
+            <data>dds_inst/N3_1_30</data>
             <data>1</data>
         </row>
         <row>
@@ -3490,108 +3590,8 @@
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/_N14</data>
-            <data>dds_inst/N3_1_12</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N15</data>
-            <data>dds_inst/N3_1_13</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N16</data>
-            <data>dds_inst/N3_1_14</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N17</data>
-            <data>dds_inst/N3_1_15</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N18</data>
-            <data>dds_inst/N3_1_16</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N19</data>
-            <data>dds_inst/N3_1_17</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N20</data>
-            <data>dds_inst/N3_1_18</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N21</data>
-            <data>dds_inst/N3_1_19</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N22</data>
-            <data>dds_inst/N3_1_20</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N23</data>
-            <data>dds_inst/N3_1_21</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N24</data>
-            <data>dds_inst/N3_1_22</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N25</data>
-            <data>dds_inst/N3_1_23</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N26</data>
-            <data>dds_inst/N3_1_24</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N27</data>
-            <data>dds_inst/N3_1_25</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N28</data>
-            <data>dds_inst/N3_1_26</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N29</data>
-            <data>dds_inst/N3_1_27</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N30</data>
-            <data>dds_inst/N3_1_28</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N31</data>
-            <data>dds_inst/N3_1_29</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/_N32</data>
-            <data>dds_inst/N3_1_30</data>
-            <data>1</data>
-        </row>
-        <row>
             <data>dds_inst/N3 [6]</data>
             <data>dds_inst/N3_1_6</data>
-            <data>1</data>
-        </row>
-        <row>
-            <data>dds_inst/N3 [5]</data>
-            <data>dds_inst/N3_1_5</data>
             <data>1</data>
         </row>
         <row>
@@ -3675,7 +3675,7 @@
         </row>
         <row>
             <data>FF</data>
-            <data>56</data>
+            <data>57</data>
             <data>133200</data>
             <data>1</data>
         </row>
@@ -3823,9 +3823,9 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:7s</data>
-            <data>0h:0m:7s</data>
-            <data>0h:0m:10s</data>
+            <data>0h:0m:8s</data>
+            <data>0h:0m:8s</data>
+            <data>0h:0m:11s</data>
             <data>330</data>
             <data>WINDOWS 10 x86_64</data>
             <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>
@@ -3841,7 +3841,7 @@
             <data message="4">Infer CARRY group, base inst: dds_inst/N3_1_1/gateop, insts:31.</data>
         </row>
         <row>
-            <data message="5">Public-4010: Pcf file C:/Users/Alivender/Desktop/18_dds/pds_prj/device_map/top_dds.pcf has been covered.</data>
+            <data message="5">Public-4010: Pcf file C:/_Project/Pangu/examination/18_dds/pds_prj/device_map/top_dds.pcf has been covered.</data>
         </row>
     </table>
     <general_container id="device_map_settings">

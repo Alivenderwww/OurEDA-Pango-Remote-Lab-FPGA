@@ -1794,6 +1794,17 @@ D;1
 RS;1
 
 Inst
+dds_inst/rom_addr[13]/opit_0_inv;gopQ
+Pin
+CECO;2
+Q;2
+RSCO;2
+CE;1
+CLK;1
+D;1
+RS;1
+
+Inst
 dds_inst/rom_addr_reg[1]/opit_0_inv_AQQ_perm;gopAL6QQ
 Pin
 CECO;2
@@ -3490,6 +3501,11 @@ Pin
 Z;2
 
 Inst
+VCC_14;gopVCC
+Pin
+Z;2
+
+Inst
 GND_0;gopGND
 Pin
 Z;2
@@ -3647,6 +3663,7 @@ dac_data_obuf[6]/ntO;
 dac_data_obuf[6]/ntT;
 dac_data_obuf[7]/ntO;
 dac_data_obuf[7]/ntT;
+dds_inst/_N2;
 dds_inst/_N3;
 dds_inst/_N4;
 dds_inst/_N5;
@@ -3676,7 +3693,6 @@ dds_inst/_N28;
 dds_inst/_N29;
 dds_inst/_N30;
 dds_inst/_N31;
-dds_inst/_N32;
 nt_dac_clk;
 nt_sys_clk;
 nt_sys_rst_n;
@@ -3741,6 +3757,7 @@ dds_inst/rom_addr [8];
 dds_inst/rom_addr [9];
 dds_inst/rom_addr [10];
 dds_inst/rom_addr [11];
+dds_inst/rom_addr [13];
 dds_inst/rom_addr_reg [0];
 dds_inst/rom_addr_reg [1];
 dds_inst/rom_addr_reg [2];
@@ -3812,6 +3829,7 @@ ntR47;
 ntR48;
 ntR49;
 ntR50;
+ntR51;
 
 Clock
 top_dds|sys_clk;1000

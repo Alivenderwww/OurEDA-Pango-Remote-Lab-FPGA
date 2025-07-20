@@ -34,7 +34,7 @@ parameter   sin_wave    =   4'b0001     ,   //正弦波
             squ_wave    =   4'b0010     ,   //方波
             tri_wave    =   4'b0100     ,   //三角波
             saw_wave    =   4'b1000     ;   //锯齿波
-parameter   FREQ_CTRL   =   32'd22265535,//32'd42949   ,   //相位累加器单次累加值
+parameter   FREQ_CTRL   =   32'd65535,//32'd42949   ,   //相位累加器单次累加值
             PHASE_CTRL  =   12'd1024    ;   //相位偏移量
 
 //reg   define

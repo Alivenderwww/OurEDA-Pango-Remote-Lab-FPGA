@@ -14,16 +14,16 @@ module dso_top #(
     input  [9:0]  deci_rate,  // 抽样率
 
     input         ram_rd_clk,
-    input         ram_refresh,
-    input  [9:0]  wave_rd_addr, // RAM读地址 0-299
-    output [7:0]  wave_rd_data, // RAM读数据
+    input         ram_refresh/* synthesis PAP_MARK_DEBUG="true" */,
+    input  [9:0]  wave_rd_addr/* synthesis PAP_MARK_DEBUG="true" */, // RAM读地址 0-299
+    output [7:0]  wave_rd_data/* synthesis PAP_MARK_DEBUG="true" */, // RAM读数据
 
     output        outrange,     //水平偏移超出范围
     output        ad_pulse,     //AD采样脉冲
-    output [19:0] ad_freq,      //AD采样频率
-    output [7:0]  ad_vpp,       //AD采样幅度
-    output [7:0]  ad_max,       //AD采样最大值
-    output [7:0]  ad_min        //AD采样最小值
+    output [19:0] ad_freq/* synthesis PAP_MARK_DEBUG="true" */,      //AD采样频率
+    output [7:0]  ad_vpp/* synthesis PAP_MARK_DEBUG="true" */,       //AD采样幅度
+    output [7:0]  ad_max/* synthesis PAP_MARK_DEBUG="true" */,       //AD采样最大值
+    output [7:0]  ad_min/* synthesis PAP_MARK_DEBUG="true" */        //AD采样最小值
 );
 
 wire       	deci_valid;

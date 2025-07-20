@@ -361,7 +361,7 @@
                                                         <row>
                                                             <data object_valid="true">HCKBROUTE_0/CLKOUT (3.104, 3.618, 3.009, 3.507)</data>
                                                             <row>
-                                                                <data object_valid="true">ntR51 (net)</data>
+                                                                <data object_valid="true">ntR49 (net)</data>
                                                                 <row>
                                                                     <data file_id="../../rtl/dds.v" line_number="49">dds_inst/fre_add[0]/opit_0_inv_L6Q_perm/CLK (3.516, 4.100, 3.415, 3.982)</data>
                                                                 </row>
@@ -457,7 +457,7 @@
                                                         <row>
                                                             <data object_valid="true">HCKBROUTE_1/CLKOUT (3.119, 3.636, 3.024, 3.525)</data>
                                                             <row>
-                                                                <data object_valid="true">ntR50 (net)</data>
+                                                                <data object_valid="true">ntR48 (net)</data>
                                                                 <row>
                                                                     <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[3].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0] (3.529, 4.116, 3.428, 3.998)</data>
                                                                 </row>
@@ -615,7 +615,7 @@
                             <data>0.481</data>
                             <data>4.099</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -859,7 +859,7 @@
                             <data>0.404</data>
                             <data>1003.508</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_361/CLK</data>
@@ -1013,7 +1013,7 @@
                             <data>0.481</data>
                             <data>4.099</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -1241,7 +1241,7 @@
                             <data>0.405</data>
                             <data>1003.509</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_355/CLK</data>
@@ -1395,7 +1395,7 @@
                             <data>0.481</data>
                             <data>4.099</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -1607,7 +1607,7 @@
                             <data>0.406</data>
                             <data>1003.510</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_349/CLK</data>
@@ -1782,7 +1782,7 @@
                             <data>0.404</data>
                             <data>3.508</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_361/CLK</data>
@@ -1914,7 +1914,7 @@
                             <data>0.471</data>
                             <data>4.089</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>DRM_40_366/CLKB[0]</data>
@@ -1953,11 +1953,297 @@
             </general_container>
         </row>
         <row>
-            <data>0.351</data>
+            <data>0.350</data>
             <data>0</data>
             <data>8</data>
-            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/CLK</data>
-            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]</data>
+            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[0]/opit_0_inv/CLK</data>
+            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[1]</data>
+            <data/>
+            <data>top_dds|sys_clk</data>
+            <data>top_dds|sys_clk</data>
+            <data>rise-rise</data>
+            <data>0.072</data>
+            <data>3.513</data>
+            <data>4.099</data>
+            <data>-0.514</data>
+            <data>0.000</data>
+            <data>0.495</data>
+            <data>0.173 (34.9%)</data>
+            <data>0.322 (65.1%)</data>
+            <general_container>
+                <data>Path #2: hold slack is 0.350(MET)</data>
+                <table_container>
+                    <table id="arrival" title="Data arrival time is 4.008" column_number="6">
+                        <column_headers>
+                            <data>Location</data>
+                            <data>Delay Type</data>
+                            <data>Incr</data>
+                            <data>Path</data>
+                            <data>Trans</data>
+                            <data>Logical Resource</data>
+                        </column_headers>
+                        <row>
+                            <data>Clock top_dds|sys_clk (rising edge)</data>
+                            <data/>
+                            <data>0.000</data>
+                            <data>0.000</data>
+                            <data>r</data>
+                            <data/>
+                        </row>
+                        <row>
+                            <data>D18</data>
+                            <data></data>
+                            <data>0.000</data>
+                            <data>0.000</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk (port)</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=1)</data>
+                            <data>0.104</data>
+                            <data>0.104</data>
+                            <data/>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk</data>
+                        </row>
+                        <row>
+                            <data>IOBD_0_1080/DIN</data>
+                            <data>td</data>
+                            <data>0.954</data>
+                            <data>1.058</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_0/O</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=1)</data>
+                            <data>0.000</data>
+                            <data>1.058</data>
+                            <data/>
+                            <data object_valid="true">sys_clk_ibuf/ntD</data>
+                        </row>
+                        <row>
+                            <data>IOLHR_16_1080/DI_TO_CLK</data>
+                            <data>td</data>
+                            <data>0.091</data>
+                            <data>1.149</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_1/DI_TO_CLK</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=2)</data>
+                            <data>1.052</data>
+                            <data>2.201</data>
+                            <data/>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">nt_sys_clk</data>
+                        </row>
+                        <row>
+                            <data>USCM_215_624/CLKOUT</data>
+                            <data>td</data>
+                            <data>0.143</data>
+                            <data>2.344</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">clkbufg_0/gopclkbufg/CLKOUT</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=2)</data>
+                            <data>0.515</data>
+                            <data>2.859</data>
+                            <data/>
+                            <data object_valid="true">ntclkbufg_0</data>
+                        </row>
+                        <row>
+                            <data>HCKB_213_467/CLKOUT</data>
+                            <data>td</data>
+                            <data>0.245</data>
+                            <data>3.104</data>
+                            <data>r</data>
+                            <data object_valid="true">HCKBROUTE_0/CLKOUT</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=52)</data>
+                            <data>0.409</data>
+                            <data>3.513</data>
+                            <data/>
+                            <data object_valid="true">ntR49</data>
+                        </row>
+                        <row>
+                            <data>CLMS_33_331/CLK</data>
+                            <data/>
+                            <data/>
+                            <data/>
+                            <data>r</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[0]/opit_0_inv/CLK</data>
+                        </row>
+                        <row>
+                            <data>CLMS_33_331/CR0</data>
+                            <data>tco</data>
+                            <data>0.173</data>
+                            <data>3.686</data>
+                            <data>f</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[0]/opit_0_inv/Q</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=8)</data>
+                            <data>0.322</data>
+                            <data>4.008</data>
+                            <data> </data>
+                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [0]</data>
+                        </row>
+                        <row>
+                            <data>DRM_40_306/ADB0[1]</data>
+                            <data/>
+                            <data/>
+                            <data/>
+                            <data>f</data>
+                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[1]</data>
+                        </row>
+                    </table>
+                </table_container>
+                <table_container>
+                    <table id="require" title="Data required time is 3.658" column_number="6">
+                        <column_headers>
+                            <data>Location</data>
+                            <data>Delay Type</data>
+                            <data>Incr</data>
+                            <data>Path</data>
+                            <data>Trans</data>
+                            <data>Logical Resource</data>
+                        </column_headers>
+                        <row>
+                            <data>Clock top_dds|sys_clk (rising edge)</data>
+                            <data/>
+                            <data>0.000</data>
+                            <data>0.000</data>
+                            <data>r</data>
+                            <data/>
+                        </row>
+                        <row>
+                            <data>D18</data>
+                            <data></data>
+                            <data>0.000</data>
+                            <data>0.000</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk (port)</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=1)</data>
+                            <data>0.104</data>
+                            <data>0.104</data>
+                            <data/>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk</data>
+                        </row>
+                        <row>
+                            <data>IOBD_0_1080/DIN</data>
+                            <data>td</data>
+                            <data>1.117</data>
+                            <data>1.221</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_0/O</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=1)</data>
+                            <data>0.000</data>
+                            <data>1.221</data>
+                            <data/>
+                            <data object_valid="true">sys_clk_ibuf/ntD</data>
+                        </row>
+                        <row>
+                            <data>IOLHR_16_1080/DI_TO_CLK</data>
+                            <data>td</data>
+                            <data>0.105</data>
+                            <data>1.326</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_1/DI_TO_CLK</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=2)</data>
+                            <data>1.235</data>
+                            <data>2.561</data>
+                            <data/>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">nt_sys_clk</data>
+                        </row>
+                        <row>
+                            <data>USCM_215_624/CLKOUT</data>
+                            <data>td</data>
+                            <data>0.168</data>
+                            <data>2.729</data>
+                            <data>r</data>
+                            <data file_id="../../rtl/top_dds.v" line_number="13">clkbufg_0/gopclkbufg/CLKOUT</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=2)</data>
+                            <data>0.602</data>
+                            <data>3.331</data>
+                            <data/>
+                            <data object_valid="true">ntclkbufg_0</data>
+                        </row>
+                        <row>
+                            <data>HCKB_213_467/CLKOUT</data>
+                            <data>td</data>
+                            <data>0.287</data>
+                            <data>3.618</data>
+                            <data>r</data>
+                            <data object_valid="true">HCKBROUTE_0/CLKOUT</data>
+                        </row>
+                        <row>
+                            <data/>
+                            <data>net (fanout=52)</data>
+                            <data>0.481</data>
+                            <data>4.099</data>
+                            <data/>
+                            <data object_valid="true">ntR49</data>
+                        </row>
+                        <row>
+                            <data>DRM_40_306/CLKB[0]</data>
+                            <data/>
+                            <data/>
+                            <data/>
+                            <data>r</data>
+                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]</data>
+                        </row>
+                        <row>
+                            <data>clock pessimism</data>
+                            <data/>
+                            <data>-0.514</data>
+                            <data>3.585</data>
+                            <data/>
+                            <data/>
+                        </row>
+                        <row>
+                            <data>clock uncertainty</data>
+                            <data/>
+                            <data>0.000</data>
+                            <data>3.585</data>
+                            <data/>
+                            <data/>
+                        </row>
+                        <row>
+                            <data>Hold time</data>
+                            <data/>
+                            <data>0.073</data>
+                            <data>3.658</data>
+                            <data/>
+                            <data/>
+                        </row>
+                    </table>
+                </table_container>
+            </general_container>
+        </row>
+        <row>
+            <data>0.352</data>
+            <data>0</data>
+            <data>8</data>
+            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/CLK</data>
+            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]</data>
             <data/>
             <data>top_dds|sys_clk</data>
             <data>top_dds|sys_clk</data>
@@ -1967,13 +2253,13 @@
             <data>4.094</data>
             <data>-0.514</data>
             <data>0.000</data>
-            <data>0.494</data>
-            <data>0.173 (35.0%)</data>
-            <data>0.321 (65.0%)</data>
+            <data>0.495</data>
+            <data>0.174 (35.2%)</data>
+            <data>0.321 (64.8%)</data>
             <general_container>
-                <data>Path #2: hold slack is 0.351(MET)</data>
+                <data>Path #3: hold slack is 0.352(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 4.002" column_number="6">
+                    <table id="arrival" title="Data arrival time is 4.003" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -2068,7 +2354,7 @@
                             <data>0.404</data>
                             <data>3.508</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_361/CLK</data>
@@ -2076,31 +2362,31 @@
                             <data/>
                             <data/>
                             <data>r</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/CLK</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/CLK</data>
                         </row>
                         <row>
-                            <data>CLMS_33_361/CR2</data>
+                            <data>CLMS_33_361/CR1</data>
                             <data>tco</data>
-                            <data>0.173</data>
-                            <data>3.681</data>
+                            <data>0.174</data>
+                            <data>3.682</data>
                             <data>f</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/Q</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/Q</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=8)</data>
                             <data>0.321</data>
-                            <data>4.002</data>
+                            <data>4.003</data>
                             <data> </data>
-                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [10]</data>
+                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [11]</data>
                         </row>
                         <row>
-                            <data>DRM_40_336/ADB0[11]</data>
+                            <data>DRM_40_336/ADB0[12]</data>
                             <data/>
                             <data/>
                             <data/>
                             <data>f</data>
-                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]</data>
+                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]</data>
                         </row>
                     </table>
                 </table_container>
@@ -2200,7 +2486,7 @@
                             <data>0.476</data>
                             <data>4.094</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>DRM_40_336/CLKB[0]</data>
@@ -2231,292 +2517,6 @@
                             <data/>
                             <data>0.071</data>
                             <data>3.651</data>
-                            <data/>
-                            <data/>
-                        </row>
-                    </table>
-                </table_container>
-            </general_container>
-        </row>
-        <row>
-            <data>0.353</data>
-            <data>0</data>
-            <data>8</data>
-            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[2]/opit_0_inv/CLK</data>
-            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[3]</data>
-            <data/>
-            <data>top_dds|sys_clk</data>
-            <data>top_dds|sys_clk</data>
-            <data>rise-rise</data>
-            <data>0.065</data>
-            <data>3.510</data>
-            <data>4.089</data>
-            <data>-0.514</data>
-            <data>0.000</data>
-            <data>0.489</data>
-            <data>0.158 (32.3%)</data>
-            <data>0.331 (67.7%)</data>
-            <general_container>
-                <data>Path #3: hold slack is 0.353(MET)</data>
-                <table_container>
-                    <table id="arrival" title="Data arrival time is 3.999" column_number="6">
-                        <column_headers>
-                            <data>Location</data>
-                            <data>Delay Type</data>
-                            <data>Incr</data>
-                            <data>Path</data>
-                            <data>Trans</data>
-                            <data>Logical Resource</data>
-                        </column_headers>
-                        <row>
-                            <data>Clock top_dds|sys_clk (rising edge)</data>
-                            <data/>
-                            <data>0.000</data>
-                            <data>0.000</data>
-                            <data>r</data>
-                            <data/>
-                        </row>
-                        <row>
-                            <data>D18</data>
-                            <data></data>
-                            <data>0.000</data>
-                            <data>0.000</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk (port)</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=1)</data>
-                            <data>0.104</data>
-                            <data>0.104</data>
-                            <data/>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk</data>
-                        </row>
-                        <row>
-                            <data>IOBD_0_1080/DIN</data>
-                            <data>td</data>
-                            <data>0.954</data>
-                            <data>1.058</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_0/O</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=1)</data>
-                            <data>0.000</data>
-                            <data>1.058</data>
-                            <data/>
-                            <data object_valid="true">sys_clk_ibuf/ntD</data>
-                        </row>
-                        <row>
-                            <data>IOLHR_16_1080/DI_TO_CLK</data>
-                            <data>td</data>
-                            <data>0.091</data>
-                            <data>1.149</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_1/DI_TO_CLK</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=2)</data>
-                            <data>1.052</data>
-                            <data>2.201</data>
-                            <data/>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">nt_sys_clk</data>
-                        </row>
-                        <row>
-                            <data>USCM_215_624/CLKOUT</data>
-                            <data>td</data>
-                            <data>0.143</data>
-                            <data>2.344</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">clkbufg_0/gopclkbufg/CLKOUT</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=2)</data>
-                            <data>0.515</data>
-                            <data>2.859</data>
-                            <data/>
-                            <data object_valid="true">ntclkbufg_0</data>
-                        </row>
-                        <row>
-                            <data>HCKB_213_467/CLKOUT</data>
-                            <data>td</data>
-                            <data>0.245</data>
-                            <data>3.104</data>
-                            <data>r</data>
-                            <data object_valid="true">HCKBROUTE_0/CLKOUT</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=52)</data>
-                            <data>0.406</data>
-                            <data>3.510</data>
-                            <data/>
-                            <data object_valid="true">ntR51</data>
-                        </row>
-                        <row>
-                            <data>CLMA_33_348/CLK</data>
-                            <data/>
-                            <data/>
-                            <data/>
-                            <data>r</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[2]/opit_0_inv/CLK</data>
-                        </row>
-                        <row>
-                            <data>CLMA_33_348/Q1</data>
-                            <data>tco</data>
-                            <data>0.158</data>
-                            <data>3.668</data>
-                            <data>f</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[2]/opit_0_inv/Q</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=8)</data>
-                            <data>0.331</data>
-                            <data>3.999</data>
-                            <data> </data>
-                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [2]</data>
-                        </row>
-                        <row>
-                            <data>DRM_40_366/ADB0[3]</data>
-                            <data/>
-                            <data/>
-                            <data/>
-                            <data>f</data>
-                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[3]</data>
-                        </row>
-                    </table>
-                </table_container>
-                <table_container>
-                    <table id="require" title="Data required time is 3.646" column_number="6">
-                        <column_headers>
-                            <data>Location</data>
-                            <data>Delay Type</data>
-                            <data>Incr</data>
-                            <data>Path</data>
-                            <data>Trans</data>
-                            <data>Logical Resource</data>
-                        </column_headers>
-                        <row>
-                            <data>Clock top_dds|sys_clk (rising edge)</data>
-                            <data/>
-                            <data>0.000</data>
-                            <data>0.000</data>
-                            <data>r</data>
-                            <data/>
-                        </row>
-                        <row>
-                            <data>D18</data>
-                            <data></data>
-                            <data>0.000</data>
-                            <data>0.000</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk (port)</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=1)</data>
-                            <data>0.104</data>
-                            <data>0.104</data>
-                            <data/>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk</data>
-                        </row>
-                        <row>
-                            <data>IOBD_0_1080/DIN</data>
-                            <data>td</data>
-                            <data>1.117</data>
-                            <data>1.221</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_0/O</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=1)</data>
-                            <data>0.000</data>
-                            <data>1.221</data>
-                            <data/>
-                            <data object_valid="true">sys_clk_ibuf/ntD</data>
-                        </row>
-                        <row>
-                            <data>IOLHR_16_1080/DI_TO_CLK</data>
-                            <data>td</data>
-                            <data>0.105</data>
-                            <data>1.326</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk_ibuf/opit_1/DI_TO_CLK</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=2)</data>
-                            <data>1.235</data>
-                            <data>2.561</data>
-                            <data/>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">nt_sys_clk</data>
-                        </row>
-                        <row>
-                            <data>USCM_215_624/CLKOUT</data>
-                            <data>td</data>
-                            <data>0.168</data>
-                            <data>2.729</data>
-                            <data>r</data>
-                            <data file_id="../../rtl/top_dds.v" line_number="13">clkbufg_0/gopclkbufg/CLKOUT</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=2)</data>
-                            <data>0.602</data>
-                            <data>3.331</data>
-                            <data/>
-                            <data object_valid="true">ntclkbufg_0</data>
-                        </row>
-                        <row>
-                            <data>HCKB_213_467/CLKOUT</data>
-                            <data>td</data>
-                            <data>0.287</data>
-                            <data>3.618</data>
-                            <data>r</data>
-                            <data object_valid="true">HCKBROUTE_0/CLKOUT</data>
-                        </row>
-                        <row>
-                            <data/>
-                            <data>net (fanout=52)</data>
-                            <data>0.471</data>
-                            <data>4.089</data>
-                            <data/>
-                            <data object_valid="true">ntR51</data>
-                        </row>
-                        <row>
-                            <data>DRM_40_366/CLKB[0]</data>
-                            <data/>
-                            <data/>
-                            <data/>
-                            <data>r</data>
-                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]</data>
-                        </row>
-                        <row>
-                            <data>clock pessimism</data>
-                            <data/>
-                            <data>-0.514</data>
-                            <data>3.575</data>
-                            <data/>
-                            <data/>
-                        </row>
-                        <row>
-                            <data>clock uncertainty</data>
-                            <data/>
-                            <data>0.000</data>
-                            <data>3.575</data>
-                            <data/>
-                            <data/>
-                        </row>
-                        <row>
-                            <data>Hold time</data>
-                            <data/>
-                            <data>0.071</data>
-                            <data>3.646</data>
                             <data/>
                             <data/>
                         </row>
@@ -2644,7 +2644,7 @@
                                                         <row>
                                                             <data object_valid="true">HCKBROUTE_0/CLKOUT (2.069, 2.429, 2.042, 2.398)</data>
                                                             <row>
-                                                                <data object_valid="true">ntR51 (net)</data>
+                                                                <data object_valid="true">ntR49 (net)</data>
                                                                 <row>
                                                                     <data file_id="../../rtl/dds.v" line_number="49">dds_inst/fre_add[0]/opit_0_inv_L6Q_perm/CLK (2.362, 2.770, 2.337, 2.740)</data>
                                                                 </row>
@@ -2740,7 +2740,7 @@
                                                         <row>
                                                             <data object_valid="true">HCKBROUTE_1/CLKOUT (2.077, 2.439, 2.050, 2.408)</data>
                                                             <row>
-                                                                <data object_valid="true">ntR50 (net)</data>
+                                                                <data object_valid="true">ntR48 (net)</data>
                                                                 <row>
                                                                     <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[3].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0] (2.368, 2.778, 2.343, 2.748)</data>
                                                                 </row>
@@ -2898,7 +2898,7 @@
                             <data>0.340</data>
                             <data>2.769</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -3142,7 +3142,7 @@
                             <data>0.284</data>
                             <data>1002.353</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_361/CLK</data>
@@ -3296,7 +3296,7 @@
                             <data>0.340</data>
                             <data>2.769</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -3524,7 +3524,7 @@
                             <data>0.285</data>
                             <data>1002.354</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_355/CLK</data>
@@ -3678,7 +3678,7 @@
                             <data>0.340</data>
                             <data>2.769</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_319/CLK</data>
@@ -3890,7 +3890,7 @@
                             <data>0.286</data>
                             <data>1002.355</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_349/CLK</data>
@@ -3953,8 +3953,8 @@
             <data>0.253</data>
             <data>0</data>
             <data>8</data>
-            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/CLK</data>
-            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]</data>
+            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/CLK</data>
+            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]</data>
             <data/>
             <data>top_dds|sys_clk</data>
             <data>top_dds|sys_clk</data>
@@ -3965,8 +3965,8 @@
             <data>-0.360</data>
             <data>0.000</data>
             <data>0.352</data>
-            <data>0.123 (34.9%)</data>
-            <data>0.229 (65.1%)</data>
+            <data>0.124 (35.2%)</data>
+            <data>0.228 (64.8%)</data>
             <general_container>
                 <data>Path #1: hold slack is 0.253(MET)</data>
                 <table_container>
@@ -4065,7 +4065,7 @@
                             <data>0.284</data>
                             <data>2.353</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_361/CLK</data>
@@ -4073,31 +4073,31 @@
                             <data/>
                             <data/>
                             <data>r</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/CLK</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/CLK</data>
                         </row>
                         <row>
-                            <data>CLMS_33_361/CR2</data>
+                            <data>CLMS_33_361/CR1</data>
                             <data>tco</data>
-                            <data>0.123</data>
-                            <data>2.476</data>
+                            <data>0.124</data>
+                            <data>2.477</data>
                             <data>f</data>
-                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[10]/opit_0_inv/Q</data>
+                            <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/opit_0_inv/Q</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=8)</data>
-                            <data>0.229</data>
+                            <data>0.228</data>
                             <data>2.705</data>
                             <data> </data>
-                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [10]</data>
+                            <data file_id="../../rtl/dds.v" line_number="43">dds_inst/rom_addr [11]</data>
                         </row>
                         <row>
-                            <data>DRM_40_336/ADB0[11]</data>
+                            <data>DRM_40_336/ADB0[12]</data>
                             <data/>
                             <data/>
                             <data/>
                             <data>f</data>
-                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]</data>
+                            <data file_id="../ipcore/rom_wave/rtl/ipm2l_spram_v1_8_rom_wave.v" line_number="663">dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]</data>
                         </row>
                     </table>
                 </table_container>
@@ -4197,7 +4197,7 @@
                             <data>0.335</data>
                             <data>2.764</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>DRM_40_336/CLKB[0]</data>
@@ -4351,7 +4351,7 @@
                             <data>0.286</data>
                             <data>2.355</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMA_33_348/CLK</data>
@@ -4483,7 +4483,7 @@
                             <data>0.329</data>
                             <data>2.758</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>DRM_40_366/CLKB[0]</data>
@@ -4637,7 +4637,7 @@
                             <data>0.290</data>
                             <data>2.359</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>CLMS_33_331/CLK</data>
@@ -4769,7 +4769,7 @@
                             <data>0.341</data>
                             <data>2.770</data>
                             <data/>
-                            <data object_valid="true">ntR51</data>
+                            <data object_valid="true">ntR49</data>
                         </row>
                         <row>
                             <data>DRM_40_306/CLKA[0]</data>
@@ -4857,9 +4857,9 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:14s</data>
-            <data>0h:0m:14s</data>
-            <data>0h:0m:17s</data>
+            <data>0h:0m:11s</data>
+            <data>0h:0m:11s</data>
+            <data>0h:0m:13s</data>
             <data>1,061</data>
             <data>WINDOWS 10 x86_64</data>
             <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>

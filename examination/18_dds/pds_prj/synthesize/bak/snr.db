@@ -36,7 +36,7 @@
         <row>
             <data>top_dds</data>
             <data>34</data>
-            <data>56</data>
+            <data>57</data>
             <data>0</data>
             <data>0</data>
             <data>4</data>
@@ -67,7 +67,7 @@
             <row>
                 <data>dds_inst</data>
                 <data>33</data>
-                <data>56</data>
+                <data>57</data>
                 <data>0</data>
                 <data>0</data>
                 <data>4</data>
@@ -424,7 +424,7 @@
             <data>1.0000MHz</data>
             <data>0.0000</data>
             <data>500.0000</data>
-            <data>64</data>
+            <data>65</data>
             <data>1</data>
             <data/>
             <data>{ sys_clk }</data>
@@ -467,17 +467,17 @@
             <data>998.274</data>
             <data>0.000</data>
             <data>0</data>
-            <data>152</data>
+            <data>160</data>
             <data>0.619</data>
             <data>0.000</data>
             <data>0</data>
-            <data>152</data>
+            <data>160</data>
         </row>
     </table>
     <table id="synthesize_report_clock_network" title="Clock Network" column_number="1" tree="">
         <column_headers/>
         <row>
-            <data>top_dds|sys_clk (1.00MHZ) (drive 64 loads) (min_rise, max_rise, min_fall, max_fall)</data>
+            <data>top_dds|sys_clk (1.00MHZ) (drive 65 loads) (min_rise, max_rise, min_fall, max_fall)</data>
             <row>
                 <data file_id="../../rtl/top_dds.v" line_number="13">sys_clk (0.000, 0.000, 0.000, 0.000)</data>
                 <row>
@@ -619,6 +619,9 @@
                                 <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[11]/CLK (3.380, 3.380, 3.281, 3.281)</data>
                             </row>
                             <row>
+                                <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr[13]/CLK (3.380, 3.380, 3.281, 3.281)</data>
+                            </row>
+                            <row>
                                 <data file_id="../../rtl/dds.v" line_number="56">dds_inst/rom_addr_reg[0]/CLK (3.380, 3.380, 3.281, 3.281)</data>
                             </row>
                             <row>
@@ -699,7 +702,7 @@
             <data>998.274</data>
             <data>0.000</data>
             <data>0</data>
-            <data>152</data>
+            <data>160</data>
         </row>
     </table>
     <table id="synthesize_report_timing_hold" title="Hold Summary" column_number="6">
@@ -717,7 +720,7 @@
             <data>0.619</data>
             <data>0.000</data>
             <data>0</data>
-            <data>152</data>
+            <data>160</data>
         </row>
     </table>
     <table id="synthesize_report_timing_mpw" title="Minimum Pulse Width Summary" column_number="5">
@@ -733,7 +736,7 @@
             <data>499.040</data>
             <data>0.000</data>
             <data>0</data>
-            <data>64</data>
+            <data>65</data>
         </row>
     </table>
     <table id="synthesize_report_timing_path_setup" title="Setup Path Summary" column_number="17">
@@ -828,7 +831,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -880,7 +883,7 @@
                             <data>0.000</data>
                             <data>4.214</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N3</data>
+                            <data object_valid="true">dds_inst/_N2</data>
                         </row>
                         <row>
                             <data> </data>
@@ -904,7 +907,7 @@
                             <data>0.000</data>
                             <data>4.236</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N4</data>
+                            <data object_valid="true">dds_inst/_N3</data>
                         </row>
                         <row>
                             <data> </data>
@@ -928,7 +931,7 @@
                             <data>0.000</data>
                             <data>4.258</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N5</data>
+                            <data object_valid="true">dds_inst/_N4</data>
                         </row>
                         <row>
                             <data> </data>
@@ -952,7 +955,7 @@
                             <data>0.000</data>
                             <data>4.280</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N6</data>
+                            <data object_valid="true">dds_inst/_N5</data>
                         </row>
                         <row>
                             <data> </data>
@@ -976,7 +979,7 @@
                             <data>0.000</data>
                             <data>4.302</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N7</data>
+                            <data object_valid="true">dds_inst/_N6</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1000,7 +1003,7 @@
                             <data>0.000</data>
                             <data>4.324</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N8</data>
+                            <data object_valid="true">dds_inst/_N7</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1024,7 +1027,7 @@
                             <data>0.000</data>
                             <data>4.346</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N9</data>
+                            <data object_valid="true">dds_inst/_N8</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1048,7 +1051,7 @@
                             <data>0.000</data>
                             <data>4.368</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N10</data>
+                            <data object_valid="true">dds_inst/_N9</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1072,7 +1075,7 @@
                             <data>0.000</data>
                             <data>4.390</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N11</data>
+                            <data object_valid="true">dds_inst/_N10</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1096,7 +1099,7 @@
                             <data>0.000</data>
                             <data>4.412</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N12</data>
+                            <data object_valid="true">dds_inst/_N11</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1120,7 +1123,7 @@
                             <data>0.000</data>
                             <data>4.434</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N13</data>
+                            <data object_valid="true">dds_inst/_N12</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1144,7 +1147,7 @@
                             <data>0.000</data>
                             <data>4.456</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N14</data>
+                            <data object_valid="true">dds_inst/_N13</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1168,7 +1171,7 @@
                             <data>0.000</data>
                             <data>4.478</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N15</data>
+                            <data object_valid="true">dds_inst/_N14</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1192,7 +1195,7 @@
                             <data>0.000</data>
                             <data>4.500</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N16</data>
+                            <data object_valid="true">dds_inst/_N15</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1216,7 +1219,7 @@
                             <data>0.000</data>
                             <data>4.522</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N17</data>
+                            <data object_valid="true">dds_inst/_N16</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1240,7 +1243,7 @@
                             <data>0.000</data>
                             <data>4.544</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N18</data>
+                            <data object_valid="true">dds_inst/_N17</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1264,7 +1267,7 @@
                             <data>0.000</data>
                             <data>4.566</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N19</data>
+                            <data object_valid="true">dds_inst/_N18</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1288,7 +1291,7 @@
                             <data>0.000</data>
                             <data>4.588</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N20</data>
+                            <data object_valid="true">dds_inst/_N19</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1312,7 +1315,7 @@
                             <data>0.000</data>
                             <data>4.610</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N21</data>
+                            <data object_valid="true">dds_inst/_N20</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1336,7 +1339,7 @@
                             <data>0.000</data>
                             <data>4.632</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N22</data>
+                            <data object_valid="true">dds_inst/_N21</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1360,7 +1363,7 @@
                             <data>0.000</data>
                             <data>4.654</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N23</data>
+                            <data object_valid="true">dds_inst/_N22</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1384,7 +1387,7 @@
                             <data>0.000</data>
                             <data>4.676</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N24</data>
+                            <data object_valid="true">dds_inst/_N23</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1408,7 +1411,7 @@
                             <data>0.000</data>
                             <data>4.698</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N25</data>
+                            <data object_valid="true">dds_inst/_N24</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1432,7 +1435,7 @@
                             <data>0.000</data>
                             <data>4.720</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N26</data>
+                            <data object_valid="true">dds_inst/_N25</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1456,7 +1459,7 @@
                             <data>0.000</data>
                             <data>4.742</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N27</data>
+                            <data object_valid="true">dds_inst/_N26</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1480,7 +1483,7 @@
                             <data>0.000</data>
                             <data>4.764</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N28</data>
+                            <data object_valid="true">dds_inst/_N27</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1504,7 +1507,7 @@
                             <data>0.000</data>
                             <data>4.786</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N29</data>
+                            <data object_valid="true">dds_inst/_N28</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1528,7 +1531,7 @@
                             <data>0.000</data>
                             <data>4.808</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N30</data>
+                            <data object_valid="true">dds_inst/_N29</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1552,7 +1555,7 @@
                             <data>0.000</data>
                             <data>4.830</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N31</data>
+                            <data object_valid="true">dds_inst/_N30</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1576,7 +1579,7 @@
                             <data>0.000</data>
                             <data>4.852</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N32</data>
+                            <data object_valid="true">dds_inst/_N31</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1664,7 +1667,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>1003.380</data>
                             <data/>
@@ -1778,7 +1781,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -1830,7 +1833,7 @@
                             <data>0.000</data>
                             <data>4.214</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N3</data>
+                            <data object_valid="true">dds_inst/_N2</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1854,7 +1857,7 @@
                             <data>0.000</data>
                             <data>4.236</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N4</data>
+                            <data object_valid="true">dds_inst/_N3</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1878,7 +1881,7 @@
                             <data>0.000</data>
                             <data>4.258</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N5</data>
+                            <data object_valid="true">dds_inst/_N4</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1902,7 +1905,7 @@
                             <data>0.000</data>
                             <data>4.280</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N6</data>
+                            <data object_valid="true">dds_inst/_N5</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1926,7 +1929,7 @@
                             <data>0.000</data>
                             <data>4.302</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N7</data>
+                            <data object_valid="true">dds_inst/_N6</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1950,7 +1953,7 @@
                             <data>0.000</data>
                             <data>4.324</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N8</data>
+                            <data object_valid="true">dds_inst/_N7</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1974,7 +1977,7 @@
                             <data>0.000</data>
                             <data>4.346</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N9</data>
+                            <data object_valid="true">dds_inst/_N8</data>
                         </row>
                         <row>
                             <data> </data>
@@ -1998,7 +2001,7 @@
                             <data>0.000</data>
                             <data>4.368</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N10</data>
+                            <data object_valid="true">dds_inst/_N9</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2022,7 +2025,7 @@
                             <data>0.000</data>
                             <data>4.390</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N11</data>
+                            <data object_valid="true">dds_inst/_N10</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2046,7 +2049,7 @@
                             <data>0.000</data>
                             <data>4.412</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N12</data>
+                            <data object_valid="true">dds_inst/_N11</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2070,7 +2073,7 @@
                             <data>0.000</data>
                             <data>4.434</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N13</data>
+                            <data object_valid="true">dds_inst/_N12</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2094,7 +2097,7 @@
                             <data>0.000</data>
                             <data>4.456</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N14</data>
+                            <data object_valid="true">dds_inst/_N13</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2118,7 +2121,7 @@
                             <data>0.000</data>
                             <data>4.478</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N15</data>
+                            <data object_valid="true">dds_inst/_N14</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2142,7 +2145,7 @@
                             <data>0.000</data>
                             <data>4.500</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N16</data>
+                            <data object_valid="true">dds_inst/_N15</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2166,7 +2169,7 @@
                             <data>0.000</data>
                             <data>4.522</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N17</data>
+                            <data object_valid="true">dds_inst/_N16</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2190,7 +2193,7 @@
                             <data>0.000</data>
                             <data>4.544</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N18</data>
+                            <data object_valid="true">dds_inst/_N17</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2214,7 +2217,7 @@
                             <data>0.000</data>
                             <data>4.566</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N19</data>
+                            <data object_valid="true">dds_inst/_N18</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2238,7 +2241,7 @@
                             <data>0.000</data>
                             <data>4.588</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N20</data>
+                            <data object_valid="true">dds_inst/_N19</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2262,7 +2265,7 @@
                             <data>0.000</data>
                             <data>4.610</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N21</data>
+                            <data object_valid="true">dds_inst/_N20</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2286,7 +2289,7 @@
                             <data>0.000</data>
                             <data>4.632</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N22</data>
+                            <data object_valid="true">dds_inst/_N21</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2310,7 +2313,7 @@
                             <data>0.000</data>
                             <data>4.654</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N23</data>
+                            <data object_valid="true">dds_inst/_N22</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2334,7 +2337,7 @@
                             <data>0.000</data>
                             <data>4.676</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N24</data>
+                            <data object_valid="true">dds_inst/_N23</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2358,7 +2361,7 @@
                             <data>0.000</data>
                             <data>4.698</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N25</data>
+                            <data object_valid="true">dds_inst/_N24</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2382,7 +2385,7 @@
                             <data>0.000</data>
                             <data>4.720</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N26</data>
+                            <data object_valid="true">dds_inst/_N25</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2406,7 +2409,7 @@
                             <data>0.000</data>
                             <data>4.742</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N27</data>
+                            <data object_valid="true">dds_inst/_N26</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2430,7 +2433,7 @@
                             <data>0.000</data>
                             <data>4.764</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N28</data>
+                            <data object_valid="true">dds_inst/_N27</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2454,7 +2457,7 @@
                             <data>0.000</data>
                             <data>4.786</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N29</data>
+                            <data object_valid="true">dds_inst/_N28</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2478,7 +2481,7 @@
                             <data>0.000</data>
                             <data>4.808</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N30</data>
+                            <data object_valid="true">dds_inst/_N29</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2502,7 +2505,7 @@
                             <data>0.000</data>
                             <data>4.830</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N31</data>
+                            <data object_valid="true">dds_inst/_N30</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2590,7 +2593,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>1003.380</data>
                             <data/>
@@ -2704,7 +2707,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -2756,7 +2759,7 @@
                             <data>0.000</data>
                             <data>4.214</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N3</data>
+                            <data object_valid="true">dds_inst/_N2</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2780,7 +2783,7 @@
                             <data>0.000</data>
                             <data>4.236</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N4</data>
+                            <data object_valid="true">dds_inst/_N3</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2804,7 +2807,7 @@
                             <data>0.000</data>
                             <data>4.258</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N5</data>
+                            <data object_valid="true">dds_inst/_N4</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2828,7 +2831,7 @@
                             <data>0.000</data>
                             <data>4.280</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N6</data>
+                            <data object_valid="true">dds_inst/_N5</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2852,7 +2855,7 @@
                             <data>0.000</data>
                             <data>4.302</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N7</data>
+                            <data object_valid="true">dds_inst/_N6</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2876,7 +2879,7 @@
                             <data>0.000</data>
                             <data>4.324</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N8</data>
+                            <data object_valid="true">dds_inst/_N7</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2900,7 +2903,7 @@
                             <data>0.000</data>
                             <data>4.346</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N9</data>
+                            <data object_valid="true">dds_inst/_N8</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2924,7 +2927,7 @@
                             <data>0.000</data>
                             <data>4.368</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N10</data>
+                            <data object_valid="true">dds_inst/_N9</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2948,7 +2951,7 @@
                             <data>0.000</data>
                             <data>4.390</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N11</data>
+                            <data object_valid="true">dds_inst/_N10</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2972,7 +2975,7 @@
                             <data>0.000</data>
                             <data>4.412</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N12</data>
+                            <data object_valid="true">dds_inst/_N11</data>
                         </row>
                         <row>
                             <data> </data>
@@ -2996,7 +2999,7 @@
                             <data>0.000</data>
                             <data>4.434</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N13</data>
+                            <data object_valid="true">dds_inst/_N12</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3020,7 +3023,7 @@
                             <data>0.000</data>
                             <data>4.456</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N14</data>
+                            <data object_valid="true">dds_inst/_N13</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3044,7 +3047,7 @@
                             <data>0.000</data>
                             <data>4.478</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N15</data>
+                            <data object_valid="true">dds_inst/_N14</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3068,7 +3071,7 @@
                             <data>0.000</data>
                             <data>4.500</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N16</data>
+                            <data object_valid="true">dds_inst/_N15</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3092,7 +3095,7 @@
                             <data>0.000</data>
                             <data>4.522</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N17</data>
+                            <data object_valid="true">dds_inst/_N16</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3116,7 +3119,7 @@
                             <data>0.000</data>
                             <data>4.544</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N18</data>
+                            <data object_valid="true">dds_inst/_N17</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3140,7 +3143,7 @@
                             <data>0.000</data>
                             <data>4.566</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N19</data>
+                            <data object_valid="true">dds_inst/_N18</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3164,7 +3167,7 @@
                             <data>0.000</data>
                             <data>4.588</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N20</data>
+                            <data object_valid="true">dds_inst/_N19</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3188,7 +3191,7 @@
                             <data>0.000</data>
                             <data>4.610</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N21</data>
+                            <data object_valid="true">dds_inst/_N20</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3212,7 +3215,7 @@
                             <data>0.000</data>
                             <data>4.632</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N22</data>
+                            <data object_valid="true">dds_inst/_N21</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3236,7 +3239,7 @@
                             <data>0.000</data>
                             <data>4.654</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N23</data>
+                            <data object_valid="true">dds_inst/_N22</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3260,7 +3263,7 @@
                             <data>0.000</data>
                             <data>4.676</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N24</data>
+                            <data object_valid="true">dds_inst/_N23</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3284,7 +3287,7 @@
                             <data>0.000</data>
                             <data>4.698</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N25</data>
+                            <data object_valid="true">dds_inst/_N24</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3308,7 +3311,7 @@
                             <data>0.000</data>
                             <data>4.720</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N26</data>
+                            <data object_valid="true">dds_inst/_N25</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3332,7 +3335,7 @@
                             <data>0.000</data>
                             <data>4.742</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N27</data>
+                            <data object_valid="true">dds_inst/_N26</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3356,7 +3359,7 @@
                             <data>0.000</data>
                             <data>4.764</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N28</data>
+                            <data object_valid="true">dds_inst/_N27</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3380,7 +3383,7 @@
                             <data>0.000</data>
                             <data>4.786</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N29</data>
+                            <data object_valid="true">dds_inst/_N28</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3404,7 +3407,7 @@
                             <data>0.000</data>
                             <data>4.808</data>
                             <data> </data>
-                            <data object_valid="true">dds_inst/_N30</data>
+                            <data object_valid="true">dds_inst/_N29</data>
                         </row>
                         <row>
                             <data> </data>
@@ -3492,7 +3495,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>1003.380</data>
                             <data/>
@@ -3627,7 +3630,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -3719,7 +3722,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -3833,7 +3836,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -3925,7 +3928,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -4039,7 +4042,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -4131,7 +4134,7 @@
                         </row>
                         <row>
                             <data/>
-                            <data>net (fanout=65)</data>
+                            <data>net (fanout=66)</data>
                             <data>2.420</data>
                             <data>3.380</data>
                             <data/>
@@ -4222,7 +4225,7 @@
 Total LUTs: 34 of 66600 (0.05%)
 	LUTs as dram: 0 of 19900 (0.00%)
 	LUTs as logic: 34
-Total Registers: 56 of 133200 (0.04%)
+Total Registers: 57 of 133200 (0.04%)
 Total Latches: 0
 
 DRM36K/FIFO:
@@ -4236,7 +4239,7 @@ Total I/O ports = 11 of 300 (3.67%)
         </comment>
         <row>
             <data>GTP_DFF_C                   </data>
-            <data>56</data>
+            <data>57</data>
         </row>
         <row>
             <data>GTP_DRM36K_E1                </data>
@@ -4277,7 +4280,7 @@ Total I/O ports = 11 of 300 (3.67%)
             <data>File Type</data>
         </column_headers>
         <row>
-            <data>C:/Users/Alivender/Desktop/18_dds/pds_prj/top_dds.fdc</data>
+            <data>C:/_Project/Pangu/examination/18_dds/pds_prj/top_dds.fdc</data>
             <data>fdc</data>
         </row>
     </table>
@@ -4331,22 +4334,16 @@ Total I/O ports = 11 of 300 (3.67%)
             <data message="4">Constant propagation done on dds_inst/N52 (bmsREDAND).</data>
         </row>
         <row>
-            <data message="4">Constant propagation done on dds_inst/N40_3 (bmsPMUX).</data>
+            <data message="4">Constant propagation done on dds_inst/N57 (bmsREDOR).</data>
         </row>
         <row>
-            <data message="4">Constant propagation done on dds_inst/N37 (bmsREDOR).</data>
+            <data message="4">Constant propagation done on dds_inst/N40_3 (bmsPMUX).</data>
         </row>
         <row>
             <data message="5">Removed bmsWIDEDFFCPE inst dds_inst/rom_addr[13:0] at 12 that is stuck at constant 0.</data>
         </row>
         <row>
-            <data message="5">Removed bmsWIDEDFFCPE inst dds_inst/rom_addr[13:0] at 13 that is stuck at constant 0.</data>
-        </row>
-        <row>
             <data message="5">Public-4008: Instance 'dds_inst/rom_addr[12]' of 'bmsWIDEDFFCPE' unit is dangling and will be cleaned.</data>
-        </row>
-        <row>
-            <data message="5">Public-4008: Instance 'dds_inst/rom_addr[13]' of 'bmsWIDEDFFCPE' unit is dangling and will be cleaned.</data>
         </row>
         <row>
             <data message="5">Timing-4087: Port 'dac_clk' is not constrained, it is treated as combinational output.</data>

@@ -5,11 +5,11 @@ module dso_axi_slave #(
     input  wire         rstn,
 
     //dso interface
-    input  wire         ad_clk,
-    input  wire [7:0]   ad_data,
+    input  wire         ad_clk/* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [7:0]   ad_data/* synthesis PAP_MARK_DEBUG="true" */,
 
     //axi slave interface
-    output wire         DSO_SLAVE_CLK          ,
+    output wire         DSO_SLAVE_CLK          /* synthesis PAP_MARK_DEBUG="true" */,
     output wire         DSO_SLAVE_RSTN         ,
     input  wire [4-1:0] DSO_SLAVE_WR_ADDR_ID   ,
     input  wire [31:0]  DSO_SLAVE_WR_ADDR      ,
@@ -27,17 +27,17 @@ module dso_axi_slave #(
     output wire         DSO_SLAVE_WR_BACK_VALID,
     input  wire         DSO_SLAVE_WR_BACK_READY,
     input  wire [4-1:0] DSO_SLAVE_RD_ADDR_ID   ,
-    input  wire [31:0]  DSO_SLAVE_RD_ADDR      ,
-    input  wire [ 7:0]  DSO_SLAVE_RD_ADDR_LEN  ,
+    input  wire [31:0]  DSO_SLAVE_RD_ADDR      /* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [ 7:0]  DSO_SLAVE_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */,
     input  wire [ 1:0]  DSO_SLAVE_RD_ADDR_BURST,
     input  wire         DSO_SLAVE_RD_ADDR_VALID,
     output wire         DSO_SLAVE_RD_ADDR_READY,
     output wire [4-1:0] DSO_SLAVE_RD_BACK_ID   ,
-    output  reg [31:0]  DSO_SLAVE_RD_DATA      ,
-    output wire [ 1:0]  DSO_SLAVE_RD_DATA_RESP ,
-    output wire         DSO_SLAVE_RD_DATA_LAST ,
-    output  reg         DSO_SLAVE_RD_DATA_VALID,
-    input  wire         DSO_SLAVE_RD_DATA_READY
+    output  reg [31:0]  DSO_SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */,
+    output wire [ 1:0]  DSO_SLAVE_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */,
+    output wire         DSO_SLAVE_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */,
+    output  reg         DSO_SLAVE_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire         DSO_SLAVE_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */
 );
 
 // 复位同步逻辑

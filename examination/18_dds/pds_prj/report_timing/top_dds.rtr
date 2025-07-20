@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------------------------------------
 | Tool Version : Fabric Compiler (version 2022.2-SP6.4 <build 146967>)
-| Date         : Sun Jul 20 01:54:51 2025
+| Date         : Sun Jul 20 17:42:29 2025
 | Design       : top_dds
 | Device       : PG2L100H
 | Speed Grade  : -6
@@ -143,7 +143,7 @@ Clock Skew  :    -0.036  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.481       4.099         ntR51            
+                                   net (fanout=52)       0.481       4.099         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.203       4.302 r       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -179,7 +179,7 @@ Clock Skew  :    -0.036  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.143    1002.344 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.515    1002.859         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.245    1003.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.404    1003.508         ntR51            
+                                   net (fanout=52)       0.404    1003.508         ntR49            
  CLMS_33_361/CLK                                                           r       dds_inst/fre_add[31]/opit_0_inv_AQ_perm/CLK
  clock pessimism                                         0.555    1004.063                          
  clock uncertainty                                      -0.050    1004.013                          
@@ -220,7 +220,7 @@ Clock Skew  :    -0.035  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.481       4.099         ntR51            
+                                   net (fanout=52)       0.481       4.099         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.203       4.302 r       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -254,7 +254,7 @@ Clock Skew  :    -0.035  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.143    1002.344 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.515    1002.859         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.245    1003.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.405    1003.509         ntR51            
+                                   net (fanout=52)       0.405    1003.509         ntR49            
  CLMS_33_355/CLK                                                           r       dds_inst/rom_addr_reg[8]/opit_0_inv_AQQ_perm/CLK
  clock pessimism                                         0.555    1004.064                          
  clock uncertainty                                      -0.050    1004.014                          
@@ -295,7 +295,7 @@ Clock Skew  :    -0.034  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.481       4.099         ntR51            
+                                   net (fanout=52)       0.481       4.099         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.203       4.302 r       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -327,7 +327,7 @@ Clock Skew  :    -0.034  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.143    1002.344 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.515    1002.859         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.245    1003.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.406    1003.510         ntR51            
+                                   net (fanout=52)       0.406    1003.510         ntR49            
  CLMS_33_349/CLK                                                           r       dds_inst/rom_addr_reg[4]/opit_0_inv_AQQ_perm/CLK
  clock pessimism                                         0.555    1004.065                          
  clock uncertainty                                      -0.050    1004.015                          
@@ -368,7 +368,7 @@ Clock Skew  :    0.067  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.143       2.344 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.515       2.859         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.245       3.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.404       3.508         ntR51            
+                                   net (fanout=52)       0.404       3.508         ntR49            
  CLMS_33_361/CLK                                                           r       dds_inst/rom_addr[11]/opit_0_inv/CLK
 
  CLMS_33_361/CR1                   tco                   0.174       3.682 f       dds_inst/rom_addr[11]/opit_0_inv/Q
@@ -390,7 +390,7 @@ Clock Skew  :    0.067  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.471       4.089         ntR51            
+                                   net (fanout=52)       0.471       4.089         ntR49            
  DRM_40_366/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
  clock pessimism                                        -0.514       3.575                          
  clock uncertainty                                       0.000       3.575                          
@@ -407,8 +407,71 @@ Clock Skew  :    0.067  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
 
 ====================================================================================================
 
-Startpoint  : dds_inst/rom_addr[10]/opit_0_inv/CLK
-Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]
+Startpoint  : dds_inst/rom_addr[0]/opit_0_inv/CLK
+Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[1]
+Path Group  : top_dds|sys_clk
+Path Type   : min (slow corner)
+Path Class  : sequential timing path
+Clock Skew  :    0.072  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
+  Capture Clock Delay     :  4.099
+  Launch Clock Delay      :  3.513
+  Clock Pessimism Removal :  -0.514
+
+ Location                          Delay Type             Incr        Path         Logical Resource 
+----------------------------------------------------------------------------------------------------
+
+ Clock top_dds|sys_clk (rising edge)
+                                                         0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       sys_clk (port)   
+                                   net (fanout=1)        0.104       0.104         sys_clk          
+ IOBD_0_1080/DIN                   td                    0.954       1.058 r       sys_clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       1.058         sys_clk_ibuf/ntD 
+ IOLHR_16_1080/DI_TO_CLK           td                    0.091       1.149 r       sys_clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=2)        1.052       2.201         nt_sys_clk       
+ USCM_215_624/CLKOUT               td                    0.143       2.344 r       clkbufg_0/gopclkbufg/CLKOUT
+                                   net (fanout=2)        0.515       2.859         ntclkbufg_0      
+ HCKB_213_467/CLKOUT               td                    0.245       3.104 r       HCKBROUTE_0/CLKOUT
+                                   net (fanout=52)       0.409       3.513         ntR49            
+ CLMS_33_331/CLK                                                           r       dds_inst/rom_addr[0]/opit_0_inv/CLK
+
+ CLMS_33_331/CR0                   tco                   0.173       3.686 f       dds_inst/rom_addr[0]/opit_0_inv/Q
+                                   net (fanout=8)        0.322       4.008         dds_inst/rom_addr [0]
+ DRM_40_306/ADB0[1]                                                        f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[1]
+
+ Data arrival time                                                   4.008         Logic Levels: 0  
+                                                                                   Logic: 0.173ns(34.949%), Route: 0.322ns(65.051%)
+----------------------------------------------------------------------------------------------------
+
+ Clock top_dds|sys_clk (rising edge)
+                                                         0.000       0.000 r                        
+ D18                                                     0.000       0.000 r       sys_clk (port)   
+                                   net (fanout=1)        0.104       0.104         sys_clk          
+ IOBD_0_1080/DIN                   td                    1.117       1.221 r       sys_clk_ibuf/opit_0/O
+                                   net (fanout=1)        0.000       1.221         sys_clk_ibuf/ntD 
+ IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.326 r       sys_clk_ibuf/opit_1/DI_TO_CLK
+                                   net (fanout=2)        1.235       2.561         nt_sys_clk       
+ USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
+                                   net (fanout=2)        0.602       3.331         ntclkbufg_0      
+ HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
+                                   net (fanout=52)       0.481       4.099         ntR49            
+ DRM_40_306/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
+ clock pessimism                                        -0.514       3.585                          
+ clock uncertainty                                       0.000       3.585                          
+
+ Hold time                                               0.073       3.658                          
+
+ Data required time                                                  3.658                          
+----------------------------------------------------------------------------------------------------
+ Data required time                                                  3.658                          
+ Data arrival time                                                   4.008                          
+----------------------------------------------------------------------------------------------------
+ Slack (MET)                                                         0.350                          
+====================================================================================================
+
+====================================================================================================
+
+Startpoint  : dds_inst/rom_addr[11]/opit_0_inv/CLK
+Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]
 Path Group  : top_dds|sys_clk
 Path Type   : min (slow corner)
 Path Class  : sequential timing path
@@ -431,15 +494,15 @@ Clock Skew  :    0.072  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.143       2.344 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.515       2.859         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.245       3.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.404       3.508         ntR51            
- CLMS_33_361/CLK                                                           r       dds_inst/rom_addr[10]/opit_0_inv/CLK
+                                   net (fanout=52)       0.404       3.508         ntR49            
+ CLMS_33_361/CLK                                                           r       dds_inst/rom_addr[11]/opit_0_inv/CLK
 
- CLMS_33_361/CR2                   tco                   0.173       3.681 f       dds_inst/rom_addr[10]/opit_0_inv/Q
-                                   net (fanout=8)        0.321       4.002         dds_inst/rom_addr [10]
- DRM_40_336/ADB0[11]                                                       f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]
+ CLMS_33_361/CR1                   tco                   0.174       3.682 f       dds_inst/rom_addr[11]/opit_0_inv/Q
+                                   net (fanout=8)        0.321       4.003         dds_inst/rom_addr [11]
+ DRM_40_336/ADB0[12]                                                       f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]
 
- Data arrival time                                                   4.002         Logic Levels: 0  
-                                                                                   Logic: 0.173ns(35.020%), Route: 0.321ns(64.980%)
+ Data arrival time                                                   4.003         Logic Levels: 0  
+                                                                                   Logic: 0.174ns(35.152%), Route: 0.321ns(64.848%)
 ----------------------------------------------------------------------------------------------------
 
  Clock top_dds|sys_clk (rising edge)
@@ -453,7 +516,7 @@ Clock Skew  :    0.072  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.476       4.094         ntR51            
+                                   net (fanout=52)       0.476       4.094         ntR49            
  DRM_40_336/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
  clock pessimism                                        -0.514       3.580                          
  clock uncertainty                                       0.000       3.580                          
@@ -463,72 +526,9 @@ Clock Skew  :    0.072  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  Data required time                                                  3.651                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                                  3.651                          
- Data arrival time                                                   4.002                          
+ Data arrival time                                                   4.003                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                         0.351                          
-====================================================================================================
-
-====================================================================================================
-
-Startpoint  : dds_inst/rom_addr[2]/opit_0_inv/CLK
-Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[3]
-Path Group  : top_dds|sys_clk
-Path Type   : min (slow corner)
-Path Class  : sequential timing path
-Clock Skew  :    0.065  (Capture Clock Delay - Launch Clock Delay + Clock Pessimism Removal)
-  Capture Clock Delay     :  4.089
-  Launch Clock Delay      :  3.510
-  Clock Pessimism Removal :  -0.514
-
- Location                          Delay Type             Incr        Path         Logical Resource 
-----------------------------------------------------------------------------------------------------
-
- Clock top_dds|sys_clk (rising edge)
-                                                         0.000       0.000 r                        
- D18                                                     0.000       0.000 r       sys_clk (port)   
-                                   net (fanout=1)        0.104       0.104         sys_clk          
- IOBD_0_1080/DIN                   td                    0.954       1.058 r       sys_clk_ibuf/opit_0/O
-                                   net (fanout=1)        0.000       1.058         sys_clk_ibuf/ntD 
- IOLHR_16_1080/DI_TO_CLK           td                    0.091       1.149 r       sys_clk_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=2)        1.052       2.201         nt_sys_clk       
- USCM_215_624/CLKOUT               td                    0.143       2.344 r       clkbufg_0/gopclkbufg/CLKOUT
-                                   net (fanout=2)        0.515       2.859         ntclkbufg_0      
- HCKB_213_467/CLKOUT               td                    0.245       3.104 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.406       3.510         ntR51            
- CLMA_33_348/CLK                                                           r       dds_inst/rom_addr[2]/opit_0_inv/CLK
-
- CLMA_33_348/Q1                    tco                   0.158       3.668 f       dds_inst/rom_addr[2]/opit_0_inv/Q
-                                   net (fanout=8)        0.331       3.999         dds_inst/rom_addr [2]
- DRM_40_366/ADB0[3]                                                        f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[3]
-
- Data arrival time                                                   3.999         Logic Levels: 0  
-                                                                                   Logic: 0.158ns(32.311%), Route: 0.331ns(67.689%)
-----------------------------------------------------------------------------------------------------
-
- Clock top_dds|sys_clk (rising edge)
-                                                         0.000       0.000 r                        
- D18                                                     0.000       0.000 r       sys_clk (port)   
-                                   net (fanout=1)        0.104       0.104         sys_clk          
- IOBD_0_1080/DIN                   td                    1.117       1.221 r       sys_clk_ibuf/opit_0/O
-                                   net (fanout=1)        0.000       1.221         sys_clk_ibuf/ntD 
- IOLHR_16_1080/DI_TO_CLK           td                    0.105       1.326 r       sys_clk_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=2)        1.235       2.561         nt_sys_clk       
- USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
-                                   net (fanout=2)        0.602       3.331         ntclkbufg_0      
- HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.471       4.089         ntR51            
- DRM_40_366/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
- clock pessimism                                        -0.514       3.575                          
- clock uncertainty                                       0.000       3.575                          
-
- Hold time                                               0.071       3.646                          
-
- Data required time                                                  3.646                          
-----------------------------------------------------------------------------------------------------
- Data required time                                                  3.646                          
- Data arrival time                                                   3.999                          
-----------------------------------------------------------------------------------------------------
- Slack (MET)                                                         0.353                          
+ Slack (MET)                                                         0.352                          
 ====================================================================================================
 
 ====================================================================================================
@@ -553,7 +553,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.477       4.095         ntR51            
+                                   net (fanout=52)       0.477       4.095         ntR49            
  DRM_40_336/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_336/QA0[0]                 tco                   1.565       5.660 r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/QA0[0]
@@ -590,7 +590,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.482       4.100         ntR51            
+                                   net (fanout=52)       0.482       4.100         ntR49            
  DRM_40_306/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_306/QA0[1]                 tco                   1.565       5.665 r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/QA0[1]
@@ -627,7 +627,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.168       2.729 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.602       3.331         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.287       3.618 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.477       4.095         ntR51            
+                                   net (fanout=52)       0.477       4.095         ntR49            
  DRM_40_336/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_336/QA0[1]                 tco                   1.565       5.660 r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/QA0[1]
@@ -659,11 +659,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.646       0.782 f       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.782         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.091       0.873 f       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        2.137       3.010         nt_sys_rst_n     
+                                   net (fanout=7)        2.136       3.009         nt_sys_rst_n     
  CLMA_45_354/RS                                                            f       dds_inst/rom_addr[3]/opit_0_inv/RS
 
- Data arrival time                                                   3.010         Logic Levels: 2  
-                                                                                   Logic: 0.737ns(24.485%), Route: 2.273ns(75.515%)
+ Data arrival time                                                   3.009         Logic Levels: 2  
+                                                                                   Logic: 0.737ns(24.493%), Route: 2.272ns(75.507%)
 ====================================================================================================
 
 ====================================================================================================
@@ -683,11 +683,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.646       0.782 f       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.782         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.091       0.873 f       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        2.137       3.010         nt_sys_rst_n     
+                                   net (fanout=7)        2.136       3.009         nt_sys_rst_n     
  CLMA_45_354/RS                                                            f       dds_inst/rom_addr[8]/opit_0_inv/RS
 
- Data arrival time                                                   3.010         Logic Levels: 2  
-                                                                                   Logic: 0.737ns(24.485%), Route: 2.273ns(75.515%)
+ Data arrival time                                                   3.009         Logic Levels: 2  
+                                                                                   Logic: 0.737ns(24.493%), Route: 2.272ns(75.507%)
 ====================================================================================================
 
 ====================================================================================================
@@ -707,11 +707,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.646       0.782 f       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.782         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.091       0.873 f       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        2.194       3.067         nt_sys_rst_n     
+                                   net (fanout=7)        2.195       3.068         nt_sys_rst_n     
  CLMS_33_313/RS                                                            f       dds_inst/fre_add[0]/opit_0_inv_L6Q_perm/RS
 
- Data arrival time                                                   3.067         Logic Levels: 2  
-                                                                                   Logic: 0.737ns(24.030%), Route: 2.330ns(75.970%)
+ Data arrival time                                                   3.068         Logic Levels: 2  
+                                                                                   Logic: 0.737ns(24.022%), Route: 2.331ns(75.978%)
 ====================================================================================================
 
 {top_dds|sys_clk} Minimum Pulse Width :
@@ -752,7 +752,7 @@ Clock Skew  :    -0.023  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.340       2.769         ntR51            
+                                   net (fanout=52)       0.340       2.769         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.125       2.894 f       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -788,7 +788,7 @@ Clock Skew  :    -0.023  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.097    1001.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328    1001.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195    1002.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.284    1002.353         ntR51            
+                                   net (fanout=52)       0.284    1002.353         ntR49            
  CLMS_33_361/CLK                                                           r       dds_inst/fre_add[31]/opit_0_inv_AQ_perm/CLK
  clock pessimism                                         0.393    1002.746                          
  clock uncertainty                                      -0.050    1002.696                          
@@ -829,7 +829,7 @@ Clock Skew  :    -0.022  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.340       2.769         ntR51            
+                                   net (fanout=52)       0.340       2.769         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.125       2.894 f       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -863,7 +863,7 @@ Clock Skew  :    -0.022  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.097    1001.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328    1001.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195    1002.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.285    1002.354         ntR51            
+                                   net (fanout=52)       0.285    1002.354         ntR49            
  CLMS_33_355/CLK                                                           r       dds_inst/rom_addr_reg[8]/opit_0_inv_AQQ_perm/CLK
  clock pessimism                                         0.393    1002.747                          
  clock uncertainty                                      -0.050    1002.697                          
@@ -904,7 +904,7 @@ Clock Skew  :    -0.021  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.340       2.769         ntR51            
+                                   net (fanout=52)       0.340       2.769         ntR49            
  CLMS_33_319/CLK                                                           r       dds_inst/fre_add[4]/opit_0_inv_AQ_perm/CLK
 
  CLMS_33_319/Q1                    tco                   0.125       2.894 f       dds_inst/fre_add[2]/opit_0_inv_AQ_perm/Q
@@ -936,7 +936,7 @@ Clock Skew  :    -0.021  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  USCM_215_624/CLKOUT               td                    0.097    1001.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328    1001.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195    1002.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.286    1002.355         ntR51            
+                                   net (fanout=52)       0.286    1002.355         ntR49            
  CLMS_33_349/CLK                                                           r       dds_inst/rom_addr_reg[4]/opit_0_inv_AQQ_perm/CLK
  clock pessimism                                         0.393    1002.748                          
  clock uncertainty                                      -0.050    1002.698                          
@@ -953,8 +953,8 @@ Clock Skew  :    -0.021  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
 
 ====================================================================================================
 
-Startpoint  : dds_inst/rom_addr[10]/opit_0_inv/CLK
-Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]
+Startpoint  : dds_inst/rom_addr[11]/opit_0_inv/CLK
+Endpoint    : dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]
 Path Group  : top_dds|sys_clk
 Path Type   : min (fast corner)
 Path Class  : sequential timing path
@@ -977,15 +977,15 @@ Clock Skew  :    0.051  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.097       1.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328       1.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195       2.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.284       2.353         ntR51            
- CLMS_33_361/CLK                                                           r       dds_inst/rom_addr[10]/opit_0_inv/CLK
+                                   net (fanout=52)       0.284       2.353         ntR49            
+ CLMS_33_361/CLK                                                           r       dds_inst/rom_addr[11]/opit_0_inv/CLK
 
- CLMS_33_361/CR2                   tco                   0.123       2.476 f       dds_inst/rom_addr[10]/opit_0_inv/Q
-                                   net (fanout=8)        0.229       2.705         dds_inst/rom_addr [10]
- DRM_40_336/ADB0[11]                                                       f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[11]
+ CLMS_33_361/CR1                   tco                   0.124       2.477 f       dds_inst/rom_addr[11]/opit_0_inv/Q
+                                   net (fanout=8)        0.228       2.705         dds_inst/rom_addr [11]
+ DRM_40_336/ADB0[12]                                                       f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/ADB0[12]
 
  Data arrival time                                                   2.705         Logic Levels: 0  
-                                                                                   Logic: 0.123ns(34.943%), Route: 0.229ns(65.057%)
+                                                                                   Logic: 0.124ns(35.227%), Route: 0.228ns(64.773%)
 ----------------------------------------------------------------------------------------------------
 
  Clock top_dds|sys_clk (rising edge)
@@ -999,7 +999,7 @@ Clock Skew  :    0.051  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.335       2.764         ntR51            
+                                   net (fanout=52)       0.335       2.764         ntR49            
  DRM_40_336/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
  clock pessimism                                        -0.360       2.404                          
  clock uncertainty                                       0.000       2.404                          
@@ -1040,7 +1040,7 @@ Clock Skew  :    0.043  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.097       1.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328       1.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195       2.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.286       2.355         ntR51            
+                                   net (fanout=52)       0.286       2.355         ntR49            
  CLMA_33_348/CLK                                                           r       dds_inst/rom_addr[1]/opit_0_inv/CLK
 
  CLMA_33_348/Q2                    tco                   0.109       2.464 f       dds_inst/rom_addr[1]/opit_0_inv/Q
@@ -1062,7 +1062,7 @@ Clock Skew  :    0.043  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.329       2.758         ntR51            
+                                   net (fanout=52)       0.329       2.758         ntR49            
  DRM_40_366/CLKB[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k/CLKB[0]
  clock pessimism                                        -0.360       2.398                          
  clock uncertainty                                       0.000       2.398                          
@@ -1103,7 +1103,7 @@ Clock Skew  :    0.051  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.097       1.546 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.328       1.874         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.195       2.069 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.290       2.359         ntR51            
+                                   net (fanout=52)       0.290       2.359         ntR49            
  CLMS_33_331/CLK                                                           r       dds_inst/rom_addr[0]/opit_0_inv/CLK
 
  CLMS_33_331/CR0                   tco                   0.123       2.482 f       dds_inst/rom_addr[0]/opit_0_inv/Q
@@ -1125,7 +1125,7 @@ Clock Skew  :    0.051  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.341       2.770         ntR51            
+                                   net (fanout=52)       0.341       2.770         ntR49            
  DRM_40_306/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
  clock pessimism                                        -0.360       2.410                          
  clock uncertainty                                       0.000       2.410                          
@@ -1162,7 +1162,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.336       2.765         ntR51            
+                                   net (fanout=52)       0.336       2.765         ntR49            
  DRM_40_336/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_336/QA0[0]                 tco                   1.021       3.786 f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/QA0[0]
@@ -1199,7 +1199,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.341       2.770         ntR51            
+                                   net (fanout=52)       0.341       2.770         ntR49            
  DRM_40_306/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_306/QA0[1]                 tco                   1.021       3.791 f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1/gopdrm_36k/QA0[1]
@@ -1236,7 +1236,7 @@ Path Class  : combinational timing path
  USCM_215_624/CLKOUT               td                    0.115       1.811 r       clkbufg_0/gopclkbufg/CLKOUT
                                    net (fanout=2)        0.385       2.196         ntclkbufg_0      
  HCKB_213_467/CLKOUT               td                    0.233       2.429 r       HCKBROUTE_0/CLKOUT
-                                   net (fanout=52)       0.336       2.765         ntR51            
+                                   net (fanout=52)       0.336       2.765         ntR49            
  DRM_40_336/CLKA[0]                                                        r       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/CLKA[0]
 
  DRM_40_336/QA0[1]                 tco                   1.021       3.786 f       dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1/gopdrm_36k/QA0[1]
@@ -1268,11 +1268,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.445       0.581 r       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.581         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.073       0.654 r       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        1.293       1.947         nt_sys_rst_n     
+                                   net (fanout=7)        1.292       1.946         nt_sys_rst_n     
  CLMA_45_354/RS                                                            r       dds_inst/rom_addr[3]/opit_0_inv/RS
 
- Data arrival time                                                   1.947         Logic Levels: 2  
-                                                                                   Logic: 0.518ns(26.605%), Route: 1.429ns(73.395%)
+ Data arrival time                                                   1.946         Logic Levels: 2  
+                                                                                   Logic: 0.518ns(26.619%), Route: 1.428ns(73.381%)
 ====================================================================================================
 
 ====================================================================================================
@@ -1292,11 +1292,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.445       0.581 r       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.581         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.073       0.654 r       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        1.293       1.947         nt_sys_rst_n     
+                                   net (fanout=7)        1.292       1.946         nt_sys_rst_n     
  CLMA_45_354/RS                                                            r       dds_inst/rom_addr[8]/opit_0_inv/RS
 
- Data arrival time                                                   1.947         Logic Levels: 2  
-                                                                                   Logic: 0.518ns(26.605%), Route: 1.429ns(73.395%)
+ Data arrival time                                                   1.946         Logic Levels: 2  
+                                                                                   Logic: 0.518ns(26.619%), Route: 1.428ns(73.381%)
 ====================================================================================================
 
 ====================================================================================================
@@ -1316,11 +1316,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.445       0.581 r       sys_rst_n_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.581         sys_rst_n_ibuf/ntD
  IOLHR_16_990/DI_TO_CLK            td                    0.073       0.654 r       sys_rst_n_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=7)        1.313       1.967         nt_sys_rst_n     
+                                   net (fanout=7)        1.314       1.968         nt_sys_rst_n     
  CLMS_33_313/RS                                                            r       dds_inst/fre_add[0]/opit_0_inv_L6Q_perm/RS
 
- Data arrival time                                                   1.967         Logic Levels: 2  
-                                                                                   Logic: 0.518ns(26.335%), Route: 1.449ns(73.665%)
+ Data arrival time                                                   1.968         Logic Levels: 2  
+                                                                                   Logic: 0.518ns(26.321%), Route: 1.450ns(73.679%)
 ====================================================================================================
 
 {top_dds|sys_clk} Minimum Pulse Width :
@@ -1347,6 +1347,6 @@ Inputs and Outputs :
 
 Flow Command: report_timing 
 Peak memory: 1,061 MB
-Total CPU time to report_timing completion : 0h:0m:14s
-Process Total CPU time to report_timing completion : 0h:0m:14s
-Total real time to report_timing completion : 0h:0m:17s
+Total CPU time to report_timing completion : 0h:0m:11s
+Process Total CPU time to report_timing completion : 0h:0m:11s
+Total real time to report_timing completion : 0h:0m:13s

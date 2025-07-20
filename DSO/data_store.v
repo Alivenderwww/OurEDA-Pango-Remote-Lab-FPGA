@@ -6,18 +6,18 @@ module data_store #(
 
     input       [7:0]            trig_level, // 触发电平
     input                        trig_edge,  // 触发边沿
-    input                        wave_run,   // 波形采集启动/停止
+    input                        wave_run/* synthesis PAP_MARK_DEBUG="true" */,   // 波形采集启动/停止
     input       [ADDR_WIDTH:0]   h_shift,    // 波形水平偏移量
 
     input                        ad_clk,     // AD时钟
     input       [7:0]            ad_data,    // AD输入数据
-    input                        deci_valid, // 抽样有效信号
+    input                        deci_valid/* synthesis PAP_MARK_DEBUG="true" */, // 抽样有效信号
     
     input                        ram_rd_clk,
     input                        ram_refresh,
     input       [ADDR_WIDTH-1:0] wave_rd_addr,
     output      [7:0]            wave_rd_data,
-    output reg                   outrange    //水平偏移超出范围
+    output reg                   outrange    /* synthesis PAP_MARK_DEBUG="true" *///水平偏移超出范围
 );
 
 //reg define
@@ -36,7 +36,7 @@ reg                  wr_pingpong;  //pingpong写标志
 reg                  ram_refresh_d; //RAM读完成标志寄存器
 
 //wire define
-wire                      wr_en;       //RAM写使能
+wire                      wr_en/* synthesis PAP_MARK_DEBUG="true" */;       //RAM写使能
 wire [ADDR_WIDTH-1+1:0]   rd_addr;     //RAM地址
 wire [ADDR_WIDTH-1+1:0]   rel_addr;    //相对触发地址
 wire [ADDR_WIDTH-1+1:0]   shift_addr;  //偏移后的地址
@@ -107,6 +107,7 @@ always @(posedge ad_clk or negedge rstn)begin
         end
                                         //波形绘制完成后重新计数
         if((data_cnt == HORIZONTAL) && ram_refresh_d & wave_run)
+        //if((data_cnt == HORIZONTAL) && ram_refresh_d)
             data_cnt <= 0;
     end
 end
