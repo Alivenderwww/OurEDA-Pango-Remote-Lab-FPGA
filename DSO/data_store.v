@@ -148,7 +148,7 @@ end
 always @(posedge ram_rd_clk or negedge rstn) begin
     if(!rstn) ram_refresh_d <= 1'b0;
     else if(ram_refresh == 1) ram_refresh_d <= 1;
-    else if(trig_flag && (data_cnt == HORIZONTAL) && ram_refresh && wave_run)
+    else if(trig_flag && (data_cnt == HORIZONTAL) && wave_run)
          ram_refresh_d <= 0;
     else ram_refresh_d <= ram_refresh_d;
 end

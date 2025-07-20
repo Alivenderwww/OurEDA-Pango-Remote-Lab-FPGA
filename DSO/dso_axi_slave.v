@@ -80,8 +80,7 @@ reg [9:0] h_shift;    // 波形水平偏移量寄存器
 reg [9:0] deci_rate;  // 抽样率寄存器
 reg       ram_refresh;// RAM刷新寄存器
 
-reg       ram_rd_en;
-reg [9:0] wave_rd_addr;
+wire [9:0] wave_rd_addr;
 
 reg wave_rd_data_valid;
 
