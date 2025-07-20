@@ -22,7 +22,7 @@ output wire        da_clk       ,
 output wire [7:0]  da_data      ,
 //adc io
 output wire        ad_clk       ,
-// input  wire [7:0]  ad_data      ,
+input  wire [7:0]  ad_data      ,
 // analyzer io
 input  wire [7:0]  digital_in   ,
 output wire        test_capture0,
@@ -120,14 +120,14 @@ localparam M_ID     = 2;
 localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
 								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
-								 				  1'b0,1'b1,1'b0,1'b0, //
+								 				  1'b1,1'b1,1'b0,1'b0, //
 								 				  1'b0,1'b0,1'b0,1'b0};//
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000,
-												  32'h40000000, 32'ha0000000, 32'h60000000, 32'h70000000,
+												  32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000,
 												  32'h80000000, 32'h90000000, 32'ha0000000, 32'hb0000000,
 												  32'hc0000000, 32'hd0000000, 32'he0000000, 32'hf0000000};
 localparam [0:(2**S_WIDTH-1)][31:0]   END_ADDR = {32'h0FFFFFFF, 32'h1FFFFFFF, 32'h2FFFFFFF, 32'h3FFFFFFF,
-												  32'h4FFFFFFF, 32'haFFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF,
+												  32'h4FFFFFFF, 32'h5FFFFFFF, 32'h6FFFFFFF, 32'h7FFFFFFF,
 												  32'h8FFFFFFF, 32'h9FFFFFFF, 32'haFFFFFFF, 32'hbFFFFFFF,
 												  32'hcFFFFFFF, 32'hdFFFFFFF, 32'heFFFFFFF, 32'hfFFFFFFF};
 
@@ -761,7 +761,7 @@ dso_axi_slave #(
 	.clk                     	( clk_50M                  ),
 	.rstn                    	( BUS_RSTN                 ),
 	.ad_clk                  	( ad_clk                   ),
-	.ad_data                 	( 8'b0                     ),
+	.ad_data                 	( ad_data                  ),
 	.DSO_SLAVE_CLK           	( S_CLK          [8]       ),
 	.DSO_SLAVE_RSTN          	( S_RSTN         [8]       ),
 	.DSO_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [8]       ),

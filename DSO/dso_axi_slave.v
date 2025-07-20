@@ -121,10 +121,10 @@ localparam ST_RD_IDLE = 2'b00, // 发送完LAST和RESP，读通道空闲
 // 写通道状态机状态转换逻辑
 always @(*) begin
     case (cu_wrchannel_st)
-        ST_WR_IDLE: nt_wrchannel_st <= (DSO_SLAVE_WR_ADDR_VALID && DSO_SLAVE_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
-        ST_WR_DATA: nt_wrchannel_st <= (DSO_SLAVE_WR_DATA_VALID && DSO_SLAVE_WR_DATA_READY && DSO_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
-        ST_WR_RESP: nt_wrchannel_st <= (DSO_SLAVE_WR_BACK_VALID && DSO_SLAVE_WR_BACK_READY)?(ST_WR_IDLE):(ST_WR_RESP);
-        default   : nt_wrchannel_st <= ST_WR_IDLE;
+        ST_WR_IDLE: nt_wrchannel_st = (DSO_SLAVE_WR_ADDR_VALID && DSO_SLAVE_WR_ADDR_READY)?(ST_WR_DATA):(ST_WR_IDLE);
+        ST_WR_DATA: nt_wrchannel_st = (DSO_SLAVE_WR_DATA_VALID && DSO_SLAVE_WR_DATA_READY && DSO_SLAVE_WR_DATA_LAST)?(ST_WR_RESP):(ST_WR_DATA);
+        ST_WR_RESP: nt_wrchannel_st = (DSO_SLAVE_WR_BACK_VALID && DSO_SLAVE_WR_BACK_READY)?(ST_WR_IDLE):(ST_WR_RESP);
+        default   : nt_wrchannel_st = ST_WR_IDLE;
     endcase
 end
 
@@ -164,10 +164,10 @@ end
 
 // 写错误检测逻辑
 always @(*) begin
-    if((~DSO_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
-    else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_WAVE_RUN) || (wr_addr > ADDR_RAM_REFRESH)) wr_transcript_error <= 1;
-    else wr_transcript_error <= 0;
+    if((~DSO_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error = 0;
+    else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error = 1;
+    else if((wr_addr < ADDR_WAVE_RUN) || (wr_addr > ADDR_RAM_REFRESH)) wr_transcript_error = 1;
+    else wr_transcript_error = 0;
 end
 
 // 写错误状态寄存
@@ -178,10 +178,9 @@ end
 
 // 写数据READY选通
 always @(*) begin
-    if(~DSO_SLAVE_RSTN_SYNC) DSO_SLAVE_WR_DATA_READY <= 0;
-    else if(cu_wrchannel_st == ST_WR_DATA) begin
-             DSO_SLAVE_WR_DATA_READY <= 1;
-    end else DSO_SLAVE_WR_DATA_READY <= 0;
+    if(cu_wrchannel_st == ST_WR_DATA) begin
+             DSO_SLAVE_WR_DATA_READY = 1;
+    end else DSO_SLAVE_WR_DATA_READY = 0;
 end
 
 // 写数据处理逻辑
@@ -232,9 +231,9 @@ end
 // 读通道状态机状态转换逻辑
 always @(*) begin
     case (cu_rdchannel_st)
-        ST_RD_IDLE: nt_rdchannel_st <= (DSO_SLAVE_RD_ADDR_VALID && DSO_SLAVE_RD_ADDR_READY)?(ST_RD_DATA):(ST_RD_IDLE);
-        ST_RD_DATA: nt_rdchannel_st <= (DSO_SLAVE_RD_DATA_VALID && DSO_SLAVE_RD_DATA_READY && DSO_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
-        default   : nt_rdchannel_st <= ST_RD_IDLE;
+        ST_RD_IDLE: nt_rdchannel_st = (DSO_SLAVE_RD_ADDR_VALID && DSO_SLAVE_RD_ADDR_READY)?(ST_RD_DATA):(ST_RD_IDLE);
+        ST_RD_DATA: nt_rdchannel_st = (DSO_SLAVE_RD_DATA_VALID && DSO_SLAVE_RD_DATA_READY && DSO_SLAVE_RD_DATA_LAST)?(ST_RD_IDLE):(ST_RD_DATA);
+        default   : nt_rdchannel_st = ST_RD_IDLE;
     endcase
 end
 
@@ -286,11 +285,11 @@ assign DSO_SLAVE_RD_DATA_LAST = (DSO_SLAVE_RD_DATA_VALID) && (rd_data_trans_num 
 
 // 读错误检测逻辑
 always @(*) begin
-    if((~DSO_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
-    else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr >= ADDR_WAVE_RUN) && (rd_addr <= ADDR_AD_MIN)) rd_transcript_error <= 0;
-    else if((rd_addr >= ADDR_WAVE_RD_DATA_START) && (rd_addr <= ADDR_WAVE_RD_DATA_END)) rd_transcript_error <= 0;
-    else rd_transcript_error <= 1;
+    if(cu_rdchannel_st == ST_RD_IDLE) rd_transcript_error = 0;
+    else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error = 1;
+    else if((rd_addr >= ADDR_WAVE_RUN) && (rd_addr <= ADDR_AD_MIN)) rd_transcript_error = 0;
+    else if((rd_addr >= ADDR_WAVE_RD_DATA_START) && (rd_addr <= ADDR_WAVE_RD_DATA_END)) rd_transcript_error = 0;
+    else rd_transcript_error = 1;
 end
 
 // 读错误状态寄存
@@ -301,18 +300,16 @@ end
 
 // 读数据VALID选通
 always @(*) begin
-    if(~DSO_SLAVE_RSTN_SYNC) DSO_SLAVE_RD_DATA_VALID <= 0;
-    else if(cu_rdchannel_st == ST_RD_DATA) begin
+    if(cu_rdchannel_st == ST_RD_DATA) begin
         if((rd_addr >= ADDR_WAVE_RD_DATA_START) && (rd_addr <= ADDR_WAVE_RD_DATA_END))
-             DSO_SLAVE_RD_DATA_VALID <= wave_rd_data_valid;
-        else DSO_SLAVE_RD_DATA_VALID <= 1;
-    end else DSO_SLAVE_RD_DATA_VALID <= 0;
+             DSO_SLAVE_RD_DATA_VALID = wave_rd_data_valid;
+        else DSO_SLAVE_RD_DATA_VALID = 1;
+    end else DSO_SLAVE_RD_DATA_VALID = 0;
 end
 
 // 读数据选通
 always @(*) begin
-    if(~DSO_SLAVE_RSTN_SYNC) DSO_SLAVE_RD_DATA <= 0;
-    else if(cu_rdchannel_st == ST_RD_DATA) begin
+    if(cu_rdchannel_st == ST_RD_DATA) begin
         if((rd_addr >= ADDR_WAVE_RD_DATA_START) && (rd_addr <= ADDR_WAVE_RD_DATA_END)) begin
             DSO_SLAVE_RD_DATA <= {24'b0, wave_rd_data};
         end else case(rd_addr)
