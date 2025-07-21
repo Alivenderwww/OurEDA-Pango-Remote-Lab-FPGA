@@ -756,7 +756,7 @@ sys_status_axi_slave S7(
 );
 
 dso_axi_slave #(
-	.CLK_FS 	(32'd50_000_000)
+	.CLK_FS 	(32'd120_000_000)
 )S8(
 	.clk                     	( clk_120M                 ),
 	.rstn                    	( BUS_RSTN                 ),

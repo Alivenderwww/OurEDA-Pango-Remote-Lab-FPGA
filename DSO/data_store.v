@@ -1,5 +1,5 @@
 module data_store #(
-    parameter HORIZONTAL  = 640, //水平采样点数
+    parameter HORIZONTAL  = 1024, //水平采样点数
     parameter ADDR_WIDTH  = 10
 )(
     input                        rstn,      // 复位信号
