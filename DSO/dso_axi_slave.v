@@ -352,7 +352,6 @@ dso_top #(
 	.trig_edge    	( trig_edge     ),
 	.h_shift      	( h_shift       ),
 	.deci_rate    	( deci_rate     ),
-	.ram_rd_clk   	( clk           ),
 	.ram_refresh  	( ram_refresh   ),
 	.wave_rd_addr 	( wave_rd_addr  ),
 	.wave_rd_data 	( wave_rd_data  ),

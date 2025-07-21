@@ -13,7 +13,6 @@ module dso_top #(
     input  [9:0]  h_shift,    // 波形水平偏移量
     input  [9:0]  deci_rate,  // 抽样率
 
-    input         ram_rd_clk,
     input         ram_refresh/* synthesis PAP_MARK_DEBUG="true" */,
     input  [9:0]  wave_rd_addr/* synthesis PAP_MARK_DEBUG="true" */, // RAM读地址 0-299
     output [7:0]  wave_rd_data/* synthesis PAP_MARK_DEBUG="true" */, // RAM读数据
@@ -54,7 +53,7 @@ data_store u_data_store(
 	.ad_clk        	( ad_clk         ),
 	.ad_data       	( ad_data        ),
 	.deci_valid    	( deci_valid     ),
-	.ram_rd_clk     ( ram_rd_clk     ),
+	.ram_rd_clk     ( clk            ),
 	.ram_refresh   	( ram_refresh    ),
 	.wave_rd_addr  	( wave_rd_addr   ),
 	.wave_rd_data  	( wave_rd_data   ),
