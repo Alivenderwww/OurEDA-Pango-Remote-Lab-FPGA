@@ -34,6 +34,11 @@ reg [7:0]            pre_data3;
 reg [ADDR_WIDTH-1:0] data_cnt;
 reg                  wr_pingpong;  //pingpong写标志
 reg                  ram_refresh_d; //RAM读完成标志寄存器
+wire ram_refresh_pos = (!ram_refresh_d) && (ram_refresh);
+always @(posedge ram_rd_clk or negedge rstn) begin
+    if(!rstn) ram_refresh_d <= 1'b0;
+    else ram_refresh_d <= ram_refresh;
+end
 
 //wire define
 wire                      wr_en/* synthesis PAP_MARK_DEBUG="true" */;       //RAM写使能
@@ -106,8 +111,7 @@ always @(posedge ad_clk or negedge rstn)begin
 
         end
                                         //波形绘制完成后重新计数
-        if((data_cnt == HORIZONTAL) && ram_refresh_d & wave_run)
-        //if((data_cnt == HORIZONTAL) && ram_refresh_d)
+        if((data_cnt == HORIZONTAL) && wave_run)
             data_cnt <= 0;
     end
 end
@@ -132,27 +136,25 @@ always @(posedge ad_clk or negedge rstn)begin
     if(!rstn) begin
         trig_addr <= 0;
         trig_flag <= 1'b0;
-        wr_pingpong <= 1'b0;
     end
     else begin
         if(deci_valid && trig_en && trig_pulse) begin       
             trig_flag <= 1'b1;
             trig_addr <= wr_addr + 2;
         end
-        if(trig_flag && (data_cnt == HORIZONTAL) && ram_refresh_d && wave_run) begin
+        if(trig_flag && (data_cnt == HORIZONTAL) && wave_run) begin
             trig_flag <= 1'b0;
-            wr_pingpong <= ~wr_pingpong;
         end
     end
 end
-
-always @(posedge ram_rd_clk or negedge rstn) begin
-    if(!rstn) ram_refresh_d <= 1'b0;
-    else if(ram_refresh == 1) ram_refresh_d <= 1;
-    else if(trig_flag && (data_cnt == HORIZONTAL) && wave_run)
-         ram_refresh_d <= 0;
-    else ram_refresh_d <= ram_refresh_d;
+always @(posedge ad_clk or negedge rstn)begin
+    if(!rstn) begin
+        wr_pingpong <= 1'b0;
+    end else if(ram_refresh_pos) begin
+        wr_pingpong <= ~wr_pingpong;
+    end
 end
+
 
 dso_ram_2port u_dso_ram_2port ( //addr width is ADDR_WIDTH+1()pingpong
   .wr_clk   (ad_clk                  ),    // input

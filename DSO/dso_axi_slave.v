@@ -182,6 +182,7 @@ always @(*) begin
     end else DSO_SLAVE_WR_DATA_READY = 0;
 end
 
+reg [31:0] ram_refresh_delay;
 // 写数据处理逻辑
 always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
     if(~DSO_SLAVE_RSTN_SYNC) begin
@@ -191,6 +192,7 @@ always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
         h_shift     <= 0 ; //???
         deci_rate   <= 10'd2; //???
         ram_refresh <= 0 ; //???
+        ram_refresh_delay <= 0;
     end else if(DSO_SLAVE_WR_DATA_VALID && DSO_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_WAVE_RUN: begin
@@ -222,7 +224,8 @@ always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
         trig_edge   <= trig_edge  ;
         h_shift     <= h_shift    ;
         deci_rate   <= deci_rate  ;
-        ram_refresh <= 0;
+        ram_refresh <= (ram_refresh_delay >= 32'h0000_FFFF)?(0):(ram_refresh);
+        ram_refresh_delay <= ((ram_refresh_delay >= 32'h0000_FFFF) || (~ram_refresh))?(0):(ram_refresh_delay + 1);
     end
 end
 
