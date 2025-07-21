@@ -120,7 +120,7 @@ localparam M_ID     = 2;
 localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
 								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
-								 				  1'b0,1'b1,1'b0,1'b0, //
+								 				  1'b1,1'b1,1'b0,1'b0, //
 								 				  1'b0,1'b0,1'b0,1'b0};//
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000,
 												  32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000,
@@ -756,9 +756,9 @@ sys_status_axi_slave S7(
 );
 
 dso_axi_slave #(
-	.CLK_FS 	(32'd120_000_000)
+	.CLK_FS 	(32'd50_000_000)
 )S8(
-	.clk                     	( clk_120M                 ),
+	.clk                     	( clk_50M                  ),
 	.rstn                    	( BUS_RSTN                 ),
 	.ad_clk                  	( ad_clk                   ),
 	.ad_data                 	( ad_data                  ),
