@@ -60,10 +60,10 @@ module axi_udp_master #(
 );
 wire eth_rstn_sync;
 
-wire [31:0] des_ip    = (admin_mode) ? ADMIN_DES_IP : eeprom_des_ip;
-wire [47:0] des_mac   = (admin_mode) ? ADMIN_DES_MAC : eeprom_des_mac;
-wire [31:0] board_ip  = (admin_mode) ? ADMIN_BOARD_IP : eeprom_board_ip;
-wire [47:0] board_mac = (admin_mode) ? ADMIN_BOARD_MAC : eeprom_board_mac;
+wire [31:0] des_ip    = (admin_mode) ? ((arp_valid)?(dec_ip         ):(ADMIN_DES_IP   )) : (eeprom_des_ip   );
+wire [47:0] des_mac   = (admin_mode) ? ((arp_valid)?(dec_mac        ):(ADMIN_DES_MAC  )) : (eeprom_des_mac  );
+wire [31:0] board_ip  = (admin_mode) ? ((arp_valid)?(ADMIN_BOARD_IP ):(ADMIN_BOARD_IP )) : (eeprom_board_ip );
+wire [47:0] board_mac = (admin_mode) ? ((arp_valid)?(ADMIN_BOARD_MAC):(ADMIN_BOARD_MAC)) : (eeprom_board_mac);
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
@@ -78,7 +78,7 @@ wire    [15:0]  rec_byte_num    ;
 wire            tx_start_en     ;
 wire    [31:0]  tx_data         ;
 wire            udp_tx_done     ;
-wire            tx_data_req          ;
+wire            tx_data_req     ;
 wire    [15:0]  udp_tx_byte_num ;
 
 wire            gmii_tx_en_udp;
@@ -87,7 +87,7 @@ wire    [7:0]   gmii_txd_udp;
 wire    [7:0]   gmii_txd_arp;
 wire    [47:0]  dec_mac;
 wire    [31:0]  dec_ip; 
-wire            arp_refresh;
+wire            arp_valid;
 
 wire udp_tx_sel;
 wire udp_tx_req;
@@ -128,31 +128,27 @@ udp u_udp(
     .des_mac       (des_mac         ),
     .board_ip      (board_ip        ),
     .board_mac     (board_mac       ),
-    .dec_mac       (dec_mac         ),
-    .dec_ip        (dec_ip          ),
 
-    .arp_refresh   (arp_refresh     ),
-
-    .gmii_rx_clk   (gmii_rx_clk ),//gmii接收
-    .gmii_rx_dv    (gmii_rx_dv  ),
-    .gmii_rxd      (gmii_rxd    ),
-    .gmii_tx_clk   (gmii_tx_clk ),//gmii发送
+    .gmii_rx_clk   (gmii_rx_clk     ),//gmii接收
+    .gmii_rx_dv    (gmii_rx_dv      ),
+    .gmii_rxd      (gmii_rxd        ),
+    .gmii_tx_clk   (gmii_tx_clk     ),//gmii发送
     .gmii_tx_en    (gmii_tx_en_udp  ),
     .gmii_txd      (gmii_txd_udp    ),
 
-    .rec_pkt_done  (rec_pkt_done),  //数据包接收结束
-    .rec_en        (rec_en      ),  //四字节接收使能
-    .rec_data      (rec_data    ),  //接收数据
-    .rec_byte_num  (rec_byte_num),  //接收到的有效数据长度
-    .tx_start_en   (tx_start_en),  //发送使能
-    .tx_data       (tx_data     ),  //发送数据
-    .tx_byte_num   (udp_tx_byte_num),  //发送长度
-    .udp_tx_sel    (udp_tx_sel),
-    .udp_tx_req    (udp_tx_req),
-    .udp_tx_working(udp_tx_working),
-    .tx_done       (udp_tx_done ),  //发送结束
-    .tx_req        (tx_data_req      ),  //四字节发送使能
-    .timestamp_rst (timestamp_rst)
+    .rec_pkt_done  (rec_pkt_done    ),  //数据包接收结束
+    .rec_en        (rec_en          ),  //四字节接收使能
+    .rec_data      (rec_data        ),  //接收数据
+    .rec_byte_num  (rec_byte_num    ),  //接收到的有效数据长度
+    .tx_start_en   (tx_start_en     ),  //发送使能
+    .tx_data       (tx_data         ),  //发送数据
+    .tx_byte_num   (udp_tx_byte_num ),  //发送长度
+    .udp_tx_sel    (udp_tx_sel      ),
+    .udp_tx_req    (udp_tx_req      ),
+    .udp_tx_working(udp_tx_working  ),
+    .tx_done       (udp_tx_done     ),  //发送结束
+    .tx_req        (tx_data_req     ),  //四字节发送使能
+    .timestamp_rst (timestamp_rst   )
     );
 
 axi_udp_cmd axi_udp_cmd_inst(
@@ -195,7 +191,7 @@ axi_udp_cmd axi_udp_cmd_inst(
     .udp_rx_data         (rec_data    ),
     .udp_rx_en           (rec_en      ),
 
-    .udp_tx_req          (tx_data_req      ),
+    .udp_tx_req          (tx_data_req ),
     .udp_tx_start        (tx_start_en ),
     .udp_tx_data         (tx_data     ),
     .udp_tx_done         (udp_tx_done ),
@@ -222,7 +218,7 @@ arp arp_inst (
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
 
-    .arp_refresh(arp_refresh)
+    .arp_valid(arp_valid)
   );
 
 

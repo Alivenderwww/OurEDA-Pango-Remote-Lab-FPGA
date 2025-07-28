@@ -7,7 +7,7 @@ module arp_rx (
     input  wire [31:0]   board_ip,
     output wire [47:0]   dec_mac,
     output wire [31:0]   dec_ip,
-    output reg           refresh
+    output reg           arp_valid
 );
 reg  [15:0]  eth_type                  ; //以太网协议类型
 reg  [47:0]  eth_des_mac               ; //以太网帧目的MAC地址
@@ -90,7 +90,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
         skip_en <= 0;
         error_en <= 0;
         cnt <= 0;
-        refresh <= 0;
+        arp_valid <= 0;
         arp_rx_des_mac <= 0;
         arp_rx_src_mac <= 0;
         arp_rx_des_ip  <= 0;
@@ -99,7 +99,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
     else begin
         skip_en <= 0;
         error_en <= 0;
-        refresh <= 0;
+        arp_valid <= arp_valid;
         case(next_state)
             st_idle : begin
                 cnt <= 0;
@@ -174,7 +174,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
                         cnt <= 0;
                         if(arp_rx_des_ip == board_ip)begin//是自己的ip地址
                             skip_en <= 1;
-                            refresh <= 1;
+                            arp_valid <= 1;
                         end
                         else begin
                             error_en <= 1;
