@@ -305,7 +305,7 @@ always @(*) begin
 end
 
 i2c_fifo #(
-	.FIFO_DEPTH 	(13))
+	.FIFO_DEPTH 	(10))
 i2c_wr_fifo(
 	.clk           	( clk                      ),
 	.rstn          	( I2C_MASTER_AXI_SLAVE_RSTN_SYNC),
