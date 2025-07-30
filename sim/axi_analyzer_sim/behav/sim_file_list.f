@@ -8,12 +8,10 @@
 ../../../JTAG/*.sv
 ../../../DDS/*.sv
 ../../../COMMON/*.v
+../../../COMMON/*.sv
 ../../../ANALYZER/*.v
 ../../../ANALYZER/*.sv
 ../axi_analyzer_sim.sv
-
-../../../IPCORE/ANALYZER/analyzer_ram/rtl/ipm2l_sdpram_v1_10_analyzer_ram.v
-../../../IPCORE/ANALYZER/analyzer_ram/analyzer_ram.v
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v
@@ -84,6 +82,11 @@
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_sdpram_v1_10_jtag_fifo_shift_out.v
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/rtl/ipm2l_fifo_v1_10_jtag_fifo_shift_out.v
 ../../../IPCORE/JTAG/jtag_fifo_shift_out/jtag_fifo_shift_out.v
+
+../../../IPCORE/ANALYZER/analyzer_fifo/rtl/ipm2l_fifo_ctrl_v1_1_analyzer_fifo.v
+../../../IPCORE/ANALYZER/analyzer_fifo/rtl/ipm2l_sdpram_v1_10_analyzer_fifo.v
+../../../IPCORE/ANALYZER/analyzer_fifo/rtl/ipm2l_fifo_v1_10_analyzer_fifo.v
+../../../IPCORE/ANALYZER/analyzer_fifo/analyzer_fifo.v
 
 ../../../IPCORE/DDS/ram_wave/rtl/ipm2l_sdpram_v1_10_ram_wave.v
 ../../../IPCORE/DDS/ram_wave/ram_wave.v

@@ -15,7 +15,7 @@
 // Filename:ipm2l_sdpram.v
 ////////////////////////////////////////////////////////////////////////////////
 
-module ipm2l_sdpram_v1_10_analyzer_ram  #(
+module ipm2l_sdpram_v1_10_analyzer_fifo  #(
     parameter   c_CAS_MODE              = "18K"             ,   // "18K", "36K", "64K"
     parameter   c_WR_ADDR_WIDTH         = 10                ,
     parameter   c_WR_DATA_WIDTH         = 32                ,
@@ -54,7 +54,6 @@ module ipm2l_sdpram_v1_10_analyzer_ram  #(
     input   wire                                rd_addr_strobe
 );
 
-localparam INIT_EN = 0 ; // @IPC bool
 localparam RST_VAL_EN = 0 ; // @IPC bool
 
     localparam  c_WR_BYTE_WIDTH = c_WR_BYTE_EN ? (c_WR_DATA_WIDTH/(c_BE_WIDTH==0 ? 1 : c_BE_WIDTH)) : ( (c_WR_DATA_WIDTH%9 ==0) ? 9 : (c_WR_DATA_WIDTH%8 ==0) ? 8 : 9 );
@@ -844,7 +843,6 @@ localparam RST_VAL_EN = 0 ; // @IPC bool
                 endcase
 
             GTP_DRM36K_E1 # (
-
                 .GRS_EN                   ( "FALSE"                  ),
                 .CSA_MASK                 ( CSA_MASK_SEL             ),
                 .CSB_MASK                 ( CSB_MASK_SEL             ),

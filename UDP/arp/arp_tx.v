@@ -8,7 +8,7 @@ module arp_tx (
     input   wire [47:0]   board_mac,
     input   wire [47:0]   dec_mac,
     input   wire [31:0]   dec_ip,
-    input   wire          arp_refresh/* synthesis PAP_MARK_DEBUG=”true” */,
+    input   wire          arp_valid/* synthesis PAP_MARK_DEBUG=”true” */,
 
     input        [31:0]  crc_data   , //CRC校验数据
     input         [7:0]  crc_next   , //CRC下次校验完成数据
@@ -183,7 +183,7 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
             st_idle : begin
                 tx_bit_sel <= 0;
                 arp_working <= 0;
-                if(arp_refresh)
+                if(arp_valid)
                     skip_en <= 1;
                 else 
                     skip_en <= 0;

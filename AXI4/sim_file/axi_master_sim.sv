@@ -1,8 +1,10 @@
 `timescale 1ns/1ps
-module axi_master_sim (
+module axi_master_sim #(
+    parameter ID_WIDTH = 2
+)(
 output logic         MASTER_CLK          ,
 output logic         MASTER_RSTN         ,
-output logic [2-1:0] MASTER_WR_ADDR_ID   ,
+output logic [ID_WIDTH-1:0] MASTER_WR_ADDR_ID   ,
 output logic [31:0]  MASTER_WR_ADDR      ,
 output logic [ 7:0]  MASTER_WR_ADDR_LEN  ,
 output logic [ 1:0]  MASTER_WR_ADDR_BURST,
@@ -13,17 +15,17 @@ output logic [ 3:0]  MASTER_WR_STRB      ,
 output logic         MASTER_WR_DATA_LAST ,
 output logic         MASTER_WR_DATA_VALID,
 input  logic         MASTER_WR_DATA_READY,
-input  logic [2-1:0] MASTER_WR_BACK_ID   ,
+input  logic [ID_WIDTH-1:0] MASTER_WR_BACK_ID   ,
 input  logic [ 1:0]  MASTER_WR_BACK_RESP ,
 input  logic         MASTER_WR_BACK_VALID,
 output logic         MASTER_WR_BACK_READY,
-output logic [2-1:0] MASTER_RD_ADDR_ID   ,
+output logic [ID_WIDTH-1:0] MASTER_RD_ADDR_ID   ,
 output logic [31:0]  MASTER_RD_ADDR      ,
 output logic [ 7:0]  MASTER_RD_ADDR_LEN  ,
 output logic [ 1:0]  MASTER_RD_ADDR_BURST,
 output logic         MASTER_RD_ADDR_VALID,
 input  logic         MASTER_RD_ADDR_READY,
-input  logic [2-1:0] MASTER_RD_BACK_ID   ,
+input  logic [ID_WIDTH-1:0] MASTER_RD_BACK_ID   ,
 input  logic [31:0]  MASTER_RD_DATA      ,
 input  logic [ 1:0]  MASTER_RD_DATA_RESP ,
 input  logic         MASTER_RD_DATA_LAST ,
@@ -54,7 +56,7 @@ output logic         MASTER_RD_DATA_READY
 ///////////////////////////////////////////////////////////////
 
 localparam BUFF_WIDTH = 10;
-reg [9:0] wr_channel_buff[2**BUFF_WIDTH-1:0];
+reg [8+ID_WIDTH-1:0] wr_channel_buff[2**BUFF_WIDTH-1:0];
 reg [BUFF_WIDTH:0] wr_channel_wrptr, wr_channel_rdptr, wr_channel_respptr;
 wire wr_channel_buff_full  = ((wr_channel_wrptr ^ wr_channel_respptr) == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
 initial begin
@@ -98,7 +100,7 @@ always @(posedge MASTER_CLK) begin
     end
 end
 
-reg [9:0] rd_channel_buff[2**BUFF_WIDTH-1:0];
+reg [8+ID_WIDTH-1:0] rd_channel_buff[2**BUFF_WIDTH-1:0];
 reg [BUFF_WIDTH:0] rd_channel_wrptr, rd_channel_rdptr;
 wire rd_channel_buff_full  = ((rd_channel_wrptr ^ rd_channel_rdptr) == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
 wire rd_channel_buff_empty = (rd_channel_wrptr == rd_channel_rdptr);
@@ -159,7 +161,7 @@ MASTER的写地址线通道传输一次。
 握手成功后解除堵塞状态。
 */
 task automatic send_wr_addr;
-    input [ 1:0] id;
+    input [ID_WIDTH-1:0] id;
     input [31:0] addr;
     input [ 7:0] len;
     input [ 1:0] burst;
@@ -185,7 +187,7 @@ MASTER的读地址线通道传输一次。
 握手成功后解除堵塞状态。
 */
 task automatic send_rd_addr;
-    input [ 1:0] id;
+    input [ID_WIDTH-1:0] id;
     input [31:0] addr;
     input [ 7:0] len;
     input [ 1:0] burst;

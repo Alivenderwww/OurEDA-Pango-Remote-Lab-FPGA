@@ -96,6 +96,16 @@ wire		DMA0_capture_rst    ;
 wire [15:0] OV_expect_width   ; //期望宽度
 wire [15:0] OV_expect_height  ; //期望高度
 
+
+wire [31:0] DMA1_START_WRITE_ADDR;
+wire [31:0] DMA1_END_WRITE_ADDR  ;
+wire DMA1_rd_clk                 ;
+wire DMA1_capture_on             ;
+wire DMA1_capture_rst            ;
+wire DMA1_rd_data_ready          ;
+wire DMA1_rd_data_valid          ;
+wire [31:0] DMA1_rd_data         ;
+
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
 wire scl_camera_out, scl_camera_enable;
@@ -117,7 +127,7 @@ wire admin_mode;
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 4;
 localparam M_ID     = 2;
-localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
+localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
 								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
 								 				  1'b1,1'b1,1'b0,1'b0, //
@@ -366,9 +376,17 @@ axi_master_initial_boot #(
     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[2]),
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[2]));
 
-axi_master_default M3(
-    .clk                  (clk_120M         ),
-    .rstn                 (sys_rstn         ),
+axi_master_write_dma M3(
+    .clk                  (clk_120M             ),
+    .rstn                 (sys_rstn             ),
+	.START_WRITE_ADDR	  (DMA1_START_WRITE_ADDR),
+	.END_WRITE_ADDR	      (DMA1_END_WRITE_ADDR  ),
+	.rd_clk               (DMA1_rd_clk          ),
+	.rd_capture_on		  (DMA1_capture_on      ),
+	.rd_capture_rst		  (DMA1_capture_rst     ),
+	.rd_data_ready        (DMA1_rd_data_ready),
+	.rd_data_valid        (DMA1_rd_data_valid),
+	.rd_data              (DMA1_rd_data      ),
     .MASTER_CLK           (M_CLK          [3]),
     .MASTER_RSTN          (M_RSTN         [3]),
     .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [3]),
@@ -748,6 +766,10 @@ sys_status_axi_slave S7(
 	.DMA0_END_WRITE_ADDR      		( DMA0_END_WRITE_ADDR       ),
 	.DMA0_capture_on			    ( DMA0_capture_on          ),
 	.DMA0_capture_rst 		        ( DMA0_capture_rst         ),
+	.DMA1_START_WRITE_ADDR          ( DMA1_START_WRITE_ADDR     ),
+	.DMA1_END_WRITE_ADDR            ( DMA1_END_WRITE_ADDR       ),
+	.DMA1_capture_on                ( DMA1_capture_on           ),
+	.DMA1_capture_rst               ( DMA1_capture_rst          ),
 	.OV_EXPECT_WIDTH			    ( OV_expect_width       ),
 	.OV_EXPECT_HEIGHT			    ( OV_expect_height      ),
 	.OV_ccd_rstn					( OV_ccd_rstn           ),
@@ -793,12 +815,14 @@ dso_axi_slave #(
 	.DSO_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[8]       )
 );
 
-Analazer #(
-	.DIGITAL_IN_NUM 	( 8  )
-)S9(
+Analazer S9(
 	.clk                          	( clk_5M              ),
 	.rstn                         	( sys_rstn            ),
 	.digital_in                   	( digital_in          ),
+	.rd_clk					  	    ( DMA1_rd_clk         ),
+	.rd_data_ready			 	    ( DMA1_rd_data_ready  ),
+	.rd_data_valid			 	    ( DMA1_rd_data_valid  ),
+	.rd_data				        ( DMA1_rd_data        ),
 	.ANALYZER_SLAVE_CLK           	( S_CLK          [9]  ),
 	.ANALYZER_SLAVE_RSTN          	( S_RSTN         [9]  ),
 	.ANALYZER_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [9]  ),
