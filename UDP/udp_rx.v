@@ -52,7 +52,7 @@ reg  [15:0]  udp_byte_num    ; //UDP长度
 reg  [15:0]  data_byte_num   ; //数据长度
 reg  [15:0]  data_cnt        ; //有效数据计数
 reg  [1:0]   rec_en_cnt      ; //8bit转32bit计数器
-
+reg  [7:0]   ip_protocol     ; //协议类型，UDP---17  TCP---6 ICMP---1
 //*****************************************************
 //**                    main code
 //*****************************************************
@@ -139,6 +139,7 @@ always @(posedge clk or negedge rst_n) begin
         rec_data <= 32'd0;
         rec_pkt_done <= 1'b0;
         rec_byte_num <= 16'd0;
+        ip_protocol <= 8'b0;
     end
     else begin
         skip_en <= 1'b0;
@@ -175,7 +176,7 @@ always @(posedge clk or negedge rst_n) begin
                         eth_type[7:0] <= gmii_rxd;
                         cnt <= 5'd0;
                         //判断MAC地址是否为开发板MAC地址或者公共地址
-                        if(((des_mac == board_mac) ||(des_mac == 48'hff_ff_ff_ff_ff_ff))
+                        if(((des_mac == board_mac))
                        && eth_type[15:8] == ETH_TYPE[15:8] && gmii_rxd == ETH_TYPE[7:0])
                             skip_en <= 1'b1;
                         else
@@ -188,6 +189,14 @@ always @(posedge clk or negedge rst_n) begin
                     cnt <= cnt + 5'd1;
                     if(cnt == 5'd0)
                         ip_head_byte_num <= {gmii_rxd[3:0],2'd0};
+                    else if(cnt == 5'd9)
+                        ip_protocol <= gmii_rxd;
+                    else if(cnt == 5'd10)begin
+                        if(ip_protocol != 8'd17)begin
+                            error_en <= 1'b1;
+                            cnt <= 5'd0;
+                        end
+                    end
                     else if((cnt >= 5'd16) && (cnt <= 5'd18))
                         des_ip <= {des_ip[23:0],gmii_rxd};   //目的IP地址
                     else if(cnt == 5'd19) begin

@@ -8,17 +8,17 @@ module hsst_axi_slave (
     output wire         SLAVE_RSTN         ,
 
     input  wire [4-1:0] SLAVE_WR_ADDR_ID   ,
-    input  wire [31:0]  SLAVE_WR_ADDR      ,
+    input  wire [31:0]  SLAVE_WR_ADDR      /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 7:0]  SLAVE_WR_ADDR_LEN  ,
     input  wire [ 1:0]  SLAVE_WR_ADDR_BURST,
-    input  wire         SLAVE_WR_ADDR_VALID,
-    output reg          SLAVE_WR_ADDR_READY,
+    input  wire         SLAVE_WR_ADDR_VALID/* synthesis PAP_MARK_DEBUG="1" */,
+    output reg          SLAVE_WR_ADDR_READY/* synthesis PAP_MARK_DEBUG="1" */,
 
-    input  wire [31:0]  SLAVE_WR_DATA      ,
+    input  wire [31:0]  SLAVE_WR_DATA      /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 3:0]  SLAVE_WR_STRB      ,
-    input  wire         SLAVE_WR_DATA_LAST ,
-    input  wire         SLAVE_WR_DATA_VALID,
-    output reg          SLAVE_WR_DATA_READY,
+    input  wire         SLAVE_WR_DATA_LAST /* synthesis PAP_MARK_DEBUG="1" */,
+    input  wire         SLAVE_WR_DATA_VALID/* synthesis PAP_MARK_DEBUG="1" */,
+    output reg          SLAVE_WR_DATA_READY/* synthesis PAP_MARK_DEBUG="1" */,
 
     output wire [4-1:0] SLAVE_WR_BACK_ID   ,
     output wire [ 1:0]  SLAVE_WR_BACK_RESP ,
@@ -26,11 +26,11 @@ module hsst_axi_slave (
     input  wire         SLAVE_WR_BACK_READY,
 
     input  wire [4-1:0] SLAVE_RD_ADDR_ID   ,
-    input  wire [31:0]  SLAVE_RD_ADDR      ,
-    input  wire [ 7:0]  SLAVE_RD_ADDR_LEN  ,
+    input  wire [31:0]  SLAVE_RD_ADDR      /* synthesis PAP_MARK_DEBUG="1" */,
+    input  wire [ 7:0]  SLAVE_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 1:0]  SLAVE_RD_ADDR_BURST,
-    input  wire         SLAVE_RD_ADDR_VALID,
-    output reg          SLAVE_RD_ADDR_READY,
+    input  wire         SLAVE_RD_ADDR_VALID/* synthesis PAP_MARK_DEBUG="1" */,
+    output reg          SLAVE_RD_ADDR_READY/* synthesis PAP_MARK_DEBUG="1" */,
     output wire [4-1:0] SLAVE_RD_BACK_ID   ,
 
     output wire [31:0]  SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="1" */,
@@ -88,7 +88,7 @@ localparam WRHEAD  = 1;
 localparam RDHEAD  = 2;
 localparam CMDDATA = 3;
 localparam MODE    = 4;
-reg [ 7:0] txtask_state;
+reg [ 7:0] txtask_state/* synthesis PAP_MARK_DEBUG="1" */;
 reg [31:0] task_cmd;
 //loacltask
 localparam LOCALREAD    = 1;
@@ -96,7 +96,7 @@ localparam LOCALWRITE   = 2;
 localparam HANDSHAKE    = 3;
 wire       localtask_wr;
 wire       localtask_rd;
-reg [ 7:0] localtask_state;
+reg [ 7:0] localtask_state/* synthesis PAP_MARK_DEBUG="1" */;
 reg [31:0] localtask_wr_cmd;
 //sfprxtask
 localparam RXPORTDATA = 1;
