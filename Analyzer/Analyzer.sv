@@ -1,7 +1,7 @@
 module Analazer (
     input  wire clk,
     input  wire rstn,
-    input  wire [8-1:0] digital_in, // 输入数字信号
+    input  wire [32-1:0] digital_in, // 输入数字信号
 
     input  wire              rd_clk,
     output logic             rd_data_ready,
@@ -48,9 +48,14 @@ module Analazer (
                                             01: 全局或  (|)
                                             10: 全局非与(~&)
                                             11: 全局非或(~|)
-0x0000_0002    R/W           load_num:       逻辑分析仪捕获的总信号突发长度（32位单位，例：load_num=1，则总深度为8）
-0x0000_0003    R/W           pre_load_num:   逻辑分析仪捕获的信号预存储突发长度（32位单位，例：pre_load_num=0，则预存储深度为4.）
-0x0000_0010 - 0x0000_0017 R/W [5:0] 信号M的触发操作符，共8路
+0x0000_0002    R/W           load_num:       逻辑分析仪捕获的总信号突发长度(32位单位，例：load_num=1，channel_div=0x2, 则总深度为(load_num+1)*(4)=8)
+0x0000_0003    R/W           pre_load_num:   逻辑分析仪捕获的信号预存储突发长度(32位单位，例：pre_load_num=0，channel_div=0x2, 则预存储深度为4.)
+                                             !!注意：pre_load_num的值必须小于load_num，否则会导致逻辑分析仪无法正常工作。
+0x0000_0004    R/W           channel_div:    逻辑分析仪有效通道数，有效值为0x0(一路), 0x1(二路), 0x2(四路), 0x3(八路), 0x04(十六路), 0x05(三十二路)
+                                             例：当通道数设置为0x2时，digital_in[0] ~ digital_in[3]存储至DDR内，32位数据宽度的DDR内存中每个数据存储8个时间单位的信号。
+                                                 当通道数设置为0x3时，digital_in[0] ~ digital_in[7]存储至DDR内，32位数据宽度的DDR内存中每个数据存储4个时间单位的信号。
+                                                 当通道数设置为0x5时，digital_in[0] ~ digital_in[31]存储至DDR内，32位数据宽度的DDR内存中每个数据存储1个时间单位的信号。
+0x0000_0010 - 0x0000_002F R/W [5:0] 信号M的触发操作符，共32路
                               [5:3] M's Operator: 000 ==
                                                   001 !=
                                                   010 <
@@ -74,6 +79,7 @@ assign ANALYZER_SLAVE_RSTN = analyzer_rstn_sync;
 reg trig_force;
 reg analyzer_on;
 reg [1:0] global_trig_mode;
+reg [7:0] channel_div;
 
 // inports wire
 reg         trig;       // 触发信号，##高电平##触发
@@ -83,8 +89,8 @@ wire        done;
 reg [31:0] load_num;
 reg [31:0] pre_load_num;
 // outports wire
-wire [8-1:0] multi_trig;
-reg [5:0] op[0:8-1]; // 触发操作符
+wire [32-1:0] multi_trig;
+reg [5:0] op[0:32-1]; // 触发操作符
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;
@@ -220,6 +226,7 @@ always @(*) begin
             32'h0000_0001    : ANALYZER_SLAVE_RD_DATA <= {30'b0,global_trig_mode};
             32'h0000_0002    : ANALYZER_SLAVE_RD_DATA <= load_num;
             32'h0000_0003    : ANALYZER_SLAVE_RD_DATA <= pre_load_num;
+            32'h0000_0004    : ANALYZER_SLAVE_RD_DATA <= {24'b0,channel_div};
             32'h0000_0010    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[0]};
             32'h0000_0011    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[1]};
             32'h0000_0012    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[2]};
@@ -228,6 +235,30 @@ always @(*) begin
             32'h0000_0015    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[5]};
             32'h0000_0016    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[6]};
             32'h0000_0017    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[7]};
+            32'h0000_0018    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[8]};
+            32'h0000_0019    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[9]};
+            32'h0000_001A    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[10]};
+            32'h0000_001B    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[11]};
+            32'h0000_001C    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[12]};
+            32'h0000_001D    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[13]};
+            32'h0000_001E    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[14]};
+            32'h0000_001F    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[15]};
+            32'h0000_0020    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[16]};
+            32'h0000_0021    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[17]};
+            32'h0000_0022    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[18]};
+            32'h0000_0023    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[19]};
+            32'h0000_0024    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[20]};
+            32'h0000_0025    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[21]};
+            32'h0000_0026    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[22]};
+            32'h0000_0027    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[23]};
+            32'h0000_0028    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[24]};
+            32'h0000_0029    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[25]};
+            32'h0000_002A    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[26]};
+            32'h0000_002B    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[27]};
+            32'h0000_002C    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[28]};
+            32'h0000_002D    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[29]};
+            32'h0000_002E    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[30]};
+            32'h0000_002F    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[31]};
             default          : ANALYZER_SLAVE_RD_DATA <= 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
         endcase
     end else ANALYZER_SLAVE_RD_DATA <= 0;
@@ -251,7 +282,8 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
         global_trig_mode <= 0;
         load_num <= 0;
         pre_load_num <= 0;
-        for(i=0;i<8;i=i+1) op[i] <= {3'b000,3'b010};
+        channel_div <= 0;
+        for(i=0;i<32;i=i+1) op[i] <= {3'b000,3'b010};
     end else if(ANALYZER_SLAVE_WR_DATA_VALID && ANALYZER_SLAVE_WR_DATA_READY)begin
         case(wr_addr)
             32'h0000_0000: begin
@@ -273,10 +305,13 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
                 pre_load_num[15: 8] <= (ANALYZER_SLAVE_WR_STRB[1])?(ANALYZER_SLAVE_WR_DATA[15: 8]):(pre_load_num[15: 8]);
                 pre_load_num[ 7: 0] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(pre_load_num[ 7: 0]);
             end
+            32'h0000_0004: begin
+                channel_div[ 7: 0] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(channel_div[ 7: 0]);
+            end
             default: begin
-                if(wr_addr[31:4] == 32'h0000_001) begin
-                    for(i=0;i<8;i=i+1) begin
-                        if(wr_addr[3:0] == i)
+                if(wr_addr[31:4] == 32'h0000_001 || wr_addr[31:4] == 32'h0000_002) begin
+                    for(i=0;i<32;i=i+1) begin
+                        if({wr_addr[7:4]-4'd1,wr_addr[3:0]} == i)
                             op[i] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[5:0]):(op[i]);
                     end
                 end
@@ -285,12 +320,11 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
     end else begin
         analyzer_on <= (trig)?(0):(analyzer_on);
         trig_force  <= 0;
-        for(i=0;i<8;i=i+1) op[i] <= op[i];
     end
 end
 
 genvar gen_i;
-generate for (gen_i = 0; gen_i < 8; gen_i++) begin : gen_Basic_trigger
+generate for (gen_i = 0; gen_i < 32; gen_i++) begin : gen_Basic_trigger
     Basic_trigger#((1)) u_Basic_trigger(clk, digital_in[gen_i], op[gen_i], 0, multi_trig[gen_i]);
 end
 endgenerate
@@ -317,6 +351,7 @@ Analyzer_datastore u_Analyzer_datastore(
 
     .load_num       ( load_num    ),
     .pre_load_num   ( pre_load_num),
+    .channel_div    ( channel_div ),
 
     .rd_clk         (rd_clk),
     .rd_data_ready  (rd_data_ready),

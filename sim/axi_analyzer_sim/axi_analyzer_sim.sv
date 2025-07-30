@@ -70,7 +70,7 @@ wire [(2**S_WIDTH-1):0]                    S_RD_DATA_READY;
 wire [0:(2**M_WIDTH-1)] [4:0] M_fifo_empty_flag;
 wire [0:(2**S_WIDTH-1)] [4:0] S_fifo_empty_flag;
 
-reg [7:0] digital_in;
+reg [31:0] digital_in;
 
 wire DMA1_rd_clk                 ;
 wire DMA1_capture_on             ;
@@ -116,20 +116,23 @@ initial begin
     #300 M0.send_wr_addr(3, 32'h10000003, 8'd0, 2'b00);
     #300 M0.send_wr_data(32'd100, 4'b1111);
 
-    #300 M0.send_wr_addr(3, 32'h10000012, 8'd0, 2'b00);
+    #300 M0.send_wr_addr(3, 32'h10000004, 8'd0, 2'b00);
+    #300 M0.send_wr_data(32'h05, 4'b1111);
+
+    #300 M0.send_wr_addr(3, 32'h10000010, 8'd0, 2'b00);
     #300 M0.send_wr_data({26'b0, 3'b000, 3'b000}, 4'b1111); //[0]==0
 
-    #300 M0.send_wr_addr(3, 32'h10000013, 8'd0, 2'b00);
-    #300 M0.send_wr_data({26'b0, 3'b000, 3'b011}, 4'b1111); //[1]==up
+    #300 M0.send_wr_addr(3, 32'h10000011, 8'd0, 2'b00);
+    #300 M0.send_wr_data({26'b0, 3'b000, 3'b000}, 4'b1111); //[1]==0
+
+    #300 M0.send_wr_addr(3, 32'h10000012, 8'd0, 2'b00);
+    #300 M0.send_wr_data({26'b0, 3'b000, 3'b001}, 4'b1111); //[2]==1
+
+    #300 M0.send_wr_addr(3, 32'h10000020, 8'd0, 2'b00);
+    #300 M0.send_wr_data({26'b0, 3'b000, 3'b001}, 4'b1111); //[16]==1
 
     #8000 M0.send_wr_addr(2, 32'h10000000, 8'd0, 2'b00);
 	#300 M0.send_wr_data(32'h00000001, 4'b1111);
-
-	#5000000
-	#80000 M0.send_rd_addr(2, 32'h11000000, 8'd255, 2'b01);
-	#80000 M0.send_rd_addr(2, 32'h11000100, 8'd255, 2'b01);
-	#80000 M0.send_rd_addr(2, 32'h11000200, 8'd255, 2'b01);
-	#80000 M0.send_rd_addr(2, 32'h11000300, 8'd255, 2'b01);
 end
 
 axi_master_sim #(
@@ -429,16 +432,9 @@ grs_n = 1'b0;
 #5 grs_n = 1'b1;
 end
 
-initial digital_in = 8'h00;
+initial digital_in = 32'h0;
 always begin
-	#50000 digital_in[0] = $random;
-	#50000 digital_in[1] = $random;
-	#50000 digital_in[2] = $random;
-	#50000 digital_in[3] = $random;
-	#50000 digital_in[4] = $random;
-	#50000 digital_in[5] = $random;
-	#50000 digital_in[6] = $random;
-	#50000 digital_in[7] = $random;
+	#200 digital_in = digital_in + 1;
 end
 
 endmodule

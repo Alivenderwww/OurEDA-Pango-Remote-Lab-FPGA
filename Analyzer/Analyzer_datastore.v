@@ -1,7 +1,7 @@
 module Analyzer_datastore (
     input  wire          clk,
     input  wire          rstn,
-    input  wire [8-1:0]  digital_in,
+    input  wire [31-1:0] digital_in,
     input  wire          trig, 
     output wire          busy, 
     input  wire          start,
@@ -9,6 +9,7 @@ module Analyzer_datastore (
 
     input  wire [31:0]   load_num     ,
     input  wire [31:0]   pre_load_num ,
+    input  wire [7:0]    channel_div  ,
 
     input  wire          rd_clk       ,
     output wire          rd_data_ready,
@@ -31,6 +32,18 @@ reg [2:0] combine_cnt;
 wire empty;
 wire fifo_wr_en;
 reg fifo_rd_en;
+reg combine_done;
+always @(*) begin
+    case (channel_div)
+        8'h00: combine_done = (combine_cnt >= 32);  // 1 channel
+        8'h01: combine_done = (combine_cnt >= 16);  // 2 channels
+        8'h02: combine_done = (combine_cnt >= 8);   // 4 channels
+        8'h03: combine_done = (combine_cnt >= 4);   // 8 channels
+        8'h04: combine_done = (combine_cnt >= 2);   // 16 channels
+        8'h05: combine_done = (combine_cnt >= 1);   // 32 channels
+        default: combine_done = (combine_cnt >= 1);
+    endcase
+end
 
 always @(posedge clk or negedge rstn) begin
     if(~rstn) state <= ST_IDLE;
@@ -40,9 +53,9 @@ end
 always @(*) begin
     case (state)
         ST_IDLE   : next_state = (start                                                   )?(ST_PRELOAD):(ST_IDLE   );
-        ST_PRELOAD: next_state = ((combine_cnt >= 4) && (load_cnt >= pre_load_num)        )?(ST_WAIT   ):(ST_PRELOAD);
+        ST_PRELOAD: next_state = ((combine_done) && (load_cnt >= pre_load_num)        )?(ST_WAIT   ):(ST_PRELOAD);
         ST_WAIT   : next_state = (trig                                                    )?(ST_CAPTURE):(ST_WAIT   );
-        ST_CAPTURE: next_state = ((combine_cnt >= 4) && (load_cnt >= load_num)            )?(ST_READ   ):(ST_CAPTURE);
+        ST_CAPTURE: next_state = ((combine_done) && (load_cnt >= load_num)            )?(ST_READ   ):(ST_CAPTURE);
         ST_READ   : next_state = ((rd_data_ready)&&(rd_data_valid)&&(unload_cnt>=load_num))?(ST_DONE   ):(ST_READ   );
         ST_DONE   : next_state = (start                                                   )?(ST_PRELOAD):(ST_DONE   );
         default   : next_state = ST_IDLE;
@@ -59,7 +72,7 @@ end
 
 always @(posedge clk or negedge rstn) begin
     if(~rstn) load_cnt <= 0;
-    else if(combine_cnt >= 4) case (state)
+    else if(combine_done) case (state)
         ST_PRELOAD: load_cnt <= load_cnt + 1;
         ST_WAIT   : load_cnt <= load_cnt;
         ST_CAPTURE: load_cnt <= load_cnt + 1;
@@ -72,8 +85,16 @@ always @(posedge clk or negedge rstn) begin
         combine_cnt <= 0;
         digital_in_combine <= 0;
     end else if(state == ST_PRELOAD || state == ST_WAIT || state == ST_CAPTURE) begin
-        combine_cnt <= (combine_cnt >= 4)?(1):(combine_cnt + 1);
-        digital_in_combine <= {digital_in_combine[23:0], digital_in};
+        combine_cnt <= (combine_done)?(1):(combine_cnt + 1);
+        case (channel_div)
+            8'h00:   digital_in_combine <= {digital_in_combine[30:0], digital_in[   0]};  // 1 channel
+            8'h01:   digital_in_combine <= {digital_in_combine[29:0], digital_in[ 1:0]};  // 2 channels
+            8'h02:   digital_in_combine <= {digital_in_combine[27:0], digital_in[ 3:0]};  // 4 channels
+            8'h03:   digital_in_combine <= {digital_in_combine[23:0], digital_in[ 7:0]};  // 8 channels
+            8'h04:   digital_in_combine <= {digital_in_combine[15:0], digital_in[15:0]};  // 16 channels
+            8'h05:   digital_in_combine <= digital_in;   // 32 channels
+            default: digital_in_combine <= digital_in;
+        endcase
     end else begin
         combine_cnt <= 0;
         digital_in_combine <= 0;
@@ -88,13 +109,13 @@ always @(posedge clk or negedge rstn) begin
     else if(fifo_rd_en && (~empty) && (~fifo_rd_data_valid)) fifo_rd_data_valid <= 1'b1;
     else fifo_rd_data_valid <= fifo_rd_data_valid;
 end
-assign fifo_wr_en = (combine_cnt >= 4) && ((state == ST_PRELOAD) || (state == ST_WAIT) || (state == ST_CAPTURE));
+assign fifo_wr_en = (combine_done) && ((state == ST_PRELOAD) || (state == ST_WAIT) || (state == ST_CAPTURE));
 always @(*) begin
     if(empty) fifo_rd_en = 0;
     else if(~fifo_rd_data_valid) fifo_rd_en = 1;
     else case (state)
         ST_PRELOAD         : fifo_rd_en = 0;
-        ST_WAIT            : fifo_rd_en = (combine_cnt >= 4);
+        ST_WAIT            : fifo_rd_en = (combine_done);
         ST_CAPTURE, ST_READ: fifo_rd_en = (rd_data_ready) & (rd_data_valid);
         default            : fifo_rd_en = 0;
     endcase
