@@ -13,9 +13,6 @@ module udp(
     input        [47:0]  des_mac     ,
     input        [31:0]  board_ip    ,
     input        [47:0]  board_mac   ,
-    input        [47:0]  dec_mac     , //这是ARP解析后的目的MAC地址
-    input        [31:0]  dec_ip      , //这是ARP解析后的目的IP地址
-    input                arp_refresh ,
     //GMII接口
     input                gmii_rx_clk , //GMII接收数据时钟
     input                gmii_rx_dv  , //GMII输入数据有效信号
@@ -89,9 +86,6 @@ udp_tx u_udp_tx(
     .board_mac       (board_mac  ),
     .des_ip          (des_ip     ),
     .des_mac         (des_mac    ),
-    .dec_mac         (dec_mac    ),
-    .dec_ip          (dec_ip     ),
-    .arp_refresh     (arp_refresh),
     .timestamp_rst   (timestamp_rst)
 );
 

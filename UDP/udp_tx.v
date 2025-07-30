@@ -25,9 +25,6 @@ module udp_tx (
     output  reg  [7:0]   gmii_txd   /* synthesis PAP_MARK_DEBUG=”true” */, //GMII输出数据
     output  reg          crc_en     , //CRC开始校验使能
     output  reg          crc_clr    , //CRC数据复位信号
-    input        [47:0]  dec_mac    ,
-    input        [31:0]  dec_ip     ,
-    input                arp_refresh,
     input                timestamp_rst,
     input        [31:0]  des_ip   ,
     input        [47:0]  des_mac  ,

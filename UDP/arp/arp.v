@@ -19,7 +19,7 @@ module arp (
     output      [47:0]   dec_mac     ,
     output      [31:0]   dec_ip      ,
 
-    output               arp_refresh 
+    output               arp_valid 
 );
 
 //wire [31:0]   dec_ip  ; 
@@ -40,7 +40,7 @@ arp_rx arp_rx_inst (
     .board_ip(board_ip),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .refresh(arp_refresh)
+    .arp_valid(arp_valid)
   );
 
 arp_tx arp_tx_inst (
@@ -52,7 +52,7 @@ arp_tx arp_tx_inst (
     .board_mac(board_mac),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .arp_refresh(arp_refresh),
+    .arp_valid(arp_valid),
     .crc_data(crc_data),
     .crc_next(crc_next[31:24]),
     .crc_en(crc_en),
