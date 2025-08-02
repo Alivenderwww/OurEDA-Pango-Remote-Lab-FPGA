@@ -107,11 +107,11 @@ reg        sfprxtask/* synthesis PAP_MARK_DEBUG="1" */;
 reg [31:0] debugger_statue/* synthesis PAP_MARK_DEBUG="1" */;
 reg        trigdone_clear/* synthesis PAP_MARK_DEBUG="1" */;
 //fifo
-wire       sfpfifo_wren;
+wire       sfpfifo_wren/* synthesis PAP_MARK_DEBUG="1" */;
 wire sfpfifo_almostempty;
-wire sfpfifo_almostfull;
-wire sfpfifo_empty;
-wire sfpfifo_rden;
+wire sfpfifo_almostfull/* synthesis PAP_MARK_DEBUG="1" */;
+wire sfpfifo_empty/* synthesis PAP_MARK_DEBUG="1" */;
+wire sfpfifo_rden/* synthesis PAP_MARK_DEBUG="1" */;
 reg sfpfifo_rden_reg;
 reg rd_addr_ready_d0,rd_addr_ready_d1;
 always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
@@ -236,7 +236,7 @@ reg        task_rddelay;//延迟为了消除亚稳态
 reg        task_rdaddr;
 wire       txtask_rd;
 
-assign txtask_rd    = task_rdaddr && txtask_state       == IDLE && rdaddr[24] == 1;
+assign txtask_rd    = task_rdaddr && txtask_state    == IDLE && rdaddr[24] == 1;
 assign localtask_rd = task_rdaddr && localtask_state == IDLE && rdaddr[24] == 0;
 assign SLAVE_RD_BACK_ID = rdaddrid;
 always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
@@ -276,7 +276,7 @@ always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
     else task_rdaddr <= task_rdaddr;
 end
 //rddata
-reg [3:0] rddata_state;
+reg [3:0] rddata_state/* synthesis PAP_MARK_DEBUG="1" */;
 assign SLAVE_RD_DATA_VALID = localtask_state == HANDSHAKE ? rd_local_data_valid : rddata_state == 3 ? rd_fifo_data_valid : 1'b0;
 assign SLAVE_RD_DATA = localtask_state == HANDSHAKE ? debugger_statue : rddata_state == 3 ? sfpfifo_data : 32'b0;
 assign SLAVE_RD_DATA_LAST = localtask_state == HANDSHAKE ? rd_local_data_last : rddata_state == 3 ? sfpfifo_data_last : 1'b0;
@@ -297,7 +297,7 @@ always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
         sfpfifo_rden_reg <= 0;
         rddata_state <= rddata_state + 1;
     end
-    else if(rddata_state == 2 && sfpfifo_almostfull)begin
+    else if(rddata_state == 2 && (sfpfifo_almostfull || (~sfpfifo_wren)))begin
         rddata_state <= rddata_state + 1;
     end
     else if(rddata_state == 3 )begin

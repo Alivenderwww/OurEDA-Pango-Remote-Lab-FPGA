@@ -14,12 +14,12 @@ module udp(
     input        [31:0]  board_ip    ,
     input        [47:0]  board_mac   ,
     //GMII接口
-    input                gmii_rx_clk , //GMII接收数据时钟
-    input                gmii_rx_dv  , //GMII输入数据有效信号
-    input        [7:0]   gmii_rxd    , //GMII输入数据
-    input                gmii_tx_clk , //GMII发送数据时钟
-    output               gmii_tx_en  , //GMII输出数据有效信号
-    output       [7:0]   gmii_txd    , //GMII输出数据
+    input                gmii_rx_clk /* synthesis PAP_MARK_DEBUG="true" */, //GMII接收数据时钟
+    input                gmii_rx_dv  /* synthesis PAP_MARK_DEBUG="true" */, //GMII输入数据有效信号
+    input        [7:0]   gmii_rxd    /* synthesis PAP_MARK_DEBUG="true" */, //GMII输入数据
+    input                gmii_tx_clk /* synthesis PAP_MARK_DEBUG="true" */, //GMII发送数据时钟
+    output               gmii_tx_en  /* synthesis PAP_MARK_DEBUG="true" */, //GMII输出数据有效信号
+    output       [7:0]   gmii_txd    /* synthesis PAP_MARK_DEBUG="true" */, //GMII输出数据
     //用户接口
     output               rec_pkt_done, //以太网单包数据接收完成信号
     output               rec_en      , //以太网接收的数据使能信号
