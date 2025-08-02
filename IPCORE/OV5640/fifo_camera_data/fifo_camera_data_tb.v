@@ -59,7 +59,7 @@ localparam ASYN_FIFO_EN = "1" ; // @IPC bool
 
 localparam ALMOST_FULL_NUM = 32000 ; // @IPC int
 
-localparam ALMOST_EMPTY_NUM = 512 ; // @IPC int
+localparam ALMOST_EMPTY_NUM = 4096 ; // @IPC int
 
 localparam RST_VAL_EN = 0 ; // @IPC bool
 

@@ -90,6 +90,11 @@ initial begin
 #50000  BUS_RSTN = 1;
 end
 
+localparam STORE_OFFSET_ADDR = 32'h0010_0000;
+localparam CAPTURE_DATA_LENGTH = 32'd1024;
+localparam CAPTURE_DATA_PRELOAD = 32'd256;
+
+
 initial begin
     #300 M0.set_clk(5);
     #300 M2.set_clk(5);
@@ -111,10 +116,10 @@ initial begin
     #300 M0.send_wr_data({30'b0, 2'b00}, 4'b1111); //00: 全局与
 
     #300 M0.send_wr_addr(3, 32'h10000002, 8'd0, 2'b00);
-    #300 M0.send_wr_data(32'h00001000-1, 4'b1111);
+    #300 M0.send_wr_data(CAPTURE_DATA_LENGTH - 1, 4'b1111);
 
     #300 M0.send_wr_addr(3, 32'h10000003, 8'd0, 2'b00);
-    #300 M0.send_wr_data(32'd100, 4'b1111);
+    #300 M0.send_wr_data(CAPTURE_DATA_PRELOAD - 1, 4'b1111);
 
     #300 M0.send_wr_addr(3, 32'h10000004, 8'd0, 2'b00);
     #300 M0.send_wr_data(32'h05, 4'b1111);
@@ -172,8 +177,8 @@ axi_master_sim #(
 axi_master_write_dma M1(
 .clk                  (BUS_CLK             ),
 .rstn                 (BUS_RSTN             ),
-.START_WRITE_ADDR	  (32'h00000000),
-.END_WRITE_ADDR	      (32'h00001000-1),
+.START_WRITE_ADDR	  (STORE_OFFSET_ADDR),
+.END_WRITE_ADDR	      (STORE_OFFSET_ADDR + CAPTURE_DATA_LENGTH - 1),
 .rd_clk               (DMA1_rd_clk          ),
 .rd_capture_on		  (1'b1      ),
 .rd_capture_rst		  (1'b0      ),
@@ -314,10 +319,9 @@ DDR_axi_sim S0(
 );
 
 Analazer u_Analazer(
-	.clk                          	( BUS_CLK             ),
+	.clk                          	( DMA1_rd_clk         ),
 	.rstn                         	( BUS_RSTN            ),
 	.digital_in                   	( digital_in          ),
-	.rd_clk                         ( DMA1_rd_clk         ),
 	.rd_data_ready                  ( DMA1_rd_data_ready  ),
 	.rd_data_valid                  ( DMA1_rd_data_valid  ),
 	.rd_data                        ( DMA1_rd_data        ),

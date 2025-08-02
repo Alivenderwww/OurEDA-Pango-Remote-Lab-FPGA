@@ -3,10 +3,12 @@ module axi_udp_master #(
     parameter ADMIN_BOARD_MAC = 48'h12_34_56_78_9a_bc         ,
     parameter ADMIN_BOARD_IP  = {8'd192,8'd168,8'd0,8'd234}   ,
     parameter ADMIN_DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
-    parameter ADMIN_DES_IP    = {8'd169,8'd254,8'd103,8'd126} 
+    parameter ADMIN_DES_IP    = {8'd169,8'd254,8'd103,8'd126} ,
+    parameter RESET_ADDR      = 32'hF0F0F0F0 // Reset address
 )(
     input  wire        udp_in_rstn     , //连什么线？
     output wire        eth_rst_n       ,
+    output wire        SYSTEM_RESET    , //系统复位信号
 
     output wire [7:0]  udp_led         ,
     input  wire        timestamp_rst   , //时间戳复位信号
@@ -151,9 +153,10 @@ udp u_udp(
     .timestamp_rst (timestamp_rst   )
     );
 
-axi_udp_cmd axi_udp_cmd_inst(
+axi_udp_cmd #((RESET_ADDR))axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
     .rstn                (eth_rstn_sync       ),
+    .SYSTEM_RESET        (SYSTEM_RESET        ),
 
     .cmdled              (udp_led             ),    
 

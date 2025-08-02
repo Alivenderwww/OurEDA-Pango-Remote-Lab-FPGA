@@ -1,6 +1,9 @@
-module axi_udp_cmd  (
+module axi_udp_cmd  #(
+    parameter RESET_ADDR = 32'h0000_0000 //复位地址
+)(
     input  wire        gmii_rx_clk         /* synthesis PAP_MARK_DEBUG="true" */,//125M
     input  wire        rstn                ,
+    output wire        SYSTEM_RESET        ,
 
     output wire  [7:0]  cmdled              ,
     //___________________AXI接口_____________________//
@@ -114,6 +117,17 @@ wire[31:0] rddata_fifo_rd_data;
 assign cmd_fifo_wr_en  = udp_rx_en && ~wrdata_fifo_wr_en_reg;
 assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
+reg SYSTEM_RESET_TRIG;
+reg [10:0] SYSTEM_RESET_DELAY;
+wire SYSTEM_RESET = (SYSTEM_RESET_DELAY != 0);
+always @(posedge gmii_rx_clk or posedge SYSTEM_RESET_TRIG) begin
+    if(SYSTEM_RESET_TRIG) begin
+        SYSTEM_RESET_DELAY <= 1;
+    end else if(SYSTEM_RESET_DELAY != 0)begin
+        SYSTEM_RESET_DELAY <= SYSTEM_RESET_DELAY + 1;
+    end else SYSTEM_RESET_DELAY <= 0;
+end
+
 //debug
 assign cmdled = {3'b000, wraddr_fifo_empty, rdaddr_fifo_empty, wrback_fifo_empty, wrdata_fifo_empty, rddata_fifo_empty};
 reg [1:0] rdaddr_cnt;
@@ -225,6 +239,7 @@ always @(posedge gmii_rx_clk ) begin
         head_data <= 0;
         rdaddr_fifo_wr_data <= 0;
         head_rx_done <= 0;
+        SYSTEM_RESET_TRIG <= 0;
     end
     else begin
 //        cmd_fifo_rd_en <= 1'b0;
@@ -265,6 +280,7 @@ always @(posedge gmii_rx_clk ) begin
                 if(head_cnt == 3)begin//判断是读地址还是写地址
                     if(head_data[63:56] == 8'h00 && head_data[48] == 1)begin
                         wraddr_fifo_wr_data <= head_data;
+                        SYSTEM_RESET_TRIG <= (head_data[31:0] == RESET_ADDR);
                         wraddr_fifo_wr_en <= 1'b1;
                     end
                     else if(head_data[63:56] == 8'h00 && head_data[48] == 0)begin

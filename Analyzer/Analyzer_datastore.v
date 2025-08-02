@@ -10,8 +10,8 @@ module Analyzer_datastore (
     input  wire [31:0]   load_num     ,
     input  wire [31:0]   pre_load_num ,
     input  wire [7:0]    channel_div  ,
+    input  wire [7:0]    clock_div    , // 逻辑分析仪采样时钟分频系数
 
-    input  wire          rd_clk       ,
     output wire          rd_data_ready,
     input  wire          rd_data_valid,
     output wire [31:0]   rd_data      
@@ -28,20 +28,27 @@ localparam ST_READ       = 3'b100;
 localparam ST_DONE       = 3'b101;
 
 reg [31:0] digital_in_combine;
-reg [2:0] combine_cnt;
+reg [5:0] combine_cnt;
 wire empty;
 wire fifo_wr_en;
 reg fifo_rd_en;
 reg combine_done;
+reg [7:0] clock_div_cnt;
+wire clock_rise = (clock_div_cnt >= clock_div);
+always @(posedge clk or negedge rstn) begin
+    if(~rstn) clock_div_cnt <= 0;
+    else if(clock_div_cnt >= clock_div) clock_div_cnt <= 0;
+    else clock_div_cnt <= clock_div_cnt + 1;
+end
 always @(*) begin
     case (channel_div)
-        8'h00: combine_done = (combine_cnt >= 32);  // 1 channel
-        8'h01: combine_done = (combine_cnt >= 16);  // 2 channels
-        8'h02: combine_done = (combine_cnt >= 8);   // 4 channels
-        8'h03: combine_done = (combine_cnt >= 4);   // 8 channels
-        8'h04: combine_done = (combine_cnt >= 2);   // 16 channels
-        8'h05: combine_done = (combine_cnt >= 1);   // 32 channels
-        default: combine_done = (combine_cnt >= 1);
+        8'h00: combine_done   = (combine_cnt >= 32) & (clock_rise);  // 1 channel
+        8'h01: combine_done   = (combine_cnt >= 16) & (clock_rise);  // 2 channels
+        8'h02: combine_done   = (combine_cnt >= 8 ) & (clock_rise);   // 4 channels
+        8'h03: combine_done   = (combine_cnt >= 4 ) & (clock_rise);   // 8 channels
+        8'h04: combine_done   = (combine_cnt >= 2 ) & (clock_rise);   // 16 channels
+        8'h05: combine_done   = (combine_cnt >= 1 ) & (clock_rise);   // 32 channels
+        default: combine_done = (combine_cnt >= 1 ) & (clock_rise);
     endcase
 end
 
@@ -52,12 +59,26 @@ end
 
 always @(*) begin
     case (state)
-        ST_IDLE   : next_state = (start                                                   )?(ST_PRELOAD):(ST_IDLE   );
-        ST_PRELOAD: next_state = ((combine_done) && (load_cnt >= pre_load_num)        )?(ST_WAIT   ):(ST_PRELOAD);
+        ST_IDLE: begin
+            if(start) begin
+                if(trig) next_state = ST_CAPTURE;
+                else next_state = ST_PRELOAD;
+            end else next_state = ST_IDLE;  
+        end
+        ST_PRELOAD:begin
+            if(trig) next_state = ST_CAPTURE;
+            else if(combine_done && (load_cnt >= pre_load_num)) next_state = ST_WAIT;
+            else next_state = ST_PRELOAD;
+        end
         ST_WAIT   : next_state = (trig                                                    )?(ST_CAPTURE):(ST_WAIT   );
-        ST_CAPTURE: next_state = ((combine_done) && (load_cnt >= load_num)            )?(ST_READ   ):(ST_CAPTURE);
+        ST_CAPTURE: next_state = ((combine_done) && (load_cnt >= load_num)                )?(ST_READ   ):(ST_CAPTURE);
         ST_READ   : next_state = ((rd_data_ready)&&(rd_data_valid)&&(unload_cnt>=load_num))?(ST_DONE   ):(ST_READ   );
-        ST_DONE   : next_state = (start                                                   )?(ST_PRELOAD):(ST_DONE   );
+        ST_DONE   : begin
+            if(start) begin
+                if(trig) next_state = ST_CAPTURE;
+                else next_state = ST_PRELOAD;
+            end else next_state = ST_DONE;  
+        end
         default   : next_state = ST_IDLE;
     endcase
 end
@@ -72,12 +93,13 @@ end
 
 always @(posedge clk or negedge rstn) begin
     if(~rstn) load_cnt <= 0;
+    else if(state == ST_IDLE || state == ST_DONE) load_cnt <= 0;
     else if(combine_done) case (state)
         ST_PRELOAD: load_cnt <= load_cnt + 1;
         ST_WAIT   : load_cnt <= load_cnt;
         ST_CAPTURE: load_cnt <= load_cnt + 1;
         default   : load_cnt <= 0;
-    endcase
+    endcase else load_cnt <= load_cnt;
 end
 
 always @(posedge clk or negedge rstn) begin
@@ -85,16 +107,17 @@ always @(posedge clk or negedge rstn) begin
         combine_cnt <= 0;
         digital_in_combine <= 0;
     end else if(state == ST_PRELOAD || state == ST_WAIT || state == ST_CAPTURE) begin
-        combine_cnt <= (combine_done)?(1):(combine_cnt + 1);
-        case (channel_div)
-            8'h00:   digital_in_combine <= {digital_in_combine[30:0], digital_in[   0]};  // 1 channel
-            8'h01:   digital_in_combine <= {digital_in_combine[29:0], digital_in[ 1:0]};  // 2 channels
-            8'h02:   digital_in_combine <= {digital_in_combine[27:0], digital_in[ 3:0]};  // 4 channels
-            8'h03:   digital_in_combine <= {digital_in_combine[23:0], digital_in[ 7:0]};  // 8 channels
-            8'h04:   digital_in_combine <= {digital_in_combine[15:0], digital_in[15:0]};  // 16 channels
+        if(clock_rise) combine_cnt <= (combine_done)?(1):(combine_cnt + 1);
+        else combine_cnt <= combine_cnt;
+        if(clock_rise) case (channel_div)
+            8'h00:   digital_in_combine <= {digital_in[   0], digital_in_combine[31: 1]};  // 1 channel
+            8'h01:   digital_in_combine <= {digital_in[ 1:0], digital_in_combine[31: 2]};  // 2 channels
+            8'h02:   digital_in_combine <= {digital_in[ 3:0], digital_in_combine[31: 4]};  // 4 channels
+            8'h03:   digital_in_combine <= {digital_in[ 7:0], digital_in_combine[31: 8]};  // 8 channels
+            8'h04:   digital_in_combine <= {digital_in[15:0], digital_in_combine[31:16]};  // 16 channels
             8'h05:   digital_in_combine <= digital_in;   // 32 channels
             default: digital_in_combine <= digital_in;
-        endcase
+        endcase else digital_in_combine <= digital_in_combine;
     end else begin
         combine_cnt <= 0;
         digital_in_combine <= 0;
@@ -124,15 +147,14 @@ assign rd_data_ready = (fifo_rd_data_valid) && ((state == ST_READ) || (state == 
 assign busy = (state == ST_CAPTURE) || (state == ST_READ);
 assign done = (state == ST_DONE);
 analyzer_fifo u_analyzer_fifo (
-    .wr_clk       (clk          ),
-    .wr_rst       (~rstn         ),
+    .clk       (clk          ),
+    .rst       (~rstn         ),
+
     .wr_en        (fifo_wr_en),
     .wr_data      (digital_in_combine),
     .wr_full      (),
     .almost_full  (),
 
-    .rd_clk       (rd_clk       ),
-    .rd_rst       (~rstn        ),
     .rd_en        (fifo_rd_en   ),
     .rd_data      (rd_data      ),
     .rd_empty     (empty        ),

@@ -254,7 +254,7 @@ end
 always @(posedge clk or negedge jtag_rstn_sync) begin
     if(~jtag_rstn_sync) rd_addr <= 0;
     else if(JTAG_SLAVE_RD_ADDR_VALID && JTAG_SLAVE_RD_ADDR_READY) rd_addr <= JTAG_SLAVE_RD_ADDR;
-    else if(JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
+    else if((rd_addr_burst == 2'b01) && JTAG_SLAVE_RD_DATA_VALID && JTAG_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
 always @(posedge clk or negedge jtag_rstn_sync) begin

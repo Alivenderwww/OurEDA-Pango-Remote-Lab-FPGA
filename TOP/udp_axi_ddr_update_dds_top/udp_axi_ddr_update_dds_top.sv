@@ -24,7 +24,7 @@ output wire [7:0]  da_data      ,
 output wire        ad_clk       ,
 input  wire [7:0]  ad_data      ,
 // analyzer io
-input  wire [7:0]  digital_in   ,
+// input  wire [31:0] digital_in   ,
 output wire        test_capture0,
 output wire        test_capture1,
 //matrix control io
@@ -55,6 +55,23 @@ input  wire        CCD_PCLK,
 input  wire        CCD_VSYNC,
 input  wire        CCD_HSYNC,
 input  wire [7:0]  CCD_DATA,
+//hdmi in io
+input  wire        hdmi_in_clk,
+output wire        hdmi_in_rstn,
+input  wire        hdmi_in_hsync,
+input  wire        hdmi_in_vsync,
+input  wire[23:0]  hdmi_in_rgb,
+input  wire        hdmi_in_de,
+//hdmi out io
+output wire        hdmi_out_clk,
+input  wire        hdmi_out_rstn,
+output wire        hdmi_out_hsync,
+output wire        hdmi_out_vsync,
+output wire[23:0]  hdmi_out_rgb,
+output wire        hdmi_out_de,
+//hdmi control iic io
+output  wire       ddc_scl,
+inout   wire       ddc_sda,
 //eth io
 input  wire        rgmii_rxc    ,
 input  wire        rgmii_rx_ctl ,
@@ -83,6 +100,7 @@ output wire        mem_cas_n    ,
 output wire        mem_we_n     ,
 output wire [ 2:0] mem_ba       
 );
+wire SYSTEM_RESET;
 
 wire [31:0]  eeprom_host_ip  ;
 wire [47:0]  eeprom_host_mac ;
@@ -228,25 +246,56 @@ assign da_clk    = clk_10M;
 assign ad_clk    = clk_10M;
 
 assign eth_rst_n   = 1;
-wire sys_rstn    = (external_rstn) && (clk_lock);
-wire BUS_RSTN    = (external_rstn) && (clk_lock);
-wire udp_in_rstn = (external_rstn) && (clk_lock);
-wire led_rst_n   = (external_rstn) && (clk_lock);
-wire ddr_rst_n   = (external_rstn) && (clk_lock);
-wire jtag_rstn   = (external_rstn) && (clk_lock);
-wire ru_rstn     = (external_rstn) && (clk_lock);
+wire sys_rstn    = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire BUS_RSTN    = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire udp_in_rstn = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire led_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire ddr_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire jtag_rstn   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire ru_rstn     = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 
 wire OV_ccd_rstn;
 assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
+
+assign  hdmi_out_clk   = hdmi_in_clk;
+assign  hdmi_out_hsync = hdmi_in_hsync;
+assign  hdmi_out_vsync = hdmi_in_vsync;
+assign  hdmi_out_rgb   = hdmi_in_rgb;
+assign  hdmi_out_de    = hdmi_in_de;
+assign  hdmi_in_rstn  = sys_rstn;
+assign  hdmi_out_rstn = sys_rstn;
+
+hdmi_i2c hdmi_i2c_inst(
+ .sys_clk   (external_clk), //系统时钟
+ .sys_rst_n (sys_rstn    ), //复位信号
+ .cfg_done  (            ), //寄存器配置完成
+ .sccb_scl  (ddc_scl     ), //SCL
+ .sccb_sda  (ddc_sda     )  //SDA
+);
+
+
+reg [2:0] digital_in_delay;
+reg [31:0] digital_in;
+always @(posedge clk_5M or negedge BUS_RSTN) begin
+	if(~BUS_RSTN) digital_in <= 0;
+	else if(digital_in_delay == 3'b111) digital_in <= digital_in + 1;
+	else digital_in <= digital_in;
+end
+always @(posedge clk_5M or negedge BUS_RSTN) begin
+	if(~BUS_RSTN) digital_in_delay <= 0;
+	else digital_in_delay <= digital_in_delay + 1;
+end
 
 axi_udp_master #(
 	.ADMIN_BOARD_MAC 	(ADMIN_BOARD_MAC),
 	.ADMIN_BOARD_IP  	(ADMIN_BOARD_IP ),
 	.ADMIN_DES_MAC   	(ADMIN_DES_MAC  ),
-	.ADMIN_DES_IP    	(ADMIN_DES_IP   )
+	.ADMIN_DES_IP    	(ADMIN_DES_IP   ),
+	.RESET_ADDR         (32'hF0F0F0F0)
 )M0(
 	.udp_in_rstn                ( udp_in_rstn     ),
 	.eth_rst_n                  (                 ),
+	.SYSTEM_RESET			    ( SYSTEM_RESET     ),
 	.rgmii_rxc            	    ( rgmii_rxc       ),
 	.rgmii_rx_ctl         	    ( rgmii_rx_ctl    ),
 	.rgmii_rxd            	    ( rgmii_rxd       ),
@@ -292,7 +341,7 @@ axi_udp_master #(
 	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0])
 );
 
-ov5640_axi_master M1(
+ov_hdmi_axi_master M1(
 	.clk                  	( clk_120M              ),
 	.rstn                 	( sys_rstn              ),
 	.CCD_RSTN              	( CCD_RSTN              ),
@@ -300,6 +349,12 @@ ov5640_axi_master M1(
 	.CCD_VSYNC            	( CCD_VSYNC             ),
 	.CCD_HSYNC            	( CCD_HSYNC             ),
 	.CCD_DATA             	( CCD_DATA              ),
+	.hdmi_in_clk		 	( hdmi_in_clk      ),
+	.hdmi_in_rstn		 	( hdmi_in_rstn     ),
+	.hdmi_in_hsync		 	( hdmi_in_hsync    ),
+	.hdmi_in_vsync		 	( hdmi_in_vsync    ),
+	.hdmi_in_de		 	    ( hdmi_in_de       ),
+	.hdmi_in_rgb 		 	( hdmi_in_rgb      ),
 	.START_WRITE_ADDR      	( DMA0_START_WRITE_ADDR ),//START_ADDR[0]       
 	.END_WRITE_ADDR         ( DMA0_END_WRITE_ADDR   ),//((640*480)*16)/32   
 	.capture_on		    	( DMA0_capture_on       ),
@@ -384,38 +439,38 @@ axi_master_write_dma M3(
 	.rd_clk               (DMA1_rd_clk          ),
 	.rd_capture_on		  (DMA1_capture_on      ),
 	.rd_capture_rst		  (DMA1_capture_rst     ),
-	.rd_data_ready        (DMA1_rd_data_ready),
-	.rd_data_valid        (DMA1_rd_data_valid),
-	.rd_data              (DMA1_rd_data      ),
-    .MASTER_CLK           (M_CLK          [3]),
-    .MASTER_RSTN          (M_RSTN         [3]),
-    .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [3]),
-    .MASTER_WR_ADDR       (M_WR_ADDR      [3]),
-    .MASTER_WR_ADDR_LEN   (M_WR_ADDR_LEN  [3]),
-    .MASTER_WR_ADDR_BURST (M_WR_ADDR_BURST[3]),
-    .MASTER_WR_ADDR_VALID (M_WR_ADDR_VALID[3]),
-    .MASTER_WR_ADDR_READY (M_WR_ADDR_READY[3]),
-    .MASTER_WR_DATA       (M_WR_DATA      [3]),
-    .MASTER_WR_STRB       (M_WR_STRB      [3]),
-    .MASTER_WR_DATA_LAST  (M_WR_DATA_LAST [3]),
-    .MASTER_WR_DATA_VALID (M_WR_DATA_VALID[3]),
-    .MASTER_WR_DATA_READY (M_WR_DATA_READY[3]),
-    .MASTER_WR_BACK_ID    (M_WR_BACK_ID   [3]),
-    .MASTER_WR_BACK_RESP  (M_WR_BACK_RESP [3]),
-    .MASTER_WR_BACK_VALID (M_WR_BACK_VALID[3]),
-    .MASTER_WR_BACK_READY (M_WR_BACK_READY[3]),
-    .MASTER_RD_ADDR_ID    (M_RD_ADDR_ID   [3]),
-    .MASTER_RD_ADDR       (M_RD_ADDR      [3]),
-    .MASTER_RD_ADDR_LEN   (M_RD_ADDR_LEN  [3]),
-    .MASTER_RD_ADDR_BURST (M_RD_ADDR_BURST[3]),
-    .MASTER_RD_ADDR_VALID (M_RD_ADDR_VALID[3]),
-    .MASTER_RD_ADDR_READY (M_RD_ADDR_READY[3]),
-    .MASTER_RD_BACK_ID    (M_RD_BACK_ID   [3]),
-    .MASTER_RD_DATA       (M_RD_DATA      [3]),
-    .MASTER_RD_DATA_RESP  (M_RD_DATA_RESP [3]),
-    .MASTER_RD_DATA_LAST  (M_RD_DATA_LAST [3]),
-    .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[3]),
-    .MASTER_RD_DATA_READY (M_RD_DATA_READY[3])
+	.rd_data_ready        (DMA1_rd_data_ready   ),
+	.rd_data_valid        (DMA1_rd_data_valid   ),
+	.rd_data              (DMA1_rd_data         ),
+    .MASTER_CLK           (M_CLK          [3]   ),
+    .MASTER_RSTN          (M_RSTN         [3]   ),
+    .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [3]   ),
+    .MASTER_WR_ADDR       (M_WR_ADDR      [3]   ),
+    .MASTER_WR_ADDR_LEN   (M_WR_ADDR_LEN  [3]   ),
+    .MASTER_WR_ADDR_BURST (M_WR_ADDR_BURST[3]   ),
+    .MASTER_WR_ADDR_VALID (M_WR_ADDR_VALID[3]   ),
+    .MASTER_WR_ADDR_READY (M_WR_ADDR_READY[3]   ),
+    .MASTER_WR_DATA       (M_WR_DATA      [3]   ),
+    .MASTER_WR_STRB       (M_WR_STRB      [3]   ),
+    .MASTER_WR_DATA_LAST  (M_WR_DATA_LAST [3]   ),
+    .MASTER_WR_DATA_VALID (M_WR_DATA_VALID[3]   ),
+    .MASTER_WR_DATA_READY (M_WR_DATA_READY[3]   ),
+    .MASTER_WR_BACK_ID    (M_WR_BACK_ID   [3]   ),
+    .MASTER_WR_BACK_RESP  (M_WR_BACK_RESP [3]   ),
+    .MASTER_WR_BACK_VALID (M_WR_BACK_VALID[3]   ),
+    .MASTER_WR_BACK_READY (M_WR_BACK_READY[3]   ),
+    .MASTER_RD_ADDR_ID    (M_RD_ADDR_ID   [3]   ),
+    .MASTER_RD_ADDR       (M_RD_ADDR      [3]   ),
+    .MASTER_RD_ADDR_LEN   (M_RD_ADDR_LEN  [3]   ),
+    .MASTER_RD_ADDR_BURST (M_RD_ADDR_BURST[3]   ),
+    .MASTER_RD_ADDR_VALID (M_RD_ADDR_VALID[3]   ),
+    .MASTER_RD_ADDR_READY (M_RD_ADDR_READY[3]   ),
+    .MASTER_RD_BACK_ID    (M_RD_BACK_ID   [3]   ),
+    .MASTER_RD_DATA       (M_RD_DATA      [3]   ),
+    .MASTER_RD_DATA_RESP  (M_RD_DATA_RESP [3]   ),
+    .MASTER_RD_DATA_LAST  (M_RD_DATA_LAST [3]   ),
+    .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[3]   ),
+    .MASTER_RD_DATA_READY (M_RD_DATA_READY[3]   )
 );
 
 slave_ddr3 S0(
@@ -816,10 +871,9 @@ dso_axi_slave #(
 );
 
 Analazer S9(
-	.clk                          	( clk_5M              ),
+	.clk                          	( DMA1_rd_clk         ),
 	.rstn                         	( sys_rstn            ),
-	.digital_in                   	( digital_in          ),
-	.rd_clk					  	    ( DMA1_rd_clk         ),
+	.digital_in                   	( {3'b0,hdmi_in_rgb,hdmi_in_de,hdmi_in_vsync,hdmi_in_hsync,hdmi_in_rstn,hdmi_in_clk}),
 	.rd_data_ready			 	    ( DMA1_rd_data_ready  ),
 	.rd_data_valid			 	    ( DMA1_rd_data_valid  ),
 	.rd_data				        ( DMA1_rd_data        ),

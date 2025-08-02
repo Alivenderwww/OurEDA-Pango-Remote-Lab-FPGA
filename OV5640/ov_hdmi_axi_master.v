@@ -1,4 +1,4 @@
-module ov5640_axi_master(
+module ov_hdmi_axi_master(
     input wire        clk,
     input wire        rstn,
 
@@ -8,6 +8,14 @@ module ov5640_axi_master(
     input  wire       CCD_VSYNC,
     input  wire       CCD_HSYNC, //原理图把HREF和HSYNC搞混了
     input  wire [7:0] CCD_DATA,
+
+    //hdmi interface
+    input  wire        hdmi_in_clk,
+    input  wire        hdmi_in_rstn,
+    input  wire        hdmi_in_hsync,
+    input  wire        hdmi_in_vsync,
+    input  wire[23:0]  hdmi_in_rgb,
+    input  wire        hdmi_in_de,
 
     //input base and end address
     input  wire [31:0] START_WRITE_ADDR,
@@ -48,19 +56,22 @@ module ov5640_axi_master(
     input  wire         MASTER_RD_DATA_VALID,
     output wire         MASTER_RD_DATA_READY);
 
-wire ov_rstn_sync;
-rstn_sync rstn_sync_ov(clk, rstn, ov_rstn_sync);
+wire ov_hdmi_rstn_sync;
+rstn_sync rstn_sync_ov_hdmi(clk, rstn, ov_hdmi_rstn_sync);
 
 wire rd_clk;
-wire rd_data_ready;
+wire rd_data_ready ,ov_rd_data_ready, hdmi_rd_data_ready;
 wire rd_data_valid;
-wire [31:0] rd_data;
+wire [31:0] rd_data, ov_rd_data, hdmi_rd_data;
+
+assign rd_data_ready = hdmi_rd_data_ready;
+assign rd_data = hdmi_rd_data;
 
 axi_master_write_dma u_axi_master_write_dma(
 	.START_WRITE_ADDR     	( START_WRITE_ADDR      ),
 	.END_WRITE_ADDR       	( END_WRITE_ADDR        ),
 	.clk                  	( clk                   ),
-	.rstn                 	( ov_rstn_sync          ),
+	.rstn                 	( ov_hdmi_rstn_sync     ),
 	.rd_clk               	( rd_clk                ),
 	.rd_capture_on        	( capture_on            ),
 	.rd_capture_rst       	( capture_rst           ),
@@ -101,7 +112,7 @@ axi_master_write_dma u_axi_master_write_dma(
 wire trans_once_done = MASTER_WR_DATA_LAST && MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY;
 ov56450_data_store u_ov56450_data_store(
 	.clk          	( rd_clk        ),
-	.rstn         	( ov_rstn_sync  ),
+	.rstn         	( ov_hdmi_rstn_sync),
 	.CCD_RSTN      	( CCD_RSTN      ),
 	.CCD_PCLK     	( CCD_PCLK      ),
 	.CCD_VSYNC    	( CCD_VSYNC     ),
@@ -112,8 +123,23 @@ ov56450_data_store u_ov56450_data_store(
     .expect_height  ( expect_height ),
     .trans_once_done( trans_once_done),
 	.rd_data_valid  ( rd_data_valid ),
-    .rd_data_ready  ( rd_data_ready ),
-	.rd_data 	    ( rd_data       )
+    .rd_data_ready  ( ov_rd_data_ready ),
+	.rd_data 	    ( ov_rd_data       )
+);
+
+hdmi_data_store u_hdmi_data_store(
+	.clk          	( rd_clk            ),
+	.rstn         	( ov_hdmi_rstn_sync ),
+    .hdmi_in_clk    ( hdmi_in_clk       ),
+    .hdmi_in_rstn   ( hdmi_in_rstn      ),
+    .hdmi_in_href   ( hdmi_in_de        ),
+    .hdmi_in_vsync  ( hdmi_in_vsync     ),
+    .hdmi_in_rgb    ( hdmi_in_rgb       ),
+    .capture_on  	( capture_on        ),
+    .trans_once_done( trans_once_done   ),
+	.rd_data_valid  ( rd_data_valid     ),
+    .rd_data_ready  ( hdmi_rd_data_ready),
+	.rd_data 	    ( hdmi_rd_data 	    )
 );
 
 

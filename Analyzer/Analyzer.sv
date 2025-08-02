@@ -3,7 +3,6 @@ module Analazer (
     input  wire rstn,
     input  wire [32-1:0] digital_in, // 输入数字信号
 
-    input  wire              rd_clk,
     output logic             rd_data_ready,
     input  logic             rd_data_valid,
     output logic [31:0]      rd_data,
@@ -55,6 +54,8 @@ module Analazer (
                                              例：当通道数设置为0x2时，digital_in[0] ~ digital_in[3]存储至DDR内，32位数据宽度的DDR内存中每个数据存储8个时间单位的信号。
                                                  当通道数设置为0x3时，digital_in[0] ~ digital_in[7]存储至DDR内，32位数据宽度的DDR内存中每个数据存储4个时间单位的信号。
                                                  当通道数设置为0x5时，digital_in[0] ~ digital_in[31]存储至DDR内，32位数据宽度的DDR内存中每个数据存储1个时间单位的信号。
+0x0000_0005    R/W           clock_div:     逻辑分析仪采样时钟分频系数，0x0表示不分频，0x1表示分频2，0x2表示分频4，0x3表示分频8，以此类推。
+                                             例：当clock_div=0x2时，逻辑分析仪采样时钟为系统时钟/4。
 0x0000_0010 - 0x0000_002F R/W [5:0] 信号M的触发操作符，共32路
                               [5:3] M's Operator: 000 ==
                                                   001 !=
@@ -80,6 +81,7 @@ reg trig_force;
 reg analyzer_on;
 reg [1:0] global_trig_mode;
 reg [7:0] channel_div;
+reg [7:0] clock_div; // 逻辑分析仪采样时钟分频系数
 
 // inports wire
 reg         trig;       // 触发信号，##高电平##触发
@@ -227,6 +229,7 @@ always @(*) begin
             32'h0000_0002    : ANALYZER_SLAVE_RD_DATA <= load_num;
             32'h0000_0003    : ANALYZER_SLAVE_RD_DATA <= pre_load_num;
             32'h0000_0004    : ANALYZER_SLAVE_RD_DATA <= {24'b0,channel_div};
+            32'h0000_0005    : ANALYZER_SLAVE_RD_DATA <= {24'b0,clock_div};
             32'h0000_0010    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[0]};
             32'h0000_0011    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[1]};
             32'h0000_0012    : ANALYZER_SLAVE_RD_DATA <= {26'b0,op[2]};
@@ -282,7 +285,8 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
         global_trig_mode <= 0;
         load_num <= 0;
         pre_load_num <= 0;
-        channel_div <= 0;
+        channel_div <= 3;
+        clock_div <= 0;
         for(i=0;i<32;i=i+1) op[i] <= {3'b000,3'b010};
     end else if(ANALYZER_SLAVE_WR_DATA_VALID && ANALYZER_SLAVE_WR_DATA_READY)begin
         case(wr_addr)
@@ -306,7 +310,10 @@ always @(posedge clk or negedge analyzer_rstn_sync) begin
                 pre_load_num[ 7: 0] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(pre_load_num[ 7: 0]);
             end
             32'h0000_0004: begin
-                channel_div[ 7: 0] <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(channel_div[ 7: 0]);
+                channel_div <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(channel_div);
+            end
+            32'h0000_0005: begin
+                clock_div <= (ANALYZER_SLAVE_WR_STRB[0])?(ANALYZER_SLAVE_WR_DATA[ 7: 0]):(clock_div);
             end
             default: begin
                 if(wr_addr[31:4] == 32'h0000_001 || wr_addr[31:4] == 32'h0000_002) begin
@@ -352,8 +359,8 @@ Analyzer_datastore u_Analyzer_datastore(
     .load_num       ( load_num    ),
     .pre_load_num   ( pre_load_num),
     .channel_div    ( channel_div ),
+    .clock_div      ( clock_div   ),
 
-    .rd_clk         (rd_clk),
     .rd_data_ready  (rd_data_ready),
     .rd_data_valid  (rd_data_valid),
     .rd_data        (rd_data)

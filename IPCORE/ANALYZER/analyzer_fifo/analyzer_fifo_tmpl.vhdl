@@ -8,14 +8,12 @@
 
 COMPONENT analyzer_fifo
   PORT (
-    wr_clk : IN STD_LOGIC;
-    wr_rst : IN STD_LOGIC;
+    clk : IN STD_LOGIC;
+    rst : IN STD_LOGIC;
     wr_en : IN STD_LOGIC;
     wr_data : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     wr_full : OUT STD_LOGIC;
     almost_full : OUT STD_LOGIC;
-    rd_clk : IN STD_LOGIC;
-    rd_rst : IN STD_LOGIC;
     rd_en : IN STD_LOGIC;
     rd_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     rd_empty : OUT STD_LOGIC;
@@ -26,14 +24,12 @@ END COMPONENT;
 
 the_instance_name : analyzer_fifo
   PORT MAP (
-    wr_clk => wr_clk,
-    wr_rst => wr_rst,
+    clk => clk,
+    rst => rst,
     wr_en => wr_en,
     wr_data => wr_data,
     wr_full => wr_full,
     almost_full => almost_full,
-    rd_clk => rd_clk,
-    rd_rst => rd_rst,
     rd_en => rd_en,
     rd_data => rd_data,
     rd_empty => rd_empty,

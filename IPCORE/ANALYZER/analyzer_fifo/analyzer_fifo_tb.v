@@ -25,7 +25,7 @@ localparam POWER_OPT = 0 ; // @IPC bool
 
 localparam RESET_TYPE = "ASYNC" ; // @IPC enum SYNC,ASYNC
 
-localparam FIFO_TYPE = "ASYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
+localparam FIFO_TYPE = "SYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
 
 localparam SAMEWIDTH_EN = 1 ; // @IPC bool
 
@@ -33,13 +33,13 @@ localparam WR_BYTE_EN = 0 ; // @IPC bool
 
 localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
-localparam WR_DEPTH_WIDTH = 12 ; // @IPC int 9,20
+localparam WR_DEPTH_WIDTH = 13 ; // @IPC int 9,20
 
 localparam WR_DATA_WIDTH = 32 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 2,128
 
-localparam RD_DEPTH_WIDTH = 12 ; // @IPC int 9,20
+localparam RD_DEPTH_WIDTH = 13 ; // @IPC int 9,20
 
 localparam RD_DATA_WIDTH = 32 ; // @IPC int 1,1152
 
@@ -55,7 +55,7 @@ localparam FULL_WL_EN = 0 ; // @IPC bool
 
 localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
-localparam ASYN_FIFO_EN = "1" ; // @IPC bool
+localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
 localparam ALMOST_FULL_NUM = 1020 ; // @IPC int
 
@@ -258,20 +258,17 @@ GTP_GRS GRS_INST(
 
 analyzer_fifo U_analyzer_fifo (
 
+    .clk            ( clk               ) ,
+    .rst            ( tb_rst            ) ,
+
     .wr_data        ( tb_wrdata         ) ,
     .wr_en          ( tb_wr_en          ) ,
-
-    .wr_clk         ( clk               ) ,
-    .wr_rst         ( tb_rst            ) ,
 
     .wr_full        ( tb_wr_full        ) ,
 
     .almost_full    ( tb_almost_full    ) ,
     .rd_data        ( tb_rddata         ) ,
     .rd_en          ( tb_rd_en          ) ,
-
-    .rd_clk         ( clk               ) ,
-    .rd_rst         ( tb_rst            ) ,
 
     .rd_empty       ( tb_rd_empty       ) ,
 
