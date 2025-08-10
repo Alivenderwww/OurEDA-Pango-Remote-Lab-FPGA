@@ -44,7 +44,7 @@ localparam  st_crc       = 7'b100_0000; //发送CRC校验值
 localparam  ETH_TYPE      = 16'h0800  ;  //以太网协议类型 IP协议
 localparam  SOURCE_PORT   = 16'd1234; //源端口号
 localparam  DEST_PORT_MIN = 16'd1234; //目的端口号范围最小值
-localparam  DEST_PORT_MAX = 16'd1239; //目的端口号范围最大值
+localparam  DEST_PORT_MAX = 16'd1244; //目的端口号范围最大值
 //以太网数据最小46个字节，IP首部20个字节+UDP首部8个字节
 //所以数据至少46-20-8=18个字节
 localparam  MIN_DATA_NUM = 16'd18 - 16'd4    ; //考虑时间戳4字节

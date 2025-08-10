@@ -198,7 +198,7 @@ end
 always @(posedge clk or negedge analyzer_rstn_sync) begin
     if(~analyzer_rstn_sync) rd_addr <= 0;
     else if(ANALYZER_SLAVE_RD_ADDR_VALID && ANALYZER_SLAVE_RD_ADDR_READY) rd_addr <= ANALYZER_SLAVE_RD_ADDR;
-    else if(ANALYZER_SLAVE_RD_DATA_VALID && ANALYZER_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
+    else if((rd_addr_burst == 2'b01) && ANALYZER_SLAVE_RD_DATA_VALID && ANALYZER_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
 always @(posedge clk or negedge analyzer_rstn_sync) begin
