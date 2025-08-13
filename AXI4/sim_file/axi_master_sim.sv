@@ -51,7 +51,15 @@ output logic         MASTER_RD_DATA_READY
 //     send_rd_addr(2'b00, 32'h00000000, 8'd255, 2'b01); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型1
 //     send_wr_data(32'h00000000, 4'b1111);              //写数据通道，起始数据0，每32位写选通4'b1111。自动按照先前发的地址线顺序发送数据。
 //     send_rd_addr(2'b00, 32'h00010000, 8'd255, 2'b01); //读地址通道，ID0，起始地址0x00000000，突发长度255，突发类型1
-//     MASTER自动处理读数据通道，写响应通道
+//     MASTER自动处理读数据通道，写响应通道，并将读数据暂存到队列中
+//     
+//     // 从读数据队列中获取数据的示例
+//     reg [31:0] read_data;
+//     reg [ID_WIDTH-1:0] read_id;
+//     reg [1:0] read_resp;
+//     reg data_valid;
+//     get_rd_data_from_queue(read_data, read_id, read_resp, data_valid); //从队列获取第一个读数据
+//     check_rd_data_queue_status(queue_cnt, queue_empty, queue_full);    //检查队列状态
 // end
 ///////////////////////////////////////////////////////////////
 
@@ -104,9 +112,21 @@ reg [8+ID_WIDTH-1:0] rd_channel_buff[2**BUFF_WIDTH-1:0];
 reg [BUFF_WIDTH:0] rd_channel_wrptr, rd_channel_rdptr;
 wire rd_channel_buff_full  = ((rd_channel_wrptr ^ rd_channel_rdptr) == {1'b1,{(BUFF_WIDTH-1){1'b0}}});
 wire rd_channel_buff_empty = (rd_channel_wrptr == rd_channel_rdptr);
+
+// 读数据队列 - 暂存从slave返回的数据
+localparam RD_DATA_QUEUE_WIDTH = 8;
+reg [31:0] rd_data_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
+reg [ID_WIDTH-1:0] rd_data_id_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
+reg [1:0] rd_data_resp_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
+reg [RD_DATA_QUEUE_WIDTH:0] rd_data_queue_wrptr, rd_data_queue_rdptr;
+wire rd_data_queue_full  = ((rd_data_queue_wrptr ^ rd_data_queue_rdptr) == {1'b1,{(RD_DATA_QUEUE_WIDTH-1){1'b0}}});
+wire rd_data_queue_empty = (rd_data_queue_wrptr == rd_data_queue_rdptr);
+
 initial begin
     rd_channel_wrptr = 0;
     rd_channel_rdptr = 0;
+    rd_data_queue_wrptr = 0;
+    rd_data_queue_rdptr = 0;
 end
 always @(posedge MASTER_CLK) begin
     if(MASTER_RD_ADDR_VALID && MASTER_RD_ADDR_READY)begin
@@ -132,6 +152,21 @@ always @(posedge MASTER_CLK) begin
     end
 end
 
+// 暂存所有读数据到队列中
+always @(posedge MASTER_CLK) begin
+    if(MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY) begin
+        if(rd_data_queue_full) begin
+            $display("%m: at time %0t ERROR: Read data queue is full, data lost: %h", $time, MASTER_RD_DATA);
+        end else begin
+            rd_data_queue[rd_data_queue_wrptr[RD_DATA_QUEUE_WIDTH-1:0]] <= MASTER_RD_DATA;
+            rd_data_id_queue[rd_data_queue_wrptr[RD_DATA_QUEUE_WIDTH-1:0]] <= MASTER_RD_BACK_ID;
+            rd_data_resp_queue[rd_data_queue_wrptr[RD_DATA_QUEUE_WIDTH-1:0]] <= MASTER_RD_DATA_RESP;
+            rd_data_queue_wrptr <= rd_data_queue_wrptr + 1;
+            $display("%m: at time %0t INFO: Read data stored to queue: data=%h, id=%b, resp=%b", $time, MASTER_RD_DATA, MASTER_RD_BACK_ID, MASTER_RD_DATA_RESP);
+        end
+    end
+end
+
 /*
 设置MASTER的读数据通道READY能力
 rd_data_capcity为MASTER读数据接收能力，31为最强（ready始终拉高），越小ready随机拉低的时间越长，0为最低（关闭通道）
@@ -152,6 +187,48 @@ initial wr_data_capcity = 31;
 task automatic set_wr_data_channel;
     input [4:0] capcity_in;
     wr_data_capcity = capcity_in;
+endtask
+
+/*
+从读数据队列中获取第一个数据
+返回数据，ID，RESP。如果队列为空，返回值无效并报告错误。
+*/
+task automatic get_rd_data_from_queue;
+    output [31:0] data_out;
+    output [ID_WIDTH-1:0] id_out;
+    output [1:0] resp_out;
+    output reg valid_out;
+    begin
+        if(rd_data_queue_empty) begin
+            $display("%m: at time %0t ERROR: Read data queue is empty, no data available.", $time);
+            data_out = 32'hXXXXXXXX;
+            id_out = {ID_WIDTH{1'bx}};
+            resp_out = 2'bxx;
+            valid_out = 0;
+        end else begin
+            data_out = rd_data_queue[rd_data_queue_rdptr[RD_DATA_QUEUE_WIDTH-1:0]];
+            id_out = rd_data_id_queue[rd_data_queue_rdptr[RD_DATA_QUEUE_WIDTH-1:0]];
+            resp_out = rd_data_resp_queue[rd_data_queue_rdptr[RD_DATA_QUEUE_WIDTH-1:0]];
+            valid_out = 1;
+            rd_data_queue_rdptr <= rd_data_queue_rdptr + 1;
+            $display("%m: at time %0t INFO: Read data retrieved from queue: data=%h, id=%b, resp=%b", $time, data_out, id_out, resp_out);
+        end
+    end
+endtask
+
+/*
+检查读数据队列状态
+*/
+task automatic check_rd_data_queue_status;
+    output reg [RD_DATA_QUEUE_WIDTH:0] queue_count;
+    output reg queue_empty_status;
+    output reg queue_full_status;
+    begin
+        queue_count = rd_data_queue_wrptr - rd_data_queue_rdptr;
+        queue_empty_status = rd_data_queue_empty;
+        queue_full_status = rd_data_queue_full;
+        $display("%m: at time %0t INFO: Read data queue status - count=%d, empty=%b, full=%b", $time, queue_count, queue_empty_status, queue_full_status);
+    end
 endtask
 
 /*

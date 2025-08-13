@@ -24,7 +24,6 @@ module axi_master_arbiter #(
 
 reg        wr_channel_lock;
 reg        rd_addr_channel_lock;
-reg        wr_resp_lock;
 
 logic [M_WIDTH-1:0] cu_wr_master_sel;
 logic [M_WIDTH-1:0] cu_rd_addr_master_sel;

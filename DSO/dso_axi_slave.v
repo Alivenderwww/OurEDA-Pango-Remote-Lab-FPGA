@@ -271,7 +271,7 @@ end
 always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
     if(~DSO_SLAVE_RSTN_SYNC) rd_addr <= 0;
     else if(DSO_SLAVE_RD_ADDR_VALID && DSO_SLAVE_RD_ADDR_READY) rd_addr <= DSO_SLAVE_RD_ADDR;
-    else if(DSO_SLAVE_RD_DATA_VALID && DSO_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
+    else if((rd_addr_burst == 2'b01) && DSO_SLAVE_RD_DATA_VALID && DSO_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
 

@@ -359,7 +359,7 @@ end
 always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
     if(~STATUS_SLAVE_RSTN_SYNC) rd_addr <= 0;
     else if(STATUS_SLAVE_RD_ADDR_VALID && STATUS_SLAVE_RD_ADDR_READY) rd_addr <= STATUS_SLAVE_RD_ADDR;
-    else if(STATUS_SLAVE_RD_DATA_VALID && STATUS_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
+    else if((rd_addr_burst == 2'b01) && STATUS_SLAVE_RD_DATA_VALID && STATUS_SLAVE_RD_DATA_READY) rd_addr <= rd_addr + 1;
     else rd_addr <= rd_addr;
 end
 
