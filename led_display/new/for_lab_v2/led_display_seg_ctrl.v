@@ -1,16 +1,19 @@
-module led_display_seg_ctrl (
-    input wire            clk,//27M
-    input wire            rstn,
-    input wire [31:0]     led_en,
-    input wire [8*32-1:0] assic_seg, //ASSIC coding
-    input wire [31:0]     seg_point, //显示小数点
+module led_display_seg_ctrl #(
+    parameter NUM  = 32,
+    parameter MODE = 0 //1:优先显示高位，即0数码管显示assic_seg高8位。0:优先显示低位
+)(
+    input wire             clk,//27M
+    input wire             rstn,
+    input wire [NUM - 1:0] led_en,
+    input wire [8*NUM-1:0] assic_seg, //ASSIC coding
+    input wire [NUM - 1:0] seg_point, //显示小数点
 
-    output reg [7:0]      seg,
-    output reg [4:0]      sel
+    output reg [7:0]       seg,
+    output reg [4:0]       sel
 );
-reg [32*8-1:0] led_in;
+reg [32*NUM-1:0] led_in;
 //遵循100HZ无闪烁规则
-parameter CNT_100Hz = 32'd8000;
+parameter CNT_100Hz = (27000000/(NUM*100));
 reg [31:0] cnt;
 reg sel_flag;
 reg seg_flag;
@@ -39,23 +42,69 @@ always @(posedge clk or negedge rstn) begin
         seg_flag <= 0;
 end
 //******************************************//
+// reg [4:0] sel_skip;
+// reg [3:0] sel_state;
+// always @(posedge clk or negedge rstn) begin
+//     if(~rstn) begin
+//         sel_skip  <= 0;
+//         sel_state <= 0;
+//     end
+//     else if(sel_state == 0)begin
+//         if(sel == NUM - 1 && led_in[0*8 +: 8] == (8'h00)) begin
+//             sel_state <= 1;
+//             sel_skip  <= 0;
+//         end
+//         else if(led_in[(sel + 1)*8 +: 8] == (8'h00))begin
+//             sel_state <= 1;
+//             sel_skip  <= sel + 1;
+//         end
+//         else begin
+//             sel_state <= sel_state;
+//             sel_skip  <= sel;
+//         end   
+//     end
+//     else if(sel_state == 1)begin
+//         if(sel_flag)begin
+//             sel_state <= 0;
+//             sel_skip  <= sel_skip;
+//         end
+//         else if(led_in[sel_skip*8 +: 8] == (8'h00))begin
+//             sel_state <= sel_state;
+//             if(sel_skip == NUM - 1)
+//                 sel_skip <= 0;
+//             else 
+//                 sel_skip <= sel_skip + 1;
+//         end
+//         else begin
+//             sel_state <= sel_state;
+//             sel_skip  <= sel_skip;
+//         end
+//     end
+// end
 always @(posedge clk or negedge rstn) begin
     if(~rstn)
         sel <= 0;
     else if(sel_flag)begin
-        if(sel == 31)
-            sel <= 0;
-        else 
-            sel <= sel + 1;
+         if(sel == NUM - 1)
+             sel <= 0;
+         else 
+             sel <= sel + 1;
+        //sel <= sel_skip;
     end
     else 
         sel <= sel;
 end
 always @(posedge clk or negedge rstn) begin
     if(~rstn)
-        seg <= 0;
+        if(MODE == 1)
+            seg <= led_in[(NUM - sel - 1)*8 +: 8];
+        else 
+            seg <= led_in[sel*8 +: 8];
     else if(seg_flag)
-        seg <= led_in[sel*8 +: 8];
+        if(MODE == 1)
+            seg <= led_in[(NUM - sel - 1)*8 +: 8];
+        else 
+            seg <= led_in[sel*8 +: 8];
     else 
         seg <= seg;
 end
@@ -64,7 +113,7 @@ end
 integer i;
 always @(*) begin
     led_in = 0;
-    for(i=0;i<32;i=i+1) begin //led_in[i*8 +: 8] <---> assic_seg[i*8 +: 8]
+    for(i=0;i<NUM;i=i+1) begin //led_in[i*8 +: 8] <---> assic_seg[i*8 +: 8]
         if(led_en[i] == 0)
             led_in[i*8 +: 8] = 8'h00;
         else 

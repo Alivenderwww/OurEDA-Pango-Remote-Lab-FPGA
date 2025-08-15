@@ -1,11 +1,10 @@
 module waterled_top(
     input sysclk,    //27MHz system clock
     input rst_n,      //active low reset
-    output [7:0] led_display_sel,
     output [7:0] led
    );
 
-assign led_display_sel = 8'b11111110;
+
     parameter CNT_MAX = 32'd5_499_999;
     reg [7:0] led_reg;
     reg [31:0] cnt;

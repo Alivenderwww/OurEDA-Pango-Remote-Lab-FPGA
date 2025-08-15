@@ -28,7 +28,7 @@
         <row>
             <data>dac_clk</data>
             <data>output</data>
-            <data>Y23</data>
+            <data>AB24</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -52,7 +52,7 @@
         <row>
             <data>dac_data[0]</data>
             <data>output</data>
-            <data>Y26</data>
+            <data>AC26</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -76,7 +76,7 @@
         <row>
             <data>dac_data[1]</data>
             <data>output</data>
-            <data>W25</data>
+            <data>U22</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -100,7 +100,7 @@
         <row>
             <data>dac_data[2]</data>
             <data>output</data>
-            <data>V17</data>
+            <data>Y26</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -124,7 +124,7 @@
         <row>
             <data>dac_data[3]</data>
             <data>output</data>
-            <data>V16</data>
+            <data>AB26</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -148,7 +148,7 @@
         <row>
             <data>dac_data[4]</data>
             <data>output</data>
-            <data>T18</data>
+            <data>AB25</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -172,7 +172,7 @@
         <row>
             <data>dac_data[5]</data>
             <data>output</data>
-            <data>T17</data>
+            <data>W25</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -196,7 +196,7 @@
         <row>
             <data>dac_data[6]</data>
             <data>output</data>
-            <data>W19</data>
+            <data>AC24</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -220,7 +220,7 @@
         <row>
             <data>dac_data[7]</data>
             <data>output</data>
-            <data>V19</data>
+            <data>AA24</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -1673,16 +1673,16 @@
             <data>IOBD_0_270</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_02P_DQS</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[3]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>W25</data>
             <data>IOBD_0_258</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_03P</data>
-            <data>dac_data[1]</data>
+            <data>dac_data[5]</data>
             <data>output</data>
             <data>YES</data>
         </row>
@@ -1709,9 +1709,9 @@
             <data>IOBD_0_222</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_06P</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[7]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>AA22</data>
@@ -1727,9 +1727,9 @@
             <data>IOBD_0_198</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_08P_DQS</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_clk</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>V23</data>
@@ -1754,9 +1754,9 @@
             <data>IOBD_0_162</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_11P_GMCLK</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[1]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>U21</data>
@@ -1808,9 +1808,9 @@
             <data>IOBD_0_84</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_17P</data>
-            <data>dac_data[7]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>V18</data>
@@ -1835,9 +1835,9 @@
             <data>IOBD_0_48</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_20P_DQS</data>
-            <data>dac_data[5]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U15</data>
@@ -1862,9 +1862,9 @@
             <data>IOBD_0_12</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_23P</data>
-            <data>dac_data[3]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U24</data>
@@ -1898,16 +1898,16 @@
             <data>IOBS_0_264</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_02N_DQS</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[0]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>Y26</data>
             <data>IOBS_0_252</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_03N</data>
-            <data>dac_data[0]</data>
+            <data>dac_data[2]</data>
             <data>output</data>
             <data>YES</data>
         </row>
@@ -1934,9 +1934,9 @@
             <data>IOBS_0_216</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_06N</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[4]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>AA23</data>
@@ -1952,9 +1952,9 @@
             <data>IOBS_0_192</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_08N_DQS</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>dac_data[6]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>W23</data>
@@ -1970,9 +1970,9 @@
             <data>IOBS_0_168</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_10N_GSCLK</data>
-            <data>dac_clk</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>V22</data>
@@ -2033,9 +2033,9 @@
             <data>IOBS_0_78</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_17N</data>
-            <data>dac_data[6]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>W18</data>
@@ -2060,9 +2060,9 @@
             <data>IOBS_0_42</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_20N_DQS</data>
-            <data>dac_data[4]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U16</data>
@@ -2087,9 +2087,9 @@
             <data>IOBS_0_6</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_23N</data>
-            <data>dac_data[2]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U17</data>
@@ -3040,48 +3040,48 @@
         </row>
         <row>
             <data>Use of CLMA</data>
-            <data>5</data>
+            <data>89</data>
             <data>11675</data>
             <data>1</data>
             <row>
                 <data>  FF</data>
-                <data>9</data>
+                <data>349</data>
                 <data>93400</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>1</data>
+                <data>228</data>
                 <data>46700</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>0</data>
+                <data>150</data>
                 <data>46700</data>
-                <data>0</data>
+                <data>1</data>
             </row>
         </row>
         <row>
             <data>Use of CLMS</data>
-            <data>9</data>
+            <data>73</data>
             <data>4975</data>
-            <data>1</data>
+            <data>2</data>
             <row>
                 <data>  FF</data>
-                <data>48</data>
+                <data>264</data>
                 <data>39800</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>33</data>
+                <data>171</data>
                 <data>19900</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>23</data>
+                <data>115</data>
                 <data>19900</data>
                 <data>1</data>
             </row>
@@ -3112,9 +3112,9 @@
         </row>
         <row>
             <data>Use of DRM</data>
-            <data>4</data>
+            <data>7</data>
             <data>155</data>
-            <data>3</data>
+            <data>5</data>
         </row>
         <row>
             <data>Use of GPLL</data>
@@ -3130,7 +3130,7 @@
         </row>
         <row>
             <data>Use of HARD0</data>
-            <data>26</data>
+            <data>92</data>
             <data>10550</data>
             <data>1</data>
         </row>
@@ -3165,15 +3165,15 @@
             <data>4</data>
             <row>
                 <data>  IOBD</data>
-                <data>6</data>
+                <data>7</data>
                 <data>144</data>
                 <data>5</data>
             </row>
             <row>
                 <data>  IOBS</data>
-                <data>5</data>
-                <data>156</data>
                 <data>4</data>
+                <data>156</data>
+                <data>3</data>
             </row>
         </row>
         <row>
@@ -3273,9 +3273,9 @@
             <data>5</data>
             <row>
                 <data> RCKB dataused</data>
-                <data>1</data>
+                <data>0</data>
                 <data>24</data>
-                <data>5</data>
+                <data>0</data>
             </row>
         </row>
         <row>
@@ -3286,9 +3286,9 @@
         </row>
         <row>
             <data>Use of SCANCHAIN</data>
-            <data>0</data>
             <data>1</data>
-            <data>0</data>
+            <data>1</data>
+            <data>100</data>
         </row>
         <row>
             <data>Use of SCKMUX_TEST</data>
@@ -3316,9 +3316,9 @@
         </row>
         <row>
             <data>Use of USCM</data>
-            <data>1</data>
+            <data>2</data>
             <data>32</data>
-            <data>4</data>
+            <data>7</data>
             <row>
                 <data> USCM dataused</data>
                 <data>0</data>
@@ -3363,11 +3363,11 @@
         </column_headers>
         <row>
             <data>top_dds</data>
-            <data>34</data>
-            <data>57</data>
+            <data>398</data>
+            <data>613</data>
             <data>0</data>
             <data>0</data>
-            <data>4</data>
+            <data>7</data>
             <data>0</data>
             <data>0</data>
             <data>1</data>
@@ -3384,9 +3384,9 @@
             <data>0</data>
             <data>0</data>
             <data>1</data>
-            <data>0</data>
-            <data>0</data>
             <data>1</data>
+            <data>0</data>
+            <data>2</data>
             <row>
                 <data>dds_inst</data>
                 <data>33</data>
@@ -3495,6 +3495,33 @@
                     </row>
                 </row>
             </row>
+            <row>
+                <data>u_CORES</data>
+                <data>365</data>
+                <data>556</data>
+                <data>0</data>
+                <data>0</data>
+                <data>3</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>1</data>
+                <data>0</data>
+                <data>0</data>
+            </row>
         </row>
     </table>
     <table id="pnr_runtime" title="Place &amp; Route Runtime &amp; Memory" column_number="7">
@@ -3508,13 +3535,13 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:19s</data>
-            <data>0h:0m:19s</data>
-            <data>0h:0m:24s</data>
-            <data>1,120</data>
+            <data>0h:0m:20s</data>
+            <data>0h:0m:20s</data>
+            <data>0h:0m:35s</data>
+            <data>1,169</data>
             <data>WINDOWS 10 x86_64</data>
-            <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>
-            <data>29</data>
+            <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
+            <data>31</data>
         </row>
     </table>
     <table id="pnr_messages" title="Place &amp; Route Messages" column_number="1">
@@ -3523,13 +3550,34 @@
             <data message="4">Column Clock Check open.</data>
         </row>
         <row>
-            <data message="4">LUT6D pack result: There are 2 LUT6 in collection, pack success:0</data>
+            <data message="6">Place-2028: GLOBAL_CLOCK: the driver u_CORES/u_GTP_SCANCHAIN_PG/scanchain fixed at SCANCHAIN_88_312 is unreasonable. Sub-optimal placement for a clock source and a clock buffer.</data>
+        </row>
+        <row>
+            <data message="4">LUT6D pack result: There are 130 LUT6 in collection, pack success:2</data>
         </row>
         <row>
             <data message="4">Process macros using &quot;Greedy&quot;.</data>
         </row>
         <row>
-            <data message="4">LUT6D pack result: There are 2 LUT6 in collection, pack success:0</data>
+            <data message="4">LUT6D pack result: There are 126 LUT6 in collection, pack success:1</data>
+        </row>
+        <row>
+            <data message="4">Design net ntclkbufg_1 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from clkbufg_4/gopclkbufg:CLKOUT to u_CORES/u_debug_core_0/u_Storage_Condition/conf_reg[6]/opit_0_inv_L6QL5Q:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net u_CORES/drck_o is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from u_CORES/u_GTP_SCANCHAIN_PG/scanchain:TCK1 to clkbufg_4/gopclkbufg:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net u_CORES/capt_o is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from u_CORES/u_GTP_SCANCHAIN_PG/scanchain:CAPTUREDR to u_CORES/u_debug_core_0/u_hub_data_decode/id_sample.conf_id[1]/opit_0_inv:CLK is routed by SRB.</data>
         </row>
     </table>
     <general_container id="pnr_settings">
@@ -3824,14 +3872,24 @@
                     <data>Site Of Driver Inst</data>
                 </column_headers>
                 <row>
-                    <data>clkbufg_0/gopclkbufg</data>
+                    <data>clkbufg_3/gopclkbufg</data>
                     <data>USCM_215_624</data>
                     <data>ntclkbufg_0</data>
-                    <data>50</data>
+                    <data>308</data>
                     <data>0</data>
                     <data>sys_clk_ibuf/opit_1</data>
                     <data>DI_TO_CLK</data>
                     <data>IOLHR_16_1080</data>
+                </row>
+                <row>
+                    <data>clkbufg_4/gopclkbufg</data>
+                    <data>USCM_215_576</data>
+                    <data>ntclkbufg_1</data>
+                    <data>113</data>
+                    <data>0</data>
+                    <data>u_CORES/u_GTP_SCANCHAIN_PG/scanchain</data>
+                    <data>TCK1</data>
+                    <data>SCANCHAIN_88_312</data>
                 </row>
             </table>
         </table_container>

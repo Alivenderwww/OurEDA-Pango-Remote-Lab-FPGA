@@ -99,7 +99,7 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
     else begin
         skip_en <= 0;
         error_en <= 0;
-        arp_valid <= arp_valid;
+        arp_valid <= 0;
         case(next_state)
             st_idle : begin
                 cnt <= 0;

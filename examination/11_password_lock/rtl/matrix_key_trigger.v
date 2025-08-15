@@ -1,14 +1,14 @@
 module matrix_key_trigger(
     input  wire clk,
     input  wire rstn,
-    input  wire [15:0] key,
-    output wire [15:0] key_trigger
+    input  wire [15:0] key/* synthesis PAP_MARK_DEBUG="true" */,
+    output wire [15:0] key_trigger/* synthesis PAP_MARK_DEBUG="true" */
 );
 
 // 按键上升沿捕获模块
 
-reg [15:0] key_d; // 上一时钟周期的按键状态
-reg [15:0] key_d2; // 上两时钟周期的按键状态
+reg [15:0] key_d/* synthesis PAP_MARK_DEBUG="true" */; // 上一时钟周期的按键状态
+reg [15:0] key_d2/* synthesis PAP_MARK_DEBUG="true" */; // 上两时钟周期的按键状态
 
 assign key_trigger = (key_d) & (~key_d2);
 

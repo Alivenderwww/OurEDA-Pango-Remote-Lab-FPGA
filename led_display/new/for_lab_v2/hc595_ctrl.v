@@ -35,15 +35,21 @@ module  hc595_ctrl
 reg     [1:0]   cnt_4   ;   //分频计数器
 reg     [3:0]   cnt_bit ;   //传输位数计数器
 
-//wire  define
-wire    [15:0]  data    ;   //数码管信号寄存
+//reg  define
+reg    [15:0]  data    ;   //数码管信号寄存
 
 //********************************************************************//
 //***************************** Main Code ****************************//
 //********************************************************************//
 
 //将数码管信号寄存
-assign  data = {3'b111 , sel , ~seg};
+always@(posedge sys_clk or  negedge sys_rst_n)
+    if(sys_rst_n == 1'b0)
+        data <=  {3'b111 , sel , ~seg};
+    else    if(rck)
+        data <=  {3'b111 , sel , ~seg};
+    else
+        data <=  data;
 
 //分频计数器:0~3循环计数
 always@(posedge sys_clk or  negedge sys_rst_n)

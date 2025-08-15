@@ -1,0 +1,1026 @@
+//
+// Generated (version 2022.2-SP6.4<build 146967>) at Fri Aug 15 15:20:56 2025
+//
+
+module waterled_top
+(
+    input rst_n,
+    input sysclk,
+    output [7:0] led
+);
+	// SDC constraint : (object sysclk) (id 1000) (clock waterled_top|sysclk) (inferred)
+    wire N0_0;
+    wire N51;
+    wire N51_7;
+    wire N58;
+    wire [23:0] N63;
+    wire _N11;
+    wire _N25;
+    wire _N35;
+    wire _N47;
+    wire _N48;
+    wire _N49;
+    wire _N50;
+    wire _N51;
+    wire _N52;
+    wire _N53;
+    wire _N54;
+    wire _N55;
+    wire _N56;
+    wire _N57;
+    wire _N58;
+    wire _N59;
+    wire _N60;
+    wire _N61;
+    wire _N62;
+    wire _N63;
+    wire _N64;
+    wire _N65;
+    wire _N66;
+    wire _N67;
+    wire _N71;
+    wire _N72;
+    wire _N131;
+    wire _N132;
+    wire _N134;
+    wire _N138;
+    wire _N144;
+    wire _N145;
+    wire [31:0] cnt;
+    wire \cnt[0]_inv ;
+    wire [7:0] nt_led;
+    wire nt_rst_n;
+    wire nt_sysclk;
+
+    GTP_GRS GRS_INST (
+            .GRS_N (1'b1));
+
+    GTP_LUT6 /* N0_0_inv */ #(
+            .INIT(64'b1111010101010101111111010101010111111101010101011111110101010101))
+        N0_0_inv (
+            .Z (N0_0),
+            .I0 (nt_rst_n),
+            .I1 (cnt[20]),
+            .I2 (cnt[21]),
+            .I3 (cnt[22]),
+            .I4 (_N35),
+            .I5 (_N72));
+	// LUT = (~I0)|(I2&I3)|(I1&I3&~I5)|(I1&I3&~I4) ;
+
+    GTP_LUT6 /* N3_mux5 */ #(
+            .INIT(64'b0000000000000000000000000000000001111111111111111111111111111111))
+        N3_mux5 (
+            .Z (_N11),
+            .I0 (cnt[0]),
+            .I1 (cnt[1]),
+            .I2 (cnt[2]),
+            .I3 (cnt[3]),
+            .I4 (cnt[4]),
+            .I5 (cnt[5]));
+	// LUT = (~I4&~I5)|(~I3&~I5)|(~I2&~I5)|(~I1&~I5)|(~I0&~I5) ;
+
+    GTP_LUT6 /* N3_mux12 */ #(
+            .INIT(64'b0000000011111111000000000111111100000000001111110000000000111111))
+        N3_mux12 (
+            .Z (_N25),
+            .I0 (cnt[6]),
+            .I1 (cnt[10]),
+            .I2 (cnt[11]),
+            .I3 (cnt[12]),
+            .I4 (_N11),
+            .I5 (_N71));
+	// LUT = (~I2&~I3)|(~I1&~I3)|(~I0&~I3&I5)|(~I3&I4&I5) ;
+
+    GTP_LUT6 /* N3_mux17_3 */ #(
+            .INIT(64'b1111111111111111111111111111111101111111111111111111111111111111))
+        N3_mux17_3 (
+            .Z (_N35),
+            .I0 (cnt[13]),
+            .I1 (cnt[14]),
+            .I2 (cnt[15]),
+            .I3 (cnt[16]),
+            .I4 (cnt[17]),
+            .I5 (_N25));
+	// LUT = (~I4)|(~I3)|(~I2)|(~I1)|(~I0)|(I5) ;
+
+    GTP_LUT3 /* N3_mux19_3 */ #(
+            .INIT(8'b00000001))
+        N3_mux19_3 (
+            .Z (_N71),
+            .I0 (cnt[7]),
+            .I1 (cnt[8]),
+            .I2 (cnt[9]));
+	// LUT = ~I0&~I1&~I2 ;
+
+    GTP_LUT6CARRY /* N5_0_1 */ #(
+            .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("TRUE"))
+        N5_0_1 (
+            .COUT (_N47),
+            .Z (N63[1]),
+            .CIN (),
+            .I0 (cnt[0]),
+            .I1 (cnt[1]),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b1));
+	// LUT = I1^I0 ;
+	// CARRY = (1'b0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_2 */ #(
+            .INIT(64'b0111100001111000011110000111100010000000100000001000000010000000), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_2 (
+            .COUT (_N48),
+            .Z (N63[2]),
+            .CIN (_N47),
+            .I0 (cnt[0]),
+            .I1 (cnt[1]),
+            .I2 (cnt[2]),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = (I0&I1&I2&~CIN)|(I0&I1&~I2&CIN)|(~I1&I2&CIN)|(~I0&I2&CIN) ;
+	// CARRY = (I0&I1&I2) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_3 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_3 (
+            .COUT (_N49),
+            .Z (N63[3]),
+            .CIN (_N48),
+            .I0 (cnt[3]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_4 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_4 (
+            .COUT (_N50),
+            .Z (N63[4]),
+            .CIN (_N49),
+            .I0 (cnt[4]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_5 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_5 (
+            .COUT (_N51),
+            .Z (N63[5]),
+            .CIN (_N50),
+            .I0 (cnt[5]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_6 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_6 (
+            .COUT (_N52),
+            .Z (N63[6]),
+            .CIN (_N51),
+            .I0 (cnt[6]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_7 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_7 (
+            .COUT (_N53),
+            .Z (N63[7]),
+            .CIN (_N52),
+            .I0 (cnt[7]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_8 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_8 (
+            .COUT (_N54),
+            .Z (N63[8]),
+            .CIN (_N53),
+            .I0 (cnt[8]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_9 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_9 (
+            .COUT (_N55),
+            .Z (N63[9]),
+            .CIN (_N54),
+            .I0 (cnt[9]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_10 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_10 (
+            .COUT (_N56),
+            .Z (N63[10]),
+            .CIN (_N55),
+            .I0 (cnt[10]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_11 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_11 (
+            .COUT (_N57),
+            .Z (N63[11]),
+            .CIN (_N56),
+            .I0 (cnt[11]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_12 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_12 (
+            .COUT (_N58),
+            .Z (N63[12]),
+            .CIN (_N57),
+            .I0 (cnt[12]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_13 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_13 (
+            .COUT (_N59),
+            .Z (N63[13]),
+            .CIN (_N58),
+            .I0 (cnt[13]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_14 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_14 (
+            .COUT (_N60),
+            .Z (N63[14]),
+            .CIN (_N59),
+            .I0 (cnt[14]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_15 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_15 (
+            .COUT (_N61),
+            .Z (N63[15]),
+            .CIN (_N60),
+            .I0 (cnt[15]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_16 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_16 (
+            .COUT (_N62),
+            .Z (N63[16]),
+            .CIN (_N61),
+            .I0 (cnt[16]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_17 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_17 (
+            .COUT (_N63),
+            .Z (N63[17]),
+            .CIN (_N62),
+            .I0 (cnt[17]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_18 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_18 (
+            .COUT (_N64),
+            .Z (N63[18]),
+            .CIN (_N63),
+            .I0 (cnt[18]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_19 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_19 (
+            .COUT (_N65),
+            .Z (N63[19]),
+            .CIN (_N64),
+            .I0 (cnt[19]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_20 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_20 (
+            .COUT (_N66),
+            .Z (N63[20]),
+            .CIN (_N65),
+            .I0 (cnt[20]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_21 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_21 (
+            .COUT (_N67),
+            .Z (N63[21]),
+            .CIN (_N66),
+            .I0 (cnt[21]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT6CARRY /* N5_0_22 */ #(
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .I5_TO_CARRY("TRUE"), 
+            .I5_TO_LUT("FALSE"))
+        N5_0_22 (
+            .COUT (),
+            .Z (N63[22]),
+            .CIN (_N67),
+            .I0 (cnt[22]),
+            .I1 (),
+            .I2 (),
+            .I3 (),
+            .I4 (),
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
+	// ../../../rtl/waterled_top.v:16
+
+    GTP_LUT4 /* N14_6 */ #(
+            .INIT(16'b0000000100000000))
+        N14_6 (
+            .Z (_N144),
+            .I0 (nt_led[0]),
+            .I1 (nt_led[1]),
+            .I2 (nt_led[2]),
+            .I3 (nt_led[7]));
+	// LUT = ~I0&~I1&~I2&I3 ;
+
+    GTP_LUT4 /* N14_7 */ #(
+            .INIT(16'b0000000000000001))
+        N14_7 (
+            .Z (_N145),
+            .I0 (nt_led[3]),
+            .I1 (nt_led[4]),
+            .I2 (nt_led[5]),
+            .I3 (nt_led[6]));
+	// LUT = ~I0&~I1&~I2&~I3 ;
+
+    GTP_LUT6D /* N51_1 */ #(
+            .INIT(64'b0000000000000000000000001111111100000000000000000000000000000001))
+        N51_1 (
+            .Z (_N72),
+            .Z5 (_N131),
+            .I0 (cnt[7]),
+            .I1 (cnt[8]),
+            .I2 (cnt[9]),
+            .I3 (cnt[18]),
+            .I4 (cnt[19]),
+            .I5 (1'b1));
+	// LUT = ~I3&~I4 ;
+	// Z5 = ~I0&~I1&~I2&~I3&~I4 ;
+
+    GTP_LUT6 /* N51_29 */ #(
+            .INIT(64'b0001000000000000000000000000000000000000000000000000000000000000))
+        N51_29 (
+            .Z (_N132),
+            .I0 (cnt[5]),
+            .I1 (cnt[12]),
+            .I2 (cnt[14]),
+            .I3 (cnt[15]),
+            .I4 (cnt[16]),
+            .I5 (cnt[17]));
+	// LUT = ~I0&~I1&I2&I3&I4&I5 ;
+
+    GTP_LUT4 /* N51_31 */ #(
+            .INIT(16'b1000000000000000))
+        N51_31 (
+            .Z (_N134),
+            .I0 (cnt[4]),
+            .I1 (cnt[6]),
+            .I2 (cnt[10]),
+            .I3 (cnt[11]));
+	// LUT = I0&I1&I2&I3 ;
+
+    GTP_LUT6 /* N51_35 */ #(
+            .INIT(64'b1000000000000000000000000000000000000000000000000000000000000000))
+        N51_35 (
+            .Z (_N138),
+            .I0 (cnt[0]),
+            .I1 (cnt[13]),
+            .I2 (cnt[20]),
+            .I3 (cnt[22]),
+            .I4 (_N131),
+            .I5 (_N132));
+	// LUT = I0&I1&I2&I3&I4&I5 ;
+
+    GTP_LUT6 /* N51_36 */ #(
+            .INIT(64'b0000000010000000000000000000000000000000000000000000000000000000))
+        N51_36 (
+            .Z (N51),
+            .I0 (cnt[1]),
+            .I1 (cnt[2]),
+            .I2 (cnt[3]),
+            .I3 (cnt[21]),
+            .I4 (_N134),
+            .I5 (_N138));
+	// LUT = I0&I1&I2&~I3&I4&I5 ;
+
+    GTP_LUT4 /* N58 */ #(
+            .INIT(16'b1011001100110011))
+        N58_vname (
+            .Z (N58),
+            .I0 (N51),
+            .I1 (nt_rst_n),
+            .I2 (_N144),
+            .I3 (_N145));
+    // defparam N58_vname.orig_name = N58;
+	// LUT = (~I1)|(I0&I2&I3) ;
+	// ../../../rtl/waterled_top.v:9
+
+    GTP_DFF_R /* \cnt[0]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[0]  (
+            .Q (cnt[0]),
+            .CLK (nt_sysclk),
+            .D (\cnt[0]_inv ),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[1]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[1]  (
+            .Q (cnt[1]),
+            .CLK (nt_sysclk),
+            .D (N63[1]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[2]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[2]  (
+            .Q (cnt[2]),
+            .CLK (nt_sysclk),
+            .D (N63[2]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[3]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[3]  (
+            .Q (cnt[3]),
+            .CLK (nt_sysclk),
+            .D (N63[3]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[4]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[4]  (
+            .Q (cnt[4]),
+            .CLK (nt_sysclk),
+            .D (N63[4]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[5]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[5]  (
+            .Q (cnt[5]),
+            .CLK (nt_sysclk),
+            .D (N63[5]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[6]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[6]  (
+            .Q (cnt[6]),
+            .CLK (nt_sysclk),
+            .D (N63[6]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[7]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[7]  (
+            .Q (cnt[7]),
+            .CLK (nt_sysclk),
+            .D (N63[7]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[8]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[8]  (
+            .Q (cnt[8]),
+            .CLK (nt_sysclk),
+            .D (N63[8]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[9]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[9]  (
+            .Q (cnt[9]),
+            .CLK (nt_sysclk),
+            .D (N63[9]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[10]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[10]  (
+            .Q (cnt[10]),
+            .CLK (nt_sysclk),
+            .D (N63[10]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[11]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[11]  (
+            .Q (cnt[11]),
+            .CLK (nt_sysclk),
+            .D (N63[11]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[12]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[12]  (
+            .Q (cnt[12]),
+            .CLK (nt_sysclk),
+            .D (N63[12]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[13]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[13]  (
+            .Q (cnt[13]),
+            .CLK (nt_sysclk),
+            .D (N63[13]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[14]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[14]  (
+            .Q (cnt[14]),
+            .CLK (nt_sysclk),
+            .D (N63[14]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[15]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[15]  (
+            .Q (cnt[15]),
+            .CLK (nt_sysclk),
+            .D (N63[15]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[16]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[16]  (
+            .Q (cnt[16]),
+            .CLK (nt_sysclk),
+            .D (N63[16]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[17]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[17]  (
+            .Q (cnt[17]),
+            .CLK (nt_sysclk),
+            .D (N63[17]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[18]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[18]  (
+            .Q (cnt[18]),
+            .CLK (nt_sysclk),
+            .D (N63[18]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[19]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[19]  (
+            .Q (cnt[19]),
+            .CLK (nt_sysclk),
+            .D (N63[19]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[20]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[20]  (
+            .Q (cnt[20]),
+            .CLK (nt_sysclk),
+            .D (N63[20]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_DFF_R /* \cnt[21]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[21]  (
+            .Q (cnt[21]),
+            .CLK (nt_sysclk),
+            .D (N63[21]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+    GTP_LUT1 /* \cnt[22:0]_inv  */ #(
+            .INIT(2'b01))
+        \cnt[22:0]_inv  (
+            .Z (\cnt[0]_inv ),
+            .I0 (cnt[0]));
+	// LUT = ~I0 ;
+
+    GTP_DFF_R /* \cnt[22]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \cnt[22]  (
+            .Q (cnt[22]),
+            .CLK (nt_sysclk),
+            .D (N63[22]),
+            .R (N0_0));
+	// ../../../rtl/waterled_top.v:12
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[0]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[0]  (
+            .O (led[0]),
+            .I (nt_led[0]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="C18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[1]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[1]  (
+            .O (led[1]),
+            .I (nt_led[1]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="C19", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[2]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[2]  (
+            .O (led[2]),
+            .I (nt_led[2]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="E18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[3]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[3]  (
+            .O (led[3]),
+            .I (nt_led[3]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[4]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[4]  (
+            .O (led[4]),
+            .I (nt_led[4]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[5]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[5]  (
+            .O (led[5]),
+            .I (nt_led[5]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="C17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[6]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[6]  (
+            .O (led[6]),
+            .I (nt_led[6]));
+	// ../../../rtl/waterled_top.v:4
+
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="B17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[7]  */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .SLEW_RATE("SLOW"), 
+            .DRIVE_STRENGTH("8"))
+        \led_obuf[7]  (
+            .O (led[7]),
+            .I (nt_led[7]));
+	// ../../../rtl/waterled_top.v:4
+
+    GTP_DFF_SE /* \led_reg[0]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b1))
+        \led_reg[0]  (
+            .Q (nt_led[0]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (1'b0),
+            .S (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_LUT2 /* \led_reg[0]_ce_fix  */ #(
+            .INIT(4'b1110))
+        \led_reg[0]_ce_fix  (
+            .Z (N51_7),
+            .I0 (N51),
+            .I1 (N58));
+	// LUT = (I0)|(I1) ;
+
+    GTP_DFF_RE /* \led_reg[1]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[1]  (
+            .Q (nt_led[1]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[0]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[2]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[2]  (
+            .Q (nt_led[2]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[1]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[3]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[3]  (
+            .Q (nt_led[3]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[2]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[4]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[4]  (
+            .Q (nt_led[4]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[3]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[5]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[5]  (
+            .Q (nt_led[5]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[4]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[6]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[6]  (
+            .Q (nt_led[6]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[5]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+    GTP_DFF_RE /* \led_reg[7]  */ #(
+            .GRS_EN("TRUE"), 
+            .INIT(1'b0))
+        \led_reg[7]  (
+            .Q (nt_led[7]),
+            .CE (N51_7),
+            .CLK (nt_sysclk),
+            .D (nt_led[6]),
+            .R (N58));
+	// ../../../rtl/waterled_top.v:21
+
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="C22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* rst_n_ibuf */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .TERM_DDR("ON"))
+        rst_n_ibuf (
+            .O (nt_rst_n),
+            .I (rst_n));
+	// ../../../rtl/waterled_top.v:3
+
+(* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="D18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* sysclk_ibuf */ #(
+            .IOSTANDARD("DEFAULT"), 
+            .TERM_DDR("ON"))
+        sysclk_ibuf (
+            .O (nt_sysclk),
+            .I (sysclk));
+	// ../../../rtl/waterled_top.v:2
+
+
+endmodule
+

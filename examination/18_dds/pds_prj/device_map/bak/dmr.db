@@ -1385,7 +1385,7 @@
             <data>DIFFIO_L6_G0_02P_DQS</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>W25</data>
@@ -1421,7 +1421,7 @@
             <data>DIFFIO_L6_G1_06P</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>AA22</data>
@@ -1439,7 +1439,7 @@
             <data>DIFFIO_L6_G1_08P_DQS</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>V23</data>
@@ -1466,7 +1466,7 @@
             <data>DIFFIO_L6_G1_11P_GMCLK</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>U21</data>
@@ -1520,7 +1520,7 @@
             <data>DIFFIO_L6_G2_17P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>V18</data>
@@ -1547,7 +1547,7 @@
             <data>DIFFIO_L6_G3_20P_DQS</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U15</data>
@@ -1574,7 +1574,7 @@
             <data>DIFFIO_L6_G3_23P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U24</data>
@@ -1610,7 +1610,7 @@
             <data>DIFFIO_L6_G0_02N_DQS</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>Y26</data>
@@ -1646,7 +1646,7 @@
             <data>DIFFIO_L6_G1_06N</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>AA23</data>
@@ -1664,7 +1664,7 @@
             <data>DIFFIO_L6_G1_08N_DQS</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>W23</data>
@@ -1682,7 +1682,7 @@
             <data>DIFFIO_L6_G1_10N_GSCLK</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>V22</data>
@@ -1745,7 +1745,7 @@
             <data>DIFFIO_L6_G2_17N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>W18</data>
@@ -1772,7 +1772,7 @@
             <data>DIFFIO_L6_G3_20N_DQS</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U16</data>
@@ -1799,7 +1799,7 @@
             <data>DIFFIO_L6_G3_23N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U17</data>
@@ -2759,7 +2759,7 @@
         <row>
             <data>dac_clk</data>
             <data>output</data>
-            <data>Y23</data>
+            <data>AB24</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2792,7 +2792,7 @@
         <row>
             <data>dac_data[0]</data>
             <data>output</data>
-            <data>Y26</data>
+            <data>AC26</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2825,7 +2825,7 @@
         <row>
             <data>dac_data[1]</data>
             <data>output</data>
-            <data>W25</data>
+            <data>U22</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2858,7 +2858,7 @@
         <row>
             <data>dac_data[2]</data>
             <data>output</data>
-            <data>V17</data>
+            <data>Y26</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2891,7 +2891,7 @@
         <row>
             <data>dac_data[3]</data>
             <data>output</data>
-            <data>V16</data>
+            <data>AB26</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2924,7 +2924,7 @@
         <row>
             <data>dac_data[4]</data>
             <data>output</data>
-            <data>T18</data>
+            <data>AB25</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2957,7 +2957,7 @@
         <row>
             <data>dac_data[5]</data>
             <data>output</data>
-            <data>T17</data>
+            <data>W25</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2990,7 +2990,7 @@
         <row>
             <data>dac_data[6]</data>
             <data>output</data>
-            <data>W19</data>
+            <data>AC24</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -3023,7 +3023,7 @@
         <row>
             <data>dac_data[7]</data>
             <data>output</data>
-            <data>V19</data>
+            <data>AA24</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -3245,13 +3245,13 @@
             <data>2</data>
         </row>
         <row>
-            <data>dds_inst/fre_add [28]</data>
-            <data>dds_inst/fre_add[28]</data>
+            <data>nt_sys_clk</data>
+            <data>sys_clk_ibuf</data>
             <data>2</data>
         </row>
         <row>
-            <data>nt_sys_clk</data>
-            <data>sys_clk_ibuf</data>
+            <data>dds_inst/fre_add [28]</data>
+            <data>dds_inst/fre_add[28]</data>
             <data>2</data>
         </row>
         <row>
@@ -3308,11 +3308,6 @@
             <data>dds_inst/fre_add [30]</data>
             <data>dds_inst/fre_add[30]</data>
             <data>2</data>
-        </row>
-        <row>
-            <data>dds_inst/N3 [9]</data>
-            <data>dds_inst/N3_1_9</data>
-            <data>1</data>
         </row>
         <row>
             <data>dds_inst/N3 [10]</data>
@@ -3430,7 +3425,7 @@
             <data>1</data>
         </row>
         <row>
-            <data>nt_dac_data[4]</data>
+            <data>nt_dac_data[5]</data>
             <data>dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[2].U_GTP_DRM36K_E1</data>
             <data>1</data>
         </row>
@@ -3485,13 +3480,13 @@
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/N3 [8]</data>
-            <data>dds_inst/N3_1_8</data>
+            <data>dds_inst/_N12</data>
+            <data>dds_inst/N3_1_11</data>
             <data>1</data>
         </row>
         <row>
-            <data>nt_dac_data[3]</data>
-            <data>dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[1].U_GTP_DRM36K_E1</data>
+            <data>dds_inst/N3 [9]</data>
+            <data>dds_inst/N3_1_9</data>
             <data>1</data>
         </row>
         <row>
@@ -3585,13 +3580,13 @@
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/N3 [7]</data>
-            <data>dds_inst/N3_1_7</data>
+            <data>dds_inst/N3 [8]</data>
+            <data>dds_inst/N3_1_8</data>
             <data>1</data>
         </row>
         <row>
-            <data>dds_inst/N3 [6]</data>
-            <data>dds_inst/N3_1_6</data>
+            <data>dds_inst/N3 [7]</data>
+            <data>dds_inst/N3_1_7</data>
             <data>1</data>
         </row>
         <row>
@@ -3659,6 +3654,11 @@
             <data>dds_inst/fre_add[14]</data>
             <data>1</data>
         </row>
+        <row>
+            <data>dds_inst/fre_add [15]</data>
+            <data>dds_inst/fre_add[15]</data>
+            <data>1</data>
+        </row>
     </table>
     <table id="device_map_resource_usage" title="Resource Usage Summary" column_number="4">
         <column_headers>
@@ -3681,7 +3681,7 @@
         </row>
         <row>
             <data>LUT</data>
-            <data>34</data>
+            <data>33</data>
             <data>66600</data>
             <data>1</data>
         </row>
@@ -3823,13 +3823,13 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:8s</data>
-            <data>0h:0m:8s</data>
+            <data>0h:0m:6s</data>
+            <data>0h:0m:6s</data>
             <data>0h:0m:11s</data>
-            <data>330</data>
+            <data>329</data>
             <data>WINDOWS 10 x86_64</data>
-            <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>
-            <data>29</data>
+            <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
+            <data>31</data>
         </row>
     </table>
     <table id="device_map_messages" title="Device Map Messages" column_number="1">
@@ -3841,7 +3841,7 @@
             <data message="4">Infer CARRY group, base inst: dds_inst/N3_1_1/gateop, insts:31.</data>
         </row>
         <row>
-            <data message="5">Public-4010: Pcf file C:/_Project/Pangu/examination/18_dds/pds_prj/device_map/top_dds.pcf has been covered.</data>
+            <data message="5">Public-4010: Pcf file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/18_dds/pds_prj/device_map/top_dds.pcf has been covered.</data>
         </row>
     </table>
     <general_container id="device_map_settings">

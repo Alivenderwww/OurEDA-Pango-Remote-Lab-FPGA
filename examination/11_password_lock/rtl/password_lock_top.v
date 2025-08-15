@@ -7,8 +7,9 @@ module password_lock_top #(
 input  wire       external_clk ,
 input  wire       external_rstn,
 
-output wire [7:0] led_display_seg,
-output wire [7:0] led_display_sel,
+output wire rck,
+output wire sck,
+output wire ser,
 
 input  wire [3:0] col,
 output wire [3:0] row
@@ -19,17 +20,29 @@ wire [15:0] key_trigger;
 wire [8*8-1:0] assic_seg;
 wire [7:0] seg_point;
 
-led_display_driver #(
-    .VALID_SIGNAL (VALID_SIGNAL),
-    .CLK_CYCLE (CLK_CYCLE)
-)u_led_display_driver(
-	.clk             	( external_clk    ),
-	.rstn            	( external_rstn   ),
-	.assic_seg       	( assic_seg       ),
-	.seg_point       	( seg_point       ),
-	.led_display_seg 	( led_display_seg ),
-	.led_display_sel 	( led_display_sel )
-);
+wire [4:0] sel;
+wire [7:0] seg;
+hc595_ctrl  hc595_ctrl_inst (
+    .sys_clk(external_clk),
+    .sys_rst_n(external_rstn),
+    .sel(sel),
+    .seg(seg),
+    .rck(rck),
+    .sck(sck),
+    .ser(ser)
+  );    
+led_display_seg_ctrl #(
+    .NUM(8),
+    .MODE(1)
+)led_display_seg_ctrl_inst(
+    .clk(external_clk),
+    .rstn(external_rstn),
+    .led_en(8'hFF),
+    .assic_seg(assic_seg),
+    .seg_point(32'h0),
+    .seg(seg),
+    .sel(sel)
+  );
 
 matrix_key #(
 	.ROW_NUM       	( 4     ),

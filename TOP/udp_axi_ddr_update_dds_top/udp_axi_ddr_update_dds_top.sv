@@ -3,10 +3,10 @@ module udp_axi_ddr_update_top #(
     // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
     parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0  8'd169,8'd254,8'd103,8'd006
     // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
-    // parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
-    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
-    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
+    // parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
+    parameter ADMIN_DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
+    // parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
+    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
     // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
 )(
 //system io
@@ -83,6 +83,10 @@ output wire        eth_rst_n    ,
 //hsst io
 input  wire        i_p_refckn_0 ,
 input  wire        i_p_refckp_0 ,
+//led display io
+input  wire        sck			,
+input  wire        rck			,
+input  wire        ser			,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -148,7 +152,7 @@ localparam M_ID     = 2;
 localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
 								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
-								 				  1'b1,1'b1,1'b1,1'b0, //
+								 				  1'b1,1'b1,1'b1,1'b1, //
 								 				  1'b0,1'b0,1'b0,1'b0};//
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000,
 												  32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000,
@@ -468,78 +472,78 @@ axi_master_initial_boot #(
 // );
 
 wire jpeg_encoder_clk = clk_200M;
-hdmi_in_axi_slave M3S10(
-	.clk                  	( clk_120M              ),
-	.rstn                 	( BUS_RSTN              ),
+// hdmi_in_axi_slave M3S10(
+// 	.clk                  	( clk_120M              ),
+// 	.rstn                 	( BUS_RSTN              ),
 
-	.hdmi_in_clk          	( hdmi_in_clk           ),
-	.hdmi_in_rstn         	( hdmi_in_rstn          ),
-	.hdmi_in_hsync        	( hdmi_in_hsync         ),
-	.hdmi_in_vsync        	( hdmi_in_vsync         ),
-	.hdmi_in_rgb          	( hdmi_in_rgb           ),
-	.hdmi_in_de           	( hdmi_in_de            ),
+// 	.hdmi_in_clk          	( hdmi_in_clk           ),
+// 	.hdmi_in_rstn         	( hdmi_in_rstn          ),
+// 	.hdmi_in_hsync        	( hdmi_in_hsync         ),
+// 	.hdmi_in_vsync        	( hdmi_in_vsync         ),
+// 	.hdmi_in_rgb          	( hdmi_in_rgb           ),
+// 	.hdmi_in_de           	( hdmi_in_de            ),
 
-	.jpeg_encoder_clk     	( jpeg_encoder_clk      ),
+// 	.jpeg_encoder_clk     	( jpeg_encoder_clk      ),
 
-	.MASTER_CLK           	( M_CLK            [3]),
-	.MASTER_RSTN          	( M_RSTN           [3]),
-	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID     [3]),
-	.MASTER_WR_ADDR       	( M_WR_ADDR        [3]),
-	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN    [3]),
-	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST  [3]),
-	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID  [3]),
-	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY  [3]),
-	.MASTER_WR_DATA       	( M_WR_DATA        [3]),
-	.MASTER_WR_STRB       	( M_WR_STRB        [3]),
-	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST   [3]),
-	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID  [3]),
-	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY  [3]),
-	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID     [3]),
-	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP   [3]),
-	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID  [3]),
-	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY  [3]),
-	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID     [3]),
-	.MASTER_RD_ADDR       	( M_RD_ADDR        [3]),
-	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN    [3]),
-	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST  [3]),
-	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID  [3]),
-	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY  [3]),
-	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID     [3]),
-	.MASTER_RD_DATA       	( M_RD_DATA        [3]),
-	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP   [3]),
-	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST   [3]),
-	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID  [3]),
-	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY  [3]),
-	.SLAVE_CLK            	( S_CLK             [10]),
-	.SLAVE_RSTN           	( S_RSTN            [10]),
-	.SLAVE_WR_ADDR_ID     	( S_WR_ADDR_ID      [10]),
-	.SLAVE_WR_ADDR        	( S_WR_ADDR         [10]),
-	.SLAVE_WR_ADDR_LEN    	( S_WR_ADDR_LEN     [10]),
-	.SLAVE_WR_ADDR_BURST  	( S_WR_ADDR_BURST   [10]),
-	.SLAVE_WR_ADDR_VALID  	( S_WR_ADDR_VALID   [10]),
-	.SLAVE_WR_ADDR_READY  	( S_WR_ADDR_READY   [10]),
-	.SLAVE_WR_DATA        	( S_WR_DATA         [10]),
-	.SLAVE_WR_STRB        	( S_WR_STRB         [10]),
-	.SLAVE_WR_DATA_LAST   	( S_WR_DATA_LAST    [10]),
-	.SLAVE_WR_DATA_VALID  	( S_WR_DATA_VALID   [10]),
-	.SLAVE_WR_DATA_READY  	( S_WR_DATA_READY   [10]),
-	.SLAVE_WR_BACK_ID     	( S_WR_BACK_ID      [10]),
-	.SLAVE_WR_BACK_RESP   	( S_WR_BACK_RESP    [10]),
-	.SLAVE_WR_BACK_VALID  	( S_WR_BACK_VALID   [10]),
-	.SLAVE_WR_BACK_READY  	( S_WR_BACK_READY   [10]),
-	.SLAVE_RD_ADDR_ID     	( S_RD_ADDR_ID      [10]),
-	.SLAVE_RD_ADDR        	( S_RD_ADDR         [10]),
-	.SLAVE_RD_ADDR_LEN    	( S_RD_ADDR_LEN     [10]),
-	.SLAVE_RD_ADDR_BURST  	( S_RD_ADDR_BURST   [10]),
-	.SLAVE_RD_ADDR_VALID  	( S_RD_ADDR_VALID   [10]),
-	.SLAVE_RD_ADDR_READY  	( S_RD_ADDR_READY   [10]),
-	.SLAVE_RD_BACK_ID     	( S_RD_BACK_ID      [10]),
-	.SLAVE_RD_DATA        	( S_RD_DATA         [10]),
-	.SLAVE_RD_DATA_RESP   	( S_RD_DATA_RESP    [10]),
-	.SLAVE_RD_DATA_LAST   	( S_RD_DATA_LAST    [10]),
-	.SLAVE_RD_DATA_VALID  	( S_RD_DATA_VALID   [10]),
-	.SLAVE_RD_DATA_READY  	( S_RD_DATA_READY   [10])
-);
+// 	.MASTER_CLK           	( M_CLK            [3]),
+// 	.MASTER_RSTN          	( M_RSTN           [3]),
+// 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID     [3]),
+// 	.MASTER_WR_ADDR       	( M_WR_ADDR        [3]),
+// 	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN    [3]),
+// 	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST  [3]),
+// 	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID  [3]),
+// 	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY  [3]),
+// 	.MASTER_WR_DATA       	( M_WR_DATA        [3]),
+// 	.MASTER_WR_STRB       	( M_WR_STRB        [3]),
+// 	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST   [3]),
+// 	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID  [3]),
+// 	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY  [3]),
+// 	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID     [3]),
+// 	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP   [3]),
+// 	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID  [3]),
+// 	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY  [3]),
+// 	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID     [3]),
+// 	.MASTER_RD_ADDR       	( M_RD_ADDR        [3]),
+// 	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN    [3]),
+// 	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST  [3]),
+// 	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID  [3]),
+// 	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY  [3]),
+// 	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID     [3]),
+// 	.MASTER_RD_DATA       	( M_RD_DATA        [3]),
+// 	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP   [3]),
+// 	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST   [3]),
+// 	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID  [3]),
+// 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY  [3]),
+// 	.SLAVE_CLK            	( S_CLK             [10]),
+// 	.SLAVE_RSTN           	( S_RSTN            [10]),
+// 	.SLAVE_WR_ADDR_ID     	( S_WR_ADDR_ID      [10]),
+// 	.SLAVE_WR_ADDR        	( S_WR_ADDR         [10]),
+// 	.SLAVE_WR_ADDR_LEN    	( S_WR_ADDR_LEN     [10]),
+// 	.SLAVE_WR_ADDR_BURST  	( S_WR_ADDR_BURST   [10]),
+// 	.SLAVE_WR_ADDR_VALID  	( S_WR_ADDR_VALID   [10]),
+// 	.SLAVE_WR_ADDR_READY  	( S_WR_ADDR_READY   [10]),
+// 	.SLAVE_WR_DATA        	( S_WR_DATA         [10]),
+// 	.SLAVE_WR_STRB        	( S_WR_STRB         [10]),
+// 	.SLAVE_WR_DATA_LAST   	( S_WR_DATA_LAST    [10]),
+// 	.SLAVE_WR_DATA_VALID  	( S_WR_DATA_VALID   [10]),
+// 	.SLAVE_WR_DATA_READY  	( S_WR_DATA_READY   [10]),
+// 	.SLAVE_WR_BACK_ID     	( S_WR_BACK_ID      [10]),
+// 	.SLAVE_WR_BACK_RESP   	( S_WR_BACK_RESP    [10]),
+// 	.SLAVE_WR_BACK_VALID  	( S_WR_BACK_VALID   [10]),
+// 	.SLAVE_WR_BACK_READY  	( S_WR_BACK_READY   [10]),
+// 	.SLAVE_RD_ADDR_ID     	( S_RD_ADDR_ID      [10]),
+// 	.SLAVE_RD_ADDR        	( S_RD_ADDR         [10]),
+// 	.SLAVE_RD_ADDR_LEN    	( S_RD_ADDR_LEN     [10]),
+// 	.SLAVE_RD_ADDR_BURST  	( S_RD_ADDR_BURST   [10]),
+// 	.SLAVE_RD_ADDR_VALID  	( S_RD_ADDR_VALID   [10]),
+// 	.SLAVE_RD_ADDR_READY  	( S_RD_ADDR_READY   [10]),
+// 	.SLAVE_RD_BACK_ID     	( S_RD_BACK_ID      [10]),
+// 	.SLAVE_RD_DATA        	( S_RD_DATA         [10]),
+// 	.SLAVE_RD_DATA_RESP   	( S_RD_DATA_RESP    [10]),
+// 	.SLAVE_RD_DATA_LAST   	( S_RD_DATA_LAST    [10]),
+// 	.SLAVE_RD_DATA_VALID  	( S_RD_DATA_VALID   [10]),
+// 	.SLAVE_RD_DATA_READY  	( S_RD_DATA_READY   [10])
+// );
 
 slave_ddr3 S0(
     .ddr_ref_clk             (clk_50M      ),
@@ -1019,10 +1023,45 @@ Analazer S9(
 // 	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[10]),
 // 	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[10])
 // );
-
-axi_slave_default S11(
+axi_slave_default S10(
 	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
+	.SLAVE_CLK          (S_CLK          [10]),
+	.SLAVE_RSTN         (S_RSTN         [10]),
+	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [10]),
+	.SLAVE_WR_ADDR      (S_WR_ADDR      [10]),
+	.SLAVE_WR_ADDR_LEN  (S_WR_ADDR_LEN  [10]),
+	.SLAVE_WR_ADDR_BURST(S_WR_ADDR_BURST[10]),
+	.SLAVE_WR_ADDR_VALID(S_WR_ADDR_VALID[10]),
+	.SLAVE_WR_ADDR_READY(S_WR_ADDR_READY[10]),
+	.SLAVE_WR_DATA      (S_WR_DATA      [10]),
+	.SLAVE_WR_STRB      (S_WR_STRB      [10]),
+	.SLAVE_WR_DATA_LAST (S_WR_DATA_LAST [10]),
+	.SLAVE_WR_DATA_VALID(S_WR_DATA_VALID[10]),
+	.SLAVE_WR_DATA_READY(S_WR_DATA_READY[10]),
+	.SLAVE_WR_BACK_ID   (S_WR_BACK_ID   [10]),
+	.SLAVE_WR_BACK_RESP (S_WR_BACK_RESP [10]),
+	.SLAVE_WR_BACK_VALID(S_WR_BACK_VALID[10]),
+	.SLAVE_WR_BACK_READY(S_WR_BACK_READY[10]),
+	.SLAVE_RD_ADDR_ID   (S_RD_ADDR_ID   [10]),
+	.SLAVE_RD_ADDR      (S_RD_ADDR      [10]),
+	.SLAVE_RD_ADDR_LEN  (S_RD_ADDR_LEN  [10]),
+	.SLAVE_RD_ADDR_BURST(S_RD_ADDR_BURST[10]),
+	.SLAVE_RD_ADDR_VALID(S_RD_ADDR_VALID[10]),
+	.SLAVE_RD_ADDR_READY(S_RD_ADDR_READY[10]),
+	.SLAVE_RD_BACK_ID   (S_RD_BACK_ID   [10]),
+	.SLAVE_RD_DATA      (S_RD_DATA      [10]),
+	.SLAVE_RD_DATA_RESP (S_RD_DATA_RESP [10]),
+	.SLAVE_RD_DATA_LAST (S_RD_DATA_LAST [10]),
+	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[10]),
+	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[10])
+);
+led_display_in_axi_slave S11(
+	.clk 				(clk_50M          	),
+	.rstn 				(BUS_RSTN          	),
+	.sck				(sck				),
+    .ser				(ser				),
+    .rck				(rck				),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
 	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [11]),
@@ -1053,7 +1092,6 @@ axi_slave_default S11(
 	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[11]),
 	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[11])
 );
-
 axi_slave_default S12(
 	.clk 				(clk_120M          ),
 	.rstn 				(BUS_RSTN          ),
