@@ -109,7 +109,7 @@ reg [4:0] wrdata_fifo_rd_cnt;//类似状态机
 wire rddata_fifo_wr_en;
 wire rddata_fifo_empty;
 wire [11:0] rddata_fifo_rd_water_level;
-wire [31:0] rddata_head;
+reg [31:0] rddata_head;
 reg [4:0] rddata_fifo_rd_cnt;//类似状态机
 reg rddata_tx_start_req;
 wire rddata_fifo_rd_en;
@@ -180,7 +180,7 @@ always @(posedge gmii_rx_clk or negedge rstn)begin
     end
 end
 
-assign udp_tx_data = (tx_state == TXWRBACK) ? wrback_fifo_rd_data : (rddata_fifo_rd_cnt == 3 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data ;
+assign udp_tx_data = (tx_state == TXWRBACK) ? (wrback_fifo_rd_data) : ((rddata_fifo_rd_cnt == 3 && tx_state == TXRDDATA) ? rddata_head : rddata_fifo_rd_data) ;
 
 assign MASTER_CLK  = gmii_rx_clk;
 assign MASTER_RSTN = rstn;
@@ -535,7 +535,6 @@ udp_fifo_wr u_sync_fifo_2048x33b_wr (
 //******************************************************************//
 
   //传输长度还没写
-assign rddata_head = MASTER_RD_DATA_LAST ? {8'h0F,6'b000000,MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00} : rddata_head;
 assign rddata_fifo_wr_en = MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY;
 
 assign rddata_fifo_rd_en = (rddata_fifo_rd_cnt == 3 || rddata_fifo_rd_cnt == 4) ? udp_tx_req : 0 ;////3或者4不太好，应该用格雷码
@@ -543,7 +542,7 @@ always @(posedge gmii_rx_clk ) begin
     if(~rstn)begin
         MASTER_RD_DATA_READY <= 0;
         rddata_fifo_rd_cnt <= 0;
-        // rddata_head <= 0;
+        rddata_head <= 0;
         rddata_tx_start_req <= 0;
         // rddata_tx_req_en <= 0;
     end
@@ -553,6 +552,7 @@ always @(posedge gmii_rx_clk ) begin
     end
     else if(MASTER_RD_DATA_LAST && MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY && rddata_fifo_rd_cnt == 1)begin
         MASTER_RD_DATA_READY <= 0;
+        rddata_head <= {8'h0F,6'b000000,MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00};
         rddata_fifo_rd_cnt <= rddata_fifo_rd_cnt + 1;
         rddata_tx_start_req <= 1;
     end

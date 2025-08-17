@@ -17,12 +17,13 @@ hc595_ctrl  hc595_ctrl_inst (
     .ser(ser)
   );    
 led_display_seg_ctrl #(
-    .NUM(32)
+    .NUM(32),
+    .MODE(0)
 )led_display_seg_ctrl_inst(
     .clk(clk),
     .rstn(rstn),
     .led_en(32'hFFFFFFFF),
-    .assic_seg({{(24){"8"}},"1","2","3","4","5","6","7","8"}),
+    .assic_seg({{(24){"0"}},"8","7","6","5","4","3","2","1"}),
 //    .assic_seg({{(31){8'h00}},"3"}),
     .seg_point(32'hFFFFFFFF),
     .seg(seg),

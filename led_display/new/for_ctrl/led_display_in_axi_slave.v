@@ -1,12 +1,17 @@
 module led_display_in_axi_slave (
     input  wire         clk,
     input  wire         rstn,
-    input  wire         sck,
-    input  wire         ser,
-    input  wire         rck,
+    //LED
+    input  wire         sck                ,
+    input  wire         ser                ,
+    input  wire         rck                ,
+    //SW
+    inout  wire [ 4:0]  sw                 ,
+    //encoder
+    inout  wire [ 2:0]  A                  ,
+    inout  wire [ 2:0]  B                  ,
+    inout  wire [ 1:0]  key                , 
 
-    inout  wire [ 4:0]  key,
- 
     output wire         SLAVE_CLK          ,
     output wire         SLAVE_RSTN         ,
 
@@ -42,8 +47,28 @@ module led_display_in_axi_slave (
     output wire         SLAVE_RD_DATA_VALID,
     input  wire         SLAVE_RD_DATA_READY
 );
-reg key_ctrl;
-reg [4:0] key_out;
+//encoder
+reg encoder_ctrl;
+reg [2:0] A_out;
+reg [2:0] B_out;
+reg       key_ctrl;
+reg [1:0] key_out;
+reg [2:0] right_start;
+reg [2:0] left_start;
+reg [2:0] right_done;
+reg [2:0] left_done;
+assign A[0]   = encoder_ctrl   ? A_out[0]   : 1'bz;
+assign A[1]   = encoder_ctrl   ? A_out[1]   : 1'bz;
+assign A[2]   = encoder_ctrl   ? A_out[2]   : 1'bz;
+assign B[0]   = encoder_ctrl   ? B_out[0]   : 1'bz;
+assign B[1]   = encoder_ctrl   ? B_out[1]   : 1'bz;
+assign B[2]   = encoder_ctrl   ? B_out[2]   : 1'bz;
+assign key[0] = key_ctrl       ? key_out[0] : 1'bz;
+assign key[1] = key_ctrl       ? key_out[1] : 1'bz;
+reg [31:0] encoder_cnt[2:0];
+//sw
+reg sw_ctrl;
+reg [4:0] sw_out;
 //只能读
 rstn_sync led_display_rstn_sync(clk,rstn,SLAVE_RSTN);
 assign SLAVE_CLK = clk;
@@ -139,7 +164,7 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
 end
 assign SLAVE_RD_DATA_VALID = rd_data_valid_reg;
 assign SLAVE_RD_DATA       = rddata;
-assign SLAVE_RD_DATA_RESP  = rdaddr <= 32'd37 ? 2'b00 : 2'b10;
+assign SLAVE_RD_DATA_RESP  =  2'b00;
 assign SLAVE_RD_DATA_LAST  = txcnt == rdaddrlen ? 1'b1 : 1'b0;
 always @(posedge clk or negedge SLAVE_RSTN) begin
     if(~SLAVE_RSTN) rd_data_valid_reg <= 0;
@@ -183,18 +208,19 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
             32'h0000001d : rddata <= {16'd0 , 8'd29 , led[29]};
             32'h0000001e : rddata <= {16'd0 , 8'd30 , led[30]};
             32'h0000001f : rddata <= {16'd0 , 8'd31 , led[31]};
-            32'h00000020 : rddata <= {31'd0  , key_ctrl  };
-            32'h00000021 : rddata <= {31'd0  , key_out[0]};
-            32'h00000022 : rddata <= {31'd0  , key_out[1]};
-            32'h00000023 : rddata <= {31'd0  , key_out[2]};
-            32'h00000024 : rddata <= {31'd0  , key_out[3]};
-            32'h00000025 : rddata <= {31'd0  , key_out[4]};
+            32'h00000020 : rddata <= {31'd0  , sw_ctrl  };
+            32'h00000021 : rddata <= {31'd0  , sw_out[4]};
+            32'h00000022 : rddata <= {31'd0  , sw_out[3]};
+            32'h00000023 : rddata <= {31'd0  , sw_out[2]};
+            32'h00000024 : rddata <= {31'd0  , sw_out[1]};
+            32'h00000025 : rddata <= {31'd0  , sw_out[0]};
+            32'h00000030 : rddata <= {31'd0  , encoder_ctrl};
             default : rddata <= 32'hFFFFFFFF;
         endcase
 end
-//key
+//sw
 
-assign key = key_ctrl ? key_out : 5'bzzzzz;
+assign sw = sw_ctrl ? sw_out : 5'bzzzzz;
 
 reg [ 3:0] wraddrid;
 reg [31:0] wraddr;
@@ -223,12 +249,223 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
 end
 always @(posedge clk or negedge SLAVE_RSTN) begin
     if(~SLAVE_RSTN) wr_en <= 'd0;
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && SLAVE_WR_DATA_LAST) wr_en <= 0;
     else if(SLAVE_WR_ADDR_VALID && SLAVE_WR_ADDR_READY) wr_en <= 1;
-    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY && ~SLAVE_WR_DATA_LAST) wr_en <= 0;
     else wr_en <= wr_en;
 end
 //把axi的信号做暂存或许比直接大量使用axi的信号时序更稳定吗？
 assign SLAVE_WR_DATA_READY = wr_en;
+always @(posedge clk or negedge SLAVE_RSTN) begin
+    if(~SLAVE_RSTN) begin
+        sw_ctrl <= 0;
+        sw_out  <= 0;
+    end
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY)begin
+        case(wraddr)
+            32'h00000020 : sw_ctrl   <= SLAVE_WR_DATA[0];
+            32'h00000021 : sw_out[4] <= SLAVE_WR_DATA[0];
+            32'h00000022 : sw_out[3] <= SLAVE_WR_DATA[0];
+            32'h00000023 : sw_out[2] <= SLAVE_WR_DATA[0];
+            32'h00000024 : sw_out[1] <= SLAVE_WR_DATA[0];
+            32'h00000025 : sw_out[0] <= SLAVE_WR_DATA[0];
+            default : ;
+        endcase
+    end
+end
+assign SLAVE_WR_BACK_ID = wraddrid;
+// assign SLAVE_WR_BACK_RESP = (wraddr >= 31'h00000020 && wraddr <= 31'h00000025) ? 2'b00 : 2'b10;
+always @(posedge clk or negedge SLAVE_RSTN) begin
+    if(~SLAVE_RSTN) SLAVE_WR_BACK_VALID <= 0;
+    else if(SLAVE_WR_BACK_VALID && SLAVE_WR_BACK_READY) SLAVE_WR_BACK_VALID <= 0;
+    else if(SLAVE_WR_DATA_LAST && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY) SLAVE_WR_BACK_VALID <= 1;
+    else SLAVE_WR_BACK_VALID <= SLAVE_WR_BACK_VALID;
+end
+
+//encoder
+reg  [2:0] fifo_wr_en;
+reg  [2:0] fifo_rd_en;
+reg  [2:0] fifo_wr_data;
+wire [2:0] fifo_rd_data;
+wire [2:0] fifo_rd_empty;
+always @(posedge clk or negedge SLAVE_RSTN) begin
+    if(~SLAVE_RSTN) begin
+        fifo_wr_en <= 0;
+        encoder_ctrl <= 0;
+        fifo_wr_data <= 0;
+    end
+    else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY)begin
+        case(wraddr)
+            32'h00000030 : encoder_ctrl   <= SLAVE_WR_DATA[0];
+            32'h00000031 : begin
+                if(SLAVE_WR_DATA[0] == 1'b1)begin
+                    fifo_wr_en[0] <= 1'b1;
+                    fifo_wr_data[0] <= 1'b1;
+                end
+                else begin
+                    fifo_wr_en[0] <= 1'b1;
+                    fifo_wr_data[0] <= 1'b0;
+                end
+                    
+            end
+            32'h00000032 : begin
+                if(SLAVE_WR_DATA[0] == 1'b1)begin
+                    fifo_wr_en[1] <= 1'b1;
+                    fifo_wr_data[1] <= 1'b1;
+                end
+                else begin
+                    fifo_wr_en[1]  <= 1'b1;
+                    fifo_wr_data[1] <= 1'b0;
+                end
+                    
+            end
+            32'h00000033 : begin
+                if(SLAVE_WR_DATA[0] == 1'b1)begin
+                    fifo_wr_en[2] <= 1'b1;
+                    fifo_wr_data[2] <= 1'b1;
+                end
+                else begin
+                    fifo_wr_en[2]  <= 1'b1;
+                    fifo_wr_data[2] <= 1'b0;
+                end
+                    
+            end
+            default : begin
+                fifo_wr_en <= 0;
+                encoder_ctrl <= 0;
+                fifo_wr_data <= fifo_wr_data;
+            end
+        endcase
+    end
+    else begin 
+        fifo_wr_en <= 0;
+        encoder_ctrl <= encoder_ctrl;
+        fifo_wr_data <= fifo_wr_data;
+    end
+end
+reg [2:0] state [2:0];
+reg [2:0] nextstate [2:0];
+localparam IDLE = 0;
+localparam WAIT = 1;
+localparam READ = 2;
+localparam WORK = 3;
+parameter  CNTTIME = 30000;
+genvar j;
+generate
+    for(j = 0;j < 3; j = j + 1)begin
+        FIFO_encoder FIFO_encoder_0 (
+            .clk(clk),                      // input
+            .rst(~SLAVE_RSTN),                      // input
+            .wr_en(fifo_wr_en[j]),                  // input
+            .wr_data(fifo_wr_data[j]),              // input
+            .wr_full(),              // output
+            .almost_full(),      // output
+            .rd_en(fifo_rd_en[j]),                  // input
+            .rd_data(fifo_rd_data[j]),              // output
+            .rd_empty(fifo_rd_empty[j]),            // output
+            .almost_empty()     // output
+        );
+        always @(posedge clk or negedge SLAVE_RSTN) begin
+            if(~SLAVE_RSTN) state[j] <= IDLE;
+            else state[j] <= nextstate[j];
+        end
+        always @(*) begin
+            nextstate[j] = state[j];
+            case(state[j])
+                IDLE : begin
+                    if(~fifo_rd_empty[j])
+                        nextstate[j] = WAIT;
+                    else 
+                        nextstate[j] = IDLE;
+                end
+                WAIT : begin
+                    if(fifo_rd_en[j])
+                        nextstate[j] = READ;
+                    else 
+                        nextstate[j] = nextstate[j];
+                end
+                READ : begin
+                    // if(right_start[j] | left_start[j])
+                        nextstate[j] = WORK;
+                    // else 
+                    //     nextstate[j] = READ;
+                end
+                WORK : begin
+                    if(right_done[j] | left_done[j])
+                        nextstate[j] = IDLE;
+                    else 
+                        nextstate[j] = WORK;
+                end
+            endcase
+        end
+        always @(posedge clk or negedge SLAVE_RSTN) begin
+            if(~SLAVE_RSTN) begin
+                fifo_rd_en[j] <= 0;
+                right_start[j] <= 0;
+
+                A_out[j] <= 0;
+                B_out[j] <= 0;
+                right_done[j] <= 0;
+                left_done[j] <= 0;
+            end
+            else begin
+                fifo_rd_en[j] <= 0;
+                right_done[j] <= 0;
+                left_done[j] <= 0;
+                case(state[j])
+                    IDLE : begin
+                        right_start[j] <= 0;
+                        left_start[j]  <= 0;
+                        
+                        A_out[j] <= A_out[j];
+                        B_out[j] <= B_out[j];
+                        if(~fifo_rd_empty[j])
+                            fifo_rd_en[j] <= 1;
+                        else 
+                            fifo_rd_en[j] <= 0;
+                    end
+                    WAIT : begin
+                        fifo_rd_en[j] <= 0;
+                        A_out[j] <= A_out[j];
+                        B_out[j] <= B_out[j];
+                    end
+                    READ : begin
+                        if(fifo_rd_data[j]) begin
+                            right_start[j] <= 1;
+                            A_out[j] <= ~A_out[j];
+                        end
+                        else begin
+                            left_start[j] <= 1;
+                            B_out[j] <= ~B_out[j];
+                        end
+                            
+                    end
+                    WORK : begin
+                        if(encoder_cnt[j] == CNTTIME) begin
+                            if(right_start[j])begin
+                                B_out[j] <= ~B_out[j];
+                                right_done[j] <= 1;
+                            end
+                                
+                            else begin
+                                A_out[j] <= ~A_out[j];
+                                left_done[j] <= 1;
+                            end
+                                
+                        end
+                            
+                    end
+                endcase
+            end
+        end
+        always @(posedge clk or negedge SLAVE_RSTN) begin
+            if(~SLAVE_RSTN) encoder_cnt[j] <= 0;
+            else if(right_done[j] | left_done[j]) encoder_cnt[j] <= 0;
+            else if(right_start[j] | left_start[j]) encoder_cnt[j] <= encoder_cnt[j] + 1;
+            else encoder_cnt[j] <= encoder_cnt[j];
+        end
+    end
+endgenerate
+//key
 always @(posedge clk or negedge SLAVE_RSTN) begin
     if(~SLAVE_RSTN) begin
         key_ctrl <= 0;
@@ -236,22 +473,15 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
     end
     else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY)begin
         case(wraddr)
-            32'h00000020 : key_ctrl   <= SLAVE_WR_DATA[0];
-            32'h00000021 : key_out[0] <= SLAVE_WR_DATA[0];
-            32'h00000022 : key_out[1] <= SLAVE_WR_DATA[0];
-            32'h00000023 : key_out[2] <= SLAVE_WR_DATA[0];
-            32'h00000024 : key_out[3] <= SLAVE_WR_DATA[0];
-            32'h00000025 : key_out[4] <= SLAVE_WR_DATA[0];
-            default : ;
+            32'h00000040 : key_ctrl   <= SLAVE_WR_DATA[0];
+            32'h00000041 : key_out[0] <= SLAVE_WR_DATA[0];
+            32'h00000042 : key_out[1] <= SLAVE_WR_DATA[0];
         endcase
     end
+    else begin
+        key_ctrl <= key_ctrl;
+        key_out <= key_out;
+    end
 end
-assign SLAVE_WR_BACK_ID = wraddrid;
-assign SLAVE_WR_BACK_RESP = (wraddr >= 31'h00000020 && wraddr <= 31'h00000025) ? 2'b00 : 2'b10;
-always @(posedge clk or negedge SLAVE_RSTN) begin
-    if(~SLAVE_RSTN) SLAVE_WR_BACK_VALID <= 0;
-    else if(SLAVE_WR_BACK_VALID && SLAVE_WR_BACK_READY) SLAVE_WR_BACK_VALID <= 0;
-    else if(SLAVE_WR_DATA_LAST && SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY) SLAVE_WR_BACK_VALID <= 1;
-    else SLAVE_WR_BACK_VALID <= SLAVE_WR_BACK_VALID;
-end
+assign SLAVE_WR_BACK_RESP = 2'b00;
 endmodule
