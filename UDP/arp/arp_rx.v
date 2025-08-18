@@ -82,6 +82,9 @@ always @(*) begin
             else 
                 next_state = st_arp_data;
         end
+        default : begin
+            next_state = st_idle; //default case to avoid latches
+        end
     endcase
 end
 
@@ -95,11 +98,15 @@ always @(posedge gmii_rx_clk or negedge rstn ) begin
         arp_rx_src_mac <= 0;
         arp_rx_des_ip  <= 0;
         arp_rx_src_ip  <= 0;
+        arp_protocol_type <= 0;
+        eth_des_mac <= 0;
+        eth_type <= 0;
+        arp_hard_type <= 0;
     end
     else begin
         skip_en <= 0;
         error_en <= 0;
-        arp_valid <= arp_valid;
+        arp_valid <= 0;
         case(next_state)
             st_idle : begin
                 cnt <= 0;

@@ -25,8 +25,6 @@ output wire        ad_clk       ,
 input  wire [7:0]  ad_data      ,
 // analyzer io
 // input  wire [31:0] digital_in   ,
-output wire        test_capture0,
-output wire        test_capture1,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
@@ -48,13 +46,13 @@ inout  wire        sda_eeprom,
 inout  wire        scl_camera,
 inout  wire        sda_camera,
 //ov5640 io
-output wire        CCD_PDN,
-output wire        CCD_RSTN,
-// output wire        CCD_CLKIN,
-input  wire        CCD_PCLK,
-input  wire        CCD_VSYNC,
-input  wire        CCD_HSYNC,
-input  wire [7:0]  CCD_DATA,
+// output wire        CCD_PDN,
+// output wire        CCD_RSTN,
+// // output wire        CCD_CLKIN,
+// input  wire        CCD_PCLK,
+// input  wire        CCD_VSYNC,
+// input  wire        CCD_HSYNC,
+// input  wire [7:0]  CCD_DATA,
 //hdmi in io
 input  wire        hdmi_in_clk,
 output wire        hdmi_in_rstn,
@@ -64,7 +62,7 @@ input  wire[23:0]  hdmi_in_rgb,
 input  wire        hdmi_in_de,
 //hdmi out io
 output wire        hdmi_out_clk,
-input  wire        hdmi_out_rstn,
+output wire        hdmi_out_rstn,
 output wire        hdmi_out_hsync,
 output wire        hdmi_out_vsync,
 output wire[23:0]  hdmi_out_rgb,
@@ -135,9 +133,6 @@ assign sda_eeprom = (sda_eeprom_enable)?(sda_eeprom_out):(1'bz);
 assign scl_camera = (scl_camera_enable)?(scl_camera_out):(1'bz);
 assign sda_camera = (sda_camera_enable)?(sda_camera_out):(1'bz);
 
-assign test_capture0 = scl_camera;
-assign test_capture1 = sda_camera;
-
 wire timestamp_rst;
 wire booting;
 wire admin_mode;
@@ -146,9 +141,9 @@ localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 4;
 localparam M_ID     = 2;
 localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
-localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //S0 DDR需要, S1 JTAG需要, S2 SPI需要, S3 I2C需要
-								 				  1'b1,1'b1,1'b0,1'b0, //S4 信号发生器需要, S5 HSST需要, S6 camera的i2c需要 S7没用上，不需要
-								 				  1'b1,1'b1,1'b1,1'b0, //
+localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b0, //
+								 				  1'b1,1'b1,1'b0,1'b0, //
+								 				  1'b1,1'b0,1'b1,1'b0, //
 								 				  1'b0,1'b0,1'b0,1'b0};//
 localparam [0:(2**S_WIDTH-1)][31:0] START_ADDR = {32'h00000000, 32'h10000000, 32'h20000000, 32'h30000000,
 												  32'h40000000, 32'h50000000, 32'h60000000, 32'h70000000,
@@ -223,22 +218,21 @@ wire [0:(2**M_WIDTH-1)] [4:0] M_fifo_empty_flag;
 wire [0:(2**S_WIDTH-1)] [4:0] S_fifo_empty_flag;
 
 wire clk_50M;
-wire clk_200M;
-wire clk_5M;
-wire clk_10M;
+wire clk_100M;
+wire clk_175M;
 wire clk_25M;
-wire clk_120M;
+wire clk_10M;
 wire clk_lock;
 
 wire [7:0] udp_led;
 
+wire clk_BUS = clk_100M;
+
 clk_pll_top clk_pll_top_inst (
   .clkout0(clk_50M),
-  .clkout1(clk_200M),
-  .clkout2(clk_5M),
+  .clkout1(clk_100M),
+  .clkout2(clk_25M),
   .clkout3(clk_10M),
-  .clkout4(clk_25M),
-  .clkout5(clk_120M),
   .lock   (clk_lock),
   .clkin1 (external_clk)
 );
@@ -254,8 +248,8 @@ wire ddr_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire jtag_rstn   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire ru_rstn     = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 
-wire OV_ccd_rstn;
-assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
+// wire OV_ccd_rstn;
+// assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
 
 assign  hdmi_out_clk   = hdmi_in_clk;
 assign  hdmi_out_hsync = hdmi_in_hsync;
@@ -276,12 +270,12 @@ hdmi_i2c hdmi_i2c_inst(
 
 reg [2:0] digital_in_delay;
 reg [31:0] digital_in;
-always @(posedge clk_5M or negedge BUS_RSTN) begin
+always @(posedge clk_10M or negedge BUS_RSTN) begin
 	if(~BUS_RSTN) digital_in <= 0;
 	else if(digital_in_delay == 3'b111) digital_in <= digital_in + 1;
 	else digital_in <= digital_in;
 end
-always @(posedge clk_5M or negedge BUS_RSTN) begin
+always @(posedge clk_10M or negedge BUS_RSTN) begin
 	if(~BUS_RSTN) digital_in_delay <= 0;
 	else digital_in_delay <= digital_in_delay + 1;
 end
@@ -293,23 +287,23 @@ axi_udp_master #(
 	.ADMIN_DES_IP    	(ADMIN_DES_IP   ),
 	.RESET_ADDR         (32'hF0F0F0F0)
 )M0(
-	.udp_in_rstn                ( udp_in_rstn     ),
-	.eth_rst_n                  (                 ),
-	.SYSTEM_RESET			    ( SYSTEM_RESET     ),
-	.rgmii_rxc            	    ( rgmii_rxc       ),
-	.rgmii_rx_ctl         	    ( rgmii_rx_ctl    ),
-	.rgmii_rxd            	    ( rgmii_rxd       ),
-	.rgmii_txc            	    ( rgmii_txc       ),
-	.rgmii_tx_ctl         	    ( rgmii_tx_ctl    ),
-	.rgmii_txd            	    ( rgmii_txd       ),
-    .udp_led                    ( udp_led         ),
-	.timestamp_rst              ( timestamp_rst   ),
-	.booting				    ( booting         ),
-	.admin_mode			        ( admin_mode      ),
-	.eeprom_des_ip              ( eeprom_host_ip  ),
-	.eeprom_des_mac             ( eeprom_host_mac ),
-	.eeprom_board_ip            ( eeprom_board_ip ),
-	.eeprom_board_mac           ( eeprom_board_mac),
+	.udp_in_rstn                ( udp_in_rstn       ),
+	.eth_rst_n                  (                   ),
+	.SYSTEM_RESET			    ( SYSTEM_RESET      ),
+	.rgmii_rxc            	    ( rgmii_rxc         ),
+	.rgmii_rx_ctl         	    ( rgmii_rx_ctl      ),
+	.rgmii_rxd            	    ( rgmii_rxd         ),
+	.rgmii_txc            	    ( rgmii_txc         ),
+	.rgmii_tx_ctl         	    ( rgmii_tx_ctl      ),
+	.rgmii_txd            	    ( rgmii_txd         ),
+    .udp_led                    ( udp_led           ),
+	.timestamp_rst              ( timestamp_rst     ),
+	.booting				    ( booting           ),
+	.admin_mode			        ( admin_mode        ),
+	.eeprom_des_ip              ( eeprom_host_ip    ),
+	.eeprom_des_mac             ( eeprom_host_mac   ),
+	.eeprom_board_ip            ( eeprom_board_ip   ),
+	.eeprom_board_mac           ( eeprom_board_mac  ),
 	.ETH_MASTER_CLK           	( M_CLK          [0]),
 	.ETH_MASTER_RSTN          	( M_RSTN         [0]),
 	.ETH_MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]),
@@ -341,20 +335,9 @@ axi_udp_master #(
 	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0])
 );
 
-ov_hdmi_axi_master M1(
-	.clk                  	( clk_120M              ),
-	.rstn                 	( sys_rstn              ),
-	.CCD_RSTN              	( CCD_RSTN              ),
-	.CCD_PCLK             	( CCD_PCLK              ),
-	.CCD_VSYNC            	( CCD_VSYNC             ),
-	.CCD_HSYNC            	( CCD_HSYNC             ),
-	.CCD_DATA             	( CCD_DATA              ),
-	.START_WRITE_ADDR      	( DMA0_START_WRITE_ADDR ),//START_ADDR[0]       
-	.END_WRITE_ADDR         ( DMA0_END_WRITE_ADDR   ),//((640*480)*16)/32   
-	.capture_on		    	( DMA0_capture_on       ),
-	.capture_rst		 	( DMA0_capture_rst      ),        
-	.expect_width         	( OV_expect_width     ),//期望宽度
-	.expect_height        	( OV_expect_height    ),//期望高度   
+axi_master_default M1(
+	.clk                  	( clk_BUS             ),
+	.rstn                 	( sys_rstn            ),
 	.MASTER_CLK           	( M_CLK          [1]  ),
 	.MASTER_RSTN          	( M_RSTN         [1]  ),
 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
@@ -386,10 +369,56 @@ ov_hdmi_axi_master M1(
 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
 );
 
+
+// ov_hdmi_axi_master M1(
+// 	.clk                  	( clk_BUS              ),
+// 	.rstn                 	( sys_rstn              ),
+// 	.CCD_RSTN              	( CCD_RSTN              ),
+// 	.CCD_PCLK             	( CCD_PCLK              ),
+// 	.CCD_VSYNC            	( CCD_VSYNC             ),
+// 	.CCD_HSYNC            	( CCD_HSYNC             ),
+// 	.CCD_DATA             	( CCD_DATA              ),
+// 	.START_WRITE_ADDR      	( DMA0_START_WRITE_ADDR ),//START_ADDR[0]       
+// 	.END_WRITE_ADDR         ( DMA0_END_WRITE_ADDR   ),//((640*480)*16)/32   
+// 	.capture_on		    	( DMA0_capture_on       ),
+// 	.capture_rst		 	( DMA0_capture_rst      ),        
+// 	.expect_width         	( OV_expect_width     ),//期望宽度
+// 	.expect_height        	( OV_expect_height    ),//期望高度   
+// 	.MASTER_CLK           	( M_CLK          [1]  ),
+// 	.MASTER_RSTN          	( M_RSTN         [1]  ),
+// 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
+// 	.MASTER_WR_ADDR       	( M_WR_ADDR      [1]  ),
+// 	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [1]  ),
+// 	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[1]  ),
+// 	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[1]  ),
+// 	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[1]  ),
+// 	.MASTER_WR_DATA       	( M_WR_DATA      [1]  ),
+// 	.MASTER_WR_STRB       	( M_WR_STRB      [1]  ),
+// 	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [1]  ),
+// 	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[1]  ),
+// 	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[1]  ),
+// 	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [1]  ),
+// 	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [1]  ),
+// 	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[1]  ),
+// 	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[1]  ),
+// 	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [1]  ),
+// 	.MASTER_RD_ADDR       	( M_RD_ADDR      [1]  ),
+// 	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [1]  ),
+// 	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[1]  ),
+// 	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[1]  ),
+// 	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[1]  ),
+// 	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [1]  ),
+// 	.MASTER_RD_DATA       	( M_RD_DATA      [1]  ),
+// 	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [1]  ),
+// 	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [1]  ),
+// 	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[1]  ),
+// 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
+// );
+
 axi_master_initial_boot #(
 	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
 )M2(
-    .clk                  (clk_120M          ),
+    .clk                  (clk_BUS           ),
     .rstn                 (sys_rstn          ),
     .eeprom_host_ip  	  (eeprom_host_ip    ),
     .eeprom_host_mac 	  (eeprom_host_mac   ),
@@ -425,61 +454,16 @@ axi_master_initial_boot #(
     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[2]),
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[2]));
 
-// axi_master_write_dma M3(
-//     .clk                  (clk_120M             ),
-//     .rstn                 (sys_rstn             ),
-// 	.START_WRITE_ADDR	  (DMA1_START_WRITE_ADDR),
-// 	.END_WRITE_ADDR	      (DMA1_END_WRITE_ADDR  ),
-// 	.rd_clk               (DMA1_rd_clk          ),
-// 	.rd_capture_on		  (DMA1_capture_on      ),
-// 	.rd_capture_rst		  (DMA1_capture_rst     ),
-// 	.rd_data_ready        (DMA1_rd_data_ready   ),
-// 	.rd_data_valid        (DMA1_rd_data_valid   ),
-// 	.rd_data              (DMA1_rd_data         ),
-//     .MASTER_CLK           (M_CLK          [3]   ),
-//     .MASTER_RSTN          (M_RSTN         [3]   ),
-//     .MASTER_WR_ADDR_ID    (M_WR_ADDR_ID   [3]   ),
-//     .MASTER_WR_ADDR       (M_WR_ADDR      [3]   ),
-//     .MASTER_WR_ADDR_LEN   (M_WR_ADDR_LEN  [3]   ),
-//     .MASTER_WR_ADDR_BURST (M_WR_ADDR_BURST[3]   ),
-//     .MASTER_WR_ADDR_VALID (M_WR_ADDR_VALID[3]   ),
-//     .MASTER_WR_ADDR_READY (M_WR_ADDR_READY[3]   ),
-//     .MASTER_WR_DATA       (M_WR_DATA      [3]   ),
-//     .MASTER_WR_STRB       (M_WR_STRB      [3]   ),
-//     .MASTER_WR_DATA_LAST  (M_WR_DATA_LAST [3]   ),
-//     .MASTER_WR_DATA_VALID (M_WR_DATA_VALID[3]   ),
-//     .MASTER_WR_DATA_READY (M_WR_DATA_READY[3]   ),
-//     .MASTER_WR_BACK_ID    (M_WR_BACK_ID   [3]   ),
-//     .MASTER_WR_BACK_RESP  (M_WR_BACK_RESP [3]   ),
-//     .MASTER_WR_BACK_VALID (M_WR_BACK_VALID[3]   ),
-//     .MASTER_WR_BACK_READY (M_WR_BACK_READY[3]   ),
-//     .MASTER_RD_ADDR_ID    (M_RD_ADDR_ID   [3]   ),
-//     .MASTER_RD_ADDR       (M_RD_ADDR      [3]   ),
-//     .MASTER_RD_ADDR_LEN   (M_RD_ADDR_LEN  [3]   ),
-//     .MASTER_RD_ADDR_BURST (M_RD_ADDR_BURST[3]   ),
-//     .MASTER_RD_ADDR_VALID (M_RD_ADDR_VALID[3]   ),
-//     .MASTER_RD_ADDR_READY (M_RD_ADDR_READY[3]   ),
-//     .MASTER_RD_BACK_ID    (M_RD_BACK_ID   [3]   ),
-//     .MASTER_RD_DATA       (M_RD_DATA      [3]   ),
-//     .MASTER_RD_DATA_RESP  (M_RD_DATA_RESP [3]   ),
-//     .MASTER_RD_DATA_LAST  (M_RD_DATA_LAST [3]   ),
-//     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[3]   ),
-//     .MASTER_RD_DATA_READY (M_RD_DATA_READY[3]   )
-// );
+streaming_axi_master_slave M3S10(
+	.clk                  	( clk_BUS             ),
+	.rstn                 	( BUS_RSTN            ),
 
-wire jpeg_encoder_clk = clk_200M;
-hdmi_in_axi_slave M3S10(
-	.clk                  	( clk_120M              ),
-	.rstn                 	( BUS_RSTN              ),
-
-	.hdmi_in_clk          	( hdmi_in_clk           ),
-	.hdmi_in_rstn         	( hdmi_in_rstn          ),
-	.hdmi_in_hsync        	( hdmi_in_hsync         ),
-	.hdmi_in_vsync        	( hdmi_in_vsync         ),
-	.hdmi_in_rgb          	( hdmi_in_rgb           ),
-	.hdmi_in_de           	( hdmi_in_de            ),
-
-	.jpeg_encoder_clk     	( jpeg_encoder_clk      ),
+	.hdmi_in_clk          	( hdmi_in_clk         ),
+	.hdmi_in_rstn         	( hdmi_in_rstn        ),
+	.hdmi_in_hsync        	( hdmi_in_hsync       ),
+	.hdmi_in_vsync        	( hdmi_in_vsync       ),
+	.hdmi_in_rgb          	( hdmi_in_rgb         ),
+	.hdmi_in_de           	( hdmi_in_de          ),
 
 	.MASTER_CLK           	( M_CLK            [3]),
 	.MASTER_RSTN          	( M_RSTN           [3]),
@@ -677,7 +661,7 @@ remote_update_axi_slave #(
 );
 
 i2c_master_axi_slave S3(
-	.clk                 	( clk_120M          ),
+	.clk                 	( clk_BUS          ),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_eeprom        ),
     .scl_out                ( scl_eeprom_out    ),
@@ -791,7 +775,7 @@ hsst_axi_slave  S5 (
   );
 
 i2c_master_general_axi_slave S6(
-	.clk                 	( clk_120M          ),
+	.clk                 	( clk_BUS          ),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_camera        ),
     .scl_out                ( scl_camera_out    ),
@@ -842,7 +826,7 @@ wire [7:0]   	power_status;
 wire [7:0]   	power_reset;
 
 sys_status_axi_slave S7(
-	.clk                        	( clk_120M              ),
+	.clk                        	( clk_BUS              ),
 	.rstn                       	( BUS_RSTN              ),
 	.STATUS_SLAVE_CLK           	( S_CLK          [7]    ),
 	.STATUS_SLAVE_RSTN          	( S_RSTN         [7]    ),
@@ -885,18 +869,18 @@ sys_status_axi_slave S7(
 	.eeprom_board_ip_addr           ( eeprom_board_ip       ),
 	.eeprom_host_mac_addr           ( eeprom_host_mac       ),
 	.eeprom_board_mac_addr          ( eeprom_board_mac      ),
-	.DMA0_START_WRITE_ADDR    		( DMA0_START_WRITE_ADDR     ),
-	.DMA0_END_WRITE_ADDR      		( DMA0_END_WRITE_ADDR       ),
-	.DMA0_capture_on			    ( DMA0_capture_on          ),
-	.DMA0_capture_rst 		        ( DMA0_capture_rst         ),
-	.DMA1_START_WRITE_ADDR          ( DMA1_START_WRITE_ADDR     ),
-	.DMA1_END_WRITE_ADDR            ( DMA1_END_WRITE_ADDR       ),
-	.DMA1_capture_on                ( DMA1_capture_on           ),
-	.DMA1_capture_rst               ( DMA1_capture_rst          ),
+	.DMA0_START_WRITE_ADDR    		( DMA0_START_WRITE_ADDR ),
+	.DMA0_END_WRITE_ADDR      		( DMA0_END_WRITE_ADDR   ),
+	.DMA0_capture_on			    ( DMA0_capture_on       ),
+	.DMA0_capture_rst 		        ( DMA0_capture_rst      ),
+	.DMA1_START_WRITE_ADDR          ( DMA1_START_WRITE_ADDR ),
+	.DMA1_END_WRITE_ADDR            ( DMA1_END_WRITE_ADDR   ),
+	.DMA1_capture_on                ( DMA1_capture_on       ),
+	.DMA1_capture_rst               ( DMA1_capture_rst      ),
 	.OV_EXPECT_WIDTH			    ( OV_expect_width       ),
 	.OV_EXPECT_HEIGHT			    ( OV_expect_height      ),
-	.OV_ccd_rstn					( OV_ccd_rstn           ),
-	.OV_ccd_pdn					    ( CCD_PDN               ),
+	.OV_ccd_rstn					(            ),
+	.OV_ccd_pdn					    (                ),
 	.ETH_timestamp_rst 			    ( timestamp_rst         )
 );
 
@@ -939,7 +923,7 @@ dso_axi_slave #(
 );
 
 Analazer S9(
-	.clk                          	( DMA1_rd_clk         ),
+	.clk                          	( clk_BUS             ),
 	.rstn                         	( sys_rstn            ),
 	.digital_in                   	( {3'b0,hdmi_in_rgb,hdmi_in_de,hdmi_in_vsync,hdmi_in_hsync,hdmi_in_rstn,hdmi_in_clk}),
 	.rd_data_ready			 	    ( DMA1_rd_data_ready  ),
@@ -979,7 +963,7 @@ Analazer S9(
 // wire hdmi_in_almost_full, hdmi_in_almost_empty;
 // assign led4 = {1'b1, 1'b1, hdmi_in_almost_full, hdmi_in_almost_empty}; // Debugging: Show HDMI input FIFO status
 // hdmi_in_axi_slave S10(
-// 	.clk 				(clk_120M           ),
+// 	.clk 				(clk_BUS           ),
 // 	.rstn 				(BUS_RSTN           ),
 //     .hdmi_in_clk        (hdmi_in_clk		),
 //     .hdmi_in_rstn       (hdmi_in_rstn		),
@@ -1021,7 +1005,7 @@ Analazer S9(
 // );
 
 axi_slave_default S11(
-	.clk 				(clk_120M          ),
+	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
@@ -1055,7 +1039,7 @@ axi_slave_default S11(
 );
 
 axi_slave_default S12(
-	.clk 				(clk_120M          ),
+	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [12]),
 	.SLAVE_RSTN         (S_RSTN         [12]),
@@ -1089,7 +1073,7 @@ axi_slave_default S12(
 );
 
 axi_slave_default S13(
-	.clk 				(clk_120M          ),
+	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [13]),
 	.SLAVE_RSTN         (S_RSTN         [13]),
@@ -1123,7 +1107,7 @@ axi_slave_default S13(
 );
 
 axi_slave_default S14(
-	.clk 				(clk_120M          ),
+	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [14]),
 	.SLAVE_RSTN         (S_RSTN         [14]),
@@ -1157,7 +1141,7 @@ axi_slave_default S14(
 );
 
 axi_slave_default S15(
-	.clk 				(clk_120M          ),
+	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
 	.SLAVE_CLK          (S_CLK          [15]),
 	.SLAVE_RSTN         (S_RSTN         [15]),
@@ -1200,7 +1184,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( clk_120M         ),
+	.BUS_CLK              	( clk_BUS         ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),

@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 10 fs 
 `include "ddr3_parameters.vh"
 module ddr3_slave_sim (
     //DDR时钟/复位/初始化接口
@@ -42,7 +42,7 @@ parameter MEM_ROW_WIDTH = 15;
 parameter CA_FIRST_DLY          = 0.15;
 parameter CA_GROUP_TO_GROUP_DLY = 0.05;
 ////////////////////////////////////////////////////////////////////
-localparam real ACTUAL_RATE  =  800.0   ; 
+localparam real ACTUAL_RATE  =  600.0   ; 
 ///////////////////////////test ppll sync case///////////////////////////
 // 1 step rst_clk phase adjust changes 2 / 128 ppll fast clk phase. the ppll fast clk frequency is twice the otput frequecey of ppll.
 parameter real OUT_SYNC_DLY = (500.0 / ACTUAL_RATE) * (123.0 / 128.0); 

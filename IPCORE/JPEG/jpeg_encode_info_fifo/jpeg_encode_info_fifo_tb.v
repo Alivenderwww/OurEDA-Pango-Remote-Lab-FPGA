@@ -25,7 +25,7 @@ localparam POWER_OPT = 0 ; // @IPC bool
 
 localparam RESET_TYPE = "ASYNC" ; // @IPC enum SYNC,ASYNC
 
-localparam FIFO_TYPE = "ASYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
+localparam FIFO_TYPE = "SYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
 
 localparam SAMEWIDTH_EN = 0 ; // @IPC bool
 
@@ -55,7 +55,7 @@ localparam FULL_WL_EN = 1 ; // @IPC bool
 
 localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
-localparam ASYN_FIFO_EN = "1" ; // @IPC bool
+localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
 localparam ALMOST_FULL_NUM = 60 ; // @IPC int
 
@@ -258,11 +258,11 @@ GTP_GRS GRS_INST(
 
 jpeg_encode_info_fifo U_jpeg_encode_info_fifo (
 
+    .clk            ( clk               ) ,
+    .rst            ( tb_rst            ) ,
+
     .wr_data        ( tb_wrdata         ) ,
     .wr_en          ( tb_wr_en          ) ,
-
-    .wr_clk         ( clk               ) ,
-    .wr_rst         ( tb_rst            ) ,
 
     .wr_full        ( tb_wr_full        ) ,
 
@@ -271,9 +271,6 @@ jpeg_encode_info_fifo U_jpeg_encode_info_fifo (
     .almost_full    ( tb_almost_full    ) ,
     .rd_data        ( tb_rddata         ) ,
     .rd_en          ( tb_rd_en          ) ,
-
-    .rd_clk         ( clk               ) ,
-    .rd_rst         ( tb_rst            ) ,
 
     .rd_empty       ( tb_rd_empty       ) ,
 

@@ -12,8 +12,6 @@ COMPONENT clk_pll_top
     clkout1 : OUT STD_LOGIC;
     clkout2 : OUT STD_LOGIC;
     clkout3 : OUT STD_LOGIC;
-    clkout4 : OUT STD_LOGIC;
-    clkout5 : OUT STD_LOGIC;
     lock : OUT STD_LOGIC;
     clkin1 : IN STD_LOGIC
   );
@@ -26,8 +24,6 @@ the_instance_name : clk_pll_top
     clkout1 => clkout1,
     clkout2 => clkout2,
     clkout3 => clkout3,
-    clkout4 => clkout4,
-    clkout5 => clkout5,
     lock => lock,
     clkin1 => clkin1
   );

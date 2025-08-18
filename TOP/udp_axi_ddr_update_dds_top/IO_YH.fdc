@@ -3,19 +3,17 @@ create_clock -name {rgmii_rxc}       [get_ports {rgmii_rxc           }] -period 
 create_clock -name {rgmii_txc}       [get_ports {rgmii_txc           }] -period {8.000 } -waveform {0.000 4.000 }
 create_clock -name {da_clk}          [get_ports {da_clk              }] -period {100.0 } -waveform {0 50.0      }
 create_clock -name {ad_clk}          [get_ports {ad_clk              }] -period {100.0 } -waveform {0 50.0      }
-create_clock -name {CCD_PCLK}        [get_ports {CCD_PCLK            }] -period {42    } -waveform {0.000 21.000}
+# create_clock -name {CCD_PCLK}        [get_ports {CCD_PCLK            }] -period {42    } -waveform {0.000 21.000}
 define_attribute   {n:rgmii_rxc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:rgmii_txc} {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:da_clk}    {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:ad_clk}    {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
-define_attribute   {n:CCD_PCLK}  {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
+# define_attribute   {n:CCD_PCLK}  {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 define_attribute   {n:hdmi_in_clk}  {PAP_CLOCK_DEDICATED_ROUTE} {FALSE}
 create_generated_clock -name {clk_50M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout0}] -master_clock [get_clocks {external_clk}] -multiply_by {50} -divide_by {50} -duty_cycle {50.000}
-create_generated_clock -name {clk_200M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout1}] -master_clock [get_clocks {external_clk}] -multiply_by {200} -divide_by {50} -duty_cycle {50.000}
-create_generated_clock -name {clk_5M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout2}] -master_clock [get_clocks {external_clk}] -multiply_by {5} -divide_by {50} -duty_cycle {50.000}
+create_generated_clock -name {clk_100M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout1}] -master_clock [get_clocks {external_clk}] -multiply_by {100} -divide_by {50} -duty_cycle {50.000}
+create_generated_clock -name {clk_25M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout2}] -master_clock [get_clocks {external_clk}] -multiply_by {25} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {clk_10M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout3}] -master_clock [get_clocks {external_clk}] -multiply_by {10} -divide_by {50} -duty_cycle {50.000}
-create_generated_clock -name {clk_25M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout4}] -master_clock [get_clocks {external_clk}] -multiply_by {25} -divide_by {50} -duty_cycle {50.000}
-create_generated_clock -name {clk_120M} -source [get_ports {external_clk}] [get_nets {clk_pll_top_inst/clkout5}] -master_clock [get_clocks {external_clk}] -multiply_by {120} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {rst_clk} -source [get_pins  {S0.ddr_ref_clk      }] [get_nets {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.rst_clk_gpll/clkout0}] -master_clock [get_clocks {clk_50M}] -multiply_by {50} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {ddrphy_sysclk} -source [get_pins  {S0.ddr_ref_clk      }] [get_nets {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_gpll/clkout0}] -master_clock [get_clocks {clk_50M}] -multiply_by {75} -divide_by {50} -duty_cycle {50.000}
 create_generated_clock -name {phy_dq_clk_0} -source [get_pins  {S0.ddr_ref_clk      }] [get_nets {S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_slice_top.i_dqs_bank[0].ddrphy_ppll/clkoutphy}] -master_clock [get_clocks {clk_50M}] -multiply_by {12} -divide_by {1} -duty_cycle {50.000}
@@ -141,16 +139,16 @@ set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slav
 set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[8].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[8].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
 set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[8].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[8].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
 
-set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
+# set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
+# set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
+# set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
+# set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
+# set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
+# set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_data_fifo_inst.U_ipm2l_fifo_slave_async_wr_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
+# set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
+# set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_rd_data_fifo_inst.U_ipm2l_fifo_slave_async_rd_data_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
+# set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
+# set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[9].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
 
 set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
 set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_addr_fifo_inst.U_ipm2l_fifo_slave_async_addr_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
@@ -163,30 +161,6 @@ set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slav
 set_max_delay {4.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
 set_max_delay {3.000} -from [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}] -to [get_cells {u_axi_bus.u_axi_clock_converter.gen_slave_async[10].genblk1.u_s_axi_async.slave_async_wr_back_fifo_inst.U_ipm2l_fifo_slave_async_wr_back_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
 
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[0].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[0].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[0].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[0].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[1].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[1].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[1].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[1].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[2].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[2].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[2].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[2].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[3].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[3].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[3].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[3].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[4].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[4].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[4].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[4].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[5].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[5].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[5].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[5].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[6].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[6].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[6].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[6].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
-set_max_delay {4.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[7].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[7].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wrptr1[*]}]
-set_max_delay {3.000} -from [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[7].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.wptr[*]}]    -to [get_cells {M3S10.u_hdmi_data_store.u_jpeg_encoder_top.gen_jpeg_encoder_line_fifo[7].u_jpeg_encoder_line_fifo.U_ipm2l_fifo_jpeg_encoder_line_fifo.U_ipm2l_fifo_ctrl.ASYN_CTRL.rwptr1[*]}]
-
 ###==== BEGIN "Generated Clocks"
 #ads
 ###==== BEGIN Logical
@@ -196,11 +170,9 @@ define_attribute {i:S0.ddr3_top_inst.axi_ddr3_inst.u_ddrphy_top.ddrphy_reset_ctr
 
 
 set_clock_groups -name clk_50M -asynchronous -group [get_clocks {clk_50M}]
-set_clock_groups -name clk_120M -asynchronous -group [get_clocks {clk_120M}]
-set_clock_groups -name clk_200M -asynchronous -group [get_clocks {clk_200M}]
-set_clock_groups -name clk_5M -asynchronous -group [get_clocks {clk_5M}]
-set_clock_groups -name clk_10M -asynchronous -group [get_clocks {clk_10M}]
+set_clock_groups -name clk_100M -asynchronous -group [get_clocks {clk_100M}]
 set_clock_groups -name clk_25M -asynchronous -group [get_clocks {clk_25M}]
+set_clock_groups -name clk_10M -asynchronous -group [get_clocks {clk_10M}]
 set_clock_groups -name rst_clk -asynchronous -group [get_clocks {rst_clk}]
 set_clock_groups -name phy_dq_clk_0 -asynchronous -group [get_clocks {phy_dq_clk_0}]
 set_clock_groups -name phy_dq_clk_1 -asynchronous -group [get_clocks {phy_dq_clk_1}]
@@ -1582,19 +1554,6 @@ define_attribute {p:sda_camera} {PAP_IO_DRIVE} {12}
 define_attribute {p:sda_camera} {PAP_IO_NONE} {TRUE}
 define_attribute {p:sda_camera} {PAP_IO_SLEW} {FAST}
 
-
-define_attribute {p:test_capture0} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:test_capture0} {PAP_IO_LOC} {C23}
-define_attribute {p:test_capture0} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:test_capture0} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:test_capture0} {PAP_IO_UNUSED} {TRUE}
-
-define_attribute {p:test_capture1} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:test_capture1} {PAP_IO_LOC} {F17}
-define_attribute {p:test_capture1} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:test_capture1} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:test_capture1} {PAP_IO_UNUSED} {TRUE}
-
 # define_attribute {p:digital_in[7]} {PAP_IO_DIRECTION} {INPUT}
 # define_attribute {p:digital_in[7]} {PAP_IO_LOC} {A22}
 # define_attribute {p:digital_in[7]} {PAP_IO_VCCIO} {3.3}
@@ -1636,75 +1595,75 @@ define_attribute {p:test_capture1} {PAP_IO_UNUSED} {TRUE}
 # define_attribute {p:digital_in[0]} {PAP_IO_STANDARD} {LVCMOS33}
 # define_attribute {p:digital_in[0]} {PAP_IO_NONE} {TRUE}
 
-define_attribute {p:CCD_DATA[7]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[7]} {PAP_IO_LOC} {T17}
-define_attribute {p:CCD_DATA[7]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[7]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[7]} {PAP_IO_UNUSED} {TRUE}
-define_attribute {p:CCD_DATA[6]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[6]} {PAP_IO_LOC} {T18}
-define_attribute {p:CCD_DATA[6]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[6]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[6]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[5]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[5]} {PAP_IO_LOC} {U20}
-define_attribute {p:CCD_DATA[5]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[5]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[5]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[4]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[4]} {PAP_IO_LOC} {T20}
-define_attribute {p:CCD_DATA[4]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[4]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[4]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[3]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[3]} {PAP_IO_LOC} {Y23}
-define_attribute {p:CCD_DATA[3]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[3]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[3]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[2]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[2]} {PAP_IO_LOC} {Y22}
-define_attribute {p:CCD_DATA[2]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[2]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[2]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[1]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[1]} {PAP_IO_LOC} {W18}
-define_attribute {p:CCD_DATA[1]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[1]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[1]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_DATA[0]} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_DATA[0]} {PAP_IO_LOC} {V18}
-define_attribute {p:CCD_DATA[0]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_DATA[0]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_DATA[0]} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_PDN} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:CCD_PDN} {PAP_IO_LOC} {AA25}
-define_attribute {p:CCD_PDN} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_PDN} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_PDN} {PAP_IO_DRIVE} {4}
-define_attribute {p:CCD_PDN} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_PDN} {PAP_IO_SLEW} {FAST}
-define_attribute {p:CCD_RSTN} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:CCD_RSTN} {PAP_IO_LOC} {Y25}
-define_attribute {p:CCD_RSTN} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_RSTN} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_RSTN} {PAP_IO_DRIVE} {4}
-define_attribute {p:CCD_RSTN} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_RSTN} {PAP_IO_SLEW} {FAST}
-define_attribute {p:CCD_HSYNC} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_HSYNC} {PAP_IO_LOC} {V21}
-define_attribute {p:CCD_HSYNC} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_HSYNC} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_HSYNC} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_PCLK} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_PCLK} {PAP_IO_LOC} {U19}
-define_attribute {p:CCD_PCLK} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_PCLK} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_PCLK} {PAP_IO_NONE} {TRUE}
-define_attribute {p:CCD_VSYNC} {PAP_IO_DIRECTION} {INPUT}
-define_attribute {p:CCD_VSYNC} {PAP_IO_LOC} {U21}
-define_attribute {p:CCD_VSYNC} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:CCD_VSYNC} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:CCD_VSYNC} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[7]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[7]} {PAP_IO_LOC} {T17}
+# define_attribute {p:CCD_DATA[7]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[7]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[7]} {PAP_IO_UNUSED} {TRUE}
+# define_attribute {p:CCD_DATA[6]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[6]} {PAP_IO_LOC} {T18}
+# define_attribute {p:CCD_DATA[6]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[6]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[6]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[5]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[5]} {PAP_IO_LOC} {U20}
+# define_attribute {p:CCD_DATA[5]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[5]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[5]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[4]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[4]} {PAP_IO_LOC} {T20}
+# define_attribute {p:CCD_DATA[4]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[4]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[4]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[3]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[3]} {PAP_IO_LOC} {Y23}
+# define_attribute {p:CCD_DATA[3]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[3]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[3]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[2]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[2]} {PAP_IO_LOC} {Y22}
+# define_attribute {p:CCD_DATA[2]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[2]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[2]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[1]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[1]} {PAP_IO_LOC} {W18}
+# define_attribute {p:CCD_DATA[1]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[1]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[1]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_DATA[0]} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_DATA[0]} {PAP_IO_LOC} {V18}
+# define_attribute {p:CCD_DATA[0]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_DATA[0]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_DATA[0]} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_PDN} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:CCD_PDN} {PAP_IO_LOC} {AA25}
+# define_attribute {p:CCD_PDN} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_PDN} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_PDN} {PAP_IO_DRIVE} {4}
+# define_attribute {p:CCD_PDN} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_PDN} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:CCD_RSTN} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:CCD_RSTN} {PAP_IO_LOC} {Y25}
+# define_attribute {p:CCD_RSTN} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_RSTN} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_RSTN} {PAP_IO_DRIVE} {4}
+# define_attribute {p:CCD_RSTN} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_RSTN} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:CCD_HSYNC} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_HSYNC} {PAP_IO_LOC} {V21}
+# define_attribute {p:CCD_HSYNC} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_HSYNC} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_HSYNC} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_PCLK} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_PCLK} {PAP_IO_LOC} {U19}
+# define_attribute {p:CCD_PCLK} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_PCLK} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_PCLK} {PAP_IO_NONE} {TRUE}
+# define_attribute {p:CCD_VSYNC} {PAP_IO_DIRECTION} {INPUT}
+# define_attribute {p:CCD_VSYNC} {PAP_IO_LOC} {U21}
+# define_attribute {p:CCD_VSYNC} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:CCD_VSYNC} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:CCD_VSYNC} {PAP_IO_NONE} {TRUE}
 # define_attribute {p:CCD_CLKIN} {PAP_IO_DIRECTION} {OUTPUT}
 # define_attribute {p:CCD_CLKIN} {PAP_IO_LOC} {T19}
 # define_attribute {p:CCD_CLKIN} {PAP_IO_VCCIO} {3.3}

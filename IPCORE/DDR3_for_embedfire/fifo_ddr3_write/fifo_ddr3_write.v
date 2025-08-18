@@ -23,6 +23,8 @@ module fifo_ddr3_write
     wr_data         ,  // input write data
     wr_full         ,  // output write full  flag 1 active
     
+    wr_water_level  ,  // output write water level
+    
     rd_en           ,  // input read enable
     rd_data         ,  // output read data
     
@@ -49,13 +51,13 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 9 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 32 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 36 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 1,128
 
 localparam RD_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 256 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 288 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 1,128
 
@@ -67,13 +69,13 @@ localparam RD_CLK_OR_POL_INV = 0 ; // @IPC bool
 
 localparam FAB_REG = 0 ; // @IPC bool
 
-localparam FULL_WL_EN = 0 ; // @IPC bool
+localparam FULL_WL_EN = 1 ; // @IPC bool
 
 localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
-localparam ALMOST_FULL_NUM = 128 ; // @IPC int
+localparam ALMOST_FULL_NUM = 450 ; // @IPC int
 
 localparam ALMOST_EMPTY_NUM = 15 ; // @IPC int
 
@@ -91,6 +93,8 @@ input                          wr_en           ;    // input write enable 1 acti
 output                         wr_full         ;    // output write full  flag 1 active
 
 output                         almost_full     ;    // output write almost full
+
+output [WR_DEPTH_WIDTH : 0]    wr_water_level  ;    // output write water level
 
 output [RD_DATA_WIDTH-1 : 0]   rd_data         ;    // output read data
 input                          rd_en           ;    // input  read enable

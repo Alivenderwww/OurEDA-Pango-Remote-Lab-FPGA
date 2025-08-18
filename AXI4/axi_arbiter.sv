@@ -34,8 +34,8 @@ localparam WR_DATA = 1'b1;
 reg cu_wr_st,nt_wr_st;
 always @(*)begin
     case (cu_wr_st)
-        WR_IDLE: nt_wr_st <= (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)?(WR_DATA):(WR_IDLE);
-        WR_DATA: nt_wr_st <= (BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST)?(WR_IDLE):(WR_DATA);
+        WR_IDLE: nt_wr_st = (BUS_WR_ADDR_VALID && BUS_WR_ADDR_READY)?(WR_DATA):(WR_IDLE);
+        WR_DATA: nt_wr_st = (BUS_WR_DATA_VALID && BUS_WR_DATA_READY && BUS_WR_DATA_LAST)?(WR_IDLE):(WR_DATA);
     endcase
 end
 always @(posedge clk or negedge rstn)begin
@@ -49,15 +49,11 @@ always @(posedge clk or negedge rstn) begin
     else  wr_channel_lock <= wr_channel_lock;
 end
 
-logic M_WR_ADDR_VALID[2**M_WIDTH-1:0];
-for (genvar i=0;i<(2**M_WIDTH);i++) begin
-    assign M_WR_ADDR_VALID[i] = MASTER_WR_ADDR_VALID[i];
-end
 always_comb begin: wr_addr_master
     int rev_i;
     wr_addr_master_sel = 0;
     if (wr_channel_lock) wr_addr_master_sel = cu_wr_master_sel;
-    else for(rev_i=(2**M_WIDTH-1); rev_i>=0; rev_i--) if(M_WR_ADDR_VALID[rev_i])
+    else for(rev_i=(2**M_WIDTH-1); rev_i>=0; rev_i--) if(MASTER_WR_ADDR_VALID[rev_i])
         wr_addr_master_sel = rev_i[M_WIDTH-1:0];
 end
 always_comb begin
@@ -81,27 +77,22 @@ always @(posedge clk or negedge rstn) begin
     else  rd_addr_channel_lock <= rd_addr_channel_lock;
 end
 
-logic M_RD_ADDR_VALID[2**M_WIDTH-1:0];
-for (genvar i=0;i<(2**M_WIDTH);i++) begin
-    assign M_RD_ADDR_VALID[i] = MASTER_RD_ADDR_VALID[i];
-end
 always_comb begin: rd_addr_master
     int rev_i;
     rd_addr_master_sel = 0;
     if (rd_addr_channel_lock) rd_addr_master_sel = cu_rd_addr_master_sel;
-    else for(rev_i=(2**M_WIDTH-1); rev_i>=0; rev_i--) if(M_RD_ADDR_VALID[rev_i])
+    else for(rev_i=(2**M_WIDTH-1); rev_i>=0; rev_i--) if(MASTER_RD_ADDR_VALID[rev_i])
         rd_addr_master_sel = rev_i[M_WIDTH-1:0];
 end
 
 always @(posedge clk or negedge rstn) begin
-    if(~rstn) cu_rd_addr_master_sel <= 2'd0;
+    if(~rstn) cu_rd_addr_master_sel <= 0;
     else cu_rd_addr_master_sel <= rd_addr_master_sel;
 end
 /**********************读数据接口 支持写交织，无需lock**********************/
 always @(*) begin
-    rd_data_master_sel <= BUS_RD_BACK_ID[M_ID+:M_WIDTH];
+    rd_data_master_sel = BUS_RD_BACK_ID[M_ID+:M_WIDTH];
 end
-
 
 endmodule //axi_master_arbiter
 
@@ -155,15 +146,12 @@ always @(posedge clk or negedge rstn) begin
     else if(BUS_WR_BACK_VALID) wr_resp_lock <= 1; //握手未成功，传输通道加锁
     else  wr_resp_lock <= wr_resp_lock;
 end
-logic S_WR_BACK_VALID[2**S_WIDTH-1:0];
-for (genvar i=0;i<(2**S_WIDTH);i++) begin
-    assign S_WR_BACK_VALID[i] = SLAVE_WR_BACK_VALID[i];
-end
+
 always_comb begin: wr_resp_slave
     int rev_i;
     wr_resp_slave_sel = 0;
     if (wr_resp_lock) wr_resp_slave_sel = cu_wr_resp_slave_sel;
-    else for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if(S_WR_BACK_VALID[rev_i])
+    else for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if(SLAVE_WR_BACK_VALID[rev_i])
         wr_resp_slave_sel = rev_i[S_WIDTH-1:0];
 end
 always @(posedge clk or negedge rstn) begin
@@ -179,14 +167,11 @@ always_comb begin: rd_addr_slave
         rd_addr_slave_sel = rev_i[S_WIDTH-1:0];
 end
 /**********************读数据接口 支持写交织，无需lock**********************/
-logic S_RD_DATA_VALID[2**S_WIDTH-1:0];
-for (genvar i=0;i<(2**S_WIDTH);i++) begin
-    assign S_RD_DATA_VALID[i] = SLAVE_RD_DATA_VALID[i];
-end
+
 always_comb begin: rd_data_slave
     int rev_i;
     rd_data_slave_sel = 0;
-    for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if(S_RD_DATA_VALID[rev_i])
+    for(rev_i=(2**S_WIDTH-1); rev_i>=0; rev_i--) if(SLAVE_RD_DATA_VALID[rev_i])
         rd_data_slave_sel = rev_i[S_WIDTH-1:0];
 end
 

@@ -10,12 +10,13 @@ module dso_top #(
     input         wave_run,   // 波形采集启动/停止
     input  [7:0]  trig_level, // 触发电平
     input         trig_edge,  // 触发边沿
-    input  [9:0]  h_shift,    // 波形水平偏移量
     input  [9:0]  deci_rate,  // 抽样率
 
     input         ram_refresh/* synthesis PAP_MARK_DEBUG="true" */,
     input  [9:0]  wave_rd_addr/* synthesis PAP_MARK_DEBUG="true" */, // RAM读地址 0-299
     output [7:0]  wave_rd_data/* synthesis PAP_MARK_DEBUG="true" */, // RAM读数据
+	output        wave_ready/* synthesis PAP_MARK_DEBUG="true" */,   // RAM读数据准备好
+	output [9:0]  wave_trig_addr/* synthesis PAP_MARK_DEBUG="true" */, // 触发地址
 
     output        outrange,     //水平偏移超出范围
     output        ad_pulse,     //AD采样脉冲
@@ -49,7 +50,6 @@ data_store u_data_store(
 	.trig_level    	( trig_level     ),
 	.trig_edge     	( trig_edge      ),
 	.wave_run      	( wave_run       ),
-	.h_shift       	( h_shift        ),
 	.ad_clk        	( ad_clk         ),
 	.ad_data       	( ad_data        ),
 	.deci_valid    	( deci_valid     ),
@@ -57,7 +57,8 @@ data_store u_data_store(
 	.ram_refresh   	( ram_refresh    ),
 	.wave_rd_addr  	( wave_rd_addr   ),
 	.wave_rd_data  	( wave_rd_data   ),
-	.outrange      	( outrange       )
+    .wave_ready		( wave_ready	 ),
+    .wave_trig_addr	( wave_trig_addr )
 );
 
 //抽样模块

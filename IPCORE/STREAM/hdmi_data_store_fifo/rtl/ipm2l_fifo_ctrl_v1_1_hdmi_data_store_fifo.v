@@ -15,7 +15,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-module ipm2l_fifo_ctrl_v1_1_jpeg_encoder_line_fifo #(
+module ipm2l_fifo_ctrl_v1_1_hdmi_data_store_fifo #(
     parameter  c_WR_DEPTH_WIDTH   = 9             ,
     parameter  c_RD_DEPTH_WIDTH   = 9             ,
     parameter  c_FIFO_TYPE        = "ASYN"        ,

@@ -7,14 +7,22 @@ module jpeg_encoder_top_tb;
 
 // Signal declarations
 reg clk;
-reg jpeg_encoder_clk;
 reg rstn;
 reg frame_done;
 reg [11:0] pixel_x;
 reg [11:0] pixel_y;
-reg data_in_enable;
-reg [23:0] data_in;
 
+// Burst interface signals
+wire wr_data_burst_valid;
+reg wr_data_burst_ready;
+wire [7:0] wr_data_burst;
+reg wr_data_valid;
+wire wr_data_ready;
+reg [31:0] wr_data;
+wire wr_data_last;
+
+// JPEG output signals
+wire [31:0] bitstream_size;
 wire [31:0] JPEG_bitstream;
 wire jpeg_enoder_data_ready;
 wire [4:0] end_of_file_bitstream_count;
@@ -25,10 +33,18 @@ integer current_image;
 integer current_width, current_height;
 integer pixel_count;
 integer total_pixels;
-integer loop_var; // 用于循环的变量
+integer loop_var;
 
-// Dynamic pixel memory - sized exactly to what we need
-reg [23:0] pixel_memory [0:TOTAL_PIXELS-1];
+// Data transmission variables - simplified
+integer global_pixel_offset;
+integer current_pixel_idx;
+reg data_sending_active;
+
+// Dynamic pixel memory - now 32-bit per pixel
+reg [31:0] pixel_memory [0:TOTAL_PIXELS-1];
+
+// Image processing control
+reg start_new_image;
 
 // Other variables
 integer file_handle;
@@ -45,10 +61,18 @@ jpeg_encoder_top UUT (
     .frame_done(frame_done),
     .pixel_x(pixel_x),
     .pixel_y(pixel_y),
-    .data_in_enable(data_in_enable),
-    .data_in(data_in),
+    
+    // Burst interface
+    .wr_data_burst_valid(wr_data_burst_valid),
+    .wr_data_burst_ready(wr_data_burst_ready),
+    .wr_data_burst(wr_data_burst),
+    .wr_data_valid(wr_data_valid),
+    .wr_data_ready(wr_data_ready),
+    .wr_data(wr_data),
+    .wr_data_last(wr_data_last),
 
-    .jpeg_encoder_clk(jpeg_encoder_clk),
+    // JPEG output
+    .bitstream_size(bitstream_size),
     .JPEG_bitstream(JPEG_bitstream),
     .jpeg_enoder_data_ready(jpeg_enoder_data_ready),
     .end_of_file_bitstream_count(end_of_file_bitstream_count),
@@ -58,8 +82,52 @@ jpeg_encoder_top UUT (
 // Clock generation
 initial clk = 0;
 always #5000 clk = ~clk;
-initial jpeg_encoder_clk = 0;
-always #2000 jpeg_encoder_clk = ~jpeg_encoder_clk;
+
+// Simple data transmission - just send packed 32-bit data directly
+initial begin
+    wr_data_burst_ready = 1'b1;  // Always ready for burst
+    wr_data_valid = 1'b1;        // Always valid
+end
+
+// Direct assignment - send current 32-bit word from memory
+assign wr_data = pixel_memory[current_pixel_idx];
+
+int last_count;
+always @(posedge clk) begin
+    if(~rstn) begin
+        last_count <= 255;
+    end else if(wr_data_valid && wr_data_ready) begin
+        last_count <= last_count - 1; // Decrement count on valid data
+    end else if(last_count == 0) last_count <= 255;
+    else last_count <= last_count; // Maintain count if not valid
+end
+assign wr_data_last = (last_count == 0); // Last data when count reaches zero
+
+// Counter increment on successful handshake
+always @(posedge clk) begin
+    if(~rstn) begin
+        current_pixel_idx <= 0;
+        data_sending_active <= 1'b0;
+    end else begin
+        if (start_new_image) begin
+            // Calculate starting position for current image
+            global_pixel_offset = 0;
+            for (loop_var = 0; loop_var < current_image; loop_var = loop_var + 1) begin
+                global_pixel_offset = global_pixel_offset + (get_image_width(loop_var) * get_image_height(loop_var));
+            end
+            // Convert pixel count to word count (3 words per 4 pixels)
+            current_pixel_idx <= global_pixel_offset;
+            data_sending_active <= 1'b1;
+        end else if (wr_data_valid && wr_data_ready && data_sending_active) begin
+            // Check if we've sent all words for current image
+            if (current_pixel_idx < global_pixel_offset + (total_pixels + 1)) begin
+                current_pixel_idx <= current_pixel_idx + 1;
+            end else begin
+                data_sending_active <= 1'b0; // Current image complete
+            end
+        end
+    end
+end
 
 // Dynamic image dimension functions using parameter arrays
 function integer get_image_width(input integer img_idx);
@@ -102,7 +170,7 @@ begin
     while (!$feof(file_handle) && i < TOTAL_PIXELS) begin
         status = $fscanf(file_handle, "%h", rgb_value);
         if (status == 1) begin
-            pixel_memory[i] = rgb_value[23:0];
+            pixel_memory[i] = rgb_value[31:0]; // Now loading 32-bit packed data
             i = i + 1;
         end
     end
@@ -116,21 +184,14 @@ begin
 end
 endtask
 
-// Main test sequence for batch processing
+// Main test sequence - simplified without tasks
 initial begin : STIMUL
     // Initialize signals
     rstn = 1'b0;
     frame_done = 1'b0;
     pixel_x = 0;
     pixel_y = 0;
-    data_in_enable = 1'b0;
-    data_in = 24'h000000;
-    pixel_count = 0;
-    data_loading_done = 1'b0;
-    frame_started = 1'b0;
     current_image = 0;
-    encoding_complete = 1'b0;
-    waiting_for_ready = 1'b0;
     
     // Open output file
     output_file = $fopen("output/jpeg_output_hex.txt", "w");
@@ -144,7 +205,6 @@ initial begin : STIMUL
     
     // Load batch hex file data
     load_batch_hex_file("output/ja_pixels.txt");
-    data_loading_done = 1'b1;
     
     // Reset release
     #10000;
@@ -152,120 +212,51 @@ initial begin : STIMUL
     #5000;
     
     // Process each image in sequence
-    process_batch_images();
-    
-    $display("All images processed successfully!");
-end
-
-// Task to process all images in batch
-task process_batch_images;
-    integer img_idx;
-begin
-    for (img_idx = 0; img_idx < NUM_IMAGES; img_idx = img_idx + 1) begin
-        current_image = img_idx;
-        current_width = get_image_width(img_idx);
-        current_height = get_image_height(img_idx);
+    for (current_image = 0; current_image < NUM_IMAGES; current_image = current_image + 1) begin
+        current_width = get_image_width(current_image);
+        current_height = get_image_height(current_image);
         total_pixels = current_width * current_height;
         
-        $display("\n=== Processing Image %d ===", img_idx + 1);
+        $display("\n=== Processing Image %d ===", current_image + 1);
         $display("Image size: %dx%d", current_width, current_height);
         $display("Total pixels: %d", total_pixels);
         
         // Send frame start signal with current image dimensions
         @(posedge clk);
-        frame_done <= 1'b1;
-        pixel_x <= current_width;
-        pixel_y <= current_height;
+        frame_done = 1'b1;
+        pixel_x = current_width;
+        pixel_y = current_height;
         @(posedge clk);
-        frame_done <= 1'b0;
-        frame_started <= 1'b1;
+        frame_done = 1'b0;
         
-        // Send pixel data for current image
-        send_current_image_data();
+        // Start data transmission
+        @(posedge clk);
+        start_new_image = 1'b1;
+        @(posedge clk);
+        start_new_image = 1'b0;
+        
+        // Wait for data transmission to complete
+        while (data_sending_active) begin
+            @(posedge clk);
+        end
         
         // Wait for encoding to complete
-        wait_for_encoding_complete();
+        while (!eof_data_partial_ready) begin
+            @(posedge clk);
+        end
         
-        $display("Image %d encoding completed", img_idx + 1);
+        $display("Image %d encoding completed", current_image + 1);
+        $display("Total pixels sent: %d", current_pixel_idx - global_pixel_offset);
         
         // Small delay between images
         repeat(100) @(posedge clk);
     end
+    
+    $display("All images processed successfully!");
 end
-endtask
-
-// Task to send pixel data for current image
-task send_current_image_data;
-    integer row, col, pixel_idx;
-    integer pixels_sent_for_current_image;
-    integer global_pixel_offset;
-begin
-    $display("Starting to send pixel data for image %d...", current_image + 1);
-    
-    // 等待几个时钟周期让模块准备好
-    repeat(10) @(posedge clk);
-    
-    pixels_sent_for_current_image = 0;
-    
-    // 计算当前图片在全局pixel_memory中的起始位置
-    global_pixel_offset = 0;
-    for (loop_var = 0; loop_var < current_image; loop_var = loop_var + 1) begin
-        global_pixel_offset = global_pixel_offset + (get_image_width(loop_var) * get_image_height(loop_var));
-    end
-    
-    // 按行扫描发送像素数据
-    for (row = 0; row < current_height; row = row + 1) begin
-        for (col = 0; col < current_width; col = col + 1) begin
-            pixel_idx = global_pixel_offset + (row * current_width + col);
-            
-            @(posedge clk) begin
-                data_in <= pixel_memory[pixel_idx];
-                data_in_enable <= 1'b1;
-                pixels_sent_for_current_image <= pixels_sent_for_current_image + 1;
-            end
-            
-            // 每隔一段时间显示进度
-            if (pixels_sent_for_current_image % 5000 == 0) begin
-                $display("Sent %d/%d pixels (%d%%) for image %d", 
-                        pixels_sent_for_current_image, total_pixels, 
-                        (pixels_sent_for_current_image * 100) / total_pixels, 
-                        current_image + 1);
-            end
-        end
-    end
-    
-    // 结束数据发送
-    @(posedge clk) begin
-        data_in_enable <= 1'b0;
-    end
-    
-    $display("Finished sending all %d pixels for image %d", pixels_sent_for_current_image, current_image + 1);
-    waiting_for_ready <= 1'b1;
-end
-endtask
-
-// Task to wait for encoding completion
-task wait_for_encoding_complete;
-begin
-    $display("Waiting for image %d encoding to complete...", current_image + 1);
-    encoding_complete = 1'b0;
-    
-    // Wait for the encoding to complete (detected by eof_data_partial_ready)
-    while (!eof_data_partial_ready) begin
-        @(posedge jpeg_encoder_clk);
-    end
-    
-    // Wait for one more clock cycle to ensure data is stable
-    @(posedge jpeg_encoder_clk);
-    
-    waiting_for_ready <= 1'b0;
-    encoding_complete = 1'b1;
-    $display("Image %d encoding completed successfully", current_image + 1);
-end
-endtask
 
 // JPEG output monitoring and logging
-always @(posedge jpeg_encoder_clk) begin
+always @(posedge clk) begin
     if (jpeg_enoder_data_ready == 1'b1) begin
         // Write output to file and display
         $fwrite(output_file, "%08h\n", JPEG_bitstream);
@@ -279,8 +270,10 @@ always @(posedge jpeg_encoder_clk) begin
         // Add a comment line indicating the number of valid bits
         $fwrite(output_file, "// Valid bits in above data: %d\n", end_of_file_bitstream_count);
         $fwrite(output_file, "// End of Image %d\n", current_image + 1);
+        $fwrite(output_file, "// Bitstream size: %d words\n", bitstream_size);
         $display("Partial JPEG data (%d bits): %08h", end_of_file_bitstream_count, JPEG_bitstream);
         $display("Image %d encoding completed!", current_image + 1);
+        $display("Total bitstream size: %d words", bitstream_size);
         if(current_image == NUM_IMAGES - 1) begin
             $display("\n=== All %d images processed successfully ===", NUM_IMAGES);
             $fclose(output_file);

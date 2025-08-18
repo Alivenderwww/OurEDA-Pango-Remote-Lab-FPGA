@@ -2,35 +2,35 @@
 module axi_master_sim #(
     parameter ID_WIDTH = 2
 )(
-output logic         MASTER_CLK          ,
-output logic         MASTER_RSTN         ,
+output logic                MASTER_CLK          ,
+output logic                MASTER_RSTN         ,
 output logic [ID_WIDTH-1:0] MASTER_WR_ADDR_ID   ,
-output logic [31:0]  MASTER_WR_ADDR      ,
-output logic [ 7:0]  MASTER_WR_ADDR_LEN  ,
-output logic [ 1:0]  MASTER_WR_ADDR_BURST,
-output logic         MASTER_WR_ADDR_VALID,
-input  logic         MASTER_WR_ADDR_READY,
-output logic [31:0]  MASTER_WR_DATA      ,
-output logic [ 3:0]  MASTER_WR_STRB      ,
-output logic         MASTER_WR_DATA_LAST ,
-output logic         MASTER_WR_DATA_VALID,
-input  logic         MASTER_WR_DATA_READY,
+output logic [31:0]         MASTER_WR_ADDR      ,
+output logic [ 7:0]         MASTER_WR_ADDR_LEN  ,
+output logic [ 1:0]         MASTER_WR_ADDR_BURST,
+output logic                MASTER_WR_ADDR_VALID,
+input  logic                MASTER_WR_ADDR_READY,
+output logic [31:0]         MASTER_WR_DATA      ,
+output logic [ 3:0]         MASTER_WR_STRB      ,
+output logic                MASTER_WR_DATA_LAST ,
+output logic                MASTER_WR_DATA_VALID,
+input  logic                MASTER_WR_DATA_READY,
 input  logic [ID_WIDTH-1:0] MASTER_WR_BACK_ID   ,
-input  logic [ 1:0]  MASTER_WR_BACK_RESP ,
-input  logic         MASTER_WR_BACK_VALID,
-output logic         MASTER_WR_BACK_READY,
+input  logic [ 1:0]         MASTER_WR_BACK_RESP ,
+input  logic                MASTER_WR_BACK_VALID,
+output logic                MASTER_WR_BACK_READY,
 output logic [ID_WIDTH-1:0] MASTER_RD_ADDR_ID   ,
-output logic [31:0]  MASTER_RD_ADDR      ,
-output logic [ 7:0]  MASTER_RD_ADDR_LEN  ,
-output logic [ 1:0]  MASTER_RD_ADDR_BURST,
-output logic         MASTER_RD_ADDR_VALID,
-input  logic         MASTER_RD_ADDR_READY,
+output logic [31:0]         MASTER_RD_ADDR      ,
+output logic [ 7:0]         MASTER_RD_ADDR_LEN  ,
+output logic [ 1:0]         MASTER_RD_ADDR_BURST,
+output logic                MASTER_RD_ADDR_VALID,
+input  logic                MASTER_RD_ADDR_READY,
 input  logic [ID_WIDTH-1:0] MASTER_RD_BACK_ID   ,
-input  logic [31:0]  MASTER_RD_DATA      ,
-input  logic [ 1:0]  MASTER_RD_DATA_RESP ,
-input  logic         MASTER_RD_DATA_LAST ,
-input  logic         MASTER_RD_DATA_VALID,
-output logic         MASTER_RD_DATA_READY 
+input  logic [31:0]         MASTER_RD_DATA      ,
+input  logic [ 1:0]         MASTER_RD_DATA_RESP ,
+input  logic                MASTER_RD_DATA_LAST ,
+input  logic                MASTER_RD_DATA_VALID,
+output logic                MASTER_RD_DATA_READY 
     
 );
 
@@ -114,7 +114,7 @@ wire rd_channel_buff_full  = ((rd_channel_wrptr ^ rd_channel_rdptr) == {1'b1,{(B
 wire rd_channel_buff_empty = (rd_channel_wrptr == rd_channel_rdptr);
 
 // 读数据队列 - 暂存从slave返回的数据
-localparam RD_DATA_QUEUE_WIDTH = 8;
+localparam RD_DATA_QUEUE_WIDTH = 15;
 reg [31:0] rd_data_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
 reg [ID_WIDTH-1:0] rd_data_id_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
 reg [1:0] rd_data_resp_queue[2**RD_DATA_QUEUE_WIDTH-1:0];
@@ -337,7 +337,13 @@ initial begin
 end
 
 always @(negedge MASTER_CLK) begin
-    MASTER_RD_DATA_READY <= (1+{$random}%(31) <= rd_data_capcity);
+    // 只有当有未完成的读地址任务时，MASTER_RD_DATA_READY才会根据能力随机拉高
+    // 否则总是拉低
+    if (!rd_channel_buff_empty) begin
+        MASTER_RD_DATA_READY <= 1;
+    end else begin
+        MASTER_RD_DATA_READY <= 0;
+    end
 end
 assign MASTER_WR_BACK_READY = 1;
 

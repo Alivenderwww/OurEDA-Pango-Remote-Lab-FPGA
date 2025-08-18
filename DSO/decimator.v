@@ -18,7 +18,9 @@ always @(posedge ad_clk or negedge rstn) begin
     if(!rstn)
         deci_cnt <= 10'd0;
     else
-        if(deci_cnt == deci_rate-1)
+        if(deci_rate == 0)
+            deci_cnt <= 10'd0;
+        else if(deci_cnt == deci_rate-1)
             deci_cnt <= 10'd0;
         else
             deci_cnt <= deci_cnt + 1'b1;
@@ -29,7 +31,9 @@ always @(posedge ad_clk or negedge rstn) begin
     if(!rstn)
         deci_valid <= 1'b0;
     else
-        if(deci_cnt == deci_rate-1)
+        if(deci_rate == 0)
+            deci_valid <= 1'b1;
+        else if(deci_cnt == deci_rate-1)
             deci_valid <= 1'b1;
         else
             deci_valid <= 1'b0;    

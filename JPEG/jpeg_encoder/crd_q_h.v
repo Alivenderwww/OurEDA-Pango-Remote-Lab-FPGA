@@ -37,7 +37,7 @@
 
 module crd_q_h(clk, rst, enable, data_in,
 JPEG_bitstream, data_ready, cr_orc,  
-end_of_block_empty);
+end_of_block_empty, CR_Quantizer);
 input		clk;
 input		rst;
 input		enable;
@@ -46,6 +46,7 @@ output  [31:0]  JPEG_bitstream;
 output		data_ready;
 output [4:0] cr_orc;
 output	end_of_block_empty;
+output [13*8*8 - 1:0] CR_Quantizer; // 13 bits per quantized Cr value, 8x8 block
 
  
 wire	dct_enable, quantizer_enable;
@@ -120,7 +121,7 @@ wire [10:0] Q81, Q82, Q83, Q84, Q85, Q86, Q87, Q88;
 	.Q61(Q61), .Q62(Q62), .Q63(Q63), .Q64(Q64), .Q65(Q65), .Q66(Q66), .Q67(Q67), .Q68(Q68),
 	.Q71(Q71), .Q72(Q72), .Q73(Q73), .Q74(Q74), .Q75(Q75), .Q76(Q76), .Q77(Q77), .Q78(Q78), 
 	.Q81(Q81), .Q82(Q82), .Q83(Q83), .Q84(Q84), .Q85(Q85), .Q86(Q86), .Q87(Q87), .Q88(Q88),
-	.out_enable(quantizer_enable));
+	.out_enable(quantizer_enable), .CR_Quantizer(CR_Quantizer));
 
 	cr_huff u10(.clk(clk), .rst(rst), .enable(quantizer_enable), 
 	.Cr11(Q11), .Cr12(Q21), .Cr13(Q31), .Cr14(Q41), .Cr15(Q51), .Cr16(Q61), .Cr17(Q71), .Cr18(Q81), 

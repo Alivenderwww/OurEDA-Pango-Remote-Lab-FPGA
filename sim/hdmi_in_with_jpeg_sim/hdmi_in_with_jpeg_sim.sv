@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ns / 10 fs 
 module hdmi_in_with_jpeg_sim ();
 
 localparam M_WIDTH  = 2;
@@ -67,6 +67,26 @@ wire [(2**S_WIDTH-1):0]                    S_RD_DATA_LAST ;
 wire [(2**S_WIDTH-1):0]                    S_RD_DATA_VALID;
 wire [(2**S_WIDTH-1):0]                    S_RD_DATA_READY;
 
+// 新的寄存器地址定义
+localparam [31:0]
+    ADDR_CAPTURE_RD_CTRL        = 32'h1000_0000,
+    ADDR_CAPTURE_WR_CTRL        = 32'h1000_0001,
+
+    ADDR_START_WRITE_ADDR0      = 32'h1000_0002,
+    ADDR_END_WRITE_ADDR0        = 32'h1000_0003,
+    ADDR_START_WRITE_ADDR1      = 32'h1000_0004,
+    ADDR_END_WRITE_ADDR1        = 32'h1000_0005,
+    ADDR_START_READ_ADDR0       = 32'h1000_0006,
+    ADDR_END_READ_ADDR0         = 32'h1000_0007,
+
+    ADDR_HDMI_NOTREADY          = 32'h1000_0008,
+    ADDR_HDMI_HEIGHT_WIDTH      = 32'h1000_0009,
+
+    ADDR_JPEG_HEIGHT_WIDTH      = 32'h1000_000A,
+    ADDR_JPEG_ADD_NEED_FRAME_NUM= 32'h1000_000B,
+    ADDR_JPEG_FRAME_SAVE_NUM    = 32'h1000_000C,
+    ADDR_FIFO_FRAME_INFO        = 32'h1000_000D;
+
 wire [0:(2**M_WIDTH-1)] [4:0] M_fifo_empty_flag;
 wire [0:(2**S_WIDTH-1)] [4:0] S_fifo_empty_flag;
 
@@ -78,14 +98,22 @@ reg         hdmi_in_vsync;
 reg [23:0]  hdmi_in_rgb;
 reg         hdmi_in_de;
 
-// JPEG encoder clock
-reg         jpeg_encoder_clk;
-
 // HDMI control variables
 reg         hdmi_enable;
 reg [11:0]  hdmi_frame_width;
 reg [11:0]  hdmi_frame_height;
 reg [31:0]  hdmi_pixel_count;
+
+// Hex file reader variables - DYNAMIC PARAMETERS (Updated by Python script)
+parameter VIDEO_WIDTH = 640;    // Python script will update this
+parameter VIDEO_HEIGHT = 480;   // Python script will update this  
+parameter VIDEO_TOTAL_PIXELS = 307200; // Python script will update this
+
+reg [23:0] video_hex_data [0:VIDEO_TOTAL_PIXELS-1]; // Dynamic array size
+integer hex_pixel_index = 0;
+integer total_hex_pixels = 0;
+integer frame_pixel_count = 0; // 单帧像素数量
+reg hex_file_loaded = 0;
 
 // HDMI timing parameters for 1080p60Hz
 localparam  H_SYNC_PULSE = 44;    // 水平同步脉冲
@@ -99,18 +127,19 @@ localparam  V_FRONT_PORCH = 4;    // 垂直前沿
 reg [31:0]  digital_in;
 
 reg  BUS_CLK    ;
+reg  ddr_ref_clk;
 reg  BUS_RSTN   ;
 
 // Clock generation
-always #8.3 BUS_CLK = ~BUS_CLK;           // 33.33MHz bus clock
-always #3.367 hdmi_in_clk = ~hdmi_in_clk; // 148.5MHz HDMI pixel clock for 1080p60Hz
-always #3.333 jpeg_encoder_clk = ~jpeg_encoder_clk; // 200MHz JPEG encoder clock
+always #10 ddr_ref_clk = ~ddr_ref_clk;           // 33.33MHz bus clock
+always #8 BUS_CLK = ~BUS_CLK;           // 33.33MHz bus clock
+always #8 hdmi_in_clk = ~hdmi_in_clk; // 148.5MHz HDMI pixel clock for 1080p60Hz
 
 initial begin
     // Initialize clocks
     BUS_CLK = 0;
+    ddr_ref_clk = 0;
     hdmi_in_clk = 0;
-    jpeg_encoder_clk = 0;
     
     // Initialize reset signals
     BUS_RSTN = 0;
@@ -118,8 +147,8 @@ initial begin
     
     // Initialize HDMI control signals
     hdmi_enable = 0;
-    hdmi_frame_width = 1920;   
-    hdmi_frame_height = 1080;  
+    hdmi_frame_width = VIDEO_WIDTH;   // Use dynamic parameter
+    hdmi_frame_height = VIDEO_HEIGHT; // Use dynamic parameter  
     
     // Initialize HDMI video signals
     hdmi_in_hsync = 0;
@@ -129,10 +158,56 @@ initial begin
     
     // Initialize counters
     hdmi_pixel_count = 0;
+    hex_pixel_index = 0;
+    frame_pixel_count = hdmi_frame_width * hdmi_frame_height; // 计算单帧像素数量
     
     // Release resets after some time
-    #50000 BUS_RSTN = 1;
+    #5000000 BUS_RSTN = 1;
     #51000 hdmi_in_rstn = 1;
+end
+
+// 读取hex文件的初始化任务
+initial begin
+    integer file_handle, scan_result;
+    integer pixel_count = 0;
+    reg [23:0] pixel_data;
+    string line;
+    
+    // 等待复位释放
+    wait(hdmi_in_rstn);
+    #1000;
+    
+    file_handle = $fopen("../output/video_data.hex", "r");
+    if (file_handle == 0) begin
+        $display("Warning: Cannot open video_data.hex file, using default test pattern");
+        hex_file_loaded = 0;
+    end else begin
+        $display("Loading video hex data...");
+        $display("Frame size: %dx%d = %d pixels", hdmi_frame_width, hdmi_frame_height, frame_pixel_count);
+        
+        // 读取hex数据
+        while (!$feof(file_handle) && pixel_count < VIDEO_TOTAL_PIXELS) begin
+            scan_result = $fgets(line, file_handle);
+            if (scan_result > 0) begin
+                scan_result = $sscanf(line, "%h", pixel_data);
+                if (scan_result == 1) begin
+                    video_hex_data[pixel_count] = pixel_data;
+                    pixel_count = pixel_count + 1;
+                end
+            end
+        end
+        
+        $fclose(file_handle);
+        total_hex_pixels = pixel_count;
+        hex_file_loaded = 1;
+        
+        $display("Video hex data loaded: %d pixels", total_hex_pixels);
+        if (total_hex_pixels >= frame_pixel_count) begin
+            $display("Sufficient data for %d complete frames", total_hex_pixels / frame_pixel_count);
+        end else begin
+            $display("Warning: Only partial frame data available");
+        end
+    end
 end
 
 initial begin
@@ -152,14 +227,19 @@ initial begin
     repeat(100) @(posedge BUS_CLK);
     
     $display("[%t] Starting HDMI and JPEG system test", $time);
-    $display("HDMI 1080p60Hz timing parameters:");
+    $display("=== HDMI Dynamic Video Timing Parameters ===");
     $display("  Horizontal: Active=%d, Front=%d, Sync=%d, Back=%d, Total=%d", 
-             1920, H_FRONT_PORCH, H_SYNC_PULSE, H_BACK_PORCH, 
-             1920 + H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH);
+             VIDEO_WIDTH, H_FRONT_PORCH, H_SYNC_PULSE, H_BACK_PORCH, 
+             VIDEO_WIDTH + H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH);
     $display("  Vertical: Active=%d, Front=%d, Sync=%d, Back=%d, Total=%d", 
-             1080, V_FRONT_PORCH, V_SYNC_PULSE, V_BACK_PORCH, 
-             1080 + V_FRONT_PORCH + V_SYNC_PULSE + V_BACK_PORCH);
+             VIDEO_HEIGHT, V_FRONT_PORCH, V_SYNC_PULSE, V_BACK_PORCH, 
+             VIDEO_HEIGHT + V_FRONT_PORCH + V_SYNC_PULSE + V_BACK_PORCH);
     $display("  Pixel Clock: 148.5MHz (period = 6.734ns)");
+    $display("=== HDMI Signal Definition ===");
+    $display("  - DE high: RGB data valid");
+    $display("  - VSYNC high: New frame start");
+    $display("  - HSYNC high: New line start");
+    $display("==========================================");
     
     // 执行HDMI AXI Slave配置序列
     hdmi_axi_slave_test_sequence();
@@ -303,18 +383,16 @@ DDR_axi_sim S0(
 	.DDR_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[0]  )
 );
 
-hdmi_in_axi_slave M1S1(
+streaming_axi_master_slave M1S1(
 	.clk                  	( BUS_CLK               ),
 	.rstn                 	( BUS_RSTN              ),
 
 	.hdmi_in_clk          	( hdmi_in_clk           ),
 	.hdmi_in_rstn         	( hdmi_in_rstn          ),
-	.hdmi_in_hsync        	( hdmi_in_hsync         ),
 	.hdmi_in_vsync        	( hdmi_in_vsync         ),
-	.hdmi_in_rgb          	( hdmi_in_rgb           ),
+	.hdmi_in_hsync        	( hdmi_in_hsync         ),
 	.hdmi_in_de           	( hdmi_in_de            ),
-
-	.jpeg_encoder_clk     	( jpeg_encoder_clk      ),
+	.hdmi_in_rgb          	( hdmi_in_rgb           ),
 
 	.MASTER_CLK           	( M_CLK            [1]),
 	.MASTER_RSTN          	( M_RSTN           [1]),
@@ -516,183 +594,376 @@ always @(posedge hdmi_in_clk or negedge hdmi_in_rstn) begin
     // 其他时候由任务控制信号
 end
 
-// 生成单帧视频的任务
+// 生成单帧视频的任务 - 1080p60Hz简化时序
 task automatic hdmi_generate_single_frame();
-    automatic int x, y, line_total, frame_total;
-    
-    line_total = H_SYNC_PULSE + H_BACK_PORCH + hdmi_frame_width + H_FRONT_PORCH;
-    frame_total = V_SYNC_PULSE + V_BACK_PORCH + hdmi_frame_height + V_FRONT_PORCH;
+    automatic int x, y;
     
     hdmi_pixel_count = 0;
     
-    for (int frame_line = 0; frame_line < frame_total; frame_line++) begin
-        // 垂直同步期
-        if (frame_line < V_SYNC_PULSE) begin
-            hdmi_in_vsync = 1;
-            hdmi_in_hsync = 0;
-            hdmi_in_de = 0;
-            hdmi_in_rgb = 24'h000000;
-            repeat(line_total) @(posedge hdmi_in_clk);
-        end
-        // 垂直后沿
-        else if (frame_line < V_SYNC_PULSE + V_BACK_PORCH) begin
-            hdmi_in_vsync = 0;
-            hdmi_in_hsync = 0;
-            hdmi_in_de = 0;
-            hdmi_in_rgb = 24'h000000;
-            repeat(line_total) @(posedge hdmi_in_clk);
-        end
-        // 有效视频行
-        else if (frame_line < V_SYNC_PULSE + V_BACK_PORCH + hdmi_frame_height) begin
-            y = frame_line - V_SYNC_PULSE - V_BACK_PORCH;
-            hdmi_in_vsync = 0;
-            
-            // 行同步
-            hdmi_in_hsync = 1;
-            hdmi_in_de = 0;
-            hdmi_in_rgb = 24'h000000;
-            repeat(H_SYNC_PULSE) @(posedge hdmi_in_clk);
-            
-            // 行后沿
-            hdmi_in_hsync = 0;
-            repeat(H_BACK_PORCH) @(posedge hdmi_in_clk);
-            
-            // 有效像素数据
-            hdmi_in_de = 1;
-            for (x = 0; x < hdmi_frame_width; x++) begin
-                hdmi_in_rgb = generate_test_pixel(x, y);
-                hdmi_pixel_count++;
-                @(posedge hdmi_in_clk);
-            end
-            
-            // 行前沿
-            hdmi_in_de = 0;
-            hdmi_in_rgb = 24'h000000;
-            repeat(H_FRONT_PORCH) @(posedge hdmi_in_clk);
-        end
-        // 垂直前沿
-        else begin
-            hdmi_in_vsync = 0;
-            hdmi_in_hsync = 0;
-            hdmi_in_de = 0;
-            hdmi_in_rgb = 24'h000000;
-            repeat(line_total) @(posedge hdmi_in_clk);
+    $display("[%t] HDMI: Starting new frame - %dx%d", 
+             $time, hdmi_frame_width, hdmi_frame_height);
+    
+    // 帧同步 - vsync拉高V_SYNC_PULSE个时钟
+    hdmi_in_vsync = 1;  // 垂直同步开始，表示新帧
+    hdmi_in_hsync = 0;  // vsync期间hsync保持低电平
+    hdmi_in_de = 0;     // 无有效数据
+    hdmi_in_rgb = 24'h000000;
+    repeat(V_SYNC_PULSE) @(posedge hdmi_in_clk);
+    
+    // vsync结束，开始发送视频数据行
+    hdmi_in_vsync = 0;
+    
+    // 发送所有视频行
+    for (y = 0; y < hdmi_frame_height; y++) begin
+        if (!hdmi_enable) break; // 允许中途停止
+        
+        // 行同步 - hsync拉高表示新行开始
+        hdmi_in_hsync = 1;
+        hdmi_in_de = 0;
+        hdmi_in_rgb = 24'h000000;
+        repeat(H_SYNC_PULSE) @(posedge hdmi_in_clk);
+        
+        // hsync结束，开始发送有效像素数据
+        hdmi_in_hsync = 0;
+        
+        // 水平后沿 (可选的消隐期)
+        hdmi_in_de = 0;
+        hdmi_in_rgb = 24'h000000;
+        repeat(H_BACK_PORCH) @(posedge hdmi_in_clk);
+        
+        // 有效像素数据 - DE高电平表示RGB有效
+        hdmi_in_de = 1;  // 数据使能有效
+        for (x = 0; x < hdmi_frame_width; x++) begin
+            hdmi_in_rgb = generate_test_pixel(x, y);
+            hdmi_pixel_count++;
+            @(posedge hdmi_in_clk);
         end
         
-        if (!hdmi_enable) break; // 允许中途停止
+        // 行结束 - 水平前沿
+        hdmi_in_de = 0;  // 数据使能无效
+        hdmi_in_rgb = 24'h000000;
+        repeat(H_FRONT_PORCH) @(posedge hdmi_in_clk);
     end
+    
+    // 帧结束 - 垂直前沿
+    hdmi_in_de = 0;
+    hdmi_in_rgb = 24'h000000;
+    repeat(V_FRONT_PORCH) @(posedge hdmi_in_clk);
     
     $display("[%t] HDMI: Frame complete - %d pixels sent", $time, hdmi_pixel_count);
 endtask
 
 // 生成测试像素数据
 function automatic [23:0] generate_test_pixel(input [11:0] x, y);
-    automatic logic [7:0] r, g, b;
-    r = (x * 256) / hdmi_frame_width;
-    g = (y * 256) / hdmi_frame_height;
-    b = ((x + y) * 256) / (hdmi_frame_width + hdmi_frame_height);
-    return {r, g, b};
+    automatic logic [23:0] pixel_data;
+    begin
+        pixel_data = video_hex_data[hex_pixel_index % total_hex_pixels];
+        hex_pixel_index = hex_pixel_index + 1;
+        return pixel_data;
+    end
 endfunction
 
-// 简化的调试监控 - 使用SystemVerilog接口监控
+// 简化的调试监控
 always_ff @(posedge hdmi_in_clk) begin
-    // 监控像素数据
-    if (hdmi_in_de && hdmi_enable && hdmi_pixel_count % 5000 == 0) begin
+    // 监控像素数据 (只有DE有效时才是有效像素)
+    if (hdmi_in_de && hdmi_enable && hdmi_pixel_count % 50000 == 0) begin
         $display("[%t] HDMI: %d pixels sent - RGB=%h", $time, hdmi_pixel_count, hdmi_in_rgb);
     end
 end
 
-// 帧同步监控
-always @(posedge hdmi_in_vsync) if (hdmi_enable)
-    $display("[%t] HDMI: New frame started", $time);
+// HDMI时序监控 - 简化版本
+always @(posedge hdmi_in_vsync) begin
+    if (hdmi_enable)
+        $display("[%t] HDMI: VSYNC=1 - New frame started", $time);
+end
     
-always @(negedge hdmi_in_vsync) if (hdmi_enable)
-    $display("[%t] HDMI: Frame sync ended", $time);
+always @(negedge hdmi_in_vsync) begin
+    if (hdmi_enable)
+        $display("[%t] HDMI: VSYNC=0 - Frame sync ended", $time);
+end
 
-// HDMI AXI Slave测试序列
+always @(posedge hdmi_in_hsync) begin
+    if (hdmi_enable && !hdmi_in_vsync)
+        $display("[%t] HDMI: HSYNC=1 - New line started", $time);
+end
+
+// DE信号监控
+always @(posedge hdmi_in_de) begin
+    if (hdmi_enable)
+        $display("[%t] HDMI: DE=1 - Active video data starts", $time);
+end
+
+always @(negedge hdmi_in_de) begin
+    if (hdmi_enable)
+        $display("[%t] HDMI: DE=0 - Active video data ends", $time);
+end
+
+// HDMI AXI Slave测试序列 - 新寄存器配置模式
 task automatic hdmi_axi_slave_test_sequence();
     reg [31:0] read_data;
     reg [M_ID-1:0] read_id;
     reg [1:0] read_resp;
     reg data_valid;
-    reg [31:0] frame_count;
-    reg [31:0] burst_len;
+    reg [31:0] hdmi_width, hdmi_height;
+    reg [31:0] bitstream_size;
+    reg [31:0] hdmi_total_size;
+    reg [31:0] read_addr;
+    reg [31:0] remaining_size;
+    reg [31:0] current_burst_size;
+    integer jpeg_file;
+    integer i, j;
     
-    $display("[%t] Starting HDMI AXI Slave test sequence", $time);
-    
-    // 步骤1: 写寄存器10000000 = 00000001 (开启捕获)
-    $display("[%t] Step 1: Enable capture", $time);
-    #5000 M0.send_wr_addr(2'b00, 32'h10000000, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'h00000001, 4'b1111);
-    
-    // 步骤2: 写寄存器10000001 = 00000000 (设置DDR首地址)
-    $display("[%t] Step 2: Set DDR start address", $time);
-    #5000 M0.send_wr_addr(2'b00, 32'h10000001, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'h00000000, 4'b1111);
-    
-    // 步骤3: 写寄存器10000002 = 0000FFFF (设置DDR末地址)
-    $display("[%t] Step 3: Set DDR end address", $time);
-    #5000 M0.send_wr_addr(2'b00, 32'h10000002, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'h00004FFF, 4'b1111);
-    
-    // 步骤4: 写寄存器10000003 = FFFFFFFF
-    $display("[%t] Step 4: Write register 10000003", $time);
-    #5000 M0.send_wr_addr(2'b00, 32'h10000003, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'hFFFFFFFF, 4'b1111);
-    
-    // 步骤5: 写寄存器10000004 = 50 (捕获50帧)
-    $display("[%t] Step 5: Set frame count to 50", $time);
-    #5000 M0.send_wr_addr(2'b00, 32'h10000004, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'd50, 4'b1111);
+    $display("[%t] Starting HDMI AXI Slave test sequence - New Register Mode", $time);
     
     // 启动HDMI视频流生成
     $display("[%t] Starting HDMI video stream for capture", $time);
-    hdmi_start(1920, 1080);
+    hdmi_start(VIDEO_WIDTH, VIDEO_HEIGHT);
+
+    #300000;
     
-    // 步骤6: 轮询读寄存器10000005直至非零 (等待编码完成)
-    $display("[%t] Step 6: Polling for encoder completion", $time);
-    frame_count = 0;
-    while (frame_count == 0) begin
-        #5000 M0.send_rd_addr(2'b01, 32'h10000005, 8'd0, 2'b00);
-        // 等待读数据返回并从队列获取
-        repeat(100) @(posedge BUS_CLK); // 等待读操作完成
+    // 计算HDMI图像总大小 (像素数 * 4/3，因为32位字存储24位像素)
+    hdmi_total_size = (VIDEO_WIDTH * VIDEO_HEIGHT);
+    
+    // 步骤1: 配置地址范围 - WRITE_ADDR0 (HDMI帧缓存)
+    $display("[%t] Step 1: Configure WRITE_ADDR0 range", $time);
+    M2.send_wr_addr(2'b00, ADDR_START_WRITE_ADDR0, 8'd0, 2'b00);
+    M2.send_wr_data(32'h00000000, 4'b1111);
+    
+    M2.send_wr_addr(2'b00, ADDR_END_WRITE_ADDR0, 8'd0, 2'b00);
+    M2.send_wr_data(hdmi_total_size - 1, 4'b1111);
+    
+    // 步骤2: 配置地址范围 - WRITE_ADDR1 (JPEG输出缓存)
+    $display("[%t] Step 2: Configure WRITE_ADDR1 range", $time);
+    M2.send_wr_addr(2'b00, ADDR_START_WRITE_ADDR1, 8'd0, 2'b00);
+    M2.send_wr_data(32'h0008_0000, 4'b1111);
+    
+    M2.send_wr_addr(2'b00, ADDR_END_WRITE_ADDR1, 8'd0, 2'b00);
+    M2.send_wr_data(32'h000F_FFFF, 4'b1111);
+    
+    // 步骤3: 配置地址范围 - READ_ADDR0 (与WRITE0相同)
+    $display("[%t] Step 3: Configure READ_ADDR0 range", $time);
+    M2.send_wr_addr(2'b00, ADDR_START_READ_ADDR0, 8'd0, 2'b00);
+    M2.send_wr_data(32'h00000000, 4'b1111);
+    
+    M2.send_wr_addr(2'b00, ADDR_END_READ_ADDR0, 8'd0, 2'b00);
+    M2.send_wr_data(hdmi_total_size - 1, 4'b1111);
+    
+    // 步骤4: 配置CAPTURE_RD_CTRL = 00000001 (开启读取)
+    $display("[%t] Step 4: Enable capture read control", $time);
+    M2.send_wr_addr(2'b00, ADDR_CAPTURE_RD_CTRL, 8'd0, 2'b00);
+    M2.send_wr_data(32'h00000001, 4'b1111);
+    
+    // 步骤5: 等待HDMI_NOTREADY直到为0 (HDMI准备就绪)
+    $display("[%t] Step 5: Wait for HDMI ready", $time);
+    read_data = 32'hFFFFFFFF;
+    while (read_data != 0) begin
+        #5000 M0.send_rd_addr(2'b01, ADDR_HDMI_NOTREADY, 8'd0, 2'b00);
+        repeat(100) @(posedge BUS_CLK);
         #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
         if (data_valid) begin
-            frame_count = read_data;
-            $display("[%t] Encoder status: %d frames ready", $time, frame_count);
+            $display("[%t] HDMI Status: NOTREADY = %d", $time, read_data);
         end
-        if (frame_count == 0) begin
-            #1000000; // 等待10us再次检查
+        if (read_data != 0) begin
+            #1000000; // 等待1ms再次检查
         end
     end
     
-    // // 停止HDMI流
-    // hdmi_stop();
+    // 步骤6: 读取HDMI长宽信息
+    $display("[%t] Step 6: Read HDMI dimensions", $time);
+    #5000 M0.send_rd_addr(2'b01, ADDR_HDMI_HEIGHT_WIDTH, 8'd0, 2'b00);
+    repeat(100) @(posedge BUS_CLK);
+    #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+    if (data_valid) begin
+        hdmi_width = read_data[15:0];
+        hdmi_height = read_data[31:16];
+        $display("[%t] HDMI Dimensions: Width=%d, Height=%d", $time, hdmi_width, hdmi_height);
+    end
     
-    // 步骤7: 读寄存器10000006获取帧信息
-    $display("[%t] Step 7: Reading frame information", $time);
-    burst_len = frame_count * 2 - 1; // 每帧2个32位数据(长宽各1个，size 1个实际是2个32位)
-    #5000 M0.send_rd_addr(2'b01, 32'h10000006, burst_len[7:0], 2'b00); // burst类型00，突发长度
+    // 步骤7: 将获取到的长宽写入JPEG_HEIGHT_WIDTH
+    $display("[%t] Step 7: Set JPEG dimensions", $time);
+    #5000 M0.send_wr_addr(2'b00, ADDR_JPEG_HEIGHT_WIDTH, 8'd0, 2'b00);
+    #5000 M0.send_wr_data(read_data, 4'b1111); // 直接使用HDMI的长宽数据
     
-    // 等待并读取所有帧信息
-    repeat(200) @(posedge BUS_CLK); // 等待突发读完成
+    // 步骤8: 配置CAPTURE_RD_CTRL = 00000003 (开启读取+写入)
+    $display("[%t] Step 8: Enable capture read+write control", $time);
+    #5000 M0.send_wr_addr(2'b00, ADDR_CAPTURE_RD_CTRL, 8'd0, 2'b00);
+    #5000 M0.send_wr_data(32'h00000003, 4'b1111);
     
-    // 从队列中获取所有帧信息数据
-    for (int i = 0; i < frame_count * 2; i++) begin
+    // 步骤9: 配置CAPTURE_WR_CTRL = 00000001 (开启写入控制)
+    $display("[%t] Step 9: Enable capture write control", $time);
+    #5000 M0.send_wr_addr(2'b00, ADDR_CAPTURE_WR_CTRL, 8'd0, 2'b00);
+    #5000 M0.send_wr_data(32'h00000001, 4'b1111);
+    
+    // 步骤10: 配置JPEG_ADD_NEED_FRAME_NUM = 1 (捕获1帧)
+    $display("[%t] Step 10: Set frame count to 1", $time);
+    #10000000 M0.send_wr_addr(2'b00, ADDR_JPEG_ADD_NEED_FRAME_NUM, 8'd0, 2'b00);
+    #5000 M0.send_wr_data(32'd1, 4'b1111);
+    
+    // 步骤11: 等待JPEG_FRAME_SAVE_NUM不为0 (JPEG编码完成)
+    $display("[%t] Step 11: Wait for JPEG encoding completion", $time);
+    read_data = 0;
+    while (read_data == 0) begin
+        #5000 M0.send_rd_addr(2'b01, ADDR_JPEG_FRAME_SAVE_NUM, 8'd0, 2'b00);
+        repeat(100) @(posedge BUS_CLK);
         #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
         if (data_valid) begin
-            if (i % 2 == 0) begin
-                // 偶数索引：长宽信息
-                $display("[%t] Frame %d: Width=%d, Height=%d", $time, i/2, read_data[15:0], read_data[31:16]);
-            end else begin
-                // 奇数索引：size信息
-                $display("[%t] Frame %d: Size=%d bytes", $time, i/2, read_data);
-            end
+            $display("[%t] JPEG Status: FRAME_SAVE_NUM = %d", $time, read_data);
+        end
+        if (read_data == 0) begin
+            #1000000; // 等待1ms再次检查
+        end
+    end
+    
+    // 步骤12: 读取FIFO_FRAME_INFO获取bitstream size (突发长度为0)
+    $display("[%t] Step 12: Read bitstream size from FIFO", $time);
+    #5000 M0.send_rd_addr(2'b01, ADDR_FIFO_FRAME_INFO, 8'd0, 2'b00); // 突发长度为0
+    repeat(100) @(posedge BUS_CLK);
+    #5000 M0.get_rd_data_from_queue(bitstream_size, read_id, read_resp, data_valid);
+    if (data_valid) begin
+        $display("[%t] Bitstream Size: %d words (32-bit units)", $time, bitstream_size);
+        
+        // 步骤13: 从JPEG缓存区读取编码数据并保存
+        $display("[%t] Step 13: Reading JPEG bitstream data", $time);
+        
+        // 打开输出文件
+        jpeg_file = $fopen("../output/jpeg_data_new.hex", "w");
+        if (jpeg_file == 0) begin
+            $display("Error: Cannot create ../output/jpeg_data_new.hex file");
         end else begin
-            $display("[%t] Warning: Failed to read frame info %d", $time, i);
+            // 分段读取JPEG bitstream数据（支持大于255个字的数据）
+            read_addr = 32'h0008_0000;
+            remaining_size = bitstream_size;
+            
+            while (remaining_size > 0) begin
+                // 计算当前突发的长度 (AXI突发长度限制为最大255)
+                if (remaining_size > 256) begin
+                    current_burst_size = 256;
+                end else begin
+                    current_burst_size = remaining_size;
+                end
+                
+                $display("[%t] Reading burst: addr=0x%08x, size=%d words", 
+                         $time, read_addr, current_burst_size);
+                
+                // 发送读地址 (突发长度 = size - 1)
+                #5000 M0.send_rd_addr(2'b00, read_addr, current_burst_size - 1, 2'b01); // INCR突发
+                
+                // 等待数据返回
+                repeat(300) @(posedge BUS_CLK);
+                
+                // 读取当前突发的所有数据
+                for (j = 0; j < current_burst_size; j++) begin
+                    #5 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+                    if (data_valid) begin
+                        $fwrite(jpeg_file, "%08X\n", read_data);
+                    end else begin
+                        $display("[%t] Warning: Failed to read JPEG bitstream word at address 0x%08x + %d", 
+                                $time, read_addr, j);
+                    end
+                end
+                
+                // 更新地址和剩余大小
+                read_addr = read_addr + current_burst_size;
+                remaining_size = remaining_size - current_burst_size;
+                
+                $display("[%t] Burst completed. Remaining: %d words", $time, remaining_size);
+            end
+            
+            $fclose(jpeg_file);
+            $display("[%t] JPEG bitstream saved to ../output/jpeg_data_new.hex", $time);
+            $display("[%t] Total %d words (32-bit) written", $time, bitstream_size);
+        end
+    end else begin
+        $display("[%t] Error: Failed to read bitstream size", $time);
+    end
+    
+    ///////第二次捕获
+
+
+    // 步骤14: 配置JPEG_ADD_NEED_FRAME_NUM = 1 (捕获1帧)
+    $display("[%t] Step 14: Set frame count to 5", $time);
+    #5000000 M0.send_wr_addr(2'b00, ADDR_JPEG_ADD_NEED_FRAME_NUM, 8'd0, 2'b00);
+    #5000 M0.send_wr_data(32'd5, 4'b1111);
+    
+    // 步骤15: 等待JPEG_FRAME_SAVE_NUM不为0 (JPEG编码完成)
+    $display("[%t] Step 15: Wait for JPEG encoding completion", $time);
+    read_data = 0;
+    while (read_data == 0) begin
+        #5000 M0.send_rd_addr(2'b01, ADDR_JPEG_FRAME_SAVE_NUM, 8'd0, 2'b00);
+        repeat(100) @(posedge BUS_CLK);
+        #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+        if (data_valid) begin
+            $display("[%t] JPEG Status: FRAME_SAVE_NUM = %d", $time, read_data);
+        end
+        if (read_data == 0) begin
+            #1000000; // 等待1ms再次检查
         end
     end
     
-    $display("[%t] HDMI AXI Slave test sequence completed", $time);
+    // 步骤16: 读取FIFO_FRAME_INFO获取bitstream size (突发长度为0)
+    $display("[%t] Step 16: Read bitstream size from FIFO", $time);
+    #5000 M0.send_rd_addr(2'b01, ADDR_FIFO_FRAME_INFO, 8'd0, 2'b00); // 突发长度为0
+    repeat(100) @(posedge BUS_CLK);
+    #5000 M0.get_rd_data_from_queue(bitstream_size, read_id, read_resp, data_valid);
+    if (data_valid) begin
+        $display("[%t] Bitstream Size: %d words (32-bit units)", $time, bitstream_size);
+        
+        // 步骤17: 从JPEG缓存区读取编码数据并保存
+        $display("[%t] Step 17: Reading JPEG bitstream data", $time);
+        
+        // 打开输出文件
+        jpeg_file = $fopen("../output/jpeg_data_new2.hex", "w");
+        if (jpeg_file == 0) begin
+            $display("Error: Cannot create ../output/jpeg_data_new2.hex file");
+        end else begin
+            // 分段读取JPEG bitstream数据（支持大于255个字的数据）
+            // read_addr = 32'h0008_0000;
+            remaining_size = bitstream_size;
+            
+            while (remaining_size > 0) begin
+                // 计算当前突发的长度 (AXI突发长度限制为最大255)
+                if (remaining_size > 256) begin
+                    current_burst_size = 256;
+                end else begin
+                    current_burst_size = remaining_size;
+                end
+                
+                $display("[%t] Reading burst: addr=0x%08x, size=%d words", 
+                         $time, read_addr, current_burst_size);
+                
+                // 发送读地址 (突发长度 = size - 1)
+                #5000 M0.send_rd_addr(2'b00, read_addr, current_burst_size - 1, 2'b01); // INCR突发
+                
+                // 等待数据返回
+                repeat(300) @(posedge BUS_CLK);
+                
+                // 读取当前突发的所有数据
+                for (j = 0; j < current_burst_size; j++) begin
+                    #5 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+                    if (data_valid) begin
+                        $fwrite(jpeg_file, "%08X\n", read_data);
+                    end else begin
+                        $display("[%t] Warning: Failed to read JPEG bitstream word at address 0x%08x + %d", 
+                                $time, read_addr, j);
+                    end
+                end
+                
+                // 更新地址和剩余大小
+                read_addr = read_addr + current_burst_size;
+                remaining_size = remaining_size - current_burst_size;
+                
+                $display("[%t] Burst completed. Remaining: %d words", $time, remaining_size);
+            end
+            
+            $fclose(jpeg_file);
+            $display("[%t] JPEG bitstream saved to ../output/jpeg_data_new2.hex", $time);
+            $display("[%t] Total %d words (32-bit) written", $time, bitstream_size);
+        end
+    end else begin
+        $display("[%t] Error: Failed to read bitstream size", $time);
+    end
+    
+    $display("[%t] HDMI AXI Slave test sequence completed - New Register Mode", $time);
 endtask
+
 endmodule

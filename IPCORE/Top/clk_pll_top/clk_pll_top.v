@@ -25,10 +25,6 @@ module clk_pll_top (
     
     output wire clkout3,
     
-    output wire clkout4,
-    
-    output wire clkout5,
-    
     input wire clkin1,
     
     output wire lock           
@@ -44,39 +40,39 @@ module clk_pll_top (
     
     localparam integer STATIC_RATIOM    = 1; //@IPC int 1,128 
     
-    localparam real    STATIC_RATIO0    = 12.0; //@IPC int 1.0000,128.0000 
+    localparam real    STATIC_RATIO0    = 24.0; //@IPC int 1.0000,128.0000 
         
-    localparam integer STATIC_RATIO1    = 3; //@IPC int 1,128 
+    localparam integer STATIC_RATIO1    = 12; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO2    = 120; //@IPC int 1,128 
+    localparam integer STATIC_RATIO2    = 48; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO3    = 60; //@IPC int 1,128 
+    localparam integer STATIC_RATIO3    = 120; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO4    = 24; //@IPC int 1,128 
+    localparam integer STATIC_RATIO4    = 120; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO5    = 5; //@IPC int 1,128 
+    localparam integer STATIC_RATIO5    = 120; //@IPC int 1,128 
     
-    localparam integer STATIC_RATIO6    = 3; //@IPC int 1,128 
+    localparam integer STATIC_RATIO6    = 120; //@IPC int 1,128 
     
-    localparam real    STATIC_RATIOF    = 12.0; //@IPC int 1.0000,128.0000 
+    localparam real    STATIC_RATIOF    = 24.0; //@IPC int 1.0000,128.0000 
         
     localparam integer STATIC_RATIOPHY  = 24; //@IPC int 1,128 
     
-    localparam integer STATIC_DUTY0     = 12; //@IPC int 2,255
+    localparam integer STATIC_DUTY0     = 24; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY1     = 3; //@IPC int 2,255
+    localparam integer STATIC_DUTY1     = 12; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY2     = 120; //@IPC int 2,255
+    localparam integer STATIC_DUTY2     = 48; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY3     = 60; //@IPC int 2,255
+    localparam integer STATIC_DUTY3     = 120; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY4     = 24; //@IPC int 2,255
+    localparam integer STATIC_DUTY4     = 120; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY5     = 5; //@IPC int 2,255
+    localparam integer STATIC_DUTY5     = 120; //@IPC int 2,255
     
-    localparam integer STATIC_DUTY6     = 3; //@IPC int 2,255
+    localparam integer STATIC_DUTY6     = 120; //@IPC int 2,255
     
-    localparam integer STATIC_DUTYF     = 12; //@IPC int 2,255
+    localparam integer STATIC_DUTYF     = 24; //@IPC int 2,255
     
     localparam integer STATIC_DUTYPHY   = 2; //@IPC int 2,255
     
@@ -325,10 +321,10 @@ module clk_pll_top (
     	
     .CLKOUT3N       (               ),
     
-    .CLKOUT4        (clkout4        ),
+    .CLKOUT4        (               ),
+    
+    .CLKOUT5        (               ),
         
-    .CLKOUT5        (clkout5        ),
-            
     .CLKOUT6        (               ),
         
     .CLKOUTF        (               ),
