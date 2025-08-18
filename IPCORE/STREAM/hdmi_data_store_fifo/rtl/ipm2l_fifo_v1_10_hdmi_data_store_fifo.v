@@ -16,7 +16,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-module ipm2l_fifo_v1_10_jpeg_encoder_line_fifo #(
+module ipm2l_fifo_v1_10_hdmi_data_store_fifo #(
     parameter  c_CAS_MODE          = "18K"         ,   // "18K", "36K", "64K"
     parameter  c_WR_DEPTH_WIDTH    = 10            ,
     parameter  c_WR_DATA_WIDTH     = 32            ,
@@ -60,7 +60,7 @@ module ipm2l_fifo_v1_10_jpeg_encoder_line_fifo #(
 
 //**************************************************************************************************************
 
-ipm2l_sdpram_v1_10_jpeg_encoder_line_fifo
+ipm2l_sdpram_v1_10_hdmi_data_store_fifo
 #(
     .c_CAS_MODE             ( c_CAS_MODE            ),
     .c_WR_ADDR_WIDTH        ( c_WR_DEPTH_WIDTH      ),
@@ -100,7 +100,7 @@ ipm2l_sdpram_v1_10_jpeg_encoder_line_fifo
     .rd_addr_strobe         ( 1'b0                  )
 );
 
-ipm2l_fifo_ctrl_v1_1_jpeg_encoder_line_fifo #(
+ipm2l_fifo_ctrl_v1_1_hdmi_data_store_fifo #(
     .c_WR_DEPTH_WIDTH       ( c_WR_DEPTH_WIDTH      ),
     .c_RD_DEPTH_WIDTH       ( c_RD_DEPTH_WIDTH      ),
     .c_FIFO_TYPE            ( c_FIFO_TYPE           ),

@@ -183,7 +183,7 @@ assign B_WR_DATA_READY    = (BUS_RSTN_SYNC) && ~wr_data_fifo_almost_full;
 
 assign wr_data_fifo_rd_rst  =  (~SLAVE_RSTN_SYNC) || (~RD_SLAVE_RSTN_SYNC);
 assign wr_data_fifo_rd_en   = (~wr_data_fifo_rd_empty) && ((async_wr_data_fifo_data_dont_care) || (S_WR_DATA_VALID && S_WR_DATA_READY));
-assign {S_WR_DATA, S_WR_STRB, S_WR_DATA_LAST} = wr_data_fifo_rd_data & ({(32+4+1){S_WR_DATA_VALID}});
+assign {S_WR_DATA, S_WR_STRB, S_WR_DATA_LAST} = wr_data_fifo_rd_data;
 assign S_WR_DATA_VALID  = (SLAVE_RSTN_SYNC) && (~async_wr_data_fifo_data_dont_care);
 
 slave_async_wr_data_fifo slave_async_wr_data_fifo_inst(
@@ -227,7 +227,7 @@ assign S_RD_DATA_READY  = (SLAVE_RSTN_SYNC) && ~rd_data_fifo_almost_full;
 
 assign rd_data_fifo_rd_rst  =  (~BUS_RSTN_SYNC) || (~RD_BUS_RSTN_SYNC);
 assign rd_data_fifo_rd_en   = (~rd_data_fifo_rd_empty) && ((async_rd_data_fifo_data_dont_care) || (B_RD_DATA_VALID && B_RD_DATA_READY));
-assign {B_RD_BACK_ID, B_RD_DATA, B_RD_DATA_RESP, B_RD_DATA_LAST} = rd_data_fifo_rd_data & ({(4+32+2+1){B_RD_DATA_VALID}});
+assign {B_RD_BACK_ID, B_RD_DATA, B_RD_DATA_RESP, B_RD_DATA_LAST} = rd_data_fifo_rd_data;
 assign B_RD_DATA_VALID    = (BUS_RSTN_SYNC) && (~async_rd_data_fifo_data_dont_care);
 
 //BUS读数据通道<===>fifo写通道<===>fifo读通道<===>SLAVE读数据通道   !!!!这个通道反过来!!!!

@@ -16,17 +16,14 @@
 module jpeg_encode_info_fifo
    (
     
-    wr_clk          ,  // input write clock
-    wr_rst          ,  // input write reset
+    clk             ,  // sync fifo clock in
+    rst             ,  // sync fifo reset in
     
     wr_en           ,  // input write enable 1 active
     wr_data         ,  // input write data
     wr_full         ,  // output write full  flag 1 active
     
     wr_water_level  ,  // output write water level
-    
-    rd_clk          ,  // input read clock
-    rd_rst          ,  // input read reset
     
     rd_en           ,  // input read enable
     rd_data         ,  // output read data
@@ -44,7 +41,7 @@ localparam POWER_OPT = 0 ; // @IPC bool
 
 localparam RESET_TYPE = "ASYNC" ; // @IPC enum SYNC,ASYNC
 
-localparam FIFO_TYPE = "ASYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
+localparam FIFO_TYPE = "SYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
 
 localparam SAMEWIDTH_EN = 0 ; // @IPC bool
 
@@ -76,7 +73,7 @@ localparam FULL_WL_EN = 1 ; // @IPC bool
 
 localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
-localparam ASYN_FIFO_EN = "1" ; // @IPC bool
+localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
 localparam ALMOST_FULL_NUM = 60 ; // @IPC int
 
@@ -87,11 +84,11 @@ localparam RST_VAL_EN = 0 ; // @IPC bool
 localparam  FIFO_TYPE_SEL      = (FIFO_TYPE  == "SYN_FIFO") ? "SYN"        : "ASYN" ;
 
 
+input                          clk             ;
+input                          rst             ;
+
 input [WR_DATA_WIDTH-1 : 0]    wr_data         ;    // input write data
 input                          wr_en           ;    // input write enable 1 active
-
-input                          wr_clk          ;    // input write clock
-input                          wr_rst          ;    // input write reset
 
 output                         wr_full         ;    // output write full  flag 1 active
 
@@ -101,9 +98,6 @@ output [WR_DEPTH_WIDTH : 0]    wr_water_level  ;    // output write water level
 
 output [RD_DATA_WIDTH-1 : 0]   rd_data         ;    // output read data
 input                          rd_en           ;    // input  read enable
-
-input                          rd_clk          ;    // input  read clock
-input                          rd_rst          ;    // input read reset
 
 output                         rd_empty        ;    // output read empty
 
@@ -163,8 +157,8 @@ ipm2l_fifo_v1_10_jpeg_encode_info_fifo #(
     .c_ALMOST_EMPTY_NUM  (ALMOST_EMPTY_NUM      )     // almost full number
 ) U_ipm2l_fifo_jpeg_encode_info_fifo (
     
-    .wr_clk         ( wr_clk         ) ,    // input write clock
-    .wr_rst         ( wr_rst         ) ,    // input write reset
+    .wr_clk         ( clk            ) ,    // input write clock
+    .wr_rst         ( rst            ) ,    // input write reset
     
     .wr_en          ( wr_en          ) ,    // input write enable 1 active
     .wr_data        ( wr_data        ) ,    // input write data
@@ -173,8 +167,8 @@ ipm2l_fifo_v1_10_jpeg_encode_info_fifo #(
     .almost_full    ( almost_full    ) ,    // output write almost full
     .wr_water_level ( wr_water_level ) ,    // output write water level
     
-    .rd_clk         ( rd_clk         ) ,    // input  read clock
-    .rd_rst         ( rd_rst         ) ,    // input read reset
+    .rd_clk         ( clk            ) ,    // input  read clock
+    .rd_rst         ( rst            ) ,    // input read reset
     
     .rd_en          ( rd_en          ) ,    // input  read enable
     
@@ -193,8 +187,8 @@ generate
         assign rd_data = (FAB_REG == 1) ? ((RD_CLK_OR_POL_INV == 1) ? fab_reg_invt : fab_reg) : rd_data_d ;
         if (RD_CLK_OR_POL_INV == 1) begin
 
-            always @(negedge rd_clk or posedge rd_rst) begin
-                if (rd_rst)
+            always @(negedge clk or posedge rst) begin
+                if (rst)
 
                     fab_reg_invt      <= {RD_DATA_WIDTH{1'b0}};
                 else if (rd_oce_mux2f)
@@ -203,8 +197,8 @@ generate
         end
         else begin
 
-            always @(posedge rd_clk or posedge rd_rst) begin
-                if (rd_rst)
+            always @(posedge clk or posedge rst) begin
+                if (rst)
 
                     fab_reg           <= {RD_DATA_WIDTH{1'b0}};
                 else if (rd_oce_mux2f)

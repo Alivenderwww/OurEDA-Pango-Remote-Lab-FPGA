@@ -69,6 +69,8 @@ wire [ 31:0] fifo_rd_data;
 wire         empty;
 wire         almost_empty;
 
+reg reset_done;
+
 reg [2:0] cu_rd_st, nt_rd_st;
 localparam READ_ST_IDLE       = 3'b000,
            READ_ST_WAIT       = 3'b001,
@@ -89,16 +91,16 @@ reg fifo_rd_first_need;
 
 always @(*) begin
     case (cu_rd_st)
-        READ_ST_IDLE      : nt_rd_st <= (SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID)?(READ_ST_WAIT):(READ_ST_IDLE);
+        READ_ST_IDLE      : nt_rd_st = (SLAVE_RD_ADDR_READY && SLAVE_RD_ADDR_VALID)?(READ_ST_WAIT):(READ_ST_IDLE);
         READ_ST_WAIT      : begin
-            if(SLAVE_RD_DATA_LAST && SLAVE_RD_DATA_READY && SLAVE_RD_DATA_VALID) nt_rd_st <= READ_ST_RESET;
-            else if(almost_empty && (~flag_trans_addr_over)) nt_rd_st <= READ_ST_TRANS_ADDR;
-            else nt_rd_st <= READ_ST_WAIT;
+            if(SLAVE_RD_DATA_LAST && SLAVE_RD_DATA_READY && SLAVE_RD_DATA_VALID) nt_rd_st = READ_ST_RESET;
+            else if(almost_empty && (~flag_trans_addr_over)) nt_rd_st = READ_ST_TRANS_ADDR;
+            else nt_rd_st = READ_ST_WAIT;
         end
-        READ_ST_TRANS_ADDR : nt_rd_st <= (READ_ADDR_READY && READ_ADDR_VALID)?(READ_ST_TRANS_DATA):(READ_ST_TRANS_ADDR);
-        READ_ST_TRANS_DATA : nt_rd_st <= (READ_DATA_VALID && READ_DATA_LAST)?(READ_ST_WAIT):(READ_ST_TRANS_DATA);
-        READ_ST_RESET      : nt_rd_st <= READ_ST_IDLE;
-        default            : nt_rd_st <= READ_ST_IDLE;
+        READ_ST_TRANS_ADDR : nt_rd_st = (READ_ADDR_READY && READ_ADDR_VALID)?(READ_ST_TRANS_DATA):(READ_ST_TRANS_ADDR);
+        READ_ST_TRANS_DATA : nt_rd_st = (READ_DATA_VALID && READ_DATA_LAST)?(READ_ST_WAIT):(READ_ST_TRANS_DATA);
+        READ_ST_RESET      : nt_rd_st = (reset_done)?(READ_ST_IDLE):(READ_ST_RESET);
+        default            : nt_rd_st = READ_ST_IDLE;
     endcase
 end
 always @(posedge clk or negedge ddr_rstn_sync) begin
@@ -196,5 +198,21 @@ fifo_ddr3_read fifo_ddr3_read(
     .rd_empty  (empty),
     .almost_empty (almost_empty)
 );
+
+// reset_done
+reg [7:0] reset_count;
+localparam RESET_MAX_COUNT = 8'h0F; // reset done after 256 cycles
+always @(posedge clk or negedge ddr_rstn_sync) begin
+    if(~ddr_rstn_sync) reset_count <= 0;
+    else if(cu_rd_st == READ_ST_RESET) begin
+        if(reset_count < RESET_MAX_COUNT) reset_count <= reset_count + 1;
+        else reset_count <= reset_count;
+    end else reset_count <= 0;
+end
+always @(*) begin
+    if((cu_rd_st == READ_ST_RESET) && (reset_count == RESET_MAX_COUNT)) begin
+             reset_done = 1;
+    end else reset_done = 0;
+end
 
 endmodule

@@ -10,10 +10,10 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 // Library:
-// Filename:jpeg_encoder_line_fifo.v
+// Filename:hdmi_data_store_fifo.v
 //////////////////////////////////////////////////////////////////////////////
 
-module jpeg_encoder_line_fifo
+module hdmi_data_store_fifo
    (
     
     wr_clk          ,  // input write clock
@@ -54,13 +54,13 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 12 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 24 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 32 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 1,128
 
 localparam RD_DEPTH_WIDTH = 12 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 24 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 32 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 1,128
 
@@ -78,9 +78,9 @@ localparam EMPTY_WL_EN = 1 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "1" ; // @IPC bool
 
-localparam ALMOST_FULL_NUM = 1020 ; // @IPC int
+localparam ALMOST_FULL_NUM = 4000 ; // @IPC int
 
-localparam ALMOST_EMPTY_NUM = 6 ; // @IPC int
+localparam ALMOST_EMPTY_NUM = 4 ; // @IPC int
 
 localparam RST_VAL_EN = 0 ; // @IPC bool
 
@@ -144,7 +144,7 @@ assign rd_oce_mux2f   =  (FAB_REG       == 1) ? ((RD_OCE_EN  == 1)  ? rd_oce : 1
 
 
 //ipml_sdpram IP instance
-ipm2l_fifo_v1_10_jpeg_encoder_line_fifo #(
+ipm2l_fifo_v1_10_hdmi_data_store_fifo #(
     .c_CAS_MODE          (CAS_MODE              ),
     .c_WR_DEPTH_WIDTH    (WR_DEPTH_WIDTH        ),    // fifo depth width 9 -- 20   legal value:9~20
     .c_WR_DATA_WIDTH     (WR_DATA_WIDTH         ),    // write data width 1 -- 1152 1)WR_BYTE_EN =0 legal value:1~1152  2)WR_BYTE_EN=1  legal value:2^N or 9*2^N
@@ -161,7 +161,7 @@ ipm2l_fifo_v1_10_jpeg_encoder_line_fifo #(
     .c_FIFO_TYPE         (FIFO_TYPE_SEL         ),    // fifo type legal value "SYN" or "ASYN"
     .c_ALMOST_FULL_NUM   (ALMOST_FULL_NUM       ),    // almost full number
     .c_ALMOST_EMPTY_NUM  (ALMOST_EMPTY_NUM      )     // almost full number
-) U_ipm2l_fifo_jpeg_encoder_line_fifo (
+) U_ipm2l_fifo_hdmi_data_store_fifo (
     
     .wr_clk         ( wr_clk         ) ,    // input write clock
     .wr_rst         ( wr_rst         ) ,    // input write reset

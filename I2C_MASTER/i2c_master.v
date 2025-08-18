@@ -105,6 +105,7 @@ always @(posedge clk or negedge rstn) begin
         i2c_read_write_reg  <= 0;
         i2c_addr_length_reg <= 0;
         i2c_start_addr_reg  <= 0;
+        i2c_read_ifstop_reg <= 0;
     end else if(cmd_valid && cmd_ready) begin
         i2c_slave_addr_reg  <= i2c_slave_addr;
         i2c_read_write_reg  <= i2c_read_write;
@@ -136,7 +137,9 @@ end
 
 //wr_data_ready, subcmd_byte_data, wr_data, addr
 always @(posedge clk or negedge rstn) begin
-    if(~rstn) begin subcmd_byte_data <= 0;
+    if(~rstn) begin
+        subcmd_byte_data <= 0;
+        wr_data_ready <= 0;
     end else if(st_iic_cu == ST_IIC_GET_SUBCMD) case(st_module_cu)
             ST_MODULE_TRANS_WR_IIC_ADDR            : begin subcmd_byte_data <= {i2c_slave_addr_reg, 1'b0}; wr_data_ready <= 1'b0; end
             ST_MODULE_TRANS_WR_START_ADDR_D10      : begin subcmd_byte_data <= i2c_start_addr_reg[15:8]  ; wr_data_ready <= 1'b0; end

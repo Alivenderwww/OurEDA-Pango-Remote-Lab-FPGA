@@ -260,62 +260,37 @@ always@(*)
 // i2c_sda_reg:sda数据缓存
 always@(*)
     case    (state)
+        IDLE:           i2c_sda_reg <= 1'b1;
+        START_1:        i2c_sda_reg <= (cnt_i2c_clk <= 2'd0) ? 1'b1 : 1'b0;
+        SEND_D_ADDR:    i2c_sda_reg <= (cnt_bit <= 3'd6) ? (device_addr_i[6 - cnt_bit]) : 1'b0;
+        ACK_1:          i2c_sda_reg <= 1'b1;
+        SEND_B_ADDR_H:  i2c_sda_reg <= byte_addr[15 - cnt_bit];
+        ACK_2:          i2c_sda_reg <= 1'b1;
+        SEND_B_ADDR_L:  i2c_sda_reg <= byte_addr[7 - cnt_bit];
+        ACK_3:          i2c_sda_reg <= 1'b1;
+        WR_DATA:        i2c_sda_reg <= wr_data[7 - cnt_bit];
+        ACK_4:          i2c_sda_reg <= 1'b1;
+        START_2:        i2c_sda_reg <= (cnt_i2c_clk <= 2'd1) ? 1'b1 : 1'b0;
+        SEND_RD_ADDR:   i2c_sda_reg <= (cnt_bit <= 3'd6) ? (device_addr_i[6 - cnt_bit]) : 1'b1;
+        ACK_5:          i2c_sda_reg <=  1'b1;
+        N_ACK:          i2c_sda_reg <=  1'b1;
+        STOP:           i2c_sda_reg <= ((cnt_bit == 3'd0) && (cnt_i2c_clk < 2'd3)) ? 1'b0 : 1'b1;
+        default: i2c_sda_reg <=  1'b1;
+    endcase
+
+always@(*)
+    case    (state)
         IDLE:
             begin
-                i2c_sda_reg <=  1'b1;
                 rd_data_reg <=  8'd0;
             end
-        START_1:
-            if(cnt_i2c_clk <= 2'd0)
-                i2c_sda_reg <=  1'b1;
-            else
-                i2c_sda_reg <=  1'b0;
-        SEND_D_ADDR:
-            if(cnt_bit <= 3'd6)
-                i2c_sda_reg <=  device_addr_i[6 - cnt_bit];
-            else
-                i2c_sda_reg <=  1'b0;
-        ACK_1:
-            i2c_sda_reg <=  1'b1;
-        SEND_B_ADDR_H:
-            i2c_sda_reg <=  byte_addr[15 - cnt_bit];
-        ACK_2:
-            i2c_sda_reg <=  1'b1;
-        SEND_B_ADDR_L:
-            i2c_sda_reg <=  byte_addr[7 - cnt_bit];
-        ACK_3:
-            i2c_sda_reg <=  1'b1;
-        WR_DATA:
-            i2c_sda_reg <=  wr_data[7 - cnt_bit];
-        ACK_4:
-            i2c_sda_reg <=  1'b1;
-        START_2:
-            if(cnt_i2c_clk <= 2'd1)
-                i2c_sda_reg <=  1'b1;
-            else
-                i2c_sda_reg <=  1'b0;
-        SEND_RD_ADDR:
-            if(cnt_bit <= 3'd6)
-                i2c_sda_reg <=  device_addr_i[6 - cnt_bit];
-            else
-                i2c_sda_reg <=  1'b1;
-        ACK_5:
-            i2c_sda_reg <=  1'b1;
         RD_DATA:
             if(cnt_i2c_clk  == 2'd2)
-                rd_data_reg[7 - cnt_bit]    <=  sda_in;
+                rd_data_reg[7 - cnt_bit] <=  sda_in;
             else
                 rd_data_reg <=  rd_data_reg;
-        N_ACK:
-            i2c_sda_reg <=  1'b1;
-        STOP:
-            if((cnt_bit == 3'd0) && (cnt_i2c_clk < 2'd3))
-                i2c_sda_reg <=  1'b0;
-            else
-                i2c_sda_reg <=  1'b1;
         default:
             begin
-                i2c_sda_reg <=  1'b1;
                 rd_data_reg <=  rd_data_reg;
             end
     endcase

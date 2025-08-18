@@ -52,6 +52,8 @@ always @(posedge clk or negedge rstn) begin
     if(~rstn)begin
         port0_sel <= 0;
         port1_sel <= 0;
+        port0_en <= 0;
+        port1_en <= 0;
     end
     else begin
         case(next_state)

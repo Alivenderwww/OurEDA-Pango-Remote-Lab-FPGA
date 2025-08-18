@@ -11,11 +11,16 @@
 ../../../COMMON/*.sv
 ../../../ANALYZER/*.v
 ../../../ANALYZER/*.sv
-../../../OV5640/hdmi_data_store.v
-../../../OV5640/hdmi_in_axi_slave.sv
+../../../STREAMING/*.v
+../../../STREAMING/*.sv
 ../../../JPEG/jpeg_encoder/*.v
 ../../../JPEG/jpeg_encoder_top.sv
 ../hdmi_in_with_jpeg_sim.sv
+
+../../../IPCORE/STREAM/hdmi_data_store_fifo/rtl/ipm2l_fifo_ctrl_v1_1_hdmi_data_store_fifo.v
+../../../IPCORE/STREAM/hdmi_data_store_fifo/rtl/ipm2l_sdpram_v1_10_hdmi_data_store_fifo.v
+../../../IPCORE/STREAM/hdmi_data_store_fifo/rtl/ipm2l_fifo_v1_10_hdmi_data_store_fifo.v
+../../../IPCORE/STREAM/hdmi_data_store_fifo/hdmi_data_store_fifo.v
 
 ../../../IPCORE/JPEG/jpeg_encode_bitstream_fifo/rtl/ipm2l_fifo_ctrl_v1_1_jpeg_encode_bitstream_fifo.v
 ../../../IPCORE/JPEG/jpeg_encode_bitstream_fifo/rtl/ipm2l_sdpram_v1_10_jpeg_encode_bitstream_fifo.v
@@ -27,10 +32,10 @@
 ../../../IPCORE/JPEG/jpeg_encode_info_fifo/rtl/ipm2l_fifo_v1_10_jpeg_encode_info_fifo.v
 ../../../IPCORE/JPEG/jpeg_encode_info_fifo/jpeg_encode_info_fifo.v
 
-../../../IPCORE/JPEG/jpeg_encoder_line_fifo/rtl/ipm2l_fifo_ctrl_v1_1_jpeg_encoder_line_fifo.v
-../../../IPCORE/JPEG/jpeg_encoder_line_fifo/rtl/ipm2l_sdpram_v1_10_jpeg_encoder_line_fifo.v
-../../../IPCORE/JPEG/jpeg_encoder_line_fifo/rtl/ipm2l_fifo_v1_10_jpeg_encoder_line_fifo.v
-../../../IPCORE/JPEG/jpeg_encoder_line_fifo/jpeg_encoder_line_fifo.v
+../../../IPCORE/JPEG/jpeg_encoder_before_ram/rtl/ipm2l_sdpram_v1_10_jpeg_encoder_before_ram.v
+../../../IPCORE/JPEG/jpeg_encoder_before_ram/rtl/jpeg_encoder_before_ram_init_param.v
+../../../IPCORE/JPEG/jpeg_encoder_before_ram/rtl/jpeg_encoder_before_ram_Reset_Value.v
+../../../IPCORE/JPEG/jpeg_encoder_before_ram/jpeg_encoder_before_ram.v
 
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_fifo_ctrl_v1_1_master_async_addr_fifo.v
 ../../../IPCORE/AXI4/master_async_addr_fifo/rtl/ipm2l_sdpram_v1_10_master_async_addr_fifo.v

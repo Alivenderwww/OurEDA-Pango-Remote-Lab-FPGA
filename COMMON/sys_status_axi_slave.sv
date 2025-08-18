@@ -246,6 +246,7 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
         OV_ccd_pdn            <= 0;
         ETH_timestamp_rst     <= 0;
         ETH_timestamp_rst_wait <= 0;
+        power_reset         <= 0;
     end else if(STATUS_SLAVE_WR_DATA_VALID && STATUS_SLAVE_WR_DATA_READY) begin
         case(wr_addr)
             ADDR_AXI_RESET: begin

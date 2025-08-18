@@ -13,6 +13,14 @@ wire        	rgmii_tx_ctl;
 wire [3:0]  	rgmii_txd;
 wire        	eth_rst_n;
 
+// HDMI video stream signals
+reg         hdmi_in_clk;
+reg         hdmi_in_rstn;
+reg         hdmi_in_hsync;
+reg         hdmi_in_vsync;
+reg [23:0]  hdmi_in_rgb;
+reg         hdmi_in_de;
+
 parameter MEM_DQ_WIDTH = 32;
 parameter MEM_DQS_WIDTH = MEM_DQ_WIDTH/8;
 parameter MEM_ROW_WIDTH = 15;
@@ -21,9 +29,11 @@ wire CCD_PCLK, CCD_VSYNC, CCD_HSYNC;
 wire [7:0] CCD_DATA;
 
 initial begin
+    hdmi_in_clk = 0;
     ov5640_sim_u.set_clk(5);
     ov5640_sim_u.set_ccd_size(64, 24);
 end
+always #3.33 hdmi_in_clk = ~hdmi_in_clk; // 148.5MHz HDMI pixel clock for 1080p60Hz
 
 ///////////////////////////test WRLVL case///////////////////////////
 parameter CA_FIRST_DLY          = 0.15;
@@ -85,6 +95,7 @@ initial begin
     #5000
     // while (~u_udp_axi_ddr_update_top.M_RSTN[0]) #1000;
     while (~u_udp_axi_ddr_update_top.S_RSTN[1]) #10000;
+    btn0_neg();
     #10000 u_rgmii_sim.send_rd_addr(2'b01, 2'b00, 3'd0, 32'h1000_0000); //对JTAG状态寄存器读，查看返回的FIFO状态 (32'h01020202)
     #10000 u_rgmii_sim.send_wr_addr(2'b10, 2'b00, 3'd3, 32'h1000_0002); //对JTAG的SHIFT_IN FIFO固定突发写4个数据
     #10000 u_rgmii_sim.send_wr_data(              3'd3, 32'h1234_5678); //写入
@@ -105,19 +116,6 @@ initial begin
 
     #10000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h7000_0014);
     #10000 u_rgmii_sim.send_wr_data(              3'd0, 32'h0000_0001); //写入
-
-    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    // #1000 u_rgmii_sim.send_wr_data(              3'd5, 32'h1234_5678); //写入
-    // #1000;
-    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd5, 32'h0101_0101);
-    // #1000;
-    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
-    // #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h0000_0001); //写入
-    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd6, 32'h0000_00F0);
-
-    // #1000 u_rgmii_sim.send_wr_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
-    // #1000 u_rgmii_sim.send_wr_data(              3'd6, 32'h1234_5678); //写入
-    // #1000 u_rgmii_sim.send_rd_addr(2'b00, 2'b01, 3'd0, 32'h0000_0000);
 end
 
 // outports wire
@@ -171,12 +169,18 @@ u_udp_axi_ddr_update_top(
 	.sda_eeprom        	(          ),
 	.scl_camera        	(          ),
 	.sda_camera        	(          ),
-	.CCD_PDN           	( CCD_PDN            ),
-	.CCD_RSTN          	( CCD_RSTN           ),
-	.CCD_PCLK          	( CCD_PCLK           ),
-	.CCD_VSYNC         	( CCD_VSYNC          ),
-	.CCD_HSYNC         	( CCD_HSYNC          ),
-	.CCD_DATA          	( CCD_DATA           ),
+    .hdmi_in_clk        (hdmi_in_clk  ),
+    .hdmi_in_rstn       (hdmi_in_rstn ),
+    .hdmi_in_hsync      (hdmi_in_hsync),
+    .hdmi_in_vsync      (hdmi_in_vsync),
+    .hdmi_in_rgb        (hdmi_in_rgb  ),
+    .hdmi_in_de         (hdmi_in_de   ),
+	// .CCD_PDN           	( CCD_PDN            ),
+	// .CCD_RSTN          	( CCD_RSTN           ),
+	// .CCD_PCLK          	( CCD_PCLK           ),
+	// .CCD_VSYNC         	( CCD_VSYNC          ),
+	// .CCD_HSYNC         	( CCD_HSYNC          ),
+	// .CCD_DATA          	( CCD_DATA           ),
 	.rgmii_rxc         	( rgmii_rxc          ),
 	.rgmii_rx_ctl      	( rgmii_rx_ctl       ),
 	.rgmii_rxd         	( rgmii_rxd          ),

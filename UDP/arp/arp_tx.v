@@ -173,6 +173,9 @@ always @(posedge gmii_tx_clk or negedge rstn) begin
         tx_done_t <= 0;
         arp_working <= 0;
         arp_tx_req <= 0;
+        gmii_tx_en <= 0;
+        tx_bit_sel <= 0;
+        gmii_txd <= 0;
     end else begin
         skip_en <= 0;
         crc_en <= 1'b0;

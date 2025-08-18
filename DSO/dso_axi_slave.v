@@ -50,35 +50,38 @@ rstn_sync dso_rstn_sync(clk,rstn,DSO_SLAVE_RSTN_SYNC);
 0x0000_0000: R/W [0]    wave_run    启动捕获/关闭
 0x0000_0001: R/W [7:0]  trig_level  触发电平
 0x0000_0002: R/W [0]    trig_edge   触发边沿，0-下降沿，1-上升沿
-0x0000_0003: R/W [9:0]  h_shift     水平偏移量
-0x0000_0004: R/W [9:0]  deci_rate   抽样率，0-1023
-0x0000_0005: R/W [0]    ram_refresh RAM刷新
-0x0000_0006: R   [19:0] ad_freq     AD采样频率
-0x0000_0007: R   [7:0]  ad_vpp      AD采样幅度
-0x0000_0008: R   [7:0]  ad_max      AD采样最大值
-0x0000_0009: R   [7:0]  ad_min      AD采样最小值
+0x0000_0003: R/W [9:0]  deci_rate   抽样率，0-1023
+0x0000_0004: R/W [0]    ram_refresh RAM刷新
+0x0000_0005: R   [0]    wave_ready 波形数据准备好
+0x0000_0006: R   [9:0]  wave_trig_addr 触发地址
+0x0000_0007: R   [19:0] ad_freq     AD采样频率
+0x0000_0008: R   [7:0]  ad_vpp      AD采样幅度
+0x0000_0009: R   [7:0]  ad_max      AD采样最大值
+0x0000_000A: R   [7:0]  ad_min      AD采样最小值
 
 0x0000_1000-0x0000_13FF: R [7:0] wave_rd_data 共1024个字节
 */
-localparam ADDR_WAVE_RUN   = 32'h0000_0000,
-           ADDR_TRIG_LEVEL = 32'h0000_0001,
-           ADDR_TRIG_EDGE  = 32'h0000_0002,
-           ADDR_H_SHIFT    = 32'h0000_0003,
-           ADDR_DECI_RATE  = 32'h0000_0004,
-           ADDR_RAM_REFRESH= 32'h0000_0005,
-           ADDR_AD_FREQ    = 32'h0000_0006,
-           ADDR_AD_VPP     = 32'h0000_0007,
-           ADDR_AD_MAX     = 32'h0000_0008,
-           ADDR_AD_MIN     = 32'h0000_0009,
-           ADDR_WAVE_RD_DATA_START = 32'h0000_1000,
-           ADDR_WAVE_RD_DATA_END   = 32'h0000_13FF;
+localparam ADDR_WAVE_RUN            = 32'h0000_0000,
+           ADDR_TRIG_LEVEL          = 32'h0000_0001,
+           ADDR_TRIG_EDGE           = 32'h0000_0002,
+           ADDR_DECI_RATE           = 32'h0000_0003,
+           ADDR_RAM_REFRESH         = 32'h0000_0004,
+           ADDR_WAVE_READY          = 32'h0000_0005,
+           ADDR_WAVE_TRIG_POSITION  = 32'h0000_0006,
+           ADDR_AD_FREQ             = 32'h0000_0007,
+           ADDR_AD_VPP              = 32'h0000_0008,
+           ADDR_AD_MAX              = 32'h0000_0009,
+           ADDR_AD_MIN              = 32'h0000_000A,
+           ADDR_WAVE_RD_DATA_START  = 32'h0000_1000,
+           ADDR_WAVE_RD_DATA_END    = 32'h0000_13FF;
 
 reg       wave_run;   // 波形采集启动/停止寄存器
 reg [7:0] trig_level; // 触发电平寄存器
 reg       trig_edge;  // 触发边沿寄存器
-reg [9:0] h_shift;    // 波形水平偏移量寄存器
 reg [9:0] deci_rate;  // 抽样率寄存器
 reg       ram_refresh;// RAM刷新寄存器
+
+reg [31:0] ram_refresh_delay;
 
 wire [9:0] wave_rd_addr;
 
@@ -90,6 +93,9 @@ wire [19:0] 	ad_freq;
 wire [7:0]  	ad_vpp;
 wire [7:0]  	ad_max;
 wire [7:0]  	ad_min;
+
+wire wave_ready;
+wire [9:0] wave_trig_addr;
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -182,14 +188,12 @@ always @(*) begin
     end else DSO_SLAVE_WR_DATA_READY = 0;
 end
 
-reg [31:0] ram_refresh_delay;
 // 写数据处理逻辑
 always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
     if(~DSO_SLAVE_RSTN_SYNC) begin
         wave_run    <= 0 ; //???
         trig_level  <= 8'd128; //???
         trig_edge   <= 0 ; //???
-        h_shift     <= 0 ; //???
         deci_rate   <= 10'd2; //???
         ram_refresh <= 0 ; //???
         ram_refresh_delay <= 0;
@@ -204,10 +208,6 @@ always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
             ADDR_TRIG_EDGE: begin
                 if(DSO_SLAVE_WR_STRB[0]) trig_edge <= DSO_SLAVE_WR_DATA[0];
             end
-            ADDR_H_SHIFT: begin
-                if(DSO_SLAVE_WR_STRB[1]) h_shift[9:8] <= DSO_SLAVE_WR_DATA[9:8];
-                if(DSO_SLAVE_WR_STRB[0]) h_shift[7:0] <= DSO_SLAVE_WR_DATA[7:0];
-            end
             ADDR_DECI_RATE: begin
                 if(DSO_SLAVE_WR_STRB[1]) deci_rate[9:8] <= DSO_SLAVE_WR_DATA[9:8];
                 if(DSO_SLAVE_WR_STRB[0]) deci_rate[7:0] <= DSO_SLAVE_WR_DATA[7:0];
@@ -216,16 +216,17 @@ always @(posedge clk or negedge DSO_SLAVE_RSTN_SYNC) begin
                 if(DSO_SLAVE_WR_STRB[0]) ram_refresh <= DSO_SLAVE_WR_DATA[0];
             end
             default: begin
+                ram_refresh <= (ram_refresh_delay >= 32'h0000_0FFF)?(0):(ram_refresh);
+                ram_refresh_delay <= ((ram_refresh_delay >= 32'h0000_0FFF) || (~ram_refresh))?(0):(ram_refresh_delay + 1);
             end
         endcase
     end else begin
         wave_run    <= wave_run   ;
         trig_level  <= trig_level ;
         trig_edge   <= trig_edge  ;
-        h_shift     <= h_shift    ;
         deci_rate   <= deci_rate  ;
-        ram_refresh <= (ram_refresh_delay >= 32'h0000_FFFF)?(0):(ram_refresh);
-        ram_refresh_delay <= ((ram_refresh_delay >= 32'h0000_FFFF) || (~ram_refresh))?(0):(ram_refresh_delay + 1);
+        ram_refresh <= (ram_refresh_delay >= 32'h0000_00FF)?(0):(ram_refresh);
+        ram_refresh_delay <= ((ram_refresh_delay >= 32'h0000_00FF) || (~ram_refresh))?(0):(ram_refresh_delay + 1);
     end
 end
 
@@ -318,9 +319,10 @@ always @(*) begin
             ADDR_WAVE_RUN           : DSO_SLAVE_RD_DATA <= {31'b0, wave_run};
             ADDR_TRIG_LEVEL         : DSO_SLAVE_RD_DATA <= {24'b0, trig_level};
             ADDR_TRIG_EDGE          : DSO_SLAVE_RD_DATA <= {31'b0, trig_edge};
-            ADDR_H_SHIFT            : DSO_SLAVE_RD_DATA <= {22'b0, h_shift};
             ADDR_DECI_RATE          : DSO_SLAVE_RD_DATA <= {22'b0, deci_rate};
             ADDR_RAM_REFRESH        : DSO_SLAVE_RD_DATA <= {31'b0, ram_refresh};
+            ADDR_WAVE_READY         : DSO_SLAVE_RD_DATA <= {31'b0, wave_ready};
+            ADDR_WAVE_TRIG_POSITION : DSO_SLAVE_RD_DATA <= {22'b0, wave_trig_addr};
             ADDR_AD_FREQ            : DSO_SLAVE_RD_DATA <= {12'b0, ad_freq};
             ADDR_AD_VPP             : DSO_SLAVE_RD_DATA <= {24'b0, ad_vpp};
             ADDR_AD_MAX             : DSO_SLAVE_RD_DATA <= {24'b0, ad_max};
@@ -350,13 +352,12 @@ dso_top #(
 	.wave_run     	( wave_run      ),
 	.trig_level   	( trig_level    ),
 	.trig_edge    	( trig_edge     ),
-	.h_shift      	( h_shift       ),
 	.deci_rate    	( deci_rate     ),
 	.ram_refresh  	( ram_refresh   ),
 	.wave_rd_addr 	( wave_rd_addr  ),
 	.wave_rd_data 	( wave_rd_data  ),
-	.outrange     	(               ),
-	.ad_pulse     	(               ),
+    .wave_ready    	( wave_ready    ),
+    .wave_trig_addr	( wave_trig_addr),
 	.ad_freq      	( ad_freq       ),
 	.ad_vpp       	( ad_vpp        ),
 	.ad_max       	( ad_max        ),

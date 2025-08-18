@@ -252,13 +252,12 @@ def run_modelsim_simulation(work_dir="work", enable_wave=False):
         else:
             print(f"⚠ 警告: 文件不存在 {vfile_path}")
     
-    # 编译IP核文件 - JPEG专用的FIFO IP核
+    # 编译IP核文件 - JPEG专用的RAM IP核
     ip_files = [
-        "jpeg_encoder_line_fifo.v",
-        "ipm2l_fifo_v1_10_jpeg_encoder_line_fifo.v", 
-        "ipm2l_sdpram_v1_10_jpeg_encoder_line_fifo.v",
-        "ipm2l_fifo_ctrl_v1_1_jpeg_encoder_line_fifo.v",
-        "jpeg_encoder_line_fifo_Reset_Value.v"
+        "jpeg_encoder_before_ram.v",
+        "jpeg_encoder_before_ram_init_param.v", 
+        "ipm2l_sdpram_v1_10_jpeg_encoder_before_ram.v",
+        "jpeg_encoder_before_ram_Reset_Value.v"
     ]
     
     for ip_file in ip_files:

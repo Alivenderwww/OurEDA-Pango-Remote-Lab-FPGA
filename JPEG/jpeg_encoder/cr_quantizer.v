@@ -47,7 +47,7 @@ Q11, Q12, Q13, Q14, Q15, Q16, Q17, Q18, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28,
 Q31, Q32, Q33, Q34, Q35, Q36, Q37, Q38, Q41, Q42, Q43, Q44, Q45, Q46, Q47, Q48,
 Q51, Q52, Q53, Q54, Q55, Q56, Q57, Q58, Q61, Q62, Q63, Q64, Q65, Q66, Q67, Q68,
 Q71, Q72, Q73, Q74, Q75, Q76, Q77, Q78, Q81, Q82, Q83, Q84, Q85, Q86, Q87, Q88,
-out_enable);
+out_enable, CR_Quantizer);
 input		clk;
 input		rst;
 input		enable;
@@ -64,6 +64,7 @@ output  [10:0]  Q55, Q56, Q57, Q58, Q61, Q62, Q63, Q64, Q65, Q66, Q67, Q68;
 output  [10:0]  Q71, Q72, Q73, Q74, Q75, Q76, Q77, Q78, Q81, Q82, Q83, Q84;
 output  [10:0]  Q85, Q86, Q87, Q88;
 output		out_enable;
+output [13*8*8 - 1:0] CR_Quantizer; // 13 bits per quantized Cr value, 8x8 block
 
 /* Below are the quantization values, these can be changed for different 
 quantization levels. Standard JPEG CbCr quantization table. */
@@ -307,6 +308,17 @@ integer Z51_int, Z52_int, Z53_int, Z54_int, Z55_int, Z56_int, Z57_int, Z58_int;
 integer Z61_int, Z62_int, Z63_int, Z64_int, Z65_int, Z66_int, Z67_int, Z68_int;
 integer Z71_int, Z72_int, Z73_int, Z74_int, Z75_int, Z76_int, Z77_int, Z78_int;
 integer Z81_int, Z82_int, Z83_int, Z84_int, Z85_int, Z86_int, Z87_int, Z88_int;
+
+assign CR_Quantizer = {
+	QM8_8, QM8_7, QM8_6, QM8_5, QM8_4, QM8_3, QM8_2, QM8_1,
+	QM7_8, QM7_7, QM7_6, QM7_5, QM7_4, QM7_3, QM7_2, QM7_1,
+	QM6_8, QM6_7, QM6_6, QM6_5, QM6_4, QM6_3, QM6_2, QM6_1,
+	QM5_8, QM5_7, QM5_6, QM5_5, QM5_4, QM5_3, QM5_2, QM5_1,
+	QM4_8, QM4_7, QM4_6, QM4_5, QM4_4, QM4_3, QM4_2, QM4_1,
+	QM3_8, QM3_7, QM3_6, QM3_5, QM3_4, QM3_3, QM3_2, QM3_1,
+	QM2_8, QM2_7, QM2_6, QM2_5, QM2_4, QM2_3, QM2_2, QM2_1,
+	QM1_8, QM1_7, QM1_6, QM1_5, QM1_4, QM1_3, QM1_2, QM1_1
+};
 
 always @(posedge clk)
 begin

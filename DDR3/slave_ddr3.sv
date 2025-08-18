@@ -153,10 +153,10 @@ ddr3_write ddr3_write_inst(
 );
  
 ddr3_top ddr3_top_inst(
-    .ddr_ref_clk  (ddr_ref_clk  ),
-    .rst_n        (rst_n        ),
-    .ddr_core_clk (ddr_core_clk ),
-    .ddr_init_done(ddr_init_done),
+    .ddr_ref_clk  (ddr_ref_clk     ),
+    .rst_n        (rst_n           ),
+    .ddr_core_clk (ddr_core_clk    ),
+    .ddr_init_done(ddr_init_done   ),
 
     .WR_ADDR      (WRITE_ADDR      ),
     .WR_ID        (WRITE_ID        ),

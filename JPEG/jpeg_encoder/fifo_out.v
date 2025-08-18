@@ -39,12 +39,14 @@ any FF's in the bitstream.
 */
 `timescale 1ns / 100ps
 
-module fifo_out(clk, rst, enable, data_in, JPEG_bitstream, data_ready, orc_reg);
+module fifo_out(clk, rst, enable, data_in, JPEG_bitstream, data_ready, orc_reg,
+Y_Quantizer, CB_Quantizer, CR_Quantizer);
 input		clk, rst, enable;
 input	[23:0]	data_in;
 output  [31:0]  JPEG_bitstream;
 output		data_ready;
 output	[4:0] orc_reg;
+output  [13*8*8 - 1:0] Y_Quantizer, CB_Quantizer, CR_Quantizer; // 13 bits per quantized value, 8x8 block
 
 
 
@@ -112,7 +114,8 @@ wire cb_out_enable = fifo_mux ? cb_out_enable2 : cb_out_enable1;
 	.y_JPEG_bitstream(y_JPEG_bitstream), 
 	.y_data_ready(y_data_ready), .y_orc(y_orc), 
 	.y_eob_output(end_of_block_output), .y_eob_empty(y_eob_empty), 
-	.cb_eob_empty(cb_eob_empty), .cr_eob_empty(cr_eob_empty));
+	.cb_eob_empty(cb_eob_empty), .cr_eob_empty(cr_eob_empty),
+	.Y_Quantizer(Y_Quantizer), .CB_Quantizer(CB_Quantizer), .CR_Quantizer(CR_Quantizer));
 
 	sync_fifo_32 u15(.clk(clk), .rst(rst), .read_req(cb_read_req1), 
 		.write_data(cb_JPEG_bitstream1), .write_enable(cb_write_enable1), 

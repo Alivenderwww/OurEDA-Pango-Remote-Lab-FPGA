@@ -5,10 +5,10 @@ module hdmi_in_axi_slave(
     //hdmi interface
     input  wire         hdmi_in_clk,
     input  wire         hdmi_in_rstn,
-    input  wire         hdmi_in_hsync,
     input  wire         hdmi_in_vsync,
-    input  wire [23:0]  hdmi_in_rgb,
+    input  wire         hdmi_in_hsync,
     input  wire         hdmi_in_de,
+    input  wire [23:0]  hdmi_in_rgb,
 
     //input base and end address
     input  wire         jpeg_encoder_clk,
@@ -89,7 +89,9 @@ localparam [31:0]
     ADDR_ADD_NEED_FRAME_NUM     = 32'h0000_0004, //add need frame num
     ADDR_FRAME_SAVE_NUM         = 32'h0000_0005, //frame save num
     ADDR_FIFO_FRAME_INFO        = 32'h0000_0006, //fifo frame info
-    ADDR_FRAME_NOTREADY         = 32'h0000_0007; //frame not ready
+    ADDR_FRAME_NOTREADY         = 32'h0000_0007, //frame not ready
+    ADDR_FRAME_HEIGHT_WIDTH     = 32'h0000_0008, //frame height,width
+    ADDR_FRAME_DE_NUM           = 32'h0000_0009; //frame data enable num
 
 wire hdmi_rstn_sync;
 rstn_sync rstn_sync_hdmi(clk, rstn, hdmi_rstn_sync);
@@ -110,9 +112,14 @@ wire [31:0] jpeg_rd_info;
 wire [31:0] frame_save_num;
 
 wire frame_notready;
+wire [31:0] frame_height_width;
+wire [31:0] frame_de_num;
 
-reg add_need_frame;
+reg [6:0] add_need_frame;
+reg       add_need_frame_d0, add_need_frame_d1;
+wire      add_need_frame_pos;
 reg [31:0] add_need_frame_num;
+wire [31:0] total_need_frame_num;
 
 axi_master_write_dma u_axi_master_write_dma(
 	.START_WRITE_ADDR     	( start_write_addr        ),
@@ -270,29 +277,28 @@ assign SLAVE_RD_DATA_RESP  = ((hdmi_rstn_sync) && (cu_rdchannel_st == ST_RD_DATA
 
 always @(*) begin
     //写数据READY选通
-    if(~hdmi_rstn_sync) SLAVE_WR_DATA_READY = 0;
-    else if(cu_wrchannel_st == ST_WR_DATA) begin
+    if(cu_wrchannel_st == ST_WR_DATA) begin
              SLAVE_WR_DATA_READY = 1;
     end else SLAVE_WR_DATA_READY = 0;
     //读数据VALID选通
-    if(~hdmi_rstn_sync) SLAVE_RD_DATA_VALID = 0;
-    else if(cu_rdchannel_st == ST_RD_DATA) case (rd_addr)
+    if(cu_rdchannel_st == ST_RD_DATA) case (rd_addr)
         ADDR_FIFO_FRAME_INFO: SLAVE_RD_DATA_VALID = jpeg_rd_info_ready;
         default             : SLAVE_RD_DATA_VALID = 1;
     endcase
     else SLAVE_RD_DATA_VALID = 0;
     //读数据DATA选通
-    if(~hdmi_rstn_sync) SLAVE_RD_DATA = 0;
-    else if(cu_rdchannel_st == ST_RD_DATA) begin
+    if(cu_rdchannel_st == ST_RD_DATA) begin
         case(rd_addr)
             ADDR_CAPTURE_CTRL          : SLAVE_RD_DATA = {23'b0, capture_rst, 7'b0, capture_on};
             ADDR_START_WRITE_ADDR      : SLAVE_RD_DATA = start_write_addr;
             ADDR_END_WRITE_ADDR        : SLAVE_RD_DATA = end_write_addr;
             ADDR_CAPTURE_FRAME_SEQUENCE: SLAVE_RD_DATA = capture_frame_sequence;
-            // ADDR_ADD_NEED_FRAME_NUM : read only
+            ADDR_ADD_NEED_FRAME_NUM    : SLAVE_RD_DATA = total_need_frame_num;
             ADDR_FRAME_SAVE_NUM        : SLAVE_RD_DATA = frame_save_num;
             ADDR_FIFO_FRAME_INFO       : SLAVE_RD_DATA = jpeg_rd_info;
             ADDR_FRAME_NOTREADY        : SLAVE_RD_DATA = {31'b0, frame_notready};
+            ADDR_FRAME_HEIGHT_WIDTH    : SLAVE_RD_DATA = frame_height_width;
+            ADDR_FRAME_DE_NUM          : SLAVE_RD_DATA = frame_de_num;
             default                    : SLAVE_RD_DATA = 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
         endcase
     end else SLAVE_RD_DATA = 0;
@@ -333,16 +339,29 @@ always @(posedge clk or negedge hdmi_rstn_sync) begin
             // ADDR_FRAME_SAVE_NUM     : read only
             // ADDR_FIFO_FRAME_INFO    : read only
             // ADDR_FRAME_NOTREADY     : read only
+            // ADDR_FRAME_HEIGHT_WIDTH : read only
+            // ADDR_FRAME_DE_NUM       : read only
             default: begin
-                add_need_frame_num <= 0;
-                add_need_frame <= 0;
+                add_need_frame_num <= add_need_frame_num;
+                add_need_frame <= (add_need_frame != 0)?(add_need_frame + 1):(0);
             end
         endcase
     end else begin
-        add_need_frame_num <= 0;
-        add_need_frame <= 0;
+        add_need_frame_num <= add_need_frame_num;
+        add_need_frame <= (add_need_frame != 0)?(add_need_frame + 1):(0);
     end
 end
+
+always @(posedge hdmi_in_clk or negedge hdmi_rstn_sync) begin
+    if(~hdmi_rstn_sync)begin
+        add_need_frame_d0 <= 0;
+        add_need_frame_d1 <= 0;
+    end else begin
+        add_need_frame_d0 <= |add_need_frame;
+        add_need_frame_d1 <= add_need_frame_d0;
+    end
+end
+assign add_need_frame_pos = (add_need_frame_d0 && ~add_need_frame_d1);
 
 assign jpeg_rd_info_valid = (cu_rdchannel_st == ST_RD_DATA) && (rd_addr == ADDR_FIFO_FRAME_INFO) && (SLAVE_RD_DATA_VALID);
 hdmi_data_store u_hdmi_data_store(
@@ -350,16 +369,20 @@ hdmi_data_store u_hdmi_data_store(
 	.rstn         	       ( hdmi_rstn_sync          ),
     .hdmi_in_clk           ( hdmi_in_clk             ),
     .hdmi_in_rstn          ( hdmi_in_rstn            ),
-    .hdmi_in_href          ( hdmi_in_de              ),
     .hdmi_in_vsync         ( hdmi_in_vsync           ),
+    .hdmi_in_hsync         ( hdmi_in_hsync           ),
+    .hdmi_in_de            ( hdmi_in_de              ),
     .hdmi_in_rgb           ( hdmi_in_rgb             ),
 
     .jpeg_encoder_clk      ( jpeg_encoder_clk        ),
     .capture_on  	       ( capture_on              ),
     .frame_notready        ( frame_notready          ),
+    .frame_height_width    ( frame_height_width      ),
+    .frame_de_num          ( frame_de_num            ),
 
     .add_need_frame_num    ( add_need_frame_num      ),
-    .add_need_frame        ( add_need_frame          ),
+    .add_need_frame_pos    ( add_need_frame_pos      ),
+    .total_need_frame_num  ( total_need_frame_num          ),
     .capture_frame_sequence( capture_frame_sequence  ),
 
     .rd_data_burst_valid   ( jpeg_rd_data_burst_valid),

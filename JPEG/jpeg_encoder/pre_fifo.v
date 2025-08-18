@@ -40,7 +40,8 @@ converter. */
 module pre_fifo(clk, rst, enable, data_in, cr_JPEG_bitstream, cr_data_ready, 
 cr_orc, cb_JPEG_bitstream, cb_data_ready, cb_orc, y_JPEG_bitstream, 
 y_data_ready, y_orc, y_eob_output,
-y_eob_empty, cb_eob_empty, cr_eob_empty);
+y_eob_empty, cb_eob_empty, cr_eob_empty,
+Y_Quantizer, CB_Quantizer, CR_Quantizer);
 input		clk, rst, enable;
 input	[23:0]	data_in;
 output  [31:0]  cr_JPEG_bitstream;
@@ -54,6 +55,7 @@ output		y_data_ready;
 output  [4:0] y_orc;
 output		y_eob_output; 
 output		y_eob_empty, cb_eob_empty, cr_eob_empty;
+output [13*8*8 - 1:0] Y_Quantizer, CB_Quantizer, CR_Quantizer; // 13 bits per quantized value, 8x8 block
 
 
 wire	rgb_enable;
@@ -66,16 +68,16 @@ wire	[23:0]	dct_data_in;
 	crd_q_h u11(.clk(clk), .rst(rst), .enable(rgb_enable), .data_in(dct_data_in[23:16]),
 	.JPEG_bitstream(cr_JPEG_bitstream), 
  	 .data_ready(cr_data_ready), .cr_orc(cr_orc),
- 	 .end_of_block_empty(cr_eob_empty)); 
+ 	 .end_of_block_empty(cr_eob_empty), .CR_Quantizer(CR_Quantizer)); 
 	
 	cbd_q_h u12(.clk(clk), .rst(rst), .enable(rgb_enable), .data_in(dct_data_in[15:8]),
 	.JPEG_bitstream(cb_JPEG_bitstream), 
  	 .data_ready(cb_data_ready), .cb_orc(cb_orc),
- 	 .end_of_block_empty(cb_eob_empty)); 
+ 	 .end_of_block_empty(cb_eob_empty), .CB_Quantizer(CB_Quantizer)); 
  
   	yd_q_h u13(.clk(clk), .rst(rst), .enable(rgb_enable), .data_in(dct_data_in[7:0]),
 	.JPEG_bitstream(y_JPEG_bitstream), 
  	 .data_ready(y_data_ready), .y_orc(y_orc),
- 	 .end_of_block_output(y_eob_output), .end_of_block_empty(y_eob_empty)); 
+ 	 .end_of_block_output(y_eob_output), .end_of_block_empty(y_eob_empty), .Y_Quantizer(Y_Quantizer)); 
   
 	endmodule

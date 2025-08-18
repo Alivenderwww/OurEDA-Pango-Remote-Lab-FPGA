@@ -119,7 +119,7 @@ assign wrdata_fifo_wr_en = udp_rx_en &&  wrdata_fifo_wr_en_reg;
 
 reg SYSTEM_RESET_TRIG;
 reg [10:0] SYSTEM_RESET_DELAY;
-wire SYSTEM_RESET = (SYSTEM_RESET_DELAY != 0);
+assign SYSTEM_RESET = (SYSTEM_RESET_DELAY != 0);
 always @(posedge gmii_rx_clk or posedge SYSTEM_RESET_TRIG) begin
     if(SYSTEM_RESET_TRIG) begin
         SYSTEM_RESET_DELAY <= 1;

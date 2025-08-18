@@ -44,7 +44,8 @@ last JPEG_bitstream value is written to the signal "end_of_file_bitstream_count"
 `timescale 1ns / 100ps
 
 module jpeg_top(clk, rst, end_of_file_signal, enable, data_in, JPEG_bitstream, 
-data_ready, end_of_file_bitstream_count, eof_data_partial_ready);
+data_ready, end_of_file_bitstream_count, eof_data_partial_ready,
+Y_Quantizer, CB_Quantizer, CR_Quantizer);
 input		clk;
 input		rst;
 input		end_of_file_signal;
@@ -54,6 +55,7 @@ output  [31:0]  JPEG_bitstream;
 output		data_ready;
 output	[4:0] end_of_file_bitstream_count;
 output		eof_data_partial_ready;
+output  [13*8*8 - 1:0] Y_Quantizer, CB_Quantizer, CR_Quantizer; // 13 bits per quantized value, 8x8 block
 
 wire [31:0] JPEG_FF;
 wire data_ready_FF;
@@ -61,7 +63,8 @@ wire [4:0] orc_reg_in;
  
 
  fifo_out u19 (.clk(clk), .rst(rst), .enable(enable), .data_in(data_in), 
- .JPEG_bitstream(JPEG_FF), .data_ready(data_ready_FF), .orc_reg(orc_reg_in));
+ .JPEG_bitstream(JPEG_FF), .data_ready(data_ready_FF), .orc_reg(orc_reg_in),
+ .Y_Quantizer(Y_Quantizer), .CB_Quantizer(CB_Quantizer), .CR_Quantizer(CR_Quantizer));
  
  ff_checker u20 (.clk(clk), .rst(rst), 
  .end_of_file_signal(end_of_file_signal), .JPEG_in(JPEG_FF), 

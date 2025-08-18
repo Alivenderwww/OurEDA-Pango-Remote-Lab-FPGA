@@ -7,14 +7,15 @@
 
 
 fifo_ddr3_write the_instance_name (
-  .clk(clk),                      // input
-  .rst(rst),                      // input
-  .wr_en(wr_en),                  // input
-  .wr_data(wr_data),              // input [31:0]
-  .wr_full(wr_full),              // output
-  .almost_full(almost_full),      // output
-  .rd_en(rd_en),                  // input
-  .rd_data(rd_data),              // output [255:0]
-  .rd_empty(rd_empty),            // output
-  .almost_empty(almost_empty)     // output
+  .clk(clk),                          // input
+  .rst(rst),                          // input
+  .wr_en(wr_en),                      // input
+  .wr_data(wr_data),                  // input [35:0]
+  .wr_full(wr_full),                  // output
+  .wr_water_level(wr_water_level),    // output [9:0]
+  .almost_full(almost_full),          // output
+  .rd_en(rd_en),                      // input
+  .rd_data(rd_data),                  // output [287:0]
+  .rd_empty(rd_empty),                // output
+  .almost_empty(almost_empty)         // output
 );

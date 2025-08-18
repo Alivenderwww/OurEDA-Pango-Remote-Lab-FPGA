@@ -35,13 +35,13 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 9 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 32 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 36 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 2,128
 
 localparam RD_DEPTH_WIDTH = 6 ; // @IPC int 9,20
 
-localparam RD_DATA_WIDTH = 256 ; // @IPC int 1,1152
+localparam RD_DATA_WIDTH = 288 ; // @IPC int 1,1152
 
 localparam RD_BE_WIDTH = 1 ; // @IPC int 2,128
 
@@ -51,13 +51,13 @@ localparam RD_OCE_EN = 0 ; // @IPC bool
 
 localparam RD_CLK_OR_POL_INV = 0 ; // @IPC bool
 
-localparam FULL_WL_EN = 0 ; // @IPC bool
+localparam FULL_WL_EN = 1 ; // @IPC bool
 
 localparam EMPTY_WL_EN = 0 ; // @IPC bool
 
 localparam ASYN_FIFO_EN = "0" ; // @IPC bool
 
-localparam ALMOST_FULL_NUM = 128 ; // @IPC int
+localparam ALMOST_FULL_NUM = 450 ; // @IPC int
 
 localparam ALMOST_EMPTY_NUM = 15 ; // @IPC int
 
@@ -265,6 +265,8 @@ fifo_ddr3_write U_fifo_ddr3_write (
     .wr_en          ( tb_wr_en          ) ,
 
     .wr_full        ( tb_wr_full        ) ,
+
+    .wr_water_level ( tb_wr_water_level ) ,
 
     .almost_full    ( tb_almost_full    ) ,
     .rd_data        ( tb_rddata         ) ,

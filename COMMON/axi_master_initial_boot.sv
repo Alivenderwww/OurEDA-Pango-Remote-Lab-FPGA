@@ -89,9 +89,10 @@ reg [31:0] wait_count;
 
 reg [1:0] axi_cu_st, axi_nt_st;
 reg [2:0] dma_cu_st, dma_nt_st;
-localparam AXI_ST_IDLE    = 2'b00,
-           AXI_ST_RD_ADDR = 2'b01,
-           AXI_ST_RD_DATA = 2'b10;
+localparam AXI_ST_RESET   = 2'b00,
+           AXI_ST_IDLE    = 2'b01,
+           AXI_ST_RD_ADDR = 2'b10,
+           AXI_ST_RD_DATA = 2'b11;
 localparam DMA_ST_IDLE          = 3'b000,
            DMA_ST_GET_HOST_IP   = 3'b001,
            DMA_ST_GET_BOARD_IP  = 3'b010,
@@ -105,7 +106,8 @@ always @(posedge clk or negedge dma_rstn_sync) begin
 end
 always @(*) begin
     case (axi_cu_st)
-        AXI_ST_IDLE   : axi_nt_st = (wait_count >= 32'h0003_FFFF)?(AXI_ST_RD_ADDR):(AXI_ST_IDLE);
+        AXI_ST_RESET  : axi_nt_st = (wait_count >= 32'h00FF_FFFF)?(AXI_ST_IDLE):(AXI_ST_RESET);
+        AXI_ST_IDLE   : axi_nt_st = (wait_count >= 32'h0000_4FFF)?(AXI_ST_RD_ADDR):(AXI_ST_IDLE);
         AXI_ST_RD_ADDR: axi_nt_st = (MASTER_RD_ADDR_VALID && MASTER_RD_ADDR_READY) ? (AXI_ST_RD_DATA) : (AXI_ST_RD_ADDR);
         AXI_ST_RD_DATA: axi_nt_st = (MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY && MASTER_RD_DATA_LAST) ? (AXI_ST_IDLE) : (AXI_ST_RD_DATA);
         default       : axi_nt_st = AXI_ST_IDLE;
@@ -130,7 +132,7 @@ end
 always @(posedge clk or negedge dma_rstn_sync) begin
     if(~dma_rstn_sync) wait_count <= 0;
     else if(dma_cu_st == DMA_ST_IDLE) wait_count <= 0;
-    else if(axi_cu_st == AXI_ST_IDLE) wait_count <= wait_count + 1;
+    else if(axi_cu_st == AXI_ST_IDLE || axi_cu_st == AXI_ST_RESET) wait_count <= wait_count + 1;
     else wait_count <= 0;
 end
 

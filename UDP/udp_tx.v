@@ -210,7 +210,14 @@ always @(posedge clk or negedge rst_n) begin
         skip_en         <= 1'b0;
         cnt             <= 5'd0;
         check_buffer    <= 32'd0;
-        ip_head[1][31:16] <= 16'd0;
+        ip_head[0]      <= 0;
+        ip_head[1]      <= 0;
+        ip_head[2]      <= 0;
+        ip_head[3]      <= 0;
+        ip_head[4]      <= 0;
+        ip_head[5]      <= 0;
+        ip_head[6]      <= 0;
+        ip_head[7]      <= 0;
         tx_bit_sel      <= 2'b0;
         crc_en          <= 1'b0;
         gmii_tx_en      <= 1'b0;
