@@ -2,3 +2,22 @@
 
 add_design "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/01_water_led/rtl/waterled_top.v"
 add_constraint "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/01_water_led/rtl/IO.fdc"
+add_design "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/01_water_led/rtl/waterled_top.v"
+add_constraint "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/01_water_led/rtl/IO.fdc"
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module waterled_top
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module waterled_top
+synthesize -ads -selected_syn_tool_opt 2 
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module waterled_top
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 

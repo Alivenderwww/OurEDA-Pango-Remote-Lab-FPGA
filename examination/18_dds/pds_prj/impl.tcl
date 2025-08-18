@@ -169,3 +169,35 @@ dev_map
 pnr 
 report_timing 
 gen_bit_stream 
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module top_dds
+synthesize -ads -selected_syn_tool_opt 2 
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+add_design E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/18_dds/pds_prj/ipcore/PLL_inst/PLL_inst.idf
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module top_dds
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module top_dds
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+add_fic "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/18_dds/pds_prj/synthesize/top_dds_syn.fic"
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module top_dds
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 
+remove_design E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/18_dds/pds_prj/ipcore/PLL_inst/PLL_inst.idf

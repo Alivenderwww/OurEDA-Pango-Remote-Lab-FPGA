@@ -4,11 +4,11 @@ module matrix_key #(
     parameter DEBOUNCE_TIME = 2000,
     parameter DELAY_TIME = 200
 ) (
-    input  wire clk,
-    input  wire rstn,
-    output  reg [ROW_NUM-1:0] row,
-    input  wire [COL_NUM-1:0] col,
-    output  reg [ROW_NUM*COL_NUM-1:0] key_out
+    input  wire clk/* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire rstn/* synthesis PAP_MARK_DEBUG="true" */,
+    output  reg [ROW_NUM-1:0] row/* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [COL_NUM-1:0] col/* synthesis PAP_MARK_DEBUG="true" */,
+    output  reg [ROW_NUM*COL_NUM-1:0] key_out/* synthesis PAP_MARK_DEBUG="true" */
 );
 
     localparam ROW_ACTIVE = 1'b0;   // 行有效电平
@@ -16,17 +16,17 @@ module matrix_key #(
     localparam COL_PRESSED = 1'b0;  // 列按下电平
     localparam COL_RELEASED = 1'b1; // 列释放电平
     
-    reg [ROW_NUM-1:0][COL_NUM-1:0] key; // 按键状态寄存器
+    reg [ROW_NUM-1:0][COL_NUM-1:0] key/* synthesis PAP_MARK_DEBUG="true" */; // 按键状态寄存器
 
-    reg [2:0] cu_st, nt_st;
+    reg [2:0] cu_st/* synthesis PAP_MARK_DEBUG="true" */, nt_st/* synthesis PAP_MARK_DEBUG="true" */;
     localparam [2:0] ST_IDLE = 3'b001;
     localparam [2:0] ST_SCAN = 3'b010;
     localparam [2:0] ST_DEBOUNCE = 3'b100;
 
-    wire btn_pressed = ((|(~(col ^ {COL_NUM{COL_PRESSED}}))) && (cu_st == ST_IDLE)) || (key_out != 0); // 只要有一个按键按下，btn_pressed为1
-    reg [31:0] delay_cnt; // 延时计数器
-    reg [31:0] debounce_cnt; // 消抖计数器
-    reg [ROW_NUM-1:0] row_cnt; // 行计数器
+    wire btn_pressed = ((|(~(col ^ {COL_NUM{COL_PRESSED}}))) && (cu_st == ST_IDLE)) || (key_out != 0)/* synthesis PAP_MARK_DEBUG="true" */; // 只要有一个按键按下，btn_pressed为1
+    reg [31:0] delay_cnt/* synthesis PAP_MARK_DEBUG="true" */; // 延时计数器
+    reg [31:0] debounce_cnt/* synthesis PAP_MARK_DEBUG="true" */; // 消抖计数器
+    reg [ROW_NUM-1:0] row_cnt/* synthesis PAP_MARK_DEBUG="true" */; // 行计数器
 
     always @(posedge clk or negedge rstn) begin
         if(!rstn) delay_cnt <= 0;

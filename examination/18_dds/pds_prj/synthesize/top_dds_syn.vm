@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Sun Jul 20 17:41:44 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Fri Aug 15 16:43:46 2025
 //
 
 module ipm2l_spram_v1_8_rom_wave
@@ -1005,7 +1005,7 @@ module dds
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_6 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_6 (
@@ -1017,9 +1017,9 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_7 */ #(
@@ -1059,7 +1059,7 @@ module dds
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_9 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_9 (
@@ -1071,13 +1071,13 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_10 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_10 (
@@ -1089,13 +1089,13 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_11 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_11 (
@@ -1107,9 +1107,9 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_12 */ #(
@@ -1131,7 +1131,7 @@ module dds
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_13 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_13 (
@@ -1143,13 +1143,13 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_14 */ #(
-            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
+            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_14 (
@@ -1161,9 +1161,9 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b1));
-	// LUT = ~CIN^I0 ;
-	// CARRY = (~I0) ? CIN : I5 ;
+            .I5 (1'b0));
+	// LUT = CIN^I0 ;
+	// CARRY = (I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_15 */ #(
@@ -1203,7 +1203,7 @@ module dds
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_17 */ #(
-            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_17 (
@@ -1215,9 +1215,9 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b0));
-	// LUT = CIN^I0 ;
-	// CARRY = (I0) ? CIN : I5 ;
+            .I5 (1'b1));
+	// LUT = ~CIN^I0 ;
+	// CARRY = (~I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_18 */ #(
@@ -1275,7 +1275,7 @@ module dds
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_21 */ #(
-            .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
+            .INIT(64'b1010101010101010101010101010101001010101010101010101010101010101), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
         N3_1_21 (
@@ -1287,9 +1287,9 @@ module dds
             .I2 (),
             .I3 (),
             .I4 (),
-            .I5 (1'b0));
-	// LUT = CIN^I0 ;
-	// CARRY = (I0) ? CIN : I5 ;
+            .I5 (1'b1));
+	// LUT = ~CIN^I0 ;
+	// CARRY = (~I0) ? CIN : I5 ;
 	// ../../rtl/dds.v:53
 
     GTP_LUT6CARRY /* N3_1_22 */ #(
@@ -2086,7 +2086,6 @@ module top_dds
     output dac_clk
 );
 	// SDC constraint : (object sys_clk) (id 1000) (clock top_dds|sys_clk) (inferred)
-    wire nt_dac_clk;
     wire [7:0] nt_dac_data;
     wire nt_sys_clk;
     wire nt_sys_rst_n;
@@ -2094,23 +2093,16 @@ module top_dds
     GTP_GRS GRS_INST (
             .GRS_N (1'b1));
 
-    GTP_LUT1 /* N0 */ #(
-            .INIT(2'b01))
-        N0 (
-            .Z (nt_dac_clk),
-            .I0 (nt_sys_clk));
-	// LUT = ~I0 ;
-
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y23", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* dac_clk_obuf */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AB24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* dac_clk_obuf */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
         dac_clk_obuf (
             .O (dac_clk),
-            .I (nt_dac_clk));
+            .I (nt_sys_clk));
 	// ../../rtl/top_dds.v:17
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[0]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AC26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[0]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2119,7 +2111,7 @@ module top_dds
             .I (nt_dac_data[0]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[1]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="U22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[1]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2128,7 +2120,7 @@ module top_dds
             .I (nt_dac_data[1]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[2]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="Y26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[2]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2137,7 +2129,7 @@ module top_dds
             .I (nt_dac_data[2]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V16", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[3]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AB26", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[3]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2146,7 +2138,7 @@ module top_dds
             .I (nt_dac_data[3]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[4]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AB25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[4]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2155,7 +2147,7 @@ module top_dds
             .I (nt_dac_data[4]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="T17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[5]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W25", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[5]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2164,7 +2156,7 @@ module top_dds
             .I (nt_dac_data[5]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="W19", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[6]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AC24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[6]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2173,7 +2165,7 @@ module top_dds
             .I (nt_dac_data[6]));
 	// ../../rtl/top_dds.v:18
 
-(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="V19", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[7]  */ #(
+(* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="AA24", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \dac_data_obuf[7]  */ #(
             .IOSTANDARD("DEFAULT"), 
             .SLEW_RATE("SLOW"), 
             .DRIVE_STRENGTH("8"))
@@ -2186,7 +2178,7 @@ module top_dds
             .data_out (nt_dac_data),
             .sys_clk (nt_sys_clk),
             .sys_rst_n (nt_sys_rst_n));
-	// ../../rtl/top_dds.v:32
+	// ../../rtl/top_dds.v:31
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="D18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS15", PAP_IO_PULLUP="TRUE" *)    GTP_INBUF /* sys_clk_ibuf */ #(
             .IOSTANDARD("DEFAULT"), 

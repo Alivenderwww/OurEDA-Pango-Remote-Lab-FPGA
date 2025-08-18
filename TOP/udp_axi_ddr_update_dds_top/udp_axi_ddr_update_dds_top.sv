@@ -3,10 +3,10 @@ module udp_axi_ddr_update_top #(
     // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
     parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0  8'd169,8'd254,8'd103,8'd006
     // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
-    // parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
-    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
-    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
+    // parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
+    parameter ADMIN_DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
+    // parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
+    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
     // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
 )(
 //system io
@@ -81,6 +81,10 @@ output wire        eth_rst_n    ,
 //hsst io
 input  wire        i_p_refckn_0 ,
 input  wire        i_p_refckp_0 ,
+//led display io
+input  wire        sck			,
+input  wire        rck			,
+input  wire        ser			,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -1007,6 +1011,42 @@ Analazer S9(
 axi_slave_default S11(
 	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),
+	.SLAVE_CLK          (S_CLK          [10]),
+	.SLAVE_RSTN         (S_RSTN         [10]),
+	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [10]),
+	.SLAVE_WR_ADDR      (S_WR_ADDR      [10]),
+	.SLAVE_WR_ADDR_LEN  (S_WR_ADDR_LEN  [10]),
+	.SLAVE_WR_ADDR_BURST(S_WR_ADDR_BURST[10]),
+	.SLAVE_WR_ADDR_VALID(S_WR_ADDR_VALID[10]),
+	.SLAVE_WR_ADDR_READY(S_WR_ADDR_READY[10]),
+	.SLAVE_WR_DATA      (S_WR_DATA      [10]),
+	.SLAVE_WR_STRB      (S_WR_STRB      [10]),
+	.SLAVE_WR_DATA_LAST (S_WR_DATA_LAST [10]),
+	.SLAVE_WR_DATA_VALID(S_WR_DATA_VALID[10]),
+	.SLAVE_WR_DATA_READY(S_WR_DATA_READY[10]),
+	.SLAVE_WR_BACK_ID   (S_WR_BACK_ID   [10]),
+	.SLAVE_WR_BACK_RESP (S_WR_BACK_RESP [10]),
+	.SLAVE_WR_BACK_VALID(S_WR_BACK_VALID[10]),
+	.SLAVE_WR_BACK_READY(S_WR_BACK_READY[10]),
+	.SLAVE_RD_ADDR_ID   (S_RD_ADDR_ID   [10]),
+	.SLAVE_RD_ADDR      (S_RD_ADDR      [10]),
+	.SLAVE_RD_ADDR_LEN  (S_RD_ADDR_LEN  [10]),
+	.SLAVE_RD_ADDR_BURST(S_RD_ADDR_BURST[10]),
+	.SLAVE_RD_ADDR_VALID(S_RD_ADDR_VALID[10]),
+	.SLAVE_RD_ADDR_READY(S_RD_ADDR_READY[10]),
+	.SLAVE_RD_BACK_ID   (S_RD_BACK_ID   [10]),
+	.SLAVE_RD_DATA      (S_RD_DATA      [10]),
+	.SLAVE_RD_DATA_RESP (S_RD_DATA_RESP [10]),
+	.SLAVE_RD_DATA_LAST (S_RD_DATA_LAST [10]),
+	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[10]),
+	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[10])
+);
+led_display_in_axi_slave S11(
+	.clk 				(clk_50M          	),
+	.rstn 				(BUS_RSTN          	),
+	.sck				(sck				),
+    .ser				(ser				),
+    .rck				(rck				),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
 	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [11]),
@@ -1037,7 +1077,6 @@ axi_slave_default S11(
 	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[11]),
 	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[11])
 );
-
 axi_slave_default S12(
 	.clk 				(clk_BUS          ),
 	.rstn 				(BUS_RSTN          ),

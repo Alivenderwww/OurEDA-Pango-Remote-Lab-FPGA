@@ -207,23 +207,6 @@ UTDI;1
 UTMS;1
 
 Inst
-dds_inst/fre_add[0]/opit_0_inv_L6Q_perm;gopLUT6Q
-Pin
-CECO;2
-L6;2
-L6Q;2
-RSCO;2
-CE;1
-CLK;1
-I0;1
-I1;1
-I2;1
-I3;1
-I4;1
-I5;1
-RS;1
-
-Inst
 clkbufg_0/gopclkbufg;gopCLKBUFG
 Pin
 CLKOUT;2
@@ -2018,15 +2001,21 @@ I5;1
 RS;1
 
 Inst
-N0/gateop_perm;gopLUT6
+dds_inst/fre_add[0]/opit_0_inv_L6Q_perm;gopLUT6Q
 Pin
+CECO;2
 L6;2
+L6Q;2
+RSCO;2
+CE;1
+CLK;1
 I0;1
 I1;1
 I2;1
 I3;1
 I4;1
 I5;1
+RS;1
 
 Inst
 dds_inst/rom_wave_inst/U_ipm2l_rom_rom_wave/U_ipm2l_spram/ADDR_LOOP[0].DATA_LOOP[0].U_GTP_DRM36K_E1/gopdrm_36k;gopDRM
@@ -3506,6 +3495,11 @@ Pin
 Z;2
 
 Inst
+VCC_15;gopVCC
+Pin
+Z;2
+
+Inst
 GND_0;gopGND
 Pin
 Z;2
@@ -3637,12 +3631,6 @@ Pin
 CLKOUT;2
 CLKIN;1
 
-Inst
-HCKBROUTE_1;gopHCKB
-Pin
-CLKOUT;2
-CLKIN;1
-
 Net
 dac_clk;
 dac_clk_obuf/ntO;
@@ -3693,7 +3681,6 @@ dds_inst/_N28;
 dds_inst/_N29;
 dds_inst/_N30;
 dds_inst/_N31;
-nt_dac_clk;
 nt_sys_clk;
 nt_sys_rst_n;
 ntclkbufg_0;
