@@ -1,4 +1,7 @@
-module led_display_in_axi_slave (
+module led_display_in_axi_slave #(
+    parameter WS_NUM = 128,
+    parameter CLK_FREQ = 32'd100_000_000
+)(
     input  wire         clk,
     input  wire         rstn,
     //LED
@@ -11,6 +14,8 @@ module led_display_in_axi_slave (
     inout  wire [ 2:0]  A                  ,
     inout  wire [ 2:0]  B                  ,
     inout  wire [ 1:0]  key                , 
+    //ws2812
+    input  wire         ws_data_stream     ,
 
     output wire         SLAVE_CLK          ,
     output wire         SLAVE_RSTN         ,
@@ -48,6 +53,7 @@ module led_display_in_axi_slave (
     input  wire         SLAVE_RD_DATA_READY
 );
 //encoder
+wire [23:0] wscolor[WS_NUM];
 reg encoder_ctrl;
 reg [2:0] A_out;
 reg [2:0] B_out;
@@ -174,49 +180,22 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
 end
 always @(posedge clk or negedge SLAVE_RSTN) begin
     if(~SLAVE_RSTN) rddata <= 0;
-    else
-        case(rdaddr)
-            32'h00000000 : rddata <= {16'd0 , 8'd0  , led[0 ]};
-            32'h00000001 : rddata <= {16'd0 , 8'd1  , led[1 ]};
-            32'h00000002 : rddata <= {16'd0 , 8'd2  , led[2 ]};
-            32'h00000003 : rddata <= {16'd0 , 8'd3  , led[3 ]};
-            32'h00000004 : rddata <= {16'd0 , 8'd4  , led[4 ]};
-            32'h00000005 : rddata <= {16'd0 , 8'd5  , led[5 ]};
-            32'h00000006 : rddata <= {16'd0 , 8'd6  , led[6 ]};
-            32'h00000007 : rddata <= {16'd0 , 8'd7  , led[7 ]};
-            32'h00000008 : rddata <= {16'd0 , 8'd8  , led[8 ]};
-            32'h00000009 : rddata <= {16'd0 , 8'd9  , led[9 ]};
-            32'h0000000a : rddata <= {16'd0 , 8'd10 , led[10]};
-            32'h0000000b : rddata <= {16'd0 , 8'd11 , led[11]};
-            32'h0000000c : rddata <= {16'd0 , 8'd12 , led[12]};
-            32'h0000000d : rddata <= {16'd0 , 8'd13 , led[13]};
-            32'h0000000e : rddata <= {16'd0 , 8'd14 , led[14]};
-            32'h0000000f : rddata <= {16'd0 , 8'd15 , led[15]};
-            32'h00000010 : rddata <= {16'd0 , 8'd16 , led[16]};
-            32'h00000011 : rddata <= {16'd0 , 8'd17 , led[17]};
-            32'h00000012 : rddata <= {16'd0 , 8'd18 , led[18]};
-            32'h00000013 : rddata <= {16'd0 , 8'd19 , led[19]};
-            32'h00000014 : rddata <= {16'd0 , 8'd20 , led[20]};
-            32'h00000015 : rddata <= {16'd0 , 8'd21 , led[21]};
-            32'h00000016 : rddata <= {16'd0 , 8'd22 , led[22]};
-            32'h00000017 : rddata <= {16'd0 , 8'd23 , led[23]};
-            32'h00000018 : rddata <= {16'd0 , 8'd24 , led[24]};
-            32'h00000019 : rddata <= {16'd0 , 8'd25 , led[25]};
-            32'h0000001a : rddata <= {16'd0 , 8'd26 , led[26]};
-            32'h0000001b : rddata <= {16'd0 , 8'd27 , led[27]};
-            32'h0000001c : rddata <= {16'd0 , 8'd28 , led[28]};
-            32'h0000001d : rddata <= {16'd0 , 8'd29 , led[29]};
-            32'h0000001e : rddata <= {16'd0 , 8'd30 , led[30]};
-            32'h0000001f : rddata <= {16'd0 , 8'd31 , led[31]};
-            32'h00000020 : rddata <= {31'd0  , sw_ctrl  };
-            32'h00000021 : rddata <= {31'd0  , sw_out[4]};
-            32'h00000022 : rddata <= {31'd0  , sw_out[3]};
-            32'h00000023 : rddata <= {31'd0  , sw_out[2]};
-            32'h00000024 : rddata <= {31'd0  , sw_out[1]};
-            32'h00000025 : rddata <= {31'd0  , sw_out[0]};
-            32'h00000030 : rddata <= {31'd0  , encoder_ctrl};
-            default : rddata <= 32'hFFFFFFFF;
-        endcase
+    else if(rdaddr >= 32'h0000_0000 && rdaddr <= 32'h0000001f) begin
+        for(i=0;i<32;i=i+1) if(rdaddr[7:0] == i[7:0])
+            rddata <= {16'b0, i[7:0], led[i]};
+    end else if(rdaddr >= 32'h0000_0100 && rdaddr <= 32'h0000_0100 + WS_NUM - 1) begin
+        for(i=0;i<WS_NUM;i=i+1) if(rdaddr[7:0] == i[7:0])
+            rddata <= {8'b0, wscolor[i]};
+    end else case(rdaddr)
+        32'h00000020 : rddata <= {31'd0  , sw_ctrl  };
+        32'h00000021 : rddata <= {31'd0  , sw_out[4]};
+        32'h00000022 : rddata <= {31'd0  , sw_out[3]};
+        32'h00000023 : rddata <= {31'd0  , sw_out[2]};
+        32'h00000024 : rddata <= {31'd0  , sw_out[1]};
+        32'h00000025 : rddata <= {31'd0  , sw_out[0]};
+        32'h00000030 : rddata <= {31'd0  , encoder_ctrl};
+        default : rddata <= 32'hFFFFFFFF;
+    endcase
 end
 //sw
 
@@ -484,4 +463,15 @@ always @(posedge clk or negedge SLAVE_RSTN) begin
     end
 end
 assign SLAVE_WR_BACK_RESP = 2'b00;
+
+//ws2812
+Recv #(
+    .CLKHZ(CLK_FREQ),
+    .WS_NUM(WS_NUM)
+)ws2812_recv_inst (
+    .clk            (clk            ),
+    .rstn           (SLAVE_RSTN     ),
+    .data_stream    (ws_data_stream ),
+    .wscolor        (wscolor        )
+);
 endmodule
