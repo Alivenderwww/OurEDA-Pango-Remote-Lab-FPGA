@@ -85,6 +85,12 @@ input  wire        i_p_refckp_0 ,
 input  wire        sck			,
 input  wire        rck			,
 input  wire        ser			,
+//sw
+inout  wire [4:0]  sw       ,
+//encoder
+inout  wire [2:0]  encoder_A,
+inout  wire [2:0]  encoder_B,
+inout  wire [1:0]  encoder_key,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -1047,6 +1053,10 @@ led_display_in_axi_slave S11(
 	.sck				(sck				),
     .ser				(ser				),
     .rck				(rck				),
+    .sw           (sw),
+    .A             (encoder_A),
+    .B             (encoder_B),
+    .key           (encoder_key),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
 	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [11]),
