@@ -12,9 +12,13 @@ module Analyzer_datastore (
     input  wire [7:0]    channel_div  ,
     input  wire [7:0]    clock_div    , // 逻辑分析仪采样时钟分频系数
 
-    output wire          rd_data_ready,
-    input  wire          rd_data_valid,
-    output wire [31:0]   rd_data      
+    output wire          rd_data_burst_valid,
+    input  wire          rd_data_burst_ready,
+    output  reg [7:0]    rd_data_burst,
+    output wire          rd_data_valid,
+    input  wire          rd_data_ready,
+    output wire [31:0]   rd_data,
+    output wire          rd_data_last
 );
 
 reg [31:0] load_cnt, unload_cnt;
@@ -143,22 +147,50 @@ always @(*) begin
         default            : fifo_rd_en = 0;
     endcase
 end
-assign rd_data_ready = (fifo_rd_data_valid) && ((state == ST_READ) || (state == ST_CAPTURE));
+assign rd_data_valid = (fifo_rd_data_valid) && ((state == ST_READ) || (state == ST_CAPTURE));
 assign busy = (state == ST_CAPTURE) || (state == ST_READ);
 assign done = (state == ST_DONE);
 analyzer_fifo u_analyzer_fifo (
-    .clk       (clk          ),
-    .rst       (~rstn         ),
+    .clk          (clk              ),
+    .rst          (~rstn            ),
 
-    .wr_en        (fifo_wr_en),
+    .wr_en        (fifo_wr_en       ),
     .wr_data      (digital_in_combine),
-    .wr_full      (),
-    .almost_full  (),
+    .wr_full      (                 ),
+    .almost_full  (                 ),
 
-    .rd_en        (fifo_rd_en   ),
-    .rd_data      (rd_data      ),
-    .rd_empty     (empty        ),
-    .almost_empty ()
+    .rd_en        (fifo_rd_en       ),
+    .rd_data      (rd_data          ),
+    .rd_empty     (empty            ),
+    .almost_empty (                 )
 );
+
+reg [31:0] need_trans;
+always @(posedge clk or negedge rstn) begin
+    if(~rstn) begin
+        need_trans <= 1;
+    end else if((state == ST_IDLE) && (next_state != ST_IDLE)) begin
+        need_trans <= load_num + 1;
+    end else if(rd_data_valid && rd_data_ready) begin
+        need_trans <= need_trans - 1;
+    end else rd_data_burst <= rd_data_burst;
+end
+
+assign rd_data_burst = (need_trans >= 256)?(8'hff):(need_trans - 1);
+
+reg [7:0] rd_data_burst_count;
+always @(posedge clk or negedge rstn) begin
+    if(~rstn) begin
+             rd_data_burst_count <= 0;
+    end else if(rd_data_burst_valid && rd_data_burst_ready) begin
+             rd_data_burst_count <= rd_data_burst;
+    end else if(rd_data_valid && rd_data_ready) begin
+             rd_data_burst_count <= (rd_data_last) ? (rd_data_burst_count) : (rd_data_burst_count - 1);
+    end else rd_data_burst_count <= rd_data_burst_count;
+end
+
+assign rd_data_burst_valid = (fifo_rd_data_valid) && ((state == ST_READ) || (state == ST_CAPTURE)) && (need_trans != 0);
+assign rd_addr_reset = 0;
+assign rd_data_last = (rd_data_burst_count == 0);
 
 endmodule //Analyzer

@@ -109,7 +109,7 @@ end
 
 //data_in_enable, jpeg_encoder_before_data
 always @(*) begin
-    if(cu_wr_state == ST_WR_DATA) wr_data_ready = 1;
+    if(cu_wr_state == ST_WR_DATA) wr_data_ready = ~wr_full;
     else wr_data_ready = 1'b0;
     
     if(wr_data_valid && wr_data_ready) begin

@@ -15,39 +15,19 @@
     </header>
     <param_list>
         <param>
-            <name>RESET_TYPE</name>
-            <value>ASYNC</value>
-        </param>
-        <param>
-            <name>RD_OCE_EN</name>
+            <name>FULL_WL_EN</name>
             <value>false</value>
         </param>
         <param>
-            <name>FAB_REG</name>
+            <name>BYTE_SIZE</name>
+            <value>8</value>
+        </param>
+        <param>
+            <name>EMPTY_WL_EN</name>
             <value>false</value>
-        </param>
-        <param>
-            <name>WR_DEPTH_WIDTH</name>
-            <value>9</value>
-        </param>
-        <param>
-            <name>BE_WIDTH</name>
-            <value>1</value>
-        </param>
-        <param>
-            <name>RD_DEPTH_WIDTH</name>
-            <value>9</value>
         </param>
         <param>
             <name>OUTPUT_REG</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>SAMEWIDTH_EN</name>
-            <value>true</value>
-        </param>
-        <param>
-            <name>RD_CLK_OR_POL_INV</name>
             <value>false</value>
         </param>
         <param>
@@ -55,52 +35,36 @@
             <value>1</value>
         </param>
         <param>
-            <name>WR_BYTE_EN</name>
+            <name>FAB_REG</name>
             <value>false</value>
         </param>
         <param>
-            <name>POWER_OPT</name>
+            <name>RD_CLK_OR_POL_INV</name>
             <value>false</value>
         </param>
         <param>
-            <name>RST_VAL_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>EMPTY_WL_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>CAS_MODE_SEL</name>
-            <value>AUTO</value>
-        </param>
-        <param>
-            <name>ASYN_FIFO_EN</name>
-            <value>true</value>
+            <name>ALMOST_FULL_NUM</name>
+            <value>300</value>
         </param>
         <param>
             <name>CAS_MODE</name>
             <value>36K</value>
         </param>
         <param>
-            <name>FIFO_TYPE</name>
-            <value>ASYN_FIFO</value>
-        </param>
-        <param>
-            <name>BYTE_SIZE</name>
-            <value>8</value>
-        </param>
-        <param>
-            <name>FULL_WL_EN</name>
+            <name>POWER_OPT</name>
             <value>false</value>
-        </param>
-        <param>
-            <name>WR_DATA_WIDTH</name>
-            <value>39</value>
         </param>
         <param>
             <name>ALMOST_EMPTY_NUM</name>
             <value>4</value>
+        </param>
+        <param>
+            <name>RD_OCE_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RST_VAL_EN</name>
+            <value>false</value>
         </param>
         <param>
             <name>RD_DATA_WIDTH</name>
@@ -111,8 +75,44 @@
             <value>0</value>
         </param>
         <param>
-            <name>ALMOST_FULL_NUM</name>
-            <value>60</value>
+            <name>BE_WIDTH</name>
+            <value>1</value>
+        </param>
+        <param>
+            <name>RD_DEPTH_WIDTH</name>
+            <value>9</value>
+        </param>
+        <param>
+            <name>RESET_TYPE</name>
+            <value>ASYNC</value>
+        </param>
+        <param>
+            <name>WR_DEPTH_WIDTH</name>
+            <value>9</value>
+        </param>
+        <param>
+            <name>SAMEWIDTH_EN</name>
+            <value>true</value>
+        </param>
+        <param>
+            <name>WR_DATA_WIDTH</name>
+            <value>39</value>
+        </param>
+        <param>
+            <name>CAS_MODE_SEL</name>
+            <value>AUTO</value>
+        </param>
+        <param>
+            <name>FIFO_TYPE</name>
+            <value>ASYN_FIFO</value>
+        </param>
+        <param>
+            <name>ASYN_FIFO_EN</name>
+            <value>true</value>
+        </param>
+        <param>
+            <name>WR_BYTE_EN</name>
+            <value>false</value>
         </param>
     </param_list>
     <pin_list>

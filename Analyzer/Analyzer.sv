@@ -3,9 +3,14 @@ module Analazer (
     input  wire rstn,
     input  wire [32-1:0] digital_in, // 输入数字信号
 
-    output logic             rd_data_ready,
-    input  logic             rd_data_valid,
+    input  logic             rd_rstn,
+    output logic             rd_data_burst_valid,
+    input  logic             rd_data_burst_ready,
+    output logic [ 7:0]      rd_data_burst,
+    output logic             rd_data_valid,
+    input  logic             rd_data_ready,
     output logic [31:0]      rd_data,
+    output logic             rd_data_last,
 
     output logic             ANALYZER_SLAVE_CLK          ,
     output logic             ANALYZER_SLAVE_RSTN         ,
@@ -348,22 +353,26 @@ always @(*) begin
 end
 
 Analyzer_datastore u_Analyzer_datastore(
-	.clk        	( clk         ),
-	.rstn       	( rstn        ),
-	.digital_in 	( digital_in  ),
-	.trig       	( trig        ),
-    .start          ( analyzer_on ),
-	.busy       	( busy        ),
-	.done       	( done        ),
+	.clk        	        (clk         ),
+	.rstn       	        (rstn & rd_rstn),
+	.digital_in 	        (digital_in  ),
+	.trig       	        (trig        ),
+    .start                  (analyzer_on ),
+	.busy       	        (busy        ),
+	.done       	        (done        ),
 
-    .load_num       ( load_num    ),
-    .pre_load_num   ( pre_load_num),
-    .channel_div    ( channel_div ),
-    .clock_div      ( clock_div   ),
+    .load_num               (load_num    ),
+    .pre_load_num           (pre_load_num),
+    .channel_div            (channel_div ),
+    .clock_div              (clock_div   ),
 
-    .rd_data_ready  (rd_data_ready),
-    .rd_data_valid  (rd_data_valid),
-    .rd_data        (rd_data)
+    .rd_data_burst_valid    (rd_data_burst_valid),
+    .rd_data_burst_ready    (rd_data_burst_ready),
+    .rd_data_burst          (rd_data_burst      ),
+    .rd_data_last           (rd_data_last       ),
+    .rd_data_ready          (rd_data_ready      ),
+    .rd_data_valid          (rd_data_valid      ),
+    .rd_data                (rd_data            )
 );
 
 

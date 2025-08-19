@@ -188,13 +188,13 @@ end
 //update when WR_ADDR(_END) -> WR_DATA
 always @(posedge clk or negedge dma_rstn_sync) begin
     if(~dma_rstn_sync) for(i=0;i<RD_INTERFACE_NUM;i=i+1) wr_len_load_count[i] <= 0;
-    else for(i=0;i<RD_INTERFACE_NUM;i=i+1) begin
+    else for(i=0;i<RD_INTERFACE_NUM;i=i+1) if(rd_channel == i) begin
         if(MASTER_WR_ADDR_VALID && MASTER_WR_ADDR_READY)
-            wr_len_load_count[i] <= wr_len_load[i];
+             wr_len_load_count[i] <= wr_len_load[i];
         else if(MASTER_WR_DATA_VALID && MASTER_WR_DATA_READY)
              wr_len_load_count[i] <= (MASTER_WR_DATA_LAST) ? (wr_len_load_count[i]) : (wr_len_load_count[i] - 1);
         else wr_len_load_count[i] <= wr_len_load_count[i];
-    end
+    end else wr_len_load_count[i] <= wr_len_load_count[i];
 end
 
 always_comb begin: MASTER_WRITE_CHANNEL
@@ -215,7 +215,7 @@ always_comb begin: MASTER_WRITE_CHANNEL
             MASTER_WR_ADDR_LEN   = wr_len_load[comb_i];
             MASTER_WR_ADDR_VALID = (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_ADDR) || (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_ADDR_END);
             MASTER_WR_DATA_VALID = (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA || axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA_END) && (rd_data_valid[comb_i] || (~rd_capture_rstn[comb_i]));
-            MASTER_WR_DATA_LAST  = (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA || axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA_END) && ((wr_len_load_count[comb_i] == 0) || rd_data_last[comb_i]);
+            MASTER_WR_DATA_LAST  = ((axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA) && (rd_data_last[comb_i])) || ((axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_DATA_END) && (wr_len_load_count[comb_i] == 0));
             MASTER_WR_DATA       = rd_data[comb_i];
             MASTER_WR_BACK_READY = (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_RESP) || (axi_rd_cu_st[comb_i] == AXI_RD_ST_WR_RESP_END);
         end

@@ -151,7 +151,7 @@ end
 always @(posedge clk or negedge ddr_rstn_sync) begin
     if(~ddr_rstn_sync) trans_num <= 0;
     else if(SLAVE_RD_ADDR_VALID && SLAVE_RD_ADDR_READY) trans_num <= SLAVE_RD_ADDR_LEN;
-    else if(fifo_rd_en && (~flag_unuse_rd_need) && (~fifo_rd_first_need) && (trans_num != 0)) trans_num <= trans_num - 1;
+    else if((SLAVE_RD_DATA_READY) && (SLAVE_RD_DATA_VALID)) trans_num <= trans_num - 1;
     else trans_num <= trans_num;
 end
 

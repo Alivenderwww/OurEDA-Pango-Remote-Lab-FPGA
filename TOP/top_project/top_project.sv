@@ -1,4 +1,4 @@
-module udp_axi_ddr_update_top #(
+module top_project #(
     parameter ADMIN_BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
     // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
     parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0  8'd169,8'd254,8'd103,8'd006
@@ -105,22 +105,17 @@ wire [47:0]  eeprom_host_mac ;
 wire [31:0]  eeprom_board_ip ;
 wire [47:0]  eeprom_board_mac;
 
-wire [31:0] DMA0_START_WRITE_ADDR;
-wire [31:0] DMA0_END_WRITE_ADDR  ;
-wire        DMA0_capture_on     ;
-wire		DMA0_capture_rst    ;
 wire [15:0] OV_expect_width   ; //期望宽度
 wire [15:0] OV_expect_height  ; //期望高度
 
-
-wire [31:0] DMA1_START_WRITE_ADDR;
-wire [31:0] DMA1_END_WRITE_ADDR  ;
-wire DMA1_rd_clk                 ;
-wire DMA1_capture_on             ;
-wire DMA1_capture_rst            ;
-wire DMA1_rd_data_ready          ;
-wire DMA1_rd_data_valid          ;
-wire [31:0] DMA1_rd_data         ;
+wire        rd_rstn_for_analyzer				;
+wire		rd_data_burst_valid_for_analyzer	;
+wire		rd_data_burst_ready_for_analyzer	;
+wire [ 7:0] rd_data_burst_for_analyzer			;
+wire		rd_data_valid_for_analyzer			;
+wire		rd_data_ready_for_analyzer			;
+wire [31:0] rd_data_for_analyzer				;
+wire		rd_data_last_for_analyzer			;
 
 wire scl_eeprom_out, scl_eeprom_enable;
 wire sda_eeprom_out, sda_eeprom_enable;
@@ -338,51 +333,6 @@ axi_udp_master #(
 	.ETH_MASTER_RD_DATA_READY 	( M_RD_DATA_READY[2])
 );
 
-// ov_hdmi_axi_master M1(
-// 	.clk                  	( clk_BUS              ),
-// 	.rstn                 	( sys_rstn              ),
-// 	.CCD_RSTN              	( CCD_RSTN              ),
-// 	.CCD_PCLK             	( CCD_PCLK              ),
-// 	.CCD_VSYNC            	( CCD_VSYNC             ),
-// 	.CCD_HSYNC            	( CCD_HSYNC             ),
-// 	.CCD_DATA             	( CCD_DATA              ),
-// 	.START_WRITE_ADDR      	( DMA0_START_WRITE_ADDR ),//START_ADDR[0]       
-// 	.END_WRITE_ADDR         ( DMA0_END_WRITE_ADDR   ),//((640*480)*16)/32   
-// 	.capture_on		    	( DMA0_capture_on       ),
-// 	.capture_rst		 	( DMA0_capture_rst      ),        
-// 	.expect_width         	( OV_expect_width     ),//期望宽度
-// 	.expect_height        	( OV_expect_height    ),//期望高度   
-// 	.MASTER_CLK           	( M_CLK          [1]  ),
-// 	.MASTER_RSTN          	( M_RSTN         [1]  ),
-// 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [1]  ),
-// 	.MASTER_WR_ADDR       	( M_WR_ADDR      [1]  ),
-// 	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [1]  ),
-// 	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[1]  ),
-// 	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[1]  ),
-// 	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[1]  ),
-// 	.MASTER_WR_DATA       	( M_WR_DATA      [1]  ),
-// 	.MASTER_WR_STRB       	( M_WR_STRB      [1]  ),
-// 	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [1]  ),
-// 	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[1]  ),
-// 	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[1]  ),
-// 	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [1]  ),
-// 	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [1]  ),
-// 	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[1]  ),
-// 	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[1]  ),
-// 	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [1]  ),
-// 	.MASTER_RD_ADDR       	( M_RD_ADDR      [1]  ),
-// 	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [1]  ),
-// 	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[1]  ),
-// 	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[1]  ),
-// 	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[1]  ),
-// 	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [1]  ),
-// 	.MASTER_RD_DATA       	( M_RD_DATA      [1]  ),
-// 	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [1]  ),
-// 	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [1]  ),
-// 	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[1]  ),
-// 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[1]  )
-// );
-
 axi_master_initial_boot #(
 	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
 )M1(
@@ -422,76 +372,85 @@ axi_master_initial_boot #(
     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[1]),
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[1]));
 
-streaming_axi_master_slave M0S2(
-	.clk                  	( clk_BUS             ),
-	.rstn                 	( BUS_RSTN            ),
+// streaming_axi_master_slave M0S2(
+// 	.clk                  	( clk_BUS             ),
+// 	.rstn                 	( BUS_RSTN            ),
 
-	.hdmi_in_clk          	( hdmi_in_clk         ),
-	.hdmi_in_rstn         	( hdmi_in_rstn        ),
-	.hdmi_in_hsync        	( hdmi_in_hsync       ),
-	.hdmi_in_vsync        	( hdmi_in_vsync       ),
-	.hdmi_in_rgb          	( hdmi_in_rgb         ),
-	.hdmi_in_de           	( hdmi_in_de          ),
+// 	.hdmi_in_clk          	( hdmi_in_clk         ),
+// 	.hdmi_in_rstn         	( hdmi_in_rstn        ),
+// 	.hdmi_in_hsync        	( hdmi_in_hsync       ),
+// 	.hdmi_in_vsync        	( hdmi_in_vsync       ),
+// 	.hdmi_in_rgb          	( hdmi_in_rgb         ),
+// 	.hdmi_in_de           	( hdmi_in_de          ),
 
-	.MASTER_CLK           	( M_CLK            [0]),
-	.MASTER_RSTN          	( M_RSTN           [0]),
-	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID     [0]),
-	.MASTER_WR_ADDR       	( M_WR_ADDR        [0]),
-	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN    [0]),
-	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST  [0]),
-	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID  [0]),
-	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY  [0]),
-	.MASTER_WR_DATA       	( M_WR_DATA        [0]),
-	.MASTER_WR_STRB       	( M_WR_STRB        [0]),
-	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST   [0]),
-	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID  [0]),
-	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY  [0]),
-	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID     [0]),
-	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP   [0]),
-	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID  [0]),
-	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY  [0]),
-	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID     [0]),
-	.MASTER_RD_ADDR       	( M_RD_ADDR        [0]),
-	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN    [0]),
-	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST  [0]),
-	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID  [0]),
-	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY  [0]),
-	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID     [0]),
-	.MASTER_RD_DATA       	( M_RD_DATA        [0]),
-	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP   [0]),
-	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST   [0]),
-	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID  [0]),
-	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY  [0]),
-	.SLAVE_CLK            	( S_CLK             [2]),
-	.SLAVE_RSTN           	( S_RSTN            [2]),
-	.SLAVE_WR_ADDR_ID     	( S_WR_ADDR_ID      [2]),
-	.SLAVE_WR_ADDR        	( S_WR_ADDR         [2]),
-	.SLAVE_WR_ADDR_LEN    	( S_WR_ADDR_LEN     [2]),
-	.SLAVE_WR_ADDR_BURST  	( S_WR_ADDR_BURST   [2]),
-	.SLAVE_WR_ADDR_VALID  	( S_WR_ADDR_VALID   [2]),
-	.SLAVE_WR_ADDR_READY  	( S_WR_ADDR_READY   [2]),
-	.SLAVE_WR_DATA        	( S_WR_DATA         [2]),
-	.SLAVE_WR_STRB        	( S_WR_STRB         [2]),
-	.SLAVE_WR_DATA_LAST   	( S_WR_DATA_LAST    [2]),
-	.SLAVE_WR_DATA_VALID  	( S_WR_DATA_VALID   [2]),
-	.SLAVE_WR_DATA_READY  	( S_WR_DATA_READY   [2]),
-	.SLAVE_WR_BACK_ID     	( S_WR_BACK_ID      [2]),
-	.SLAVE_WR_BACK_RESP   	( S_WR_BACK_RESP    [2]),
-	.SLAVE_WR_BACK_VALID  	( S_WR_BACK_VALID   [2]),
-	.SLAVE_WR_BACK_READY  	( S_WR_BACK_READY   [2]),
-	.SLAVE_RD_ADDR_ID     	( S_RD_ADDR_ID      [2]),
-	.SLAVE_RD_ADDR        	( S_RD_ADDR         [2]),
-	.SLAVE_RD_ADDR_LEN    	( S_RD_ADDR_LEN     [2]),
-	.SLAVE_RD_ADDR_BURST  	( S_RD_ADDR_BURST   [2]),
-	.SLAVE_RD_ADDR_VALID  	( S_RD_ADDR_VALID   [2]),
-	.SLAVE_RD_ADDR_READY  	( S_RD_ADDR_READY   [2]),
-	.SLAVE_RD_BACK_ID     	( S_RD_BACK_ID      [2]),
-	.SLAVE_RD_DATA        	( S_RD_DATA         [2]),
-	.SLAVE_RD_DATA_RESP   	( S_RD_DATA_RESP    [2]),
-	.SLAVE_RD_DATA_LAST   	( S_RD_DATA_LAST    [2]),
-	.SLAVE_RD_DATA_VALID  	( S_RD_DATA_VALID   [2]),
-	.SLAVE_RD_DATA_READY  	( S_RD_DATA_READY   [2])
-);
+// 	.rd_rstn_for_analyzer            (rd_rstn_for_analyzer),
+// 	.rd_data_burst_valid_for_analyzer(rd_data_burst_valid_for_analyzer),
+// 	.rd_data_burst_ready_for_analyzer(rd_data_burst_ready_for_analyzer),
+// 	.rd_data_burst_for_analyzer		(rd_data_burst_for_analyzer		),
+// 	.rd_data_valid_for_analyzer		(rd_data_valid_for_analyzer		),
+// 	.rd_data_ready_for_analyzer		(rd_data_ready_for_analyzer		),
+// 	.rd_data_for_analyzer			(rd_data_for_analyzer			),
+// 	.rd_data_last_for_analyzer		(rd_data_last_for_analyzer		),
+
+// 	.MASTER_CLK           	( M_CLK            [0]),
+// 	.MASTER_RSTN          	( M_RSTN           [0]),
+// 	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID     [0]),
+// 	.MASTER_WR_ADDR       	( M_WR_ADDR        [0]),
+// 	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN    [0]),
+// 	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST  [0]),
+// 	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID  [0]),
+// 	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY  [0]),
+// 	.MASTER_WR_DATA       	( M_WR_DATA        [0]),
+// 	.MASTER_WR_STRB       	( M_WR_STRB        [0]),
+// 	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST   [0]),
+// 	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID  [0]),
+// 	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY  [0]),
+// 	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID     [0]),
+// 	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP   [0]),
+// 	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID  [0]),
+// 	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY  [0]),
+// 	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID     [0]),
+// 	.MASTER_RD_ADDR       	( M_RD_ADDR        [0]),
+// 	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN    [0]),
+// 	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST  [0]),
+// 	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID  [0]),
+// 	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY  [0]),
+// 	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID     [0]),
+// 	.MASTER_RD_DATA       	( M_RD_DATA        [0]),
+// 	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP   [0]),
+// 	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST   [0]),
+// 	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID  [0]),
+// 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY  [0]),
+// 	.SLAVE_CLK            	( S_CLK             [2]),
+// 	.SLAVE_RSTN           	( S_RSTN            [2]),
+// 	.SLAVE_WR_ADDR_ID     	( S_WR_ADDR_ID      [2]),
+// 	.SLAVE_WR_ADDR        	( S_WR_ADDR         [2]),
+// 	.SLAVE_WR_ADDR_LEN    	( S_WR_ADDR_LEN     [2]),
+// 	.SLAVE_WR_ADDR_BURST  	( S_WR_ADDR_BURST   [2]),
+// 	.SLAVE_WR_ADDR_VALID  	( S_WR_ADDR_VALID   [2]),
+// 	.SLAVE_WR_ADDR_READY  	( S_WR_ADDR_READY   [2]),
+// 	.SLAVE_WR_DATA        	( S_WR_DATA         [2]),
+// 	.SLAVE_WR_STRB        	( S_WR_STRB         [2]),
+// 	.SLAVE_WR_DATA_LAST   	( S_WR_DATA_LAST    [2]),
+// 	.SLAVE_WR_DATA_VALID  	( S_WR_DATA_VALID   [2]),
+// 	.SLAVE_WR_DATA_READY  	( S_WR_DATA_READY   [2]),
+// 	.SLAVE_WR_BACK_ID     	( S_WR_BACK_ID      [2]),
+// 	.SLAVE_WR_BACK_RESP   	( S_WR_BACK_RESP    [2]),
+// 	.SLAVE_WR_BACK_VALID  	( S_WR_BACK_VALID   [2]),
+// 	.SLAVE_WR_BACK_READY  	( S_WR_BACK_READY   [2]),
+// 	.SLAVE_RD_ADDR_ID     	( S_RD_ADDR_ID      [2]),
+// 	.SLAVE_RD_ADDR        	( S_RD_ADDR         [2]),
+// 	.SLAVE_RD_ADDR_LEN    	( S_RD_ADDR_LEN     [2]),
+// 	.SLAVE_RD_ADDR_BURST  	( S_RD_ADDR_BURST   [2]),
+// 	.SLAVE_RD_ADDR_VALID  	( S_RD_ADDR_VALID   [2]),
+// 	.SLAVE_RD_ADDR_READY  	( S_RD_ADDR_READY   [2]),
+// 	.SLAVE_RD_BACK_ID     	( S_RD_BACK_ID      [2]),
+// 	.SLAVE_RD_DATA        	( S_RD_DATA         [2]),
+// 	.SLAVE_RD_DATA_RESP   	( S_RD_DATA_RESP    [2]),
+// 	.SLAVE_RD_DATA_LAST   	( S_RD_DATA_LAST    [2]),
+// 	.SLAVE_RD_DATA_VALID  	( S_RD_DATA_VALID   [2]),
+// 	.SLAVE_RD_DATA_READY  	( S_RD_DATA_READY   [2])
+// );
 
 axi_master_default M3(
 	.clk                  	( clk_BUS             ),
@@ -525,6 +484,40 @@ axi_master_default M3(
 	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [3]  ),
 	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[3]  ),
 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[3]  )
+);
+
+axi_master_default M0(
+	.clk                  	( clk_BUS             ),
+	.rstn                 	( sys_rstn            ),
+	.MASTER_CLK           	( M_CLK          [0]  ),
+	.MASTER_RSTN          	( M_RSTN         [0]  ),
+	.MASTER_WR_ADDR_ID    	( M_WR_ADDR_ID   [0]  ),
+	.MASTER_WR_ADDR       	( M_WR_ADDR      [0]  ),
+	.MASTER_WR_ADDR_LEN   	( M_WR_ADDR_LEN  [0]  ),
+	.MASTER_WR_ADDR_BURST 	( M_WR_ADDR_BURST[0]  ),
+	.MASTER_WR_ADDR_VALID 	( M_WR_ADDR_VALID[0]  ),
+	.MASTER_WR_ADDR_READY 	( M_WR_ADDR_READY[0]  ),
+	.MASTER_WR_DATA       	( M_WR_DATA      [0]  ),
+	.MASTER_WR_STRB       	( M_WR_STRB      [0]  ),
+	.MASTER_WR_DATA_LAST  	( M_WR_DATA_LAST [0]  ),
+	.MASTER_WR_DATA_VALID 	( M_WR_DATA_VALID[0]  ),
+	.MASTER_WR_DATA_READY 	( M_WR_DATA_READY[0]  ),
+	.MASTER_WR_BACK_ID    	( M_WR_BACK_ID   [0]  ),
+	.MASTER_WR_BACK_RESP  	( M_WR_BACK_RESP [0]  ),
+	.MASTER_WR_BACK_VALID 	( M_WR_BACK_VALID[0]  ),
+	.MASTER_WR_BACK_READY 	( M_WR_BACK_READY[0]  ),
+	.MASTER_RD_ADDR_ID    	( M_RD_ADDR_ID   [0]  ),
+	.MASTER_RD_ADDR       	( M_RD_ADDR      [0]  ),
+	.MASTER_RD_ADDR_LEN   	( M_RD_ADDR_LEN  [0]  ),
+	.MASTER_RD_ADDR_BURST 	( M_RD_ADDR_BURST[0]  ),
+	.MASTER_RD_ADDR_VALID 	( M_RD_ADDR_VALID[0]  ),
+	.MASTER_RD_ADDR_READY 	( M_RD_ADDR_READY[0]  ),
+	.MASTER_RD_BACK_ID    	( M_RD_BACK_ID   [0]  ),
+	.MASTER_RD_DATA       	( M_RD_DATA      [0]  ),
+	.MASTER_RD_DATA_RESP  	( M_RD_DATA_RESP [0]  ),
+	.MASTER_RD_DATA_LAST  	( M_RD_DATA_LAST [0]  ),
+	.MASTER_RD_DATA_VALID 	( M_RD_DATA_VALID[0]  ),
+	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[0]  )
 );
 
 slave_ddr3 S0(
@@ -576,46 +569,51 @@ slave_ddr3 S0(
     .mem_ba                  (mem_ba           )
 );
 
-JTAG_SLAVE S1(
-    .clk                      (clk_25M           ),
-    .rstn                     (jtag_rstn         ),
-    .tck                      (tck               ),
-    .tdi                      (tdi               ),
-    .tms                      (tms               ),
-    .tdo                      (tdo               ),
-	.matrix_key_col		      (matrix_col        ),
-	.matrix_key_row		      (matrix_row        ),
-	.lab_fpga_power_on	      (lab_fpga_power_on ),
-    .JTAG_SLAVE_CLK           (S_CLK          [1]),
-    .JTAG_SLAVE_RSTN          (S_RSTN         [1]),
-    .JTAG_SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   [1]),
-    .JTAG_SLAVE_WR_ADDR       (S_WR_ADDR      [1]),
-    .JTAG_SLAVE_WR_ADDR_LEN   (S_WR_ADDR_LEN  [1]),
-    .JTAG_SLAVE_WR_ADDR_BURST (S_WR_ADDR_BURST[1]),
-    .JTAG_SLAVE_WR_ADDR_VALID (S_WR_ADDR_VALID[1]),
-    .JTAG_SLAVE_WR_ADDR_READY (S_WR_ADDR_READY[1]),
-    .JTAG_SLAVE_WR_DATA       (S_WR_DATA      [1]),
-    .JTAG_SLAVE_WR_STRB       (S_WR_STRB      [1]),
-    .JTAG_SLAVE_WR_DATA_LAST  (S_WR_DATA_LAST [1]),
-    .JTAG_SLAVE_WR_DATA_VALID (S_WR_DATA_VALID[1]),
-    .JTAG_SLAVE_WR_DATA_READY (S_WR_DATA_READY[1]),
-    .JTAG_SLAVE_WR_BACK_ID    (S_WR_BACK_ID   [1]),
-    .JTAG_SLAVE_WR_BACK_RESP  (S_WR_BACK_RESP [1]),
-    .JTAG_SLAVE_WR_BACK_VALID (S_WR_BACK_VALID[1]),
-    .JTAG_SLAVE_WR_BACK_READY (S_WR_BACK_READY[1]),
-    .JTAG_SLAVE_RD_ADDR_ID    (S_RD_ADDR_ID   [1]),
-    .JTAG_SLAVE_RD_ADDR       (S_RD_ADDR      [1]),
-    .JTAG_SLAVE_RD_ADDR_LEN   (S_RD_ADDR_LEN  [1]),
-    .JTAG_SLAVE_RD_ADDR_BURST (S_RD_ADDR_BURST[1]),
-    .JTAG_SLAVE_RD_ADDR_VALID (S_RD_ADDR_VALID[1]),
-    .JTAG_SLAVE_RD_ADDR_READY (S_RD_ADDR_READY[1]),
-    .JTAG_SLAVE_RD_BACK_ID    (S_RD_BACK_ID   [1]),
-    .JTAG_SLAVE_RD_DATA       (S_RD_DATA      [1]),
-    .JTAG_SLAVE_RD_DATA_RESP  (S_RD_DATA_RESP [1]),
-    .JTAG_SLAVE_RD_DATA_LAST  (S_RD_DATA_LAST [1]),
-    .JTAG_SLAVE_RD_DATA_VALID (S_RD_DATA_VALID[1]),
-    .JTAG_SLAVE_RD_DATA_READY (S_RD_DATA_READY[1])
-);
+assign tck = 0;
+assign tdi = 0;
+assign tms = 0;
+assign matrix_col = 0;
+assign lab_fpga_power_on = 0;
+// JTAG_SLAVE S1(
+//     .clk                      (clk_25M           ),
+//     .rstn                     (jtag_rstn         ),
+//     .tck                      (tck               ),
+//     .tdi                      (tdi               ),
+//     .tms                      (tms               ),
+//     .tdo                      (tdo               ),
+// 	.matrix_key_col		      (matrix_col        ),
+// 	.matrix_key_row		      (matrix_row        ),
+// 	.lab_fpga_power_on	      (lab_fpga_power_on ),
+//     .JTAG_SLAVE_CLK           (S_CLK          [1]),
+//     .JTAG_SLAVE_RSTN          (S_RSTN         [1]),
+//     .JTAG_SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   [1]),
+//     .JTAG_SLAVE_WR_ADDR       (S_WR_ADDR      [1]),
+//     .JTAG_SLAVE_WR_ADDR_LEN   (S_WR_ADDR_LEN  [1]),
+//     .JTAG_SLAVE_WR_ADDR_BURST (S_WR_ADDR_BURST[1]),
+//     .JTAG_SLAVE_WR_ADDR_VALID (S_WR_ADDR_VALID[1]),
+//     .JTAG_SLAVE_WR_ADDR_READY (S_WR_ADDR_READY[1]),
+//     .JTAG_SLAVE_WR_DATA       (S_WR_DATA      [1]),
+//     .JTAG_SLAVE_WR_STRB       (S_WR_STRB      [1]),
+//     .JTAG_SLAVE_WR_DATA_LAST  (S_WR_DATA_LAST [1]),
+//     .JTAG_SLAVE_WR_DATA_VALID (S_WR_DATA_VALID[1]),
+//     .JTAG_SLAVE_WR_DATA_READY (S_WR_DATA_READY[1]),
+//     .JTAG_SLAVE_WR_BACK_ID    (S_WR_BACK_ID   [1]),
+//     .JTAG_SLAVE_WR_BACK_RESP  (S_WR_BACK_RESP [1]),
+//     .JTAG_SLAVE_WR_BACK_VALID (S_WR_BACK_VALID[1]),
+//     .JTAG_SLAVE_WR_BACK_READY (S_WR_BACK_READY[1]),
+//     .JTAG_SLAVE_RD_ADDR_ID    (S_RD_ADDR_ID   [1]),
+//     .JTAG_SLAVE_RD_ADDR       (S_RD_ADDR      [1]),
+//     .JTAG_SLAVE_RD_ADDR_LEN   (S_RD_ADDR_LEN  [1]),
+//     .JTAG_SLAVE_RD_ADDR_BURST (S_RD_ADDR_BURST[1]),
+//     .JTAG_SLAVE_RD_ADDR_VALID (S_RD_ADDR_VALID[1]),
+//     .JTAG_SLAVE_RD_ADDR_READY (S_RD_ADDR_READY[1]),
+//     .JTAG_SLAVE_RD_BACK_ID    (S_RD_BACK_ID   [1]),
+//     .JTAG_SLAVE_RD_DATA       (S_RD_DATA      [1]),
+//     .JTAG_SLAVE_RD_DATA_RESP  (S_RD_DATA_RESP [1]),
+//     .JTAG_SLAVE_RD_DATA_LAST  (S_RD_DATA_LAST [1]),
+//     .JTAG_SLAVE_RD_DATA_VALID (S_RD_DATA_VALID[1]),
+//     .JTAG_SLAVE_RD_DATA_READY (S_RD_DATA_READY[1])
+// );
 
 // remote_update_axi_slave #(
 //     .FPGA_VERSION           (48'h2024_1119_1943 ),
@@ -702,43 +700,43 @@ i2c_master_axi_slave S3(
 	.SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[3])
 );
 
-// dds_slave #(
-//     .CHANNEL_NUM(1),
-//     .VERTICAL_RESOLUTION(8)
-// )S4(
-// 	.clk                 	    ( da_clk            ),
-// 	.rstn                	    ( sys_rstn          ),
-//     .wave_out            	    ( da_data           ),
-// 	.DDS_SLAVE_CLK           	( S_CLK          [4]),
-// 	.DDS_SLAVE_RSTN          	( S_RSTN         [4]),
-// 	.DDS_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [4]),
-// 	.DDS_SLAVE_WR_ADDR       	( S_WR_ADDR      [4]),
-// 	.DDS_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [4]),
-// 	.DDS_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[4]),
-// 	.DDS_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[4]),
-// 	.DDS_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[4]),
-// 	.DDS_SLAVE_WR_DATA       	( S_WR_DATA      [4]),
-// 	.DDS_SLAVE_WR_STRB       	( S_WR_STRB      [4]),
-// 	.DDS_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [4]),
-// 	.DDS_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[4]),
-// 	.DDS_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[4]),
-// 	.DDS_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [4]),
-// 	.DDS_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [4]),
-// 	.DDS_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[4]),
-// 	.DDS_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[4]),
-// 	.DDS_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [4]),
-// 	.DDS_SLAVE_RD_ADDR       	( S_RD_ADDR      [4]),
-// 	.DDS_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [4]),
-// 	.DDS_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[4]),
-// 	.DDS_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[4]),
-// 	.DDS_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[4]),
-// 	.DDS_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [4]),
-// 	.DDS_SLAVE_RD_DATA       	( S_RD_DATA      [4]),
-// 	.DDS_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [4]),
-// 	.DDS_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [4]),
-// 	.DDS_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[4]),
-// 	.DDS_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[4])
-// );
+dds_slave #(
+    .CHANNEL_NUM(1),
+    .VERTICAL_RESOLUTION(8)
+)S1(
+	.clk                 	    ( da_clk            ),
+	.rstn                	    ( sys_rstn          ),
+    .wave_out            	    ( da_data           ),
+	.DDS_SLAVE_CLK           	( S_CLK          [1]),
+	.DDS_SLAVE_RSTN          	( S_RSTN         [1]),
+	.DDS_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [1]),
+	.DDS_SLAVE_WR_ADDR       	( S_WR_ADDR      [1]),
+	.DDS_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [1]),
+	.DDS_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[1]),
+	.DDS_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[1]),
+	.DDS_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[1]),
+	.DDS_SLAVE_WR_DATA       	( S_WR_DATA      [1]),
+	.DDS_SLAVE_WR_STRB       	( S_WR_STRB      [1]),
+	.DDS_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [1]),
+	.DDS_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[1]),
+	.DDS_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[1]),
+	.DDS_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [1]),
+	.DDS_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [1]),
+	.DDS_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[1]),
+	.DDS_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[1]),
+	.DDS_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [1]),
+	.DDS_SLAVE_RD_ADDR       	( S_RD_ADDR      [1]),
+	.DDS_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [1]),
+	.DDS_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[1]),
+	.DDS_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[1]),
+	.DDS_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[1]),
+	.DDS_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [1]),
+	.DDS_SLAVE_RD_DATA       	( S_RD_DATA      [1]),
+	.DDS_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [1]),
+	.DDS_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [1]),
+	.DDS_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[1]),
+	.DDS_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[1])
+);
 
 // hsst_axi_slave  S5 (
 //     .i_p_refckn_0           ( i_p_refckn_0      ),
@@ -871,14 +869,6 @@ i2c_master_axi_slave S3(
 // 	.eeprom_board_ip_addr           ( eeprom_board_ip       ),
 // 	.eeprom_host_mac_addr           ( eeprom_host_mac       ),
 // 	.eeprom_board_mac_addr          ( eeprom_board_mac      ),
-// 	.DMA0_START_WRITE_ADDR    		( DMA0_START_WRITE_ADDR ),
-// 	.DMA0_END_WRITE_ADDR      		( DMA0_END_WRITE_ADDR   ),
-// 	.DMA0_capture_on			    ( DMA0_capture_on       ),
-// 	.DMA0_capture_rst 		        ( DMA0_capture_rst      ),
-// 	.DMA1_START_WRITE_ADDR          ( DMA1_START_WRITE_ADDR ),
-// 	.DMA1_END_WRITE_ADDR            ( DMA1_END_WRITE_ADDR   ),
-// 	.DMA1_capture_on                ( DMA1_capture_on       ),
-// 	.DMA1_capture_rst               ( DMA1_capture_rst      ),
 // 	.OV_EXPECT_WIDTH			    ( OV_expect_width       ),
 // 	.OV_EXPECT_HEIGHT			    ( OV_expect_height      ),
 // 	.OV_ccd_rstn					(            ),
@@ -886,124 +876,85 @@ i2c_master_axi_slave S3(
 // 	.ETH_timestamp_rst 			    ( timestamp_rst         )
 // );
 
-// dso_axi_slave #(
-// 	.CLK_FS 	(32'd50_000_000)
-// )S8(
-// 	.clk                     	( clk_50M                  ),
-// 	.rstn                    	( BUS_RSTN                 ),
-// 	.ad_clk                  	( ad_clk                   ),
-// 	.ad_data                 	( ad_data                  ),
-// 	.DSO_SLAVE_CLK           	( S_CLK          [8]       ),
-// 	.DSO_SLAVE_RSTN          	( S_RSTN         [8]       ),
-// 	.DSO_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [8]       ),
-// 	.DSO_SLAVE_WR_ADDR       	( S_WR_ADDR      [8]       ),
-// 	.DSO_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [8]       ),
-// 	.DSO_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[8]       ),
-// 	.DSO_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[8]       ),
-// 	.DSO_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[8]       ),
-// 	.DSO_SLAVE_WR_DATA       	( S_WR_DATA      [8]       ),
-// 	.DSO_SLAVE_WR_STRB       	( S_WR_STRB      [8]       ),
-// 	.DSO_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [8]       ),
-// 	.DSO_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[8]       ),
-// 	.DSO_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[8]       ),
-// 	.DSO_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [8]       ),
-// 	.DSO_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [8]       ),
-// 	.DSO_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[8]       ),
-// 	.DSO_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[8]       ),
-// 	.DSO_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [8]       ),
-// 	.DSO_SLAVE_RD_ADDR       	( S_RD_ADDR      [8]       ),
-// 	.DSO_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [8]       ),
-// 	.DSO_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[8]       ),
-// 	.DSO_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[8]       ),
-// 	.DSO_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[8]       ),
-// 	.DSO_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [8]       ),
-// 	.DSO_SLAVE_RD_DATA       	( S_RD_DATA      [8]       ),
-// 	.DSO_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [8]       ),
-// 	.DSO_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [8]       ),
-// 	.DSO_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[8]       ),
-// 	.DSO_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[8]       )
-// );
+dso_axi_slave #(
+	.CLK_FS 	(32'd50_000_000)
+)S2(
+	.clk                     	( clk_50M           ),
+	.rstn                    	( BUS_RSTN          ),
+	.ad_clk                  	( ad_clk            ),
+	.ad_data                 	( ad_data           ),
+	.DSO_SLAVE_CLK           	( S_CLK          [2]),
+	.DSO_SLAVE_RSTN          	( S_RSTN         [2]),
+	.DSO_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [2]),
+	.DSO_SLAVE_WR_ADDR       	( S_WR_ADDR      [2]),
+	.DSO_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [2]),
+	.DSO_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[2]),
+	.DSO_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[2]),
+	.DSO_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[2]),
+	.DSO_SLAVE_WR_DATA       	( S_WR_DATA      [2]),
+	.DSO_SLAVE_WR_STRB       	( S_WR_STRB      [2]),
+	.DSO_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [2]),
+	.DSO_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[2]),
+	.DSO_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[2]),
+	.DSO_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [2]),
+	.DSO_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [2]),
+	.DSO_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[2]),
+	.DSO_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[2]),
+	.DSO_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [2]),
+	.DSO_SLAVE_RD_ADDR       	( S_RD_ADDR      [2]),
+	.DSO_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [2]),
+	.DSO_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[2]),
+	.DSO_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[2]),
+	.DSO_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[2]),
+	.DSO_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [2]),
+	.DSO_SLAVE_RD_DATA       	( S_RD_DATA      [2]),
+	.DSO_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [2]),
+	.DSO_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [2]),
+	.DSO_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[2]),
+	.DSO_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[2])
+);
 
-// Analazer S9(
+// Analazer S1(
 // 	.clk                          	( clk_BUS             ),
 // 	.rstn                         	( sys_rstn            ),
+//  .rd_rstn                        ( rd_rstn_for_analyzer),
 // 	.digital_in                   	( {3'b0,hdmi_in_rgb,hdmi_in_de,hdmi_in_vsync,hdmi_in_hsync,hdmi_in_rstn,hdmi_in_clk}),
-// 	.rd_data_ready			 	    ( DMA1_rd_data_ready  ),
-// 	.rd_data_valid			 	    ( DMA1_rd_data_valid  ),
-// 	.rd_data				        ( DMA1_rd_data        ),
-// 	.ANALYZER_SLAVE_CLK           	( S_CLK          [9]  ),
-// 	.ANALYZER_SLAVE_RSTN          	( S_RSTN         [9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR       	( S_WR_ADDR      [9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[9]  ),
-// 	.ANALYZER_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[9]  ),
-// 	.ANALYZER_SLAVE_WR_DATA       	( S_WR_DATA      [9]  ),
-// 	.ANALYZER_SLAVE_WR_STRB       	( S_WR_STRB      [9]  ),
-// 	.ANALYZER_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [9]  ),
-// 	.ANALYZER_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[9]  ),
-// 	.ANALYZER_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[9]  ),
-// 	.ANALYZER_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [9]  ),
-// 	.ANALYZER_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [9]  ),
-// 	.ANALYZER_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[9]  ),
-// 	.ANALYZER_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR       	( S_RD_ADDR      [9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[9]  ),
-// 	.ANALYZER_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[9]  ),
-// 	.ANALYZER_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [9]  ),
-// 	.ANALYZER_SLAVE_RD_DATA       	( S_RD_DATA      [9]  ),
-// 	.ANALYZER_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [9]  ),
-// 	.ANALYZER_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [9]  ),
-// 	.ANALYZER_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[9]  ),
-// 	.ANALYZER_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[9]  )
-// );
-
-// wire hdmi_in_almost_full, hdmi_in_almost_empty;
-// assign led4 = {1'b1, 1'b1, hdmi_in_almost_full, hdmi_in_almost_empty}; // Debugging: Show HDMI input FIFO status
-// hdmi_in_axi_slave S10(
-// 	.clk 				(clk_BUS           ),
-// 	.rstn 				(BUS_RSTN           ),
-//     .hdmi_in_clk        (hdmi_in_clk		),
-//     .hdmi_in_rstn       (hdmi_in_rstn		),
-//     .hdmi_in_hsync      (hdmi_in_hsync		),
-//     .hdmi_in_vsync      (hdmi_in_vsync		),
-//     .hdmi_in_rgb        (hdmi_in_rgb		),
-//     .hdmi_in_de	        (hdmi_in_de			),
-// 	.almost_full        (hdmi_in_almost_full),
-// 	.almost_empty       (hdmi_in_almost_empty),
-// 	.SLAVE_CLK          (S_CLK          [10]),
-// 	.SLAVE_RSTN         (S_RSTN         [10]),
-// 	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [10]),
-// 	.SLAVE_WR_ADDR      (S_WR_ADDR      [10]),
-// 	.SLAVE_WR_ADDR_LEN  (S_WR_ADDR_LEN  [10]),
-// 	.SLAVE_WR_ADDR_BURST(S_WR_ADDR_BURST[10]),
-// 	.SLAVE_WR_ADDR_VALID(S_WR_ADDR_VALID[10]),
-// 	.SLAVE_WR_ADDR_READY(S_WR_ADDR_READY[10]),
-// 	.SLAVE_WR_DATA      (S_WR_DATA      [10]),
-// 	.SLAVE_WR_STRB      (S_WR_STRB      [10]),
-// 	.SLAVE_WR_DATA_LAST (S_WR_DATA_LAST [10]),
-// 	.SLAVE_WR_DATA_VALID(S_WR_DATA_VALID[10]),
-// 	.SLAVE_WR_DATA_READY(S_WR_DATA_READY[10]),
-// 	.SLAVE_WR_BACK_ID   (S_WR_BACK_ID   [10]),
-// 	.SLAVE_WR_BACK_RESP (S_WR_BACK_RESP [10]),
-// 	.SLAVE_WR_BACK_VALID(S_WR_BACK_VALID[10]),
-// 	.SLAVE_WR_BACK_READY(S_WR_BACK_READY[10]),
-// 	.SLAVE_RD_ADDR_ID   (S_RD_ADDR_ID   [10]),
-// 	.SLAVE_RD_ADDR      (S_RD_ADDR      [10]),
-// 	.SLAVE_RD_ADDR_LEN  (S_RD_ADDR_LEN  [10]),
-// 	.SLAVE_RD_ADDR_BURST(S_RD_ADDR_BURST[10]),
-// 	.SLAVE_RD_ADDR_VALID(S_RD_ADDR_VALID[10]),
-// 	.SLAVE_RD_ADDR_READY(S_RD_ADDR_READY[10]),
-// 	.SLAVE_RD_BACK_ID   (S_RD_BACK_ID   [10]),
-// 	.SLAVE_RD_DATA      (S_RD_DATA      [10]),
-// 	.SLAVE_RD_DATA_RESP (S_RD_DATA_RESP [10]),
-// 	.SLAVE_RD_DATA_LAST (S_RD_DATA_LAST [10]),
-// 	.SLAVE_RD_DATA_VALID(S_RD_DATA_VALID[10]),
-// 	.SLAVE_RD_DATA_READY(S_RD_DATA_READY[10])
+//  .rd_data_burst_valid			(rd_data_burst_valid_for_analyzer	),
+// 	.rd_data_burst_ready			(rd_data_burst_ready_for_analyzer	),
+// 	.rd_data_burst                  (rd_data_burst_for_analyzer			),
+// 	.rd_data_valid			 	    (rd_data_valid_for_analyzer			),
+// 	.rd_data_ready			 	    (rd_data_ready_for_analyzer			),
+// 	.rd_data				        (rd_data_for_analyzer				),
+//  .rd_data_last			 	    (rd_data_last_for_analyzer			),
+// 	.ANALYZER_SLAVE_CLK           	( S_CLK          [1]  ),
+// 	.ANALYZER_SLAVE_RSTN          	( S_RSTN         [1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR_ID    	( S_WR_ADDR_ID   [1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR       	( S_WR_ADDR      [1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR_LEN   	( S_WR_ADDR_LEN  [1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR_BURST 	( S_WR_ADDR_BURST[1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR_VALID 	( S_WR_ADDR_VALID[1]  ),
+// 	.ANALYZER_SLAVE_WR_ADDR_READY 	( S_WR_ADDR_READY[1]  ),
+// 	.ANALYZER_SLAVE_WR_DATA       	( S_WR_DATA      [1]  ),
+// 	.ANALYZER_SLAVE_WR_STRB       	( S_WR_STRB      [1]  ),
+// 	.ANALYZER_SLAVE_WR_DATA_LAST  	( S_WR_DATA_LAST [1]  ),
+// 	.ANALYZER_SLAVE_WR_DATA_VALID 	( S_WR_DATA_VALID[1]  ),
+// 	.ANALYZER_SLAVE_WR_DATA_READY 	( S_WR_DATA_READY[1]  ),
+// 	.ANALYZER_SLAVE_WR_BACK_ID    	( S_WR_BACK_ID   [1]  ),
+// 	.ANALYZER_SLAVE_WR_BACK_RESP  	( S_WR_BACK_RESP [1]  ),
+// 	.ANALYZER_SLAVE_WR_BACK_VALID 	( S_WR_BACK_VALID[1]  ),
+// 	.ANALYZER_SLAVE_WR_BACK_READY 	( S_WR_BACK_READY[1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR_ID    	( S_RD_ADDR_ID   [1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR       	( S_RD_ADDR      [1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR_LEN   	( S_RD_ADDR_LEN  [1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR_BURST 	( S_RD_ADDR_BURST[1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR_VALID 	( S_RD_ADDR_VALID[1]  ),
+// 	.ANALYZER_SLAVE_RD_ADDR_READY 	( S_RD_ADDR_READY[1]  ),
+// 	.ANALYZER_SLAVE_RD_BACK_ID    	( S_RD_BACK_ID   [1]  ),
+// 	.ANALYZER_SLAVE_RD_DATA       	( S_RD_DATA      [1]  ),
+// 	.ANALYZER_SLAVE_RD_DATA_RESP  	( S_RD_DATA_RESP [1]  ),
+// 	.ANALYZER_SLAVE_RD_DATA_LAST  	( S_RD_DATA_LAST [1]  ),
+// 	.ANALYZER_SLAVE_RD_DATA_VALID 	( S_RD_DATA_VALID[1]  ),
+// 	.ANALYZER_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[1]  )
 // );
 
 // axi_slave_default S11(
@@ -1269,7 +1220,7 @@ u_axi_bus(
 // assign data_in[14]   = 8'b11110000;
 // assign data_in[15]   = 8'b00001111;
 
-assign led4 = {M_fifo_empty_flag[2][4], M_fifo_empty_flag[2][2], M_fifo_empty_flag[2][1], M_fifo_empty_flag[2][0]};
+assign led4 = {M_fifo_empty_flag[0][4], M_fifo_empty_flag[0][2], M_fifo_empty_flag[0][1], M_fifo_empty_flag[0][0]};
 //{wr_addr_fifo_rd_empty, rd_addr_fifo_rd_empty, wr_data_fifo_rd_empty, rd_data_fifo_rd_empty, wr_back_fifo_rd_empty}
 
 // led8_btn u_led8_btn(

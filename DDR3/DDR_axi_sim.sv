@@ -74,7 +74,7 @@ initial begin
 end
 
 always begin: write_channel
-    @(posedge DDR_SLAVE_CLK) begin
+    @(negedge DDR_SLAVE_CLK) begin
         DDR_SLAVE_WR_ADDR_READY <= 1'b1;
         DDR_SLAVE_WR_DATA_READY <= 1'b0;
         DDR_SLAVE_WR_BACK_VALID <= 1'b0;
@@ -82,9 +82,12 @@ always begin: write_channel
     while(~(DDR_SLAVE_WR_ADDR_VALID && DDR_SLAVE_WR_ADDR_READY)) @(posedge DDR_SLAVE_CLK);
     @(negedge DDR_SLAVE_CLK) begin
         DDR_SLAVE_WR_ADDR_READY <= 1'b0;
-        DDR_SLAVE_WR_DATA_READY <= 1'b1;
         DDR_wrptr <= DDR_SLAVE_WR_ADDR[19:0];
         wr_back_id <= DDR_SLAVE_WR_ADDR_ID;
+    end
+    repeat(700) @(posedge DDR_SLAVE_CLK); // Wait for 1000 clock cycles
+    @(negedge DDR_SLAVE_CLK) begin
+        DDR_SLAVE_WR_DATA_READY <= 1'b1;
     end
     while(~(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY && DDR_SLAVE_WR_DATA_LAST)) begin
         @(posedge DDR_SLAVE_CLK) if(DDR_SLAVE_WR_DATA_VALID && DDR_SLAVE_WR_DATA_READY) begin
@@ -99,14 +102,10 @@ always begin: write_channel
         DDR_SLAVE_WR_BACK_RESP <= 2'b00; // OKAY response
     end
     while(~(DDR_SLAVE_WR_BACK_READY && DDR_SLAVE_WR_BACK_VALID)) @(posedge DDR_SLAVE_CLK);
-    @(negedge DDR_SLAVE_CLK) begin
-        DDR_SLAVE_WR_ADDR_READY <= 1'b1;
-        DDR_SLAVE_WR_BACK_VALID <= 1'b0;
-    end
 end
 
 always begin: read_channel
-    @(posedge DDR_SLAVE_CLK) begin
+    @(negedge DDR_SLAVE_CLK) begin
         DDR_SLAVE_RD_ADDR_READY <= 1'b1;
         DDR_SLAVE_RD_DATA_RESP <= 2'b00; // OKAY response
         DDR_SLAVE_RD_DATA_VALID <= 1'b0;
@@ -114,11 +113,14 @@ always begin: read_channel
     while(~(DDR_SLAVE_RD_ADDR_VALID && DDR_SLAVE_RD_ADDR_READY)) @(posedge DDR_SLAVE_CLK);
     @(negedge DDR_SLAVE_CLK) begin
         DDR_SLAVE_RD_ADDR_READY <= 1'b0;
-        DDR_SLAVE_RD_DATA_VALID <= 1'b1;
         DDR_rdptr <= DDR_SLAVE_RD_ADDR[19:0];
         DDR_SLAVE_RD_DATA <= DDR[DDR_SLAVE_RD_ADDR[19:0]];
         rd_back_id <= DDR_SLAVE_RD_ADDR_ID;
         DDR_rd_len <= DDR_SLAVE_RD_ADDR_LEN;
+    end
+    repeat(400) @(posedge DDR_SLAVE_CLK); // Wait for 1000 clock cycles
+    @(negedge DDR_SLAVE_CLK) begin
+        DDR_SLAVE_RD_DATA_VALID <= 1'b1;
     end
     while(~(DDR_SLAVE_RD_DATA_VALID && DDR_SLAVE_RD_DATA_READY && DDR_SLAVE_RD_DATA_LAST)) begin
         @(posedge DDR_SLAVE_CLK) if(DDR_SLAVE_RD_DATA_VALID && DDR_SLAVE_RD_DATA_READY) begin
@@ -128,11 +130,6 @@ always begin: read_channel
         @(negedge DDR_SLAVE_CLK) begin
             DDR_SLAVE_RD_DATA <= DDR[DDR_rdptr];
         end
-    end
-    @(negedge DDR_SLAVE_CLK) begin
-        DDR_SLAVE_RD_ADDR_READY <= 1'b1;
-        DDR_SLAVE_RD_DATA_RESP <= 2'b00;
-        DDR_SLAVE_RD_DATA_VALID <= 1'b0;
     end
 end
 assign DDR_SLAVE_RD_DATA_LAST = DDR_SLAVE_RD_DATA_VALID && DDR_SLAVE_RD_DATA_READY && (DDR_rd_len == 0);

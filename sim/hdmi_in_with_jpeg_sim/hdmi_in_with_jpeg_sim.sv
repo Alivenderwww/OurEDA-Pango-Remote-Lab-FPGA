@@ -735,10 +735,10 @@ task automatic hdmi_axi_slave_test_sequence();
     // 步骤2: 配置地址范围 - WRITE_ADDR1 (JPEG输出缓存)
     $display("[%t] Step 2: Configure WRITE_ADDR1 range", $time);
     M2.send_wr_addr(2'b00, ADDR_START_WRITE_ADDR1, 8'd0, 2'b00);
-    M2.send_wr_data(32'h0008_0000, 4'b1111);
+    M2.send_wr_data(32'h0080_0000, 4'b1111);
     
     M2.send_wr_addr(2'b00, ADDR_END_WRITE_ADDR1, 8'd0, 2'b00);
-    M2.send_wr_data(32'h000F_FFFF, 4'b1111);
+    M2.send_wr_data(32'h008F_FFFF, 4'b1111);
     
     // 步骤3: 配置地址范围 - READ_ADDR0 (与WRITE0相同)
     $display("[%t] Step 3: Configure READ_ADDR0 range", $time);
@@ -797,7 +797,7 @@ task automatic hdmi_axi_slave_test_sequence();
     // 步骤10: 配置JPEG_ADD_NEED_FRAME_NUM = 1 (捕获1帧)
     $display("[%t] Step 10: Set frame count to 1", $time);
     #10000000 M0.send_wr_addr(2'b00, ADDR_JPEG_ADD_NEED_FRAME_NUM, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'd1, 4'b1111);
+    #5000 M0.send_wr_data(32'hFF, 4'b1111);
     
     // 步骤11: 等待JPEG_FRAME_SAVE_NUM不为0 (JPEG编码完成)
     $display("[%t] Step 11: Wait for JPEG encoding completion", $time);
@@ -877,91 +877,91 @@ task automatic hdmi_axi_slave_test_sequence();
         $display("[%t] Error: Failed to read bitstream size", $time);
     end
     
-    ///////第二次捕获
+    // ///////第二次捕获
 
 
-    // 步骤14: 配置JPEG_ADD_NEED_FRAME_NUM = 1 (捕获1帧)
-    $display("[%t] Step 14: Set frame count to 5", $time);
-    #5000000 M0.send_wr_addr(2'b00, ADDR_JPEG_ADD_NEED_FRAME_NUM, 8'd0, 2'b00);
-    #5000 M0.send_wr_data(32'd5, 4'b1111);
+    // // 步骤14: 配置JPEG_ADD_NEED_FRAME_NUM = 1 (捕获1帧)
+    // $display("[%t] Step 14: Set frame count to 5", $time);
+    // #5000000 M0.send_wr_addr(2'b00, ADDR_JPEG_ADD_NEED_FRAME_NUM, 8'd0, 2'b00);
+    // #5000 M0.send_wr_data(32'd5, 4'b1111);
     
-    // 步骤15: 等待JPEG_FRAME_SAVE_NUM不为0 (JPEG编码完成)
-    $display("[%t] Step 15: Wait for JPEG encoding completion", $time);
-    read_data = 0;
-    while (read_data == 0) begin
-        #5000 M0.send_rd_addr(2'b01, ADDR_JPEG_FRAME_SAVE_NUM, 8'd0, 2'b00);
-        repeat(100) @(posedge BUS_CLK);
-        #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
-        if (data_valid) begin
-            $display("[%t] JPEG Status: FRAME_SAVE_NUM = %d", $time, read_data);
-        end
-        if (read_data == 0) begin
-            #1000000; // 等待1ms再次检查
-        end
-    end
+    // // 步骤15: 等待JPEG_FRAME_SAVE_NUM不为0 (JPEG编码完成)
+    // $display("[%t] Step 15: Wait for JPEG encoding completion", $time);
+    // read_data = 0;
+    // while (read_data == 0) begin
+    //     #5000 M0.send_rd_addr(2'b01, ADDR_JPEG_FRAME_SAVE_NUM, 8'd0, 2'b00);
+    //     repeat(100) @(posedge BUS_CLK);
+    //     #5000 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+    //     if (data_valid) begin
+    //         $display("[%t] JPEG Status: FRAME_SAVE_NUM = %d", $time, read_data);
+    //     end
+    //     if (read_data == 0) begin
+    //         #1000000; // 等待1ms再次检查
+    //     end
+    // end
     
-    // 步骤16: 读取FIFO_FRAME_INFO获取bitstream size (突发长度为0)
-    $display("[%t] Step 16: Read bitstream size from FIFO", $time);
-    #5000 M0.send_rd_addr(2'b01, ADDR_FIFO_FRAME_INFO, 8'd0, 2'b00); // 突发长度为0
-    repeat(100) @(posedge BUS_CLK);
-    #5000 M0.get_rd_data_from_queue(bitstream_size, read_id, read_resp, data_valid);
-    if (data_valid) begin
-        $display("[%t] Bitstream Size: %d words (32-bit units)", $time, bitstream_size);
+    // // 步骤16: 读取FIFO_FRAME_INFO获取bitstream size (突发长度为0)
+    // $display("[%t] Step 16: Read bitstream size from FIFO", $time);
+    // #5000 M0.send_rd_addr(2'b01, ADDR_FIFO_FRAME_INFO, 8'd0, 2'b00); // 突发长度为0
+    // repeat(100) @(posedge BUS_CLK);
+    // #5000 M0.get_rd_data_from_queue(bitstream_size, read_id, read_resp, data_valid);
+    // if (data_valid) begin
+    //     $display("[%t] Bitstream Size: %d words (32-bit units)", $time, bitstream_size);
         
-        // 步骤17: 从JPEG缓存区读取编码数据并保存
-        $display("[%t] Step 17: Reading JPEG bitstream data", $time);
+    //     // 步骤17: 从JPEG缓存区读取编码数据并保存
+    //     $display("[%t] Step 17: Reading JPEG bitstream data", $time);
         
-        // 打开输出文件
-        jpeg_file = $fopen("../output/jpeg_data_new2.hex", "w");
-        if (jpeg_file == 0) begin
-            $display("Error: Cannot create ../output/jpeg_data_new2.hex file");
-        end else begin
-            // 分段读取JPEG bitstream数据（支持大于255个字的数据）
-            // read_addr = 32'h0008_0000;
-            remaining_size = bitstream_size;
+    //     // 打开输出文件
+    //     jpeg_file = $fopen("../output/jpeg_data_new2.hex", "w");
+    //     if (jpeg_file == 0) begin
+    //         $display("Error: Cannot create ../output/jpeg_data_new2.hex file");
+    //     end else begin
+    //         // 分段读取JPEG bitstream数据（支持大于255个字的数据）
+    //         // read_addr = 32'h0008_0000;
+    //         remaining_size = bitstream_size;
             
-            while (remaining_size > 0) begin
-                // 计算当前突发的长度 (AXI突发长度限制为最大255)
-                if (remaining_size > 256) begin
-                    current_burst_size = 256;
-                end else begin
-                    current_burst_size = remaining_size;
-                end
+    //         while (remaining_size > 0) begin
+    //             // 计算当前突发的长度 (AXI突发长度限制为最大255)
+    //             if (remaining_size > 256) begin
+    //                 current_burst_size = 256;
+    //             end else begin
+    //                 current_burst_size = remaining_size;
+    //             end
                 
-                $display("[%t] Reading burst: addr=0x%08x, size=%d words", 
-                         $time, read_addr, current_burst_size);
+    //             $display("[%t] Reading burst: addr=0x%08x, size=%d words", 
+    //                      $time, read_addr, current_burst_size);
                 
-                // 发送读地址 (突发长度 = size - 1)
-                #5000 M0.send_rd_addr(2'b00, read_addr, current_burst_size - 1, 2'b01); // INCR突发
+    //             // 发送读地址 (突发长度 = size - 1)
+    //             #5000 M0.send_rd_addr(2'b00, read_addr, current_burst_size - 1, 2'b01); // INCR突发
                 
-                // 等待数据返回
-                repeat(300) @(posedge BUS_CLK);
+    //             // 等待数据返回
+    //             repeat(300) @(posedge BUS_CLK);
                 
-                // 读取当前突发的所有数据
-                for (j = 0; j < current_burst_size; j++) begin
-                    #5 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
-                    if (data_valid) begin
-                        $fwrite(jpeg_file, "%08X\n", read_data);
-                    end else begin
-                        $display("[%t] Warning: Failed to read JPEG bitstream word at address 0x%08x + %d", 
-                                $time, read_addr, j);
-                    end
-                end
+    //             // 读取当前突发的所有数据
+    //             for (j = 0; j < current_burst_size; j++) begin
+    //                 #5 M0.get_rd_data_from_queue(read_data, read_id, read_resp, data_valid);
+    //                 if (data_valid) begin
+    //                     $fwrite(jpeg_file, "%08X\n", read_data);
+    //                 end else begin
+    //                     $display("[%t] Warning: Failed to read JPEG bitstream word at address 0x%08x + %d", 
+    //                             $time, read_addr, j);
+    //                 end
+    //             end
                 
-                // 更新地址和剩余大小
-                read_addr = read_addr + current_burst_size;
-                remaining_size = remaining_size - current_burst_size;
+    //             // 更新地址和剩余大小
+    //             read_addr = read_addr + current_burst_size;
+    //             remaining_size = remaining_size - current_burst_size;
                 
-                $display("[%t] Burst completed. Remaining: %d words", $time, remaining_size);
-            end
+    //             $display("[%t] Burst completed. Remaining: %d words", $time, remaining_size);
+    //         end
             
-            $fclose(jpeg_file);
-            $display("[%t] JPEG bitstream saved to ../output/jpeg_data_new2.hex", $time);
-            $display("[%t] Total %d words (32-bit) written", $time, bitstream_size);
-        end
-    end else begin
-        $display("[%t] Error: Failed to read bitstream size", $time);
-    end
+    //         $fclose(jpeg_file);
+    //         $display("[%t] JPEG bitstream saved to ../output/jpeg_data_new2.hex", $time);
+    //         $display("[%t] Total %d words (32-bit) written", $time, bitstream_size);
+    //     end
+    // end else begin
+    //     $display("[%t] Error: Failed to read bitstream size", $time);
+    // end
     
     $display("[%t] HDMI AXI Slave test sequence completed - New Register Mode", $time);
 endtask

@@ -46,7 +46,7 @@ localparam RESET_TYPE = "ASYNC" ; // @IPC enum SYNC,ASYNC
 
 localparam FIFO_TYPE = "ASYN_FIFO" ; // @IPC enum SYN_FIFO,ASYN_FIFO
 
-localparam SAMEWIDTH_EN = 1 ; // @IPC bool
+localparam SAMEWIDTH_EN = 0 ; // @IPC bool
 
 localparam WR_BYTE_EN = 0 ; // @IPC bool
 
@@ -54,11 +54,11 @@ localparam BYTE_SIZE = 8 ; // @IPC enum 8,9
 
 localparam WR_DEPTH_WIDTH = 12 ; // @IPC int 9,20
 
-localparam WR_DATA_WIDTH = 32 ; // @IPC int 1,1152
+localparam WR_DATA_WIDTH = 16 ; // @IPC int 1,1152
 
 localparam BE_WIDTH = 1 ; // @IPC int 1,128
 
-localparam RD_DEPTH_WIDTH = 12 ; // @IPC int 9,20
+localparam RD_DEPTH_WIDTH = 11 ; // @IPC int 9,20
 
 localparam RD_DATA_WIDTH = 32 ; // @IPC int 1,1152
 
