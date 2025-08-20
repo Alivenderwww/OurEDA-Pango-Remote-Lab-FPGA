@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Thu May  8 15:08:14 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Wed Aug 20 05:40:44 2025
 //
 
 module pwm
@@ -12,10 +12,10 @@ module pwm
     wire N0;
     wire N4;
     wire [15:0] N26;
-    wire [16:0] \N40.co ;
-    wire N53;
-    wire N54;
-    wire [15:0] N73;
+    wire [16:0] \N38.co ;
+    wire N51;
+    wire N52;
+    wire [15:0] N71;
     wire _N7;
     wire _N17;
     wire _N21;
@@ -49,11 +49,11 @@ module pwm
     wire _N62;
     wire _N71;
     wire _N108;
-    wire _N113;
-    wire _N120;
-    wire _N121;
-    wire _N128;
-    wire _N129;
+    wire _N115;
+    wire _N122;
+    wire _N123;
+    wire _N130;
+    wire _N131;
     wire _N138;
     wire _N140;
     wire _N143;
@@ -76,7 +76,7 @@ module pwm
             .INIT(64'b0000000000000000001111111111111100100010001000100010001000100010))
         N4_mux3 (
             .Z (_N7),
-            .Z5 (N73[0]),
+            .Z5 (N71[0]),
             .I0 (N4),
             .I1 (pwm_cnt[0]),
             .I2 (pwm_cnt[1]),
@@ -365,153 +365,153 @@ module pwm
 	// LUT = CIN^I2^I1 ;
 	// CARRY = (I2^I1) ? CIN : I5 ;
 
-    GTP_LUT6CARRY /* \N40.lt_0  */ #(
+    GTP_LUT6CARRY /* \N38.lt_0  */ #(
             .INIT(64'b0010000011110010001000001111001000000000000000000000000000000000), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_0  (
-            .COUT (\N40.co [0] ),
+        \N38.lt_0  (
+            .COUT (\N38.co [0] ),
             .Z (),
             .CIN (),
-            .I0 (pwm_cnt[0]),
-            .I1 (duty[0]),
-            .I2 (pwm_cnt[1]),
-            .I3 (duty[1]),
+            .I0 (duty[0]),
+            .I1 (pwm_cnt[0]),
+            .I2 (duty[1]),
+            .I3 (pwm_cnt[1]),
             .I4 (),
             .I5 ());
 	// LUT = (I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = (1'b0) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_1  */ #(
+    GTP_LUT6CARRY /* \N38.lt_1  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_1  (
-            .COUT (\N40.co [2] ),
+        \N38.lt_1  (
+            .COUT (\N38.co [2] ),
             .Z (),
-            .CIN (\N40.co [0] ),
-            .I0 (pwm_cnt[2]),
-            .I1 (duty[2]),
-            .I2 (pwm_cnt[3]),
-            .I3 (duty[3]),
+            .CIN (\N38.co [0] ),
+            .I0 (duty[2]),
+            .I1 (pwm_cnt[2]),
+            .I2 (duty[3]),
+            .I3 (pwm_cnt[3]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_2  */ #(
+    GTP_LUT6CARRY /* \N38.lt_2  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_2  (
-            .COUT (\N40.co [4] ),
+        \N38.lt_2  (
+            .COUT (\N38.co [4] ),
             .Z (),
-            .CIN (\N40.co [2] ),
-            .I0 (pwm_cnt[4]),
-            .I1 (duty[4]),
-            .I2 (pwm_cnt[5]),
-            .I3 (duty[5]),
+            .CIN (\N38.co [2] ),
+            .I0 (duty[4]),
+            .I1 (pwm_cnt[4]),
+            .I2 (duty[5]),
+            .I3 (pwm_cnt[5]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_3  */ #(
+    GTP_LUT6CARRY /* \N38.lt_3  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_3  (
-            .COUT (\N40.co [6] ),
+        \N38.lt_3  (
+            .COUT (\N38.co [6] ),
             .Z (),
-            .CIN (\N40.co [4] ),
-            .I0 (pwm_cnt[6]),
-            .I1 (duty[6]),
-            .I2 (pwm_cnt[7]),
-            .I3 (duty[7]),
+            .CIN (\N38.co [4] ),
+            .I0 (duty[6]),
+            .I1 (pwm_cnt[6]),
+            .I2 (duty[7]),
+            .I3 (pwm_cnt[7]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_4  */ #(
+    GTP_LUT6CARRY /* \N38.lt_4  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_4  (
-            .COUT (\N40.co [8] ),
+        \N38.lt_4  (
+            .COUT (\N38.co [8] ),
             .Z (),
-            .CIN (\N40.co [6] ),
-            .I0 (pwm_cnt[8]),
-            .I1 (duty[8]),
-            .I2 (pwm_cnt[9]),
-            .I3 (duty[9]),
+            .CIN (\N38.co [6] ),
+            .I0 (duty[8]),
+            .I1 (pwm_cnt[8]),
+            .I2 (duty[9]),
+            .I3 (pwm_cnt[9]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_5  */ #(
+    GTP_LUT6CARRY /* \N38.lt_5  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_5  (
-            .COUT (\N40.co [10] ),
+        \N38.lt_5  (
+            .COUT (\N38.co [10] ),
             .Z (),
-            .CIN (\N40.co [8] ),
-            .I0 (pwm_cnt[10]),
-            .I1 (duty[10]),
-            .I2 (pwm_cnt[11]),
-            .I3 (duty[11]),
+            .CIN (\N38.co [8] ),
+            .I0 (duty[10]),
+            .I1 (pwm_cnt[10]),
+            .I2 (duty[11]),
+            .I3 (pwm_cnt[11]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_6  */ #(
+    GTP_LUT6CARRY /* \N38.lt_6  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_6  (
-            .COUT (\N40.co [12] ),
+        \N38.lt_6  (
+            .COUT (\N38.co [12] ),
             .Z (),
-            .CIN (\N40.co [10] ),
-            .I0 (pwm_cnt[12]),
-            .I1 (duty[12]),
-            .I2 (pwm_cnt[13]),
-            .I3 (duty[13]),
+            .CIN (\N38.co [10] ),
+            .I0 (duty[12]),
+            .I1 (pwm_cnt[12]),
+            .I2 (duty[13]),
+            .I3 (pwm_cnt[13]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6CARRY /* \N40.lt_7  */ #(
+    GTP_LUT6CARRY /* \N38.lt_7  */ #(
             .INIT(64'b0010000011110010001000001111001010010000000010011001000000001001), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        \N40.lt_7  (
+        \N38.lt_7  (
             .COUT (nt_led),
             .Z (),
-            .CIN (\N40.co [12] ),
-            .I0 (pwm_cnt[14]),
-            .I1 (duty[14]),
-            .I2 (pwm_cnt[15]),
-            .I3 (duty[15]),
+            .CIN (\N38.co [12] ),
+            .I0 (duty[14]),
+            .I1 (pwm_cnt[14]),
+            .I2 (duty[15]),
+            .I3 (pwm_cnt[15]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN)|(I2&~I3&CIN)|(I0&~I1&~I3&CIN)|(I0&~I1&I2&CIN) ;
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : ((I2&~I3)|(I0&~I1&~I3)|(I0&~I1&I2)) ;
 	// ../../../rtl/pwm.v:47
 
-    GTP_LUT6D /* N53_6 */ #(
+    GTP_LUT6D /* N51_6 */ #(
             .INIT(64'b0000000000001000000000000000100000000000000011110000000000000000))
-        N53_6 (
+        N51_6 (
             .Z (_N138),
             .Z5 (_N21),
             .I0 (pwm_cnt[5]),
@@ -523,9 +523,9 @@ module pwm
 	// LUT = I0&I1&~I2&~I3 ;
 	// Z5 = ~I2&~I3&I4 ;
 
-    GTP_LUT4 /* N53_9 */ #(
+    GTP_LUT4 /* N51_9 */ #(
             .INIT(16'b0000000000000001))
-        N53_9 (
+        N51_9 (
             .Z (_N140),
             .I0 (pwm_cnt[3]),
             .I1 (pwm_cnt[7]),
@@ -533,9 +533,9 @@ module pwm
             .I3 (pwm_cnt[15]));
 	// LUT = ~I0&~I1&~I2&~I3 ;
 
-    GTP_LUT5 /* N53_14 */ #(
+    GTP_LUT5 /* N51_14 */ #(
             .INIT(32'b10000000000000000000000000000000))
-        N53_14 (
+        N51_14 (
             .Z (_N143),
             .I0 (pwm_cnt[2]),
             .I1 (pwm_cnt[4]),
@@ -544,10 +544,10 @@ module pwm
             .I4 (_N140));
 	// LUT = I0&I1&I2&I3&I4 ;
 
-    GTP_LUT6 /* N53_15 */ #(
+    GTP_LUT6 /* N51_15 */ #(
             .INIT(64'b1000000000000000000000000000000000000000000000000000000000000000))
-        N53_15 (
-            .Z (N53),
+        N51_15 (
+            .Z (N51),
             .I0 (pwm_cnt[0]),
             .I1 (pwm_cnt[1]),
             .I2 (pwm_cnt[13]),
@@ -556,35 +556,35 @@ module pwm
             .I5 (_N143));
 	// LUT = I0&I1&I2&I3&I4&I5 ;
 
-    GTP_LUT4 /* N62_15 */ #(
+    GTP_LUT4 /* N60_15 */ #(
             .INIT(16'b0000000000000001))
-        N62_15 (
-            .Z (_N113),
+        N60_15 (
+            .Z (_N115),
             .I0 (duty[1]),
             .I1 (duty[2]),
             .I2 (duty[7]),
             .I3 (duty[9]));
 	// LUT = ~I0&~I1&~I2&~I3 ;
 
-    GTP_LUT6D /* N62_17 */ #(
+    GTP_LUT6D /* N60_17 */ #(
             .INIT(64'b0000000000000001000000000000000001010101010101010101010101010101))
-        N62_17 (
+        N60_17 (
             .Z (_N71),
-            .Z5 (N54),
+            .Z5 (N52),
             .I0 (duty[0]),
             .I1 (duty[10]),
             .I2 (duty[12]),
             .I3 (duty[15]),
-            .I4 (_N113),
+            .I4 (_N115),
             .I5 (1'b1));
 	// LUT = ~I0&~I1&~I2&~I3&I4 ;
 	// Z5 = ~I0 ;
 
-    GTP_LUT6D /* N62_22 */ #(
+    GTP_LUT6D /* N60_22 */ #(
             .INIT(64'b1000000000000000100000000000000000000000000000010000000000000001))
-        N62_22 (
-            .Z (_N128),
-            .Z5 (_N120),
+        N60_22 (
+            .Z (_N130),
+            .Z5 (_N122),
             .I0 (duty[3]),
             .I1 (duty[4]),
             .I2 (duty[5]),
@@ -594,11 +594,11 @@ module pwm
 	// LUT = I0&I1&I2&I3 ;
 	// Z5 = ~I0&~I1&~I2&~I3 ;
 
-    GTP_LUT6D /* N62_23 */ #(
+    GTP_LUT6D /* N60_23 */ #(
             .INIT(64'b1000000000000000100000000000000000000000000000010000000000000001))
-        N62_23 (
-            .Z (_N129),
-            .Z5 (_N121),
+        N60_23 (
+            .Z (_N131),
+            .Z5 (_N123),
             .I0 (duty[8]),
             .I1 (duty[11]),
             .I2 (duty[13]),
@@ -608,13 +608,13 @@ module pwm
 	// LUT = I0&I1&I2&I3 ;
 	// Z5 = ~I0&~I1&~I2&~I3 ;
 
-    GTP_LUT6CARRY /* N82_0_1 */ #(
+    GTP_LUT6CARRY /* N80_0_1 */ #(
             .INIT(64'b0110000001100000011000000110000000000000000000000000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("TRUE"))
-        N82_0_1 (
+        N80_0_1 (
             .COUT (_N33),
-            .Z (N73[1]),
+            .Z (N71[1]),
             .CIN (),
             .I0 (pwm_cnt[0]),
             .I1 (pwm_cnt[1]),
@@ -626,13 +626,13 @@ module pwm
 	// CARRY = (1'b0) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_2 */ #(
+    GTP_LUT6CARRY /* N80_0_2 */ #(
             .INIT(64'b0111000010000000011100001000000010000000000000001000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_2 (
+        N80_0_2 (
             .COUT (_N34),
-            .Z (N73[2]),
+            .Z (N71[2]),
             .CIN (_N33),
             .I0 (pwm_cnt[0]),
             .I1 (pwm_cnt[1]),
@@ -644,13 +644,13 @@ module pwm
 	// CARRY = (I0&I1&I2&I3) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_3 */ #(
+    GTP_LUT6CARRY /* N80_0_3 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_3 (
+        N80_0_3 (
             .COUT (_N35),
-            .Z (N73[3]),
+            .Z (N71[3]),
             .CIN (_N34),
             .I0 (pwm_cnt[3]),
             .I1 (N4),
@@ -662,13 +662,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_4 */ #(
+    GTP_LUT6CARRY /* N80_0_4 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_4 (
+        N80_0_4 (
             .COUT (_N36),
-            .Z (N73[4]),
+            .Z (N71[4]),
             .CIN (_N35),
             .I0 (pwm_cnt[4]),
             .I1 (N4),
@@ -680,13 +680,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_5 */ #(
+    GTP_LUT6CARRY /* N80_0_5 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_5 (
+        N80_0_5 (
             .COUT (_N37),
-            .Z (N73[5]),
+            .Z (N71[5]),
             .CIN (_N36),
             .I0 (pwm_cnt[5]),
             .I1 (N4),
@@ -698,13 +698,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_6 */ #(
+    GTP_LUT6CARRY /* N80_0_6 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_6 (
+        N80_0_6 (
             .COUT (_N38),
-            .Z (N73[6]),
+            .Z (N71[6]),
             .CIN (_N37),
             .I0 (pwm_cnt[6]),
             .I1 (N4),
@@ -716,13 +716,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_7 */ #(
+    GTP_LUT6CARRY /* N80_0_7 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_7 (
+        N80_0_7 (
             .COUT (_N39),
-            .Z (N73[7]),
+            .Z (N71[7]),
             .CIN (_N38),
             .I0 (pwm_cnt[7]),
             .I1 (N4),
@@ -734,13 +734,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_8 */ #(
+    GTP_LUT6CARRY /* N80_0_8 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_8 (
+        N80_0_8 (
             .COUT (_N40),
-            .Z (N73[8]),
+            .Z (N71[8]),
             .CIN (_N39),
             .I0 (pwm_cnt[8]),
             .I1 (N4),
@@ -752,13 +752,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_9 */ #(
+    GTP_LUT6CARRY /* N80_0_9 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_9 (
+        N80_0_9 (
             .COUT (_N41),
-            .Z (N73[9]),
+            .Z (N71[9]),
             .CIN (_N40),
             .I0 (pwm_cnt[9]),
             .I1 (N4),
@@ -770,13 +770,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_10 */ #(
+    GTP_LUT6CARRY /* N80_0_10 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_10 (
+        N80_0_10 (
             .COUT (_N42),
-            .Z (N73[10]),
+            .Z (N71[10]),
             .CIN (_N41),
             .I0 (pwm_cnt[10]),
             .I1 (N4),
@@ -788,13 +788,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_11 */ #(
+    GTP_LUT6CARRY /* N80_0_11 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_11 (
+        N80_0_11 (
             .COUT (_N43),
-            .Z (N73[11]),
+            .Z (N71[11]),
             .CIN (_N42),
             .I0 (pwm_cnt[11]),
             .I1 (N4),
@@ -806,13 +806,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_12 */ #(
+    GTP_LUT6CARRY /* N80_0_12 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_12 (
+        N80_0_12 (
             .COUT (_N44),
-            .Z (N73[12]),
+            .Z (N71[12]),
             .CIN (_N43),
             .I0 (pwm_cnt[12]),
             .I1 (N4),
@@ -824,13 +824,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_13 */ #(
+    GTP_LUT6CARRY /* N80_0_13 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_13 (
+        N80_0_13 (
             .COUT (_N45),
-            .Z (N73[13]),
+            .Z (N71[13]),
             .CIN (_N44),
             .I0 (pwm_cnt[13]),
             .I1 (N4),
@@ -842,13 +842,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_14 */ #(
+    GTP_LUT6CARRY /* N80_0_14 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_14 (
+        N80_0_14 (
             .COUT (_N46),
-            .Z (N73[14]),
+            .Z (N71[14]),
             .CIN (_N45),
             .I0 (pwm_cnt[14]),
             .I1 (N4),
@@ -860,13 +860,13 @@ module pwm
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/pwm.v:19
 
-    GTP_LUT6CARRY /* N82_0_15 */ #(
+    GTP_LUT6CARRY /* N80_0_15 */ #(
             .INIT(64'b1010101010101010101010101010101000000000000000000000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N82_0_15 (
+        N80_0_15 (
             .COUT (),
-            .Z (N73[15]),
+            .Z (N71[15]),
             .CIN (_N46),
             .I0 (N4),
             .I1 (),
@@ -884,9 +884,9 @@ module pwm
         \duty[0]  (
             .Q (duty[0]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
-            .D (N54));
+            .D (N52));
 	// ../../../rtl/pwm.v:24
 
     GTP_DFF_CE /* \duty[1]  */ #(
@@ -895,7 +895,7 @@ module pwm
         \duty[1]  (
             .Q (duty[1]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[1]));
 	// ../../../rtl/pwm.v:24
@@ -906,7 +906,7 @@ module pwm
         \duty[2]  (
             .Q (duty[2]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[2]));
 	// ../../../rtl/pwm.v:24
@@ -917,7 +917,7 @@ module pwm
         \duty[3]  (
             .Q (duty[3]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[3]));
 	// ../../../rtl/pwm.v:24
@@ -928,7 +928,7 @@ module pwm
         \duty[4]  (
             .Q (duty[4]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[4]));
 	// ../../../rtl/pwm.v:24
@@ -939,7 +939,7 @@ module pwm
         \duty[5]  (
             .Q (duty[5]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[5]));
 	// ../../../rtl/pwm.v:24
@@ -950,7 +950,7 @@ module pwm
         \duty[6]  (
             .Q (duty[6]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[6]));
 	// ../../../rtl/pwm.v:24
@@ -961,7 +961,7 @@ module pwm
         \duty[7]  (
             .Q (duty[7]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[7]));
 	// ../../../rtl/pwm.v:24
@@ -972,7 +972,7 @@ module pwm
         \duty[8]  (
             .Q (duty[8]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[8]));
 	// ../../../rtl/pwm.v:24
@@ -983,7 +983,7 @@ module pwm
         \duty[9]  (
             .Q (duty[9]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[9]));
 	// ../../../rtl/pwm.v:24
@@ -994,7 +994,7 @@ module pwm
         \duty[10]  (
             .Q (duty[10]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[10]));
 	// ../../../rtl/pwm.v:24
@@ -1005,7 +1005,7 @@ module pwm
         \duty[11]  (
             .Q (duty[11]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[11]));
 	// ../../../rtl/pwm.v:24
@@ -1016,7 +1016,7 @@ module pwm
         \duty[12]  (
             .Q (duty[12]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[12]));
 	// ../../../rtl/pwm.v:24
@@ -1027,7 +1027,7 @@ module pwm
         \duty[13]  (
             .Q (duty[13]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[13]));
 	// ../../../rtl/pwm.v:24
@@ -1038,7 +1038,7 @@ module pwm
         \duty[14]  (
             .Q (duty[14]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[14]));
 	// ../../../rtl/pwm.v:24
@@ -1049,7 +1049,7 @@ module pwm
         \duty[15]  (
             .Q (duty[15]),
             .C (N0),
-            .CE (N53),
+            .CE (N51),
             .CLK (nt_sysclk),
             .D (N26[15]));
 	// ../../../rtl/pwm.v:24
@@ -1071,10 +1071,10 @@ module pwm
             .Z (_N108),
             .I0 (inc_dec_flag),
             .I1 (_N71),
-            .I2 (_N120),
-            .I3 (_N121),
-            .I4 (_N128),
-            .I5 (_N129));
+            .I2 (_N122),
+            .I3 (_N123),
+            .I4 (_N130),
+            .I5 (_N131));
 	// LUT = (I0&~I3)|(I0&~I2)|(I0&~I1)|(I1&I4&I5) ;
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* led_obuf */ #(
@@ -1093,7 +1093,7 @@ module pwm
             .Q (pwm_cnt[0]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[0]));
+            .D (N71[0]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[1]  */ #(
@@ -1103,7 +1103,7 @@ module pwm
             .Q (pwm_cnt[1]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[1]));
+            .D (N71[1]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[2]  */ #(
@@ -1113,7 +1113,7 @@ module pwm
             .Q (pwm_cnt[2]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[2]));
+            .D (N71[2]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[3]  */ #(
@@ -1123,7 +1123,7 @@ module pwm
             .Q (pwm_cnt[3]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[3]));
+            .D (N71[3]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[4]  */ #(
@@ -1133,7 +1133,7 @@ module pwm
             .Q (pwm_cnt[4]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[4]));
+            .D (N71[4]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[5]  */ #(
@@ -1143,7 +1143,7 @@ module pwm
             .Q (pwm_cnt[5]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[5]));
+            .D (N71[5]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[6]  */ #(
@@ -1153,7 +1153,7 @@ module pwm
             .Q (pwm_cnt[6]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[6]));
+            .D (N71[6]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[7]  */ #(
@@ -1163,7 +1163,7 @@ module pwm
             .Q (pwm_cnt[7]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[7]));
+            .D (N71[7]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[8]  */ #(
@@ -1173,7 +1173,7 @@ module pwm
             .Q (pwm_cnt[8]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[8]));
+            .D (N71[8]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[9]  */ #(
@@ -1183,7 +1183,7 @@ module pwm
             .Q (pwm_cnt[9]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[9]));
+            .D (N71[9]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[10]  */ #(
@@ -1193,7 +1193,7 @@ module pwm
             .Q (pwm_cnt[10]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[10]));
+            .D (N71[10]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[11]  */ #(
@@ -1203,7 +1203,7 @@ module pwm
             .Q (pwm_cnt[11]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[11]));
+            .D (N71[11]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[12]  */ #(
@@ -1213,7 +1213,7 @@ module pwm
             .Q (pwm_cnt[12]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[12]));
+            .D (N71[12]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[13]  */ #(
@@ -1223,7 +1223,7 @@ module pwm
             .Q (pwm_cnt[13]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[13]));
+            .D (N71[13]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[14]  */ #(
@@ -1233,7 +1233,7 @@ module pwm
             .Q (pwm_cnt[14]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[14]));
+            .D (N71[14]));
 	// ../../../rtl/pwm.v:15
 
     GTP_DFF_C /* \pwm_cnt[15]  */ #(
@@ -1243,7 +1243,7 @@ module pwm
             .Q (pwm_cnt[15]),
             .C (N0),
             .CLK (nt_sysclk),
-            .D (N73[15]));
+            .D (N71[15]));
 	// ../../../rtl/pwm.v:15
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="C22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* rstn_ibuf */ #(

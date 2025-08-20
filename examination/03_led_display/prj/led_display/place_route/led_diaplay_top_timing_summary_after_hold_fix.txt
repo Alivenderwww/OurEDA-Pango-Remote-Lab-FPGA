@@ -5,9 +5,7 @@ Setup Summary(Slow Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- led_diaplay_top|external_clk
-                        led_diaplay_top|external_clk
-                                                   996.647       0.000              0            540
+ led_diaplay_top|clk    led_diaplay_top|clk        997.611       0.000              0            203
 ====================================================================================================
 
 Hold Summary(Slow Corner):
@@ -15,9 +13,7 @@ Hold Summary(Slow Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- led_diaplay_top|external_clk
-                        led_diaplay_top|external_clk
-                                                     0.159       0.000              0            540
+ led_diaplay_top|clk    led_diaplay_top|clk          0.274       0.000              0            203
 ====================================================================================================
 
 Recovery Summary(Slow Corner):
@@ -25,6 +21,7 @@ Recovery Summary(Slow Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
+ led_diaplay_top|clk    led_diaplay_top|clk        997.736       0.000              0             38
 ====================================================================================================
 
 Removal Summary(Slow Corner):
@@ -32,6 +29,7 @@ Removal Summary(Slow Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
+ led_diaplay_top|clk    led_diaplay_top|clk          0.578       0.000              0             38
 ====================================================================================================
 
 Minimum Pulse Width Summary(Slow Corner):
@@ -46,9 +44,7 @@ Setup Summary(Fast Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- led_diaplay_top|external_clk
-                        led_diaplay_top|external_clk
-                                                   997.946       0.000              0            540
+ led_diaplay_top|clk    led_diaplay_top|clk        998.529       0.000              0            203
 ====================================================================================================
 
 Hold Summary(Fast Corner):
@@ -56,9 +52,7 @@ Hold Summary(Fast Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- led_diaplay_top|external_clk
-                        led_diaplay_top|external_clk
-                                                     0.117       0.000              0            540
+ led_diaplay_top|clk    led_diaplay_top|clk          0.174       0.000              0            203
 ====================================================================================================
 
 Recovery Summary(Fast Corner):
@@ -66,6 +60,7 @@ Recovery Summary(Fast Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
+ led_diaplay_top|clk    led_diaplay_top|clk        998.680       0.000              0             38
 ====================================================================================================
 
 Removal Summary(Fast Corner):
@@ -73,6 +68,7 @@ Removal Summary(Fast Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
+ led_diaplay_top|clk    led_diaplay_top|clk          0.412       0.000              0             38
 ====================================================================================================
 
 Minimum Pulse Width Summary(Fast Corner):

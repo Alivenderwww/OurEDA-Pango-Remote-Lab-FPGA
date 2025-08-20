@@ -195,7 +195,7 @@ UTDI;1
 UTMS;1
 
 Inst
-N53_6/LUT6D_inst_perm;gopLUT6L5
+N51_6/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -207,7 +207,7 @@ I4;1
 I5;1
 
 Inst
-N62_15/gateop_perm;gopLUT6
+N60_15/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -218,7 +218,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_1/gateop_perm;gopA
+N38.lt_1/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -231,7 +231,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_2/gateop_perm;gopA
+N38.lt_2/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -244,7 +244,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_3/gateop_perm;gopA
+N38.lt_3/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -257,7 +257,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_4/gateop_perm;gopA
+N38.lt_4/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -270,7 +270,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_5/gateop_perm;gopA
+N38.lt_5/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -283,7 +283,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_6/gateop_perm;gopA
+N38.lt_6/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -296,7 +296,7 @@ I4;1
 I5;1
 
 Inst
-N40.lt_7/gateop_l6l5_perm;gopAL6L5
+N38.lt_7/gateop_l6l5_perm;gopAL6L5
 Pin
 COUT;2
 L5;2
@@ -310,7 +310,7 @@ I4;1
 I5;1
 
 Inst
-N53_9/gateop_perm;gopLUT6
+N51_9/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -321,7 +321,7 @@ I4;1
 I5;1
 
 Inst
-N53_15/LUT6_inst_perm;gopLUT6
+N51_15/LUT6_inst_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -332,7 +332,7 @@ I4;1
 I5;1
 
 Inst
-N53_14/gateop_perm;gopLUT6
+N51_14/gateop_perm;gopLUT6
 Pin
 L6;2
 I0;1
@@ -354,7 +354,7 @@ I4;1
 I5;1
 
 Inst
-N62_22/LUT6D_inst_perm;gopLUT6L5
+N60_22/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -1078,7 +1078,7 @@ I5;1
 RS;1
 
 Inst
-N62_23/LUT6D_inst_perm;gopLUT6L5
+N60_23/LUT6D_inst_perm;gopLUT6L5
 Pin
 L5;2
 L6;2
@@ -1128,7 +1128,7 @@ I5;1
 RS;1
 
 Inst
-N40.lt_0/gateop_perm;gopA
+N38.lt_0/gateop_perm;gopA
 Pin
 COUT;2
 Y;2
@@ -1441,7 +1441,7 @@ CLKIN;1
 
 Net
 N4;
-N53;
+N51;
 _N0;
 _N7;
 _N17;
@@ -1475,11 +1475,11 @@ _N60;
 _N61;
 _N62;
 _N71;
-_N113;
-_N120;
-_N121;
-_N128;
-_N129;
+_N115;
+_N122;
+_N123;
+_N130;
+_N131;
 _N138;
 _N140;
 _N143;
@@ -1498,13 +1498,13 @@ sysclk;
 sysclk_ibuf/ntD;
 sysclk_ibuf/ntDO;
 sysclk_ibuf/ntDO_N;
-N40.co [0];
-N40.co [2];
-N40.co [4];
-N40.co [6];
-N40.co [8];
-N40.co [10];
-N40.co [12];
+N38.co [0];
+N38.co [2];
+N38.co [4];
+N38.co [6];
+N38.co [8];
+N38.co [10];
+N38.co [12];
 duty[0];
 duty[1];
 duty[2];

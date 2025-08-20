@@ -1,0 +1,34 @@
+# ±÷”∏¥Œª
+define_attribute {p:sys_clk} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:sys_clk} {PAP_IO_LOC} {B5}
+define_attribute {p:sys_clk} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:sys_clk} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:sys_clk} {PAP_IO_PULLUP} {TRUE}
+
+define_attribute {p:sys_rst_n} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:sys_rst_n} {PAP_IO_LOC} {E8}
+define_attribute {p:sys_rst_n} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:sys_rst_n} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:sys_rst_n} {PAP_IO_PULLUP} {TRUE}
+
+#DAC
+define_attribute {p:key[3]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:key[3]} {PAP_IO_LOC} {H17}
+define_attribute {p:key[3]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:key[3]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:key[3]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:key[2]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:key[2]} {PAP_IO_LOC} {N18}
+define_attribute {p:key[2]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:key[2]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:key[2]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:key[1]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:key[1]} {PAP_IO_LOC} {N17}
+define_attribute {p:key[1]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:key[1]} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:key[1]} {PAP_IO_NONE} {TRUE}
+define_attribute {p:key[0]} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:key[0]} {PAP_IO_LOC} {K18}
+define_attribute {p:key[0]} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:key[0]} {PAP_IO_STANDARD} {LVCMOS12}
+define_attribute {p:key[0]} {PAP_IO_NONE} {TRUE}

@@ -127,7 +127,7 @@ end
 always @(posedge ad_clk or negedge rstn)begin
     if(!rstn) trig_flag <= 1'b0;
     else if(~wave_run) trig_flag <= 0;
-    else if((trig_flag == 0) deci_valid && trig_en && trig_pulse)    
+    else if((trig_flag == 0) && deci_valid && trig_en && trig_pulse)    
          trig_flag <= 1'b1;
     else if(trig_flag && (data_cnt == HORIZONTAL))
          trig_flag <= 1'b0;

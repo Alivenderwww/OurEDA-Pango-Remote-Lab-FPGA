@@ -6,15 +6,15 @@
             <data>File Type</data>
         </column_headers>
         <row>
-            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_diaplay_top.v</data>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v</data>
             <data>Verilog</data>
         </row>
         <row>
-            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_driver.v</data>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_seg_ctrl.v</data>
             <data>Verilog</data>
         </row>
         <row>
-            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_selector.v</data>
+            <data>E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_top.v</data>
             <data>Verilog</data>
         </row>
     </table>
@@ -29,10 +29,10 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:1s</data>
-            <data>0h:0m:1s</data>
+            <data>0h:0m:0s</data>
+            <data>0h:0m:0s</data>
             <data>0h:0m:4s</data>
-            <data>138</data>
+            <data>131</data>
             <data>WINDOWS 10 x86_64</data>
             <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
             <data>31</data>
@@ -44,85 +44,40 @@
             <data message="4">Enable Verilog2k features and keywords</data>
         </row>
         <row>
-            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_diaplay_top.v</data>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v</data>
         </row>
         <row>
-            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_diaplay_top.v(line number: 2)] Analyzing module led_diaplay_top (library work)</data>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v(line number: 19)] Analyzing module hc595_ctrl (library work)</data>
         </row>
         <row>
-            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_driver.v</data>
+            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_seg_ctrl.v</data>
         </row>
         <row>
-            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_driver.v(line number: 1)] Analyzing module led_display_driver (library work)</data>
+            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_seg_ctrl.v(line number: 1)] Analyzing module led_display_seg_ctrl (library work)</data>
         </row>
         <row>
-            <data message="4">Verilog-0001: Analyzing file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_selector.v</data>
+            <data message="5">Verilog-2006: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_seg_ctrl.v(line number: 16)] Ansi_parameter force parameter in body to localparam</data>
         </row>
         <row>
-            <data message="4">Verilog-0002: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_selector.v(line number: 1)] Analyzing module led_display_selector (library work)</data>
+            <data message="4">Module &quot;hc595_ctrl&quot; is set as top module.</data>
         </row>
         <row>
-            <data message="4">Module &quot;led_diaplay_top&quot; is set as top module.</data>
+            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v(line number: 19)] Elaborating module hc595_ctrl</data>
         </row>
         <row>
-            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_diaplay_top.v(line number: 2)] Elaborating module led_diaplay_top</data>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v(line number: 46)] Removed register node data[13] that is stuck at constant 1.</data>
         </row>
         <row>
-            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_diaplay_top.v(line number: 33)] Elaborating instance u_led_display_driver</data>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v(line number: 46)] Removed register node data[14] that is stuck at constant 1.</data>
         </row>
         <row>
-            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_driver.v(line number: 1)] Elaborating module led_display_driver</data>
-        </row>
-        <row>
-            <data message="4">Verilog-0004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_driver.v(line number: 70)] Elaborating instance u_led_display_selector</data>
-        </row>
-        <row>
-            <data message="4">Verilog-0003: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_selector.v(line number: 1)] Elaborating module led_display_selector</data>
-        </row>
-        <row>
-            <data message="4">Module instance {led_diaplay_top/u_led_display_driver/u_led_display_selector} parameter value:
-    NUM = 8'b00001000
-    VALID_SIGNAL = 1'b0
-    CLK_CYCLE = 32'b00000000000000000001001110001000</data>
-        </row>
-        <row>
-            <data message="5">Sdm-2004: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/led_display_selector.v(line number: 9)] Latch is generated for signal led_display_seg, possible missing assignment in an if or case statement.</data>
+            <data message="5">Sdm-2000: [E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/03_led_display/rtl/hc595_ctrl.v(line number: 46)] Removed register node data[15] that is stuck at constant 1.</data>
         </row>
         <row>
             <data message="5">Loop was found during constant probe.</data>
         </row>
         <row>
             <data message="5">Loop was found during constant probe.</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_0 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_1 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_2 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_3 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_4 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_5 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_6 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N6_7 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N12_0 (bmsREDOR).</data>
-        </row>
-        <row>
-            <data message="4">Constant propagation done on N12_1 (bmsREDOR).</data>
         </row>
     </table>
     <general_container id="compile_settings">
@@ -138,7 +93,7 @@
                 </row>
                 <row>
                     <data>Top Module</data>
-                    <data>led_diaplay_top</data>
+                    <data>hc595_ctrl</data>
                 </row>
             </table>
         </table_container>
