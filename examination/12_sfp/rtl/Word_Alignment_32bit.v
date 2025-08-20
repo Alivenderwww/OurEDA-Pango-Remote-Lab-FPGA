@@ -84,59 +84,59 @@ end
 always @(*)begin
     case(state)
         IDLE : begin
-            if     (rxk == 4'b0111) nextstate <= ALIGN1;
-            else if(rxk == 4'b0011) nextstate <= ALIGN2;
-            else if(rxk == 4'b0001) nextstate <= ALIGN3;
-            else if(rxk == 4'b0000) nextstate <= ALIGN4;
-            else                    nextstate <= IDLE; 
+            if     (rxk == 4'b0111) nextstate = ALIGN1;
+            else if(rxk == 4'b0011) nextstate = ALIGN2;
+            else if(rxk == 4'b0001) nextstate = ALIGN3;
+            else if(rxk == 4'b0000) nextstate = ALIGN4;
+            else                    nextstate = IDLE; 
         end
         ALIGN1 : begin
             if(skip || error) begin
-                if     (rxk == 4'b0111) nextstate <= ALIGN1;
-                else if(rxk == 4'b0011) nextstate <= ALIGN2;
-                else if(rxk == 4'b0001) nextstate <= ALIGN3;
-                else if(rxk == 4'b0000) nextstate <= ALIGN4;
-                else                    nextstate <= IDLE; 
+                if     (rxk == 4'b0111) nextstate = ALIGN1;
+                else if(rxk == 4'b0011) nextstate = ALIGN2;
+                else if(rxk == 4'b0001) nextstate = ALIGN3;
+                else if(rxk == 4'b0000) nextstate = ALIGN4;
+                else                    nextstate = IDLE; 
             end
             else 
-                nextstate <= ALIGN1; 
+                nextstate = ALIGN1; 
         end
         ALIGN2 : begin
             if(skip || error) begin
-                if     (rxk == 4'b0111) nextstate <= ALIGN1;
-                else if(rxk == 4'b0011) nextstate <= ALIGN2;
-                else if(rxk == 4'b0001) nextstate <= ALIGN3;
-                else if(rxk == 4'b0000) nextstate <= ALIGN4;
-                else                    nextstate <= IDLE; 
+                if     (rxk == 4'b0111) nextstate = ALIGN1;
+                else if(rxk == 4'b0011) nextstate = ALIGN2;
+                else if(rxk == 4'b0001) nextstate = ALIGN3;
+                else if(rxk == 4'b0000) nextstate = ALIGN4;
+                else                    nextstate = IDLE; 
             end
             else 
-                nextstate <= ALIGN2; 
+                nextstate = ALIGN2; 
         end
         ALIGN3 : begin
             if(skip || error) begin
-                if     (rxk == 4'b0111) nextstate <= ALIGN1;
-                else if(rxk == 4'b0011) nextstate <= ALIGN2;
-                else if(rxk == 4'b0001) nextstate <= ALIGN3;
-                else if(rxk == 4'b0000) nextstate <= ALIGN4;
-                else                    nextstate <= IDLE; 
+                if     (rxk == 4'b0111) nextstate = ALIGN1;
+                else if(rxk == 4'b0011) nextstate = ALIGN2;
+                else if(rxk == 4'b0001) nextstate = ALIGN3;
+                else if(rxk == 4'b0000) nextstate = ALIGN4;
+                else                    nextstate = IDLE; 
             end
             else 
-                nextstate <= ALIGN3; 
+                nextstate = ALIGN3; 
         end
         ALIGN4 : begin
             if(skip || error) begin
-                if     (rxk == 4'b0111) nextstate <= ALIGN1;
-                else if(rxk == 4'b0011) nextstate <= ALIGN2;
-                else if(rxk == 4'b0001) nextstate <= ALIGN3;
-                else if(rxk == 4'b0000) nextstate <= ALIGN4;
-                else                    nextstate <= IDLE; 
+                if     (rxk == 4'b0111) nextstate = ALIGN1;
+                else if(rxk == 4'b0011) nextstate = ALIGN2;
+                else if(rxk == 4'b0001) nextstate = ALIGN3;
+                else if(rxk == 4'b0000) nextstate = ALIGN4;
+                else                    nextstate = IDLE; 
             end
             // if(skip)
-            //     nextstate <= IDLE;
+            //     nextstate = IDLE;
             // else if(error)
-            //     nextstate <= IDLE;
+            //     nextstate = IDLE;
             else 
-                nextstate <= ALIGN4; 
+                nextstate = ALIGN4; 
         end
     endcase
 end
