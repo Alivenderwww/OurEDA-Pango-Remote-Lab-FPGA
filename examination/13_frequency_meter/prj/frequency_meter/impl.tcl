@@ -43,3 +43,14 @@ pnr
 report_timing 
 gen_bit_stream 
 gen_bit_stream 
+remove_design -verilog "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/13_frequency_meter/rtl/led_display_driver.v"
+remove_design -verilog "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/13_frequency_meter/rtl/led_display_selector.v"
+add_design "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/13_frequency_meter/rtl/hc595_ctrl.v"
+add_design "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/13_frequency_meter/rtl/led_display_seg_ctrl.v"
+set_arch -family Logos2 -device PG2L100H -speedgrade -6 -package FBG676
+compile -top_module frequency_meter
+synthesize -ads -selected_syn_tool_opt 2 
+dev_map 
+pnr 
+report_timing 
+gen_bit_stream 

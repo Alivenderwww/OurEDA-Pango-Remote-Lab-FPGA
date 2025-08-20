@@ -1421,7 +1421,7 @@
             <data>DIFFIO_L6_G1_06P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>AA22</data>
@@ -1430,7 +1430,7 @@
             <data>DIFFIO_L6_G1_07P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>AB24</data>
@@ -1448,7 +1448,7 @@
             <data>DIFFIO_L6_G1_09P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>Y22</data>
@@ -1493,7 +1493,7 @@
             <data>DIFFIO_L6_G2_14P_DQS</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>W20</data>
@@ -1529,7 +1529,7 @@
             <data>DIFFIO_L6_G3_18P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>T14</data>
@@ -1538,7 +1538,7 @@
             <data>DIFFIO_L6_G3_19P</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>T17</data>
@@ -1565,7 +1565,7 @@
             <data>DIFFIO_L6_G3_22P</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>V16</data>
@@ -1637,7 +1637,7 @@
             <data>DIFFIO_L6_G0_05N_VREF</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>AB25</data>
@@ -1646,7 +1646,7 @@
             <data>DIFFIO_L6_G1_06N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>AA23</data>
@@ -1655,7 +1655,7 @@
             <data>DIFFIO_L6_G1_07N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>AC24</data>
@@ -1673,7 +1673,7 @@
             <data>DIFFIO_L6_G1_09N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>Y23</data>
@@ -1709,7 +1709,7 @@
             <data>DIFFIO_L6_G2_13N_GSCLK</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U20</data>
@@ -1718,7 +1718,7 @@
             <data>DIFFIO_L6_G2_14N_DQS</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>Y20</data>
@@ -1727,7 +1727,7 @@
             <data>DIFFIO_L6_G2_15N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>U19</data>
@@ -1754,7 +1754,7 @@
             <data>DIFFIO_L6_G3_18N_VREF</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>T15</data>
@@ -1763,7 +1763,7 @@
             <data>DIFFIO_L6_G3_19N</data>
             <data></data>
             <data></data>
-            <data>YES</data>
+            <data></data>
         </row>
         <row>
             <data>T18</data>
@@ -1790,7 +1790,7 @@
             <data>DIFFIO_L6_G3_22N</data>
             <data></data>
             <data></data>
-            <data></data>
+            <data>YES</data>
         </row>
         <row>
             <data>V17</data>
@@ -2796,9 +2796,9 @@
             <data></data>
         </row>
         <row>
-            <data>led_display_seg[0]</data>
+            <data>rck</data>
             <data>output</data>
-            <data>T20</data>
+            <data>V14</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2829,9 +2829,9 @@
             <data></data>
         </row>
         <row>
-            <data>led_display_seg[1]</data>
+            <data>sck</data>
             <data>output</data>
-            <data>W24</data>
+            <data>U14</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -2862,438 +2862,9 @@
             <data></data>
         </row>
         <row>
-            <data>led_display_seg[2]</data>
-            <data>output</data>
-            <data>V18</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_seg[3]</data>
-            <data>output</data>
-            <data>W18</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_seg[4]</data>
-            <data>output</data>
-            <data>T14</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_seg[5]</data>
-            <data>output</data>
-            <data>AA24</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_seg[6]</data>
-            <data>output</data>
-            <data>U20</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_seg[7]</data>
-            <data>output</data>
-            <data>Y21</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[0]</data>
-            <data>output</data>
-            <data>T15</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[1]</data>
-            <data>output</data>
-            <data>AB25</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[2]</data>
-            <data>output</data>
-            <data>Y20</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[3]</data>
+            <data>ser</data>
             <data>output</data>
             <data>W21</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[4]</data>
-            <data>output</data>
-            <data>V23</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[5]</data>
-            <data>output</data>
-            <data>W23</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[6]</data>
-            <data>output</data>
-            <data>AA23</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-            <data></data>
-        </row>
-        <row>
-            <data>led_display_sel[7]</data>
-            <data>output</data>
-            <data>AA22</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>8</data>
@@ -3667,7 +3238,7 @@
             <data>clk_ibuf</data>
             <data>clkbufg_0</data>
             <data>ntclkbufg_0</data>
-            <data>123</data>
+            <data>166</data>
         </row>
         <row>
             <data>CLKOUT0</data>
@@ -3696,7 +3267,177 @@
         <row>
             <data>cymometer_inst/N4_1</data>
             <data>cymometer_inst/N4_1</data>
-            <data>181</data>
+            <data>190</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N133</data>
+            <data>hc595_ctrl_inst/N133_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N136</data>
+            <data>hc595_ctrl_inst/N136_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N139</data>
+            <data>hc595_ctrl_inst/N139_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N142</data>
+            <data>hc595_ctrl_inst/N142_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N145</data>
+            <data>hc595_ctrl_inst/N145_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N148</data>
+            <data>hc595_ctrl_inst/N148_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N151</data>
+            <data>hc595_ctrl_inst/N151_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N157</data>
+            <data>hc595_ctrl_inst/N157_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N160</data>
+            <data>hc595_ctrl_inst/N160_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N163</data>
+            <data>hc595_ctrl_inst/N163_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N134</data>
+            <data>hc595_ctrl_inst/N134_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N137</data>
+            <data>hc595_ctrl_inst/N137_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N140</data>
+            <data>hc595_ctrl_inst/N140_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N143</data>
+            <data>hc595_ctrl_inst/N143_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N146</data>
+            <data>hc595_ctrl_inst/N146_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N149</data>
+            <data>hc595_ctrl_inst/N149_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N152</data>
+            <data>hc595_ctrl_inst/N152_inv</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N158</data>
+            <data>hc595_ctrl_inst/N158</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N161</data>
+            <data>hc595_ctrl_inst/N161</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>hc595_ctrl_inst/N164</data>
+            <data>hc595_ctrl_inst/N164</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3917</data>
+            <data>led_display_seg_ctrl_inst/N3917_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3914</data>
+            <data>led_display_seg_ctrl_inst/N3914_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3926</data>
+            <data>led_display_seg_ctrl_inst/N3926_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3908</data>
+            <data>led_display_seg_ctrl_inst/N3908_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3923</data>
+            <data>led_display_seg_ctrl_inst/N3923_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3911</data>
+            <data>led_display_seg_ctrl_inst/N3911_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3920</data>
+            <data>led_display_seg_ctrl_inst/N3920_inv</data>
+            <data>2</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3918</data>
+            <data>led_display_seg_ctrl_inst/N3918</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3915</data>
+            <data>led_display_seg_ctrl_inst/N3915</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3927</data>
+            <data>led_display_seg_ctrl_inst/N3927</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3909</data>
+            <data>led_display_seg_ctrl_inst/N3909</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3924</data>
+            <data>led_display_seg_ctrl_inst/N3924</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3912</data>
+            <data>led_display_seg_ctrl_inst/N3912</data>
+            <data>1</data>
+        </row>
+        <row>
+            <data>led_display_seg_ctrl_inst/N3921</data>
+            <data>led_display_seg_ctrl_inst/N3921</data>
+            <data>1</data>
         </row>
     </table>
     <table id="device_map_high_fanout_singnal" title="High Fanout Signal" column_number="3">
@@ -3708,12 +3449,12 @@
         <row>
             <data>cymometer_inst/N4_1</data>
             <data>cymometer_inst/N4_1</data>
-            <data>181</data>
+            <data>190</data>
         </row>
         <row>
             <data>ntclkbufg_0</data>
             <data>clkbufg_0</data>
-            <data>123</data>
+            <data>166</data>
         </row>
         <row>
             <data>cymometer_inst/fs_cnt [0]</data>
@@ -3726,8 +3467,58 @@
             <data>60</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [18]</data>
-            <data>cymometer_inst/fs_cnt[18]</data>
+            <data>cymometer_inst/fs_cnt [10]</data>
+            <data>cymometer_inst/fs_cnt[10]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [9]</data>
+            <data>cymometer_inst/fs_cnt[9]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [29]</data>
+            <data>cymometer_inst/fs_cnt[29]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [28]</data>
+            <data>cymometer_inst/fs_cnt[28]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [14]</data>
+            <data>cymometer_inst/fs_cnt[14]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [27]</data>
+            <data>cymometer_inst/fs_cnt[27]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [8]</data>
+            <data>cymometer_inst/fs_cnt[8]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [7]</data>
+            <data>cymometer_inst/fs_cnt[7]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [16]</data>
+            <data>cymometer_inst/fs_cnt[16]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [17]</data>
+            <data>cymometer_inst/fs_cnt[17]</data>
+            <data>59</data>
+        </row>
+        <row>
+            <data>cymometer_inst/fs_cnt [13]</data>
+            <data>cymometer_inst/fs_cnt[13]</data>
             <data>59</data>
         </row>
         <row>
@@ -3746,63 +3537,23 @@
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [15]</data>
-            <data>cymometer_inst/fs_cnt[15]</data>
+            <data>cymometer_inst/fs_cnt [22]</data>
+            <data>cymometer_inst/fs_cnt[22]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [29]</data>
-            <data>cymometer_inst/fs_cnt[29]</data>
+            <data>cymometer_inst/fs_cnt [23]</data>
+            <data>cymometer_inst/fs_cnt[23]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [28]</data>
-            <data>cymometer_inst/fs_cnt[28]</data>
+            <data>cymometer_inst/fs_cnt [24]</data>
+            <data>cymometer_inst/fs_cnt[24]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [27]</data>
-            <data>cymometer_inst/fs_cnt[27]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [14]</data>
-            <data>cymometer_inst/fs_cnt[14]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [17]</data>
-            <data>cymometer_inst/fs_cnt[17]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [12]</data>
-            <data>cymometer_inst/fs_cnt[12]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [11]</data>
-            <data>cymometer_inst/fs_cnt[11]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [10]</data>
-            <data>cymometer_inst/fs_cnt[10]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [9]</data>
-            <data>cymometer_inst/fs_cnt[9]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [8]</data>
-            <data>cymometer_inst/fs_cnt[8]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [7]</data>
-            <data>cymometer_inst/fs_cnt[7]</data>
+            <data>cymometer_inst/fs_cnt [25]</data>
+            <data>cymometer_inst/fs_cnt[25]</data>
             <data>59</data>
         </row>
         <row>
@@ -3821,33 +3572,23 @@
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [22]</data>
-            <data>cymometer_inst/fs_cnt[22]</data>
-            <data>59</data>
-        </row>
-        <row>
             <data>cymometer_inst/fs_cnt [3]</data>
             <data>cymometer_inst/fs_cnt[3]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [23]</data>
-            <data>cymometer_inst/fs_cnt[23]</data>
+            <data>cymometer_inst/fs_cnt [11]</data>
+            <data>cymometer_inst/fs_cnt[11]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [13]</data>
-            <data>cymometer_inst/fs_cnt[13]</data>
+            <data>cymometer_inst/fs_cnt [15]</data>
+            <data>cymometer_inst/fs_cnt[15]</data>
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [16]</data>
-            <data>cymometer_inst/fs_cnt[16]</data>
-            <data>59</data>
-        </row>
-        <row>
-            <data>cymometer_inst/fs_cnt [25]</data>
-            <data>cymometer_inst/fs_cnt[25]</data>
+            <data>cymometer_inst/fs_cnt [18]</data>
+            <data>cymometer_inst/fs_cnt[18]</data>
             <data>59</data>
         </row>
         <row>
@@ -3861,8 +3602,8 @@
             <data>59</data>
         </row>
         <row>
-            <data>cymometer_inst/fs_cnt [24]</data>
-            <data>cymometer_inst/fs_cnt[24]</data>
+            <data>cymometer_inst/fs_cnt [12]</data>
+            <data>cymometer_inst/fs_cnt[12]</data>
             <data>59</data>
         </row>
         <row>
@@ -3876,6 +3617,11 @@
             <data>37</data>
         </row>
         <row>
+            <data>nt_rstn</data>
+            <data>rstn_ibuf</data>
+            <data>36</data>
+        </row>
+        <row>
             <data>cymometer_inst/gate</data>
             <data>cymometer_inst/gate</data>
             <data>33</data>
@@ -3884,80 +3630,10 @@
             <data>cymometer_inst/gate_fs</data>
             <data>cymometer_inst/gate_fs</data>
             <data>33</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1702</data>
-            <data>cymometer_inst/N64_sub6.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1671</data>
-            <data>cymometer_inst/N64_sub7.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1609</data>
-            <data>cymometer_inst/N64_sub9.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1299</data>
-            <data>cymometer_inst/N64_sub19.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1330</data>
-            <data>cymometer_inst/N64_sub18.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1733</data>
-            <data>cymometer_inst/N64_sub5.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1392</data>
-            <data>cymometer_inst/N64_sub16.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1578</data>
-            <data>cymometer_inst/N64_sub10.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1547</data>
-            <data>cymometer_inst/N64_sub11.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1764</data>
-            <data>cymometer_inst/N64_sub4.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1795</data>
-            <data>cymometer_inst/N64_sub3.faddsub_31</data>
-            <data>32</data>
         </row>
         <row>
             <data>cymometer_inst/_N1423</data>
             <data>cymometer_inst/N64_sub15.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1516</data>
-            <data>cymometer_inst/N64_sub12.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1485</data>
-            <data>cymometer_inst/N64_sub13.faddsub_31</data>
-            <data>32</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1361</data>
-            <data>cymometer_inst/N64_sub17.faddsub_31</data>
             <data>32</data>
         </row>
         <row>
@@ -3966,8 +3642,53 @@
             <data>32</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1826</data>
-            <data>cymometer_inst/N64_sub2.faddsub_31</data>
+            <data>cymometer_inst/_N1795</data>
+            <data>cymometer_inst/N64_sub3.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1764</data>
+            <data>cymometer_inst/N64_sub4.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>sel[2]</data>
+            <data>led_display_seg_ctrl_inst/sel[2]</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1392</data>
+            <data>cymometer_inst/N64_sub16.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1516</data>
+            <data>cymometer_inst/N64_sub12.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1547</data>
+            <data>cymometer_inst/N64_sub11.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1578</data>
+            <data>cymometer_inst/N64_sub10.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1609</data>
+            <data>cymometer_inst/N64_sub9.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1361</data>
+            <data>cymometer_inst/N64_sub17.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1330</data>
+            <data>cymometer_inst/N64_sub18.faddsub_31</data>
             <data>32</data>
         </row>
         <row>
@@ -3976,19 +3697,34 @@
             <data>32</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1082</data>
-            <data>cymometer_inst/N64_sub26.faddsub_31</data>
-            <data>31</data>
+            <data>cymometer_inst/_N1671</data>
+            <data>cymometer_inst/N64_sub7.faddsub_31</data>
+            <data>32</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1051</data>
-            <data>cymometer_inst/N64_sub27.faddsub_31</data>
-            <data>31</data>
+            <data>cymometer_inst/_N1826</data>
+            <data>cymometer_inst/N64_sub2.faddsub_31</data>
+            <data>32</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1020</data>
-            <data>cymometer_inst/N64_sub28.faddsub_31</data>
-            <data>31</data>
+            <data>cymometer_inst/_N1485</data>
+            <data>cymometer_inst/N64_sub13.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1733</data>
+            <data>cymometer_inst/N64_sub5.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1299</data>
+            <data>cymometer_inst/N64_sub19.faddsub_31</data>
+            <data>32</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1702</data>
+            <data>cymometer_inst/N64_sub6.faddsub_31</data>
+            <data>32</data>
         </row>
         <row>
             <data>cymometer_inst/_N989</data>
@@ -4046,6 +3782,51 @@
             <data>31</data>
         </row>
         <row>
+            <data>cymometer_inst/_N1051</data>
+            <data>cymometer_inst/N64_sub27.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1082</data>
+            <data>cymometer_inst/N64_sub26.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1113</data>
+            <data>cymometer_inst/N64_sub25.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1144</data>
+            <data>cymometer_inst/N64_sub24.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1857</data>
+            <data>cymometer_inst/N64_sub1.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1175</data>
+            <data>cymometer_inst/N64_sub23.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1206</data>
+            <data>cymometer_inst/N64_sub22.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1237</data>
+            <data>cymometer_inst/N64_sub21.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N1268</data>
+            <data>cymometer_inst/N64_sub20.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
             <data>cymometer_inst/_N648</data>
             <data>cymometer_inst/N64_sub40.faddsub_31</data>
             <data>31</data>
@@ -4056,23 +3837,13 @@
             <data>31</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1144</data>
-            <data>cymometer_inst/N64_sub24.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1175</data>
-            <data>cymometer_inst/N64_sub23.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1857</data>
-            <data>cymometer_inst/N64_sub1.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
             <data>cymometer_inst/_N586</data>
             <data>cymometer_inst/N64_sub42.faddsub_31</data>
+            <data>31</data>
+        </row>
+        <row>
+            <data>cymometer_inst/_N90</data>
+            <data>cymometer_inst/N64_sub58.faddsub_31</data>
             <data>31</data>
         </row>
         <row>
@@ -4101,28 +3872,8 @@
             <data>31</data>
         </row>
         <row>
-            <data>cymometer_inst/_N90</data>
-            <data>cymometer_inst/N64_sub58.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
             <data>cymometer_inst/_N400</data>
             <data>cymometer_inst/N64_sub48.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1206</data>
-            <data>cymometer_inst/N64_sub22.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1237</data>
-            <data>cymometer_inst/N64_sub21.faddsub_31</data>
-            <data>31</data>
-        </row>
-        <row>
-            <data>cymometer_inst/_N1268</data>
-            <data>cymometer_inst/N64_sub20.faddsub_31</data>
             <data>31</data>
         </row>
         <row>
@@ -4171,18 +3922,18 @@
             <data>31</data>
         </row>
         <row>
-            <data>cymometer_inst/_N1113</data>
-            <data>cymometer_inst/N64_sub25.faddsub_31</data>
+            <data>cymometer_inst/_N1020</data>
+            <data>cymometer_inst/N64_sub28.faddsub_31</data>
             <data>31</data>
         </row>
         <row>
-            <data>cymometer_inst/N84</data>
-            <data>cymometer_inst/N84</data>
+            <data>cymometer_inst/N90</data>
+            <data>cymometer_inst/N90</data>
             <data>30</data>
         </row>
         <row>
-            <data>cymometer_inst/N90</data>
-            <data>cymometer_inst/N90</data>
+            <data>cymometer_inst/N84</data>
+            <data>cymometer_inst/N84</data>
             <data>30</data>
         </row>
         <row>
@@ -4191,19 +3942,9 @@
             <data>30</data>
         </row>
         <row>
-            <data>data_fx[19]</data>
-            <data>cymometer_inst/data_fx[19]</data>
-            <data>16</data>
-        </row>
-        <row>
-            <data>data_fx[18]</data>
-            <data>cymometer_inst/data_fx[18]</data>
-            <data>14</data>
-        </row>
-        <row>
-            <data>cymometer_inst/N86</data>
-            <data>cymometer_inst/N84</data>
-            <data>14</data>
+            <data>nt_rck</data>
+            <data>hc595_ctrl_inst/rck</data>
+            <data>21</data>
         </row>
     </table>
     <table id="device_map_resource_usage" title="Resource Usage Summary" column_number="4">
@@ -4221,13 +3962,13 @@
         </row>
         <row>
             <data>FF</data>
-            <data>188</data>
+            <data>241</data>
             <data>133200</data>
             <data>1</data>
         </row>
         <row>
             <data>LUT</data>
-            <data>2104</data>
+            <data>2159</data>
             <data>66600</data>
             <data>4</data>
         </row>
@@ -4245,9 +3986,9 @@
         </row>
         <row>
             <data>IO</data>
-            <data>27</data>
+            <data>14</data>
             <data>300</data>
-            <data>9</data>
+            <data>5</data>
         </row>
         <row>
             <data>RCKB</data>
@@ -4370,12 +4111,12 @@
         </column_headers>
         <row>
             <data>0h:0m:9s</data>
-            <data>0h:0m:10s</data>
-            <data>0h:0m:11s</data>
-            <data>363</data>
+            <data>0h:0m:9s</data>
+            <data>0h:0m:12s</data>
+            <data>353</data>
             <data>WINDOWS 10 x86_64</data>
-            <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>
-            <data>29</data>
+            <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
+            <data>31</data>
         </row>
     </table>
     <table id="device_map_messages" title="Device Map Messages" column_number="1">
@@ -4579,13 +4320,13 @@
             <data message="4">Infer CARRY group, base inst: cymometer_inst/N64_sub58.faddsub_2/gateop, insts:30.</data>
         </row>
         <row>
-            <data message="4">Infer CARRY group, base inst: led_display_driver_inst/u_led_display_selector/N6_1_1/gateop, insts:12.</data>
+            <data message="4">Infer CARRY group, base inst: led_display_seg_ctrl_inst/N6_1_1/gateop, insts:15.</data>
         </row>
         <row>
             <data message="4">Infer APM group, base inst: cymometer_inst/N57_m1/gopapm, insts:2.</data>
         </row>
         <row>
-            <data message="5">Public-4010: Pcf file C:/_Project/Pangu/examination/13_frequency_meter/prj/frequency_meter/device_map/frequency_meter.pcf has been covered.</data>
+            <data message="5">Public-4010: Pcf file E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/13_frequency_meter/prj/frequency_meter/device_map/frequency_meter.pcf has been covered.</data>
         </row>
     </table>
     <general_container id="device_map_settings">

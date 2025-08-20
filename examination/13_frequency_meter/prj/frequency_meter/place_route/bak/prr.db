@@ -292,7 +292,7 @@
         <row>
             <data>led_display_seg[1]</data>
             <data>output</data>
-            <data>W20</data>
+            <data>W24</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -2174,9 +2174,9 @@
             <data>IOBD_0_108</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_15P</data>
-            <data>led_display_seg[1]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>T19</data>
@@ -2309,9 +2309,9 @@
             <data>IOBS_0_228</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_05N_VREF</data>
-            <data></data>
-            <data></data>
-            <data></data>
+            <data>led_display_seg[1]</data>
+            <data>output</data>
+            <data>YES</data>
         </row>
         <row>
             <data>AB25</data>
@@ -3424,48 +3424,48 @@
         </row>
         <row>
             <data>Use of CLMA</data>
-            <data>361</data>
+            <data>357</data>
             <data>11675</data>
             <data>4</data>
             <row>
                 <data>  FF</data>
-                <data>121</data>
+                <data>142</data>
                 <data>93400</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>1297</data>
+                <data>1290</data>
                 <data>46700</data>
                 <data>3</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>57</data>
+                <data>72</data>
                 <data>46700</data>
                 <data>1</data>
             </row>
         </row>
         <row>
             <data>Use of CLMS</data>
-            <data>215</data>
+            <data>211</data>
             <data>4975</data>
             <data>5</data>
             <row>
                 <data>  FF</data>
-                <data>67</data>
+                <data>46</data>
                 <data>39800</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>795</data>
+                <data>801</data>
                 <data>19900</data>
-                <data>4</data>
+                <data>5</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>38</data>
+                <data>24</data>
                 <data>19900</data>
                 <data>1</data>
             </row>
@@ -3514,7 +3514,7 @@
         </row>
         <row>
             <data>Use of HARD0</data>
-            <data>119</data>
+            <data>117</data>
             <data>10550</data>
             <data>2</data>
         </row>
@@ -3549,15 +3549,15 @@
             <data>9</data>
             <row>
                 <data>  IOBD</data>
-                <data>15</data>
+                <data>14</data>
                 <data>144</data>
-                <data>11</data>
+                <data>10</data>
             </row>
             <row>
                 <data>  IOBS</data>
-                <data>12</data>
+                <data>13</data>
                 <data>156</data>
-                <data>8</data>
+                <data>9</data>
             </row>
         </row>
         <row>
@@ -3747,7 +3747,7 @@
         </column_headers>
         <row>
             <data>frequency_meter</data>
-            <data>2092</data>
+            <data>2091</data>
             <data>188</data>
             <data>0</data>
             <data>2</data>
@@ -3800,7 +3800,7 @@
             </row>
             <row>
                 <data>bin2bcd_inst</data>
-                <data>95</data>
+                <data>94</data>
                 <data>0</data>
                 <data>0</data>
                 <data>0</data>
@@ -4054,10 +4054,10 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:1m:58s</data>
-            <data>0h:2m:7s</data>
-            <data>0h:2m:0s</data>
-            <data>1,197</data>
+            <data>0h:2m:5s</data>
+            <data>0h:2m:13s</data>
+            <data>0h:2m:11s</data>
+            <data>1,194</data>
             <data>WINDOWS 10 x86_64</data>
             <data>AMD Ryzen 7 7840HS w/ Radeon 780M Graphics</data>
             <data>29</data>
@@ -4075,13 +4075,13 @@
             <data message="4">Process macros using &quot;Greedy&quot;.</data>
         </row>
         <row>
-            <data message="4">LUT6D pack result: There are 137 LUT6 in collection, pack success:0</data>
+            <data message="4">LUT6D pack result: There are 137 LUT6 in collection, pack success:1</data>
         </row>
         <row>
             <data message="4">Design net led_display_driver_inst/u_led_display_selector/N105 is routed by general path.</data>
         </row>
         <row>
-            <data message="6">Route-2036: The clock path from led_display_driver_inst/u_led_display_selector/N105_inv/gateop:L6 to led_display_driver_inst/u_led_display_selector/led_display_seg[4]/opit_0:CLK is routed by SRB.</data>
+            <data message="6">Route-2036: The clock path from led_display_driver_inst/u_led_display_selector/N105_inv/gateop:L6 to led_display_driver_inst/u_led_display_selector/led_display_seg[5]/opit_0:CLK is routed by SRB.</data>
         </row>
         <row>
             <data message="4">Design net ad_pulse is routed by general path.</data>
@@ -4385,7 +4385,7 @@
                     <data>clkbufg_0/gopclkbufg</data>
                     <data>USCM_215_624</data>
                     <data>ntclkbufg_0</data>
-                    <data>109</data>
+                    <data>110</data>
                     <data>0</data>
                     <data>clk_ibuf/opit_1</data>
                     <data>DI_TO_CLK</data>
@@ -4432,7 +4432,7 @@
                     <data>PLLinst/u_gpll/gpll_inst</data>
                     <data>GPLL_7_1075</data>
                     <data>CLKIN2</data>
-                    <data>ntR53</data>
+                    <data>ntR57</data>
                     <data> - </data>
                     <data> - </data>
                     <data>GND_85</data>
