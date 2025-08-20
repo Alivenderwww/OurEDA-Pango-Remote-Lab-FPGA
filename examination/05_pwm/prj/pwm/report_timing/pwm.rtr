@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------------------------------------
 | Tool Version : Fabric Compiler (version 2022.2-SP6.4 <build 146967>)
-| Date         : Thu May  8 15:09:15 2025
+| Date         : Wed Aug 20 05:41:37 2025
 | Design       : pwm
 | Device       : PG2L100H
 | Speed Grade  : -6
@@ -34,7 +34,7 @@ Timing analysis mode : multi corner
                               Requested       Estimated      Requested      Estimated               
  Clock                        Frequency       Frequency      Period         Period             Slack
 ----------------------------------------------------------------------------------------------------
- pwm|sysclk                  1.0000 MHz    282.6456 MHz      1000.0000         3.5380        996.462
+ pwm|sysclk                  1.0000 MHz    263.7131 MHz      1000.0000         3.7920        996.208
 ====================================================================================================
 
 Design Summary : All Constraints Met.
@@ -44,7 +44,7 @@ Setup Summary(Slow Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- pwm|sysclk             pwm|sysclk                 996.462       0.000              0             94
+ pwm|sysclk             pwm|sysclk                 996.208       0.000              0             94
 ====================================================================================================
 
 Hold Summary(Slow Corner):
@@ -82,7 +82,7 @@ Setup Summary(Fast Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- pwm|sysclk             pwm|sysclk                 997.827       0.000              0             94
+ pwm|sysclk             pwm|sysclk                 997.691       0.000              0             94
 ====================================================================================================
 
 Hold Summary(Fast Corner):
@@ -148,25 +148,25 @@ Clock Skew  :    -0.026  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.203       4.025 r       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.521       4.546         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.229       4.775 r       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.246       5.021         _N7              
- CLMA_81_840/Y0                    td                    0.096       5.117 r       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.243       5.360         _N17             
- CLMA_81_841/CR1                   td                    0.224       5.584 r       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.404       5.988         _N21             
- CLMA_75_852/Y1                    td                    0.096       6.084 r       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.291       6.375         N4               
- CLMA_81_846/CR1                   td                    0.227       6.602 r       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.120       6.722         ntR19            
- CLMA_81_847/COUT                  td                    0.288       7.010 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       7.010         _N36             
- CLMA_81_853/COUT                  td                    0.085       7.095 f       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       7.095         _N40             
- CLMA_81_859/COUT                  td                    0.078       7.173 r       pwm_cnt[12]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       7.173         _N44             
+                                   net (fanout=1)        0.398       5.173         _N7              
+ CLMA_81_840/Y0                    td                    0.108       5.281 r       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.244       5.525         _N17             
+ CLMA_81_841/CR1                   td                    0.313       5.838 r       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.404       6.242         _N21             
+ CLMA_75_852/Y1                    td                    0.096       6.338 r       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.291       6.629         N4               
+ CLMA_81_846/CR1                   td                    0.227       6.856 r       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.120       6.976         ntR20            
+ CLMA_81_847/COUT                  td                    0.288       7.264 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.264         _N36             
+ CLMA_81_853/COUT                  td                    0.085       7.349 f       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.349         _N40             
+ CLMA_81_859/COUT                  td                    0.078       7.427 r       pwm_cnt[12]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.427         _N44             
  CLMA_81_865/CIN                                                           r       pwm_cnt[13]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   7.173         Logic Levels: 8  
-                                                                                   Logic: 1.526ns(45.539%), Route: 1.825ns(54.461%)
+ Data arrival time                                                   7.427         Logic Levels: 8  
+                                                                                   Logic: 1.627ns(45.132%), Route: 1.978ns(54.868%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -189,9 +189,9 @@ Clock Skew  :    -0.026  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1003.635                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1003.635                          
- Data arrival time                                                   7.173                          
+ Data arrival time                                                   7.427                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       996.462                          
+ Slack (MET)                                                       996.208                          
 ====================================================================================================
 
 ====================================================================================================
@@ -225,23 +225,23 @@ Clock Skew  :    -0.027  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.203       4.025 r       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.521       4.546         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.229       4.775 r       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.246       5.021         _N7              
- CLMA_81_840/Y0                    td                    0.096       5.117 r       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.243       5.360         _N17             
- CLMA_81_841/CR1                   td                    0.224       5.584 r       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.404       5.988         _N21             
- CLMA_75_852/Y1                    td                    0.096       6.084 r       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.291       6.375         N4               
- CLMA_81_846/CR1                   td                    0.227       6.602 r       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.120       6.722         ntR19            
- CLMA_81_847/COUT                  td                    0.288       7.010 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       7.010         _N36             
- CLMA_81_853/COUT                  td                    0.078       7.088 r       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       7.088         _N40             
+                                   net (fanout=1)        0.398       5.173         _N7              
+ CLMA_81_840/Y0                    td                    0.108       5.281 r       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.244       5.525         _N17             
+ CLMA_81_841/CR1                   td                    0.313       5.838 r       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.404       6.242         _N21             
+ CLMA_75_852/Y1                    td                    0.096       6.338 r       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.291       6.629         N4               
+ CLMA_81_846/CR1                   td                    0.227       6.856 r       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.120       6.976         ntR20            
+ CLMA_81_847/COUT                  td                    0.288       7.264 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.264         _N36             
+ CLMA_81_853/COUT                  td                    0.078       7.342 r       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.342         _N40             
  CLMA_81_859/CIN                                                           r       pwm_cnt[9]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   7.088         Logic Levels: 7  
-                                                                                   Logic: 1.441ns(44.121%), Route: 1.825ns(55.879%)
+ Data arrival time                                                   7.342         Logic Levels: 7  
+                                                                                   Logic: 1.542ns(43.807%), Route: 1.978ns(56.193%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -264,9 +264,9 @@ Clock Skew  :    -0.027  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1003.634                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1003.634                          
- Data arrival time                                                   7.088                          
+ Data arrival time                                                   7.342                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       996.546                          
+ Slack (MET)                                                       996.292                          
 ====================================================================================================
 
 ====================================================================================================
@@ -300,21 +300,21 @@ Clock Skew  :    -0.028  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.203       4.025 r       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.521       4.546         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.229       4.775 r       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.246       5.021         _N7              
- CLMA_81_840/Y0                    td                    0.096       5.117 r       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.243       5.360         _N17             
- CLMA_81_841/CR1                   td                    0.224       5.584 r       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.404       5.988         _N21             
- CLMA_75_852/Y1                    td                    0.096       6.084 r       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.291       6.375         N4               
- CLMA_81_846/CR1                   td                    0.227       6.602 r       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.120       6.722         ntR19            
- CLMA_81_847/COUT                  td                    0.265       6.987 r       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       6.987         _N36             
+                                   net (fanout=1)        0.398       5.173         _N7              
+ CLMA_81_840/Y0                    td                    0.108       5.281 r       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.244       5.525         _N17             
+ CLMA_81_841/CR1                   td                    0.313       5.838 r       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.404       6.242         _N21             
+ CLMA_75_852/Y1                    td                    0.096       6.338 r       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.291       6.629         N4               
+ CLMA_81_846/CR1                   td                    0.227       6.856 r       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.120       6.976         ntR20            
+ CLMA_81_847/COUT                  td                    0.265       7.241 r       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       7.241         _N36             
  CLMA_81_853/CIN                                                           r       pwm_cnt[5]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   6.987         Logic Levels: 6  
-                                                                                   Logic: 1.340ns(42.338%), Route: 1.825ns(57.662%)
+ Data arrival time                                                   7.241         Logic Levels: 6  
+                                                                                   Logic: 1.441ns(42.147%), Route: 1.978ns(57.853%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -337,9 +337,9 @@ Clock Skew  :    -0.028  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1003.633                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1003.633                          
- Data arrival time                                                   6.987                          
+ Data arrival time                                                   7.241                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       996.646                          
+ Slack (MET)                                                       996.392                          
 ====================================================================================================
 
 ====================================================================================================
@@ -493,11 +493,11 @@ Clock Skew  :    0.029  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  CLMA_81_865/CLK                                                           r       inc_dec_flag/opit_0_inv_L6Q_perm/CLK
 
  CLMA_81_865/Q3                    tco                   0.158       3.437 f       inc_dec_flag/opit_0_inv_L6Q_perm/L6Q
-                                   net (fanout=27)       0.151       3.588         inc_dec_flag     
+                                   net (fanout=27)       0.152       3.589         inc_dec_flag     
  CLMA_81_864/A5                                                            f       duty[13]/opit_0_inv_AQ_perm/I5
 
- Data arrival time                                                   3.588         Logic Levels: 0  
-                                                                                   Logic: 0.158ns(51.133%), Route: 0.151ns(48.867%)
+ Data arrival time                                                   3.589         Logic Levels: 0  
+                                                                                   Logic: 0.158ns(50.968%), Route: 0.152ns(49.032%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                          0.000       0.000 r                        
@@ -520,9 +520,9 @@ Clock Skew  :    0.029  (Capture Clock Delay - Launch Clock Delay + Clock Pessim
  Data required time                                                  3.288                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                                  3.288                          
- Data arrival time                                                   3.588                          
+ Data arrival time                                                   3.589                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                         0.300                          
+ Slack (MET)                                                         0.301                          
 ====================================================================================================
 
 ====================================================================================================
@@ -549,20 +549,20 @@ Path Class  : combinational timing path
                                    net (fanout=33)       0.467       3.823         ntR22            
  CLMA_81_852/CLK                                                           r       duty[8]/opit_0_inv_AQ_perm/CLK
 
- CLMA_81_852/Q0                    tco                   0.203       4.026 r       duty[5]/opit_0_inv_AQ_perm/Q
-                                   net (fanout=3)        0.612       4.638         duty[5]          
- CLMS_75_847/COUT                  td                    0.285       4.923 f       N40.lt_3/gateop_perm/COUT
-                                   net (fanout=1)        0.000       4.923         N40.co [6]       
- CLMS_75_853/CR3                   td                    0.201       5.124 r       N40.lt_7/gateop_l6l5_perm/L5
-                                   net (fanout=1)        1.597       6.721         _N0              
- IOLHR_16_1032/DO_P                td                    0.611       7.332 r       led_obuf/opit_1/DO_P
-                                   net (fanout=1)        0.000       7.332         led_obuf/ntO     
- IOBS_0_1032/PAD                   td                    2.385       9.717 r       led_obuf/opit_0/O
-                                   net (fanout=1)        0.153       9.870         led              
+ CLMA_81_852/Q1                    tco                   0.203       4.026 r       duty[6]/opit_0_inv_AQ_perm/Q
+                                   net (fanout=3)        0.857       4.883         duty[6]          
+ CLMS_75_847/COUT                  td                    0.272       5.155 r       N38.lt_3/gateop_perm/COUT
+                                   net (fanout=1)        0.000       5.155         N38.co [6]       
+ CLMS_75_853/CR3                   td                    0.201       5.356 r       N38.lt_7/gateop_l6l5_perm/L5
+                                   net (fanout=1)        1.597       6.953         _N0              
+ IOLHR_16_1032/DO_P                td                    0.611       7.564 r       led_obuf/opit_1/DO_P
+                                   net (fanout=1)        0.000       7.564         led_obuf/ntO     
+ IOBS_0_1032/PAD                   td                    2.385       9.949 r       led_obuf/opit_0/O
+                                   net (fanout=1)        0.153      10.102         led              
  A20                                                                       r       led (port)       
 
- Data arrival time                                                   9.870         Logic Levels: 4  
-                                                                                   Logic: 3.685ns(60.939%), Route: 2.362ns(39.061%)
+ Data arrival time                                                  10.102         Logic Levels: 4  
+                                                                                   Logic: 3.672ns(58.481%), Route: 2.607ns(41.519%)
 ====================================================================================================
 
 ====================================================================================================
@@ -742,25 +742,25 @@ Clock Skew  :    -0.012  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.125       2.739 f       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.309       3.048         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.125       3.173 f       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.148       3.321         _N7              
- CLMA_81_840/Y0                    td                    0.066       3.387 f       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.147       3.534         _N17             
- CLMA_81_841/CR1                   td                    0.135       3.669 f       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.243       3.912         _N21             
- CLMA_75_852/Y1                    td                    0.066       3.978 f       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.173       4.151         N4               
- CLMA_81_846/CR1                   td                    0.142       4.293 f       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.075       4.368         ntR19            
- CLMA_81_847/COUT                  td                    0.198       4.566 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.566         _N36             
- CLMA_81_853/COUT                  td                    0.056       4.622 f       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.622         _N40             
- CLMA_81_859/COUT                  td                    0.046       4.668 r       pwm_cnt[12]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.668         _N44             
+                                   net (fanout=1)        0.231       3.404         _N7              
+ CLMA_81_840/Y0                    td                    0.070       3.474 f       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.147       3.621         _N17             
+ CLMA_81_841/CR1                   td                    0.183       3.804 f       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.243       4.047         _N21             
+ CLMA_75_852/Y1                    td                    0.066       4.113 f       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.173       4.286         N4               
+ CLMA_81_846/CR1                   td                    0.142       4.428 f       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.076       4.504         ntR20            
+ CLMA_81_847/COUT                  td                    0.198       4.702 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.702         _N36             
+ CLMA_81_853/COUT                  td                    0.056       4.758 f       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.758         _N40             
+ CLMA_81_859/COUT                  td                    0.046       4.804 r       pwm_cnt[12]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.804         _N44             
  CLMA_81_865/CIN                                                           r       pwm_cnt[13]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   4.668         Logic Levels: 8  
-                                                                                   Logic: 0.959ns(46.689%), Route: 1.095ns(53.311%)
+ Data arrival time                                                   4.804         Logic Levels: 8  
+                                                                                   Logic: 1.011ns(46.164%), Route: 1.179ns(53.836%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -783,9 +783,9 @@ Clock Skew  :    -0.012  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1002.495                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1002.495                          
- Data arrival time                                                   4.668                          
+ Data arrival time                                                   4.804                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       997.827                          
+ Slack (MET)                                                       997.691                          
 ====================================================================================================
 
 ====================================================================================================
@@ -819,23 +819,23 @@ Clock Skew  :    -0.013  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.125       2.739 f       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.309       3.048         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.125       3.173 f       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.148       3.321         _N7              
- CLMA_81_840/Y0                    td                    0.066       3.387 f       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.147       3.534         _N17             
- CLMA_81_841/CR1                   td                    0.135       3.669 f       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.243       3.912         _N21             
- CLMA_75_852/Y1                    td                    0.066       3.978 f       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.173       4.151         N4               
- CLMA_81_846/CR1                   td                    0.142       4.293 f       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.075       4.368         ntR19            
- CLMA_81_847/COUT                  td                    0.198       4.566 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.566         _N36             
- CLMA_81_853/COUT                  td                    0.046       4.612 r       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.612         _N40             
+                                   net (fanout=1)        0.231       3.404         _N7              
+ CLMA_81_840/Y0                    td                    0.070       3.474 f       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.147       3.621         _N17             
+ CLMA_81_841/CR1                   td                    0.183       3.804 f       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.243       4.047         _N21             
+ CLMA_75_852/Y1                    td                    0.066       4.113 f       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.173       4.286         N4               
+ CLMA_81_846/CR1                   td                    0.142       4.428 f       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.076       4.504         ntR20            
+ CLMA_81_847/COUT                  td                    0.198       4.702 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.702         _N36             
+ CLMA_81_853/COUT                  td                    0.046       4.748 r       pwm_cnt[8]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.748         _N40             
  CLMA_81_859/CIN                                                           r       pwm_cnt[9]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   4.612         Logic Levels: 7  
-                                                                                   Logic: 0.903ns(45.195%), Route: 1.095ns(54.805%)
+ Data arrival time                                                   4.748         Logic Levels: 7  
+                                                                                   Logic: 0.955ns(44.752%), Route: 1.179ns(55.248%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -858,9 +858,9 @@ Clock Skew  :    -0.013  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1002.494                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1002.494                          
- Data arrival time                                                   4.612                          
+ Data arrival time                                                   4.748                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       997.882                          
+ Slack (MET)                                                       997.746                          
 ====================================================================================================
 
 ====================================================================================================
@@ -894,21 +894,21 @@ Clock Skew  :    -0.014  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  CLMA_81_847/Q1                    tco                   0.125       2.739 f       pwm_cnt[2]/opit_0_inv_AQ_perm/Q
                                    net (fanout=4)        0.309       3.048         pwm_cnt[2]       
  CLMA_81_841/Y0                    td                    0.125       3.173 f       pwm_cnt[0]/opit_0_inv_L5Q_perm/L6
-                                   net (fanout=1)        0.148       3.321         _N7              
- CLMA_81_840/Y0                    td                    0.066       3.387 f       N4_mux8/LUT6_inst_perm/L6
-                                   net (fanout=1)        0.147       3.534         _N17             
- CLMA_81_841/CR1                   td                    0.135       3.669 f       N53_6/LUT6D_inst_perm/L5
-                                   net (fanout=1)        0.243       3.912         _N21             
- CLMA_75_852/Y1                    td                    0.066       3.978 f       N4_mux15/LUT6_inst_perm/L6
-                                   net (fanout=16)       0.173       4.151         N4               
- CLMA_81_846/CR1                   td                    0.142       4.293 f       CLKROUTE_0/CR    
-                                   net (fanout=1)        0.075       4.368         ntR19            
- CLMA_81_847/COUT                  td                    0.198       4.566 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
-                                   net (fanout=1)        0.000       4.566         _N36             
+                                   net (fanout=1)        0.231       3.404         _N7              
+ CLMA_81_840/Y0                    td                    0.070       3.474 f       N4_mux8/LUT6_inst_perm/L6
+                                   net (fanout=1)        0.147       3.621         _N17             
+ CLMA_81_841/CR1                   td                    0.183       3.804 f       N51_6/LUT6D_inst_perm/L5
+                                   net (fanout=1)        0.243       4.047         _N21             
+ CLMA_75_852/Y1                    td                    0.066       4.113 f       N4_mux15/LUT6_inst_perm/L6
+                                   net (fanout=16)       0.173       4.286         N4               
+ CLMA_81_846/CR1                   td                    0.142       4.428 f       CLKROUTE_1/CR    
+                                   net (fanout=1)        0.076       4.504         ntR20            
+ CLMA_81_847/COUT                  td                    0.198       4.702 f       pwm_cnt[4]/opit_0_inv_AQ_perm/COUT
+                                   net (fanout=1)        0.000       4.702         _N36             
  CLMA_81_853/CIN                                                           f       pwm_cnt[5]/opit_0_inv_AQ_perm/CIN
 
- Data arrival time                                                   4.566         Logic Levels: 6  
-                                                                                   Logic: 0.857ns(43.904%), Route: 1.095ns(56.096%)
+ Data arrival time                                                   4.702         Logic Levels: 6  
+                                                                                   Logic: 0.909ns(43.534%), Route: 1.179ns(56.466%)
 ----------------------------------------------------------------------------------------------------
 
  Clock pwm|sysclk (rising edge)                       1000.000    1000.000 r                        
@@ -931,9 +931,9 @@ Clock Skew  :    -0.014  (Capture Clock Delay - Launch Clock Delay + Clock Pessi
  Data required time                                               1002.503                          
 ----------------------------------------------------------------------------------------------------
  Data required time                                               1002.503                          
- Data arrival time                                                   4.566                          
+ Data arrival time                                                   4.702                          
 ----------------------------------------------------------------------------------------------------
- Slack (MET)                                                       997.937                          
+ Slack (MET)                                                       997.801                          
 ====================================================================================================
 
 ====================================================================================================
@@ -1143,20 +1143,20 @@ Path Class  : combinational timing path
                                    net (fanout=33)       0.325       2.615         ntR22            
  CLMA_81_852/CLK                                                           r       duty[8]/opit_0_inv_AQ_perm/CLK
 
- CLMA_81_852/Q0                    tco                   0.125       2.740 f       duty[5]/opit_0_inv_AQ_perm/Q
-                                   net (fanout=3)        0.356       3.096         duty[5]          
- CLMS_75_847/COUT                  td                    0.197       3.293 f       N40.lt_3/gateop_perm/COUT
-                                   net (fanout=1)        0.000       3.293         N40.co [6]       
- CLMS_75_853/CR3                   td                    0.123       3.416 f       N40.lt_7/gateop_l6l5_perm/L5
-                                   net (fanout=1)        1.021       4.437         _N0              
- IOLHR_16_1032/DO_P                td                    0.353       4.790 f       led_obuf/opit_1/DO_P
-                                   net (fanout=1)        0.000       4.790         led_obuf/ntO     
- IOBS_0_1032/PAD                   td                    2.022       6.812 f       led_obuf/opit_0/O
-                                   net (fanout=1)        0.153       6.965         led              
+ CLMA_81_852/Q1                    tco                   0.125       2.740 f       duty[6]/opit_0_inv_AQ_perm/Q
+                                   net (fanout=3)        0.485       3.225         duty[6]          
+ CLMS_75_847/COUT                  td                    0.155       3.380 f       N38.lt_3/gateop_perm/COUT
+                                   net (fanout=1)        0.000       3.380         N38.co [6]       
+ CLMS_75_853/CR3                   td                    0.123       3.503 f       N38.lt_7/gateop_l6l5_perm/L5
+                                   net (fanout=1)        1.021       4.524         _N0              
+ IOLHR_16_1032/DO_P                td                    0.353       4.877 f       led_obuf/opit_1/DO_P
+                                   net (fanout=1)        0.000       4.877         led_obuf/ntO     
+ IOBS_0_1032/PAD                   td                    2.022       6.899 f       led_obuf/opit_0/O
+                                   net (fanout=1)        0.153       7.052         led              
  A20                                                                       f       led (port)       
 
- Data arrival time                                                   6.965         Logic Levels: 4  
-                                                                                   Logic: 2.820ns(64.828%), Route: 1.530ns(35.172%)
+ Data arrival time                                                   7.052         Logic Levels: 4  
+                                                                                   Logic: 2.778ns(62.610%), Route: 1.659ns(37.390%)
 ====================================================================================================
 
 ====================================================================================================
@@ -1238,11 +1238,11 @@ Path Class  : combinational timing path
  IOBD_0_990/DIN                    td                    0.445       0.581 r       rstn_ibuf/opit_0/O
                                    net (fanout=1)        0.000       0.581         rstn_ibuf/ntD    
  IOLHR_16_990/DI_TO_CLK            td                    0.073       0.654 r       rstn_ibuf/opit_1/DI_TO_CLK
-                                   net (fanout=6)        0.728       1.382         nt_rstn          
+                                   net (fanout=6)        0.729       1.383         nt_rstn          
  CLMA_75_852/RS                                                            r       duty[0]/opit_0_inv_L5Q_perm/RS
 
- Data arrival time                                                   1.382         Logic Levels: 2  
-                                                                                   Logic: 0.518ns(37.482%), Route: 0.864ns(62.518%)
+ Data arrival time                                                   1.383         Logic Levels: 2  
+                                                                                   Logic: 0.518ns(37.455%), Route: 0.865ns(62.545%)
 ====================================================================================================
 
 ====================================================================================================
@@ -1305,18 +1305,18 @@ Path Class  : combinational timing path
 ====================================================================================================
 
 Inputs and Outputs :
-+------------------------------------------------------------------------------------------------------+
-| Type       | File Name                                                                              
-+------------------------------------------------------------------------------------------------------+
-| Input      | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/prj/pwm/place_route/pwm_pnr.adf       
-| Output     | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/prj/pwm/report_timing/pwm_rtp.adf     
-|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/prj/pwm/report_timing/pwm.rtr         
-|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/LAB/pwm/prj/pwm/report_timing/rtr.db          
-+------------------------------------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------------------------------------------+
+| Type       | File Name                                                                                                            
++------------------------------------------------------------------------------------------------------------------------------------+
+| Input      | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/05_pwm/prj/pwm/place_route/pwm_pnr.adf       
+| Output     | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/05_pwm/prj/pwm/report_timing/pwm_rtp.adf     
+|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/05_pwm/prj/pwm/report_timing/pwm.rtr         
+|            | E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/05_pwm/prj/pwm/report_timing/rtr.db          
++------------------------------------------------------------------------------------------------------------------------------------+
 
 
 Flow Command: report_timing 
 Peak memory: 1,054 MB
-Total CPU time to report_timing completion : 0h:0m:11s
-Process Total CPU time to report_timing completion : 0h:0m:11s
+Total CPU time to report_timing completion : 0h:0m:14s
+Process Total CPU time to report_timing completion : 0h:0m:14s
 Total real time to report_timing completion : 0h:0m:16s

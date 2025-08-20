@@ -221,9 +221,9 @@
         </column_headers>
         <row>
             <data>pwm|sysclk</data>
-            <data>282.6456MHz</data>
+            <data>263.7131MHz</data>
             <data>1.0000MHz</data>
-            <data>996.462</data>
+            <data>996.208</data>
         </row>
     </table>
     <table id="report_clock_interaction" title="Clock Interaction" column_number="12">
@@ -246,7 +246,7 @@
             <data>pwm|sysclk</data>
             <data>YES</data>
             <data>Timed</data>
-            <data>996.462</data>
+            <data>996.208</data>
             <data>0.000</data>
             <data>0</data>
             <data>94</data>
@@ -268,7 +268,7 @@
         <row>
             <data>pwm|sysclk</data>
             <data>pwm|sysclk</data>
-            <data>996.462</data>
+            <data>996.208</data>
             <data>0.000</data>
             <data>0</data>
             <data>94</data>
@@ -407,7 +407,7 @@
             <data>Route delay</data>
         </column_headers>
         <row>
-            <data>996.462</data>
+            <data>996.208</data>
             <data>8</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -421,13 +421,13 @@
             <data>3.279</data>
             <data>0.517</data>
             <data>1000.000</data>
-            <data>3.351</data>
-            <data>1.526 (45.5%)</data>
-            <data>1.825 (54.5%)</data>
+            <data>3.605</data>
+            <data>1.627 (45.1%)</data>
+            <data>1.978 (54.9%)</data>
             <general_container>
-                <data>Path #1: setup slack is 996.462(MET)</data>
+                <data>Path #1: setup slack is 996.208(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 7.173" column_number="6">
+                    <table id="arrival" title="Data arrival time is 7.427" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -559,40 +559,40 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.246</data>
-                            <data>5.021</data>
+                            <data>0.398</data>
+                            <data>5.173</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.096</data>
-                            <data>5.117</data>
+                            <data>0.108</data>
+                            <data>5.281</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.243</data>
-                            <data>5.360</data>
+                            <data>0.244</data>
+                            <data>5.525</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.224</data>
-                            <data>5.584</data>
+                            <data>0.313</data>
+                            <data>5.838</data>
                             <data>r</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.404</data>
-                            <data>5.988</data>
+                            <data>6.242</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -600,7 +600,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.096</data>
-                            <data>6.084</data>
+                            <data>6.338</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -608,7 +608,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.291</data>
-                            <data>6.375</data>
+                            <data>6.629</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -616,23 +616,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.227</data>
-                            <data>6.602</data>
+                            <data>6.856</data>
                             <data>r</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.120</data>
-                            <data>6.722</data>
+                            <data>6.976</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.288</data>
-                            <data>7.010</data>
+                            <data>7.264</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -640,7 +640,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>7.010</data>
+                            <data>7.264</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -648,7 +648,7 @@
                             <data>CLMA_81_853/COUT</data>
                             <data>td</data>
                             <data>0.085</data>
-                            <data>7.095</data>
+                            <data>7.349</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[8]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -656,7 +656,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>7.095</data>
+                            <data>7.349</data>
                             <data> </data>
                             <data object_valid="true">_N40</data>
                         </row>
@@ -664,7 +664,7 @@
                             <data>CLMA_81_859/COUT</data>
                             <data>td</data>
                             <data>0.078</data>
-                            <data>7.173</data>
+                            <data>7.427</data>
                             <data>r</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[12]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -672,7 +672,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>7.173</data>
+                            <data>7.427</data>
                             <data> </data>
                             <data object_valid="true">_N44</data>
                         </row>
@@ -821,7 +821,7 @@
             </general_container>
         </row>
         <row>
-            <data>996.546</data>
+            <data>996.292</data>
             <data>7</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -835,13 +835,13 @@
             <data>3.278</data>
             <data>0.517</data>
             <data>1000.000</data>
-            <data>3.266</data>
-            <data>1.441 (44.1%)</data>
-            <data>1.825 (55.9%)</data>
+            <data>3.520</data>
+            <data>1.542 (43.8%)</data>
+            <data>1.978 (56.2%)</data>
             <general_container>
-                <data>Path #2: setup slack is 996.546(MET)</data>
+                <data>Path #2: setup slack is 996.292(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 7.088" column_number="6">
+                    <table id="arrival" title="Data arrival time is 7.342" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -973,40 +973,40 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.246</data>
-                            <data>5.021</data>
+                            <data>0.398</data>
+                            <data>5.173</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.096</data>
-                            <data>5.117</data>
+                            <data>0.108</data>
+                            <data>5.281</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.243</data>
-                            <data>5.360</data>
+                            <data>0.244</data>
+                            <data>5.525</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.224</data>
-                            <data>5.584</data>
+                            <data>0.313</data>
+                            <data>5.838</data>
                             <data>r</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.404</data>
-                            <data>5.988</data>
+                            <data>6.242</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -1014,7 +1014,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.096</data>
-                            <data>6.084</data>
+                            <data>6.338</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -1022,7 +1022,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.291</data>
-                            <data>6.375</data>
+                            <data>6.629</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -1030,23 +1030,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.227</data>
-                            <data>6.602</data>
+                            <data>6.856</data>
                             <data>r</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.120</data>
-                            <data>6.722</data>
+                            <data>6.976</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.288</data>
-                            <data>7.010</data>
+                            <data>7.264</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -1054,7 +1054,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>7.010</data>
+                            <data>7.264</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -1062,7 +1062,7 @@
                             <data>CLMA_81_853/COUT</data>
                             <data>td</data>
                             <data>0.078</data>
-                            <data>7.088</data>
+                            <data>7.342</data>
                             <data>r</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[8]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -1070,7 +1070,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>7.088</data>
+                            <data>7.342</data>
                             <data> </data>
                             <data object_valid="true">_N40</data>
                         </row>
@@ -1219,7 +1219,7 @@
             </general_container>
         </row>
         <row>
-            <data>996.646</data>
+            <data>996.392</data>
             <data>6</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -1233,13 +1233,13 @@
             <data>3.277</data>
             <data>0.517</data>
             <data>1000.000</data>
-            <data>3.165</data>
-            <data>1.340 (42.3%)</data>
-            <data>1.825 (57.7%)</data>
+            <data>3.419</data>
+            <data>1.441 (42.1%)</data>
+            <data>1.978 (57.9%)</data>
             <general_container>
-                <data>Path #3: setup slack is 996.646(MET)</data>
+                <data>Path #3: setup slack is 996.392(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 6.987" column_number="6">
+                    <table id="arrival" title="Data arrival time is 7.241" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -1371,40 +1371,40 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.246</data>
-                            <data>5.021</data>
+                            <data>0.398</data>
+                            <data>5.173</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.096</data>
-                            <data>5.117</data>
+                            <data>0.108</data>
+                            <data>5.281</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.243</data>
-                            <data>5.360</data>
+                            <data>0.244</data>
+                            <data>5.525</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.224</data>
-                            <data>5.584</data>
+                            <data>0.313</data>
+                            <data>5.838</data>
                             <data>r</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.404</data>
-                            <data>5.988</data>
+                            <data>6.242</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -1412,7 +1412,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.096</data>
-                            <data>6.084</data>
+                            <data>6.338</data>
                             <data>r</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -1420,7 +1420,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.291</data>
-                            <data>6.375</data>
+                            <data>6.629</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -1428,23 +1428,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.227</data>
-                            <data>6.602</data>
+                            <data>6.856</data>
                             <data>r</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.120</data>
-                            <data>6.722</data>
+                            <data>6.976</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.265</data>
-                            <data>6.987</data>
+                            <data>7.241</data>
                             <data>r</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -1452,7 +1452,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>6.987</data>
+                            <data>7.241</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -2194,7 +2194,7 @@
             </general_container>
         </row>
         <row>
-            <data>0.300</data>
+            <data>0.301</data>
             <data>0</data>
             <data>27</data>
             <data file_id="../../../rtl/pwm.v" line_number="36">inc_dec_flag/opit_0_inv_L6Q_perm/CLK</data>
@@ -2208,13 +2208,13 @@
             <data>3.825</data>
             <data>-0.517</data>
             <data>0.000</data>
-            <data>0.309</data>
-            <data>0.158 (51.1%)</data>
-            <data>0.151 (48.9%)</data>
+            <data>0.310</data>
+            <data>0.158 (51.0%)</data>
+            <data>0.152 (49.0%)</data>
             <general_container>
-                <data>Path #3: hold slack is 0.300(MET)</data>
+                <data>Path #3: hold slack is 0.301(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 3.588" column_number="6">
+                    <table id="arrival" title="Data arrival time is 3.589" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -2330,8 +2330,8 @@
                         <row>
                             <data/>
                             <data>net (fanout=27)</data>
-                            <data>0.151</data>
-                            <data>3.588</data>
+                            <data>0.152</data>
+                            <data>3.589</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="13">inc_dec_flag</data>
                         </row>
@@ -2530,7 +2530,7 @@
         <row>
             <data>pwm|sysclk</data>
             <data>pwm|sysclk</data>
-            <data>997.827</data>
+            <data>997.691</data>
             <data>0.000</data>
             <data>0</data>
             <data>94</data>
@@ -2669,7 +2669,7 @@
             <data>Route delay</data>
         </column_headers>
         <row>
-            <data>997.827</data>
+            <data>997.691</data>
             <data>8</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -2683,13 +2683,13 @@
             <data>2.229</data>
             <data>0.373</data>
             <data>1000.000</data>
-            <data>2.054</data>
-            <data>0.959 (46.7%)</data>
-            <data>1.095 (53.3%)</data>
+            <data>2.190</data>
+            <data>1.011 (46.2%)</data>
+            <data>1.179 (53.8%)</data>
             <general_container>
-                <data>Path #1: setup slack is 997.827(MET)</data>
+                <data>Path #1: setup slack is 997.691(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 4.668" column_number="6">
+                    <table id="arrival" title="Data arrival time is 4.804" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -2821,16 +2821,16 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.148</data>
-                            <data>3.321</data>
+                            <data>0.231</data>
+                            <data>3.404</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.066</data>
-                            <data>3.387</data>
+                            <data>0.070</data>
+                            <data>3.474</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
@@ -2838,23 +2838,23 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.147</data>
-                            <data>3.534</data>
+                            <data>3.621</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.135</data>
-                            <data>3.669</data>
+                            <data>0.183</data>
+                            <data>3.804</data>
                             <data>f</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.243</data>
-                            <data>3.912</data>
+                            <data>4.047</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -2862,7 +2862,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.066</data>
-                            <data>3.978</data>
+                            <data>4.113</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -2870,7 +2870,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.173</data>
-                            <data>4.151</data>
+                            <data>4.286</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -2878,23 +2878,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.142</data>
-                            <data>4.293</data>
+                            <data>4.428</data>
                             <data>f</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.075</data>
-                            <data>4.368</data>
+                            <data>0.076</data>
+                            <data>4.504</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.198</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -2902,7 +2902,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -2910,7 +2910,7 @@
                             <data>CLMA_81_853/COUT</data>
                             <data>td</data>
                             <data>0.056</data>
-                            <data>4.622</data>
+                            <data>4.758</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[8]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -2918,7 +2918,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.622</data>
+                            <data>4.758</data>
                             <data> </data>
                             <data object_valid="true">_N40</data>
                         </row>
@@ -2926,7 +2926,7 @@
                             <data>CLMA_81_859/COUT</data>
                             <data>td</data>
                             <data>0.046</data>
-                            <data>4.668</data>
+                            <data>4.804</data>
                             <data>r</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[12]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -2934,7 +2934,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.668</data>
+                            <data>4.804</data>
                             <data> </data>
                             <data object_valid="true">_N44</data>
                         </row>
@@ -3083,7 +3083,7 @@
             </general_container>
         </row>
         <row>
-            <data>997.882</data>
+            <data>997.746</data>
             <data>7</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -3097,13 +3097,13 @@
             <data>2.228</data>
             <data>0.373</data>
             <data>1000.000</data>
-            <data>1.998</data>
-            <data>0.903 (45.2%)</data>
-            <data>1.095 (54.8%)</data>
+            <data>2.134</data>
+            <data>0.955 (44.8%)</data>
+            <data>1.179 (55.2%)</data>
             <general_container>
-                <data>Path #2: setup slack is 997.882(MET)</data>
+                <data>Path #2: setup slack is 997.746(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 4.612" column_number="6">
+                    <table id="arrival" title="Data arrival time is 4.748" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -3235,16 +3235,16 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.148</data>
-                            <data>3.321</data>
+                            <data>0.231</data>
+                            <data>3.404</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.066</data>
-                            <data>3.387</data>
+                            <data>0.070</data>
+                            <data>3.474</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
@@ -3252,23 +3252,23 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.147</data>
-                            <data>3.534</data>
+                            <data>3.621</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.135</data>
-                            <data>3.669</data>
+                            <data>0.183</data>
+                            <data>3.804</data>
                             <data>f</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.243</data>
-                            <data>3.912</data>
+                            <data>4.047</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -3276,7 +3276,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.066</data>
-                            <data>3.978</data>
+                            <data>4.113</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -3284,7 +3284,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.173</data>
-                            <data>4.151</data>
+                            <data>4.286</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -3292,23 +3292,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.142</data>
-                            <data>4.293</data>
+                            <data>4.428</data>
                             <data>f</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.075</data>
-                            <data>4.368</data>
+                            <data>0.076</data>
+                            <data>4.504</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.198</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -3316,7 +3316,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -3324,7 +3324,7 @@
                             <data>CLMA_81_853/COUT</data>
                             <data>td</data>
                             <data>0.046</data>
-                            <data>4.612</data>
+                            <data>4.748</data>
                             <data>r</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[8]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -3332,7 +3332,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.612</data>
+                            <data>4.748</data>
                             <data> </data>
                             <data object_valid="true">_N40</data>
                         </row>
@@ -3481,7 +3481,7 @@
             </general_container>
         </row>
         <row>
-            <data>997.937</data>
+            <data>997.801</data>
             <data>6</data>
             <data>16</data>
             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/CLK</data>
@@ -3495,13 +3495,13 @@
             <data>2.227</data>
             <data>0.373</data>
             <data>1000.000</data>
-            <data>1.952</data>
-            <data>0.857 (43.9%)</data>
-            <data>1.095 (56.1%)</data>
+            <data>2.088</data>
+            <data>0.909 (43.5%)</data>
+            <data>1.179 (56.5%)</data>
             <general_container>
-                <data>Path #3: setup slack is 997.937(MET)</data>
+                <data>Path #3: setup slack is 997.801(MET)</data>
                 <table_container>
-                    <table id="arrival" title="Data arrival time is 4.566" column_number="6">
+                    <table id="arrival" title="Data arrival time is 4.702" column_number="6">
                         <column_headers>
                             <data>Location</data>
                             <data>Delay Type</data>
@@ -3633,16 +3633,16 @@
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.148</data>
-                            <data>3.321</data>
+                            <data>0.231</data>
+                            <data>3.404</data>
                             <data> </data>
                             <data object_valid="true">_N7</data>
                         </row>
                         <row>
                             <data>CLMA_81_840/Y0</data>
                             <data>td</data>
-                            <data>0.066</data>
-                            <data>3.387</data>
+                            <data>0.070</data>
+                            <data>3.474</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux8/LUT6_inst_perm/L6</data>
                         </row>
@@ -3650,23 +3650,23 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.147</data>
-                            <data>3.534</data>
+                            <data>3.621</data>
                             <data> </data>
                             <data object_valid="true">_N17</data>
                         </row>
                         <row>
                             <data>CLMA_81_841/CR1</data>
                             <data>td</data>
-                            <data>0.135</data>
-                            <data>3.669</data>
+                            <data>0.183</data>
+                            <data>3.804</data>
                             <data>f</data>
-                            <data object_valid="true">N53_6/LUT6D_inst_perm/L5</data>
+                            <data object_valid="true">N51_6/LUT6D_inst_perm/L5</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.243</data>
-                            <data>3.912</data>
+                            <data>4.047</data>
                             <data> </data>
                             <data object_valid="true">_N21</data>
                         </row>
@@ -3674,7 +3674,7 @@
                             <data>CLMA_75_852/Y1</data>
                             <data>td</data>
                             <data>0.066</data>
-                            <data>3.978</data>
+                            <data>4.113</data>
                             <data>f</data>
                             <data object_valid="true">N4_mux15/LUT6_inst_perm/L6</data>
                         </row>
@@ -3682,7 +3682,7 @@
                             <data/>
                             <data>net (fanout=16)</data>
                             <data>0.173</data>
-                            <data>4.151</data>
+                            <data>4.286</data>
                             <data> </data>
                             <data file_id="../../../rtl/pwm.v" line_number="18">N4</data>
                         </row>
@@ -3690,23 +3690,23 @@
                             <data>CLMA_81_846/CR1</data>
                             <data>td</data>
                             <data>0.142</data>
-                            <data>4.293</data>
+                            <data>4.428</data>
                             <data>f</data>
-                            <data object_valid="true">CLKROUTE_0/CR</data>
+                            <data object_valid="true">CLKROUTE_1/CR</data>
                         </row>
                         <row>
                             <data/>
                             <data>net (fanout=1)</data>
-                            <data>0.075</data>
-                            <data>4.368</data>
+                            <data>0.076</data>
+                            <data>4.504</data>
                             <data> </data>
-                            <data object_valid="true">ntR19</data>
+                            <data object_valid="true">ntR20</data>
                         </row>
                         <row>
                             <data>CLMA_81_847/COUT</data>
                             <data>td</data>
                             <data>0.198</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data>f</data>
                             <data file_id="../../../rtl/pwm.v" line_number="15">pwm_cnt[4]/opit_0_inv_AQ_perm/COUT</data>
                         </row>
@@ -3714,7 +3714,7 @@
                             <data/>
                             <data>net (fanout=1)</data>
                             <data>0.000</data>
-                            <data>4.566</data>
+                            <data>4.702</data>
                             <data> </data>
                             <data object_valid="true">_N36</data>
                         </row>
@@ -4791,8 +4791,8 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:11s</data>
-            <data>0h:0m:11s</data>
+            <data>0h:0m:14s</data>
+            <data>0h:0m:14s</data>
             <data>0h:0m:16s</data>
             <data>1,054</data>
             <data>WINDOWS 10 x86_64</data>

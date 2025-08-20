@@ -26,14 +26,14 @@
             <data>IO_REGISTER</data>
         </column_headers>
         <row>
-            <data>external_clk</data>
+            <data>clk</data>
             <data>input</data>
             <data>D18</data>
             <data>BANKL3</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
             <data>NA</data>
-            <data>PULLUP</data>
+            <data>NONE</data>
             <data>NA</data>
             <data>NA</data>
             <data>NA</data>
@@ -50,103 +50,7 @@
             <data>NA</data>
         </row>
         <row>
-            <data>external_rstn</data>
-            <data>input</data>
-            <data>C22</data>
-            <data>BANKL3</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>NA</data>
-            <data>UNUSED</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[0]</data>
-            <data>output</data>
-            <data>W18</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[1]</data>
-            <data>output</data>
-            <data>AB24</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[2]</data>
-            <data>output</data>
-            <data>Y21</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[3]</data>
+            <data>rck</data>
             <data>output</data>
             <data>V14</data>
             <data>BANKL6</data>
@@ -170,16 +74,19 @@
             <data>NA</data>
         </row>
         <row>
-            <data>led_display_seg[4]</data>
-            <data>output</data>
-            <data>AC24</data>
-            <data>BANKL6</data>
+            <data>rstn</data>
+            <data>input</data>
+            <data>C22</data>
+            <data>BANKL3</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
+            <data>NA</data>
+            <data>NONE</data>
+            <data>NA</data>
+            <data>NA</data>
+            <data>NA</data>
+            <data>NA</data>
+            <data>NA</data>
             <data>NA</data>
             <data>NA</data>
             <data>NA</data>
@@ -187,206 +94,11 @@
             <data>NA</data>
             <data>OFF</data>
             <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
             <data>YES</data>
             <data>NA</data>
         </row>
         <row>
-            <data>led_display_seg[5]</data>
-            <data>output</data>
-            <data>Y22</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[6]</data>
-            <data>output</data>
-            <data>T15</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_seg[7]</data>
-            <data>output</data>
-            <data>Y26</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[0]</data>
-            <data>output</data>
-            <data>U20</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[1]</data>
-            <data>output</data>
-            <data>W25</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[2]</data>
-            <data>output</data>
-            <data>T20</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[3]</data>
-            <data>output</data>
-            <data>Y23</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[4]</data>
-            <data>output</data>
-            <data>W21</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[5]</data>
+            <data>sck</data>
             <data>output</data>
             <data>U14</data>
             <data>BANKL6</data>
@@ -410,33 +122,9 @@
             <data>NA</data>
         </row>
         <row>
-            <data>led_display_sel[6]</data>
+            <data>ser</data>
             <data>output</data>
-            <data>T14</data>
-            <data>BANKL6</data>
-            <data>3.3</data>
-            <data>LVCMOS33</data>
-            <data>8</data>
-            <data>UNUSED</data>
-            <data>FAST</data>
-            <data>N</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>OFF</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>NA</data>
-            <data>YES</data>
-            <data>NA</data>
-        </row>
-        <row>
-            <data>led_display_sel[7]</data>
-            <data>output</data>
-            <data>V18</data>
+            <data>W21</data>
             <data>BANKL6</data>
             <data>3.3</data>
             <data>LVCMOS33</data>
@@ -572,7 +260,7 @@
             <data>IOBD_0_1080</data>
             <data>BANKL3</data>
             <data>DIFFIO_L3_G1_11P_GMCLK</data>
-            <data>external_clk</data>
+            <data>clk</data>
             <data>input</data>
             <data>YES</data>
         </row>
@@ -635,7 +323,7 @@
             <data>IOBD_0_990</data>
             <data>BANKL3</data>
             <data>DIFFIO_L3_G3_18P</data>
-            <data>external_rstn</data>
+            <data>rstn</data>
             <data>input</data>
             <data>YES</data>
         </row>
@@ -1850,9 +1538,9 @@
             <data>IOBD_0_258</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_03P</data>
-            <data>led_display_sel[1]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>Y25</data>
@@ -1895,9 +1583,9 @@
             <data>IOBD_0_198</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_08P_DQS</data>
-            <data>led_display_seg[1]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>V23</data>
@@ -1913,9 +1601,9 @@
             <data>IOBD_0_174</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_10P_GSCLK</data>
-            <data>led_display_seg[5]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U22</data>
@@ -1940,7 +1628,7 @@
             <data>IOBD_0_132</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_13P_GSCLK</data>
-            <data>led_display_sel[4]</data>
+            <data>ser</data>
             <data>output</data>
             <data>YES</data>
         </row>
@@ -1949,9 +1637,9 @@
             <data>IOBD_0_120</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_14P_DQS</data>
-            <data>led_display_sel[2]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>W20</data>
@@ -1985,18 +1673,18 @@
             <data>IOBD_0_72</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_18P</data>
-            <data>led_display_sel[7]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>T14</data>
             <data>IOBD_0_60</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_19P</data>
-            <data>led_display_sel[6]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>T17</data>
@@ -2021,7 +1709,7 @@
             <data>IOBD_0_24</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_22P</data>
-            <data>led_display_sel[5]</data>
+            <data>sck</data>
             <data>output</data>
             <data>YES</data>
         </row>
@@ -2075,9 +1763,9 @@
             <data>IOBS_0_252</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G0_03N</data>
-            <data>led_display_seg[7]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>AA25</data>
@@ -2120,9 +1808,9 @@
             <data>IOBS_0_192</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_08N_DQS</data>
-            <data>led_display_seg[4]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>W23</data>
@@ -2138,9 +1826,9 @@
             <data>IOBS_0_168</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G1_10N_GSCLK</data>
-            <data>led_display_sel[3]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>V22</data>
@@ -2165,18 +1853,18 @@
             <data>IOBS_0_126</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_13N_GSCLK</data>
-            <data>led_display_seg[2]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>U20</data>
             <data>IOBS_0_114</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G2_14N_DQS</data>
-            <data>led_display_sel[0]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>Y20</data>
@@ -2210,18 +1898,18 @@
             <data>IOBS_0_66</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_18N_VREF</data>
-            <data>led_display_seg[0]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>T15</data>
             <data>IOBS_0_54</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_19N</data>
-            <data>led_display_seg[6]</data>
-            <data>output</data>
-            <data>YES</data>
+            <data></data>
+            <data></data>
+            <data></data>
         </row>
         <row>
             <data>T18</data>
@@ -2246,7 +1934,7 @@
             <data>IOBS_0_18</data>
             <data>BANKL6</data>
             <data>DIFFIO_L6_G3_22N</data>
-            <data>led_display_seg[3]</data>
+            <data>rck</data>
             <data>output</data>
             <data>YES</data>
         </row>
@@ -3208,48 +2896,48 @@
         </row>
         <row>
             <data>Use of CLMA</data>
-            <data>70</data>
+            <data>43</data>
             <data>11675</data>
             <data>1</data>
             <row>
                 <data>  FF</data>
-                <data>278</data>
+                <data>61</data>
                 <data>93400</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>148</data>
+                <data>73</data>
                 <data>46700</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>41</data>
+                <data>34</data>
                 <data>46700</data>
                 <data>1</data>
             </row>
         </row>
         <row>
             <data>Use of CLMS</data>
-            <data>38</data>
+            <data>26</data>
             <data>4975</data>
             <data>1</data>
             <row>
                 <data>  FF</data>
-                <data>140</data>
+                <data>26</data>
                 <data>39800</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT</data>
-                <data>60</data>
+                <data>15</data>
                 <data>19900</data>
                 <data>1</data>
             </row>
             <row>
                 <data>  LUT-FF pairs</data>
-                <data>3</data>
+                <data>5</data>
                 <data>19900</data>
                 <data>1</data>
             </row>
@@ -3298,7 +2986,7 @@
         </row>
         <row>
             <data>Use of HARD0</data>
-            <data>27</data>
+            <data>36</data>
             <data>10550</data>
             <data>1</data>
         </row>
@@ -3328,20 +3016,20 @@
         </row>
         <row>
             <data>Use of IO</data>
-            <data>18</data>
+            <data>5</data>
             <data>300</data>
-            <data>6</data>
+            <data>2</data>
             <row>
                 <data>  IOBD</data>
-                <data>10</data>
+                <data>4</data>
                 <data>144</data>
-                <data>7</data>
+                <data>3</data>
             </row>
             <row>
                 <data>  IOBS</data>
-                <data>8</data>
+                <data>1</data>
                 <data>156</data>
-                <data>6</data>
+                <data>1</data>
             </row>
         </row>
         <row>
@@ -3358,9 +3046,9 @@
         </row>
         <row>
             <data>Use of IOLHR</data>
-            <data>18</data>
+            <data>5</data>
             <data>300</data>
-            <data>6</data>
+            <data>2</data>
         </row>
         <row>
             <data>Use of KEYRAM</data>
@@ -3531,8 +3219,8 @@
         </column_headers>
         <row>
             <data>led_diaplay_top</data>
-            <data>208</data>
-            <data>418</data>
+            <data>88</data>
+            <data>87</data>
             <data>0</data>
             <data>0</data>
             <data>0</data>
@@ -3545,7 +3233,7 @@
             <data>0</data>
             <data>1</data>
             <data>0</data>
-            <data>18</data>
+            <data>5</data>
             <data>0</data>
             <data>0</data>
             <data>0</data>
@@ -3556,9 +3244,9 @@
             <data>0</data>
             <data>1</data>
             <row>
-                <data>u_led_display_driver</data>
-                <data>178</data>
-                <data>41</data>
+                <data>hc595_ctrl_inst</data>
+                <data>38</data>
+                <data>45</data>
                 <data>0</data>
                 <data>0</data>
                 <data>0</data>
@@ -3581,33 +3269,33 @@
                 <data>0</data>
                 <data>0</data>
                 <data>0</data>
-                <row>
-                    <data>u_led_display_selector</data>
-                    <data>76</data>
-                    <data>41</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                    <data>0</data>
-                </row>
+            </row>
+            <row>
+                <data>led_display_seg_ctrl_inst</data>
+                <data>50</data>
+                <data>42</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
+                <data>0</data>
             </row>
         </row>
     </table>
@@ -3622,9 +3310,9 @@
             <data>RAM(GB)</data>
         </column_headers>
         <row>
-            <data>0h:0m:20s</data>
-            <data>0h:0m:20s</data>
-            <data>0h:0m:30s</data>
+            <data>0h:0m:23s</data>
+            <data>0h:0m:23s</data>
+            <data>0h:0m:29s</data>
             <data>1,121</data>
             <data>WINDOWS 10 x86_64</data>
             <data>AMD Ryzen 7 4800H with Radeon Graphics</data>
@@ -3637,19 +3325,121 @@
             <data message="4">Column Clock Check open.</data>
         </row>
         <row>
-            <data message="4">LUT6D pack result: There are 47 LUT6 in collection, pack success:1</data>
+            <data message="4">LUT6D pack result: There are 58 LUT6 in collection, pack success:12</data>
         </row>
         <row>
             <data message="4">Process macros using &quot;Greedy&quot;.</data>
         </row>
         <row>
-            <data message="4">LUT6D pack result: There are 45 LUT6 in collection, pack success:1</data>
+            <data message="4">LUT6D pack result: There are 34 LUT6 in collection, pack success:0</data>
         </row>
         <row>
-            <data message="4">Design net u_led_display_driver/u_led_display_selector/N96 is routed by general path.</data>
+            <data message="4">Design net hc595_ctrl_inst/N134 is routed by general path.</data>
         </row>
         <row>
-            <data message="6">Route-2036: The clock path from u_led_display_driver/u_led_display_selector/N96_inv/gateop:L6 to u_led_display_driver/u_led_display_selector/led_display_seg[1]/opit_0:CLK is routed by SRB.</data>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N134_inv/gateop:L6 to hc595_ctrl_inst/data_cp/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N167 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N167/gateop:L6 to hc595_ctrl_inst/data_cp_10/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N146 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N146_inv/gateop:L6 to hc595_ctrl_inst/data_cp_4/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N158 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N158/gateop:L6 to hc595_ctrl_inst/data_cp_7/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14558 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14558/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_6/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14549 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14549_inv/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_1/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14543 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14543/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_2/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14546 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14546/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14552 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14552/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_4/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N170 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N170/gateop:L6 to hc595_ctrl_inst/data_cp_11/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N149 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N149_inv/gateop:L6 to hc595_ctrl_inst/data_cp_5/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N161 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N161/gateop:L6 to hc595_ctrl_inst/data_cp_8/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N137 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N137_inv/gateop:L6 to hc595_ctrl_inst/data_cp_1/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N143 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N143_inv/gateop:L6 to hc595_ctrl_inst/data_cp_3/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14561 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14561/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_3/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net led_display_seg_ctrl_inst/N14555 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from led_display_seg_ctrl_inst/N14555/LUT6_inst:L6 to led_display_seg_ctrl_inst/seg_cp_5/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N152 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N152_inv/gateop:L6 to hc595_ctrl_inst/data_cp_6/opit_0:CLK is routed by SRB.</data>
+        </row>
+        <row>
+            <data message="4">Design net hc595_ctrl_inst/N164 is routed by general path.</data>
+        </row>
+        <row>
+            <data message="6">Route-2036: The clock path from hc595_ctrl_inst/N164/gateop:L6 to hc595_ctrl_inst/data_cp_9/opit_0:CLK is routed by SRB.</data>
         </row>
     </table>
     <general_container id="pnr_settings">
@@ -3947,9 +3737,9 @@
                     <data>clkbufg_0/gopclkbufg</data>
                     <data>USCM_215_624</data>
                     <data>ntclkbufg_0</data>
-                    <data>273</data>
+                    <data>64</data>
                     <data>0</data>
-                    <data>external_clk_ibuf/opit_1</data>
+                    <data>clk_ibuf/opit_1</data>
                     <data>DI_TO_CLK</data>
                     <data>IOLHR_16_1080</data>
                 </row>

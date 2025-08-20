@@ -1,5 +1,5 @@
 define_attribute {p:led} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:led} {PAP_IO_LOC} {V22}
+define_attribute {p:led} {PAP_IO_LOC} {A20}
 define_attribute {p:led} {PAP_IO_VCCIO} {3.3}
 define_attribute {p:led} {PAP_IO_STANDARD} {LVCMOS33}
 define_attribute {p:led} {PAP_IO_DRIVE} {8}

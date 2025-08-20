@@ -393,3 +393,190 @@ Cable index 0:USB Cable II/3044374137353330
 [Debug] [2025-5-13 20:49:15] Log::Print : The done bit is 1
 [Debug] [2025-5-13 20:49:15] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
 [Info] [2025-5-13 20:49:49] /***************************End Configration***************************/
+[Info] [2025-8-19 16:28:09] /***************************Start Configuration***************************/
+[Info] [2025-8-19 16:28:09] Path: C:/pango/PDS_2022.2-SP6.4/bin
+[Info] [2025-8-19 16:28:09] Version: 146967
+[Info] [2025-8-19 16:28:10] Current Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar
+[Info] [2025-8-19 16:28:10] PDS Dir Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar
+[Info] [2025-8-19 16:28:12] Configuration is not connect with server. connect first then scan chain.
+[Debug] [2025-8-19 16:28:12] Client Local host name:DESKTOP-FLDUJ87
+[Debug] [2025-8-19 16:28:12] Client Local Address:172.6.1.36
+[Debug] [2025-8-19 16:28:12] Server Address:127.0.0.1, Port:65420
+[Debug] [2025-8-19 16:28:12] Log::Print : Connecting to server[127.0.0.1 : 65420].
+[Info] [2025-8-19 16:28:12] Connect OK, Server: 127.0.0.1  Port: 65420
+[Debug] [2025-8-19 16:28:12] Finish.
+[Info] [2025-8-19 16:28:12] Connect server succeeded
+[Debug] [2025-8-19 16:28:12] Send RPC:1
+[Debug] [2025-8-19 16:28:12] Send cmd [check version information:40004] OK
+[Debug] [2025-8-19 16:28:12] Send RPC:2
+[Debug] [2025-8-19 16:28:12] Send cmd [get_cable_paras:40010] OK
+[Debug] [2025-8-19 16:28:12] Begin to send initialize chain cmd...
+[Debug] [2025-8-19 16:28:12] Send RPC:3
+[Debug] [2025-8-19 16:28:12] Send cmd [Open config cable:20001] OK
+[Debug] [2025-8-19 16:28:12] End to send initialize chain cmd.
+[Debug] [2025-8-19 16:28:12] COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-8-19 16:28:12] Log::Print : Connect to server[127.0.0.1 : 65420] successfully.
+[Debug] [2025-8-19 16:28:12] Log::Print : COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-8-19 16:28:13] COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-8-19 16:28:13] Log::Print : The cable List : 
+Cable index 0:USB Cable II/3044374137353330 
+
+[Debug] [2025-8-19 16:28:13] Log::Print : COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-8-19 16:28:13] begin the exec of open cable cmd...
+[Debug] [2025-8-19 16:28:13] Begin to deal with chain from server...
+[Debug] [2025-8-19 16:28:13] Begin to set user chain...
+[Debug] [2025-8-19 16:28:13] End to set user chain.
+[Debug] [2025-8-19 16:28:13] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:13] End to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:13] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-8-19 16:28:13] Log::Print : PG2L100H
+[Debug] [2025-8-19 16:28:13] Log::Print : This device configure situation (done bit): 1
+[Info] [2025-8-19 16:28:14] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar/generate_bitstream/hdmi_top.sbit
+[Debug] [2025-8-19 16:28:14] begin to get device info from CFG file...
+[Debug] [2025-8-19 16:28:14] end to get device info from CFG file...
+[Debug] [2025-8-19 16:28:14] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:14] End to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:14] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:14] End to update graphic item and tree item ...
+[Debug] [2025-8-19 16:28:14] End to deal wiht chain from server.
+[Debug] [2025-8-19 16:28:14] end the exec of open cable cmd.
+[Debug] [2025-8-19 16:28:14] COMMAND[Open config cable] execute successfully, takes 2.4 secs.
+[Debug] [2025-8-19 16:28:14] Log::Print : COMMAND[Open config cable] execute successfully, takes 2.4 secs.
+[Debug] [2025-8-19 16:28:15] Begin to send programming cmd...
+[Debug] [2025-8-19 16:28:15] Send RPC:4
+[Debug] [2025-8-19 16:28:15] Begin to send program data.
+[Debug] [2025-8-19 16:28:15] End to send program data.
+[Debug] [2025-8-19 16:28:15] Send cmd [Program:20002] OK
+[Debug] [2025-8-19 16:28:15] The value of Progress is 6
+[Debug] [2025-8-19 16:28:16] The value of Progress is 10
+[Debug] [2025-8-19 16:28:16] The value of Progress is 15
+[Debug] [2025-8-19 16:28:16] The value of Progress is 20
+[Debug] [2025-8-19 16:28:16] The value of Progress is 25
+[Debug] [2025-8-19 16:28:16] The value of Progress is 30
+[Debug] [2025-8-19 16:28:16] The value of Progress is 35
+[Debug] [2025-8-19 16:28:16] The value of Progress is 40
+[Debug] [2025-8-19 16:28:17] The value of Progress is 45
+[Debug] [2025-8-19 16:28:17] The value of Progress is 50
+[Debug] [2025-8-19 16:28:17] The value of Progress is 55
+[Debug] [2025-8-19 16:28:17] The value of Progress is 60
+[Debug] [2025-8-19 16:28:17] The value of Progress is 65
+[Debug] [2025-8-19 16:28:17] The value of Progress is 70
+[Debug] [2025-8-19 16:28:18] The value of Progress is 75
+[Debug] [2025-8-19 16:28:18] The value of Progress is 80
+[Debug] [2025-8-19 16:28:18] The value of Progress is 85
+[Debug] [2025-8-19 16:28:18] The value of Progress is 90
+[Debug] [2025-8-19 16:28:18] The value of Progress is 95
+[Debug] [2025-8-19 16:28:18] The value of Progress is 100
+[Debug] [2025-8-19 16:28:19] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-8-19 16:28:19] End to send programming cmd.
+[Debug] [2025-8-19 16:28:19] Log::Print : The done bit is 1
+[Debug] [2025-8-19 16:28:19] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Info] [2025-8-19 16:51:33] /***************************End Configration***************************/
+[Info] [2025-8-19 21:25:36] /***************************Start Configuration***************************/
+[Info] [2025-8-19 21:25:36] Path: C:/pango/PDS_2022.2-SP6.4/bin
+[Info] [2025-8-19 21:25:36] Version: 146967
+[Info] [2025-8-19 21:25:37] Current Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar
+[Info] [2025-8-19 21:25:37] PDS Dir Path: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar
+[Info] [2025-8-19 21:25:39] Configuration is not connect with server. connect first then scan chain.
+[Debug] [2025-8-19 21:25:39] Client Local host name:DESKTOP-FLDUJ87
+[Debug] [2025-8-19 21:25:39] Client Local Address:172.6.1.36
+[Debug] [2025-8-19 21:25:39] Server Address:127.0.0.1, Port:65420
+[Debug] [2025-8-19 21:25:39] Log::Print : Connecting to server[127.0.0.1 : 65420].
+[Info] [2025-8-19 21:25:39] Connect OK, Server: 127.0.0.1  Port: 65420
+[Debug] [2025-8-19 21:25:39] Finish.
+[Info] [2025-8-19 21:25:39] Connect server succeeded
+[Debug] [2025-8-19 21:25:39] Send RPC:1
+[Debug] [2025-8-19 21:25:39] Send cmd [check version information:40004] OK
+[Debug] [2025-8-19 21:25:39] Send RPC:2
+[Debug] [2025-8-19 21:25:39] Send cmd [get_cable_paras:40010] OK
+[Debug] [2025-8-19 21:25:39] Begin to send initialize chain cmd...
+[Debug] [2025-8-19 21:25:39] Send RPC:3
+[Debug] [2025-8-19 21:25:39] Send cmd [Open config cable:20001] OK
+[Debug] [2025-8-19 21:25:39] End to send initialize chain cmd.
+[Debug] [2025-8-19 21:25:39] COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-8-19 21:25:39] Log::Print : Connect to server[127.0.0.1 : 65420] successfully.
+[Debug] [2025-8-19 21:25:39] Log::Print : COMMAND[check version information] execute successfully, takes 0.0 secs.
+[Debug] [2025-8-19 21:25:40] COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-8-19 21:25:40] Log::Print : The cable List : 
+Cable index 0:USB Cable II/3044374137353330 
+
+[Debug] [2025-8-19 21:25:40] Log::Print : COMMAND[get_cable_paras] execute successfully, takes 0.9 secs.
+[Debug] [2025-8-19 21:25:40] begin the exec of open cable cmd...
+[Debug] [2025-8-19 21:25:40] Begin to deal with chain from server...
+[Debug] [2025-8-19 21:25:40] Begin to set user chain...
+[Debug] [2025-8-19 21:25:40] End to set user chain.
+[Debug] [2025-8-19 21:25:40] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:40] End to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:40] Log::Print : PANGO USB CABLE II cable driver: D2XX DLL
+[Debug] [2025-8-19 21:25:40] Log::Print : PG2L100H
+[Debug] [2025-8-19 21:25:40] Log::Print : This device configure situation (done bit): 1
+[Info] [2025-8-19 21:25:41] set OpenLastPath: E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/06_hdmi/prj/hdmi_colorbar/generate_bitstream/hdmi_top.sbit
+[Debug] [2025-8-19 21:25:41] begin to get device info from CFG file...
+[Debug] [2025-8-19 21:25:41] end to get device info from CFG file...
+[Debug] [2025-8-19 21:25:41] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:41] End to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:41] Begin to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:41] End to update graphic item and tree item ...
+[Debug] [2025-8-19 21:25:41] End to deal wiht chain from server.
+[Debug] [2025-8-19 21:25:41] end the exec of open cable cmd.
+[Debug] [2025-8-19 21:25:41] COMMAND[Open config cable] execute successfully, takes 2.2 secs.
+[Debug] [2025-8-19 21:25:41] Log::Print : COMMAND[Open config cable] execute successfully, takes 2.2 secs.
+[Debug] [2025-8-19 21:25:42] Begin to send programming cmd...
+[Debug] [2025-8-19 21:25:42] Send RPC:4
+[Debug] [2025-8-19 21:25:42] Begin to send program data.
+[Debug] [2025-8-19 21:25:42] End to send program data.
+[Debug] [2025-8-19 21:25:42] Send cmd [Program:20002] OK
+[Debug] [2025-8-19 21:25:43] The value of Progress is 6
+[Debug] [2025-8-19 21:25:43] The value of Progress is 10
+[Debug] [2025-8-19 21:25:43] The value of Progress is 15
+[Debug] [2025-8-19 21:25:43] The value of Progress is 20
+[Debug] [2025-8-19 21:25:43] The value of Progress is 25
+[Debug] [2025-8-19 21:25:43] The value of Progress is 30
+[Debug] [2025-8-19 21:25:43] The value of Progress is 35
+[Debug] [2025-8-19 21:25:44] The value of Progress is 40
+[Debug] [2025-8-19 21:25:44] The value of Progress is 45
+[Debug] [2025-8-19 21:25:44] The value of Progress is 50
+[Debug] [2025-8-19 21:25:44] The value of Progress is 55
+[Debug] [2025-8-19 21:25:44] The value of Progress is 60
+[Debug] [2025-8-19 21:25:44] The value of Progress is 65
+[Debug] [2025-8-19 21:25:45] The value of Progress is 70
+[Debug] [2025-8-19 21:25:45] The value of Progress is 75
+[Debug] [2025-8-19 21:25:45] The value of Progress is 80
+[Debug] [2025-8-19 21:25:45] The value of Progress is 85
+[Debug] [2025-8-19 21:25:45] The value of Progress is 90
+[Debug] [2025-8-19 21:25:45] The value of Progress is 95
+[Debug] [2025-8-19 21:25:45] The value of Progress is 100
+[Debug] [2025-8-19 21:25:46] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-8-19 21:25:46] End to send programming cmd.
+[Debug] [2025-8-19 21:25:46] Log::Print : The done bit is 1
+[Debug] [2025-8-19 21:25:46] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-8-19 21:41:21] Begin to send programming cmd...
+[Debug] [2025-8-19 21:41:21] Send RPC:5
+[Debug] [2025-8-19 21:41:21] Begin to send program data.
+[Debug] [2025-8-19 21:41:21] End to send program data.
+[Debug] [2025-8-19 21:41:21] Send cmd [Program:20002] OK
+[Debug] [2025-8-19 21:41:21] The value of Progress is 6
+[Debug] [2025-8-19 21:41:21] The value of Progress is 10
+[Debug] [2025-8-19 21:41:21] The value of Progress is 15
+[Debug] [2025-8-19 21:41:22] The value of Progress is 20
+[Debug] [2025-8-19 21:41:22] The value of Progress is 25
+[Debug] [2025-8-19 21:41:22] The value of Progress is 30
+[Debug] [2025-8-19 21:41:22] The value of Progress is 35
+[Debug] [2025-8-19 21:41:22] The value of Progress is 40
+[Debug] [2025-8-19 21:41:22] The value of Progress is 45
+[Debug] [2025-8-19 21:41:23] The value of Progress is 50
+[Debug] [2025-8-19 21:41:23] The value of Progress is 55
+[Debug] [2025-8-19 21:41:23] The value of Progress is 60
+[Debug] [2025-8-19 21:41:23] The value of Progress is 65
+[Debug] [2025-8-19 21:41:23] The value of Progress is 70
+[Debug] [2025-8-19 21:41:23] The value of Progress is 75
+[Debug] [2025-8-19 21:41:23] The value of Progress is 80
+[Debug] [2025-8-19 21:41:24] The value of Progress is 85
+[Debug] [2025-8-19 21:41:24] The value of Progress is 90
+[Debug] [2025-8-19 21:41:24] The value of Progress is 95
+[Debug] [2025-8-19 21:41:24] The value of Progress is 100
+[Debug] [2025-8-19 21:41:24] COMMAND[Program] execute successfully, takes 3.6 secs.
+[Debug] [2025-8-19 21:41:24] End to send programming cmd.
+[Debug] [2025-8-19 21:41:24] Log::Print : The done bit is 1
+[Debug] [2025-8-19 21:41:24] Log::Print : COMMAND[Program] execute successfully, takes 3.6 secs.
+[Info] [2025-8-19 22:45:43] /***************************End Configration***************************/
