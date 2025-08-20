@@ -1,4 +1,6 @@
-module streaming_axi_slave(
+module streaming_axi_slave #(
+    parameter ID_WIDTH = 4
+)(
     input wire        clk,
     input wire        rstn,
 
@@ -24,35 +26,35 @@ module streaming_axi_slave(
 
     
     //AXI SLAVE interface
-    output logic         SLAVE_CLK          ,
-    output logic         SLAVE_RSTN         ,
-    input  logic [4-1:0] SLAVE_WR_ADDR_ID   ,
-    input  logic [31:0]  SLAVE_WR_ADDR      ,
-    input  logic [ 7:0]  SLAVE_WR_ADDR_LEN  ,
-    input  logic [ 1:0]  SLAVE_WR_ADDR_BURST,
-    input  logic         SLAVE_WR_ADDR_VALID,
-    output logic         SLAVE_WR_ADDR_READY,
-    input  logic [31:0]  SLAVE_WR_DATA      ,
-    input  logic [ 3:0]  SLAVE_WR_STRB      ,
-    input  logic         SLAVE_WR_DATA_LAST ,
-    input  logic         SLAVE_WR_DATA_VALID,
-    output logic         SLAVE_WR_DATA_READY,
-    output logic [4-1:0] SLAVE_WR_BACK_ID   ,
-    output logic [ 1:0]  SLAVE_WR_BACK_RESP ,
-    output logic         SLAVE_WR_BACK_VALID,
-    input  logic         SLAVE_WR_BACK_READY,
-    input  logic [4-1:0] SLAVE_RD_ADDR_ID   ,
-    input  logic [31:0]  SLAVE_RD_ADDR      ,
-    input  logic [ 7:0]  SLAVE_RD_ADDR_LEN  ,
-    input  logic [ 1:0]  SLAVE_RD_ADDR_BURST,
-    input  logic         SLAVE_RD_ADDR_VALID,
-    output logic         SLAVE_RD_ADDR_READY,
-    output logic [4-1:0] SLAVE_RD_BACK_ID   ,
-    output logic [31:0]  SLAVE_RD_DATA      ,
-    output logic [ 1:0]  SLAVE_RD_DATA_RESP ,
-    output logic         SLAVE_RD_DATA_LAST ,
-    output logic         SLAVE_RD_DATA_VALID,
-    input  logic         SLAVE_RD_DATA_READY);
+    output logic                SLAVE_CLK          ,
+    output logic                SLAVE_RSTN         ,
+    input  logic [ID_WIDTH-1:0] SLAVE_WR_ADDR_ID   ,
+    input  logic [31:0]         SLAVE_WR_ADDR      ,
+    input  logic [ 7:0]         SLAVE_WR_ADDR_LEN  ,
+    input  logic [ 1:0]         SLAVE_WR_ADDR_BURST,
+    input  logic                SLAVE_WR_ADDR_VALID,
+    output logic                SLAVE_WR_ADDR_READY,
+    input  logic [31:0]         SLAVE_WR_DATA      ,
+    input  logic [ 3:0]         SLAVE_WR_STRB      ,
+    input  logic                SLAVE_WR_DATA_LAST ,
+    input  logic                SLAVE_WR_DATA_VALID,
+    output logic                SLAVE_WR_DATA_READY,
+    output logic [ID_WIDTH-1:0] SLAVE_WR_BACK_ID   ,
+    output logic [ 1:0]         SLAVE_WR_BACK_RESP ,
+    output logic                SLAVE_WR_BACK_VALID,
+    input  logic                SLAVE_WR_BACK_READY,
+    input  logic [ID_WIDTH-1:0] SLAVE_RD_ADDR_ID   ,
+    input  logic [31:0]         SLAVE_RD_ADDR      ,
+    input  logic [ 7:0]         SLAVE_RD_ADDR_LEN  ,
+    input  logic [ 1:0]         SLAVE_RD_ADDR_BURST,
+    input  logic                SLAVE_RD_ADDR_VALID,
+    output logic                SLAVE_RD_ADDR_READY,
+    output logic [ID_WIDTH-1:0] SLAVE_RD_BACK_ID   ,
+    output logic [31:0]         SLAVE_RD_DATA      ,
+    output logic [ 1:0]         SLAVE_RD_DATA_RESP ,
+    output logic                SLAVE_RD_DATA_LAST ,
+    output logic                SLAVE_RD_DATA_VALID,
+    input  logic                SLAVE_RD_DATA_READY);
 
 assign SLAVE_CLK  = clk;
 assign SLAVE_RSTN = rstn;
@@ -78,7 +80,7 @@ localparam [31:0]
     ADDR_CAPTURE_HEIGHT_WIDTH   = 32'h0000_0028;
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;
+reg [ID_WIDTH-1:0] wr_addr_id;
 reg [31:0] wr_addr;
 reg [ 3:0] wr_addr_burst;
 reg        wr_transcript_error, wr_transcript_error_reg;
@@ -88,7 +90,7 @@ localparam ST_WR_IDLE = 2'b00, //写通道空闲
            ST_WR_DATA = 2'b01, //地址线握手成功，数据线通道开启
            ST_WR_RESP = 2'b10; //写响应
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;
+reg [ID_WIDTH-1:0] rd_addr_id;
 reg [31:0] rd_addr;
 reg [ 7:0] rd_addr_len;
 reg [ 3:0] rd_addr_burst;

@@ -4,6 +4,7 @@ module axi_udp_master #(
     parameter ADMIN_BOARD_IP  = {8'd192,8'd168,8'd0,8'd234}   ,
     parameter ADMIN_DES_MAC   = 48'h00_2B_67_09_FF_5E         ,
     parameter ADMIN_DES_IP    = {8'd169,8'd254,8'd103,8'd126} ,
+    parameter ID_WIDTH        = 2                             ,
     parameter RESET_ADDR      = 32'hF0F0F0F0 // Reset address
 )(
     input  wire        udp_in_rstn     , //连什么线？
@@ -26,46 +27,41 @@ module axi_udp_master #(
     output wire        rgmii_tx_ctl ,
     output wire [ 3:0] rgmii_txd    ,
 
-    output wire        ETH_MASTER_CLK          ,
-    output wire        ETH_MASTER_RSTN         ,
-    output wire [ 1:0] ETH_MASTER_WR_ADDR_ID   ,
-    output wire [31:0] ETH_MASTER_WR_ADDR      ,
-    output wire [ 7:0] ETH_MASTER_WR_ADDR_LEN  ,
-    output wire [ 1:0] ETH_MASTER_WR_ADDR_BURST,
-    output wire        ETH_MASTER_WR_ADDR_VALID,
-    input  wire        ETH_MASTER_WR_ADDR_READY,
+    output wire                ETH_MASTER_CLK          ,
+    output wire                ETH_MASTER_RSTN         ,
+    output wire [ID_WIDTH-1:0] ETH_MASTER_WR_ADDR_ID   ,
+    output wire [31:0]         ETH_MASTER_WR_ADDR      ,
+    output wire [ 7:0]         ETH_MASTER_WR_ADDR_LEN  ,
+    output wire [ 1:0]         ETH_MASTER_WR_ADDR_BURST,
+    output wire                ETH_MASTER_WR_ADDR_VALID,
+    input  wire                ETH_MASTER_WR_ADDR_READY,
 
-    output wire [31:0] ETH_MASTER_WR_DATA      ,
-    output wire [ 3:0] ETH_MASTER_WR_STRB      ,
-    output wire        ETH_MASTER_WR_DATA_LAST ,
-    output wire        ETH_MASTER_WR_DATA_VALID,
-    input  wire        ETH_MASTER_WR_DATA_READY,
+    output wire [31:0]         ETH_MASTER_WR_DATA      ,
+    output wire [ 3:0]         ETH_MASTER_WR_STRB      ,
+    output wire                ETH_MASTER_WR_DATA_LAST ,
+    output wire                ETH_MASTER_WR_DATA_VALID,
+    input  wire                ETH_MASTER_WR_DATA_READY,
 
-    input  wire [ 1:0] ETH_MASTER_WR_BACK_ID   ,
-    input  wire [ 1:0] ETH_MASTER_WR_BACK_RESP ,
-    input  wire        ETH_MASTER_WR_BACK_VALID,
-    output wire        ETH_MASTER_WR_BACK_READY,
+    input  wire [ID_WIDTH-1:0] ETH_MASTER_WR_BACK_ID   ,
+    input  wire [ 1:0]         ETH_MASTER_WR_BACK_RESP ,
+    input  wire                ETH_MASTER_WR_BACK_VALID,
+    output wire                ETH_MASTER_WR_BACK_READY,
 
-    output wire [ 1:0] ETH_MASTER_RD_ADDR_ID   ,
-    output wire [31:0] ETH_MASTER_RD_ADDR      ,
-    output wire [ 7:0] ETH_MASTER_RD_ADDR_LEN  ,
-    output wire [ 1:0] ETH_MASTER_RD_ADDR_BURST,
-    output wire        ETH_MASTER_RD_ADDR_VALID,
-    input  wire        ETH_MASTER_RD_ADDR_READY,
+    output wire [ID_WIDTH-1:0] ETH_MASTER_RD_ADDR_ID   ,
+    output wire [31:0]         ETH_MASTER_RD_ADDR      ,
+    output wire [ 7:0]         ETH_MASTER_RD_ADDR_LEN  ,
+    output wire [ 1:0]         ETH_MASTER_RD_ADDR_BURST,
+    output wire                ETH_MASTER_RD_ADDR_VALID,
+    input  wire                ETH_MASTER_RD_ADDR_READY,
 
-    input  wire [ 1:0] ETH_MASTER_RD_BACK_ID   ,
-    input  wire [31:0] ETH_MASTER_RD_DATA      ,
-    input  wire [ 1:0] ETH_MASTER_RD_DATA_RESP ,
-    input  wire        ETH_MASTER_RD_DATA_LAST ,
-    input  wire        ETH_MASTER_RD_DATA_VALID,
-    output wire        ETH_MASTER_RD_DATA_READY 
+    input  wire [ID_WIDTH-1:0] ETH_MASTER_RD_BACK_ID   ,
+    input  wire [31:0]         ETH_MASTER_RD_DATA      ,
+    input  wire [ 1:0]         ETH_MASTER_RD_DATA_RESP ,
+    input  wire                ETH_MASTER_RD_DATA_LAST ,
+    input  wire                ETH_MASTER_RD_DATA_VALID,
+    output wire                ETH_MASTER_RD_DATA_READY 
 );
 wire eth_rstn_sync;
-
-wire [31:0] des_ip    = (admin_mode) ? ((arp_valid)?(dec_ip         ):(ADMIN_DES_IP   )) : (eeprom_des_ip   );
-wire [47:0] des_mac   = (admin_mode) ? ((arp_valid)?(dec_mac        ):(ADMIN_DES_MAC  )) : (eeprom_des_mac  );
-wire [31:0] board_ip  = (admin_mode) ? ((arp_valid)?(ADMIN_BOARD_IP ):(ADMIN_BOARD_IP )) : (eeprom_board_ip );
-wire [47:0] board_mac = (admin_mode) ? ((arp_valid)?(ADMIN_BOARD_MAC):(ADMIN_BOARD_MAC)) : (eeprom_board_mac);
 
 wire            gmii_rx_clk     ;
 wire            gmii_rx_dv      ;
@@ -90,6 +86,7 @@ wire    [7:0]   gmii_txd_arp;
 wire    [47:0]  dec_mac;
 wire    [31:0]  dec_ip; 
 wire            arp_valid;
+wire            arp_had_recv;
 
 wire udp_tx_sel;
 wire udp_tx_req;
@@ -104,6 +101,11 @@ assign gmii_tx_en = arp_working ? gmii_tx_en_arp : gmii_tx_en_udp;
 assign gmii_txd   = arp_working ? gmii_txd_arp   : gmii_txd_udp;
 
 rstn_sync rstn_sync_eth(gmii_rx_clk, udp_in_rstn, eth_rstn_sync);
+
+wire [31:0] des_ip    = (admin_mode) ? ((arp_had_recv)?(dec_ip         ):(ADMIN_DES_IP   )) : (eeprom_des_ip   );
+wire [47:0] des_mac   = (admin_mode) ? ((arp_had_recv)?(dec_mac        ):(ADMIN_DES_MAC  )) : (eeprom_des_mac  );
+wire [31:0] board_ip  = (admin_mode) ? ((arp_had_recv)?(ADMIN_BOARD_IP ):(ADMIN_BOARD_IP )) : (eeprom_board_ip );
+wire [47:0] board_mac = (admin_mode) ? ((arp_had_recv)?(ADMIN_BOARD_MAC):(ADMIN_BOARD_MAC)) : (eeprom_board_mac);
 
 assign eth_rst_n = 1'b1; //暂时不使用复位信号
 //GMII接口与RGMII接口 互转
@@ -153,7 +155,10 @@ udp u_udp(
     .timestamp_rst (timestamp_rst   )
     );
 
-axi_udp_cmd #((RESET_ADDR))axi_udp_cmd_inst(
+axi_udp_cmd #(
+    .RESET_ADDR(RESET_ADDR),
+    .ID_WIDTH(ID_WIDTH)
+)axi_udp_cmd_inst(
     .gmii_rx_clk         (gmii_rx_clk         ),
     .rstn                (eth_rstn_sync       ),
     .SYSTEM_RESET        (SYSTEM_RESET        ),
@@ -221,6 +226,7 @@ arp arp_inst (
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
 
+    .arp_had_recv(arp_had_recv),
     .arp_valid(arp_valid)
   );
 

@@ -1,4 +1,6 @@
-module i2c_master_axi_slave (
+module i2c_master_axi_slave #(
+    parameter ID_WIDTH = 4 // ID width for AXI slave interface
+)(
     input  wire         clk,
     input  wire         rstn,
 
@@ -12,7 +14,7 @@ module i2c_master_axi_slave (
     
     output wire         SLAVE_CLK          ,
     output wire         SLAVE_RSTN         ,
-    input  wire [4-1:0] SLAVE_WR_ADDR_ID   ,
+    input  wire [ID_WIDTH-1:0] SLAVE_WR_ADDR_ID   ,
     input  wire [31:0]  SLAVE_WR_ADDR      ,
     input  wire [ 7:0]  SLAVE_WR_ADDR_LEN  ,
     input  wire [ 1:0]  SLAVE_WR_ADDR_BURST,
@@ -23,17 +25,17 @@ module i2c_master_axi_slave (
     input  wire         SLAVE_WR_DATA_LAST ,
     input  wire         SLAVE_WR_DATA_VALID,
     output  reg         SLAVE_WR_DATA_READY,
-    output wire [4-1:0] SLAVE_WR_BACK_ID   ,
+    output wire [ID_WIDTH-1:0] SLAVE_WR_BACK_ID   ,
     output wire [ 1:0]  SLAVE_WR_BACK_RESP ,
     output wire         SLAVE_WR_BACK_VALID,
     input  wire         SLAVE_WR_BACK_READY,
-    input  wire [4-1:0] SLAVE_RD_ADDR_ID   ,
+    input  wire [ID_WIDTH-1:0] SLAVE_RD_ADDR_ID   ,
     input  wire [31:0]  SLAVE_RD_ADDR      ,
     input  wire [ 7:0]  SLAVE_RD_ADDR_LEN  ,
     input  wire [ 1:0]  SLAVE_RD_ADDR_BURST,
     input  wire         SLAVE_RD_ADDR_VALID,
     output wire         SLAVE_RD_ADDR_READY,
-    output wire [4-1:0] SLAVE_RD_BACK_ID   ,
+    output wire [ID_WIDTH-1:0] SLAVE_RD_BACK_ID   ,
     output wire [31:0]  SLAVE_RD_DATA      ,
     output wire [ 1:0]  SLAVE_RD_DATA_RESP ,
     output wire         SLAVE_RD_DATA_LAST ,
@@ -89,7 +91,7 @@ wire       i2c_rd_fifo_rd_snapshot  ;
 wire       i2c_rd_fifo_rd_rollback  ;
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
+reg [ID_WIDTH-1:0] wr_addr_id;    // 写地址ID寄存器
 reg [31:0] wr_addr;       // 写地址寄存器
 reg [ 1:0] wr_addr_burst; // 写突发类型寄存器
 reg        wr_transcript_error, wr_transcript_error_reg; // 写传输错误标志及其寄存器
@@ -104,7 +106,7 @@ localparam ST_WR_IDLE = 3'b000, // 写通道空闲
            ST_WR_RESP = 3'b101; // 写响应
 
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;     // 读地址ID寄存器
+reg [ID_WIDTH-1:0] rd_addr_id;     // 读地址ID寄存器
 reg [31:0] rd_addr;        // 读地址寄存器
 reg [ 7:0] rd_addr_len;    // 读突发长度寄存器
 reg [ 1:0] rd_addr_burst;  // 读突发类型寄存器

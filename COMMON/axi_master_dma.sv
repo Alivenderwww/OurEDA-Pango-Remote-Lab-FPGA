@@ -1,6 +1,7 @@
 module axi_master_write_dma #(
     parameter RD_INTERFACE_NUM = 2,
-    parameter WR_INTERFACE_NUM = 1
+    parameter WR_INTERFACE_NUM = 1,
+    parameter ID_WIDTH         = 2
 )(
     input  logic [RD_INTERFACE_NUM-1:0] [31:0] START_WRITE_ADDR    ,
     input  logic [RD_INTERFACE_NUM-1:0] [31:0] END_WRITE_ADDR      ,
@@ -38,35 +39,35 @@ module axi_master_write_dma #(
     output logic [WR_INTERFACE_NUM-1:0]        wr_data_last        ,
 
     //AXI MASTER interface
-    output logic         MASTER_CLK          ,
-    output logic         MASTER_RSTN         ,
-    output logic [2-1:0] MASTER_WR_ADDR_ID   ,
-    output logic [31:0]  MASTER_WR_ADDR      ,
-    output logic [ 7:0]  MASTER_WR_ADDR_LEN  ,
-    output logic [ 1:0]  MASTER_WR_ADDR_BURST,
-    output logic         MASTER_WR_ADDR_VALID,
-    input  logic         MASTER_WR_ADDR_READY,
-    output logic [31:0]  MASTER_WR_DATA      ,
-    output logic [ 3:0]  MASTER_WR_STRB      ,
-    output logic         MASTER_WR_DATA_LAST ,
-    output logic         MASTER_WR_DATA_VALID,
-    input  logic         MASTER_WR_DATA_READY,
-    input  logic [2-1:0] MASTER_WR_BACK_ID   ,
-    input  logic [ 1:0]  MASTER_WR_BACK_RESP ,
-    input  logic         MASTER_WR_BACK_VALID,
-    output logic         MASTER_WR_BACK_READY,
-    output logic [2-1:0] MASTER_RD_ADDR_ID   ,
-    output logic [31:0]  MASTER_RD_ADDR      ,
-    output logic [ 7:0]  MASTER_RD_ADDR_LEN  ,
-    output logic [ 1:0]  MASTER_RD_ADDR_BURST,
-    output logic         MASTER_RD_ADDR_VALID,
-    input  logic         MASTER_RD_ADDR_READY,
-    input  logic [2-1:0] MASTER_RD_BACK_ID   ,
-    input  logic [31:0]  MASTER_RD_DATA      ,
-    input  logic [ 1:0]  MASTER_RD_DATA_RESP ,
-    input  logic         MASTER_RD_DATA_LAST ,
-    input  logic         MASTER_RD_DATA_VALID,
-    output logic         MASTER_RD_DATA_READY);
+    output logic                MASTER_CLK          ,
+    output logic                MASTER_RSTN         ,
+    output logic [ID_WIDTH-1:0] MASTER_WR_ADDR_ID   ,
+    output logic [31:0]         MASTER_WR_ADDR      ,
+    output logic [ 7:0]         MASTER_WR_ADDR_LEN  ,
+    output logic [ 1:0]         MASTER_WR_ADDR_BURST,
+    output logic                MASTER_WR_ADDR_VALID,
+    input  logic                MASTER_WR_ADDR_READY,
+    output logic [31:0]         MASTER_WR_DATA      ,
+    output logic [ 3:0]         MASTER_WR_STRB      ,
+    output logic                MASTER_WR_DATA_LAST ,
+    output logic                MASTER_WR_DATA_VALID,
+    input  logic                MASTER_WR_DATA_READY,
+    input  logic [ID_WIDTH-1:0] MASTER_WR_BACK_ID   ,
+    input  logic [ 1:0]         MASTER_WR_BACK_RESP ,
+    input  logic                MASTER_WR_BACK_VALID,
+    output logic                MASTER_WR_BACK_READY,
+    output logic [ID_WIDTH-1:0] MASTER_RD_ADDR_ID   ,
+    output logic [31:0]         MASTER_RD_ADDR      ,
+    output logic [ 7:0]         MASTER_RD_ADDR_LEN  ,
+    output logic [ 1:0]         MASTER_RD_ADDR_BURST,
+    output logic                MASTER_RD_ADDR_VALID,
+    input  logic                MASTER_RD_ADDR_READY,
+    input  logic [ID_WIDTH-1:0] MASTER_RD_BACK_ID   ,
+    input  logic [31:0]         MASTER_RD_DATA      ,
+    input  logic [ 1:0]         MASTER_RD_DATA_RESP ,
+    input  logic                MASTER_RD_DATA_LAST ,
+    input  logic                MASTER_RD_DATA_VALID,
+    output logic                MASTER_RD_DATA_READY);
 
 wire dma_rstn_sync;
 rstn_sync rstn_sync_ov(clk, rstn, dma_rstn_sync);
@@ -199,7 +200,7 @@ end
 
 always_comb begin: MASTER_WRITE_CHANNEL
     int comb_i;
-    MASTER_WR_ADDR_ID    = 0;
+    MASTER_WR_ADDR_ID    = 1;
     MASTER_WR_ADDR_BURST = 2'b01;
     MASTER_WR_STRB       = 4'b1111; //always write 32bit
     MASTER_WR_ADDR       = 0;

@@ -1,5 +1,6 @@
 module dso_axi_slave #(
-    parameter CLK_FS = 32'd50_000_000 // 基准时钟频率值
+    parameter CLK_FS = 32'd50_000_000, // 基准时钟频率值
+    parameter ID_WIDTH = 4 // AXI从机ID位宽
 )(
     input  wire         clk,
     input  wire         rstn,
@@ -9,35 +10,35 @@ module dso_axi_slave #(
     input  wire [7:0]   ad_data/* synthesis PAP_MARK_DEBUG="true" */,
 
     //axi slave interface
-    output wire         DSO_SLAVE_CLK          /* synthesis PAP_MARK_DEBUG="true" */,
-    output wire         DSO_SLAVE_RSTN         ,
-    input  wire [4-1:0] DSO_SLAVE_WR_ADDR_ID   ,
-    input  wire [31:0]  DSO_SLAVE_WR_ADDR      ,
-    input  wire [ 7:0]  DSO_SLAVE_WR_ADDR_LEN  ,
-    input  wire [ 1:0]  DSO_SLAVE_WR_ADDR_BURST,
-    input  wire         DSO_SLAVE_WR_ADDR_VALID,
-    output wire         DSO_SLAVE_WR_ADDR_READY,
-    input  wire [31:0]  DSO_SLAVE_WR_DATA      ,
-    input  wire [ 3:0]  DSO_SLAVE_WR_STRB      ,
-    input  wire         DSO_SLAVE_WR_DATA_LAST ,
-    input  wire         DSO_SLAVE_WR_DATA_VALID,
-    output  reg         DSO_SLAVE_WR_DATA_READY,
-    output wire [4-1:0] DSO_SLAVE_WR_BACK_ID   ,
-    output wire [ 1:0]  DSO_SLAVE_WR_BACK_RESP ,
-    output wire         DSO_SLAVE_WR_BACK_VALID,
-    input  wire         DSO_SLAVE_WR_BACK_READY,
-    input  wire [4-1:0] DSO_SLAVE_RD_ADDR_ID   ,
-    input  wire [31:0]  DSO_SLAVE_RD_ADDR      /* synthesis PAP_MARK_DEBUG="true" */,
-    input  wire [ 7:0]  DSO_SLAVE_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */,
-    input  wire [ 1:0]  DSO_SLAVE_RD_ADDR_BURST,
-    input  wire         DSO_SLAVE_RD_ADDR_VALID,
-    output wire         DSO_SLAVE_RD_ADDR_READY,
-    output wire [4-1:0] DSO_SLAVE_RD_BACK_ID   ,
-    output  reg [31:0]  DSO_SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */,
-    output wire [ 1:0]  DSO_SLAVE_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */,
-    output wire         DSO_SLAVE_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */,
-    output  reg         DSO_SLAVE_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */,
-    input  wire         DSO_SLAVE_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */
+    output wire                     DSO_SLAVE_CLK          /* synthesis PAP_MARK_DEBUG="true" */,
+    output wire                     DSO_SLAVE_RSTN         ,
+    input  wire [ID_WIDTH-1:0]      DSO_SLAVE_WR_ADDR_ID   ,
+    input  wire [31:0]              DSO_SLAVE_WR_ADDR      ,
+    input  wire [ 7:0]              DSO_SLAVE_WR_ADDR_LEN  ,
+    input  wire [ 1:0]              DSO_SLAVE_WR_ADDR_BURST,
+    input  wire                     DSO_SLAVE_WR_ADDR_VALID,
+    output wire                     DSO_SLAVE_WR_ADDR_READY,
+    input  wire [31:0]              DSO_SLAVE_WR_DATA      ,
+    input  wire [ 3:0]              DSO_SLAVE_WR_STRB      ,
+    input  wire                     DSO_SLAVE_WR_DATA_LAST ,
+    input  wire                     DSO_SLAVE_WR_DATA_VALID,
+    output  reg                     DSO_SLAVE_WR_DATA_READY,
+    output wire [ID_WIDTH-1:0]      DSO_SLAVE_WR_BACK_ID   ,
+    output wire [ 1:0]              DSO_SLAVE_WR_BACK_RESP ,
+    output wire                     DSO_SLAVE_WR_BACK_VALID,
+    input  wire                     DSO_SLAVE_WR_BACK_READY,
+    input  wire [ID_WIDTH-1:0]      DSO_SLAVE_RD_ADDR_ID   ,
+    input  wire [31:0]              DSO_SLAVE_RD_ADDR      /* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [ 7:0]              DSO_SLAVE_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire [ 1:0]              DSO_SLAVE_RD_ADDR_BURST,
+    input  wire                     DSO_SLAVE_RD_ADDR_VALID,
+    output wire                     DSO_SLAVE_RD_ADDR_READY,
+    output wire [ID_WIDTH-1:0]      DSO_SLAVE_RD_BACK_ID   ,
+    output  reg [31:0]              DSO_SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */,
+    output wire [ 1:0]              DSO_SLAVE_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */,
+    output wire                     DSO_SLAVE_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */,
+    output  reg                     DSO_SLAVE_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */,
+    input  wire                     DSO_SLAVE_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */
 );
 
 // 复位同步逻辑
@@ -98,7 +99,7 @@ wire wave_ready;
 wire [9:0] wave_trig_addr;
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
+reg [ID_WIDTH-1:0] wr_addr_id;    // 写地址ID寄存器
 reg [31:0] wr_addr;       // 写地址寄存器
 reg [ 1:0] wr_addr_burst; // 写突发类型寄存器
 reg        wr_transcript_error, wr_transcript_error_reg; // 写传输错误标志及其寄存器
@@ -110,7 +111,7 @@ localparam ST_WR_IDLE = 2'b00, // 写通道空闲
            ST_WR_RESP = 2'b10; // 写响应
 
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;     // 读地址ID寄存器
+reg [ID_WIDTH-1:0] rd_addr_id;     // 读地址ID寄存器
 reg [31:0] rd_addr;        // 读地址寄存器
 reg [ 7:0] rd_addr_len;    // 读突发长度寄存器
 reg [ 1:0] rd_addr_burst;  // 读突发类型寄存器

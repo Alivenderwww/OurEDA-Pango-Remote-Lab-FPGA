@@ -1,40 +1,41 @@
 module dds_slave#(
    parameter CHANNEL_NUM = 2, //共有2条输出通道，可并行输出2路波形。
-   parameter VERTICAL_RESOLUTION = 8 
+   parameter VERTICAL_RESOLUTION = 8 ,
+   parameter ID_WIDTH = 4 // AXI slave interface ID width
 )(
    input wire clk,
    input wire rstn,
 
    output wire [CHANNEL_NUM*(VERTICAL_RESOLUTION)-1:0] wave_out,
-   output logic             DDS_SLAVE_CLK          ,
-   output logic             DDS_SLAVE_RSTN         ,
-   input  logic [4-1:0]     DDS_SLAVE_WR_ADDR_ID   ,
-   input  logic [31:0]      DDS_SLAVE_WR_ADDR      ,
-   input  logic [ 7:0]      DDS_SLAVE_WR_ADDR_LEN  ,
-   input  logic [ 1:0]      DDS_SLAVE_WR_ADDR_BURST,
-   input  logic             DDS_SLAVE_WR_ADDR_VALID,
-   output logic             DDS_SLAVE_WR_ADDR_READY,
-   input  logic [31:0]      DDS_SLAVE_WR_DATA      ,
-   input  logic [ 3:0]      DDS_SLAVE_WR_STRB      ,
-   input  logic             DDS_SLAVE_WR_DATA_LAST ,
-   input  logic             DDS_SLAVE_WR_DATA_VALID,
-   output logic             DDS_SLAVE_WR_DATA_READY,
-   output logic [4-1:0]     DDS_SLAVE_WR_BACK_ID   ,
-   output logic [ 1:0]      DDS_SLAVE_WR_BACK_RESP ,
-   output logic             DDS_SLAVE_WR_BACK_VALID,
-   input  logic             DDS_SLAVE_WR_BACK_READY,
-   input  logic [4-1:0]     DDS_SLAVE_RD_ADDR_ID   ,
-   input  logic [31:0]      DDS_SLAVE_RD_ADDR      ,
-   input  logic [ 7:0]      DDS_SLAVE_RD_ADDR_LEN  ,
-   input  logic [ 1:0]      DDS_SLAVE_RD_ADDR_BURST,
-   input  logic             DDS_SLAVE_RD_ADDR_VALID,
-   output logic             DDS_SLAVE_RD_ADDR_READY,
-   output logic [4-1:0]     DDS_SLAVE_RD_BACK_ID   ,
-   output logic [31:0]      DDS_SLAVE_RD_DATA      ,
-   output logic [ 1:0]      DDS_SLAVE_RD_DATA_RESP ,
-   output logic             DDS_SLAVE_RD_DATA_LAST ,
-   output logic             DDS_SLAVE_RD_DATA_VALID,
-   input  logic             DDS_SLAVE_RD_DATA_READY
+   output logic                  DDS_SLAVE_CLK          ,
+   output logic                  DDS_SLAVE_RSTN         ,
+   input  logic [ID_WIDTH-1:0]   DDS_SLAVE_WR_ADDR_ID   ,
+   input  logic [31:0]           DDS_SLAVE_WR_ADDR      ,
+   input  logic [ 7:0]           DDS_SLAVE_WR_ADDR_LEN  ,
+   input  logic [ 1:0]           DDS_SLAVE_WR_ADDR_BURST,
+   input  logic                  DDS_SLAVE_WR_ADDR_VALID,
+   output logic                  DDS_SLAVE_WR_ADDR_READY,
+   input  logic [31:0]           DDS_SLAVE_WR_DATA      ,
+   input  logic [ 3:0]           DDS_SLAVE_WR_STRB      ,
+   input  logic                  DDS_SLAVE_WR_DATA_LAST ,
+   input  logic                  DDS_SLAVE_WR_DATA_VALID,
+   output logic                  DDS_SLAVE_WR_DATA_READY,
+   output logic [ID_WIDTH-1:0]   DDS_SLAVE_WR_BACK_ID   ,
+   output logic [ 1:0]           DDS_SLAVE_WR_BACK_RESP ,
+   output logic                  DDS_SLAVE_WR_BACK_VALID,
+   input  logic                  DDS_SLAVE_WR_BACK_READY,
+   input  logic [ID_WIDTH-1:0]   DDS_SLAVE_RD_ADDR_ID   ,
+   input  logic [31:0]           DDS_SLAVE_RD_ADDR      ,
+   input  logic [ 7:0]           DDS_SLAVE_RD_ADDR_LEN  ,
+   input  logic [ 1:0]           DDS_SLAVE_RD_ADDR_BURST,
+   input  logic                  DDS_SLAVE_RD_ADDR_VALID,
+   output logic                  DDS_SLAVE_RD_ADDR_READY,
+   output logic [ID_WIDTH-1:0]   DDS_SLAVE_RD_BACK_ID   ,
+   output logic [31:0]           DDS_SLAVE_RD_DATA      ,
+   output logic [ 1:0]           DDS_SLAVE_RD_DATA_RESP ,
+   output logic                  DDS_SLAVE_RD_DATA_LAST ,
+   output logic                  DDS_SLAVE_RD_DATA_VALID,
+   input  logic                  DDS_SLAVE_RD_DATA_READY
 );
 wire DDS_SLAVE_RSTN_SYNC;
 assign DDS_SLAVE_CLK = clk;
@@ -79,7 +80,7 @@ reg  [CHANNEL_NUM-1:0] dds_wr_enable;
 reg  [CHANNEL_NUM-1:0] dds_wr_valid;
 integer wave_channel, wave_select;
 
-reg  [ 3:0] wr_addr_id;   
+reg [ID_WIDTH-1:0] wr_addr_id;   
 reg  [31:0] wr_addr;
 reg  [ 1:0] wr_addr_burst;
 reg         wr_error_detect;
@@ -88,7 +89,7 @@ localparam ST_WR_IDLE = 2'b01,
            ST_WR_DATA = 2'b10,
            ST_WR_RESP = 2'b11;
 
-reg  [ 3:0] rd_addr_id;   
+reg [ID_WIDTH-1:0] rd_addr_id;   
 reg  [31:0] rd_addr;
 reg  [ 7:0] rd_addr_len;
 reg  [ 1:0] rd_addr_burst;

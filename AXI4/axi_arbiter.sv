@@ -16,9 +16,12 @@ module axi_master_arbiter #(
     input  wire                      BUS_RD_ADDR_READY,
     input  wire  [M_ID+M_WIDTH-1:0]  BUS_RD_BACK_ID,
     output logic [M_WIDTH-1:0]       wr_addr_master_sel,
+    output logic                     wr_addr_master_lock,
     output logic [M_WIDTH-1:0]       wr_data_master_sel,
+    output logic                     wr_data_master_lock,
     output logic [M_WIDTH-1:0]       wr_resp_master_sel,
     output logic [M_WIDTH-1:0]       rd_addr_master_sel,
+    output logic                     rd_addr_master_lock,
     output logic [M_WIDTH-1:0]       rd_data_master_sel
 );
 
@@ -27,6 +30,10 @@ reg        rd_addr_channel_lock;
 
 logic [M_WIDTH-1:0] cu_wr_master_sel;
 logic [M_WIDTH-1:0] cu_rd_addr_master_sel;
+
+assign wr_addr_master_lock = wr_channel_lock;
+assign wr_data_master_lock = wr_channel_lock;
+assign rd_addr_master_lock = rd_addr_channel_lock;
 
 /**************************写通道接口（包括写地址，写数据通道）**********************/
 localparam WR_IDLE = 1'b0;
@@ -114,12 +121,18 @@ module axi_slave_arbiter #(
     output logic [S_WIDTH-1:0]      wr_addr_slave_sel,
     output logic [S_WIDTH-1:0]      wr_data_slave_sel,
     output logic [S_WIDTH-1:0]      wr_resp_slave_sel,
+    output logic                    wr_resp_slave_lock,
     output logic [S_WIDTH-1:0]      rd_addr_slave_sel,
     output logic [S_WIDTH-1:0]      rd_data_slave_sel
 );
 
 reg wr_resp_lock;
 logic [S_WIDTH-1:0] cu_wr_resp_slave_sel;
+
+assign wr_resp_slave_lock = wr_resp_lock;
+assign rd_addr_slave_lock = 1'b0; //读地址通道不需要锁
+assign rd_data_slave_lock = 1'b0; //读数据通道不需要锁
+
 
 /**************************写通道接口（包括写地址，写数据通道）**********************/
 always_comb begin: wr_addr_slave

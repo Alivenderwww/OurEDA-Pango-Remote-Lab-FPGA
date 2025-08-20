@@ -3,9 +3,12 @@ module axi_master_switch #(
     parameter M_ID    = 2
 )(
     input wire [M_WIDTH-1:0] wr_addr_sel,
+    input wire               wr_addr_lock,
     input wire [M_WIDTH-1:0] wr_data_sel,
+    input wire               wr_data_lock,
     input wire [M_WIDTH-1:0] wr_resp_sel,
     input wire [M_WIDTH-1:0] rd_addr_sel,
+    input wire               rd_addr_lock,
     input wire [M_WIDTH-1:0] rd_data_sel,
     
     input  logic [(2**M_WIDTH-1):0] [M_ID-1:0]  MASTER_WR_ADDR_ID   ,
@@ -66,17 +69,17 @@ module axi_master_switch #(
 );
 
 for (genvar i=0; i<(2**M_WIDTH); i++) begin: AXI_MASTER_OUT
-    assign MASTER_WR_ADDR_READY[i] = (wr_addr_sel==i)?(BUS_WR_ADDR_READY):(0);
-    assign MASTER_WR_DATA_READY[i] = (wr_data_sel==i)?(BUS_WR_DATA_READY):(0);
-    assign MASTER_WR_BACK_ID   [i] = (wr_resp_sel==i)?(BUS_WR_BACK_ID[0+:M_ID]   ):(0);
-    assign MASTER_WR_BACK_RESP [i] = (wr_resp_sel==i)?(BUS_WR_BACK_RESP ):(0);
-    assign MASTER_WR_BACK_VALID[i] = (wr_resp_sel==i)?(BUS_WR_BACK_VALID):(0);
-    assign MASTER_RD_ADDR_READY[i] = (rd_addr_sel==i)?(BUS_RD_ADDR_READY):(0);
-    assign MASTER_RD_BACK_ID   [i] = (rd_data_sel==i)?(BUS_RD_BACK_ID[0+:M_ID]   ):(0);
-    assign MASTER_RD_DATA      [i] = (rd_data_sel==i)?(BUS_RD_DATA      ):(0);
-    assign MASTER_RD_DATA_RESP [i] = (rd_data_sel==i)?(BUS_RD_DATA_RESP ):(0);
-    assign MASTER_RD_DATA_LAST [i] = (rd_data_sel==i)?(BUS_RD_DATA_LAST ):(0);
-    assign MASTER_RD_DATA_VALID[i] = (rd_data_sel==i)?(BUS_RD_DATA_VALID):(0);
+    assign MASTER_WR_ADDR_READY[i] = ((wr_addr_sel==i))?(BUS_WR_ADDR_READY):(0);
+    assign MASTER_WR_DATA_READY[i] = ((wr_data_sel==i))?(BUS_WR_DATA_READY):(0);
+    assign MASTER_WR_BACK_ID   [i] = ((wr_resp_sel==i)               )?(BUS_WR_BACK_ID[0+:M_ID]   ):(0);
+    assign MASTER_WR_BACK_RESP [i] = ((wr_resp_sel==i)               )?(BUS_WR_BACK_RESP ):(0);
+    assign MASTER_WR_BACK_VALID[i] = ((wr_resp_sel==i)               )?(BUS_WR_BACK_VALID):(0);
+    assign MASTER_RD_ADDR_READY[i] = ((rd_addr_sel==i))?(BUS_RD_ADDR_READY):(0);
+    assign MASTER_RD_BACK_ID   [i] = ((rd_data_sel==i)               )?(BUS_RD_BACK_ID[0+:M_ID]   ):(0);
+    assign MASTER_RD_DATA      [i] = ((rd_data_sel==i)               )?(BUS_RD_DATA      ):(0);
+    assign MASTER_RD_DATA_RESP [i] = ((rd_data_sel==i)               )?(BUS_RD_DATA_RESP ):(0);
+    assign MASTER_RD_DATA_LAST [i] = ((rd_data_sel==i)               )?(BUS_RD_DATA_LAST ):(0);
+    assign MASTER_RD_DATA_VALID[i] = ((rd_data_sel==i)               )?(BUS_RD_DATA_VALID):(0);
 end
 
 always_comb begin: master_switch
@@ -136,6 +139,7 @@ module axi_slave_switch #(
     input wire [S_WIDTH-1:0] wr_addr_sel,
     input wire [S_WIDTH-1:0] wr_data_sel,
     input wire [S_WIDTH-1:0] wr_resp_sel,
+    input wire               wr_resp_lock,
     input wire [S_WIDTH-1:0] rd_addr_sel,
     input wire [S_WIDTH-1:0] rd_data_sel,
 
@@ -197,22 +201,22 @@ module axi_slave_switch #(
 );
 
 for (genvar i=0; i<2**S_WIDTH; i++) begin: AXI_SLAVE_OUT
-    assign SLAVE_WR_ADDR_ID   [i] = (wr_addr_sel==i)?(BUS_WR_ADDR_ID   ):(0);
-    assign SLAVE_WR_ADDR      [i] = (wr_addr_sel==i)?(BUS_WR_ADDR      ):(0);
-    assign SLAVE_WR_ADDR_LEN  [i] = (wr_addr_sel==i)?(BUS_WR_ADDR_LEN  ):(0);
-    assign SLAVE_WR_ADDR_BURST[i] = (wr_addr_sel==i)?(BUS_WR_ADDR_BURST):(0);
-    assign SLAVE_WR_ADDR_VALID[i] = (wr_addr_sel==i)?(BUS_WR_ADDR_VALID):(0);
-    assign SLAVE_WR_DATA      [i] = (wr_data_sel==i)?(BUS_WR_DATA      ):(0);
-    assign SLAVE_WR_STRB      [i] = (wr_data_sel==i)?(BUS_WR_STRB      ):(0);
-    assign SLAVE_WR_DATA_LAST [i] = (wr_data_sel==i)?(BUS_WR_DATA_LAST ):(0);
-    assign SLAVE_WR_DATA_VALID[i] = (wr_data_sel==i)?(BUS_WR_DATA_VALID):(0);
-    assign SLAVE_WR_BACK_READY[i] = (wr_resp_sel==i)?(BUS_WR_BACK_READY):(0);
-    assign SLAVE_RD_ADDR_ID   [i] = (rd_addr_sel==i)?(BUS_RD_ADDR_ID   ):(0);
-    assign SLAVE_RD_ADDR      [i] = (rd_addr_sel==i)?(BUS_RD_ADDR      ):(0);
-    assign SLAVE_RD_ADDR_LEN  [i] = (rd_addr_sel==i)?(BUS_RD_ADDR_LEN  ):(0);
-    assign SLAVE_RD_ADDR_BURST[i] = (rd_addr_sel==i)?(BUS_RD_ADDR_BURST):(0);
-    assign SLAVE_RD_ADDR_VALID[i] = (rd_addr_sel==i)?(BUS_RD_ADDR_VALID):(0);
-    assign SLAVE_RD_DATA_READY[i] = (rd_data_sel==i)?(BUS_RD_DATA_READY):(0);
+    assign SLAVE_WR_ADDR_ID   [i] = ((wr_addr_sel==i)               )?(BUS_WR_ADDR_ID   ):(0);
+    assign SLAVE_WR_ADDR      [i] = ((wr_addr_sel==i)               )?(BUS_WR_ADDR      ):(0);
+    assign SLAVE_WR_ADDR_LEN  [i] = ((wr_addr_sel==i)               )?(BUS_WR_ADDR_LEN  ):(0);
+    assign SLAVE_WR_ADDR_BURST[i] = ((wr_addr_sel==i)               )?(BUS_WR_ADDR_BURST):(0);
+    assign SLAVE_WR_ADDR_VALID[i] = ((wr_addr_sel==i)               )?(BUS_WR_ADDR_VALID):(0);
+    assign SLAVE_WR_DATA      [i] = ((wr_data_sel==i)               )?(BUS_WR_DATA      ):(0);
+    assign SLAVE_WR_STRB      [i] = ((wr_data_sel==i)               )?(BUS_WR_STRB      ):(0);
+    assign SLAVE_WR_DATA_LAST [i] = ((wr_data_sel==i)               )?(BUS_WR_DATA_LAST ):(0);
+    assign SLAVE_WR_DATA_VALID[i] = ((wr_data_sel==i)               )?(BUS_WR_DATA_VALID):(0);
+    assign SLAVE_WR_BACK_READY[i] = ((wr_resp_sel==i))?(BUS_WR_BACK_READY):(0);
+    assign SLAVE_RD_ADDR_ID   [i] = ((rd_addr_sel==i)               )?(BUS_RD_ADDR_ID   ):(0);
+    assign SLAVE_RD_ADDR      [i] = ((rd_addr_sel==i)               )?(BUS_RD_ADDR      ):(0);
+    assign SLAVE_RD_ADDR_LEN  [i] = ((rd_addr_sel==i)               )?(BUS_RD_ADDR_LEN  ):(0);
+    assign SLAVE_RD_ADDR_BURST[i] = ((rd_addr_sel==i)               )?(BUS_RD_ADDR_BURST):(0);
+    assign SLAVE_RD_ADDR_VALID[i] = ((rd_addr_sel==i)               )?(BUS_RD_ADDR_VALID):(0);
+    assign SLAVE_RD_DATA_READY[i] = ((rd_data_sel==i)               )?(BUS_RD_DATA_READY):(0);
 end
 
 always_comb begin: slave_switch

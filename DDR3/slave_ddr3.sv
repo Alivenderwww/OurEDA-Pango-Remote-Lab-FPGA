@@ -1,36 +1,38 @@
-module slave_ddr3 (
+module slave_ddr3 #(
+    parameter ID_WIDTH = 4
+)(
     //DDR时钟/复位/初始化接口
-    input wire     ddr_ref_clk            ,
-    input wire     rst_n                  ,
-    output         DDR_SLAVE_CLK          ,
-    output         DDR_SLAVE_RSTN         ,
-    input  [4-1:0] DDR_SLAVE_WR_ADDR_ID   ,
-    input  [31:0]  DDR_SLAVE_WR_ADDR      ,
-    input  [ 7:0]  DDR_SLAVE_WR_ADDR_LEN  ,
-    input  [ 1:0]  DDR_SLAVE_WR_ADDR_BURST,
-    input          DDR_SLAVE_WR_ADDR_VALID,
-    output         DDR_SLAVE_WR_ADDR_READY,
-    input  [31:0]  DDR_SLAVE_WR_DATA      ,
-    input  [ 3:0]  DDR_SLAVE_WR_STRB      ,
-    input          DDR_SLAVE_WR_DATA_LAST ,
-    input          DDR_SLAVE_WR_DATA_VALID,
-    output         DDR_SLAVE_WR_DATA_READY,
-    output [4-1:0] DDR_SLAVE_WR_BACK_ID   ,
-    output [ 1:0]  DDR_SLAVE_WR_BACK_RESP ,
-    output         DDR_SLAVE_WR_BACK_VALID,
-    input          DDR_SLAVE_WR_BACK_READY,
-    input  [4-1:0] DDR_SLAVE_RD_ADDR_ID   ,
-    input  [31:0]  DDR_SLAVE_RD_ADDR      ,
-    input  [ 7:0]  DDR_SLAVE_RD_ADDR_LEN  ,
-    input  [ 1:0]  DDR_SLAVE_RD_ADDR_BURST,
-    input          DDR_SLAVE_RD_ADDR_VALID,
-    output         DDR_SLAVE_RD_ADDR_READY,
-    output [4-1:0] DDR_SLAVE_RD_BACK_ID   ,
-    output [31:0]  DDR_SLAVE_RD_DATA      ,
-    output [ 1:0]  DDR_SLAVE_RD_DATA_RESP ,
-    output         DDR_SLAVE_RD_DATA_LAST ,
-    output         DDR_SLAVE_RD_DATA_VALID,
-    input          DDR_SLAVE_RD_DATA_READY,
+    input wire            ddr_ref_clk            ,
+    input wire            rst_n                  ,
+    output                DDR_SLAVE_CLK          ,
+    output                DDR_SLAVE_RSTN         ,
+    input  [ID_WIDTH-1:0] DDR_SLAVE_WR_ADDR_ID   ,
+    input  [31:0]         DDR_SLAVE_WR_ADDR      ,
+    input  [ 7:0]         DDR_SLAVE_WR_ADDR_LEN  ,
+    input  [ 1:0]         DDR_SLAVE_WR_ADDR_BURST,
+    input                 DDR_SLAVE_WR_ADDR_VALID,
+    output                DDR_SLAVE_WR_ADDR_READY,
+    input  [31:0]         DDR_SLAVE_WR_DATA      ,
+    input  [ 3:0]         DDR_SLAVE_WR_STRB      ,
+    input                 DDR_SLAVE_WR_DATA_LAST ,
+    input                 DDR_SLAVE_WR_DATA_VALID,
+    output                DDR_SLAVE_WR_DATA_READY,
+    output [ID_WIDTH-1:0] DDR_SLAVE_WR_BACK_ID   ,
+    output [ 1:0]         DDR_SLAVE_WR_BACK_RESP ,
+    output                DDR_SLAVE_WR_BACK_VALID,
+    input                 DDR_SLAVE_WR_BACK_READY,
+    input  [ID_WIDTH-1:0] DDR_SLAVE_RD_ADDR_ID   ,
+    input  [31:0]         DDR_SLAVE_RD_ADDR      ,
+    input  [ 7:0]         DDR_SLAVE_RD_ADDR_LEN  ,
+    input  [ 1:0]         DDR_SLAVE_RD_ADDR_BURST,
+    input                 DDR_SLAVE_RD_ADDR_VALID,
+    output                DDR_SLAVE_RD_ADDR_READY,
+    output [ID_WIDTH-1:0] DDR_SLAVE_RD_BACK_ID   ,
+    output [31:0]         DDR_SLAVE_RD_DATA      ,
+    output [ 1:0]         DDR_SLAVE_RD_DATA_RESP ,
+    output                DDR_SLAVE_RD_DATA_LAST ,
+    output                DDR_SLAVE_RD_DATA_VALID,
+    input                 DDR_SLAVE_RD_DATA_READY,
     
     //DDR-memory接口
     output wire         mem_rst_n    , //Memory复位
@@ -90,7 +92,9 @@ assign DDR_SLAVE_RSTN = (ddr_init_done);
 读DDR 一次不会请求读大于FIFO存储量的突发量。
 */
 
-ddr3_read ddr3_read_inst(
+ddr3_read #(
+    .ID_WIDTH(ID_WIDTH)
+)ddr3_read_inst(
     .clk                 (DDR_SLAVE_CLK           ),
     .rstn                (DDR_SLAVE_RSTN          ),
 
@@ -119,7 +123,9 @@ ddr3_read ddr3_read_inst(
     .READ_DATA_VALID     (READ_DATA_VALID     )
 );
 
-ddr3_write ddr3_write_inst(
+ddr3_write #(
+    .ID_WIDTH(ID_WIDTH)
+)ddr3_write_inst(
     .clk                 (DDR_SLAVE_CLK           ),
     .rstn                (DDR_SLAVE_RSTN          ),
     .SLAVE_WR_ADDR_ID    (DDR_SLAVE_WR_ADDR_ID    ),

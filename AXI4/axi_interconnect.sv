@@ -108,14 +108,22 @@ wire [S_WIDTH-1:0]  wr_resp_slave_sel;
 wire [S_WIDTH-1:0]  rd_addr_slave_sel;
 wire [S_WIDTH-1:0]  rd_data_slave_sel;
 
+wire                wr_addr_master_lock;
+wire				wr_data_master_lock;
+wire                wr_resp_slave_lock;
+wire 			    rd_addr_master_lock;
+
 axi_master_switch #(
 	.M_WIDTH (M_WIDTH),
 	.M_ID    (M_ID)
 )u_axi_master_switch(
 	.wr_addr_sel 	( wr_addr_master_sel),
+	.wr_addr_lock   ( wr_addr_master_lock),
 	.wr_data_sel 	( wr_data_master_sel),
+	.wr_data_lock 	( wr_data_master_lock),
 	.wr_resp_sel 	( wr_resp_master_sel),
 	.rd_addr_sel 	( rd_addr_master_sel),
+	.rd_addr_lock 	( rd_addr_master_lock),
 	.rd_data_sel 	( rd_data_master_sel),
 	.MASTER_WR_ADDR_ID   (M_WR_ADDR_ID   ),
 	.MASTER_WR_ADDR      (M_WR_ADDR      ),
@@ -180,6 +188,7 @@ axi_slave_switch #(
 	.wr_addr_sel 	( wr_addr_slave_sel ),
 	.wr_data_sel 	( wr_data_slave_sel ),
 	.wr_resp_sel 	( wr_resp_slave_sel ),
+	.wr_resp_lock 	( wr_resp_slave_lock ),
 	.rd_addr_sel 	( rd_addr_slave_sel ),
 	.rd_data_sel 	( rd_data_slave_sel ),
 	.SLAVE_WR_ADDR_ID    (S_WR_ADDR_ID   ),
@@ -256,9 +265,12 @@ axi_master_arbiter #(
     .BUS_RD_ADDR_READY		( B_RD_ADDR_READY	  ),
     .BUS_RD_BACK_ID			( B_RD_BACK_ID		  ),
 	.wr_addr_master_sel 	( wr_addr_master_sel  ),
+	.wr_addr_master_lock 	( wr_addr_master_lock ),
 	.wr_data_master_sel 	( wr_data_master_sel  ),
+	.wr_data_master_lock 	( wr_data_master_lock ),
 	.wr_resp_master_sel 	( wr_resp_master_sel  ),
 	.rd_addr_master_sel 	( rd_addr_master_sel  ),
+	.rd_addr_master_lock 	( rd_addr_master_lock ),
 	.rd_data_master_sel 	( rd_data_master_sel  )
 );
 
@@ -280,6 +292,7 @@ axi_slave_arbiter #(
 	.wr_addr_slave_sel 	( wr_addr_slave_sel  ),
 	.wr_data_slave_sel 	( wr_data_slave_sel  ),
 	.wr_resp_slave_sel 	( wr_resp_slave_sel  ),
+	.wr_resp_slave_lock ( wr_resp_slave_lock ),
 	.rd_addr_slave_sel 	( rd_addr_slave_sel  ),
 	.rd_data_slave_sel 	( rd_data_slave_sel  )
 );
