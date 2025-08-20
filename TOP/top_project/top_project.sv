@@ -1,13 +1,8 @@
 module top_project #(
     parameter ADMIN_BOARD_MAC     = {48'h12_34_56_78_9A_BC      }  ,
-    // parameter BOARD_MAC     = {48'h12_34_56_78_9A_aa      }  ,
-    parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0  8'd169,8'd254,8'd103,8'd006
-    // parameter BOARD_IP      = {8'd169,8'd254,8'd109,8'd005}  , //169.254.109.5  8'd169,8'd254,8'd103,8'd006
-    parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  , //00_2B_67_09_FF_5E
-    // parameter DES_MAC       = {48'h00_2B_67_09_FF_5E      }  , //00_2B_67_09_FF_5E
-    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}    //8'd169,8'd254,8'd103,8'd126
-    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
-    // parameter DES_IP        = {8'd169,8'd254,8'd103,8'd126}    //8'd169,8'd254,8'd103,8'd126
+    parameter ADMIN_BOARD_IP      = {8'd169,8'd254,8'd109,8'd000}  , //169.254.109.0
+    parameter ADMIN_DES_MAC       = {48'h84_47_09_4C_47_7C      }  ,
+    parameter ADMIN_DES_IP        = {8'd169,8'd254,8'd109,8'd183}
 )(
 //system io
 input  wire        external_clk ,
@@ -23,8 +18,6 @@ output wire [7:0]  da_data      ,
 //adc io
 output wire        ad_clk       ,
 input  wire [7:0]  ad_data      ,
-// analyzer io
-// input  wire [31:0] digital_in   ,
 //matrix control io
 output wire [3:0]  matrix_col   ,
 input  wire [3:0]  matrix_row   ,
@@ -91,6 +84,8 @@ inout  wire [4:0]  sw       ,
 inout  wire [2:0]  encoder_A,
 inout  wire [2:0]  encoder_B,
 inout  wire [1:0]  encoder_key,
+//digital io
+// input  wire [7:0]  digital_input,
 //ddrmem io
 output wire        mem_rst_n    ,
 output wire        mem_ck       ,
@@ -144,7 +139,8 @@ wire admin_mode;
 
 localparam M_WIDTH  = 2;
 localparam S_WIDTH  = 4;
-localparam M_ID     = 2;
+localparam M_ID     = 4;
+localparam S_ID     = M_ID + M_WIDTH;
 
 localparam [0:(2**M_WIDTH-1)]       M_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1};//M0 UDP需要, M1 摄像头数据传递，现在用50M不需要， M2是DMA，现在用50M不需要， M3 没用上，不需要
 localparam [0:(2**S_WIDTH-1)]       S_ASYNC_ON = {1'b1,1'b1,1'b1,1'b1, //
@@ -272,17 +268,52 @@ hdmi_i2c hdmi_i2c_inst(
  .sccb_sda  (ddc_sda     )  //SDA
 );
 
-
-reg [2:0] digital_in_delay;
 reg [31:0] digital_in;
-always @(posedge clk_10M or negedge BUS_RSTN) begin
-	if(~BUS_RSTN) digital_in <= 0;
-	else if(digital_in_delay == 3'b111) digital_in <= digital_in + 1;
-	else digital_in <= digital_in;
-end
-always @(posedge clk_10M or negedge BUS_RSTN) begin
-	if(~BUS_RSTN) digital_in_delay <= 0;
-	else digital_in_delay <= digital_in_delay + 1;
+always @(*) begin
+	digital_in[0] = matrix_row[0];
+	digital_in[1] = matrix_row[1];
+	digital_in[2] = matrix_row[2];
+	digital_in[3] = matrix_row[3];
+	digital_in[4] = matrix_col[0];
+	digital_in[5] = matrix_col[1];
+	digital_in[6] = matrix_col[2];
+	digital_in[7] = matrix_col[3];
+
+	digital_in[ 8] = sck;
+	digital_in[ 9] = rck;
+	digital_in[10] = ser;
+	digital_in[11] = sw[0];
+	digital_in[12] = sw[1];
+	digital_in[13] = sw[2];
+	digital_in[14] = sw[3];
+	digital_in[15] = sw[4];
+
+	digital_in[16] = encoder_A[0];
+	digital_in[17] = encoder_B[0];
+	digital_in[18] = encoder_key[0];
+	digital_in[19] = encoder_A[1];
+	digital_in[20] = encoder_B[1];
+	digital_in[21] = encoder_key[1];
+	digital_in[22] = encoder_A[2];
+	digital_in[23] = encoder_B[2];
+
+	// digital_in[24] = digital_input[0];
+	// digital_in[25] = digital_input[1];
+	// digital_in[26] = digital_input[2];
+	// digital_in[27] = digital_input[3];
+	// digital_in[28] = digital_input[4];
+	// digital_in[29] = digital_input[5];
+	// digital_in[30] = digital_input[6];
+	// digital_in[31] = digital_input[7];
+
+	digital_in[24] = 0;
+	digital_in[25] = 0;
+	digital_in[26] = 0;
+	digital_in[27] = 0;
+	digital_in[28] = 0;
+	digital_in[29] = 0;
+	digital_in[30] = 0;
+	digital_in[31] = 0;
 end
 
 axi_udp_master #(
@@ -290,7 +321,8 @@ axi_udp_master #(
 	.ADMIN_BOARD_IP  	(ADMIN_BOARD_IP ),
 	.ADMIN_DES_MAC   	(ADMIN_DES_MAC  ),
 	.ADMIN_DES_IP    	(ADMIN_DES_IP   ),
-	.RESET_ADDR         (32'hF0F0F0F0)
+	.RESET_ADDR         (32'hF0F0F0F0),
+	.ID_WIDTH		    (M_ID)
 )M0(
 	.udp_in_rstn                ( udp_in_rstn       ),
 	.eth_rst_n                  (                   ),
@@ -341,7 +373,8 @@ axi_udp_master #(
 );
 
 axi_master_initial_boot #(
-	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3])
+	.I2C_EEPROM_SLAVE_BASEADDR (START_ADDR[3]),
+	.ID_WIDTH				   (M_ID)
 )M1(
     .clk                  (clk_BUS           ),
     .rstn                 (sys_rstn          ),
@@ -379,7 +412,10 @@ axi_master_initial_boot #(
     .MASTER_RD_DATA_VALID (M_RD_DATA_VALID[1]),
     .MASTER_RD_DATA_READY (M_RD_DATA_READY[1]));
 
-streaming_axi_master_slave M2S10(
+streaming_axi_master_slave #(
+	.M_ID_WIDTH          (M_ID),
+	.S_ID_WIDTH          (S_ID)
+) M2S10(
 	.clk                  	( clk_BUS             ),
 	.rstn                 	( BUS_RSTN            ),
 
@@ -459,7 +495,9 @@ streaming_axi_master_slave M2S10(
 	.SLAVE_RD_DATA_READY  	( S_RD_DATA_READY   [10])
 );
 
-axi_master_default M3(
+axi_master_default #(
+	.ID_WIDTH		  (M_ID)
+)M3(
 	.clk                  	( clk_BUS             ),
 	.rstn                 	( sys_rstn            ),
 	.MASTER_CLK           	( M_CLK          [3]  ),
@@ -493,7 +531,9 @@ axi_master_default M3(
 	.MASTER_RD_DATA_READY 	( M_RD_DATA_READY[3]  )
 );
 
-slave_ddr3 S0(
+slave_ddr3 #(
+	.ID_WIDTH                (S_ID)
+)S0(
     .ddr_ref_clk             (clk_50M           ),
     .rst_n                   (ddr_rst_n         ),
     .DDR_SLAVE_CLK           (S_CLK          [0]),
@@ -542,7 +582,9 @@ slave_ddr3 S0(
     .mem_ba                  (mem_ba           )
 );
 
-JTAG_SLAVE S1(
+JTAG_SLAVE #(
+	.ID_WIDTH                 (S_ID)
+)S1(
     .clk                      (clk_25M           ),
     .rstn                     (jtag_rstn         ),
     .tck                      (tck               ),
@@ -589,7 +631,8 @@ remote_update_axi_slave #(
     .USER_BITSTREAM_CNT     (2'd3               ),
     .USER_BITSTREAM1_ADDR   (24'h3a_4000        ),
     .USER_BITSTREAM2_ADDR   (24'h74_2000        ),
-    .USER_BITSTREAM3_ADDR   (24'hae_0000        )
+    .USER_BITSTREAM3_ADDR   (24'hae_0000        ),
+	.ID_WIDTH               (S_ID               )
 )S2(
     .clk                 (clk_10M           ),
     .rstn                (ru_rstn           ),
@@ -628,7 +671,9 @@ remote_update_axi_slave #(
     .SLAVE_RD_DATA_READY (S_RD_DATA_READY[2])
 );
 
-i2c_master_axi_slave S3(
+i2c_master_axi_slave #(
+	.ID_WIDTH               (S_ID               )
+)S3(
 	.clk                 	( clk_BUS           ),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_eeprom        ),
@@ -669,8 +714,9 @@ i2c_master_axi_slave S3(
 );
 
 dds_slave #(
-    .CHANNEL_NUM(1),
-    .VERTICAL_RESOLUTION(8)
+    .CHANNEL_NUM				(1),
+    .VERTICAL_RESOLUTION		(8),
+	.ID_WIDTH               	(S_ID)
 )S4(
 	.clk                 	    ( da_clk            ),
 	.rstn                	    ( sys_rstn          ),
@@ -706,7 +752,9 @@ dds_slave #(
 	.DDS_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[4])
 );
 
-hsst_axi_slave  S5 (
+hsst_axi_slave #(
+	.ID_WIDTH                (S_ID)
+) S5 (
     .i_p_refckn_0           ( i_p_refckn_0      ),
     .i_p_refckp_0           ( i_p_refckp_0      ),
     .rstn                   ( sys_rstn          ),
@@ -742,7 +790,9 @@ hsst_axi_slave  S5 (
     .SLAVE_RD_DATA_READY    ( S_RD_DATA_READY[5])
   );
 
-i2c_master_general_axi_slave S6(
+i2c_master_general_axi_slave #(
+	.ID_WIDTH               (S_ID			   )
+)S6(
 	.clk                 	( clk_BUS          	),
 	.rstn                	( BUS_RSTN          ),
     .scl_in                 ( scl_camera        ),
@@ -793,7 +843,9 @@ wire [15:0]  	axi_slave_reset;
 wire [7:0]   	power_status;
 wire [7:0]   	power_reset;
 
-sys_status_axi_slave S7(
+sys_status_axi_slave #(
+	.ID_WIDTH                		(S_ID)
+)S7(
 	.clk                        	( clk_BUS              	),
 	.rstn                       	( BUS_RSTN              ),
 	.STATUS_SLAVE_CLK           	( S_CLK          [7]    ),
@@ -845,7 +897,8 @@ sys_status_axi_slave S7(
 );
 
 dso_axi_slave #(
-	.CLK_FS 	(32'd50_000_000)
+	.CLK_FS 	(32'd50_000_000),
+	.ID_WIDTH 	(S_ID)
 )S8(
 	.clk                     	( clk_50M           ),
 	.rstn                    	( BUS_RSTN          ),
@@ -882,11 +935,13 @@ dso_axi_slave #(
 	.DSO_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[8])
 );
 
-Analazer S9(
+Analazer #(
+	.ID_WIDTH                (S_ID)
+)S9(
 	.clk                          	( clk_BUS             ),
 	.rstn                         	( sys_rstn            ),
  	.rd_rstn                       	( rd_rstn_for_analyzer),
-	.digital_in                   	( 0),
+	.digital_in                   	( digital_in),
  	.rd_data_burst_valid			(rd_data_burst_valid_for_analyzer	),
 	.rd_data_burst_ready			(rd_data_burst_ready_for_analyzer	),
 	.rd_data_burst                  (rd_data_burst_for_analyzer			),
@@ -925,7 +980,9 @@ Analazer S9(
 	.ANALYZER_SLAVE_RD_DATA_READY 	( S_RD_DATA_READY[9]  )
 );
 
-led_display_in_axi_slave S11(
+led_display_in_axi_slave #(
+	.ID_WIDTH                (S_ID)
+)S11(
 	.clk 				(clk_50M          	),
 	.rstn 				(BUS_RSTN          	),
 	.sck				(sck				),
@@ -1112,7 +1169,7 @@ axi_bus #(
 	.START_ADDR 	( START_ADDR),
 	.END_ADDR   	( END_ADDR  ))
 u_axi_bus(
-	.BUS_CLK              	( clk_BUS         ),
+	.BUS_CLK              	( clk_BUS          ),
 	.BUS_RSTN             	( BUS_RSTN         ),
 	.MASTER_CLK           	( M_CLK            ),
 	.MASTER_RSTN          	( M_RSTN           ),
@@ -1176,48 +1233,14 @@ u_axi_bus(
 	.S_fifo_empty_flag    	( S_fifo_empty_flag)
 );
 
-
-// wire [15:0][7:0] data_in;
-// assign data_in[0]    = {3'b0,M_fifo_empty_flag[0]};
-// assign data_in[1]    = {3'b0,M_fifo_empty_flag[1]};
-// assign data_in[2]    = {3'b0,M_fifo_empty_flag[2]};
-// assign data_in[3]    = {3'b0,M_fifo_empty_flag[3]};
-// assign data_in[4]    = {3'b0,S_fifo_empty_flag[0]};
-// assign data_in[5]    = {3'b0,S_fifo_empty_flag[1]};
-// assign data_in[6]    = {3'b0,S_fifo_empty_flag[2]};
-// assign data_in[7]    = {3'b0,S_fifo_empty_flag[3]};
-// assign data_in[8]    = {udp_led};
-// assign data_in[9]    = 8'b00001111;
-// assign data_in[10]   = 8'b11110000;
-// assign data_in[11]   = 8'b00001111;
-// assign data_in[12]   = 8'b10101010;
-// assign data_in[13]   = 8'b01010101;
-// assign data_in[14]   = 8'b11110000;
-// assign data_in[15]   = 8'b00001111;
-
-assign led4 = {M_fifo_empty_flag[0][4], M_fifo_empty_flag[0][2], M_fifo_empty_flag[0][1], M_fifo_empty_flag[0][0]};
-//{wr_addr_fifo_rd_empty, rd_addr_fifo_rd_empty, wr_data_fifo_rd_empty, rd_data_fifo_rd_empty, wr_back_fifo_rd_empty}
-
-// led8_btn u_led8_btn(
-// 	.clk      	( clk_50M   ),
-// 	.rstn     	( sys_rstn  ),
-// 	.data_in  	( data_in   ),
-// 	.btn_up   	( btn[0]    ),
-// 	.btn_down 	( btn[1]    ),
-// 	.led      	(           ),
-// 	.led_n    	( led8      ),
-// 	.bcd      	( led4      ),
-// 	.bcd_n    	(           )
-// );
-
-// btn_led_boot_ctrl u_btn_led_boot_ctrl(
-// 	.clk        	( clk_50M     ),
-// 	.rstn       	( sys_rstn    ),
-// 	.btn        	( &btn        ),
-// 	.booting		( booting     ),
-// 	.admin_mode 	( admin_mode  )
-// 	// .led        	( led4        )
-// );
+btn_led_boot_ctrl u_btn_led_boot_ctrl(
+	.clk        	( clk_50M     ),
+	.rstn       	( sys_rstn    ),
+	.btn        	( &btn        ),
+	.booting		( booting     ),
+	.admin_mode 	( admin_mode  ),
+	.led        	( led4        )
+);
 
 
 endmodule

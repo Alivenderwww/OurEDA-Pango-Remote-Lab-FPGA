@@ -1,4 +1,6 @@
-module Analazer (
+module Analazer #(
+    parameter ID_WIDTH = 4
+)(
     input  wire clk,
     input  wire rstn,
     input  wire [32-1:0] digital_in, // 输入数字信号
@@ -12,35 +14,35 @@ module Analazer (
     output logic [31:0]      rd_data,
     output logic             rd_data_last,
 
-    output logic             ANALYZER_SLAVE_CLK          ,
-    output logic             ANALYZER_SLAVE_RSTN         ,
-    input  logic [4-1:0]     ANALYZER_SLAVE_WR_ADDR_ID   ,
-    input  logic [31:0]      ANALYZER_SLAVE_WR_ADDR      ,
-    input  logic [ 7:0]      ANALYZER_SLAVE_WR_ADDR_LEN  ,
-    input  logic [ 1:0]      ANALYZER_SLAVE_WR_ADDR_BURST,
-    input  logic             ANALYZER_SLAVE_WR_ADDR_VALID,
-    output logic             ANALYZER_SLAVE_WR_ADDR_READY,
-    input  logic [31:0]      ANALYZER_SLAVE_WR_DATA      ,
-    input  logic [ 3:0]      ANALYZER_SLAVE_WR_STRB      ,
-    input  logic             ANALYZER_SLAVE_WR_DATA_LAST ,
-    input  logic             ANALYZER_SLAVE_WR_DATA_VALID,
-    output logic             ANALYZER_SLAVE_WR_DATA_READY,
-    output logic [4-1:0]     ANALYZER_SLAVE_WR_BACK_ID   ,
-    output logic [ 1:0]      ANALYZER_SLAVE_WR_BACK_RESP ,
-    output logic             ANALYZER_SLAVE_WR_BACK_VALID,
-    input  logic             ANALYZER_SLAVE_WR_BACK_READY,
-    input  logic [4-1:0]     ANALYZER_SLAVE_RD_ADDR_ID   ,
-    input  logic [31:0]      ANALYZER_SLAVE_RD_ADDR      ,
-    input  logic [ 7:0]      ANALYZER_SLAVE_RD_ADDR_LEN  ,
-    input  logic [ 1:0]      ANALYZER_SLAVE_RD_ADDR_BURST,
-    input  logic             ANALYZER_SLAVE_RD_ADDR_VALID,
-    output logic             ANALYZER_SLAVE_RD_ADDR_READY,
-    output logic [4-1:0]     ANALYZER_SLAVE_RD_BACK_ID   ,
-    output logic [31:0]      ANALYZER_SLAVE_RD_DATA      ,
-    output logic [ 1:0]      ANALYZER_SLAVE_RD_DATA_RESP ,
-    output logic             ANALYZER_SLAVE_RD_DATA_LAST ,
-    output logic             ANALYZER_SLAVE_RD_DATA_VALID,
-    input  logic             ANALYZER_SLAVE_RD_DATA_READY
+    output logic                ANALYZER_SLAVE_CLK          ,
+    output logic                ANALYZER_SLAVE_RSTN         ,
+    input  logic [ID_WIDTH-1:0] ANALYZER_SLAVE_WR_ADDR_ID   ,
+    input  logic [31:0]         ANALYZER_SLAVE_WR_ADDR      ,
+    input  logic [ 7:0]         ANALYZER_SLAVE_WR_ADDR_LEN  ,
+    input  logic [ 1:0]         ANALYZER_SLAVE_WR_ADDR_BURST,
+    input  logic                ANALYZER_SLAVE_WR_ADDR_VALID,
+    output logic                ANALYZER_SLAVE_WR_ADDR_READY,
+    input  logic [31:0]         ANALYZER_SLAVE_WR_DATA      ,
+    input  logic [ 3:0]         ANALYZER_SLAVE_WR_STRB      ,
+    input  logic                ANALYZER_SLAVE_WR_DATA_LAST ,
+    input  logic                ANALYZER_SLAVE_WR_DATA_VALID,
+    output logic                ANALYZER_SLAVE_WR_DATA_READY,
+    output logic [ID_WIDTH-1:0] ANALYZER_SLAVE_WR_BACK_ID   ,
+    output logic [ 1:0]         ANALYZER_SLAVE_WR_BACK_RESP ,
+    output logic                ANALYZER_SLAVE_WR_BACK_VALID,
+    input  logic                ANALYZER_SLAVE_WR_BACK_READY,
+    input  logic [ID_WIDTH-1:0] ANALYZER_SLAVE_RD_ADDR_ID   ,
+    input  logic [31:0]         ANALYZER_SLAVE_RD_ADDR      ,
+    input  logic [ 7:0]         ANALYZER_SLAVE_RD_ADDR_LEN  ,
+    input  logic [ 1:0]         ANALYZER_SLAVE_RD_ADDR_BURST,
+    input  logic                ANALYZER_SLAVE_RD_ADDR_VALID,
+    output logic                ANALYZER_SLAVE_RD_ADDR_READY,
+    output logic [ID_WIDTH-1:0] ANALYZER_SLAVE_RD_BACK_ID   ,
+    output logic [31:0]         ANALYZER_SLAVE_RD_DATA      ,
+    output logic [ 1:0]         ANALYZER_SLAVE_RD_DATA_RESP ,
+    output logic                ANALYZER_SLAVE_RD_DATA_LAST ,
+    output logic                ANALYZER_SLAVE_RD_DATA_VALID,
+    input  logic                ANALYZER_SLAVE_RD_DATA_READY
 );
 /*
 0x0000_0000    R/W [ 0]      capture on:    置1开始等待捕获，0停止捕获。捕获到信号后该位自动清零。 
@@ -100,7 +102,7 @@ wire [32-1:0] multi_trig;
 reg [5:0] op[0:32-1]; // 触发操作符
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;
+reg [ID_WIDTH-1:0] wr_addr_id;
 reg [31:0] wr_addr;
 reg [ 3:0] wr_addr_burst;
 reg        wr_transcript_error, wr_transcript_error_reg;
@@ -114,7 +116,7 @@ localparam GLOBAL_AND = 2'b00, //全局与
            GLOBAL_NAND= 2'b10, //全局非与
            GLOBAL_NOR = 2'b11; //全局非或
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;
+reg [ID_WIDTH-1:0] rd_addr_id;
 reg [31:0] rd_addr;
 reg [ 7:0] rd_addr_len;
 reg [ 3:0] rd_addr_burst;

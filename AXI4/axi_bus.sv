@@ -129,10 +129,11 @@ wire [(2**S_WIDTH-1):0]                 	  S_B_RD_DATA_VALID;
 wire [(2**S_WIDTH-1):0]                 	  S_B_RD_DATA_READY;
 
 axi_clock_converter #(
-	.M_WIDTH 	( M_WIDTH  ),
-	.S_WIDTH 	( S_WIDTH  ),
+	.M_WIDTH 	( M_WIDTH    ),
+	.S_WIDTH 	( S_WIDTH    ),
     .M_ASYNC_ON ( M_ASYNC_ON ),
-    .S_ASYNC_ON ( S_ASYNC_ON ))
+    .S_ASYNC_ON ( S_ASYNC_ON ),
+    .M_ID       ( M_ID       ))
 u_axi_clock_converter(
 	.BUS_CLK           	(BUS_CLK             ),
 	.BUS_RSTN          	(BUS_RSTN            ),

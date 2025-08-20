@@ -1,4 +1,6 @@
-module JTAG_SLAVE (
+module JTAG_SLAVE #(
+    parameter ID_WIDTH = 4
+)(
     input wire clk,
     input wire rstn,
 
@@ -11,35 +13,35 @@ module JTAG_SLAVE (
     input  wire [3:0] matrix_key_row,
     output logic      lab_fpga_power_on,
 
-    output logic             JTAG_SLAVE_CLK          ,
-    output logic             JTAG_SLAVE_RSTN         ,
-    input  logic [4-1:0]     JTAG_SLAVE_WR_ADDR_ID   ,
-    input  logic [31:0]      JTAG_SLAVE_WR_ADDR      ,
-    input  logic [ 7:0]      JTAG_SLAVE_WR_ADDR_LEN  ,
-    input  logic [ 1:0]      JTAG_SLAVE_WR_ADDR_BURST,
-    input  logic             JTAG_SLAVE_WR_ADDR_VALID,
-    output logic             JTAG_SLAVE_WR_ADDR_READY,
-    input  logic [31:0]      JTAG_SLAVE_WR_DATA      ,
-    input  logic [ 3:0]      JTAG_SLAVE_WR_STRB      ,
-    input  logic             JTAG_SLAVE_WR_DATA_LAST ,
-    input  logic             JTAG_SLAVE_WR_DATA_VALID,
-    output logic             JTAG_SLAVE_WR_DATA_READY,
-    output logic [4-1:0]     JTAG_SLAVE_WR_BACK_ID   ,
-    output logic [ 1:0]      JTAG_SLAVE_WR_BACK_RESP ,
-    output logic             JTAG_SLAVE_WR_BACK_VALID,
-    input  logic             JTAG_SLAVE_WR_BACK_READY,
-    input  logic [4-1:0]     JTAG_SLAVE_RD_ADDR_ID   ,
-    input  logic [31:0]      JTAG_SLAVE_RD_ADDR      ,
-    input  logic [ 7:0]      JTAG_SLAVE_RD_ADDR_LEN  ,
-    input  logic [ 1:0]      JTAG_SLAVE_RD_ADDR_BURST,
-    input  logic             JTAG_SLAVE_RD_ADDR_VALID,
-    output logic             JTAG_SLAVE_RD_ADDR_READY,
-    output logic [4-1:0]     JTAG_SLAVE_RD_BACK_ID   ,
-    output logic [31:0]      JTAG_SLAVE_RD_DATA      ,
-    output logic [ 1:0]      JTAG_SLAVE_RD_DATA_RESP ,
-    output logic             JTAG_SLAVE_RD_DATA_LAST ,
-    output logic             JTAG_SLAVE_RD_DATA_VALID,
-    input  logic             JTAG_SLAVE_RD_DATA_READY
+    output logic                JTAG_SLAVE_CLK          ,
+    output logic                JTAG_SLAVE_RSTN         ,
+    input  logic [ID_WIDTH-1:0] JTAG_SLAVE_WR_ADDR_ID   ,
+    input  logic [31:0]         JTAG_SLAVE_WR_ADDR      ,
+    input  logic [ 7:0]         JTAG_SLAVE_WR_ADDR_LEN  ,
+    input  logic [ 1:0]         JTAG_SLAVE_WR_ADDR_BURST,
+    input  logic                JTAG_SLAVE_WR_ADDR_VALID,
+    output logic                JTAG_SLAVE_WR_ADDR_READY,
+    input  logic [31:0]         JTAG_SLAVE_WR_DATA      ,
+    input  logic [ 3:0]         JTAG_SLAVE_WR_STRB      ,
+    input  logic                JTAG_SLAVE_WR_DATA_LAST ,
+    input  logic                JTAG_SLAVE_WR_DATA_VALID,
+    output logic                JTAG_SLAVE_WR_DATA_READY,
+    output logic [ID_WIDTH-1:0] JTAG_SLAVE_WR_BACK_ID   ,
+    output logic [ 1:0]         JTAG_SLAVE_WR_BACK_RESP ,
+    output logic                JTAG_SLAVE_WR_BACK_VALID,
+    input  logic                JTAG_SLAVE_WR_BACK_READY,
+    input  logic [ID_WIDTH-1:0] JTAG_SLAVE_RD_ADDR_ID   ,
+    input  logic [31:0]         JTAG_SLAVE_RD_ADDR      ,
+    input  logic [ 7:0]         JTAG_SLAVE_RD_ADDR_LEN  ,
+    input  logic [ 1:0]         JTAG_SLAVE_RD_ADDR_BURST,
+    input  logic                JTAG_SLAVE_RD_ADDR_VALID,
+    output logic                JTAG_SLAVE_RD_ADDR_READY,
+    output logic [ID_WIDTH-1:0] JTAG_SLAVE_RD_BACK_ID   ,
+    output logic [31:0]         JTAG_SLAVE_RD_DATA      ,
+    output logic [ 1:0]         JTAG_SLAVE_RD_DATA_RESP ,
+    output logic                JTAG_SLAVE_RD_DATA_LAST ,
+    output logic                JTAG_SLAVE_RD_DATA_VALID,
+    input  logic                JTAG_SLAVE_RD_DATA_READY
 );
 
 /*
@@ -124,7 +126,7 @@ reg [15:0] tck_high_period, tck_low_period;
 */
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;
+reg [ID_WIDTH-1:0] wr_addr_id;
 reg [31:0] wr_addr;
 reg [ 3:0] wr_addr_burst;
 reg        wr_transcript_error, wr_transcript_error_reg;
@@ -135,7 +137,7 @@ localparam ST_WR_IDLE = 2'b00, //写通道空闲
            ST_WR_RESP = 2'b10; //写响应
 
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;
+reg [ID_WIDTH-1:0] rd_addr_id;
 reg [31:0] rd_addr;
 reg [ 7:0] rd_addr_len;
 reg [ 3:0] rd_addr_burst;

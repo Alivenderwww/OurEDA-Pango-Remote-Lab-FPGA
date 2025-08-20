@@ -1,24 +1,26 @@
-module ddr3_write(
-    input  wire         clk              ,
-    input  wire         rstn             ,
+module ddr3_write #(
+    parameter ID_WIDTH = 4
+)(
+    input  wire                clk              ,
+    input  wire                rstn             ,
 
-    input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
-    input  wire [27:0] SLAVE_WR_ADDR      , //写地址通道-地址
-    input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
-    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型-DDR不支持除增量传输外的其他突发类型，因此不接入逻辑
-    input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
-    output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
+    input  wire [27:0]         SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [ 7:0]         SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0]         SLAVE_WR_ADDR_BURST, //写地址通道-突发类型-DDR不支持除增量传输外的其他突发类型，因此不接入逻辑
+    input  wire                SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    output wire                SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
 
-    input  wire [31:0] SLAVE_WR_DATA      , //写数据通道-数据
-    input  wire [ 3:0] SLAVE_WR_STRB      , //写数据通道-选通
-    input  wire        SLAVE_WR_DATA_LAST , //写数据通道-last信号
-    input  wire        SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
-    output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+    input  wire [31:0]         SLAVE_WR_DATA      , //写数据通道-数据
+    input  wire [ 3:0]         SLAVE_WR_STRB      , //写数据通道-选通
+    input  wire                SLAVE_WR_DATA_LAST , //写数据通道-last信号
+    input  wire                SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire                SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
-    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应
-    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
-    input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
+    output wire [ID_WIDTH-1:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0]         SLAVE_WR_BACK_RESP , //写响应通道-响应
+    output wire                SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
+    input  wire                SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
         
     //转换前的总线
     output wire [ 27:0]  WRITE_ADDR      ,
@@ -71,7 +73,7 @@ reg          fifo_rd_first_need;
 reg [2:0] start_complete_num, end_complete_num;
 reg [27:0] wr_addr_load;
 reg [ 7:0] wr_len_load;
-reg [3:0] wr_id_load;
+reg [ID_WIDTH-1:0] wr_id_load;
 reg [9:0] wr_water_level;
 wire [27:0] wr_addr_end = SLAVE_WR_ADDR + SLAVE_WR_ADDR_LEN;
 reg flag_data_recv_over;
@@ -178,7 +180,7 @@ assign SLAVE_WR_BACK_VALID    = (ddr_rstn_sync) && (cu_wr_st == WRITE_ST_RESP);
 assign SLAVE_WR_BACK_RESP     = 2'b00;
 assign WRITE_ADDR             = wr_addr_load;
 assign WRITE_LEN              = (wr_len_load >= 15)?(4'b1111):(wr_len_load);
-assign WRITE_ID               = wr_id_load;
+assign WRITE_ID               = wr_id_load[3:0];
 assign WRITE_ADDR_VALID       = (ddr_rstn_sync) && (cu_wr_st == WRITE_ST_TRANS_ADDR);
 assign WRITE_DATA             = fifo_rd_data;
 assign WRITE_STRB             = fifo_rd_strb;

@@ -7,6 +7,7 @@ module arp_rx (
     input  wire [31:0]   board_ip,
     output wire [47:0]   dec_mac,
     output wire [31:0]   dec_ip,
+    output reg           arp_had_recv,
     output reg           arp_valid
 );
 reg  [15:0]  eth_type                  ; //以太网协议类型
@@ -30,6 +31,12 @@ localparam  st_arp_head   = 7'b000_1000; //接收IP首部
 localparam  st_arp_data   = 7'b001_0000; //接收UDP首部
 assign dec_mac = arp_rx_src_mac;
 assign dec_ip  = arp_rx_src_ip;
+
+always @(posedge gmii_rx_clk or negedge rstn) begin
+    if(~rstn) arp_had_recv <= 0;
+    else if(arp_valid) arp_had_recv <= 1;
+    else if(state == st_idle) arp_had_recv <= arp_had_recv;
+end
 
 reg [7:0] state;
 reg [7:0] next_state;

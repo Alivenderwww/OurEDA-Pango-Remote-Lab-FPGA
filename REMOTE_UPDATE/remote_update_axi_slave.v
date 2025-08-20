@@ -4,7 +4,8 @@ module remote_update_axi_slave #(
     parameter USER_BITSTREAM_CNT    = 2'd1              ,   // user bitstream count,2'd1,2'd2,2'd3 ----> there are 1/2/3 user bitstream in the flash,at least 1 bitstream.
     parameter USER_BITSTREAM1_ADDR  = 24'h3a_0000       ,   // user bitstream1 start address  ---> [6*4KB+2068KB(2065),32MB- 2068KB(2065)],4KB align  // 24'h20_b000
     parameter USER_BITSTREAM2_ADDR  = 24'h41_0000       ,   // user bitstream2 start address  ---> 24'h41_0000 
-    parameter USER_BITSTREAM3_ADDR  = 24'h61_5000           // user bitstream3 start address  ---> 24'h61_5000
+    parameter USER_BITSTREAM3_ADDR  = 24'h61_5000       ,   // user bitstream3 start address  ---> 24'h61_5000
+    parameter ID_WIDTH              = 4                    // AXI ID width, 4'b0000~4'b1111
 )(
     //___________________其他接口_____________________//
     input  wire        clk          , //10Mhz need
@@ -16,40 +17,40 @@ module remote_update_axi_slave #(
     output wire        spi_dq0      ,
 
     //___________________AXI接口_____________________//
-    output wire        SLAVE_CLK          , //向AXI总线提供的本主机时钟信号
-    output wire        SLAVE_RSTN         , //向AXI总线提供的本主机复位信号
+    output wire                 SLAVE_CLK          , //向AXI总线提供的本主机时钟信号
+    output wire                 SLAVE_RSTN         , //向AXI总线提供的本主机复位信号
 
-    input  wire [ 3:0] SLAVE_WR_ADDR_ID   , //写地址通道-ID
-    input  wire [31:0] SLAVE_WR_ADDR      , //写地址通道-地址
-    input  wire [ 7:0] SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
-    input  wire [ 1:0] SLAVE_WR_ADDR_BURST, //写地址通道-突发类型
-    input  wire        SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
-    output wire        SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0]  SLAVE_WR_ADDR_ID   , //写地址通道-ID
+    input  wire [31:0]          SLAVE_WR_ADDR      , //写地址通道-地址
+    input  wire [ 7:0]          SLAVE_WR_ADDR_LEN  , //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0]          SLAVE_WR_ADDR_BURST, //写地址通道-突发类型
+    input  wire                 SLAVE_WR_ADDR_VALID, //写地址通道-握手信号-有效
+    output wire                 SLAVE_WR_ADDR_READY, //写地址通道-握手信号-准备
 
-    input  wire [31:0] SLAVE_WR_DATA      , //写数据通道-数据
-    input  wire [ 3:0] SLAVE_WR_STRB      , //写数据通道-选通
-    input  wire        SLAVE_WR_DATA_LAST , //写数据通道-last信号
-    input  wire        SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
-    output wire        SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
+    input  wire [31:0]          SLAVE_WR_DATA      , //写数据通道-数据
+    input  wire [ 3:0]          SLAVE_WR_STRB      , //写数据通道-选通
+    input  wire                 SLAVE_WR_DATA_LAST , //写数据通道-last信号
+    input  wire                 SLAVE_WR_DATA_VALID, //写数据通道-握手信号-有效
+    output wire                 SLAVE_WR_DATA_READY, //写数据通道-握手信号-准备
 
-    output wire [ 3:0] SLAVE_WR_BACK_ID   , //写响应通道-ID
-    output wire [ 1:0] SLAVE_WR_BACK_RESP , //写响应通道-响应 //SLAVE_WR_DATA_LAST拉高的同时或者之后 00 01正常 10写错误 11地址有问题找不到从机
-    output wire        SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
-    input  wire        SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
+    output wire [ID_WIDTH-1:0]  SLAVE_WR_BACK_ID   , //写响应通道-ID
+    output wire [ 1:0]          SLAVE_WR_BACK_RESP , //写响应通道-响应 //SLAVE_WR_DATA_LAST拉高的同时或者之后 00 01正常 10写错误 11地址有问题找不到从机
+    output wire                 SLAVE_WR_BACK_VALID, //写响应通道-握手信号-有效
+    input  wire                 SLAVE_WR_BACK_READY, //写响应通道-握手信号-准备
 
-    input  wire [ 3:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
-    input  wire [31:0] SLAVE_RD_ADDR      , //读地址通道-地址
-    input  wire [ 7:0] SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
-    input  wire [ 1:0] SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。
-    input  wire        SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
-    output wire        SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0]  SLAVE_RD_ADDR_ID   , //读地址通道-ID
+    input  wire [31:0]          SLAVE_RD_ADDR      , //读地址通道-地址
+    input  wire [ 7:0]          SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0]          SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。
+    input  wire                 SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
+    output wire                 SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
 
-    output wire [ 3:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
-    output wire [31:0] SLAVE_RD_DATA      , //读数据通道-数据
-    output wire [ 1:0] SLAVE_RD_DATA_RESP , //读数据通道-响应
-    output wire        SLAVE_RD_DATA_LAST , //读数据通道-last信号
-    output wire        SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
-    input  wire        SLAVE_RD_DATA_READY  //读数据通道-握手信号-准备
+    output wire [ID_WIDTH-1:0]  SLAVE_RD_BACK_ID   , //读数据通道-ID
+    output wire [31:0]          SLAVE_RD_DATA      , //读数据通道-数据
+    output wire [ 1:0]          SLAVE_RD_DATA_RESP , //读数据通道-响应
+    output wire                 SLAVE_RD_DATA_LAST , //读数据通道-last信号
+    output wire                 SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
+    input  wire                 SLAVE_RD_DATA_READY  //读数据通道-握手信号-准备
 );
 
 
@@ -107,7 +108,8 @@ rstn_sync ru_top_rstn_sync(clk,rstn,RU_RSTN_SYNC);
 //--------------------------------------------------------------------------
 data_ctrl_slave
 #(
-    .FPGA_VERSION               (FPGA_VERSION               )
+    .FPGA_VERSION               (FPGA_VERSION               ),
+    .ID_WIDTH                   (ID_WIDTH                   )
 )data_ctrl_master_inst(
     .clk                        (clk                    ),
     .rstn                       (RU_RSTN_SYNC           ),

@@ -1,5 +1,6 @@
 module axi_udp_cmd  #(
-    parameter RESET_ADDR = 32'h0000_0000 //复位地址
+    parameter RESET_ADDR = 32'h0000_0000,//复位地址
+    parameter ID_WIDTH = 2 //ID的位宽
 )(
     input  wire        gmii_rx_clk         /* synthesis PAP_MARK_DEBUG="true" */,//125M
     input  wire        rstn                ,
@@ -10,37 +11,37 @@ module axi_udp_cmd  #(
     output wire        MASTER_CLK          , //向AXI总线提供的本主机时钟信号
     output wire        MASTER_RSTN         , //向AXI总线提供的本主机复位信号
 
-    output wire [ 1:0] MASTER_WR_ADDR_ID   /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-ID
-    output wire [31:0] MASTER_WR_ADDR      /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-地址
-    output wire [ 7:0] MASTER_WR_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
-    output wire [ 1:0] MASTER_WR_ADDR_BURST/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-突发类型
-    output reg         MASTER_WR_ADDR_VALID/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-握手信号-有效
-    input  wire        MASTER_WR_ADDR_READY/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-握手信号-准备
+    output wire [ID_WIDTH-1:0] MASTER_WR_ADDR_ID   /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-ID
+    output wire [31:0]         MASTER_WR_ADDR      /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-地址
+    output wire [ 7:0]         MASTER_WR_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-突发长度-最小为0（1突发），最大为255（256突发）
+    output wire [ 1:0]         MASTER_WR_ADDR_BURST/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-突发类型
+    output reg                 MASTER_WR_ADDR_VALID/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-握手信号-有效
+    input  wire                MASTER_WR_ADDR_READY/* synthesis PAP_MARK_DEBUG="true" */, //写地址通道-握手信号-准备
 
-    output wire [31:0] MASTER_WR_DATA      /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-数据
-    output reg  [ 3:0] MASTER_WR_STRB      /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-选通
-    output wire        MASTER_WR_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-last信号
-    output wire        MASTER_WR_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-握手信号-有效
-    input  wire        MASTER_WR_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-握手信号-准备
+    output wire [31:0]         MASTER_WR_DATA      /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-数据
+    output reg  [ 3:0]         MASTER_WR_STRB      /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-选通
+    output wire                MASTER_WR_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-last信号
+    output wire                MASTER_WR_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-握手信号-有效
+    input  wire                MASTER_WR_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //写数据通道-握手信号-准备
 
-    input  wire [ 1:0] MASTER_WR_BACK_ID    /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-ID
-    input  wire [ 1:0] MASTER_WR_BACK_RESP  /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-响应
-    input  wire        MASTER_WR_BACK_VALID /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-有效
-    output reg         MASTER_WR_BACK_READY /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0] MASTER_WR_BACK_ID    /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-ID
+    input  wire [ 1:0]         MASTER_WR_BACK_RESP  /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-响应
+    input  wire                MASTER_WR_BACK_VALID /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-有效
+    output reg                 MASTER_WR_BACK_READY /* synthesis PAP_MARK_DEBUG="true" */, //写响应通道-握手信号-准备
 
-    output wire [ 1:0] MASTER_RD_ADDR_ID   /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-ID
-    output wire [31:0] MASTER_RD_ADDR      /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-地址
-    output wire [ 7:0] MASTER_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
-    output wire [ 1:0] MASTER_RD_ADDR_BURST/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-突发类型。
-    output reg         MASTER_RD_ADDR_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-握手信号-有效
-    input  wire        MASTER_RD_ADDR_READY/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-握手信号-准备
+    output wire [ID_WIDTH-1:0] MASTER_RD_ADDR_ID   /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-ID
+    output wire [31:0]         MASTER_RD_ADDR      /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-地址
+    output wire [ 7:0]         MASTER_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
+    output wire [ 1:0]         MASTER_RD_ADDR_BURST/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-突发类型。
+    output reg                 MASTER_RD_ADDR_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-握手信号-有效
+    input  wire                MASTER_RD_ADDR_READY/* synthesis PAP_MARK_DEBUG="true" */, //读地址通道-握手信号-准备
 
-    input  wire [ 1:0] MASTER_RD_BACK_ID   /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-ID
-    input  wire [31:0] MASTER_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-数据
-    input  wire [ 1:0] MASTER_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-响应
-    input  wire        MASTER_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-last信号
-    input  wire        MASTER_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-有效
-    output reg         MASTER_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0] MASTER_RD_BACK_ID   /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-ID
+    input  wire [31:0]         MASTER_RD_DATA      /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-数据
+    input  wire [ 1:0]         MASTER_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-响应
+    input  wire                MASTER_RD_DATA_LAST /* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-last信号
+    input  wire                MASTER_RD_DATA_VALID/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-有效
+    output reg                 MASTER_RD_DATA_READY/* synthesis PAP_MARK_DEBUG="true" */, //读数据通道-握手信号-准备
     //___________________UDP接口_____________________//
     input  wire        udp_rx_done    /* synthesis PAP_MARK_DEBUG="true" */,
     input  wire [31:0] udp_rx_data    /* synthesis PAP_MARK_DEBUG="true" */,
@@ -326,7 +327,7 @@ udp_cmd_fifo u_sync_fifo_512x33b_cmd (
 //*****************************axi_wr_addr*******************************//
 //******************************************************************//
 //wraddr //如果地址fifo非空，并且valid为低，那么取出数据使能，等待一个时钟周期，取出数据，拉高valid，握手成功拉低valid
-assign MASTER_WR_ADDR_ID    = wraddr_fifo_rd_data[53:52];
+assign MASTER_WR_ADDR_ID    = wraddr_fifo_rd_data[32+:ID_WIDTH];
 assign MASTER_WR_ADDR       = wraddr_fifo_rd_data[31: 0];
 assign MASTER_WR_ADDR_LEN   = wraddr_fifo_rd_data[47:40];
 assign MASTER_WR_ADDR_BURST = wraddr_fifo_rd_data[55:54];
@@ -373,10 +374,10 @@ wr_addr_fifo u_sync_fifo_512x64b_wraddr (
 //******************************************************************//
 //*****************************axi_rd_addr**************************//
 //******************************************************************//
-assign MASTER_RD_ADDR_ID    = rdaddr_fifo_rd_data[53:52];
+assign MASTER_RD_ADDR_ID    = rdaddr_fifo_rd_data[32+:ID_WIDTH];
 assign MASTER_RD_ADDR       = rdaddr_fifo_rd_data[31: 0];
 assign MASTER_RD_ADDR_LEN   = rdaddr_fifo_rd_data[47:40];
-assign MASTER_RD_ADDR_BURST = rdaddr_fifo_rd_data[55:54];
+assign MASTER_RD_ADDR_BURST = rdaddr_fifo_rd_data[53:52];
 
 always @(posedge gmii_rx_clk ) begin
     if(~rstn) begin
@@ -431,7 +432,7 @@ always @(posedge gmii_rx_clk ) begin
     else if(~wrback_fifo_full) begin
         MASTER_WR_BACK_READY <= 1;
         if(MASTER_WR_BACK_READY && MASTER_WR_BACK_VALID) begin
-            wrback_fifo_wr_data <= {8'hf0,6'b000000,MASTER_WR_BACK_ID,6'b000000,MASTER_WR_BACK_RESP,8'h00};
+            wrback_fifo_wr_data <= {8'hf0,{(8-ID_WIDTH){1'b0}},MASTER_WR_BACK_ID,6'b000000,MASTER_WR_BACK_RESP,8'h00};
             wrback_fifo_wr_en <= 1;
         end
         else begin
@@ -552,7 +553,7 @@ always @(posedge gmii_rx_clk ) begin
     end
     else if(MASTER_RD_DATA_LAST && MASTER_RD_DATA_VALID && MASTER_RD_DATA_READY && rddata_fifo_rd_cnt == 1)begin
         MASTER_RD_DATA_READY <= 0;
-        rddata_head <= {8'h0F,6'b000000,MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00};
+        rddata_head <= {8'h0F,{(8-ID_WIDTH){1'b0}},MASTER_RD_BACK_ID,6'b000000,MASTER_RD_DATA_RESP,8'h00};
         rddata_fifo_rd_cnt <= rddata_fifo_rd_cnt + 1;
         rddata_tx_start_req <= 1;
     end

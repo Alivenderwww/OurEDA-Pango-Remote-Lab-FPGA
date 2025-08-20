@@ -19,6 +19,7 @@ module arp (
     output      [47:0]   dec_mac     ,
     output      [31:0]   dec_ip      ,
 
+    output               arp_had_recv,
     output               arp_valid 
 );
 
@@ -40,7 +41,8 @@ arp_rx arp_rx_inst (
     .board_ip(board_ip),
     .dec_mac(dec_mac),
     .dec_ip(dec_ip),
-    .arp_valid(arp_valid)
+    .arp_valid(arp_valid),
+    .arp_had_recv(arp_had_recv)
   );
 
 arp_tx arp_tx_inst (

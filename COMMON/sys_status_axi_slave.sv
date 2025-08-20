@@ -1,4 +1,6 @@
-module sys_status_axi_slave (
+module sys_status_axi_slave #(
+    parameter ID_WIDTH = 4
+)(
     // 时钟和复位信号
     input                clk                       , // 系统时钟
     input                rstn                      , // 系统复位，低电平有效
@@ -6,41 +8,41 @@ module sys_status_axi_slave (
     output logic         STATUS_SLAVE_RSTN         , // AXI从机复位输出
     
     // AXI写地址通道信号
-    input  logic [4-1:0] STATUS_SLAVE_WR_ADDR_ID   , // 写地址ID
-    input  logic [31:0]  STATUS_SLAVE_WR_ADDR      , // 写地址
-    input  logic [ 7:0]  STATUS_SLAVE_WR_ADDR_LEN  , // 突发传输长度
-    input  logic [ 1:0]  STATUS_SLAVE_WR_ADDR_BURST, // 突发类型
-    input  logic         STATUS_SLAVE_WR_ADDR_VALID, // 写地址有效
-    output logic         STATUS_SLAVE_WR_ADDR_READY, // 写地址就绪
+    input  logic [ID_WIDTH-1:0]     STATUS_SLAVE_WR_ADDR_ID   , // 写地址ID
+    input  logic [31:0]             STATUS_SLAVE_WR_ADDR      , // 写地址
+    input  logic [ 7:0]             STATUS_SLAVE_WR_ADDR_LEN  , // 突发传输长度
+    input  logic [ 1:0]             STATUS_SLAVE_WR_ADDR_BURST, // 突发类型
+    input  logic                    STATUS_SLAVE_WR_ADDR_VALID, // 写地址有效
+    output logic                    STATUS_SLAVE_WR_ADDR_READY, // 写地址就绪
     
     // AXI写数据通道信号
-    input  logic [31:0]  STATUS_SLAVE_WR_DATA      , // 写数据
-    input  logic [ 3:0]  STATUS_SLAVE_WR_STRB      , // 写数据字节选通
-    input  logic         STATUS_SLAVE_WR_DATA_LAST , // 最后一个数据
-    input  logic         STATUS_SLAVE_WR_DATA_VALID, // 写数据有效
-    output logic         STATUS_SLAVE_WR_DATA_READY, // 写数据就绪
+    input  logic [31:0]             STATUS_SLAVE_WR_DATA      , // 写数据
+    input  logic [ 3:0]             STATUS_SLAVE_WR_STRB      , // 写数据字节选通
+    input  logic                    STATUS_SLAVE_WR_DATA_LAST , // 最后一个数据
+    input  logic                    STATUS_SLAVE_WR_DATA_VALID, // 写数据有效
+    output logic                    STATUS_SLAVE_WR_DATA_READY, // 写数据就绪
     
     // AXI写响应通道信号
-    output logic [4-1:0] STATUS_SLAVE_WR_BACK_ID   , // 写响应ID
-    output logic [ 1:0]  STATUS_SLAVE_WR_BACK_RESP , // 写响应状态
-    output logic         STATUS_SLAVE_WR_BACK_VALID, // 写响应有效
-    input  logic         STATUS_SLAVE_WR_BACK_READY, // 写响应就绪
+    output logic [ID_WIDTH-1:0]     STATUS_SLAVE_WR_BACK_ID   , // 写响应ID
+    output logic [ 1:0]             STATUS_SLAVE_WR_BACK_RESP , // 写响应状态
+    output logic                    STATUS_SLAVE_WR_BACK_VALID, // 写响应有效
+    input  logic                    STATUS_SLAVE_WR_BACK_READY, // 写响应就绪
     
     // AXI读地址通道信号
-    input  logic [4-1:0] STATUS_SLAVE_RD_ADDR_ID   , // 读地址ID
-    input  logic [31:0]  STATUS_SLAVE_RD_ADDR      , // 读地址
-    input  logic [ 7:0]  STATUS_SLAVE_RD_ADDR_LEN  , // 突发传输长度
-    input  logic [ 1:0]  STATUS_SLAVE_RD_ADDR_BURST, // 突发类型
-    input  logic         STATUS_SLAVE_RD_ADDR_VALID, // 读地址有效
-    output logic         STATUS_SLAVE_RD_ADDR_READY, // 读地址就绪
+    input  logic [ID_WIDTH-1:0]     STATUS_SLAVE_RD_ADDR_ID   , // 读地址ID
+    input  logic [31:0]             STATUS_SLAVE_RD_ADDR      , // 读地址
+    input  logic [ 7:0]             STATUS_SLAVE_RD_ADDR_LEN  , // 突发传输长度
+    input  logic [ 1:0]             STATUS_SLAVE_RD_ADDR_BURST, // 突发类型
+    input  logic                    STATUS_SLAVE_RD_ADDR_VALID, // 读地址有效
+    output logic                    STATUS_SLAVE_RD_ADDR_READY, // 读地址就绪
     
     // AXI读数据通道信号
-    output logic [4-1:0] STATUS_SLAVE_RD_BACK_ID   , // 读数据ID
-    output logic [31:0]  STATUS_SLAVE_RD_DATA      , // 读数据
-    output logic [ 1:0]  STATUS_SLAVE_RD_DATA_RESP , // 读响应状态
-    output logic         STATUS_SLAVE_RD_DATA_LAST , // 最后一个数据
-    output logic         STATUS_SLAVE_RD_DATA_VALID, // 读数据有效
-    input  logic         STATUS_SLAVE_RD_DATA_READY, // 读数据就绪
+    output logic [ID_WIDTH-1:0]     STATUS_SLAVE_RD_BACK_ID   , // 读数据ID
+    output logic [31:0]             STATUS_SLAVE_RD_DATA      , // 读数据
+    output logic [ 1:0]             STATUS_SLAVE_RD_DATA_RESP , // 读响应状态
+    output logic                    STATUS_SLAVE_RD_DATA_LAST , // 最后一个数据
+    output logic                    STATUS_SLAVE_RD_DATA_VALID, // 读数据有效
+    input  logic                    STATUS_SLAVE_RD_DATA_READY, // 读数据就绪
 
     // 系统状态接口
     input  logic [15:0]  axi_master_rstn_status,   // AXI主机复位状态
@@ -110,7 +112,7 @@ localparam ADDR_AXI_INIT              = 32'h0000_0000, // AXI总线初始化状�
            ADDR_ETH_TIMESTAMP_RST     = 32'h0000_000E; // ETH时间戳复位信号
 
 //_________________写___通___道_________________//
-reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
+reg [ID_WIDTH-1:0] wr_addr_id;    // 写地址ID寄存器
 reg [31:0] wr_addr;       // 写地址寄存器
 reg [ 1:0] wr_addr_burst; // 写突发类型寄存器
 reg        wr_transcript_error, wr_transcript_error_reg; // 写传输错误标志及其寄存器
@@ -123,7 +125,7 @@ localparam ST_WR_IDLE = 2'b00, // 写通道空闲
            ST_WR_RESP = 2'b10; // 写响应
 
 //_________________读___通___道_________________//
-reg [ 3:0] rd_addr_id;     // 读地址ID寄存器
+reg [ID_WIDTH-1:0] rd_addr_id;     // 读地址ID寄存器
 reg [31:0] rd_addr;        // 读地址寄存器
 reg [ 7:0] rd_addr_len;    // 读突发长度寄存器
 reg [ 1:0] rd_addr_burst;  // 读突发类型寄存器

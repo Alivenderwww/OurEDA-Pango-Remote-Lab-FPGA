@@ -1,4 +1,6 @@
-module hsst_axi_slave (
+module hsst_axi_slave #(
+    parameter ID_WIDTH = 4
+)(
     input wire          i_p_refckn_0       ,
     input wire          i_p_refckp_0       ,
     input wire          rstn               ,
@@ -7,7 +9,7 @@ module hsst_axi_slave (
     output wire         SLAVE_CLK          ,
     output wire         SLAVE_RSTN         ,
 
-    input  wire [4-1:0] SLAVE_WR_ADDR_ID   ,
+    input  wire [ID_WIDTH-1:0] SLAVE_WR_ADDR_ID   ,
     input  wire [31:0]  SLAVE_WR_ADDR      /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 7:0]  SLAVE_WR_ADDR_LEN  ,
     input  wire [ 1:0]  SLAVE_WR_ADDR_BURST,
@@ -20,18 +22,18 @@ module hsst_axi_slave (
     input  wire         SLAVE_WR_DATA_VALID/* synthesis PAP_MARK_DEBUG="1" */,
     output reg          SLAVE_WR_DATA_READY/* synthesis PAP_MARK_DEBUG="1" */,
 
-    output wire [4-1:0] SLAVE_WR_BACK_ID   ,
+    output wire [ID_WIDTH-1:0] SLAVE_WR_BACK_ID   ,
     output wire [ 1:0]  SLAVE_WR_BACK_RESP ,
     output reg          SLAVE_WR_BACK_VALID,
     input  wire         SLAVE_WR_BACK_READY,
 
-    input  wire [4-1:0] SLAVE_RD_ADDR_ID   ,
+    input  wire [ID_WIDTH-1:0] SLAVE_RD_ADDR_ID   ,
     input  wire [31:0]  SLAVE_RD_ADDR      /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 7:0]  SLAVE_RD_ADDR_LEN  /* synthesis PAP_MARK_DEBUG="1" */,
     input  wire [ 1:0]  SLAVE_RD_ADDR_BURST,
     input  wire         SLAVE_RD_ADDR_VALID/* synthesis PAP_MARK_DEBUG="1" */,
     output reg          SLAVE_RD_ADDR_READY/* synthesis PAP_MARK_DEBUG="1" */,
-    output wire [4-1:0] SLAVE_RD_BACK_ID   ,
+    output wire [ID_WIDTH-1:0] SLAVE_RD_BACK_ID   ,
 
     output wire [31:0]  SLAVE_RD_DATA      /* synthesis PAP_MARK_DEBUG="1" */,
     output wire [ 1:0]  SLAVE_RD_DATA_RESP /* synthesis PAP_MARK_DEBUG="1" */,
@@ -143,7 +145,7 @@ end
 assign SLAVE_CLK = txclk_0;
 //***********************AXI***********************//
 //wraddr
-reg [ 3:0] wraddrid;
+reg [ID_WIDTH-1:0] wraddrid;
 reg [31:0] wraddr;
 reg [ 7:0] wraddrlen;
 reg [ 1:0] wraddrburst;
@@ -228,7 +230,7 @@ always @(posedge SLAVE_CLK or negedge rstn_sync_for_txclk) begin
     else SLAVE_WR_BACK_VALID <= SLAVE_WR_BACK_VALID;
 end
 //rdaddr
-reg [ 3:0] rdaddrid;
+reg [ID_WIDTH-1:0] rdaddrid;
 reg [31:0] rdaddr;
 reg [ 7:0] rdaddrlen;
 reg [ 1:0] rdaddrburst;

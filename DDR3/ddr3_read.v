@@ -1,21 +1,23 @@
-module ddr3_read(
+module ddr3_read #(
+    parameter ID_WIDTH = 4
+)(
     input wire          clk            ,
     input wire          rstn           ,
 
     //转换后的总线
-    input  wire [ 3:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
-    input  wire [27:0] SLAVE_RD_ADDR      , //读地址通道-地址
-    input  wire [ 7:0] SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
-    input  wire [ 1:0] SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。（DDR不支持除增量传输外的其他突发类型，因此不接入逻辑）
-    input  wire        SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
-    output wire        SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
+    input  wire [ID_WIDTH-1:0] SLAVE_RD_ADDR_ID   , //读地址通道-ID
+    input  wire [27:0]         SLAVE_RD_ADDR      , //读地址通道-地址
+    input  wire [ 7:0]         SLAVE_RD_ADDR_LEN  , //读地址通道-突发长度。最小为0（1突发），最大为255（256突发）
+    input  wire [ 1:0]         SLAVE_RD_ADDR_BURST, //读地址通道-突发类型。（DDR不支持除增量传输外的其他突发类型，因此不接入逻辑）
+    input  wire                SLAVE_RD_ADDR_VALID, //读地址通道-握手信号-有效
+    output wire                SLAVE_RD_ADDR_READY, //读地址通道-握手信号-准备
 
-    output wire [ 3:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
-    output wire [31:0] SLAVE_RD_DATA      , //读数据通道-数据
-    output wire [ 1:0] SLAVE_RD_DATA_RESP , //读数据通道-响应
-    output wire        SLAVE_RD_DATA_LAST , //读数据通道-last信号
-    output wire        SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
-    input  wire        SLAVE_RD_DATA_READY, //读数据通道-握手信号-准备
+    output wire [ID_WIDTH-1:0] SLAVE_RD_BACK_ID   , //读数据通道-ID
+    output wire [31:0]         SLAVE_RD_DATA      , //读数据通道-数据
+    output wire [ 1:0]         SLAVE_RD_DATA_RESP , //读数据通道-响应
+    output wire                SLAVE_RD_DATA_LAST , //读数据通道-last信号
+    output wire                SLAVE_RD_DATA_VALID, //读数据通道-握手信号-有效
+    input  wire                SLAVE_RD_DATA_READY, //读数据通道-握手信号-准备
 
     //转换前的总线
     output wire [ 27:0] READ_ADDR      ,
@@ -82,7 +84,7 @@ reg [2:0] start_giveup_num;
 reg [7:0] trans_num;
 reg [27:0] rd_addr_load;
 reg [ 7:0] rd_len_load;
-reg [3:0] rd_id_load;
+reg [ID_WIDTH-1:0] rd_id_load;
 wire [27:0] rd_addr_end = SLAVE_RD_ADDR + SLAVE_RD_ADDR_LEN;
 wire flag_last_trans = (cu_rd_st != READ_ST_IDLE) && (rd_len_load <= 15);
 wire flag_unuse_rd_need = (cu_rd_st != READ_ST_IDLE) && (start_giveup_num != 0);
@@ -171,7 +173,7 @@ assign SLAVE_RD_DATA_VALID   = (ddr_rstn_sync) && ((cu_rd_st != READ_ST_IDLE && 
 assign SLAVE_RD_DATA_RESP    = 2'b00;
 assign READ_ADDR             = rd_addr_load;
 assign READ_LEN              = (rd_len_load >= 15)?(4'b1111):(rd_len_load);
-assign READ_ID               = rd_id_load;
+assign READ_ID               = rd_id_load[3:0];
 assign READ_ADDR_VALID       = (ddr_rstn_sync) && (cu_rd_st == READ_ST_TRANS_ADDR);
 
 assign fifo_rst     = (~ddr_rstn_sync) || (cu_rd_st == READ_ST_RESET);

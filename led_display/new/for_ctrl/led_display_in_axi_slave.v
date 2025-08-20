@@ -1,6 +1,7 @@
 module led_display_in_axi_slave #(
     parameter WS_NUM = 128,
-    parameter CLK_FREQ = 32'd100_000_000
+    parameter CLK_FREQ = 32'd100_000_000,
+    parameter ID_WIDTH = 4
 )(
     input  wire         clk,
     input  wire         rstn,
@@ -20,37 +21,37 @@ module led_display_in_axi_slave #(
     output wire         SLAVE_CLK          ,
     output wire         SLAVE_RSTN         ,
 
-    input  wire [4-1:0] SLAVE_WR_ADDR_ID   ,
-    input  wire [31:0]  SLAVE_WR_ADDR      ,
-    input  wire [ 7:0]  SLAVE_WR_ADDR_LEN  ,
-    input  wire [ 1:0]  SLAVE_WR_ADDR_BURST,
-    input  wire         SLAVE_WR_ADDR_VALID,
-    output wire         SLAVE_WR_ADDR_READY,
+    input  wire [ID_WIDTH-1:0] SLAVE_WR_ADDR_ID   ,
+    input  wire [31:0]         SLAVE_WR_ADDR      ,
+    input  wire [ 7:0]         SLAVE_WR_ADDR_LEN  ,
+    input  wire [ 1:0]         SLAVE_WR_ADDR_BURST,
+    input  wire                SLAVE_WR_ADDR_VALID,
+    output wire                SLAVE_WR_ADDR_READY,
 
-    input  wire [31:0]  SLAVE_WR_DATA      ,
-    input  wire [ 3:0]  SLAVE_WR_STRB      ,
-    input  wire         SLAVE_WR_DATA_LAST ,
-    input  wire         SLAVE_WR_DATA_VALID,
-    output wire         SLAVE_WR_DATA_READY,
+    input  wire [31:0]         SLAVE_WR_DATA      ,
+    input  wire [ 3:0]         SLAVE_WR_STRB      ,
+    input  wire                SLAVE_WR_DATA_LAST ,
+    input  wire                SLAVE_WR_DATA_VALID,
+    output wire                SLAVE_WR_DATA_READY,
 
-    output wire [4-1:0] SLAVE_WR_BACK_ID   ,
-    output wire [ 1:0]  SLAVE_WR_BACK_RESP ,
-    output reg          SLAVE_WR_BACK_VALID,
-    input  wire         SLAVE_WR_BACK_READY,
+    output wire [ID_WIDTH-1:0] SLAVE_WR_BACK_ID   ,
+    output wire [ 1:0]         SLAVE_WR_BACK_RESP ,
+    output reg                 SLAVE_WR_BACK_VALID,
+    input  wire                SLAVE_WR_BACK_READY,
 
-    input  wire [4-1:0] SLAVE_RD_ADDR_ID   ,
-    input  wire [31:0]  SLAVE_RD_ADDR      ,
-    input  wire [ 7:0]  SLAVE_RD_ADDR_LEN  ,
-    input  wire [ 1:0]  SLAVE_RD_ADDR_BURST,
-    input  wire         SLAVE_RD_ADDR_VALID,
-    output wire         SLAVE_RD_ADDR_READY,
-    output wire [4-1:0] SLAVE_RD_BACK_ID   ,
+    input  wire [ID_WIDTH-1:0] SLAVE_RD_ADDR_ID   ,
+    input  wire [31:0]         SLAVE_RD_ADDR      ,
+    input  wire [ 7:0]         SLAVE_RD_ADDR_LEN  ,
+    input  wire [ 1:0]         SLAVE_RD_ADDR_BURST,
+    input  wire                SLAVE_RD_ADDR_VALID,
+    output wire                SLAVE_RD_ADDR_READY,
+    output wire [ID_WIDTH-1:0] SLAVE_RD_BACK_ID   ,
 
-    output wire [31:0]  SLAVE_RD_DATA      ,
-    output wire [ 1:0]  SLAVE_RD_DATA_RESP ,
-    output wire         SLAVE_RD_DATA_LAST ,
-    output wire         SLAVE_RD_DATA_VALID,
-    input  wire         SLAVE_RD_DATA_READY
+    output wire [31:0]         SLAVE_RD_DATA      ,
+    output wire [ 1:0]         SLAVE_RD_DATA_RESP ,
+    output wire                SLAVE_RD_DATA_LAST ,
+    output wire                SLAVE_RD_DATA_VALID,
+    input  wire                SLAVE_RD_DATA_READY
 );
 //encoder
 wire [23:0] wscolor[WS_NUM];
@@ -125,7 +126,7 @@ end
 reg rd_en;
 reg rd_data_valid_reg;
 reg [ 7:0] txcnt    ;
-reg [ 3:0] rdaddrid ;
+reg [ID_WIDTH-1:0] rdaddrid ;
 reg [31:0] rdaddr   ;
 reg [ 7:0] rdaddrlen;
 reg [31:0] rddata   ;
@@ -201,7 +202,7 @@ end
 
 assign sw = sw_ctrl ? sw_out : 5'bzzzzz;
 
-reg [ 3:0] wraddrid;
+reg [ID_WIDTH-1:0] wraddrid;
 reg [31:0] wraddr;
 reg [ 7:0] wraddrlen;
 reg wr_en;
