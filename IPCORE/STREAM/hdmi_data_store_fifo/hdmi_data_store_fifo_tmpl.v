@@ -10,7 +10,7 @@ hdmi_data_store_fifo the_instance_name (
   .wr_clk(wr_clk),                    // input
   .wr_rst(wr_rst),                    // input
   .wr_en(wr_en),                      // input
-  .wr_data(wr_data),                  // input [31:0]
+  .wr_data(wr_data),                  // input [15:0]
   .wr_full(wr_full),                  // output
   .almost_full(almost_full),          // output
   .rd_clk(rd_clk),                    // input
@@ -18,6 +18,6 @@ hdmi_data_store_fifo the_instance_name (
   .rd_en(rd_en),                      // input
   .rd_data(rd_data),                  // output [31:0]
   .rd_empty(rd_empty),                // output
-  .rd_water_level(rd_water_level),    // output [12:0]
+  .rd_water_level(rd_water_level),    // output [11:0]
   .almost_empty(almost_empty)         // output
 );

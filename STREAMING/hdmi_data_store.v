@@ -10,6 +10,7 @@ module hdmi_data_store (
     input  wire        capture_on,
     output wire        frame_notready,
     output wire [31:0] frame_height_width,
+    input  wire [31:0] capture_height_width,
 
     input  wire        rd_clk,
     input  wire        rd_rstn,
@@ -25,7 +26,7 @@ module hdmi_data_store (
 
 wire fifo_wr_rst;
 reg fifo_wr_en;
-reg [31:0] fifo_wr_data;
+reg [15:0] fifo_wr_data;
 wire almost_full;
 
 wire fifo_rd_rst, fifo_rd_en;
@@ -39,7 +40,13 @@ reg [23:0] HDMI_DATA_d1, HDMI_DATA_d2;
 reg [11:0] camera_hcount, camera_vcount;
 reg [11:0] camera_v, camera_h;
 reg [3:0] stage_width_cnt, stage_height_cnt; //帧计数
-assign frame_notready = (stage_height_cnt <= 4'd1) || (stage_width_cnt <= 4'd1);
+// assign frame_notready = (stage_height_cnt <= 4'd1) || (stage_width_cnt <= 4'd1);
+assign frame_notready = 0;
+
+wire [11:0] capture_height = capture_height_width[16+:12];
+wire [11:0] capture_width  = capture_height_width[ 0+:12];
+
+reg capture_rest;
 
 //如果FIFO数据有反压，则记录反压时的hcount和vcount并停止存储，等FIFO不再反压并且hcount和vcount与记录的相同后再继续存储。
 reg [11:0] pause_camera_hcount, pause_camera_vcount;
@@ -118,6 +125,12 @@ always @(posedge hdmi_in_clk or negedge hdmi_in_rstn) begin
 end
 
 always @(posedge hdmi_in_clk or negedge hdmi_in_rstn) begin
+    if(~hdmi_in_rstn) capture_rest <= 0;
+    else if(HDMI_VSYNC_pos) capture_rest <= ~capture_rest;
+    else capture_rest <= capture_rest;
+end
+
+always @(posedge hdmi_in_clk or negedge hdmi_in_rstn) begin
     if(~hdmi_in_rstn) cu_st_store <= ST_IDLE;
     else cu_st_store <= nt_st_store;
 end
@@ -161,19 +174,18 @@ always @(posedge rd_clk or negedge rd_rstn) begin
 end
 //fifo_wr_en, fifo_wr_data
 always @(*) begin
-    if(HDMI_DE_d1 && (nt_st_store == ST_TRANS)) begin
+    if(HDMI_DE_d1 && (cu_st_store == ST_TRANS) && (camera_hcount <= capture_width - 1) && (camera_vcount <= capture_height - 1)) begin
         fifo_wr_en = 1;
-        fifo_wr_data = {8'hff, HDMI_DATA_d1};
+        fifo_wr_data = {HDMI_DATA_d1[23-:5], HDMI_DATA_d1[15-:6], HDMI_DATA_d1[7-:5]};
     end else begin
         fifo_wr_en = 0;
-        fifo_wr_data = 32'hffffffff; // no data
+        fifo_wr_data = 16'hffff; // no data
     end
 end
 
 assign fifo_wr_rst = (~hdmi_in_rstn) || ((~capture_on) || (frame_notready));
 assign fifo_rd_rst = (~rd_rstn) || ((~capture_on) || (frame_notready));
 assign fifo_rd_en = (~rd_empty) && ((rd_data_valid && rd_data_ready) || (~fifo_rd_data_valid));
-assign rd_data_valid = fifo_rd_data_valid;
 
 hdmi_data_store_fifo u_hdmi_data_store_fifo(
     .wr_clk         ( hdmi_in_clk     ),
@@ -224,5 +236,6 @@ assign rd_data_burst_valid = (cu_fifo_rd_st == FIFO_RD_ST_TRANS_BURST);
 assign rd_data_last = (cu_fifo_rd_st == FIFO_RD_ST_TRANS_DATA) && (rd_data_burst == 0);
 // assign rd_addr_reset = HDMI_VSYNC_pos;
 assign rd_addr_reset = 0;
+assign rd_data_valid = (cu_fifo_rd_st == FIFO_RD_ST_TRANS_DATA) && fifo_rd_data_valid;
 
 endmodule

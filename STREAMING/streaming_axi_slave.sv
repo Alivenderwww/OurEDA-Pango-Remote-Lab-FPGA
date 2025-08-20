@@ -16,17 +16,7 @@ module streaming_axi_slave(
     //hdmi
     input  logic         hdmi_notready,
     input  logic [31:0]  hdmi_height_width,
-
-    //jpeg
-    output logic [31:0]  jpeg_height_width,
-    output logic         jpeg_add_need_frame_pos,
-    output logic [31:0]  jpeg_add_need_frame_num,
-    input  logic [31:0]  jpeg_total_need_frame_num,
-
-    input  logic [31:0]  jpeg_save_num,
-    output logic         jpeg_rd_info_valid,
-    input  logic [31:0]  jpeg_rd_info,
-    input  logic         jpeg_rd_info_ready,
+    output logic [31:0]  capture_height_width,
 
     input  logic [13*8*8 - 1:0] Y_Quantizer,
     input  logic [13*8*8 - 1:0] CB_Quantizer,
@@ -71,30 +61,21 @@ logic [8*8*3-1:0] [12:0] Quantizer;
 assign Quantizer = {CR_Quantizer, CB_Quantizer, Y_Quantizer};
 
 localparam [31:0]
-    ADDR_CAPTURE_RD_CTRL        = 32'h0000_0000,
-    ADDR_CAPTURE_WR_CTRL        = 32'h0000_0001,
+    ADDR_CAPTURE_RD_CTRL_START  = 32'h0000_0000,
+    ADDR_CAPTURE_RD_CTRL_END    = 32'h0000_000F,
+    ADDR_CAPTURE_WR_CTRL_START  = 32'h0000_0010,
+    ADDR_CAPTURE_WR_CTRL_END    = 32'h0000_001F,
 
-    ADDR_START_WRITE_ADDR0      = 32'h0000_0002,
-    ADDR_END_WRITE_ADDR0        = 32'h0000_0003,
-    ADDR_START_WRITE_ADDR1      = 32'h0000_0004,
-    ADDR_END_WRITE_ADDR1        = 32'h0000_0005,
-    ADDR_START_READ_ADDR0       = 32'h0000_0006,
-    ADDR_END_READ_ADDR0         = 32'h0000_0007,
+    ADDR_START_WRITE_ADDR0      = 32'h0000_0020,
+    ADDR_END_WRITE_ADDR0        = 32'h0000_0021,
+    ADDR_START_WRITE_ADDR1      = 32'h0000_0022,
+    ADDR_END_WRITE_ADDR1        = 32'h0000_0023,
+    ADDR_START_READ_ADDR0       = 32'h0000_0024,
+    ADDR_END_READ_ADDR0         = 32'h0000_0025,
 
-    ADDR_HDMI_NOTREADY          = 32'h0000_0008,
-    ADDR_HDMI_HEIGHT_WIDTH      = 32'h0000_0009,
-
-    ADDR_JPEG_HEIGHT_WIDTH      = 32'h0000_000A,
-    ADDR_JPEG_ADD_NEED_FRAME_NUM= 32'h0000_000B,
-    ADDR_JPEG_FRAME_SAVE_NUM    = 32'h0000_000C,
-    ADDR_FIFO_FRAME_INFO        = 32'h0000_000D,
-
-    ADDR_Y_QUANTIZER_START      = 32'h0000_0100,
-    ADDR_Y_QUANTIZER_END        = 32'h0000_013F,
-    ADDR_CB_QUANTIZER_START     = 32'h0000_0140,
-    ADDR_CB_QUANTIZER_END       = 32'h0000_017F,
-    ADDR_CR_QUANTIZER_START     = 32'h0000_0180,
-    ADDR_CR_QUANTIZER_END       = 32'h0000_01BF;
+    ADDR_HDMI_NOTREADY          = 32'h0000_0026,
+    ADDR_HDMI_HEIGHT_WIDTH      = 32'h0000_0027,
+    ADDR_CAPTURE_HEIGHT_WIDTH   = 32'h0000_0028;
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;
@@ -213,19 +194,19 @@ always @(*) begin
     end else SLAVE_WR_DATA_READY = 0;
     //读数据VALID选通
     if(cu_rdchannel_st == ST_RD_DATA) case (rd_addr)
-        ADDR_FIFO_FRAME_INFO: SLAVE_RD_DATA_VALID = jpeg_rd_info_ready;
         default             : SLAVE_RD_DATA_VALID = 1;
     endcase
     else SLAVE_RD_DATA_VALID = 0;
     //读数据DATA选通
     if(cu_rdchannel_st == ST_RD_DATA) begin
-        if(rd_addr >= ADDR_Y_QUANTIZER_START && rd_addr <= ADDR_CR_QUANTIZER_END) begin
-            for(i = 0; i < 8*8*3; i++) if(rd_addr[7:0] == i)
-                SLAVE_RD_DATA = {19'b0, Quantizer[i]};
-                else SLAVE_RD_DATA = 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
+        if(rd_addr >= ADDR_CAPTURE_RD_CTRL_START && rd_addr <= ADDR_CAPTURE_RD_CTRL_END) begin
+            for(i=0;i<16;i=i+1) if(rd_addr[3:0] == i[3:0])
+                SLAVE_RD_DATA = {31'b0, rd_capture_rstn[i]};
+        end
+        else if(rd_addr >= ADDR_CAPTURE_WR_CTRL_START && rd_addr <= ADDR_CAPTURE_WR_CTRL_END) begin
+            for(i=0;i<16;i=i+1) if(rd_addr[3:0] == i[3:0])
+                SLAVE_RD_DATA = {31'b0, wr_capture_rstn[i]};
         end else case(rd_addr)
-            ADDR_CAPTURE_RD_CTRL        : SLAVE_RD_DATA = {16'b0, rd_capture_rstn};
-            ADDR_CAPTURE_WR_CTRL        : SLAVE_RD_DATA = {16'b0, wr_capture_rstn};
             ADDR_START_WRITE_ADDR0      : SLAVE_RD_DATA = start_write_addr0;
             ADDR_END_WRITE_ADDR0        : SLAVE_RD_DATA = end_write_addr0;
             ADDR_START_WRITE_ADDR1      : SLAVE_RD_DATA = start_write_addr1;
@@ -234,10 +215,7 @@ always @(*) begin
             ADDR_END_READ_ADDR0         : SLAVE_RD_DATA = end_read_addr0;
             ADDR_HDMI_NOTREADY          : SLAVE_RD_DATA = {31'b0, hdmi_notready};
             ADDR_HDMI_HEIGHT_WIDTH      : SLAVE_RD_DATA = hdmi_height_width;
-            ADDR_JPEG_HEIGHT_WIDTH      : SLAVE_RD_DATA = jpeg_height_width;
-            ADDR_JPEG_ADD_NEED_FRAME_NUM: SLAVE_RD_DATA = jpeg_total_need_frame_num;
-            ADDR_JPEG_FRAME_SAVE_NUM    : SLAVE_RD_DATA = jpeg_save_num;
-            ADDR_FIFO_FRAME_INFO        : SLAVE_RD_DATA = jpeg_rd_info;
+            ADDR_CAPTURE_HEIGHT_WIDTH   : SLAVE_RD_DATA = capture_height_width;
             default                     : SLAVE_RD_DATA = 32'hFFFFFFFF; //ERROR，直接跳过默认为全1
         endcase
     end else SLAVE_RD_DATA = 0;
@@ -263,13 +241,18 @@ always @(posedge clk or negedge rstn) begin
         end_write_addr1   <= 0;
         start_read_addr0  <= 0;
         end_read_addr0    <= 0;
-        jpeg_height_width       <= 0;
-        jpeg_add_need_frame_num <= 0;
-        jpeg_add_need_frame_pos <= 0;
+        capture_height_width <= {16'd1080, 16'd1920};
     end else if(SLAVE_WR_DATA_VALID && SLAVE_WR_DATA_READY)begin
-        case(wr_addr)
-            ADDR_CAPTURE_RD_CTRL        : rd_capture_rstn   <= SLAVE_WR_DATA[15:0];
-            ADDR_CAPTURE_WR_CTRL        : wr_capture_rstn   <= SLAVE_WR_DATA[15:0];
+        if(wr_addr >= ADDR_CAPTURE_RD_CTRL_START && wr_addr <= ADDR_CAPTURE_RD_CTRL_END) begin
+            for(i=0;i<16;i=i+1) if(wr_addr[3:0] == i[3:0])
+                rd_capture_rstn[i] <= SLAVE_WR_DATA[0];
+                else rd_capture_rstn[i] <= rd_capture_rstn[i];
+        end
+        else if(wr_addr >= ADDR_CAPTURE_WR_CTRL_START && wr_addr <= ADDR_CAPTURE_WR_CTRL_END) begin
+            for(i=0;i<16;i=i+1) if(wr_addr[3:0] == i[3:0])
+                wr_capture_rstn[i] <= SLAVE_WR_DATA[0];
+                else wr_capture_rstn[i] <= wr_capture_rstn[i];
+        end else case(wr_addr)
             ADDR_START_WRITE_ADDR0      : start_write_addr0 <= SLAVE_WR_DATA;
             ADDR_END_WRITE_ADDR0        : end_write_addr0   <= SLAVE_WR_DATA;
             ADDR_START_WRITE_ADDR1      : start_write_addr1 <= SLAVE_WR_DATA;
@@ -278,23 +261,15 @@ always @(posedge clk or negedge rstn) begin
             ADDR_END_READ_ADDR0         : end_read_addr0    <= SLAVE_WR_DATA;
             // ADDR_HDMI_NOTREADY          : read only;
             // ADDR_HDMI_HEIGHT_WIDTH      : read only;
-            ADDR_JPEG_HEIGHT_WIDTH      : jpeg_height_width       <= SLAVE_WR_DATA;
-            ADDR_JPEG_ADD_NEED_FRAME_NUM: begin
-                jpeg_add_need_frame_num <= SLAVE_WR_DATA;
-                jpeg_add_need_frame_pos <= 1;
-            end
             // ADDR_JPEG_FRAME_SAVE_NUM    : read only;
             // ADDR_FIFO_FRAME_INFO        : read only;
+            ADDR_CAPTURE_HEIGHT_WIDTH   : capture_height_width <= SLAVE_WR_DATA;
             default: begin
-                jpeg_add_need_frame_pos <= 0;
             end
         endcase
     end else begin
-        jpeg_add_need_frame_pos <= 0;
     end
 end
-
-assign jpeg_rd_info_valid = (cu_rdchannel_st == ST_RD_DATA) && (rd_addr == ADDR_FIFO_FRAME_INFO) && (SLAVE_RD_DATA_VALID);
 
 
 endmodule

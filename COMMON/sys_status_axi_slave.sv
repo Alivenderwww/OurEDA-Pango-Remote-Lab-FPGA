@@ -58,14 +58,6 @@ module sys_status_axi_slave (
     input  logic [47:0]  eeprom_host_mac_addr,    // 默认上位机MAC地址
     input  logic [47:0]  eeprom_board_mac_addr,   // 默认本机MAC地址
 
-    output logic [31:0]  DMA0_START_WRITE_ADDR,    // DMA0存储起始地址
-    output logic [31:0]  DMA0_END_WRITE_ADDR,      // DMA0存储结束地址
-    output logic         DMA0_capture_on,          // DMA0捕获使能信号
-    output logic         DMA0_capture_rst,         // DMA0捕获复位信号
-    output logic [31:0]  DMA1_START_WRITE_ADDR,    // DMA1存储起始地址
-    output logic [31:0]  DMA1_END_WRITE_ADDR,      // DMA1存储结束地址
-    output logic         DMA1_capture_on,          // DMA1捕获使能信号
-    output logic         DMA1_capture_rst,         // DMA1捕获复位信号
     output logic [15:0]  OV_EXPECT_WIDTH,          // OV5640期望宽度
     output logic [15:0]  OV_EXPECT_HEIGHT,         // OV5640期望高度
     output logic         OV_ccd_rstn,              // OV5640 CCD复位信号
@@ -94,16 +86,10 @@ rstn_sync status_rstn_sync(clk,rstn,STATUS_SLAVE_RSTN_SYNC);
 32'h0000_000A:  只读    默认本机MAC地址高16位
 32'h0000_000B:  只读    默认本机MAC地址低32位
 
-32'h0000_000C:  读写    DMA0存储起始地址，32位地址线              //0x0000_0000
-32'h0000_000D:  读写    DMA0存储结束地址，32位地址线，单位为32bit     //(640x480)*16/32
-32'h0000_000E:  读写    DMA0捕获使能和复位信号，[0]为capture_on，[8]为capture_rst
 32'h0000_000F:  读写    OV5640期望{V,H}
 32'h0000_0010:  读写    [0]为OV5640 CCD复位信号，低电平复位，重新上电后需要初始化SCCB寄存器。默认高电平
                         [8]为OV5640 CCD休眠信号，高电平休眠，重新唤醒后仍保留之前的寄存器配置。默认低电平
 32'h0000_0011:  读写    [0]为ETH时间戳复位信号，1为复位，0为不影响。复位后自动置零
-32'h0000_0012:  读写    DMA1存储起始地址，32位地址线              //0x0000_0000
-32'h0000_0013:  读写    DMA1存储结束地址，32位地址线，单位为32bit     //(640x480)*16/32
-32'h0000_0014:  读写    DMA1捕获使能和复位信号，[0]为capture_on，[8]为capture_rst
 */
 
 // 地址定义
@@ -119,15 +105,9 @@ localparam ADDR_AXI_INIT              = 32'h0000_0000, // AXI总线初始化状�
            ADDR_DEFAULT_HOST_MAC_1    = 32'h0000_0009, // 默认上位机MAC地址低32位
            ADDR_DEFAULT_BOARD_MAC_2   = 32'h0000_000A, // 默认本机MAC地址
            ADDR_DEFAULT_BOARD_MAC_1   = 32'h0000_000B, // 默认本机MAC地址低32位
-           ADDR_DMA0_START_WRITE_ADDR = 32'h0000_000C, // OV5640存储起始地址
-           ADDR_DMA0_END_WRITE_ADDR   = 32'h0000_000D, // OV5640存储数量
-           ADDR_DMA0_CAPTURE_CTRL     = 32'h0000_000E, // DMA0捕获使能和复位信号
-           ADDR_OV_EXPECT_VH          = 32'h0000_000F, // OV5640期望宽度和高度时钟周期
-           ADDR_OV_POWER_CONTROL      = 32'h0000_0010, // OV5640 CCD复位和休眠控制
-           ADDR_ETH_TIMESTAMP_RST     = 32'h0000_0011, // ETH时间戳复位信号
-           ADDR_DMA1_START_WRITE_ADDR = 32'h0000_0012, // DMA1存储起始地址
-           ADDR_DMA1_END_WRITE_ADDR   = 32'h0000_0013, // DMA1存储结束地址
-           ADDR_DMA1_CAPTURE_CTRL     = 32'h0000_0014; // DMA1捕获使能和复位信号
+           ADDR_OV_EXPECT_VH          = 32'h0000_000C, // OV5640期望宽度和高度时钟周期
+           ADDR_OV_POWER_CONTROL      = 32'h0000_000D, // OV5640 CCD复位和休眠控制
+           ADDR_ETH_TIMESTAMP_RST     = 32'h0000_000E; // ETH时间戳复位信号
 
 //_________________写___通___道_________________//
 reg [ 3:0] wr_addr_id;    // 写地址ID寄存器
@@ -207,7 +187,7 @@ end
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_wrchannel_st == ST_WR_IDLE) || (cu_wrchannel_st == ST_WR_RESP)) wr_transcript_error <= 0;
     else if((wr_addr_burst == 2'b10) || (wr_addr_burst == 2'b11)) wr_transcript_error <= 1;
-    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_DMA1_CAPTURE_CTRL)) wr_transcript_error <= 1;
+    else if((wr_addr < ADDR_AXI_INIT) || (wr_addr > ADDR_ETH_TIMESTAMP_RST)) wr_transcript_error <= 1;
     else if(wr_addr == ADDR_UID_2 || wr_addr == ADDR_UID_1) wr_transcript_error <= 1;
     else wr_transcript_error <= 0;
 end
@@ -232,14 +212,6 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
         axi_master_reset      <= 0;
         axi_slave_reset       <= 0;
         power_status          <= 0;
-        DMA0_START_WRITE_ADDR <= 32'h0000_0000;
-        DMA0_END_WRITE_ADDR   <= ((640*480)*16)/32;
-        DMA0_capture_on       <= 0;
-        DMA0_capture_rst      <= 0;
-        DMA1_START_WRITE_ADDR <= 32'h0000_0000;
-        DMA1_END_WRITE_ADDR   <= 32'h0000_1000;
-        DMA1_capture_on       <= 0;
-        DMA1_capture_rst      <= 0;
         OV_EXPECT_WIDTH       <= 640; // 默认640x480
         OV_EXPECT_HEIGHT      <= 480; // 默认640x480
         OV_ccd_rstn           <= 1;
@@ -261,22 +233,6 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
             ADDR_POWER_RESET: begin
                 if(STATUS_SLAVE_WR_STRB[0]) power_reset <= STATUS_SLAVE_WR_DATA[7:0];
             end
-            ADDR_DMA0_START_WRITE_ADDR: begin
-                if(STATUS_SLAVE_WR_STRB[3]) DMA0_START_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) DMA0_START_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) DMA0_START_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA0_START_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_DMA0_END_WRITE_ADDR: begin
-                if(STATUS_SLAVE_WR_STRB[3]) DMA0_END_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) DMA0_END_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) DMA0_END_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA0_END_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_DMA0_CAPTURE_CTRL: begin
-                if(STATUS_SLAVE_WR_STRB[1]) DMA0_capture_rst <= STATUS_SLAVE_WR_DATA[8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA0_capture_on <= STATUS_SLAVE_WR_DATA[0];
-            end
             ADDR_OV_EXPECT_VH: begin
                 if(STATUS_SLAVE_WR_STRB[3]) OV_EXPECT_HEIGHT[15:8] <= STATUS_SLAVE_WR_DATA[31:24];
                 if(STATUS_SLAVE_WR_STRB[2]) OV_EXPECT_HEIGHT[7:0]  <= STATUS_SLAVE_WR_DATA[23:16];
@@ -289,22 +245,6 @@ always @(posedge clk or negedge STATUS_SLAVE_RSTN_SYNC) begin
             end
             ADDR_ETH_TIMESTAMP_RST: begin
                 if(STATUS_SLAVE_WR_STRB[0]) ETH_timestamp_rst <= STATUS_SLAVE_WR_DATA[0];
-            end
-            ADDR_DMA1_START_WRITE_ADDR: begin
-                if(STATUS_SLAVE_WR_STRB[3]) DMA1_START_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) DMA1_START_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) DMA1_START_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA1_START_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_DMA1_END_WRITE_ADDR: begin
-                if(STATUS_SLAVE_WR_STRB[3]) DMA1_END_WRITE_ADDR[31:24] <= STATUS_SLAVE_WR_DATA[31:24];
-                if(STATUS_SLAVE_WR_STRB[2]) DMA1_END_WRITE_ADDR[23:16] <= STATUS_SLAVE_WR_DATA[23:16];
-                if(STATUS_SLAVE_WR_STRB[1]) DMA1_END_WRITE_ADDR[15:8] <= STATUS_SLAVE_WR_DATA[15:8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA1_END_WRITE_ADDR[7:0] <= STATUS_SLAVE_WR_DATA[7:0];
-            end
-            ADDR_DMA1_CAPTURE_CTRL: begin
-                if(STATUS_SLAVE_WR_STRB[1]) DMA1_capture_rst <= STATUS_SLAVE_WR_DATA[8];
-                if(STATUS_SLAVE_WR_STRB[0]) DMA1_capture_on <= STATUS_SLAVE_WR_DATA[0];
             end
             default: begin
             end
@@ -378,7 +318,7 @@ assign STATUS_SLAVE_RD_DATA_LAST = (STATUS_SLAVE_RD_DATA_VALID) && (rd_data_tran
 always @(*) begin
     if((~STATUS_SLAVE_RSTN_SYNC) || (cu_rdchannel_st == ST_RD_IDLE)) rd_transcript_error <= 0;
     else if((rd_addr_burst == 2'b10) || (rd_addr_burst == 2'b11)) rd_transcript_error <= 1;
-    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_DMA1_CAPTURE_CTRL)) rd_transcript_error <= 1;
+    else if((rd_addr < ADDR_AXI_INIT) || (rd_addr > ADDR_ETH_TIMESTAMP_RST)) rd_transcript_error <= 1;
     else if(rd_addr == ADDR_AXI_RESET || rd_addr == ADDR_POWER_RESET) rd_transcript_error <= 1;
     else rd_transcript_error <= 0;
 end
@@ -412,15 +352,9 @@ always @(*) begin
             ADDR_DEFAULT_BOARD_IP      : STATUS_SLAVE_RD_DATA <= eeprom_board_ip_addr;
             ADDR_DEFAULT_BOARD_MAC_2   : STATUS_SLAVE_RD_DATA <= {16'b0, eeprom_board_mac_addr[47:32]};
             ADDR_DEFAULT_BOARD_MAC_1   : STATUS_SLAVE_RD_DATA <= eeprom_board_mac_addr[31:0];
-            ADDR_DMA0_START_WRITE_ADDR : STATUS_SLAVE_RD_DATA <= DMA0_START_WRITE_ADDR;
-            ADDR_DMA0_END_WRITE_ADDR   : STATUS_SLAVE_RD_DATA <= DMA0_END_WRITE_ADDR;
-            ADDR_DMA0_CAPTURE_CTRL     : STATUS_SLAVE_RD_DATA <= {16'b0, 7'b0, DMA0_capture_rst, 7'b0, DMA0_capture_on};
             ADDR_OV_EXPECT_VH          : STATUS_SLAVE_RD_DATA <= {OV_EXPECT_HEIGHT, OV_EXPECT_WIDTH};
             ADDR_OV_POWER_CONTROL      : STATUS_SLAVE_RD_DATA <= {23'b0, OV_ccd_pdn, 7'b0, OV_ccd_rstn};
             ADDR_ETH_TIMESTAMP_RST     : STATUS_SLAVE_RD_DATA <= {31'b0, ETH_timestamp_rst};
-            ADDR_DMA1_START_WRITE_ADDR : STATUS_SLAVE_RD_DATA <= DMA1_START_WRITE_ADDR;
-            ADDR_DMA1_END_WRITE_ADDR   : STATUS_SLAVE_RD_DATA <= DMA1_END_WRITE_ADDR;
-            ADDR_DMA1_CAPTURE_CTRL     : STATUS_SLAVE_RD_DATA <= {16'b0, 7'b0, DMA1_capture_rst, 7'b0, DMA1_capture_on};
             default: STATUS_SLAVE_RD_DATA <= 32'hFFFFFFFF;
         endcase
     end else STATUS_SLAVE_RD_DATA <= 0;

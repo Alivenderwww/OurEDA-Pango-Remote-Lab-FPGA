@@ -10,6 +10,15 @@ module streaming_axi_master_slave(
     input  wire         hdmi_in_de,
     input  wire [23:0]  hdmi_in_rgb,
 
+    output logic        rd_rstn_for_analyzer,
+    input  logic		rd_data_burst_valid_for_analyzer,
+    output logic		rd_data_burst_ready_for_analyzer,
+    input  logic [ 7:0] rd_data_burst_for_analyzer		,
+    input  logic		rd_data_valid_for_analyzer		,
+    output logic		rd_data_ready_for_analyzer		,
+    input  logic [31:0] rd_data_for_analyzer			,
+    input  logic		rd_data_last_for_analyzer		,
+
     //AXI MASTER interface
     output logic         MASTER_CLK          ,
     output logic         MASTER_RSTN         ,
@@ -102,6 +111,10 @@ wire [WR_INTERFACE_NUM-1:0]         wr_data_ready;
 wire [WR_INTERFACE_NUM-1:0] [31:0]  wr_data;
 wire [WR_INTERFACE_NUM-1:0]         wr_data_last;
 
+wire hdmi_notready;
+wire [31:0] hdmi_height_width;
+wire [31:0] capture_height_width;
+
 axi_master_write_dma #(
     .RD_INTERFACE_NUM(RD_INTERFACE_NUM),
     .WR_INTERFACE_NUM(WR_INTERFACE_NUM)
@@ -166,22 +179,6 @@ axi_master_write_dma #(
 	.MASTER_RD_DATA_READY 	( MASTER_RD_DATA_READY  )
 );
 
-wire        jpeg_add_need_frame_pos;
-wire [31:0] jpeg_add_need_frame_num;
-wire [31:0] jpeg_total_need_frame_num;
-wire [31:0] jpeg_height_width;
-wire [31:0] jpeg_save_num;
-wire        jpeg_rd_info_valid;
-wire        jpeg_rd_info_ready;
-wire [31:0] jpeg_rd_info;
-
-wire hdmi_notready;
-wire [31:0] hdmi_height_width;
-
-wire [13*8*8 - 1:0] Y_Quantizer;
-wire [13*8*8 - 1:0] CB_Quantizer;
-wire [13*8*8 - 1:0] CR_Quantizer;
-
 streaming_axi_slave u_streaming_axi_slave(
 	.clk                       	( clk                        ),
 	.rstn                      	( rstn                       ),
@@ -196,17 +193,7 @@ streaming_axi_slave u_streaming_axi_slave(
 	.end_read_addr0            	( end_read_addr[0]           ),
 	.hdmi_notready             	( hdmi_notready              ),
 	.hdmi_height_width         	( hdmi_height_width          ),
-	.jpeg_height_width         	( jpeg_height_width          ),
-	.jpeg_add_need_frame_pos   	( jpeg_add_need_frame_pos    ),
-	.jpeg_add_need_frame_num   	( jpeg_add_need_frame_num    ),
-	.jpeg_total_need_frame_num 	( jpeg_total_need_frame_num  ),
-	.jpeg_save_num             	( jpeg_save_num              ),
-	.jpeg_rd_info_valid        	( jpeg_rd_info_valid         ),
-	.jpeg_rd_info              	( jpeg_rd_info               ),
-	.jpeg_rd_info_ready        	( jpeg_rd_info_ready         ),
-    .Y_Quantizer                ( Y_Quantizer                ),
-    .CB_Quantizer               ( CB_Quantizer               ),
-    .CR_Quantizer               ( CR_Quantizer               ),
+    .capture_height_width       ( capture_height_width       ),
 
 	.SLAVE_CLK                 	( SLAVE_CLK                  ),
 	.SLAVE_RSTN                	( SLAVE_RSTN                 ),
@@ -241,64 +228,36 @@ streaming_axi_slave u_streaming_axi_slave(
 
 // read fifo 0: HDMI in
 hdmi_data_store hdmi_data_store_inst(
-    .hdmi_in_clk        (hdmi_in_clk           ),
-    .hdmi_in_rstn       (hdmi_in_rstn          ),
-    .hdmi_in_vsync      (hdmi_in_vsync         ),
-    .hdmi_in_hsync      (hdmi_in_hsync         ),
-    .hdmi_in_de         (hdmi_in_de            ),
-    .hdmi_in_rgb        (hdmi_in_rgb           ),
-    .frame_notready     (hdmi_notready         ),
-    .frame_height_width (hdmi_height_width     ),
-    .rd_clk             (clk                   ),
-    .rd_rstn            (rd_rstn            [0]),
-    .capture_on         (rd_capture_rstn    [0]),
-    .rd_addr_reset      (rd_addr_reset      [0]),
-    .rd_data_burst_valid(rd_data_burst_valid[0]),
-    .rd_data_burst_ready(rd_data_burst_ready[0]),
-    .rd_data_burst      (rd_data_burst      [0]),
-    .rd_data_valid      (rd_data_valid      [0]),
-    .rd_data_ready      (rd_data_ready      [0]),
-    .rd_data            (rd_data            [0]),
-    .rd_data_last       (rd_data_last       [0])
+    .hdmi_in_clk            (hdmi_in_clk           ),
+    .hdmi_in_rstn           (hdmi_in_rstn          ),
+    .hdmi_in_vsync          (hdmi_in_vsync         ),
+    .hdmi_in_hsync          (hdmi_in_hsync         ),
+    .hdmi_in_de             (hdmi_in_de            ),
+    .hdmi_in_rgb            (hdmi_in_rgb           ),
+    .frame_notready         (hdmi_notready         ),
+    .frame_height_width     (hdmi_height_width     ),
+    .capture_height_width   (capture_height_width         ),
+    .rd_clk                 (clk                   ),
+    .rd_rstn                (rd_rstn            [0]),
+    .capture_on             (rd_capture_rstn    [0]),
+    .rd_addr_reset          (rd_addr_reset      [0]),
+    .rd_data_burst_valid    (rd_data_burst_valid[0]),
+    .rd_data_burst_ready    (rd_data_burst_ready[0]),
+    .rd_data_burst          (rd_data_burst      [0]),
+    .rd_data_valid          (rd_data_valid      [0]),
+    .rd_data_ready          (rd_data_ready      [0]),
+    .rd_data                (rd_data            [0]),
+    .rd_data_last           (rd_data_last       [0])
 );
 
-//write fifo 0, read fifo 1: JPEG encoder (read frame from DDR, write encoded frame to DDR)
-jpeg_data_store jpeg_data_store_inst(
-    .clk                    (clk                    ),
-    .rstn                   (wr_rstn[0] & rd_rstn[1]),
-    .capture_on             (wr_capture_rstn[0] & rd_capture_rstn[1]),
-    .frame_width            (jpeg_height_width[11:0]         ),
-    .frame_height           (jpeg_height_width[27:16]        ),
-    .add_need_frame_num     (jpeg_add_need_frame_num  ),
-    .add_need_frame_pos     (jpeg_add_need_frame_pos  ),
-    .total_need_frame_num   (jpeg_total_need_frame_num),
-
-    .wr_addr_reset          (wr_addr_reset      [0]),
-    .wr_data_burst_valid    (wr_data_burst_valid[0]),
-    .wr_data_burst_ready    (wr_data_burst_ready[0]),
-    .wr_data_burst          (wr_data_burst      [0]),
-    .wr_data_valid          (wr_data_valid      [0]),
-    .wr_data_ready          (wr_data_ready      [0]),
-    .wr_data                (wr_data            [0]),
-    .wr_data_last           (wr_data_last       [0]),
-
-    .rd_addr_reset          (rd_addr_reset      [1]),
-    .rd_data_burst_valid    (rd_data_burst_valid[1]),
-    .rd_data_burst_ready    (rd_data_burst_ready[1]),
-    .rd_data_burst          (rd_data_burst      [1]),
-    .rd_data_valid          (rd_data_valid      [1]),
-    .rd_data_ready          (rd_data_ready      [1]),
-    .rd_data                (rd_data            [1]),
-    .rd_data_last           (rd_data_last       [1]),
-
-    .rd_info_valid          (jpeg_rd_info_valid  ),
-    .rd_info_ready          (jpeg_rd_info_ready  ),
-    .rd_info                (jpeg_rd_info        ),
-    .frame_save_num         (jpeg_save_num       ),
-
-    .Y_Quantizer            (Y_Quantizer         ),
-    .CB_Quantizer           (CB_Quantizer        ),
-    .CR_Quantizer           (CR_Quantizer        )
-);
+assign rd_rstn_for_analyzer   = rd_rstn[1];
+assign rd_data_burst_valid[1] = rd_data_burst_valid_for_analyzer;
+assign rd_data_burst_ready_for_analyzer = rd_data_burst_ready[1];
+assign rd_data_burst      [1] = rd_data_burst_for_analyzer		;
+assign rd_data_valid      [1] = rd_data_valid_for_analyzer		;
+assign rd_data_ready_for_analyzer = rd_data_ready      [1]		;
+assign rd_data            [1] = rd_data_for_analyzer			;
+assign rd_data_last       [1] = rd_data_last_for_analyzer		;
+assign rd_addr_reset[1]       = 0;
 
 endmodule

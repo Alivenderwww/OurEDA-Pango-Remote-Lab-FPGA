@@ -15,84 +15,28 @@
     </header>
     <param_list>
         <param>
-            <name>POWER_OPT</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>RD_DEPTH_WIDTH</name>
-            <value>12</value>
-        </param>
-        <param>
-            <name>BYTE_SIZE</name>
-            <value>8</value>
-        </param>
-        <param>
-            <name>RD_OCE_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>ALMOST_FULL_NUM</name>
-            <value>4000</value>
-        </param>
-        <param>
-            <name>FULL_WL_EN</name>
-            <value>false</value>
-        </param>
-        <param>
-            <name>EMPTY_WL_EN</name>
-            <value>true</value>
-        </param>
-        <param>
-            <name>SAMEWIDTH_EN</name>
-            <value>true</value>
-        </param>
-        <param>
-            <name>WR_DATA_WIDTH</name>
-            <value>32</value>
-        </param>
-        <param>
-            <name>RD_DATA_WIDTH</name>
-            <value>32</value>
+            <name>BE_WIDTH</name>
+            <value>1</value>
         </param>
         <param>
             <name>RST_VAL</name>
             <value>0</value>
         </param>
         <param>
-            <name>BE_WIDTH</name>
-            <value>1</value>
+            <name>WR_DATA_WIDTH</name>
+            <value>16</value>
         </param>
         <param>
-            <name>ALMOST_EMPTY_NUM</name>
-            <value>4</value>
+            <name>ALMOST_FULL_NUM</name>
+            <value>4000</value>
         </param>
         <param>
-            <name>RD_BE_WIDTH</name>
-            <value>1</value>
-        </param>
-        <param>
-            <name>WR_DEPTH_WIDTH</name>
-            <value>12</value>
-        </param>
-        <param>
-            <name>FIFO_TYPE</name>
-            <value>ASYN_FIFO</value>
-        </param>
-        <param>
-            <name>CAS_MODE_SEL</name>
-            <value>AUTO</value>
-        </param>
-        <param>
-            <name>FAB_REG</name>
+            <name>WR_BYTE_EN</name>
             <value>false</value>
         </param>
         <param>
-            <name>RESET_TYPE</name>
-            <value>ASYNC</value>
-        </param>
-        <param>
-            <name>ASYN_FIFO_EN</name>
-            <value>true</value>
+            <name>RD_DATA_WIDTH</name>
+            <value>32</value>
         </param>
         <param>
             <name>RD_CLK_OR_POL_INV</name>
@@ -103,7 +47,31 @@
             <value>36K</value>
         </param>
         <param>
-            <name>WR_BYTE_EN</name>
+            <name>EMPTY_WL_EN</name>
+            <value>true</value>
+        </param>
+        <param>
+            <name>RD_DEPTH_WIDTH</name>
+            <value>11</value>
+        </param>
+        <param>
+            <name>BYTE_SIZE</name>
+            <value>8</value>
+        </param>
+        <param>
+            <name>RD_BE_WIDTH</name>
+            <value>1</value>
+        </param>
+        <param>
+            <name>WR_DEPTH_WIDTH</name>
+            <value>12</value>
+        </param>
+        <param>
+            <name>RST_VAL_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RD_OCE_EN</name>
             <value>false</value>
         </param>
         <param>
@@ -111,7 +79,39 @@
             <value>false</value>
         </param>
         <param>
-            <name>RST_VAL_EN</name>
+            <name>ALMOST_EMPTY_NUM</name>
+            <value>4</value>
+        </param>
+        <param>
+            <name>FIFO_TYPE</name>
+            <value>ASYN_FIFO</value>
+        </param>
+        <param>
+            <name>CAS_MODE_SEL</name>
+            <value>AUTO</value>
+        </param>
+        <param>
+            <name>SAMEWIDTH_EN</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>POWER_OPT</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>ASYN_FIFO_EN</name>
+            <value>true</value>
+        </param>
+        <param>
+            <name>FAB_REG</name>
+            <value>false</value>
+        </param>
+        <param>
+            <name>RESET_TYPE</name>
+            <value>ASYNC</value>
+        </param>
+        <param>
+            <name>FULL_WL_EN</name>
             <value>false</value>
         </param>
     </param_list>
@@ -139,7 +139,7 @@
             <text>wr_data</text>
             <dir>input</dir>
             <pos>left</pos>
-            <msb>31</msb>
+            <msb>15</msb>
             <lsb>0</lsb>
         </pin>
         <pin>
@@ -191,7 +191,7 @@
             <text>rd_water_level</text>
             <dir>output</dir>
             <pos>right</pos>
-            <msb>12</msb>
+            <msb>11</msb>
             <lsb>0</lsb>
         </pin>
         <pin>

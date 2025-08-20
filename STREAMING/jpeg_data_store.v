@@ -44,6 +44,8 @@ wire        	jpeg_enoder_data_ready;
 wire [4:0]  	end_of_file_bitstream_count;
 wire        	eof_data_partial_ready;
 
+localparam [7:0] JPEG_FIFO_TRHSHOLD_LEVEL = 255; // 260*32 = 8320 bits, 1040 bytes, 1.04 KB
+
 wire fifo_wr_en;
 wire fifo_rd_en;
 wire fifo_rst;
@@ -176,7 +178,7 @@ always @(posedge clk or negedge rstn) begin
     if(~rstn) begin
              rd_data_burst <= 0;
     end else if((cu_fifo_rd_st == FIFO_RD_ST_IDLE) && (nt_fifo_rd_st == FIFO_RD_ST_TRANS_BURST)) begin
-        if(rd_water_level >= 260)
+        if(rd_water_level + fifo_rd_data_valid >= JPEG_FIFO_TRHSHOLD_LEVEL)
              rd_data_burst <= 8'hff; // burst size is 255
         else if(frame_need_trans_all && fifo_rd_data_valid)
              rd_data_burst <= 0;
@@ -200,7 +202,7 @@ end
 always @(*) begin
     if(~capture_on) nt_fifo_rd_st = FIFO_RD_ST_IDLE;
     else case (cu_fifo_rd_st)
-        FIFO_RD_ST_IDLE        : nt_fifo_rd_st = ((rd_water_level >= 256 - fifo_rd_data_valid) || (frame_need_trans_all && (fifo_rd_data_valid)))?(FIFO_RD_ST_TRANS_BURST):(FIFO_RD_ST_IDLE);
+        FIFO_RD_ST_IDLE        : nt_fifo_rd_st = ((rd_water_level + fifo_rd_data_valid >= JPEG_FIFO_TRHSHOLD_LEVEL) || (frame_need_trans_all && (fifo_rd_data_valid)))?(FIFO_RD_ST_TRANS_BURST):(FIFO_RD_ST_IDLE);
         FIFO_RD_ST_TRANS_BURST : nt_fifo_rd_st = (rd_data_burst_valid && rd_data_burst_ready)?(FIFO_RD_ST_TRANS_DATA):(FIFO_RD_ST_TRANS_BURST);
         FIFO_RD_ST_TRANS_DATA  : nt_fifo_rd_st = (rd_data_valid && rd_data_ready && rd_data_last)?((frame_need_trans_all && (bitstream_trans_size == bitstream_size_reg - 1))?(FIFO_RD_ST_FRAME_OVER):(FIFO_RD_ST_IDLE)):(FIFO_RD_ST_TRANS_DATA);
         FIFO_RD_ST_FRAME_OVER  : nt_fifo_rd_st = (frame_need_trans_all == 0)?(FIFO_RD_ST_IDLE):(FIFO_RD_ST_FRAME_OVER);

@@ -11,7 +11,7 @@ COMPONENT hdmi_data_store_fifo
     wr_clk : IN STD_LOGIC;
     wr_rst : IN STD_LOGIC;
     wr_en : IN STD_LOGIC;
-    wr_data : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    wr_data : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
     wr_full : OUT STD_LOGIC;
     almost_full : OUT STD_LOGIC;
     rd_clk : IN STD_LOGIC;
@@ -19,7 +19,7 @@ COMPONENT hdmi_data_store_fifo
     rd_en : IN STD_LOGIC;
     rd_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     rd_empty : OUT STD_LOGIC;
-    rd_water_level : OUT STD_LOGIC_VECTOR(12 DOWNTO 0);
+    rd_water_level : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
     almost_empty : OUT STD_LOGIC
   );
 END COMPONENT;
