@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Thu May 15 19:16:25 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Wed Aug 20 17:23:20 2025
 //
 
 module Word_Alignment_32bit
@@ -11,8 +11,9 @@ module Word_Alignment_32bit
     input N259,
     input _N1284,
     input clk,
-    output [31:0] N164,
+    output [31:0] N165,
     output [31:0] data_af_align,
+    output data_done,
     output data_valid
 );
     wire N23;
@@ -68,13 +69,12 @@ module Word_Alignment_32bit
     wire _N1229;
     wire _N1446_3;
     wire _N1446_4;
-    wire _N1474;
     wire _N1475;
-    wire _N1646;
+    wire _N1476;
     wire _N1647;
-    wire _N1649;
+    wire _N1648;
     wire _N1650;
-(* PAP_MARK_DEBUG="1" *)    wire data_done;
+    wire _N1651;
     wire [7:0] datareg8;
     wire [15:0] datareg16;
     wire [23:0] datareg24;
@@ -973,12 +973,12 @@ module Word_Alignment_32bit
             .INIT(64'b0000001100000011000000110000000001000100010001000100010001000100))
         N410_2_1 (
             .Z (_N1108),
-            .Z5 (N164[0]),
+            .Z5 (N165[0]),
             .I0 (data_bf_Alignment_judge[0]),
             .I1 (N259),
             .I2 (skip),
-            .I3 (_N1649),
-            .I4 (_N1650),
+            .I3 (_N1650),
+            .I4 (_N1651),
             .I5 (1'b1));
 	// LUT = (~I1&~I2&I4)|(~I1&~I2&I3) ;
 	// Z5 = ~I0&I1 ;
@@ -986,7 +986,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N410_4_2 */ #(
             .INIT(64'b0000000000000000000011111111000000000000000000000000011110110000))
         N410_4_2 (
-            .Z (_N1649),
+            .Z (_N1650),
             .I0 (rxk[2]),
             .I1 (rxk[3]),
             .I2 (state[0]),
@@ -998,7 +998,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N410_4_3 */ #(
             .INIT(64'b0000000000000111101100000000000000000000000011111111000000000000))
         N410_4_3 (
-            .Z (_N1650),
+            .Z (_N1651),
             .I0 (rxk[0]),
             .I1 (rxk[1]),
             .I2 (state[0]),
@@ -1010,7 +1010,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N484_3_2 */ #(
             .INIT(64'b0000000000000000000000000000000000000000000000000000100001000000))
         N484_3_2 (
-            .Z (_N1646),
+            .Z (_N1647),
             .I0 (rxk[2]),
             .I1 (rxk[3]),
             .I2 (state[0]),
@@ -1022,7 +1022,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N484_3_3 */ #(
             .INIT(64'b0000000000001000010000000000000000000000000000000000000000000000))
         N484_3_3 (
-            .Z (_N1647),
+            .Z (_N1648),
             .I0 (rxk[0]),
             .I1 (rxk[1]),
             .I2 (state[0]),
@@ -1035,8 +1035,8 @@ module Word_Alignment_32bit
             .INIT(4'b1110))
         N484_3_4 (
             .Z (_N1117),
-            .I0 (_N1646),
-            .I1 (_N1647));
+            .I0 (_N1647),
+            .I1 (_N1648));
 	// LUT = (I0)|(I1) ;
 
     GTP_LUT6 /* N505 */ #(
@@ -2382,14 +2382,14 @@ module Word_Alignment_32bit
             .Q (error),
             .C (N0),
             .CLK (clk),
-            .D (_N1474));
+            .D (_N1475));
     // defparam error_vname.orig_name = error;
 	// ../../../rtl/Word_Alignment_32bit.v:143
 
     GTP_LUT6 /* error_ce_mux */ #(
             .INIT(64'b1111111111111111111111111111101011001100110011001100110011001010))
         error_ce_mux (
-            .Z (_N1474),
+            .Z (_N1475),
             .I0 (N146),
             .I1 (error),
             .I2 (state[0]),
@@ -2432,14 +2432,14 @@ module Word_Alignment_32bit
             .Q (skip),
             .C (N0),
             .CLK (clk),
-            .D (_N1475));
+            .D (_N1476));
     // defparam skip_vname.orig_name = skip;
 	// ../../../rtl/Word_Alignment_32bit.v:143
 
     GTP_LUT6 /* skip_ce_mux */ #(
             .INIT(64'b1111111111110001000100010001000011001100110000000000000000000000))
         skip_ce_mux (
-            .Z (_N1475),
+            .Z (_N1476),
             .I0 (N259),
             .I1 (skip),
             .I2 (state[0]),
@@ -3235,8 +3235,8 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     wire _N286;
     wire _N287;
     wire _N1470;
-    wire _N1518;
-    wire _N1519;
+    wire _N1508;
+    wire _N1509;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
@@ -3245,16 +3245,6 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .Z (N0),
             .I (rst_n));
     // defparam N0_vname.orig_name = N0;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -3457,7 +3447,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     GTP_LUT4 /* N36_8 */ #(
             .INIT(16'b0000000000000001))
         N36_8 (
-            .Z (_N1518),
+            .Z (_N1508),
             .I0 (rise_cnt[4]),
             .I1 (rise_cnt[3]),
             .I2 (rise_cnt[2]),
@@ -3467,7 +3457,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1519),
+            .Z (_N1509),
             .I0 (rise_cnt[8]),
             .I1 (rise_cnt[7]),
             .I2 (rise_cnt[6]),
@@ -3482,24 +3472,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .I1 (rise_cnt[10]),
             .I2 (rise_cnt[9]),
             .I3 (rise_cnt[0]),
-            .I4 (_N1518),
-            .I5 (_N1519));
+            .I4 (_N1508),
+            .I5 (_N1509));
 	// LUT = I0&~I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111111111100111111111111110000000000111110100000000011111010))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (_N1470),
-            .I0 (signal_deb),
-            .I1 (signal_b),
-            .I2 (N36),
+            .Z5 (N2),
+            .I0 (signal_b),
+            .I1 (N36),
+            .I2 (signal_b_ff),
             .I3 (signal_b_neg),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I3)|(I2)|(I1) ;
-	// Z5 = (I2&~I3)|(I0&~I3) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[0]  */ #(
@@ -3744,6 +3734,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .CLK (clk),
             .D (_N1470));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:60
+
+    GTP_LUT3 /* signal_deb_pre_ce_mux */ #(
+            .INIT(8'b00001110))
+        signal_deb_pre_ce_mux (
+            .Z (_N1470),
+            .I0 (signal_deb),
+            .I1 (N36),
+            .I2 (signal_b_neg));
+	// LUT = (I0&~I2)|(I1&~I2) ;
 
 
 endmodule
@@ -4138,27 +4137,30 @@ module ipm2l_hsstlp_rst_wtchdg_v1_0
 	// CARRY = (I0&~I1&~I2) ? CIN : I5 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:64
 
-    GTP_LUT1 /* N20_1 */ #(
-            .INIT(2'b01))
-        N20_1 (
-            .Z (N20),
-            .I0 (cnt_2[9]));
-	// LUT = ~I0 ;
-
-    GTP_LUT6D /* N34 */ #(
-            .INIT(64'b1111111111111010111110101111101000000001000000010000000100000001))
-        N34_vname (
-            .Z (N34),
-            .Z5 (N31[0]),
+    GTP_LUT3 /* \N31[0]_1  */ #(
+            .INIT(8'b00000001))
+        \N31[0]_1  (
+            .Z (N31[0]),
             .I0 (wtchdg_in),
             .I1 (cnt_1[0]),
-            .I2 (cnt_1[9]),
-            .I3 (cnt_2[0]),
-            .I4 (cnt_2[9]),
+            .I2 (cnt_1[9]));
+	// LUT = ~I0&~I1&~I2 ;
+	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:36
+
+    GTP_LUT6D /* N34 */ #(
+            .INIT(64'b1111111011101110111111101110111000000000111111110000000011111111))
+        N34_vname (
+            .Z (N34),
+            .Z5 (N20),
+            .I0 (wtchdg_in),
+            .I1 (cnt_1[9]),
+            .I2 (cnt_2[0]),
+            .I3 (cnt_2[9]),
+            .I4 (),
             .I5 (1'b1));
     // defparam N34_vname.orig_name = N34;
-	// LUT = (I3&I4)|(I2)|(I0) ;
-	// Z5 = ~I0&~I1&~I2 ;
+	// LUT = (I2&I3)|(I1)|(I0) ;
+	// Z5 = ~I3 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:52
 
     GTP_LUT2 /* \N35[0]  */ #(
@@ -4398,7 +4400,7 @@ endmodule
 module ipm2l_hsstlp_rst_sync_v1_0_unq68
 (
     input clk,
-    input nt_rstn,
+    input i_pll_rst_0,
     output sig_synced
 );
     wire sig_async_ff;
@@ -4408,7 +4410,7 @@ module ipm2l_hsstlp_rst_sync_v1_0_unq68
             .INIT(1'b0))
         sig_async_ff_vname (
             .Q (sig_async_ff),
-            .C (nt_rstn),
+            .C (i_pll_rst_0),
             .CLK (clk),
             .D (1'b1));
     // defparam sig_async_ff_vname.orig_name = sig_async_ff;
@@ -4419,7 +4421,7 @@ module ipm2l_hsstlp_rst_sync_v1_0_unq68
             .INIT(1'b0))
         sig_synced_vname (
             .Q (sig_synced),
-            .C (nt_rstn),
+            .C (i_pll_rst_0),
             .CLK (clk),
             .D (sig_async_ff));
     // defparam sig_synced_vname.orig_name = sig_synced;
@@ -4444,7 +4446,6 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     wire [15:0] N81;
     wire N109;
     wire N151;
-    wire N166;
     wire [2:0] N168;
     wire _N0;
     wire _N6;
@@ -4472,8 +4473,9 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     wire _N1471;
     wire _N1472;
     wire _N1473;
-    wire _N1505;
-    wire _N1525;
+    wire _N1474;
+    wire _N1488;
+    wire _N1526;
     wire [15:0] cntr;
     wire [3:0] pll_fsm_reg;
 
@@ -4504,7 +4506,7 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I2 (pll_fsm_reg[1]),
             .I3 (pll_fsm_reg[2]),
             .I4 (_N1277),
-            .I5 (_N1525));
+            .I5 (_N1526));
 	// LUT = (I3&~I5)|(I3&~I4)|(I0&I1&I2) ;
 
     GTP_LUT6CARRY /* N42_1_1 */ #(
@@ -4861,8 +4863,8 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     GTP_LUT6D /* N103_11 */ #(
             .INIT(64'b0001000000000000000100000000000000000000000010000000000000000000))
         N103_11 (
-            .Z (_N1505),
-            .Z5 (_N1525),
+            .Z (_N1488),
+            .Z5 (_N1526),
             .I0 (cntr[0]),
             .I1 (cntr[4]),
             .I2 (cntr[8]),
@@ -4881,7 +4883,7 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I1 (cntr[6]),
             .I2 (cntr[7]),
             .I3 (_N1277),
-            .I4 (_N1505),
+            .I4 (_N1488),
             .I5 (1'b1));
 	// LUT = ~I0&~I1&~I2 ;
 	// Z5 = I0&~I1&~I2&I3&I4 ;
@@ -4943,21 +4945,6 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I4 (_N1276));
 	// LUT = I0&I1&I2&I3&I4 ;
 
-    GTP_LUT6D /* N166 */ #(
-            .INIT(64'b0000000000001111000000000000001111101110111011100010001000100010))
-        N166_vname (
-            .Z (N166),
-            .Z5 (_N1471),
-            .I0 (P_PLLPOWERDOWN),
-            .I1 (pll_fsm_reg[0]),
-            .I2 (pll_fsm_reg[1]),
-            .I3 (pll_fsm_reg[2]),
-            .I4 (_N883),
-            .I5 (1'b1));
-    // defparam N166_vname.orig_name = N166;
-	// LUT = (~I2&~I3&I4)|(~I1&~I2&~I3) ;
-	// Z5 = (I1&I4)|(I0&~I1) ;
-
     GTP_DFF_P /* P_PLLPOWERDOWN */ #(
             .GRS_EN("TRUE"), 
             .INIT(1'b1))
@@ -4968,6 +4955,15 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .P (N0));
     // defparam P_PLLPOWERDOWN_vname.orig_name = P_PLLPOWERDOWN;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
+
+    GTP_LUT3 /* P_PLLPOWERDOWN_ce_mux */ #(
+            .INIT(8'b11100010))
+        P_PLLPOWERDOWN_ce_mux (
+            .Z (_N1471),
+            .I0 (P_PLLPOWERDOWN),
+            .I1 (pll_fsm_reg[0]),
+            .I2 (_N883));
+	// LUT = (I0&~I1)|(I1&I2) ;
 
     GTP_DFF_C /* P_PLL_RST */ #(
             .GRS_EN("TRUE"), 
@@ -5152,17 +5148,28 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .D (N81[15]));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
 
-    GTP_DFF_CE /* o_pll_done */ #(
+    GTP_DFF_C /* o_pll_done */ #(
             .GRS_EN("TRUE"), 
             .INIT(1'b0))
         o_pll_done_vname (
             .Q (o_pll_done),
             .C (N0),
-            .CE (N166),
             .CLK (clk),
-            .D (pll_fsm_reg[3]));
+            .D (_N1473));
     // defparam o_pll_done_vname.orig_name = o_pll_done;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
+
+    GTP_LUT6 /* o_pll_done_ce_mux */ #(
+            .INIT(64'b1010101010101111101010101010000010101010101010111010101010101000))
+        o_pll_done_ce_mux (
+            .Z (_N1473),
+            .I0 (o_pll_done),
+            .I1 (pll_fsm_reg[0]),
+            .I2 (pll_fsm_reg[1]),
+            .I3 (pll_fsm_reg[2]),
+            .I4 (pll_fsm_reg[3]),
+            .I5 (_N883));
+	// LUT = (I0&I2)|(I0&I3)|(I0&I1&~I5)|(~I1&~I2&~I3&I4)|(~I2&~I3&I4&I5) ;
 
     GTP_LUT6D /* \pll_fsm_fsm[1:0]_1  */ #(
             .INIT(64'b0000000011001100000000001100110011111111010111111100110000000000))
@@ -5216,17 +5223,17 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .Q (pll_fsm_reg[3]),
             .C (N0),
             .CLK (clk),
-            .D (_N1473));
+            .D (_N1474));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:49
 
     GTP_LUT4 /* \pll_fsm_reg_ce_mux[3]  */ #(
             .INIT(16'b1110110011001100))
         \pll_fsm_reg_ce_mux[3]  (
-            .Z (_N1473),
+            .Z (_N1474),
             .I0 (pll_fsm_reg[2]),
             .I1 (pll_fsm_reg[3]),
             .I2 (_N1277),
-            .I3 (_N1525));
+            .I3 (_N1526));
 	// LUT = (I1)|(I0&I2&I3) ;
 
 
@@ -5273,7 +5280,7 @@ module ipm2l_hsstlp_rst_pll_v1_0
     ipm2l_hsstlp_rst_sync_v1_0_unq68 pll0_rstn_sync (
             .sig_synced (s_pll_rstn_0),
             .clk (clk),
-            .nt_rstn (i_pll_rst_0));
+            .i_pll_rst_0 (i_pll_rst_0));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_pll_v1_0.v:58
 
     ipm2l_hsstlp_pll_rst_fsm_v1_0 pll_rst_fsm_0 (
@@ -5367,16 +5374,16 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     wire _N1002;
     wire _N1462;
     wire _N1463;
-    wire _N1535;
     wire _N1536;
-    wire _N1563;
-    wire _N1574;
+    wire _N1537;
+    wire _N1564;
     wire _N1575;
     wire _N1576;
-    wire _N1585;
+    wire _N1577;
     wire _N1586;
-    wire _N1590;
-    wire _N1604;
+    wire _N1587;
+    wire _N1591;
+    wire _N1605;
     wire [12:0] cntr0;
     wire [7:0] cntr1;
     wire [14:0] cntr2;
@@ -5407,9 +5414,9 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .Z5 (N84),
             .I0 (sigdet),
             .I1 (cdr_align),
-            .I2 (_N1574),
-            .I3 (_N1575),
-            .I4 (_N1576),
+            .I2 (_N1575),
+            .I3 (_N1576),
+            .I4 (_N1577),
             .I5 (1'b1));
     // defparam N95_vname.orig_name = N95;
 	// LUT = (~I1)|(~I0) ;
@@ -5618,7 +5625,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .INIT(64'b1000000000000000100000000000000000000000110000000000000000000000))
         N215_ac3 (
             .Z (_N57),
-            .Z5 (_N1563),
+            .Z5 (_N1564),
             .I0 (cntr1[0]),
             .I1 (cntr1[1]),
             .I2 (cntr1[2]),
@@ -5871,7 +5878,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr3[3]),
             .I3 (cntr3[4]),
             .I4 (cntr3[9]),
-            .I5 (_N1535));
+            .I5 (_N1536));
     // defparam N243_vname.orig_name = N243;
 	// LUT = (I0)|(~I1&I2&I3&I4&I5) ;
 
@@ -6074,7 +6081,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N387_19 */ #(
             .INIT(16'b0000000000000001))
         N387_19 (
-            .Z (_N1585),
+            .Z (_N1586),
             .I0 (cntr0[1]),
             .I1 (cntr0[2]),
             .I2 (cntr0[3]),
@@ -6084,7 +6091,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N387_20 */ #(
             .INIT(16'b0000000000000010))
         N387_20 (
-            .Z (_N1586),
+            .Z (_N1587),
             .I0 (cntr0[4]),
             .I1 (cntr0[8]),
             .I2 (cntr0[9]),
@@ -6099,14 +6106,14 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr0[5]),
             .I2 (cntr0[6]),
             .I3 (cntr0[11]),
-            .I4 (_N1585),
-            .I5 (_N1586));
+            .I4 (_N1586),
+            .I5 (_N1587));
 	// LUT = ~I0&I1&I2&I3&I4&I5 ;
 
     GTP_LUT4 /* N404_9 */ #(
             .INIT(16'b0000000000010000))
         N404_9 (
-            .Z (_N1574),
+            .Z (_N1575),
             .I0 (cntr2[3]),
             .I1 (cntr2[4]),
             .I2 (cntr2[5]),
@@ -6116,7 +6123,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N404_10 */ #(
             .INIT(16'b1000000000000000))
         N404_10 (
-            .Z (_N1575),
+            .Z (_N1576),
             .I0 (cntr2[7]),
             .I1 (cntr2[8]),
             .I2 (cntr2[9]),
@@ -6126,7 +6133,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT5 /* N404_11 */ #(
             .INIT(32'b00000001000000000000000000000000))
         N404_11 (
-            .Z (_N1576),
+            .Z (_N1577),
             .I0 (cntr2[0]),
             .I1 (cntr2[1]),
             .I2 (cntr2[2]),
@@ -6137,7 +6144,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* N413_13 */ #(
             .INIT(64'b0000000000000000000000000000000000000000000000000000000000000100))
         N413_13 (
-            .Z (_N1535),
+            .Z (_N1536),
             .I0 (cntr3[1]),
             .I1 (cntr3[2]),
             .I2 (cntr3[5]),
@@ -6149,7 +6156,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N413_14 */ #(
             .INIT(16'b0100000000000000))
         N413_14 (
-            .Z (_N1536),
+            .Z (_N1537),
             .I0 (cntr3[0]),
             .I1 (cntr3[3]),
             .I2 (cntr3[4]),
@@ -6183,18 +6190,18 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
 	// Z5 = I0&I1&~I2&~I3&I4 ;
 
     GTP_LUT6D /* N483_0 */ #(
-            .INIT(64'b1111110011111100111111001111110000000000000001010000000000000101))
+            .INIT(64'b1111111111110000111111111111000000000000000000000000000000010001))
         N483_0 (
             .Z (_N83),
-            .Z5 (N509[0]),
-            .I0 (N243),
-            .I1 (rxlane_rst_fsm_reg[1]),
-            .I2 (rxlane_rst_fsm_reg[0]),
-            .I3 (cntr3[0]),
-            .I4 (),
+            .Z5 (N502[0]),
+            .I0 (cdr_align),
+            .I1 (N84),
+            .I2 (rxlane_rst_fsm_reg[1]),
+            .I3 (rxlane_rst_fsm_reg[0]),
+            .I4 (cntr2[0]),
             .I5 (1'b1));
-	// LUT = (I2)|(I1) ;
-	// Z5 = ~I0&~I2&~I3 ;
+	// LUT = (I3)|(I2) ;
+	// Z5 = ~I0&~I1&~I3&~I4 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6D /* \N486_7[1]  */ #(
@@ -6276,18 +6283,18 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
 	// LUT = ~I0&I1 ;
 
     GTP_LUT6D /* N492_0 */ #(
-            .INIT(64'b1111111111110000111111111111000000000000000000000000000000010001))
+            .INIT(64'b1110111011101110111011101110111000000001000000010000000100000001))
         N492_0 (
             .Z (_N76),
-            .Z5 (N502[0]),
-            .I0 (cdr_align),
-            .I1 (N84),
-            .I2 (rxlane_rst_fsm_reg[2]),
-            .I3 (rxlane_rst_fsm_reg[0]),
-            .I4 (cntr2[0]),
+            .Z5 (_N82_inv),
+            .I0 (rxlane_rst_fsm_reg[2]),
+            .I1 (rxlane_rst_fsm_reg[0]),
+            .I2 (rxlane_rst_fsm_reg[5]),
+            .I3 (),
+            .I4 (),
             .I5 (1'b1));
-	// LUT = (I3)|(I2) ;
-	// Z5 = ~I0&~I1&~I3&~I4 ;
+	// LUT = (I1)|(I0) ;
+	// Z5 = ~I0&~I1&~I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6D /* \N495_7[0]  */ #(
@@ -6299,7 +6306,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr1[0]),
             .I2 (cntr1[4]),
             .I3 (_N57),
-            .I4 (_N1563),
+            .I4 (_N1564),
             .I5 (1'b1));
 	// LUT = (~I0&~I1&~I4)|(~I0&~I1&~I2) ;
 	// Z5 = (~I0&I2&~I3&~I4)|(~I0&I1&I2&~I3)|(~I0&~I2&I3) ;
@@ -6313,7 +6320,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[1]),
             .I3 (cntr1[2]),
             .I4 (cntr1[4]),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&~I1&I3&~I5)|(~I0&~I1&I3&~I4)|(~I0&I1&I2&~I3)|(~I0&I1&~I2&I3) ;
 
     GTP_LUT5 /* \N495_7[3]  */ #(
@@ -6336,22 +6343,37 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[4]),
             .I3 (cntr1[5]),
             .I4 (_N57),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&~I2&I3)|(~I0&I3&~I4&~I5)|(~I0&I1&I3&~I4)|(~I0&I2&~I3&I4&~I5)|(~I0&I1&I2&~I3&I4) ;
 
     GTP_LUT6D /* N499_0 */ #(
-            .INIT(64'b1111110011111100111111001111110000000000000100010000000000010001))
+            .INIT(64'b1111111111001100111111111100110000000001000000010000000100000001))
         N499_0 (
             .Z (_N77),
-            .Z5 (_N82_inv),
-            .I0 (rxlane_rst_fsm_reg[2]),
+            .Z5 (N509[0]),
+            .I0 (N243),
             .I1 (rxlane_rst_fsm_reg[0]),
-            .I2 (rxlane_rst_fsm_reg[4]),
-            .I3 (rxlane_rst_fsm_reg[5]),
+            .I2 (cntr3[0]),
+            .I3 (rxlane_rst_fsm_reg[4]),
             .I4 (),
             .I5 (1'b1));
-	// LUT = (I2)|(I1) ;
-	// Z5 = ~I0&~I1&~I3 ;
+	// LUT = (I3)|(I1) ;
+	// Z5 = ~I0&~I1&~I2 ;
+	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
+
+    GTP_LUT6D /* N506_0 */ #(
+            .INIT(64'b1111111111110000111111111111000000000000000000000010001011111111))
+        N506_0 (
+            .Z (_N78),
+            .Z5 (N658),
+            .I0 (N247),
+            .I1 (N243),
+            .I2 (rxlane_rst_fsm_reg[0]),
+            .I3 (rxlane_rst_fsm_reg[5]),
+            .I4 (_N1605),
+            .I5 (1'b1));
+	// LUT = (I3)|(I2) ;
+	// Z5 = (~I3&~I4)|(I0&~I1&~I4) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6 /* \N525_1[1]  */ #(
@@ -6429,7 +6451,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr1[0]),
             .I2 (cntr1[1]),
             .I3 (cntr1[4]),
-            .I4 (_N1563),
+            .I4 (_N1564),
             .I5 (1'b1));
 	// LUT = (~I4)|(~I3)|(I1)|(I0) ;
 	// Z5 = (~I0&~I1&I2&~I4)|(~I0&~I1&I2&~I3)|(~I0&I1&~I2) ;
@@ -6438,7 +6460,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* N654_4 */ #(
             .INIT(64'b1111111111111111111111111111101111111111111111111111111111110000))
         N654_4 (
-            .Z (_N1604),
+            .Z (_N1605),
             .I0 (N95),
             .I1 (N443),
             .I2 (rxlane_rst_fsm_reg[1]),
@@ -6446,21 +6468,6 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I4 (rxlane_rst_fsm_reg[4]),
             .I5 (rxlane_rst_fsm_reg[7]));
 	// LUT = (I2)|(I3)|(I4)|(~I1&I5)|(I0&I5) ;
-
-    GTP_LUT6D /* N658 */ #(
-            .INIT(64'b0000000000000000001000101111111111111111111100001111111111110000))
-        N658_vname (
-            .Z (N658),
-            .Z5 (_N78),
-            .I0 (N247),
-            .I1 (N243),
-            .I2 (rxlane_rst_fsm_reg[0]),
-            .I3 (rxlane_rst_fsm_reg[5]),
-            .I4 (_N1604),
-            .I5 (1'b1));
-    // defparam N658_vname.orig_name = N658;
-	// LUT = (~I3&~I4)|(I0&~I1&~I4) ;
-	// Z5 = (I3)|(I2) ;
 
     GTP_DFF_P /* P_PCS_RX_RST */ #(
             .GRS_EN("TRUE"), 
@@ -7072,7 +7079,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[0]),
             .I3 (cntr1[4]),
             .I4 (rxlane_rst_fsm_reg[3]),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&I4)|(I1&~I2&I3&I5) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
@@ -7103,7 +7110,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* \rxlane_rst_fsm_fsm[3:0]_51_2  */ #(
             .INIT(64'b0111011111110111011101111111011101110111111101110000000011110000))
         \rxlane_rst_fsm_fsm[3:0]_51_2  (
-            .Z (_N1590),
+            .Z (_N1591),
             .I0 (sigdet),
             .I1 (cdr_align),
             .I2 (rxlane_rst_fsm_reg[2]),
@@ -7120,7 +7127,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (rxlane_rst_fsm_reg[1]),
             .I2 (N673[7]),
             .I3 (rxlane_rst_fsm_reg[4]),
-            .I4 (_N1590));
+            .I4 (_N1591));
 	// LUT = (I4)|(I0&I3)|(I1&I2) ;
 
     GTP_LUT6 /* \rxlane_rst_fsm_fsm[3:0]_57  */ #(
@@ -7131,8 +7138,8 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cdr_align),
             .I2 (rxlane_rst_fsm_reg[5]),
             .I3 (rxlane_rst_fsm_reg[7]),
-            .I4 (_N1535),
-            .I5 (_N1536));
+            .I4 (_N1536),
+            .I5 (_N1537));
 	// LUT = (I0&I1&I3)|(I0&I1&I2&I4&I5) ;
 
 (* syn_encoding="onehot" *)    GTP_DFF_P /* \rxlane_rst_fsm_reg[0]  */ #(
@@ -7232,21 +7239,11 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     wire _N246;
     wire _N247;
     wire _N1461;
-    wire _N1556;
     wire _N1557;
+    wire _N1558;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -7449,7 +7446,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1556),
+            .Z (_N1557),
             .I0 (rise_cnt[5]),
             .I1 (rise_cnt[6]),
             .I2 (rise_cnt[7]),
@@ -7459,7 +7456,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     GTP_LUT4 /* N36_10 */ #(
             .INIT(16'b0000000100000000))
         N36_10 (
-            .Z (_N1557),
+            .Z (_N1558),
             .I0 (rise_cnt[0]),
             .I1 (rise_cnt[9]),
             .I2 (rise_cnt[10]),
@@ -7474,24 +7471,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
             .I1 (rise_cnt[2]),
             .I2 (rise_cnt[3]),
             .I3 (rise_cnt[4]),
-            .I4 (_N1556),
-            .I5 (_N1557));
+            .I4 (_N1557),
+            .I5 (_N1558));
 	// LUT = ~I0&~I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111111111010111111111111101000001111000011000000111100001100))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (_N1461),
+            .Z5 (N2),
             .I0 (signal_b),
-            .I1 (signal_deb),
-            .I2 (signal_b_neg),
+            .I1 (signal_b_neg),
+            .I2 (signal_b_ff),
             .I3 (N36),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I3)|(I2)|(I0) ;
-	// Z5 = (~I2&I3)|(I1&~I2) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[0]  */ #(
@@ -7737,6 +7734,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
             .D (_N1461));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:60
 
+    GTP_LUT3 /* signal_deb_pre_ce_mux */ #(
+            .INIT(8'b00110010))
+        signal_deb_pre_ce_mux (
+            .Z (_N1461),
+            .I0 (signal_deb),
+            .I1 (signal_b_neg),
+            .I2 (N36));
+	// LUT = (I0&~I1)|(~I1&I2) ;
+
 
 endmodule
 
@@ -7799,21 +7805,11 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     wire _N258;
     wire _N259;
     wire _N1460;
-    wire _N1544;
     wire _N1545;
+    wire _N1546;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -8016,7 +8012,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     GTP_LUT4 /* N36_8 */ #(
             .INIT(16'b0000000000000001))
         N36_8 (
-            .Z (_N1544),
+            .Z (_N1545),
             .I0 (rise_cnt[1]),
             .I1 (rise_cnt[3]),
             .I2 (rise_cnt[4]),
@@ -8026,7 +8022,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1545),
+            .Z (_N1546),
             .I0 (rise_cnt[6]),
             .I1 (rise_cnt[7]),
             .I2 (rise_cnt[8]),
@@ -8041,24 +8037,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
             .I1 (rise_cnt[2]),
             .I2 (rise_cnt[10]),
             .I3 (rise_cnt[11]),
-            .I4 (_N1544),
-            .I5 (_N1545));
+            .I4 (_N1545),
+            .I5 (_N1546));
 	// LUT = ~I0&I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111011111110111111101111111000110011001100000011001100110000))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (N41[2]),
+            .Z5 (N2),
             .I0 (signal_b),
             .I1 (signal_b_neg),
-            .I2 (N36),
-            .I3 (N13[2]),
+            .I2 (signal_b_ff),
+            .I3 (N36),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I2)|(I1)|(I0) ;
-	// Z5 = (~I1&I3)|(~I1&I2) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[1]  */ #(
@@ -8074,6 +8070,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
             .I5 (1'b1));
 	// LUT = ~I0&~I1&I3 ;
 	// Z5 = ~I0&~I1&~I2 ;
+
+    GTP_LUT3 /* \N41_3[2]  */ #(
+            .INIT(8'b01010100))
+        \N41_3[2]  (
+            .Z (N41[2]),
+            .I0 (signal_b_neg),
+            .I1 (N36),
+            .I2 (N13[2]));
+	// LUT = (~I0&I1)|(~I0&I2) ;
 
     GTP_DFF_CE /* \rise_cnt[0]  */ #(
             .GRS_EN("TRUE"), 
@@ -8394,8 +8399,8 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     wire _N1467;
     wire _N1468;
     wire _N1469;
-    wire _N1477;
-    wire _N1610;
+    wire _N1478;
+    wire _N1611;
     wire [8:0] cntr;
     wire [5:0] txlane_rst_fsm_reg_alias;
     assign txlane_rst_fsm_reg_alias[0] = txlane_rst_fsm_reg[0];
@@ -8509,7 +8514,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I1 (txlane_rst_fsm_reg_alias[1]),
             .I2 (txlane_rst_fsm_reg_alias[2]),
             .I3 (_N1266),
-            .I4 (_N1477),
+            .I4 (_N1478),
             .I5 (1'b1));
 	// LUT = (I1&~I4)|(I1&~I3)|(~I0&I2) ;
 	// Z5 = (I1&I3&I4)|(~I0&I2) ;
@@ -8518,7 +8523,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     GTP_LUT6D /* N298_9 */ #(
             .INIT(64'b0001000000010000000100000001000000001000000000000000100000000000))
         N298_9 (
-            .Z (_N1477),
+            .Z (_N1478),
             .Z5 (N315),
             .I0 (cntr[1]),
             .I1 (cntr[3]),
@@ -8560,7 +8565,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     GTP_LUT5 /* N314_10 */ #(
             .INIT(32'b00000000000000000000000000001000))
         N314_10 (
-            .Z (_N1610),
+            .Z (_N1611),
             .I0 (cntr[1]),
             .I1 (cntr[4]),
             .I2 (cntr[6]),
@@ -8577,7 +8582,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I2 (cntr[3]),
             .I3 (cntr[5]),
             .I4 (txlane_rst_fsm_reg_alias[1]),
-            .I5 (_N1610));
+            .I5 (_N1611));
     // defparam N468_vname.orig_name = N468;
 	// LUT = (I4&~I5)|(~I3&I4)|(~I1&I4)|(I0&I4)|(I2&I4) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v:221
@@ -8639,7 +8644,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I1 (txlane_rst_fsm_reg_alias[0]),
             .I2 (txlane_rst_fsm_reg_alias[1]),
             .I3 (_N1266),
-            .I4 (_N1477));
+            .I4 (_N1478));
 	// LUT = (I1&~I4)|(I1&~I3)|(I0&~I2)|(I1&~I2)|(I0&I3&I4) ;
 
     GTP_DFF_P /* P_TX_LANE_PD_DRIVER */ #(
@@ -8907,13 +8912,13 @@ module ipm2l_hsstlp_rst_v1_8
     output P_TX_LANE_PD_DRIVER_3,
     output P_TX_LANE_PD_PISO_3,
     output P_TX_PMA_RST_3,
-    output o_pll_done_0,
     output o_rxlane_done_3,
     output o_txlane_done_3
 );
     wire \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/N17 ;
     wire [9:0] \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg ;
     wire \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[0]_inv ;
+    wire o_pll_done_0;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[1]_floating ;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[2]_floating ;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[3]_floating ;
@@ -8976,8 +8981,6 @@ module hsst
     output [3:0] o_rxk_3,
     output i_p_rx3_clk_fr_core,
     output i_p_tx3_clk_fr_core,
-    output o_p_pll_lock_0,
-    output o_pll_done_0,
     output o_rxlane_done_3,
     output o_txlane_done_3
 );
@@ -8992,6 +8995,7 @@ module hsst
     wire P_TX_LANE_PD_PISO_3;
     wire P_TX_PMA_RST_3;
     wire o_p_lx_cdr_align_3;
+    wire o_p_pll_lock_0;
     wire o_p_rx_sigdet_sta_3;
     wire \U_GTP_HSSTLP_WRAPPER_P_RDATA_3[8]_floating ;
     wire \U_GTP_HSSTLP_WRAPPER_P_RDATA_3[9]_floating ;
@@ -9038,7 +9042,6 @@ module hsst
             .P_TX_LANE_PD_DRIVER_3 (P_TX_LANE_PD_DRIVER_3),
             .P_TX_LANE_PD_PISO_3 (P_TX_LANE_PD_PISO_3),
             .P_TX_PMA_RST_3 (P_TX_PMA_RST_3),
-            .o_pll_done_0 (o_pll_done_0),
             .o_rxlane_done_3 (o_rxlane_done_3),
             .o_txlane_done_3 (o_txlane_done_3),
             .P_PLL_READY_0 (o_p_pll_lock_0),
@@ -9061,15 +9064,15 @@ module hsst_top
     output [7:0] led
 );
 	// SDC constraint : (object clk) (id 1000) (clock hsst_top|clk) (inferred)
-    wire N17;
-    wire [32:0] \N110.co ;
+    wire N18;
     wire [32:0] \N111.co ;
-    wire [31:0] N152;
-    wire [15:0] N162;
-    wire [31:0] N164;
-    wire [31:0] N166;
-    wire [15:0] N169;
-    wire [1:0] N174;
+    wire [32:0] \N112.co ;
+    wire [31:0] N153;
+    wire [15:0] N163;
+    wire [31:0] N165;
+    wire [31:0] N167;
+    wire [15:0] N170;
+    wire [1:0] N175;
     wire \Word_Alignment_32bit_inst/N259_rnmt ;
     wire _N189;
     wire _N190;
@@ -9196,7 +9199,9 @@ module hsst_top
     wire [31:0] data_af_Alignment_judge;
     wire [31:0] data_af_align;
     wire [31:0] data_bf_Alignment_judge;
+(* PAP_MARK_DEBUG="1" *)    wire data_last;
 (* PAP_MARK_DEBUG="1" *)    wire data_valid;
+    wire i_pll_rst_0;
     wire [31:0] i_txd_3;
     wire [3:0] i_txk_3;
     wire nt_clk;
@@ -9206,63 +9211,67 @@ module hsst_top
     wire nt_rstn;
     wire [31:0] o_rxd_3;
     wire [3:0] o_rxk_3;
-    wire rxclk;
+(* PAP_MARK_DEBUG="1" *)    wire rxclk;
     wire [2:0] tx_state_next;
     wire [2:0] tx_state_reg;
     wire txclk;
     wire [15:0] txcnt;
-    wire \Word_Alignment_32bit_inst_N164[1]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[2]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[3]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[4]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[5]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[6]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[7]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[8]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[9]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[10]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[11]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[12]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[13]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[14]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[15]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[16]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[17]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[18]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[19]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[20]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[21]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[22]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[23]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[24]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[25]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[26]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[27]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[28]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[29]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[30]_floating ;
-    wire \Word_Alignment_32bit_inst_N164[31]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[1]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[2]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[3]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[4]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[5]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[6]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[7]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[8]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[9]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[10]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[11]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[12]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[13]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[14]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[15]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[16]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[17]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[18]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[19]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[20]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[21]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[22]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[23]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[24]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[25]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[26]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[27]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[28]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[29]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[30]_floating ;
+    wire \Word_Alignment_32bit_inst_N165[31]_floating ;
 
     GTP_GRS GRS_INST (
             .GRS_N (1'b1));
 
-    GTP_LUT3 /* N17 */ #(
+    GTP_INV N0 (
+            .Z (i_pll_rst_0),
+            .I (nt_rstn));
+
+    GTP_LUT3 /* N18 */ #(
             .INIT(8'b01111111))
-        N17_vname (
-            .Z (N17),
+        N18_vname (
+            .Z (N18),
             .I0 (nt_rstn),
-            .I1 (nt_led[4]),
-            .I2 (nt_led[5]));
-    // defparam N17_vname.orig_name = N17;
+            .I1 (nt_led[2]),
+            .I2 (nt_led[3]));
+    // defparam N18_vname.orig_name = N18;
 	// LUT = (~I2)|(~I1)|(~I0) ;
 
-    GTP_LUT6CARRY /* N37_0_1 */ #(
+    GTP_LUT6CARRY /* N38_0_1 */ #(
             .INIT(64'b0110000001100000011000000110000000000000000000000000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("TRUE"))
-        N37_0_1 (
+        N38_0_1 (
             .COUT (_N300),
-            .Z (N152[1]),
+            .Z (N153[1]),
             .CIN (),
             .I0 (i_txd_3[0]),
             .I1 (i_txd_3[1]),
@@ -9274,11 +9283,11 @@ module hsst_top
 	// CARRY = (1'b0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_2 */ #(
+    GTP_LUT6CARRY /* N38_0_2 */ #(
             .INIT(64'b0111000010000000011100001000000010000000000000001000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_2 (
+        N38_0_2 (
             .COUT (_N301),
             .Z (_N780),
             .CIN (_N300),
@@ -9292,11 +9301,11 @@ module hsst_top
 	// CARRY = (I0&I1&I2&I3) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_3 */ #(
+    GTP_LUT6CARRY /* N38_0_3 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_3 (
+        N38_0_3 (
             .COUT (_N302),
             .Z (_N783),
             .CIN (_N301),
@@ -9310,11 +9319,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_4 */ #(
+    GTP_LUT6CARRY /* N38_0_4 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_4 (
+        N38_0_4 (
             .COUT (_N303),
             .Z (_N786),
             .CIN (_N302),
@@ -9328,11 +9337,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_5 */ #(
+    GTP_LUT6CARRY /* N38_0_5 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_5 (
+        N38_0_5 (
             .COUT (_N304),
             .Z (_N789),
             .CIN (_N303),
@@ -9346,13 +9355,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_6 */ #(
+    GTP_LUT6CARRY /* N38_0_6 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_6 (
+        N38_0_6 (
             .COUT (_N305),
-            .Z (N152[6]),
+            .Z (N153[6]),
             .CIN (_N304),
             .I0 (i_txd_3[6]),
             .I1 (tx_state_reg[2]),
@@ -9364,11 +9373,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_7 */ #(
+    GTP_LUT6CARRY /* N38_0_7 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_7 (
+        N38_0_7 (
             .COUT (_N306),
             .Z (_N795),
             .CIN (_N305),
@@ -9382,13 +9391,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_8 */ #(
+    GTP_LUT6CARRY /* N38_0_8 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_8 (
+        N38_0_8 (
             .COUT (_N307),
-            .Z (N152[8]),
+            .Z (N153[8]),
             .CIN (_N306),
             .I0 (i_txd_3[8]),
             .I1 (tx_state_reg[2]),
@@ -9400,13 +9409,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_9 */ #(
+    GTP_LUT6CARRY /* N38_0_9 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_9 (
+        N38_0_9 (
             .COUT (_N308),
-            .Z (N152[9]),
+            .Z (N153[9]),
             .CIN (_N307),
             .I0 (i_txd_3[9]),
             .I1 (tx_state_reg[2]),
@@ -9418,11 +9427,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_10 */ #(
+    GTP_LUT6CARRY /* N38_0_10 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_10 (
+        N38_0_10 (
             .COUT (_N309),
             .Z (_N804),
             .CIN (_N308),
@@ -9436,11 +9445,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_11 */ #(
+    GTP_LUT6CARRY /* N38_0_11 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_11 (
+        N38_0_11 (
             .COUT (_N310),
             .Z (_N807),
             .CIN (_N309),
@@ -9454,11 +9463,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_12 */ #(
+    GTP_LUT6CARRY /* N38_0_12 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_12 (
+        N38_0_12 (
             .COUT (_N311),
             .Z (_N810),
             .CIN (_N310),
@@ -9472,11 +9481,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_13 */ #(
+    GTP_LUT6CARRY /* N38_0_13 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_13 (
+        N38_0_13 (
             .COUT (_N312),
             .Z (_N813),
             .CIN (_N311),
@@ -9490,13 +9499,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_14 */ #(
+    GTP_LUT6CARRY /* N38_0_14 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_14 (
+        N38_0_14 (
             .COUT (_N313),
-            .Z (N152[14]),
+            .Z (N153[14]),
             .CIN (_N312),
             .I0 (i_txd_3[14]),
             .I1 (tx_state_reg[2]),
@@ -9508,11 +9517,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_15 */ #(
+    GTP_LUT6CARRY /* N38_0_15 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_15 (
+        N38_0_15 (
             .COUT (_N314),
             .Z (_N819),
             .CIN (_N313),
@@ -9526,13 +9535,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_16 */ #(
+    GTP_LUT6CARRY /* N38_0_16 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_16 (
+        N38_0_16 (
             .COUT (_N315),
-            .Z (N152[16]),
+            .Z (N153[16]),
             .CIN (_N314),
             .I0 (i_txd_3[16]),
             .I1 (tx_state_reg[2]),
@@ -9544,13 +9553,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_17 */ #(
+    GTP_LUT6CARRY /* N38_0_17 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_17 (
+        N38_0_17 (
             .COUT (_N316),
-            .Z (N152[17]),
+            .Z (N153[17]),
             .CIN (_N315),
             .I0 (i_txd_3[17]),
             .I1 (tx_state_reg[2]),
@@ -9562,11 +9571,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_18 */ #(
+    GTP_LUT6CARRY /* N38_0_18 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_18 (
+        N38_0_18 (
             .COUT (_N317),
             .Z (_N828),
             .CIN (_N316),
@@ -9580,11 +9589,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_19 */ #(
+    GTP_LUT6CARRY /* N38_0_19 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_19 (
+        N38_0_19 (
             .COUT (_N318),
             .Z (_N831),
             .CIN (_N317),
@@ -9598,11 +9607,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_20 */ #(
+    GTP_LUT6CARRY /* N38_0_20 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_20 (
+        N38_0_20 (
             .COUT (_N319),
             .Z (_N834),
             .CIN (_N318),
@@ -9616,11 +9625,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_21 */ #(
+    GTP_LUT6CARRY /* N38_0_21 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_21 (
+        N38_0_21 (
             .COUT (_N320),
             .Z (_N837),
             .CIN (_N319),
@@ -9634,13 +9643,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_22 */ #(
+    GTP_LUT6CARRY /* N38_0_22 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_22 (
+        N38_0_22 (
             .COUT (_N321),
-            .Z (N152[22]),
+            .Z (N153[22]),
             .CIN (_N320),
             .I0 (i_txd_3[22]),
             .I1 (tx_state_reg[2]),
@@ -9652,11 +9661,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_23 */ #(
+    GTP_LUT6CARRY /* N38_0_23 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_23 (
+        N38_0_23 (
             .COUT (_N322),
             .Z (_N843),
             .CIN (_N321),
@@ -9670,13 +9679,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_24 */ #(
+    GTP_LUT6CARRY /* N38_0_24 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_24 (
+        N38_0_24 (
             .COUT (_N323),
-            .Z (N152[24]),
+            .Z (N153[24]),
             .CIN (_N322),
             .I0 (i_txd_3[24]),
             .I1 (tx_state_reg[2]),
@@ -9688,13 +9697,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_25 */ #(
+    GTP_LUT6CARRY /* N38_0_25 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_25 (
+        N38_0_25 (
             .COUT (_N324),
-            .Z (N152[25]),
+            .Z (N153[25]),
             .CIN (_N323),
             .I0 (i_txd_3[25]),
             .I1 (tx_state_reg[2]),
@@ -9706,11 +9715,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_26 */ #(
+    GTP_LUT6CARRY /* N38_0_26 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_26 (
+        N38_0_26 (
             .COUT (_N325),
             .Z (_N852),
             .CIN (_N324),
@@ -9724,11 +9733,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_27 */ #(
+    GTP_LUT6CARRY /* N38_0_27 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_27 (
+        N38_0_27 (
             .COUT (_N326),
             .Z (_N855),
             .CIN (_N325),
@@ -9742,11 +9751,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_28 */ #(
+    GTP_LUT6CARRY /* N38_0_28 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_28 (
+        N38_0_28 (
             .COUT (_N327),
             .Z (_N858),
             .CIN (_N326),
@@ -9760,11 +9769,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_29 */ #(
+    GTP_LUT6CARRY /* N38_0_29 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_29 (
+        N38_0_29 (
             .COUT (_N328),
             .Z (_N861),
             .CIN (_N327),
@@ -9778,13 +9787,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_30 */ #(
+    GTP_LUT6CARRY /* N38_0_30 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_30 (
+        N38_0_30 (
             .COUT (_N329),
-            .Z (N152[30]),
+            .Z (N153[30]),
             .CIN (_N328),
             .I0 (i_txd_3[30]),
             .I1 (tx_state_reg[2]),
@@ -9796,11 +9805,11 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N37_0_31 */ #(
+    GTP_LUT6CARRY /* N38_0_31 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N37_0_31 (
+        N38_0_31 (
             .COUT (),
             .Z (_N867),
             .CIN (_N329),
@@ -9814,13 +9823,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:92
 
-    GTP_LUT6CARRY /* N87_0_1 */ #(
+    GTP_LUT6CARRY /* N88_0_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("TRUE"))
-        N87_0_1 (
+        N88_0_1 (
             .COUT (_N189),
-            .Z (N169[1]),
+            .Z (N170[1]),
             .CIN (),
             .I0 (txcnt[0]),
             .I1 (txcnt[1]),
@@ -9832,13 +9841,13 @@ module hsst_top
 	// CARRY = (1'b0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_2 */ #(
+    GTP_LUT6CARRY /* N88_0_2 */ #(
             .INIT(64'b0111100001111000011110000111100010000000100000001000000010000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_2 (
+        N88_0_2 (
             .COUT (_N190),
-            .Z (N169[2]),
+            .Z (N170[2]),
             .CIN (_N189),
             .I0 (txcnt[0]),
             .I1 (txcnt[1]),
@@ -9850,13 +9859,13 @@ module hsst_top
 	// CARRY = (I0&I1&I2) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_3 */ #(
+    GTP_LUT6CARRY /* N88_0_3 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_3 (
+        N88_0_3 (
             .COUT (_N191),
-            .Z (N169[3]),
+            .Z (N170[3]),
             .CIN (_N190),
             .I0 (txcnt[3]),
             .I1 (),
@@ -9868,13 +9877,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_4 */ #(
+    GTP_LUT6CARRY /* N88_0_4 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_4 (
+        N88_0_4 (
             .COUT (_N192),
-            .Z (N169[4]),
+            .Z (N170[4]),
             .CIN (_N191),
             .I0 (txcnt[4]),
             .I1 (),
@@ -9886,13 +9895,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_5 */ #(
+    GTP_LUT6CARRY /* N88_0_5 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_5 (
+        N88_0_5 (
             .COUT (_N193),
-            .Z (N169[5]),
+            .Z (N170[5]),
             .CIN (_N192),
             .I0 (txcnt[5]),
             .I1 (),
@@ -9904,13 +9913,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_6 */ #(
+    GTP_LUT6CARRY /* N88_0_6 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_6 (
+        N88_0_6 (
             .COUT (_N194),
-            .Z (N169[6]),
+            .Z (N170[6]),
             .CIN (_N193),
             .I0 (txcnt[6]),
             .I1 (),
@@ -9922,13 +9931,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_7 */ #(
+    GTP_LUT6CARRY /* N88_0_7 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_7 (
+        N88_0_7 (
             .COUT (_N195),
-            .Z (N169[7]),
+            .Z (N170[7]),
             .CIN (_N194),
             .I0 (txcnt[7]),
             .I1 (),
@@ -9940,13 +9949,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_8 */ #(
+    GTP_LUT6CARRY /* N88_0_8 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_8 (
+        N88_0_8 (
             .COUT (_N196),
-            .Z (N169[8]),
+            .Z (N170[8]),
             .CIN (_N195),
             .I0 (txcnt[8]),
             .I1 (),
@@ -9958,13 +9967,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_9 */ #(
+    GTP_LUT6CARRY /* N88_0_9 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_9 (
+        N88_0_9 (
             .COUT (_N197),
-            .Z (N169[9]),
+            .Z (N170[9]),
             .CIN (_N196),
             .I0 (txcnt[9]),
             .I1 (),
@@ -9976,13 +9985,13 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N87_0_10 */ #(
+    GTP_LUT6CARRY /* N88_0_10 */ #(
             .INIT(64'b0101010101010101010101010101010110101010101010101010101010101010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N87_0_10 (
+        N88_0_10 (
             .COUT (),
-            .Z (N169[10]),
+            .Z (N170[10]),
             .CIN (_N197),
             .I0 (txcnt[10]),
             .I1 (),
@@ -9994,11 +10003,11 @@ module hsst_top
 	// CARRY = (I0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:122
 
-    GTP_LUT6CARRY /* N100_0_0 */ #(
+    GTP_LUT6CARRY /* N101_0_0 */ #(
             .INIT(64'b1100110011001100110011001100110000000000000000000000000000000000), 
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_0 (
+        N101_0_0 (
             .COUT (_N331),
             .Z (),
             .CIN (),
@@ -10012,13 +10021,13 @@ module hsst_top
 	// CARRY = (1'b0) ? CIN : (I1) ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_1 */ #(
+    GTP_LUT6CARRY /* N101_0_1 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_1 (
+        N101_0_1 (
             .COUT (_N332),
-            .Z (N164[1]),
+            .Z (N165[1]),
             .CIN (_N331),
             .I0 (data_bf_Alignment_judge[1]),
             .I1 (o_rxk_3[0]),
@@ -10030,13 +10039,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_2 */ #(
+    GTP_LUT6CARRY /* N101_0_2 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_2 (
+        N101_0_2 (
             .COUT (_N333),
-            .Z (N164[2]),
+            .Z (N165[2]),
             .CIN (_N332),
             .I0 (data_bf_Alignment_judge[2]),
             .I1 (o_rxk_3[0]),
@@ -10048,13 +10057,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_3 */ #(
+    GTP_LUT6CARRY /* N101_0_3 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_3 (
+        N101_0_3 (
             .COUT (_N334),
-            .Z (N164[3]),
+            .Z (N165[3]),
             .CIN (_N333),
             .I0 (data_bf_Alignment_judge[3]),
             .I1 (o_rxk_3[0]),
@@ -10066,13 +10075,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_4 */ #(
+    GTP_LUT6CARRY /* N101_0_4 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_4 (
+        N101_0_4 (
             .COUT (_N335),
-            .Z (N164[4]),
+            .Z (N165[4]),
             .CIN (_N334),
             .I0 (data_bf_Alignment_judge[4]),
             .I1 (o_rxk_3[0]),
@@ -10084,13 +10093,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_5 */ #(
+    GTP_LUT6CARRY /* N101_0_5 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_5 (
+        N101_0_5 (
             .COUT (_N336),
-            .Z (N164[5]),
+            .Z (N165[5]),
             .CIN (_N335),
             .I0 (data_bf_Alignment_judge[5]),
             .I1 (o_rxk_3[0]),
@@ -10102,13 +10111,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_6 */ #(
+    GTP_LUT6CARRY /* N101_0_6 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_6 (
+        N101_0_6 (
             .COUT (_N337),
-            .Z (N164[6]),
+            .Z (N165[6]),
             .CIN (_N336),
             .I0 (data_bf_Alignment_judge[6]),
             .I1 (o_rxk_3[0]),
@@ -10120,13 +10129,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_7 */ #(
+    GTP_LUT6CARRY /* N101_0_7 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_7 (
+        N101_0_7 (
             .COUT (_N338),
-            .Z (N164[7]),
+            .Z (N165[7]),
             .CIN (_N337),
             .I0 (data_bf_Alignment_judge[7]),
             .I1 (o_rxk_3[0]),
@@ -10138,13 +10147,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_8 */ #(
+    GTP_LUT6CARRY /* N101_0_8 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_8 (
+        N101_0_8 (
             .COUT (_N339),
-            .Z (N164[8]),
+            .Z (N165[8]),
             .CIN (_N338),
             .I0 (data_bf_Alignment_judge[8]),
             .I1 (o_rxk_3[0]),
@@ -10156,13 +10165,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_9 */ #(
+    GTP_LUT6CARRY /* N101_0_9 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_9 (
+        N101_0_9 (
             .COUT (_N340),
-            .Z (N164[9]),
+            .Z (N165[9]),
             .CIN (_N339),
             .I0 (data_bf_Alignment_judge[9]),
             .I1 (o_rxk_3[0]),
@@ -10174,13 +10183,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_10 */ #(
+    GTP_LUT6CARRY /* N101_0_10 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_10 (
+        N101_0_10 (
             .COUT (_N341),
-            .Z (N164[10]),
+            .Z (N165[10]),
             .CIN (_N340),
             .I0 (data_bf_Alignment_judge[10]),
             .I1 (o_rxk_3[0]),
@@ -10192,13 +10201,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_11 */ #(
+    GTP_LUT6CARRY /* N101_0_11 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_11 (
+        N101_0_11 (
             .COUT (_N342),
-            .Z (N164[11]),
+            .Z (N165[11]),
             .CIN (_N341),
             .I0 (data_bf_Alignment_judge[11]),
             .I1 (o_rxk_3[0]),
@@ -10210,13 +10219,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_12 */ #(
+    GTP_LUT6CARRY /* N101_0_12 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_12 (
+        N101_0_12 (
             .COUT (_N343),
-            .Z (N164[12]),
+            .Z (N165[12]),
             .CIN (_N342),
             .I0 (data_bf_Alignment_judge[12]),
             .I1 (o_rxk_3[0]),
@@ -10228,13 +10237,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_13 */ #(
+    GTP_LUT6CARRY /* N101_0_13 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_13 (
+        N101_0_13 (
             .COUT (_N344),
-            .Z (N164[13]),
+            .Z (N165[13]),
             .CIN (_N343),
             .I0 (data_bf_Alignment_judge[13]),
             .I1 (o_rxk_3[0]),
@@ -10246,13 +10255,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_14 */ #(
+    GTP_LUT6CARRY /* N101_0_14 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_14 (
+        N101_0_14 (
             .COUT (_N345),
-            .Z (N164[14]),
+            .Z (N165[14]),
             .CIN (_N344),
             .I0 (data_bf_Alignment_judge[14]),
             .I1 (o_rxk_3[0]),
@@ -10264,13 +10273,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_15 */ #(
+    GTP_LUT6CARRY /* N101_0_15 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_15 (
+        N101_0_15 (
             .COUT (_N346),
-            .Z (N164[15]),
+            .Z (N165[15]),
             .CIN (_N345),
             .I0 (data_bf_Alignment_judge[15]),
             .I1 (o_rxk_3[0]),
@@ -10282,13 +10291,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_16 */ #(
+    GTP_LUT6CARRY /* N101_0_16 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_16 (
+        N101_0_16 (
             .COUT (_N347),
-            .Z (N164[16]),
+            .Z (N165[16]),
             .CIN (_N346),
             .I0 (data_bf_Alignment_judge[16]),
             .I1 (o_rxk_3[0]),
@@ -10300,13 +10309,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_17 */ #(
+    GTP_LUT6CARRY /* N101_0_17 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_17 (
+        N101_0_17 (
             .COUT (_N348),
-            .Z (N164[17]),
+            .Z (N165[17]),
             .CIN (_N347),
             .I0 (data_bf_Alignment_judge[17]),
             .I1 (o_rxk_3[0]),
@@ -10318,13 +10327,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_18 */ #(
+    GTP_LUT6CARRY /* N101_0_18 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_18 (
+        N101_0_18 (
             .COUT (_N349),
-            .Z (N164[18]),
+            .Z (N165[18]),
             .CIN (_N348),
             .I0 (data_bf_Alignment_judge[18]),
             .I1 (o_rxk_3[0]),
@@ -10336,13 +10345,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_19 */ #(
+    GTP_LUT6CARRY /* N101_0_19 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_19 (
+        N101_0_19 (
             .COUT (_N350),
-            .Z (N164[19]),
+            .Z (N165[19]),
             .CIN (_N349),
             .I0 (data_bf_Alignment_judge[19]),
             .I1 (o_rxk_3[0]),
@@ -10354,13 +10363,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_20 */ #(
+    GTP_LUT6CARRY /* N101_0_20 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_20 (
+        N101_0_20 (
             .COUT (_N351),
-            .Z (N164[20]),
+            .Z (N165[20]),
             .CIN (_N350),
             .I0 (data_bf_Alignment_judge[20]),
             .I1 (o_rxk_3[0]),
@@ -10372,13 +10381,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_21 */ #(
+    GTP_LUT6CARRY /* N101_0_21 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_21 (
+        N101_0_21 (
             .COUT (_N352),
-            .Z (N164[21]),
+            .Z (N165[21]),
             .CIN (_N351),
             .I0 (data_bf_Alignment_judge[21]),
             .I1 (o_rxk_3[0]),
@@ -10390,13 +10399,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_22 */ #(
+    GTP_LUT6CARRY /* N101_0_22 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_22 (
+        N101_0_22 (
             .COUT (_N353),
-            .Z (N164[22]),
+            .Z (N165[22]),
             .CIN (_N352),
             .I0 (data_bf_Alignment_judge[22]),
             .I1 (o_rxk_3[0]),
@@ -10408,13 +10417,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_23 */ #(
+    GTP_LUT6CARRY /* N101_0_23 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_23 (
+        N101_0_23 (
             .COUT (_N354),
-            .Z (N164[23]),
+            .Z (N165[23]),
             .CIN (_N353),
             .I0 (data_bf_Alignment_judge[23]),
             .I1 (o_rxk_3[0]),
@@ -10426,13 +10435,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_24 */ #(
+    GTP_LUT6CARRY /* N101_0_24 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_24 (
+        N101_0_24 (
             .COUT (_N355),
-            .Z (N164[24]),
+            .Z (N165[24]),
             .CIN (_N354),
             .I0 (data_bf_Alignment_judge[24]),
             .I1 (o_rxk_3[0]),
@@ -10444,13 +10453,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_25 */ #(
+    GTP_LUT6CARRY /* N101_0_25 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_25 (
+        N101_0_25 (
             .COUT (_N356),
-            .Z (N164[25]),
+            .Z (N165[25]),
             .CIN (_N355),
             .I0 (data_bf_Alignment_judge[25]),
             .I1 (o_rxk_3[0]),
@@ -10462,13 +10471,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_26 */ #(
+    GTP_LUT6CARRY /* N101_0_26 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_26 (
+        N101_0_26 (
             .COUT (_N357),
-            .Z (N164[26]),
+            .Z (N165[26]),
             .CIN (_N356),
             .I0 (data_bf_Alignment_judge[26]),
             .I1 (o_rxk_3[0]),
@@ -10480,13 +10489,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_27 */ #(
+    GTP_LUT6CARRY /* N101_0_27 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_27 (
+        N101_0_27 (
             .COUT (_N358),
-            .Z (N164[27]),
+            .Z (N165[27]),
             .CIN (_N357),
             .I0 (data_bf_Alignment_judge[27]),
             .I1 (o_rxk_3[0]),
@@ -10498,13 +10507,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_28 */ #(
+    GTP_LUT6CARRY /* N101_0_28 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_28 (
+        N101_0_28 (
             .COUT (_N359),
-            .Z (N164[28]),
+            .Z (N165[28]),
             .CIN (_N358),
             .I0 (data_bf_Alignment_judge[28]),
             .I1 (o_rxk_3[0]),
@@ -10516,13 +10525,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_29 */ #(
+    GTP_LUT6CARRY /* N101_0_29 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_29 (
+        N101_0_29 (
             .COUT (_N360),
-            .Z (N164[29]),
+            .Z (N165[29]),
             .CIN (_N359),
             .I0 (data_bf_Alignment_judge[29]),
             .I1 (o_rxk_3[0]),
@@ -10534,13 +10543,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_30 */ #(
+    GTP_LUT6CARRY /* N101_0_30 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_30 (
+        N101_0_30 (
             .COUT (_N361),
-            .Z (N164[30]),
+            .Z (N165[30]),
             .CIN (_N360),
             .I0 (data_bf_Alignment_judge[30]),
             .I1 (o_rxk_3[0]),
@@ -10552,13 +10561,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N100_0_31 */ #(
+    GTP_LUT6CARRY /* N101_0_31 */ #(
             .INIT(64'b0000000000000000000000000000000100000000000000000000000000000010), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N100_0_31 (
+        N101_0_31 (
             .COUT (),
-            .Z (N164[31]),
+            .Z (N165[31]),
             .CIN (_N361),
             .I0 (data_bf_Alignment_judge[31]),
             .I1 (o_rxk_3[0]),
@@ -10570,13 +10579,13 @@ module hsst_top
 	// CARRY = (I0&~I1&~I2&~I3&~I4) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:144
 
-    GTP_LUT6CARRY /* N106_0_1 */ #(
+    GTP_LUT6CARRY /* N107_0_1 */ #(
             .INIT(64'b0110000001100000011000000110000000000000000000000000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("TRUE"))
-        N106_0_1 (
+        N107_0_1 (
             .COUT (_N364),
-            .Z (N166[1]),
+            .Z (N167[1]),
             .CIN (),
             .I0 (data_af_Alignment_judge[0]),
             .I1 (data_af_Alignment_judge[1]),
@@ -10588,13 +10597,13 @@ module hsst_top
 	// CARRY = (1'b0) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_2 */ #(
+    GTP_LUT6CARRY /* N107_0_2 */ #(
             .INIT(64'b0111000010000000011100001000000010000000000000001000000000000000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_2 (
+        N107_0_2 (
             .COUT (_N365),
-            .Z (N166[2]),
+            .Z (N167[2]),
             .CIN (_N364),
             .I0 (data_af_Alignment_judge[0]),
             .I1 (data_af_Alignment_judge[1]),
@@ -10606,13 +10615,13 @@ module hsst_top
 	// CARRY = (I0&I1&I2&I3) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_3 */ #(
+    GTP_LUT6CARRY /* N107_0_3 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_3 (
+        N107_0_3 (
             .COUT (_N366),
-            .Z (N166[3]),
+            .Z (N167[3]),
             .CIN (_N365),
             .I0 (data_af_Alignment_judge[3]),
             .I1 (data_valid),
@@ -10624,13 +10633,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_4 */ #(
+    GTP_LUT6CARRY /* N107_0_4 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_4 (
+        N107_0_4 (
             .COUT (_N367),
-            .Z (N166[4]),
+            .Z (N167[4]),
             .CIN (_N366),
             .I0 (data_af_Alignment_judge[4]),
             .I1 (data_valid),
@@ -10642,13 +10651,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_5 */ #(
+    GTP_LUT6CARRY /* N107_0_5 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_5 (
+        N107_0_5 (
             .COUT (_N368),
-            .Z (N166[5]),
+            .Z (N167[5]),
             .CIN (_N367),
             .I0 (data_af_Alignment_judge[5]),
             .I1 (data_valid),
@@ -10660,13 +10669,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_6 */ #(
+    GTP_LUT6CARRY /* N107_0_6 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_6 (
+        N107_0_6 (
             .COUT (_N369),
-            .Z (N166[6]),
+            .Z (N167[6]),
             .CIN (_N368),
             .I0 (data_af_Alignment_judge[6]),
             .I1 (data_valid),
@@ -10678,13 +10687,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_7 */ #(
+    GTP_LUT6CARRY /* N107_0_7 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_7 (
+        N107_0_7 (
             .COUT (_N370),
-            .Z (N166[7]),
+            .Z (N167[7]),
             .CIN (_N369),
             .I0 (data_af_Alignment_judge[7]),
             .I1 (data_valid),
@@ -10696,13 +10705,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_8 */ #(
+    GTP_LUT6CARRY /* N107_0_8 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_8 (
+        N107_0_8 (
             .COUT (_N371),
-            .Z (N166[8]),
+            .Z (N167[8]),
             .CIN (_N370),
             .I0 (data_af_Alignment_judge[8]),
             .I1 (data_valid),
@@ -10714,13 +10723,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_9 */ #(
+    GTP_LUT6CARRY /* N107_0_9 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_9 (
+        N107_0_9 (
             .COUT (_N372),
-            .Z (N166[9]),
+            .Z (N167[9]),
             .CIN (_N371),
             .I0 (data_af_Alignment_judge[9]),
             .I1 (data_valid),
@@ -10732,13 +10741,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_10 */ #(
+    GTP_LUT6CARRY /* N107_0_10 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_10 (
+        N107_0_10 (
             .COUT (_N373),
-            .Z (N166[10]),
+            .Z (N167[10]),
             .CIN (_N372),
             .I0 (data_af_Alignment_judge[10]),
             .I1 (data_valid),
@@ -10750,13 +10759,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_11 */ #(
+    GTP_LUT6CARRY /* N107_0_11 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_11 (
+        N107_0_11 (
             .COUT (_N374),
-            .Z (N166[11]),
+            .Z (N167[11]),
             .CIN (_N373),
             .I0 (data_af_Alignment_judge[11]),
             .I1 (data_valid),
@@ -10768,13 +10777,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_12 */ #(
+    GTP_LUT6CARRY /* N107_0_12 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_12 (
+        N107_0_12 (
             .COUT (_N375),
-            .Z (N166[12]),
+            .Z (N167[12]),
             .CIN (_N374),
             .I0 (data_af_Alignment_judge[12]),
             .I1 (data_valid),
@@ -10786,13 +10795,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_13 */ #(
+    GTP_LUT6CARRY /* N107_0_13 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_13 (
+        N107_0_13 (
             .COUT (_N376),
-            .Z (N166[13]),
+            .Z (N167[13]),
             .CIN (_N375),
             .I0 (data_af_Alignment_judge[13]),
             .I1 (data_valid),
@@ -10804,13 +10813,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_14 */ #(
+    GTP_LUT6CARRY /* N107_0_14 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_14 (
+        N107_0_14 (
             .COUT (_N377),
-            .Z (N166[14]),
+            .Z (N167[14]),
             .CIN (_N376),
             .I0 (data_af_Alignment_judge[14]),
             .I1 (data_valid),
@@ -10822,13 +10831,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_15 */ #(
+    GTP_LUT6CARRY /* N107_0_15 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_15 (
+        N107_0_15 (
             .COUT (_N378),
-            .Z (N166[15]),
+            .Z (N167[15]),
             .CIN (_N377),
             .I0 (data_af_Alignment_judge[15]),
             .I1 (data_valid),
@@ -10840,13 +10849,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_16 */ #(
+    GTP_LUT6CARRY /* N107_0_16 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_16 (
+        N107_0_16 (
             .COUT (_N379),
-            .Z (N166[16]),
+            .Z (N167[16]),
             .CIN (_N378),
             .I0 (data_af_Alignment_judge[16]),
             .I1 (data_valid),
@@ -10858,13 +10867,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_17 */ #(
+    GTP_LUT6CARRY /* N107_0_17 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_17 (
+        N107_0_17 (
             .COUT (_N380),
-            .Z (N166[17]),
+            .Z (N167[17]),
             .CIN (_N379),
             .I0 (data_af_Alignment_judge[17]),
             .I1 (data_valid),
@@ -10876,13 +10885,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_18 */ #(
+    GTP_LUT6CARRY /* N107_0_18 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_18 (
+        N107_0_18 (
             .COUT (_N381),
-            .Z (N166[18]),
+            .Z (N167[18]),
             .CIN (_N380),
             .I0 (data_af_Alignment_judge[18]),
             .I1 (data_valid),
@@ -10894,13 +10903,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_19 */ #(
+    GTP_LUT6CARRY /* N107_0_19 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_19 (
+        N107_0_19 (
             .COUT (_N382),
-            .Z (N166[19]),
+            .Z (N167[19]),
             .CIN (_N381),
             .I0 (data_af_Alignment_judge[19]),
             .I1 (data_valid),
@@ -10912,13 +10921,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_20 */ #(
+    GTP_LUT6CARRY /* N107_0_20 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_20 (
+        N107_0_20 (
             .COUT (_N383),
-            .Z (N166[20]),
+            .Z (N167[20]),
             .CIN (_N382),
             .I0 (data_af_Alignment_judge[20]),
             .I1 (data_valid),
@@ -10930,13 +10939,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_21 */ #(
+    GTP_LUT6CARRY /* N107_0_21 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_21 (
+        N107_0_21 (
             .COUT (_N384),
-            .Z (N166[21]),
+            .Z (N167[21]),
             .CIN (_N383),
             .I0 (data_af_Alignment_judge[21]),
             .I1 (data_valid),
@@ -10948,13 +10957,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_22 */ #(
+    GTP_LUT6CARRY /* N107_0_22 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_22 (
+        N107_0_22 (
             .COUT (_N385),
-            .Z (N166[22]),
+            .Z (N167[22]),
             .CIN (_N384),
             .I0 (data_af_Alignment_judge[22]),
             .I1 (data_valid),
@@ -10966,13 +10975,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_23 */ #(
+    GTP_LUT6CARRY /* N107_0_23 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_23 (
+        N107_0_23 (
             .COUT (_N386),
-            .Z (N166[23]),
+            .Z (N167[23]),
             .CIN (_N385),
             .I0 (data_af_Alignment_judge[23]),
             .I1 (data_valid),
@@ -10984,13 +10993,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_24 */ #(
+    GTP_LUT6CARRY /* N107_0_24 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_24 (
+        N107_0_24 (
             .COUT (_N387),
-            .Z (N166[24]),
+            .Z (N167[24]),
             .CIN (_N386),
             .I0 (data_af_Alignment_judge[24]),
             .I1 (data_valid),
@@ -11002,13 +11011,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_25 */ #(
+    GTP_LUT6CARRY /* N107_0_25 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_25 (
+        N107_0_25 (
             .COUT (_N388),
-            .Z (N166[25]),
+            .Z (N167[25]),
             .CIN (_N387),
             .I0 (data_af_Alignment_judge[25]),
             .I1 (data_valid),
@@ -11020,13 +11029,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_26 */ #(
+    GTP_LUT6CARRY /* N107_0_26 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_26 (
+        N107_0_26 (
             .COUT (_N389),
-            .Z (N166[26]),
+            .Z (N167[26]),
             .CIN (_N388),
             .I0 (data_af_Alignment_judge[26]),
             .I1 (data_valid),
@@ -11038,13 +11047,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_27 */ #(
+    GTP_LUT6CARRY /* N107_0_27 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_27 (
+        N107_0_27 (
             .COUT (_N390),
-            .Z (N166[27]),
+            .Z (N167[27]),
             .CIN (_N389),
             .I0 (data_af_Alignment_judge[27]),
             .I1 (data_valid),
@@ -11056,13 +11065,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_28 */ #(
+    GTP_LUT6CARRY /* N107_0_28 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_28 (
+        N107_0_28 (
             .COUT (_N391),
-            .Z (N166[28]),
+            .Z (N167[28]),
             .CIN (_N390),
             .I0 (data_af_Alignment_judge[28]),
             .I1 (data_valid),
@@ -11074,13 +11083,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_29 */ #(
+    GTP_LUT6CARRY /* N107_0_29 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_29 (
+        N107_0_29 (
             .COUT (_N392),
-            .Z (N166[29]),
+            .Z (N167[29]),
             .CIN (_N391),
             .I0 (data_af_Alignment_judge[29]),
             .I1 (data_valid),
@@ -11092,13 +11101,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_30 */ #(
+    GTP_LUT6CARRY /* N107_0_30 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_30 (
+        N107_0_30 (
             .COUT (_N393),
-            .Z (N166[30]),
+            .Z (N167[30]),
             .CIN (_N392),
             .I0 (data_af_Alignment_judge[30]),
             .I1 (data_valid),
@@ -11110,13 +11119,13 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* N106_0_31 */ #(
+    GTP_LUT6CARRY /* N107_0_31 */ #(
             .INIT(64'b0100010001000100010001000100010010001000100010001000100010001000), 
             .I5_TO_CARRY("TRUE"), 
             .I5_TO_LUT("FALSE"))
-        N106_0_31 (
+        N107_0_31 (
             .COUT (),
-            .Z (N166[31]),
+            .Z (N167[31]),
             .CIN (_N393),
             .I0 (data_af_Alignment_judge[31]),
             .I1 (data_valid),
@@ -11128,294 +11137,6 @@ module hsst_top
 	// CARRY = (I0&I1) ? CIN : I5 ;
 	// ../../../rtl/hsst_top.v:149
 
-    GTP_LUT6CARRY /* \N110.eq_0  */ #(
-            .INIT(64'b1001000000001001100100000000100100000000000000000000000000000000), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_0  (
-            .COUT (\N110.co [0] ),
-            .Z (),
-            .CIN (),
-            .I0 (data_af_align[0]),
-            .I1 (data_af_Alignment_judge[0]),
-            .I2 (data_af_align[1]),
-            .I3 (data_af_Alignment_judge[1]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&CIN)|(I0&I1&~I2&~I3&CIN)|(~I0&~I1&I2&I3&CIN)|(I0&I1&I2&I3&CIN) ;
-	// CARRY = (1'b0) ? CIN : ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_1  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_1  (
-            .COUT (\N110.co [2] ),
-            .Z (),
-            .CIN (\N110.co [0] ),
-            .I0 (data_af_align[2]),
-            .I1 (data_af_Alignment_judge[2]),
-            .I2 (data_af_align[3]),
-            .I3 (data_af_Alignment_judge[3]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_2  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_2  (
-            .COUT (\N110.co [4] ),
-            .Z (),
-            .CIN (\N110.co [2] ),
-            .I0 (data_af_align[4]),
-            .I1 (data_af_Alignment_judge[4]),
-            .I2 (data_af_align[5]),
-            .I3 (data_af_Alignment_judge[5]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_3  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_3  (
-            .COUT (\N110.co [6] ),
-            .Z (),
-            .CIN (\N110.co [4] ),
-            .I0 (data_af_align[6]),
-            .I1 (data_af_Alignment_judge[6]),
-            .I2 (data_af_align[7]),
-            .I3 (data_af_Alignment_judge[7]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_4  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_4  (
-            .COUT (\N110.co [8] ),
-            .Z (),
-            .CIN (\N110.co [6] ),
-            .I0 (data_af_align[8]),
-            .I1 (data_af_Alignment_judge[8]),
-            .I2 (data_af_align[9]),
-            .I3 (data_af_Alignment_judge[9]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_5  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_5  (
-            .COUT (\N110.co [10] ),
-            .Z (),
-            .CIN (\N110.co [8] ),
-            .I0 (data_af_align[10]),
-            .I1 (data_af_Alignment_judge[10]),
-            .I2 (data_af_align[11]),
-            .I3 (data_af_Alignment_judge[11]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_6  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_6  (
-            .COUT (\N110.co [12] ),
-            .Z (),
-            .CIN (\N110.co [10] ),
-            .I0 (data_af_align[12]),
-            .I1 (data_af_Alignment_judge[12]),
-            .I2 (data_af_align[13]),
-            .I3 (data_af_Alignment_judge[13]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_7  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_7  (
-            .COUT (\N110.co [14] ),
-            .Z (),
-            .CIN (\N110.co [12] ),
-            .I0 (data_af_align[14]),
-            .I1 (data_af_Alignment_judge[14]),
-            .I2 (data_af_align[15]),
-            .I3 (data_af_Alignment_judge[15]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_8  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_8  (
-            .COUT (\N110.co [16] ),
-            .Z (),
-            .CIN (\N110.co [14] ),
-            .I0 (data_af_align[16]),
-            .I1 (data_af_Alignment_judge[16]),
-            .I2 (data_af_align[17]),
-            .I3 (data_af_Alignment_judge[17]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_9  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_9  (
-            .COUT (\N110.co [18] ),
-            .Z (),
-            .CIN (\N110.co [16] ),
-            .I0 (data_af_align[18]),
-            .I1 (data_af_Alignment_judge[18]),
-            .I2 (data_af_align[19]),
-            .I3 (data_af_Alignment_judge[19]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_10  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_10  (
-            .COUT (\N110.co [20] ),
-            .Z (),
-            .CIN (\N110.co [18] ),
-            .I0 (data_af_align[20]),
-            .I1 (data_af_Alignment_judge[20]),
-            .I2 (data_af_align[21]),
-            .I3 (data_af_Alignment_judge[21]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_11  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_11  (
-            .COUT (\N110.co [22] ),
-            .Z (),
-            .CIN (\N110.co [20] ),
-            .I0 (data_af_align[22]),
-            .I1 (data_af_Alignment_judge[22]),
-            .I2 (data_af_align[23]),
-            .I3 (data_af_Alignment_judge[23]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_12  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_12  (
-            .COUT (\N110.co [24] ),
-            .Z (),
-            .CIN (\N110.co [22] ),
-            .I0 (data_af_align[24]),
-            .I1 (data_af_Alignment_judge[24]),
-            .I2 (data_af_align[25]),
-            .I3 (data_af_Alignment_judge[25]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_13  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_13  (
-            .COUT (\N110.co [26] ),
-            .Z (),
-            .CIN (\N110.co [24] ),
-            .I0 (data_af_align[26]),
-            .I1 (data_af_Alignment_judge[26]),
-            .I2 (data_af_align[27]),
-            .I3 (data_af_Alignment_judge[27]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_14  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_14  (
-            .COUT (\N110.co [28] ),
-            .Z (),
-            .CIN (\N110.co [26] ),
-            .I0 (data_af_align[28]),
-            .I1 (data_af_Alignment_judge[28]),
-            .I2 (data_af_align[29]),
-            .I3 (data_af_Alignment_judge[29]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
-    GTP_LUT6CARRY /* \N110.eq_15  */ #(
-            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
-            .I5_TO_CARRY("FALSE"), 
-            .I5_TO_LUT("FALSE"))
-        \N110.eq_15  (
-            .COUT (nt_led[1]),
-            .Z (),
-            .CIN (\N110.co [28] ),
-            .I0 (data_af_align[30]),
-            .I1 (data_af_Alignment_judge[30]),
-            .I2 (data_af_align[31]),
-            .I3 (data_af_Alignment_judge[31]),
-            .I4 (),
-            .I5 ());
-	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
-	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
-	// ../../../rtl/hsst_top.v:153
-
     GTP_LUT6CARRY /* \N111.eq_0  */ #(
             .INIT(64'b1001000000001001100100000000100100000000000000000000000000000000), 
             .I5_TO_CARRY("FALSE"), 
@@ -11424,10 +11145,10 @@ module hsst_top
             .COUT (\N111.co [0] ),
             .Z (),
             .CIN (),
-            .I0 (o_rxd_3[0]),
-            .I1 (data_bf_Alignment_judge[0]),
-            .I2 (o_rxd_3[1]),
-            .I3 (data_bf_Alignment_judge[1]),
+            .I0 (data_af_align[0]),
+            .I1 (data_af_Alignment_judge[0]),
+            .I2 (data_af_align[1]),
+            .I3 (data_af_Alignment_judge[1]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&CIN)|(I0&I1&~I2&~I3&CIN)|(~I0&~I1&I2&I3&CIN)|(I0&I1&I2&I3&CIN) ;
@@ -11442,10 +11163,10 @@ module hsst_top
             .COUT (\N111.co [2] ),
             .Z (),
             .CIN (\N111.co [0] ),
-            .I0 (o_rxd_3[2]),
-            .I1 (data_bf_Alignment_judge[2]),
-            .I2 (o_rxd_3[3]),
-            .I3 (data_bf_Alignment_judge[3]),
+            .I0 (data_af_align[2]),
+            .I1 (data_af_Alignment_judge[2]),
+            .I2 (data_af_align[3]),
+            .I3 (data_af_Alignment_judge[3]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11460,10 +11181,10 @@ module hsst_top
             .COUT (\N111.co [4] ),
             .Z (),
             .CIN (\N111.co [2] ),
-            .I0 (o_rxd_3[4]),
-            .I1 (data_bf_Alignment_judge[4]),
-            .I2 (o_rxd_3[5]),
-            .I3 (data_bf_Alignment_judge[5]),
+            .I0 (data_af_align[4]),
+            .I1 (data_af_Alignment_judge[4]),
+            .I2 (data_af_align[5]),
+            .I3 (data_af_Alignment_judge[5]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11478,10 +11199,10 @@ module hsst_top
             .COUT (\N111.co [6] ),
             .Z (),
             .CIN (\N111.co [4] ),
-            .I0 (o_rxd_3[6]),
-            .I1 (data_bf_Alignment_judge[6]),
-            .I2 (o_rxd_3[7]),
-            .I3 (data_bf_Alignment_judge[7]),
+            .I0 (data_af_align[6]),
+            .I1 (data_af_Alignment_judge[6]),
+            .I2 (data_af_align[7]),
+            .I3 (data_af_Alignment_judge[7]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11496,10 +11217,10 @@ module hsst_top
             .COUT (\N111.co [8] ),
             .Z (),
             .CIN (\N111.co [6] ),
-            .I0 (o_rxd_3[8]),
-            .I1 (data_bf_Alignment_judge[8]),
-            .I2 (o_rxd_3[9]),
-            .I3 (data_bf_Alignment_judge[9]),
+            .I0 (data_af_align[8]),
+            .I1 (data_af_Alignment_judge[8]),
+            .I2 (data_af_align[9]),
+            .I3 (data_af_Alignment_judge[9]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11514,10 +11235,10 @@ module hsst_top
             .COUT (\N111.co [10] ),
             .Z (),
             .CIN (\N111.co [8] ),
-            .I0 (o_rxd_3[10]),
-            .I1 (data_bf_Alignment_judge[10]),
-            .I2 (o_rxd_3[11]),
-            .I3 (data_bf_Alignment_judge[11]),
+            .I0 (data_af_align[10]),
+            .I1 (data_af_Alignment_judge[10]),
+            .I2 (data_af_align[11]),
+            .I3 (data_af_Alignment_judge[11]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11532,10 +11253,10 @@ module hsst_top
             .COUT (\N111.co [12] ),
             .Z (),
             .CIN (\N111.co [10] ),
-            .I0 (o_rxd_3[12]),
-            .I1 (data_bf_Alignment_judge[12]),
-            .I2 (o_rxd_3[13]),
-            .I3 (data_bf_Alignment_judge[13]),
+            .I0 (data_af_align[12]),
+            .I1 (data_af_Alignment_judge[12]),
+            .I2 (data_af_align[13]),
+            .I3 (data_af_Alignment_judge[13]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11550,10 +11271,10 @@ module hsst_top
             .COUT (\N111.co [14] ),
             .Z (),
             .CIN (\N111.co [12] ),
-            .I0 (o_rxd_3[14]),
-            .I1 (data_bf_Alignment_judge[14]),
-            .I2 (o_rxd_3[15]),
-            .I3 (data_bf_Alignment_judge[15]),
+            .I0 (data_af_align[14]),
+            .I1 (data_af_Alignment_judge[14]),
+            .I2 (data_af_align[15]),
+            .I3 (data_af_Alignment_judge[15]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11568,10 +11289,10 @@ module hsst_top
             .COUT (\N111.co [16] ),
             .Z (),
             .CIN (\N111.co [14] ),
-            .I0 (o_rxd_3[16]),
-            .I1 (data_bf_Alignment_judge[16]),
-            .I2 (o_rxd_3[17]),
-            .I3 (data_bf_Alignment_judge[17]),
+            .I0 (data_af_align[16]),
+            .I1 (data_af_Alignment_judge[16]),
+            .I2 (data_af_align[17]),
+            .I3 (data_af_Alignment_judge[17]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11586,10 +11307,10 @@ module hsst_top
             .COUT (\N111.co [18] ),
             .Z (),
             .CIN (\N111.co [16] ),
-            .I0 (o_rxd_3[18]),
-            .I1 (data_bf_Alignment_judge[18]),
-            .I2 (o_rxd_3[19]),
-            .I3 (data_bf_Alignment_judge[19]),
+            .I0 (data_af_align[18]),
+            .I1 (data_af_Alignment_judge[18]),
+            .I2 (data_af_align[19]),
+            .I3 (data_af_Alignment_judge[19]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11604,10 +11325,10 @@ module hsst_top
             .COUT (\N111.co [20] ),
             .Z (),
             .CIN (\N111.co [18] ),
-            .I0 (o_rxd_3[20]),
-            .I1 (data_bf_Alignment_judge[20]),
-            .I2 (o_rxd_3[21]),
-            .I3 (data_bf_Alignment_judge[21]),
+            .I0 (data_af_align[20]),
+            .I1 (data_af_Alignment_judge[20]),
+            .I2 (data_af_align[21]),
+            .I3 (data_af_Alignment_judge[21]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11622,10 +11343,10 @@ module hsst_top
             .COUT (\N111.co [22] ),
             .Z (),
             .CIN (\N111.co [20] ),
-            .I0 (o_rxd_3[22]),
-            .I1 (data_bf_Alignment_judge[22]),
-            .I2 (o_rxd_3[23]),
-            .I3 (data_bf_Alignment_judge[23]),
+            .I0 (data_af_align[22]),
+            .I1 (data_af_Alignment_judge[22]),
+            .I2 (data_af_align[23]),
+            .I3 (data_af_Alignment_judge[23]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11640,10 +11361,10 @@ module hsst_top
             .COUT (\N111.co [24] ),
             .Z (),
             .CIN (\N111.co [22] ),
-            .I0 (o_rxd_3[24]),
-            .I1 (data_bf_Alignment_judge[24]),
-            .I2 (o_rxd_3[25]),
-            .I3 (data_bf_Alignment_judge[25]),
+            .I0 (data_af_align[24]),
+            .I1 (data_af_Alignment_judge[24]),
+            .I2 (data_af_align[25]),
+            .I3 (data_af_Alignment_judge[25]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11658,10 +11379,10 @@ module hsst_top
             .COUT (\N111.co [26] ),
             .Z (),
             .CIN (\N111.co [24] ),
-            .I0 (o_rxd_3[26]),
-            .I1 (data_bf_Alignment_judge[26]),
-            .I2 (o_rxd_3[27]),
-            .I3 (data_bf_Alignment_judge[27]),
+            .I0 (data_af_align[26]),
+            .I1 (data_af_Alignment_judge[26]),
+            .I2 (data_af_align[27]),
+            .I3 (data_af_Alignment_judge[27]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11676,10 +11397,10 @@ module hsst_top
             .COUT (\N111.co [28] ),
             .Z (),
             .CIN (\N111.co [26] ),
-            .I0 (o_rxd_3[28]),
-            .I1 (data_bf_Alignment_judge[28]),
-            .I2 (o_rxd_3[29]),
-            .I3 (data_bf_Alignment_judge[29]),
+            .I0 (data_af_align[28]),
+            .I1 (data_af_Alignment_judge[28]),
+            .I2 (data_af_align[29]),
+            .I3 (data_af_Alignment_judge[29]),
             .I4 (),
             .I5 ());
 	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
@@ -11691,9 +11412,297 @@ module hsst_top
             .I5_TO_CARRY("FALSE"), 
             .I5_TO_LUT("FALSE"))
         \N111.eq_15  (
-            .COUT (nt_led[0]),
+            .COUT (nt_led[1]),
             .Z (),
             .CIN (\N111.co [28] ),
+            .I0 (data_af_align[30]),
+            .I1 (data_af_Alignment_judge[30]),
+            .I2 (data_af_align[31]),
+            .I3 (data_af_Alignment_judge[31]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_0  */ #(
+            .INIT(64'b1001000000001001100100000000100100000000000000000000000000000000), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_0  (
+            .COUT (\N112.co [0] ),
+            .Z (),
+            .CIN (),
+            .I0 (o_rxd_3[0]),
+            .I1 (data_bf_Alignment_judge[0]),
+            .I2 (o_rxd_3[1]),
+            .I3 (data_bf_Alignment_judge[1]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&CIN)|(I0&I1&~I2&~I3&CIN)|(~I0&~I1&I2&I3&CIN)|(I0&I1&I2&I3&CIN) ;
+	// CARRY = (1'b0) ? CIN : ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_1  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_1  (
+            .COUT (\N112.co [2] ),
+            .Z (),
+            .CIN (\N112.co [0] ),
+            .I0 (o_rxd_3[2]),
+            .I1 (data_bf_Alignment_judge[2]),
+            .I2 (o_rxd_3[3]),
+            .I3 (data_bf_Alignment_judge[3]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_2  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_2  (
+            .COUT (\N112.co [4] ),
+            .Z (),
+            .CIN (\N112.co [2] ),
+            .I0 (o_rxd_3[4]),
+            .I1 (data_bf_Alignment_judge[4]),
+            .I2 (o_rxd_3[5]),
+            .I3 (data_bf_Alignment_judge[5]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_3  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_3  (
+            .COUT (\N112.co [6] ),
+            .Z (),
+            .CIN (\N112.co [4] ),
+            .I0 (o_rxd_3[6]),
+            .I1 (data_bf_Alignment_judge[6]),
+            .I2 (o_rxd_3[7]),
+            .I3 (data_bf_Alignment_judge[7]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_4  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_4  (
+            .COUT (\N112.co [8] ),
+            .Z (),
+            .CIN (\N112.co [6] ),
+            .I0 (o_rxd_3[8]),
+            .I1 (data_bf_Alignment_judge[8]),
+            .I2 (o_rxd_3[9]),
+            .I3 (data_bf_Alignment_judge[9]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_5  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_5  (
+            .COUT (\N112.co [10] ),
+            .Z (),
+            .CIN (\N112.co [8] ),
+            .I0 (o_rxd_3[10]),
+            .I1 (data_bf_Alignment_judge[10]),
+            .I2 (o_rxd_3[11]),
+            .I3 (data_bf_Alignment_judge[11]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_6  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_6  (
+            .COUT (\N112.co [12] ),
+            .Z (),
+            .CIN (\N112.co [10] ),
+            .I0 (o_rxd_3[12]),
+            .I1 (data_bf_Alignment_judge[12]),
+            .I2 (o_rxd_3[13]),
+            .I3 (data_bf_Alignment_judge[13]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_7  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_7  (
+            .COUT (\N112.co [14] ),
+            .Z (),
+            .CIN (\N112.co [12] ),
+            .I0 (o_rxd_3[14]),
+            .I1 (data_bf_Alignment_judge[14]),
+            .I2 (o_rxd_3[15]),
+            .I3 (data_bf_Alignment_judge[15]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_8  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_8  (
+            .COUT (\N112.co [16] ),
+            .Z (),
+            .CIN (\N112.co [14] ),
+            .I0 (o_rxd_3[16]),
+            .I1 (data_bf_Alignment_judge[16]),
+            .I2 (o_rxd_3[17]),
+            .I3 (data_bf_Alignment_judge[17]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_9  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_9  (
+            .COUT (\N112.co [18] ),
+            .Z (),
+            .CIN (\N112.co [16] ),
+            .I0 (o_rxd_3[18]),
+            .I1 (data_bf_Alignment_judge[18]),
+            .I2 (o_rxd_3[19]),
+            .I3 (data_bf_Alignment_judge[19]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_10  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_10  (
+            .COUT (\N112.co [20] ),
+            .Z (),
+            .CIN (\N112.co [18] ),
+            .I0 (o_rxd_3[20]),
+            .I1 (data_bf_Alignment_judge[20]),
+            .I2 (o_rxd_3[21]),
+            .I3 (data_bf_Alignment_judge[21]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_11  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_11  (
+            .COUT (\N112.co [22] ),
+            .Z (),
+            .CIN (\N112.co [20] ),
+            .I0 (o_rxd_3[22]),
+            .I1 (data_bf_Alignment_judge[22]),
+            .I2 (o_rxd_3[23]),
+            .I3 (data_bf_Alignment_judge[23]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_12  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_12  (
+            .COUT (\N112.co [24] ),
+            .Z (),
+            .CIN (\N112.co [22] ),
+            .I0 (o_rxd_3[24]),
+            .I1 (data_bf_Alignment_judge[24]),
+            .I2 (o_rxd_3[25]),
+            .I3 (data_bf_Alignment_judge[25]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_13  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_13  (
+            .COUT (\N112.co [26] ),
+            .Z (),
+            .CIN (\N112.co [24] ),
+            .I0 (o_rxd_3[26]),
+            .I1 (data_bf_Alignment_judge[26]),
+            .I2 (o_rxd_3[27]),
+            .I3 (data_bf_Alignment_judge[27]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_14  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_14  (
+            .COUT (\N112.co [28] ),
+            .Z (),
+            .CIN (\N112.co [26] ),
+            .I0 (o_rxd_3[28]),
+            .I1 (data_bf_Alignment_judge[28]),
+            .I2 (o_rxd_3[29]),
+            .I3 (data_bf_Alignment_judge[29]),
+            .I4 (),
+            .I5 ());
+	// LUT = (~I0&~I1&~I2&~I3&~CIN)|(I0&I1&~I2&~I3&~CIN)|(~I0&~I1&I2&I3&~CIN)|(I0&I1&I2&I3&~CIN) ;
+	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
+	// ../../../rtl/hsst_top.v:153
+
+    GTP_LUT6CARRY /* \N112.eq_15  */ #(
+            .INIT(64'b0000000000000000000000000000000010010000000010011001000000001001), 
+            .I5_TO_CARRY("FALSE"), 
+            .I5_TO_LUT("FALSE"))
+        \N112.eq_15  (
+            .COUT (nt_led[0]),
+            .Z (),
+            .CIN (\N112.co [28] ),
             .I0 (o_rxd_3[30]),
             .I1 (data_bf_Alignment_judge[30]),
             .I2 (o_rxd_3[31]),
@@ -11704,9 +11713,9 @@ module hsst_top
 	// CARRY = ((~I0&~I1&~I2&~I3)|(I0&I1&~I2&~I3)|(~I0&~I1&I2&I3)|(I0&I1&I2&I3)) ? CIN : (1'b0) ;
 	// ../../../rtl/hsst_top.v:153
 
-    GTP_LUT6 /* N135_10 */ #(
+    GTP_LUT6 /* N136_10 */ #(
             .INIT(64'b0000000000000000000000000000000000000000000000000000000000000001))
-        N135_10 (
+        N136_10 (
             .Z (_N1264),
             .I0 (txcnt[4]),
             .I1 (txcnt[5]),
@@ -11716,10 +11725,10 @@ module hsst_top
             .I5 (txcnt[9]));
 	// LUT = ~I0&~I1&~I2&~I3&~I4&~I5 ;
 
-    GTP_LUT6 /* N135_15 */ #(
+    GTP_LUT6 /* N136_15 */ #(
             .INIT(64'b0000000000000000000000001000000000000000000000000000000000000000))
-        N135_15 (
-            .Z (N174[1]),
+        N136_15 (
+            .Z (N175[1]),
             .I0 (txcnt[0]),
             .I1 (txcnt[1]),
             .I2 (txcnt[2]),
@@ -11728,10 +11737,10 @@ module hsst_top
             .I5 (_N1264));
 	// LUT = I0&I1&I2&~I3&~I4&I5 ;
 
-    GTP_LUT6 /* N141_6 */ #(
+    GTP_LUT6 /* N142_6 */ #(
             .INIT(64'b0000000100000000000000000000000000000000000000000000000000000000))
-        N141_6 (
-            .Z (N174[0]),
+        N142_6 (
+            .Z (N175[0]),
             .I0 (txcnt[0]),
             .I1 (txcnt[1]),
             .I2 (txcnt[2]),
@@ -11740,9 +11749,9 @@ module hsst_top
             .I5 (_N1264));
 	// LUT = ~I0&~I1&~I2&I3&I4&I5 ;
 
-    GTP_LUT6D /* N147_3 */ #(
+    GTP_LUT6D /* N148_3 */ #(
             .INIT(64'b1110111011101110111011101110111000000000000000010000000000000001))
-        N147_3 (
+        N148_3 (
             .Z (_N1284),
             .Z5 (\Word_Alignment_32bit_inst/N259_rnmt ),
             .I0 (o_rxk_3[0]),
@@ -11754,11 +11763,25 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = ~I0&~I1&~I2&~I3 ;
 
-    GTP_LUT6D /* \N152_or[2]  */ #(
+    GTP_LUT6D /* \N153_and[0][2]  */ #(
+            .INIT(64'b0011001100000000001100110000000011110101111100001111010111110000))
+        \N153_and[0][2]  (
+            .Z (N153[0]),
+            .Z5 (tx_state_next[2]),
+            .I0 (N175[0]),
+            .I1 (i_txd_3[0]),
+            .I2 (tx_state_reg[1]),
+            .I3 (tx_state_reg[2]),
+            .I4 (),
+            .I5 (1'b1));
+	// LUT = ~I1&I3 ;
+	// Z5 = (~I0&I3)|(I2) ;
+
+    GTP_LUT6D /* \N153_or[2]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[2]  (
-            .Z (N152[2]),
-            .Z5 (N152[3]),
+        \N153_or[2]  (
+            .Z (N153[2]),
+            .Z5 (N153[3]),
             .I0 (tx_state_reg[0]),
             .I1 (_N780),
             .I2 (_N783),
@@ -11768,11 +11791,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[4]  */ #(
+    GTP_LUT6D /* \N153_or[4]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[4]  (
-            .Z (N152[4]),
-            .Z5 (N152[5]),
+        \N153_or[4]  (
+            .Z (N153[4]),
+            .Z5 (N153[5]),
             .I0 (tx_state_reg[0]),
             .I1 (_N786),
             .I2 (_N789),
@@ -11782,11 +11805,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[7]  */ #(
+    GTP_LUT6D /* \N153_or[7]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[7]  (
-            .Z (N152[7]),
-            .Z5 (N152[10]),
+        \N153_or[7]  (
+            .Z (N153[7]),
+            .Z5 (N153[10]),
             .I0 (tx_state_reg[0]),
             .I1 (_N795),
             .I2 (_N804),
@@ -11796,11 +11819,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[11]  */ #(
+    GTP_LUT6D /* \N153_or[11]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[11]  (
-            .Z (N152[11]),
-            .Z5 (N152[12]),
+        \N153_or[11]  (
+            .Z (N153[11]),
+            .Z5 (N153[12]),
             .I0 (tx_state_reg[0]),
             .I1 (_N807),
             .I2 (_N810),
@@ -11810,11 +11833,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[13]  */ #(
+    GTP_LUT6D /* \N153_or[13]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[13]  (
-            .Z (N152[13]),
-            .Z5 (N152[15]),
+        \N153_or[13]  (
+            .Z (N153[13]),
+            .Z5 (N153[15]),
             .I0 (tx_state_reg[0]),
             .I1 (_N813),
             .I2 (_N819),
@@ -11824,11 +11847,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[18]  */ #(
+    GTP_LUT6D /* \N153_or[18]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[18]  (
-            .Z (N152[18]),
-            .Z5 (N152[19]),
+        \N153_or[18]  (
+            .Z (N153[18]),
+            .Z5 (N153[19]),
             .I0 (tx_state_reg[0]),
             .I1 (_N828),
             .I2 (_N831),
@@ -11838,11 +11861,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[20]  */ #(
+    GTP_LUT6D /* \N153_or[20]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[20]  (
-            .Z (N152[20]),
-            .Z5 (N152[21]),
+        \N153_or[20]  (
+            .Z (N153[20]),
+            .Z5 (N153[21]),
             .I0 (tx_state_reg[0]),
             .I1 (_N834),
             .I2 (_N837),
@@ -11852,11 +11875,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[23]  */ #(
+    GTP_LUT6D /* \N153_or[23]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[23]  (
-            .Z (N152[23]),
-            .Z5 (N152[26]),
+        \N153_or[23]  (
+            .Z (N153[23]),
+            .Z5 (N153[26]),
             .I0 (tx_state_reg[0]),
             .I1 (_N843),
             .I2 (_N852),
@@ -11866,11 +11889,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[27]  */ #(
+    GTP_LUT6D /* \N153_or[27]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[27]  (
-            .Z (N152[27]),
-            .Z5 (N152[28]),
+        \N153_or[27]  (
+            .Z (N153[27]),
+            .Z5 (N153[28]),
             .I0 (tx_state_reg[0]),
             .I1 (_N855),
             .I2 (_N858),
@@ -11880,11 +11903,11 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6D /* \N152_or[29]  */ #(
+    GTP_LUT6D /* \N153_or[29]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
-        \N152_or[29]  (
-            .Z (N152[29]),
-            .Z5 (N152[31]),
+        \N153_or[29]  (
+            .Z (N153[29]),
+            .Z5 (N153[31]),
             .I0 (tx_state_reg[0]),
             .I1 (_N861),
             .I2 (_N867),
@@ -11894,10 +11917,10 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = (I2)|(I0) ;
 
-    GTP_LUT6 /* \N162[0]  */ #(
+    GTP_LUT6 /* \N163[0]  */ #(
             .INIT(64'b0101010001010101010101010101010101010101010101010101010101010101))
-        \N162[0]  (
-            .Z (N162[0]),
+        \N163[0]  (
+            .Z (N163[0]),
             .I0 (txcnt[0]),
             .I1 (txcnt[1]),
             .I2 (txcnt[2]),
@@ -11907,14 +11930,14 @@ module hsst_top
 	// LUT = (~I0&~I5)|(~I0&~I4)|(~I0&~I3)|(~I0&I1)|(~I0&I2) ;
 	// ../../../rtl/hsst_top.v:116
 
-    GTP_LUT6D /* \N162[1]  */ #(
+    GTP_LUT6D /* \N163[1]  */ #(
             .INIT(64'b0000101000001010000010100000101000001100000011000000110000001100))
-        \N162[1]  (
-            .Z (N162[3]),
-            .Z5 (N162[10]),
-            .I0 (N169[3]),
-            .I1 (N169[10]),
-            .I2 (N174[0]),
+        \N163[1]  (
+            .Z (N163[3]),
+            .Z5 (N163[10]),
+            .I0 (N170[3]),
+            .I1 (N170[10]),
+            .I2 (N175[0]),
             .I3 (),
             .I4 (),
             .I5 (1'b1));
@@ -11922,23 +11945,24 @@ module hsst_top
 	// Z5 = I1&~I2 ;
 	// ../../../rtl/hsst_top.v:116
 
-    GTP_LUT2 /* \N166[0]_0  */ #(
+    GTP_LUT2 /* \N167[0]_0  */ #(
             .INIT(4'b0010))
-        \N166[0]_0  (
-            .Z (N166[0]),
+        \N167[0]_0  (
+            .Z (N167[0]),
             .I0 (data_valid),
             .I1 (data_af_Alignment_judge[0]));
 	// LUT = I0&~I1 ;
 	// ../../../rtl/hsst_top.v:147
 
     Word_Alignment_32bit Word_Alignment_32bit_inst (
-            .N164 ({\Word_Alignment_32bit_inst_N164[31]_floating , \Word_Alignment_32bit_inst_N164[30]_floating , \Word_Alignment_32bit_inst_N164[29]_floating , \Word_Alignment_32bit_inst_N164[28]_floating , \Word_Alignment_32bit_inst_N164[27]_floating , \Word_Alignment_32bit_inst_N164[26]_floating , \Word_Alignment_32bit_inst_N164[25]_floating , \Word_Alignment_32bit_inst_N164[24]_floating , \Word_Alignment_32bit_inst_N164[23]_floating , \Word_Alignment_32bit_inst_N164[22]_floating , \Word_Alignment_32bit_inst_N164[21]_floating , \Word_Alignment_32bit_inst_N164[20]_floating , \Word_Alignment_32bit_inst_N164[19]_floating , \Word_Alignment_32bit_inst_N164[18]_floating , \Word_Alignment_32bit_inst_N164[17]_floating , \Word_Alignment_32bit_inst_N164[16]_floating , \Word_Alignment_32bit_inst_N164[15]_floating , \Word_Alignment_32bit_inst_N164[14]_floating , \Word_Alignment_32bit_inst_N164[13]_floating , \Word_Alignment_32bit_inst_N164[12]_floating , \Word_Alignment_32bit_inst_N164[11]_floating , \Word_Alignment_32bit_inst_N164[10]_floating , \Word_Alignment_32bit_inst_N164[9]_floating , \Word_Alignment_32bit_inst_N164[8]_floating , \Word_Alignment_32bit_inst_N164[7]_floating , \Word_Alignment_32bit_inst_N164[6]_floating , \Word_Alignment_32bit_inst_N164[5]_floating , \Word_Alignment_32bit_inst_N164[4]_floating , \Word_Alignment_32bit_inst_N164[3]_floating , \Word_Alignment_32bit_inst_N164[2]_floating , \Word_Alignment_32bit_inst_N164[1]_floating , N164[0]}),
+            .N165 ({\Word_Alignment_32bit_inst_N165[31]_floating , \Word_Alignment_32bit_inst_N165[30]_floating , \Word_Alignment_32bit_inst_N165[29]_floating , \Word_Alignment_32bit_inst_N165[28]_floating , \Word_Alignment_32bit_inst_N165[27]_floating , \Word_Alignment_32bit_inst_N165[26]_floating , \Word_Alignment_32bit_inst_N165[25]_floating , \Word_Alignment_32bit_inst_N165[24]_floating , \Word_Alignment_32bit_inst_N165[23]_floating , \Word_Alignment_32bit_inst_N165[22]_floating , \Word_Alignment_32bit_inst_N165[21]_floating , \Word_Alignment_32bit_inst_N165[20]_floating , \Word_Alignment_32bit_inst_N165[19]_floating , \Word_Alignment_32bit_inst_N165[18]_floating , \Word_Alignment_32bit_inst_N165[17]_floating , \Word_Alignment_32bit_inst_N165[16]_floating , \Word_Alignment_32bit_inst_N165[15]_floating , \Word_Alignment_32bit_inst_N165[14]_floating , \Word_Alignment_32bit_inst_N165[13]_floating , \Word_Alignment_32bit_inst_N165[12]_floating , \Word_Alignment_32bit_inst_N165[11]_floating , \Word_Alignment_32bit_inst_N165[10]_floating , \Word_Alignment_32bit_inst_N165[9]_floating , \Word_Alignment_32bit_inst_N165[8]_floating , \Word_Alignment_32bit_inst_N165[7]_floating , \Word_Alignment_32bit_inst_N165[6]_floating , \Word_Alignment_32bit_inst_N165[5]_floating , \Word_Alignment_32bit_inst_N165[4]_floating , \Word_Alignment_32bit_inst_N165[3]_floating , \Word_Alignment_32bit_inst_N165[2]_floating , \Word_Alignment_32bit_inst_N165[1]_floating , N165[0]}),
             .data_af_align (data_af_align),
             .data_bf_Alignment_judge ({1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, data_bf_Alignment_judge[0]}),
             .data_bf_align (o_rxd_3),
             .rxk (o_rxk_3),
+            .data_done (data_last),
             .data_valid (data_valid),
-            .N0 (N17),
+            .N0 (N18),
             .N259 (\Word_Alignment_32bit_inst/N259_rnmt ),
             ._N1284 (_N1284),
             .clk (rxclk));
@@ -11957,9 +11981,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[0]  (
             .Q (data_af_Alignment_judge[0]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[0]));
+            .D (N167[0]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[1]  */ #(
@@ -11967,9 +11991,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[1]  (
             .Q (data_af_Alignment_judge[1]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[1]));
+            .D (N167[1]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[2]  */ #(
@@ -11977,9 +12001,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[2]  (
             .Q (data_af_Alignment_judge[2]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[2]));
+            .D (N167[2]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[3]  */ #(
@@ -11987,9 +12011,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[3]  (
             .Q (data_af_Alignment_judge[3]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[3]));
+            .D (N167[3]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[4]  */ #(
@@ -11997,9 +12021,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[4]  (
             .Q (data_af_Alignment_judge[4]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[4]));
+            .D (N167[4]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[5]  */ #(
@@ -12007,9 +12031,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[5]  (
             .Q (data_af_Alignment_judge[5]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[5]));
+            .D (N167[5]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[6]  */ #(
@@ -12017,9 +12041,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[6]  (
             .Q (data_af_Alignment_judge[6]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[6]));
+            .D (N167[6]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[7]  */ #(
@@ -12027,9 +12051,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[7]  (
             .Q (data_af_Alignment_judge[7]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[7]));
+            .D (N167[7]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[8]  */ #(
@@ -12037,9 +12061,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[8]  (
             .Q (data_af_Alignment_judge[8]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[8]));
+            .D (N167[8]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[9]  */ #(
@@ -12047,9 +12071,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[9]  (
             .Q (data_af_Alignment_judge[9]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[9]));
+            .D (N167[9]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[10]  */ #(
@@ -12057,9 +12081,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[10]  (
             .Q (data_af_Alignment_judge[10]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[10]));
+            .D (N167[10]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[11]  */ #(
@@ -12067,9 +12091,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[11]  (
             .Q (data_af_Alignment_judge[11]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[11]));
+            .D (N167[11]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[12]  */ #(
@@ -12077,9 +12101,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[12]  (
             .Q (data_af_Alignment_judge[12]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[12]));
+            .D (N167[12]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[13]  */ #(
@@ -12087,9 +12111,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[13]  (
             .Q (data_af_Alignment_judge[13]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[13]));
+            .D (N167[13]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[14]  */ #(
@@ -12097,9 +12121,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[14]  (
             .Q (data_af_Alignment_judge[14]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[14]));
+            .D (N167[14]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[15]  */ #(
@@ -12107,9 +12131,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[15]  (
             .Q (data_af_Alignment_judge[15]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[15]));
+            .D (N167[15]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[16]  */ #(
@@ -12117,9 +12141,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[16]  (
             .Q (data_af_Alignment_judge[16]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[16]));
+            .D (N167[16]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[17]  */ #(
@@ -12127,9 +12151,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[17]  (
             .Q (data_af_Alignment_judge[17]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[17]));
+            .D (N167[17]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[18]  */ #(
@@ -12137,9 +12161,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[18]  (
             .Q (data_af_Alignment_judge[18]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[18]));
+            .D (N167[18]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[19]  */ #(
@@ -12147,9 +12171,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[19]  (
             .Q (data_af_Alignment_judge[19]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[19]));
+            .D (N167[19]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[20]  */ #(
@@ -12157,9 +12181,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[20]  (
             .Q (data_af_Alignment_judge[20]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[20]));
+            .D (N167[20]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[21]  */ #(
@@ -12167,9 +12191,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[21]  (
             .Q (data_af_Alignment_judge[21]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[21]));
+            .D (N167[21]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[22]  */ #(
@@ -12177,9 +12201,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[22]  (
             .Q (data_af_Alignment_judge[22]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[22]));
+            .D (N167[22]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[23]  */ #(
@@ -12187,9 +12211,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[23]  (
             .Q (data_af_Alignment_judge[23]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[23]));
+            .D (N167[23]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[24]  */ #(
@@ -12197,9 +12221,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[24]  (
             .Q (data_af_Alignment_judge[24]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[24]));
+            .D (N167[24]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[25]  */ #(
@@ -12207,9 +12231,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[25]  (
             .Q (data_af_Alignment_judge[25]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[25]));
+            .D (N167[25]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[26]  */ #(
@@ -12217,9 +12241,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[26]  (
             .Q (data_af_Alignment_judge[26]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[26]));
+            .D (N167[26]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[27]  */ #(
@@ -12227,9 +12251,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[27]  (
             .Q (data_af_Alignment_judge[27]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[27]));
+            .D (N167[27]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[28]  */ #(
@@ -12237,9 +12261,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[28]  (
             .Q (data_af_Alignment_judge[28]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[28]));
+            .D (N167[28]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[29]  */ #(
@@ -12247,9 +12271,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[29]  (
             .Q (data_af_Alignment_judge[29]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[29]));
+            .D (N167[29]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[30]  */ #(
@@ -12257,9 +12281,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[30]  (
             .Q (data_af_Alignment_judge[30]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[30]));
+            .D (N167[30]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_af_Alignment_judge[31]  */ #(
@@ -12267,9 +12291,9 @@ module hsst_top
             .INIT(1'b0))
         \data_af_Alignment_judge[31]  (
             .Q (data_af_Alignment_judge[31]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N166[31]));
+            .D (N167[31]));
 	// ../../../rtl/hsst_top.v:147
 
     GTP_DFF_C /* \data_bf_Alignment_judge[0]  */ #(
@@ -12277,9 +12301,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[0]  (
             .Q (data_bf_Alignment_judge[0]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[0]));
+            .D (N165[0]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[1]  */ #(
@@ -12287,9 +12311,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[1]  (
             .Q (data_bf_Alignment_judge[1]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[1]));
+            .D (N165[1]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[2]  */ #(
@@ -12297,9 +12321,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[2]  (
             .Q (data_bf_Alignment_judge[2]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[2]));
+            .D (N165[2]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[3]  */ #(
@@ -12307,9 +12331,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[3]  (
             .Q (data_bf_Alignment_judge[3]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[3]));
+            .D (N165[3]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[4]  */ #(
@@ -12317,9 +12341,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[4]  (
             .Q (data_bf_Alignment_judge[4]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[4]));
+            .D (N165[4]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[5]  */ #(
@@ -12327,9 +12351,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[5]  (
             .Q (data_bf_Alignment_judge[5]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[5]));
+            .D (N165[5]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[6]  */ #(
@@ -12337,9 +12361,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[6]  (
             .Q (data_bf_Alignment_judge[6]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[6]));
+            .D (N165[6]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[7]  */ #(
@@ -12347,9 +12371,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[7]  (
             .Q (data_bf_Alignment_judge[7]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[7]));
+            .D (N165[7]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[8]  */ #(
@@ -12357,9 +12381,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[8]  (
             .Q (data_bf_Alignment_judge[8]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[8]));
+            .D (N165[8]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[9]  */ #(
@@ -12367,9 +12391,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[9]  (
             .Q (data_bf_Alignment_judge[9]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[9]));
+            .D (N165[9]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[10]  */ #(
@@ -12377,9 +12401,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[10]  (
             .Q (data_bf_Alignment_judge[10]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[10]));
+            .D (N165[10]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[11]  */ #(
@@ -12387,9 +12411,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[11]  (
             .Q (data_bf_Alignment_judge[11]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[11]));
+            .D (N165[11]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[12]  */ #(
@@ -12397,9 +12421,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[12]  (
             .Q (data_bf_Alignment_judge[12]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[12]));
+            .D (N165[12]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[13]  */ #(
@@ -12407,9 +12431,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[13]  (
             .Q (data_bf_Alignment_judge[13]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[13]));
+            .D (N165[13]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[14]  */ #(
@@ -12417,9 +12441,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[14]  (
             .Q (data_bf_Alignment_judge[14]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[14]));
+            .D (N165[14]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[15]  */ #(
@@ -12427,9 +12451,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[15]  (
             .Q (data_bf_Alignment_judge[15]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[15]));
+            .D (N165[15]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[16]  */ #(
@@ -12437,9 +12461,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[16]  (
             .Q (data_bf_Alignment_judge[16]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[16]));
+            .D (N165[16]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[17]  */ #(
@@ -12447,9 +12471,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[17]  (
             .Q (data_bf_Alignment_judge[17]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[17]));
+            .D (N165[17]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[18]  */ #(
@@ -12457,9 +12481,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[18]  (
             .Q (data_bf_Alignment_judge[18]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[18]));
+            .D (N165[18]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[19]  */ #(
@@ -12467,9 +12491,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[19]  (
             .Q (data_bf_Alignment_judge[19]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[19]));
+            .D (N165[19]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[20]  */ #(
@@ -12477,9 +12501,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[20]  (
             .Q (data_bf_Alignment_judge[20]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[20]));
+            .D (N165[20]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[21]  */ #(
@@ -12487,9 +12511,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[21]  (
             .Q (data_bf_Alignment_judge[21]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[21]));
+            .D (N165[21]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[22]  */ #(
@@ -12497,9 +12521,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[22]  (
             .Q (data_bf_Alignment_judge[22]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[22]));
+            .D (N165[22]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[23]  */ #(
@@ -12507,9 +12531,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[23]  (
             .Q (data_bf_Alignment_judge[23]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[23]));
+            .D (N165[23]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[24]  */ #(
@@ -12517,9 +12541,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[24]  (
             .Q (data_bf_Alignment_judge[24]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[24]));
+            .D (N165[24]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[25]  */ #(
@@ -12527,9 +12551,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[25]  (
             .Q (data_bf_Alignment_judge[25]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[25]));
+            .D (N165[25]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[26]  */ #(
@@ -12537,9 +12561,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[26]  (
             .Q (data_bf_Alignment_judge[26]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[26]));
+            .D (N165[26]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[27]  */ #(
@@ -12547,9 +12571,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[27]  (
             .Q (data_bf_Alignment_judge[27]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[27]));
+            .D (N165[27]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[28]  */ #(
@@ -12557,9 +12581,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[28]  (
             .Q (data_bf_Alignment_judge[28]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[28]));
+            .D (N165[28]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[29]  */ #(
@@ -12567,9 +12591,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[29]  (
             .Q (data_bf_Alignment_judge[29]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[29]));
+            .D (N165[29]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[30]  */ #(
@@ -12577,9 +12601,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[30]  (
             .Q (data_bf_Alignment_judge[30]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[30]));
+            .D (N165[30]));
 	// ../../../rtl/hsst_top.v:142
 
     GTP_DFF_C /* \data_bf_Alignment_judge[31]  */ #(
@@ -12587,9 +12611,9 @@ module hsst_top
             .INIT(1'b0))
         \data_bf_Alignment_judge[31]  (
             .Q (data_bf_Alignment_judge[31]),
-            .C (N17),
+            .C (N18),
             .CLK (rxclk),
-            .D (N164[31]));
+            .D (N165[31]));
 	// ../../../rtl/hsst_top.v:142
 
     hsst hsst_inst (
@@ -12599,14 +12623,12 @@ module hsst_top
             .i_txk_3 ({1'bx, 1'bx, 1'bx, i_txk_3[0]}),
             .i_p_rx3_clk_fr_core (rxclk),
             .i_p_tx3_clk_fr_core (txclk),
-            .o_p_pll_lock_0 (nt_led[6]),
-            .o_pll_done_0 (nt_led[7]),
-            .o_rxlane_done_3 (nt_led[4]),
-            .o_txlane_done_3 (nt_led[5]),
+            .o_rxlane_done_3 (nt_led[2]),
+            .o_txlane_done_3 (nt_led[3]),
             .i_free_clk (nt_clk),
             .i_p_refckn_0 (nt_i_p_refckn_0),
             .i_p_refckp_0 (nt_i_p_refckp_0),
-            .i_pll_rst_0 (nt_rstn));
+            .i_pll_rst_0 (i_pll_rst_0));
 	// ../../../rtl/hsst_top.v:41
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="AB11" *)    GTP_INBUF /* i_p_refckn_0_ibuf */ #(
@@ -12630,9 +12652,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[0]  (
             .Q (i_txd_3[0]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[0]));
+            .D (N153[0]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[1]  */ #(
@@ -12640,9 +12662,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[1]  (
             .Q (i_txd_3[1]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[1]));
+            .D (N153[1]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[2]  */ #(
@@ -12651,8 +12673,8 @@ module hsst_top
         \i_txd_3[2]  (
             .Q (i_txd_3[2]),
             .CLK (txclk),
-            .D (N152[2]),
-            .P (N17));
+            .D (N153[2]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[3]  */ #(
@@ -12661,8 +12683,8 @@ module hsst_top
         \i_txd_3[3]  (
             .Q (i_txd_3[3]),
             .CLK (txclk),
-            .D (N152[3]),
-            .P (N17));
+            .D (N153[3]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[4]  */ #(
@@ -12671,8 +12693,8 @@ module hsst_top
         \i_txd_3[4]  (
             .Q (i_txd_3[4]),
             .CLK (txclk),
-            .D (N152[4]),
-            .P (N17));
+            .D (N153[4]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[5]  */ #(
@@ -12681,8 +12703,8 @@ module hsst_top
         \i_txd_3[5]  (
             .Q (i_txd_3[5]),
             .CLK (txclk),
-            .D (N152[5]),
-            .P (N17));
+            .D (N153[5]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[6]  */ #(
@@ -12690,9 +12712,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[6]  (
             .Q (i_txd_3[6]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[6]));
+            .D (N153[6]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[7]  */ #(
@@ -12701,8 +12723,8 @@ module hsst_top
         \i_txd_3[7]  (
             .Q (i_txd_3[7]),
             .CLK (txclk),
-            .D (N152[7]),
-            .P (N17));
+            .D (N153[7]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[8]  */ #(
@@ -12710,9 +12732,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[8]  (
             .Q (i_txd_3[8]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[8]));
+            .D (N153[8]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[9]  */ #(
@@ -12720,9 +12742,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[9]  (
             .Q (i_txd_3[9]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[9]));
+            .D (N153[9]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[10]  */ #(
@@ -12731,8 +12753,8 @@ module hsst_top
         \i_txd_3[10]  (
             .Q (i_txd_3[10]),
             .CLK (txclk),
-            .D (N152[10]),
-            .P (N17));
+            .D (N153[10]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[11]  */ #(
@@ -12741,8 +12763,8 @@ module hsst_top
         \i_txd_3[11]  (
             .Q (i_txd_3[11]),
             .CLK (txclk),
-            .D (N152[11]),
-            .P (N17));
+            .D (N153[11]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[12]  */ #(
@@ -12751,8 +12773,8 @@ module hsst_top
         \i_txd_3[12]  (
             .Q (i_txd_3[12]),
             .CLK (txclk),
-            .D (N152[12]),
-            .P (N17));
+            .D (N153[12]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[13]  */ #(
@@ -12761,8 +12783,8 @@ module hsst_top
         \i_txd_3[13]  (
             .Q (i_txd_3[13]),
             .CLK (txclk),
-            .D (N152[13]),
-            .P (N17));
+            .D (N153[13]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[14]  */ #(
@@ -12770,9 +12792,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[14]  (
             .Q (i_txd_3[14]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[14]));
+            .D (N153[14]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[15]  */ #(
@@ -12781,8 +12803,8 @@ module hsst_top
         \i_txd_3[15]  (
             .Q (i_txd_3[15]),
             .CLK (txclk),
-            .D (N152[15]),
-            .P (N17));
+            .D (N153[15]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[16]  */ #(
@@ -12790,9 +12812,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[16]  (
             .Q (i_txd_3[16]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[16]));
+            .D (N153[16]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[17]  */ #(
@@ -12800,9 +12822,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[17]  (
             .Q (i_txd_3[17]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[17]));
+            .D (N153[17]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[18]  */ #(
@@ -12811,8 +12833,8 @@ module hsst_top
         \i_txd_3[18]  (
             .Q (i_txd_3[18]),
             .CLK (txclk),
-            .D (N152[18]),
-            .P (N17));
+            .D (N153[18]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[19]  */ #(
@@ -12821,8 +12843,8 @@ module hsst_top
         \i_txd_3[19]  (
             .Q (i_txd_3[19]),
             .CLK (txclk),
-            .D (N152[19]),
-            .P (N17));
+            .D (N153[19]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[20]  */ #(
@@ -12831,8 +12853,8 @@ module hsst_top
         \i_txd_3[20]  (
             .Q (i_txd_3[20]),
             .CLK (txclk),
-            .D (N152[20]),
-            .P (N17));
+            .D (N153[20]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[21]  */ #(
@@ -12841,8 +12863,8 @@ module hsst_top
         \i_txd_3[21]  (
             .Q (i_txd_3[21]),
             .CLK (txclk),
-            .D (N152[21]),
-            .P (N17));
+            .D (N153[21]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[22]  */ #(
@@ -12850,9 +12872,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[22]  (
             .Q (i_txd_3[22]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[22]));
+            .D (N153[22]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[23]  */ #(
@@ -12861,8 +12883,8 @@ module hsst_top
         \i_txd_3[23]  (
             .Q (i_txd_3[23]),
             .CLK (txclk),
-            .D (N152[23]),
-            .P (N17));
+            .D (N153[23]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[24]  */ #(
@@ -12870,9 +12892,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[24]  (
             .Q (i_txd_3[24]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[24]));
+            .D (N153[24]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[25]  */ #(
@@ -12880,9 +12902,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[25]  (
             .Q (i_txd_3[25]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[25]));
+            .D (N153[25]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[26]  */ #(
@@ -12891,8 +12913,8 @@ module hsst_top
         \i_txd_3[26]  (
             .Q (i_txd_3[26]),
             .CLK (txclk),
-            .D (N152[26]),
-            .P (N17));
+            .D (N153[26]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[27]  */ #(
@@ -12901,8 +12923,8 @@ module hsst_top
         \i_txd_3[27]  (
             .Q (i_txd_3[27]),
             .CLK (txclk),
-            .D (N152[27]),
-            .P (N17));
+            .D (N153[27]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[28]  */ #(
@@ -12911,8 +12933,8 @@ module hsst_top
         \i_txd_3[28]  (
             .Q (i_txd_3[28]),
             .CLK (txclk),
-            .D (N152[28]),
-            .P (N17));
+            .D (N153[28]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[29]  */ #(
@@ -12921,8 +12943,8 @@ module hsst_top
         \i_txd_3[29]  (
             .Q (i_txd_3[29]),
             .CLK (txclk),
-            .D (N152[29]),
-            .P (N17));
+            .D (N153[29]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_C /* \i_txd_3[30]  */ #(
@@ -12930,9 +12952,9 @@ module hsst_top
             .INIT(1'b0))
         \i_txd_3[30]  (
             .Q (i_txd_3[30]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N152[30]));
+            .D (N153[30]));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txd_3[31]  */ #(
@@ -12941,8 +12963,8 @@ module hsst_top
         \i_txd_3[31]  (
             .Q (i_txd_3[31]),
             .CLK (txclk),
-            .D (N152[31]),
-            .P (N17));
+            .D (N153[31]),
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
     GTP_DFF_P /* \i_txk_3[0]  */ #(
@@ -12952,7 +12974,7 @@ module hsst_top
             .Q (i_txk_3[0]),
             .CLK (txclk),
             .D (tx_state_reg[0]),
-            .P (N17));
+            .P (N18));
 	// ../../../rtl/hsst_top.v:78
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A20", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[0]  */ #(
@@ -12979,7 +13001,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[2]  (
             .O (led[2]),
-            .I (1'b0));
+            .I (nt_led[2]));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="E18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[3]  */ #(
@@ -12988,7 +13010,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[3]  (
             .O (led[3]),
-            .I (1'b0));
+            .I (nt_led[3]));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[4]  */ #(
@@ -12997,7 +13019,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[4]  (
             .O (led[4]),
-            .I (nt_led[4]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[5]  */ #(
@@ -13006,7 +13028,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[5]  (
             .O (led[5]),
-            .I (nt_led[5]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="C17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[6]  */ #(
@@ -13015,7 +13037,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[6]  (
             .O (led[6]),
-            .I (nt_led[6]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="B17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[7]  */ #(
@@ -13024,7 +13046,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[7]  (
             .O (led[7]),
-            .I (nt_led[7]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="C22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* rstn_ibuf */ #(
@@ -13040,29 +13062,14 @@ module hsst_top
         \tx_state_fsm[2:0]_7  (
             .Z (tx_state_next[1]),
             .Z5 (tx_state_next[0]),
-            .I0 (N174[0]),
-            .I1 (N174[1]),
+            .I0 (N175[0]),
+            .I1 (N175[1]),
             .I2 (tx_state_reg[0]),
             .I3 (tx_state_reg[1]),
             .I4 (tx_state_reg[2]),
             .I5 (1'b1));
 	// LUT = I1&I2 ;
 	// Z5 = (I0&I4)|(I0&~I3)|(~I1&I2) ;
-	// ../../../rtl/hsst_top.v:96
-
-    GTP_LUT6D /* \tx_state_fsm[2:0]_9  */ #(
-            .INIT(64'b1111010111110000111101011111000000110011000000000011001100000000))
-        \tx_state_fsm[2:0]_9  (
-            .Z (tx_state_next[2]),
-            .Z5 (N152[0]),
-            .I0 (N174[0]),
-            .I1 (i_txd_3[0]),
-            .I2 (tx_state_reg[1]),
-            .I3 (tx_state_reg[2]),
-            .I4 (),
-            .I5 (1'b1));
-	// LUT = (~I0&I3)|(I2) ;
-	// Z5 = ~I1&I3 ;
 	// ../../../rtl/hsst_top.v:96
 
 (* syn_encoding="onehot" *)    GTP_DFF_P /* \tx_state_reg[0]  */ #(
@@ -13072,7 +13079,7 @@ module hsst_top
             .Q (tx_state_reg[0]),
             .CLK (txclk),
             .D (tx_state_next[0]),
-            .P (N17));
+            .P (N18));
 	// ../../../rtl/hsst_top.v:96
 
 (* syn_encoding="onehot" *)    GTP_DFF_C /* \tx_state_reg[1]  */ #(
@@ -13080,7 +13087,7 @@ module hsst_top
             .INIT(1'b0))
         \tx_state_reg[1]  (
             .Q (tx_state_reg[1]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
             .D (tx_state_next[1]));
 	// ../../../rtl/hsst_top.v:96
@@ -13090,7 +13097,7 @@ module hsst_top
             .INIT(1'b0))
         \tx_state_reg[2]  (
             .Q (tx_state_reg[2]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
             .D (tx_state_next[2]));
 	// ../../../rtl/hsst_top.v:96
@@ -13100,9 +13107,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[0]  (
             .Q (txcnt[0]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N162[0]));
+            .D (N163[0]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[1]  */ #(
@@ -13110,9 +13117,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[1]  (
             .Q (txcnt[1]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[1]));
+            .D (N170[1]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[2]  */ #(
@@ -13120,9 +13127,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[2]  (
             .Q (txcnt[2]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[2]));
+            .D (N170[2]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[3]  */ #(
@@ -13130,9 +13137,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[3]  (
             .Q (txcnt[3]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N162[3]));
+            .D (N163[3]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[4]  */ #(
@@ -13140,9 +13147,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[4]  (
             .Q (txcnt[4]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[4]));
+            .D (N170[4]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[5]  */ #(
@@ -13150,9 +13157,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[5]  (
             .Q (txcnt[5]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[5]));
+            .D (N170[5]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[6]  */ #(
@@ -13160,9 +13167,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[6]  (
             .Q (txcnt[6]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[6]));
+            .D (N170[6]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[7]  */ #(
@@ -13170,9 +13177,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[7]  (
             .Q (txcnt[7]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[7]));
+            .D (N170[7]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[8]  */ #(
@@ -13180,9 +13187,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[8]  (
             .Q (txcnt[8]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[8]));
+            .D (N170[8]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[9]  */ #(
@@ -13190,9 +13197,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[9]  (
             .Q (txcnt[9]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N169[9]));
+            .D (N170[9]));
 	// ../../../rtl/hsst_top.v:116
 
     GTP_DFF_C /* \txcnt[10]  */ #(
@@ -13200,9 +13207,9 @@ module hsst_top
             .INIT(1'b0))
         \txcnt[10]  (
             .Q (txcnt[10]),
-            .C (N17),
+            .C (N18),
             .CLK (txclk),
-            .D (N162[10]));
+            .D (N163[10]));
 	// ../../../rtl/hsst_top.v:116
 
 

@@ -1,0 +1,80 @@
+define_attribute {p:clk} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:clk} {PAP_IO_LOC} {D18}
+define_attribute {p:clk} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:clk} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:clk} {PAP_IO_NONE} {TRUE}
+define_attribute {p:rstn} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:rstn} {PAP_IO_LOC} {C22}
+define_attribute {p:rstn} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:rstn} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rstn} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:B_1} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:B_1} {PAP_IO_LOC} {T20}
+define_attribute {p:B_1} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:B_1} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:B_1} {PAP_IO_NONE} {TRUE}                                                                                                                                                                                                                                                                           
+
+define_attribute {p:A_1} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:A_1} {PAP_IO_LOC} {U25}
+define_attribute {p:A_1} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:A_1} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:A_1} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:B_2} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:B_2} {PAP_IO_LOC} {U20}
+define_attribute {p:B_2} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:B_2} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:B_2} {PAP_IO_NONE} {TRUE}  
+
+define_attribute {p:A_2} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:A_2} {PAP_IO_LOC} {U26}
+define_attribute {p:A_2} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:A_2} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:A_2} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:B_3} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:B_3} {PAP_IO_LOC} {W23}
+define_attribute {p:B_3} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:B_3} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:B_3} {PAP_IO_NONE} {TRUE}                                                                                                                                                                                                                                                                           
+
+define_attribute {p:A_3} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:A_3} {PAP_IO_LOC} {V23}
+define_attribute {p:A_3} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:A_3} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:A_3} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:encoder_keyin_1} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:encoder_keyin_1} {PAP_IO_LOC} {W20}
+define_attribute {p:encoder_keyin_1} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:encoder_keyin_1} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:encoder_keyin_1} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:encoder_keyin_2} {PAP_IO_DIRECTION} {INPUT}
+define_attribute {p:encoder_keyin_2} {PAP_IO_LOC} {Y20}
+define_attribute {p:encoder_keyin_2} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:encoder_keyin_2} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:encoder_keyin_2} {PAP_IO_NONE} {TRUE}
+#led_display
+define_attribute {p:ser} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:ser} {PAP_IO_LOC} {W21}
+define_attribute {p:ser} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ser} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ser} {PAP_IO_DRIVE} {8}
+define_attribute {p:ser} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:ser} {PAP_IO_SLEW} {FAST}
+define_attribute {p:sck} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:sck} {PAP_IO_LOC} {U14}
+define_attribute {p:sck} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:sck} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:sck} {PAP_IO_DRIVE} {8}
+define_attribute {p:sck} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:sck} {PAP_IO_SLEW} {FAST}
+define_attribute {p:rck} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:rck} {PAP_IO_LOC} {V14}
+define_attribute {p:rck} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:rck} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:rck} {PAP_IO_DRIVE} {8}
+define_attribute {p:rck} {PAP_IO_UNUSED} {TRUE}
+define_attribute {p:rck} {PAP_IO_SLEW} {FAST}             

@@ -1,5 +1,5 @@
 //
-// Generated (version 2022.2-SP6.4<build 146967>) at Thu May 15 20:48:02 2025
+// Generated (version 2022.2-SP6.4<build 146967>) at Wed Aug 20 17:41:33 2025
 //
 
 module Word_Alignment_32bit
@@ -13,6 +13,7 @@ module Word_Alignment_32bit
     input clk,
     output [31:0] N165,
     output [31:0] data_af_align,
+    output data_done,
     output data_valid
 );
     wire N23;
@@ -68,13 +69,12 @@ module Word_Alignment_32bit
     wire _N1229;
     wire _N1446_3;
     wire _N1446_4;
-    wire _N1474;
     wire _N1475;
-    wire _N1646;
+    wire _N1476;
     wire _N1647;
-    wire _N1649;
+    wire _N1648;
     wire _N1650;
-(* PAP_MARK_DEBUG="1" *)    wire data_done;
+    wire _N1651;
     wire [7:0] datareg8;
     wire [15:0] datareg16;
     wire [23:0] datareg24;
@@ -977,8 +977,8 @@ module Word_Alignment_32bit
             .I0 (data_bf_Alignment_judge[0]),
             .I1 (N259),
             .I2 (skip),
-            .I3 (_N1649),
-            .I4 (_N1650),
+            .I3 (_N1650),
+            .I4 (_N1651),
             .I5 (1'b1));
 	// LUT = (~I1&~I2&I4)|(~I1&~I2&I3) ;
 	// Z5 = ~I0&I1 ;
@@ -986,7 +986,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N410_4_2 */ #(
             .INIT(64'b0000000000000000000011111111000000000000000000000000011110110000))
         N410_4_2 (
-            .Z (_N1649),
+            .Z (_N1650),
             .I0 (rxk[2]),
             .I1 (rxk[3]),
             .I2 (state[0]),
@@ -998,7 +998,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N410_4_3 */ #(
             .INIT(64'b0000000000000111101100000000000000000000000011111111000000000000))
         N410_4_3 (
-            .Z (_N1650),
+            .Z (_N1651),
             .I0 (rxk[0]),
             .I1 (rxk[1]),
             .I2 (state[0]),
@@ -1010,7 +1010,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N484_3_2 */ #(
             .INIT(64'b0000000000000000000000000000000000000000000000000000100001000000))
         N484_3_2 (
-            .Z (_N1646),
+            .Z (_N1647),
             .I0 (rxk[2]),
             .I1 (rxk[3]),
             .I2 (state[0]),
@@ -1022,7 +1022,7 @@ module Word_Alignment_32bit
     GTP_LUT6 /* N484_3_3 */ #(
             .INIT(64'b0000000000001000010000000000000000000000000000000000000000000000))
         N484_3_3 (
-            .Z (_N1647),
+            .Z (_N1648),
             .I0 (rxk[0]),
             .I1 (rxk[1]),
             .I2 (state[0]),
@@ -1035,8 +1035,8 @@ module Word_Alignment_32bit
             .INIT(4'b1110))
         N484_3_4 (
             .Z (_N1117),
-            .I0 (_N1646),
-            .I1 (_N1647));
+            .I0 (_N1647),
+            .I1 (_N1648));
 	// LUT = (I0)|(I1) ;
 
     GTP_LUT6 /* N505 */ #(
@@ -2382,14 +2382,14 @@ module Word_Alignment_32bit
             .Q (error),
             .C (N0),
             .CLK (clk),
-            .D (_N1474));
+            .D (_N1475));
     // defparam error_vname.orig_name = error;
 	// ../../../rtl/Word_Alignment_32bit.v:143
 
     GTP_LUT6 /* error_ce_mux */ #(
             .INIT(64'b1111111111111111111111111111101011001100110011001100110011001010))
         error_ce_mux (
-            .Z (_N1474),
+            .Z (_N1475),
             .I0 (N146),
             .I1 (error),
             .I2 (state[0]),
@@ -2432,14 +2432,14 @@ module Word_Alignment_32bit
             .Q (skip),
             .C (N0),
             .CLK (clk),
-            .D (_N1475));
+            .D (_N1476));
     // defparam skip_vname.orig_name = skip;
 	// ../../../rtl/Word_Alignment_32bit.v:143
 
     GTP_LUT6 /* skip_ce_mux */ #(
             .INIT(64'b1111111111110001000100010001000011001100110000000000000000000000))
         skip_ce_mux (
-            .Z (_N1475),
+            .Z (_N1476),
             .I0 (N259),
             .I1 (skip),
             .I2 (state[0]),
@@ -3235,8 +3235,8 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     wire _N286;
     wire _N287;
     wire _N1470;
-    wire _N1518;
-    wire _N1519;
+    wire _N1508;
+    wire _N1509;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
@@ -3245,16 +3245,6 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .Z (N0),
             .I (rst_n));
     // defparam N0_vname.orig_name = N0;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -3457,7 +3447,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     GTP_LUT4 /* N36_8 */ #(
             .INIT(16'b0000000000000001))
         N36_8 (
-            .Z (_N1518),
+            .Z (_N1508),
             .I0 (rise_cnt[4]),
             .I1 (rise_cnt[3]),
             .I2 (rise_cnt[2]),
@@ -3467,7 +3457,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1519),
+            .Z (_N1509),
             .I0 (rise_cnt[8]),
             .I1 (rise_cnt[7]),
             .I2 (rise_cnt[6]),
@@ -3482,24 +3472,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .I1 (rise_cnt[10]),
             .I2 (rise_cnt[9]),
             .I3 (rise_cnt[0]),
-            .I4 (_N1518),
-            .I5 (_N1519));
+            .I4 (_N1508),
+            .I5 (_N1509));
 	// LUT = I0&~I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111111111100111111111111110000000000111110100000000011111010))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (_N1470),
-            .I0 (signal_deb),
-            .I1 (signal_b),
-            .I2 (N36),
+            .Z5 (N2),
+            .I0 (signal_b),
+            .I1 (N36),
+            .I2 (signal_b_ff),
             .I3 (signal_b_neg),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I3)|(I2)|(I1) ;
-	// Z5 = (I2&~I3)|(I0&~I3) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[0]  */ #(
@@ -3744,6 +3734,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0
             .CLK (clk),
             .D (_N1470));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:60
+
+    GTP_LUT3 /* signal_deb_pre_ce_mux */ #(
+            .INIT(8'b00001110))
+        signal_deb_pre_ce_mux (
+            .Z (_N1470),
+            .I0 (signal_deb),
+            .I1 (N36),
+            .I2 (signal_b_neg));
+	// LUT = (I0&~I2)|(I1&~I2) ;
 
 
 endmodule
@@ -4138,27 +4137,30 @@ module ipm2l_hsstlp_rst_wtchdg_v1_0
 	// CARRY = (I0&~I1&~I2) ? CIN : I5 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:64
 
-    GTP_LUT1 /* N20_1 */ #(
-            .INIT(2'b01))
-        N20_1 (
-            .Z (N20),
-            .I0 (cnt_2[9]));
-	// LUT = ~I0 ;
-
-    GTP_LUT6D /* N34 */ #(
-            .INIT(64'b1111111111111010111110101111101000000001000000010000000100000001))
-        N34_vname (
-            .Z (N34),
-            .Z5 (N31[0]),
+    GTP_LUT3 /* \N31[0]_1  */ #(
+            .INIT(8'b00000001))
+        \N31[0]_1  (
+            .Z (N31[0]),
             .I0 (wtchdg_in),
             .I1 (cnt_1[0]),
-            .I2 (cnt_1[9]),
-            .I3 (cnt_2[0]),
-            .I4 (cnt_2[9]),
+            .I2 (cnt_1[9]));
+	// LUT = ~I0&~I1&~I2 ;
+	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:36
+
+    GTP_LUT6D /* N34 */ #(
+            .INIT(64'b1111111011101110111111101110111000000000111111110000000011111111))
+        N34_vname (
+            .Z (N34),
+            .Z5 (N20),
+            .I0 (wtchdg_in),
+            .I1 (cnt_1[9]),
+            .I2 (cnt_2[0]),
+            .I3 (cnt_2[9]),
+            .I4 (),
             .I5 (1'b1));
     // defparam N34_vname.orig_name = N34;
-	// LUT = (I3&I4)|(I2)|(I0) ;
-	// Z5 = ~I0&~I1&~I2 ;
+	// LUT = (I2&I3)|(I1)|(I0) ;
+	// Z5 = ~I3 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_wtchdg_v1_0.v:52
 
     GTP_LUT2 /* \N35[0]  */ #(
@@ -4444,7 +4446,6 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     wire [15:0] N81;
     wire N109;
     wire N151;
-    wire N166;
     wire [2:0] N168;
     wire _N0;
     wire _N6;
@@ -4472,8 +4473,9 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     wire _N1471;
     wire _N1472;
     wire _N1473;
-    wire _N1505;
-    wire _N1525;
+    wire _N1474;
+    wire _N1488;
+    wire _N1526;
     wire [15:0] cntr;
     wire [3:0] pll_fsm_reg;
 
@@ -4504,7 +4506,7 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I2 (pll_fsm_reg[1]),
             .I3 (pll_fsm_reg[2]),
             .I4 (_N1277),
-            .I5 (_N1525));
+            .I5 (_N1526));
 	// LUT = (I3&~I5)|(I3&~I4)|(I0&I1&I2) ;
 
     GTP_LUT6CARRY /* N42_1_1 */ #(
@@ -4861,8 +4863,8 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
     GTP_LUT6D /* N103_11 */ #(
             .INIT(64'b0001000000000000000100000000000000000000000010000000000000000000))
         N103_11 (
-            .Z (_N1505),
-            .Z5 (_N1525),
+            .Z (_N1488),
+            .Z5 (_N1526),
             .I0 (cntr[0]),
             .I1 (cntr[4]),
             .I2 (cntr[8]),
@@ -4881,7 +4883,7 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I1 (cntr[6]),
             .I2 (cntr[7]),
             .I3 (_N1277),
-            .I4 (_N1505),
+            .I4 (_N1488),
             .I5 (1'b1));
 	// LUT = ~I0&~I1&~I2 ;
 	// Z5 = I0&~I1&~I2&I3&I4 ;
@@ -4943,21 +4945,6 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .I4 (_N1276));
 	// LUT = I0&I1&I2&I3&I4 ;
 
-    GTP_LUT6D /* N166 */ #(
-            .INIT(64'b0000000000001111000000000000001111101110111011100010001000100010))
-        N166_vname (
-            .Z (N166),
-            .Z5 (_N1471),
-            .I0 (P_PLLPOWERDOWN),
-            .I1 (pll_fsm_reg[0]),
-            .I2 (pll_fsm_reg[1]),
-            .I3 (pll_fsm_reg[2]),
-            .I4 (_N883),
-            .I5 (1'b1));
-    // defparam N166_vname.orig_name = N166;
-	// LUT = (~I2&~I3&I4)|(~I1&~I2&~I3) ;
-	// Z5 = (I1&I4)|(I0&~I1) ;
-
     GTP_DFF_P /* P_PLLPOWERDOWN */ #(
             .GRS_EN("TRUE"), 
             .INIT(1'b1))
@@ -4968,6 +4955,15 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .P (N0));
     // defparam P_PLLPOWERDOWN_vname.orig_name = P_PLLPOWERDOWN;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
+
+    GTP_LUT3 /* P_PLLPOWERDOWN_ce_mux */ #(
+            .INIT(8'b11100010))
+        P_PLLPOWERDOWN_ce_mux (
+            .Z (_N1471),
+            .I0 (P_PLLPOWERDOWN),
+            .I1 (pll_fsm_reg[0]),
+            .I2 (_N883));
+	// LUT = (I0&~I1)|(I1&I2) ;
 
     GTP_DFF_C /* P_PLL_RST */ #(
             .GRS_EN("TRUE"), 
@@ -5152,17 +5148,28 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .D (N81[15]));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
 
-    GTP_DFF_CE /* o_pll_done */ #(
+    GTP_DFF_C /* o_pll_done */ #(
             .GRS_EN("TRUE"), 
             .INIT(1'b0))
         o_pll_done_vname (
             .Q (o_pll_done),
             .C (N0),
-            .CE (N166),
             .CLK (clk),
-            .D (pll_fsm_reg[3]));
+            .D (_N1473));
     // defparam o_pll_done_vname.orig_name = o_pll_done;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:90
+
+    GTP_LUT6 /* o_pll_done_ce_mux */ #(
+            .INIT(64'b1010101010101111101010101010000010101010101010111010101010101000))
+        o_pll_done_ce_mux (
+            .Z (_N1473),
+            .I0 (o_pll_done),
+            .I1 (pll_fsm_reg[0]),
+            .I2 (pll_fsm_reg[1]),
+            .I3 (pll_fsm_reg[2]),
+            .I4 (pll_fsm_reg[3]),
+            .I5 (_N883));
+	// LUT = (I0&I2)|(I0&I3)|(I0&I1&~I5)|(~I1&~I2&~I3&I4)|(~I2&~I3&I4&I5) ;
 
     GTP_LUT6D /* \pll_fsm_fsm[1:0]_1  */ #(
             .INIT(64'b0000000011001100000000001100110011111111010111111100110000000000))
@@ -5216,17 +5223,17 @@ module ipm2l_hsstlp_pll_rst_fsm_v1_0
             .Q (pll_fsm_reg[3]),
             .C (N0),
             .CLK (clk),
-            .D (_N1473));
+            .D (_N1474));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_pll_rst_fsm_v1_0.v:49
 
     GTP_LUT4 /* \pll_fsm_reg_ce_mux[3]  */ #(
             .INIT(16'b1110110011001100))
         \pll_fsm_reg_ce_mux[3]  (
-            .Z (_N1473),
+            .Z (_N1474),
             .I0 (pll_fsm_reg[2]),
             .I1 (pll_fsm_reg[3]),
             .I2 (_N1277),
-            .I3 (_N1525));
+            .I3 (_N1526));
 	// LUT = (I1)|(I0&I2&I3) ;
 
 
@@ -5367,16 +5374,16 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     wire _N1002;
     wire _N1462;
     wire _N1463;
-    wire _N1535;
     wire _N1536;
-    wire _N1563;
-    wire _N1574;
+    wire _N1537;
+    wire _N1564;
     wire _N1575;
     wire _N1576;
-    wire _N1585;
+    wire _N1577;
     wire _N1586;
-    wire _N1590;
-    wire _N1604;
+    wire _N1587;
+    wire _N1591;
+    wire _N1605;
     wire [12:0] cntr0;
     wire [7:0] cntr1;
     wire [14:0] cntr2;
@@ -5407,9 +5414,9 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .Z5 (N84),
             .I0 (sigdet),
             .I1 (cdr_align),
-            .I2 (_N1574),
-            .I3 (_N1575),
-            .I4 (_N1576),
+            .I2 (_N1575),
+            .I3 (_N1576),
+            .I4 (_N1577),
             .I5 (1'b1));
     // defparam N95_vname.orig_name = N95;
 	// LUT = (~I1)|(~I0) ;
@@ -5618,7 +5625,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .INIT(64'b1000000000000000100000000000000000000000110000000000000000000000))
         N215_ac3 (
             .Z (_N57),
-            .Z5 (_N1563),
+            .Z5 (_N1564),
             .I0 (cntr1[0]),
             .I1 (cntr1[1]),
             .I2 (cntr1[2]),
@@ -5871,7 +5878,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr3[3]),
             .I3 (cntr3[4]),
             .I4 (cntr3[9]),
-            .I5 (_N1535));
+            .I5 (_N1536));
     // defparam N243_vname.orig_name = N243;
 	// LUT = (I0)|(~I1&I2&I3&I4&I5) ;
 
@@ -6074,7 +6081,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N387_19 */ #(
             .INIT(16'b0000000000000001))
         N387_19 (
-            .Z (_N1585),
+            .Z (_N1586),
             .I0 (cntr0[1]),
             .I1 (cntr0[2]),
             .I2 (cntr0[3]),
@@ -6084,7 +6091,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N387_20 */ #(
             .INIT(16'b0000000000000010))
         N387_20 (
-            .Z (_N1586),
+            .Z (_N1587),
             .I0 (cntr0[4]),
             .I1 (cntr0[8]),
             .I2 (cntr0[9]),
@@ -6099,14 +6106,14 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr0[5]),
             .I2 (cntr0[6]),
             .I3 (cntr0[11]),
-            .I4 (_N1585),
-            .I5 (_N1586));
+            .I4 (_N1586),
+            .I5 (_N1587));
 	// LUT = ~I0&I1&I2&I3&I4&I5 ;
 
     GTP_LUT4 /* N404_9 */ #(
             .INIT(16'b0000000000010000))
         N404_9 (
-            .Z (_N1574),
+            .Z (_N1575),
             .I0 (cntr2[3]),
             .I1 (cntr2[4]),
             .I2 (cntr2[5]),
@@ -6116,7 +6123,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N404_10 */ #(
             .INIT(16'b1000000000000000))
         N404_10 (
-            .Z (_N1575),
+            .Z (_N1576),
             .I0 (cntr2[7]),
             .I1 (cntr2[8]),
             .I2 (cntr2[9]),
@@ -6126,7 +6133,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT5 /* N404_11 */ #(
             .INIT(32'b00000001000000000000000000000000))
         N404_11 (
-            .Z (_N1576),
+            .Z (_N1577),
             .I0 (cntr2[0]),
             .I1 (cntr2[1]),
             .I2 (cntr2[2]),
@@ -6137,7 +6144,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* N413_13 */ #(
             .INIT(64'b0000000000000000000000000000000000000000000000000000000000000100))
         N413_13 (
-            .Z (_N1535),
+            .Z (_N1536),
             .I0 (cntr3[1]),
             .I1 (cntr3[2]),
             .I2 (cntr3[5]),
@@ -6149,7 +6156,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT4 /* N413_14 */ #(
             .INIT(16'b0100000000000000))
         N413_14 (
-            .Z (_N1536),
+            .Z (_N1537),
             .I0 (cntr3[0]),
             .I1 (cntr3[3]),
             .I2 (cntr3[4]),
@@ -6183,18 +6190,18 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
 	// Z5 = I0&I1&~I2&~I3&I4 ;
 
     GTP_LUT6D /* N483_0 */ #(
-            .INIT(64'b1111110011111100111111001111110000000000000001010000000000000101))
+            .INIT(64'b1111111111110000111111111111000000000000000000000000000000010001))
         N483_0 (
             .Z (_N83),
-            .Z5 (N509[0]),
-            .I0 (N243),
-            .I1 (rxlane_rst_fsm_reg[1]),
-            .I2 (rxlane_rst_fsm_reg[0]),
-            .I3 (cntr3[0]),
-            .I4 (),
+            .Z5 (N502[0]),
+            .I0 (cdr_align),
+            .I1 (N84),
+            .I2 (rxlane_rst_fsm_reg[1]),
+            .I3 (rxlane_rst_fsm_reg[0]),
+            .I4 (cntr2[0]),
             .I5 (1'b1));
-	// LUT = (I2)|(I1) ;
-	// Z5 = ~I0&~I2&~I3 ;
+	// LUT = (I3)|(I2) ;
+	// Z5 = ~I0&~I1&~I3&~I4 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6D /* \N486_7[1]  */ #(
@@ -6276,18 +6283,18 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
 	// LUT = ~I0&I1 ;
 
     GTP_LUT6D /* N492_0 */ #(
-            .INIT(64'b1111111111110000111111111111000000000000000000000000000000010001))
+            .INIT(64'b1110111011101110111011101110111000000001000000010000000100000001))
         N492_0 (
             .Z (_N76),
-            .Z5 (N502[0]),
-            .I0 (cdr_align),
-            .I1 (N84),
-            .I2 (rxlane_rst_fsm_reg[2]),
-            .I3 (rxlane_rst_fsm_reg[0]),
-            .I4 (cntr2[0]),
+            .Z5 (_N82_inv),
+            .I0 (rxlane_rst_fsm_reg[2]),
+            .I1 (rxlane_rst_fsm_reg[0]),
+            .I2 (rxlane_rst_fsm_reg[5]),
+            .I3 (),
+            .I4 (),
             .I5 (1'b1));
-	// LUT = (I3)|(I2) ;
-	// Z5 = ~I0&~I1&~I3&~I4 ;
+	// LUT = (I1)|(I0) ;
+	// Z5 = ~I0&~I1&~I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6D /* \N495_7[0]  */ #(
@@ -6299,7 +6306,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr1[0]),
             .I2 (cntr1[4]),
             .I3 (_N57),
-            .I4 (_N1563),
+            .I4 (_N1564),
             .I5 (1'b1));
 	// LUT = (~I0&~I1&~I4)|(~I0&~I1&~I2) ;
 	// Z5 = (~I0&I2&~I3&~I4)|(~I0&I1&I2&~I3)|(~I0&~I2&I3) ;
@@ -6313,7 +6320,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[1]),
             .I3 (cntr1[2]),
             .I4 (cntr1[4]),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&~I1&I3&~I5)|(~I0&~I1&I3&~I4)|(~I0&I1&I2&~I3)|(~I0&I1&~I2&I3) ;
 
     GTP_LUT5 /* \N495_7[3]  */ #(
@@ -6336,22 +6343,37 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[4]),
             .I3 (cntr1[5]),
             .I4 (_N57),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&~I2&I3)|(~I0&I3&~I4&~I5)|(~I0&I1&I3&~I4)|(~I0&I2&~I3&I4&~I5)|(~I0&I1&I2&~I3&I4) ;
 
     GTP_LUT6D /* N499_0 */ #(
-            .INIT(64'b1111110011111100111111001111110000000000000100010000000000010001))
+            .INIT(64'b1111111111001100111111111100110000000001000000010000000100000001))
         N499_0 (
             .Z (_N77),
-            .Z5 (_N82_inv),
-            .I0 (rxlane_rst_fsm_reg[2]),
+            .Z5 (N509[0]),
+            .I0 (N243),
             .I1 (rxlane_rst_fsm_reg[0]),
-            .I2 (rxlane_rst_fsm_reg[4]),
-            .I3 (rxlane_rst_fsm_reg[5]),
+            .I2 (cntr3[0]),
+            .I3 (rxlane_rst_fsm_reg[4]),
             .I4 (),
             .I5 (1'b1));
-	// LUT = (I2)|(I1) ;
-	// Z5 = ~I0&~I1&~I3 ;
+	// LUT = (I3)|(I1) ;
+	// Z5 = ~I0&~I1&~I2 ;
+	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
+
+    GTP_LUT6D /* N506_0 */ #(
+            .INIT(64'b1111111111110000111111111111000000000000000000000010001011111111))
+        N506_0 (
+            .Z (_N78),
+            .Z5 (N658),
+            .I0 (N247),
+            .I1 (N243),
+            .I2 (rxlane_rst_fsm_reg[0]),
+            .I3 (rxlane_rst_fsm_reg[5]),
+            .I4 (_N1605),
+            .I5 (1'b1));
+	// LUT = (I3)|(I2) ;
+	// Z5 = (~I3&~I4)|(I0&~I1&~I4) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
     GTP_LUT6 /* \N525_1[1]  */ #(
@@ -6429,7 +6451,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cntr1[0]),
             .I2 (cntr1[1]),
             .I3 (cntr1[4]),
-            .I4 (_N1563),
+            .I4 (_N1564),
             .I5 (1'b1));
 	// LUT = (~I4)|(~I3)|(I1)|(I0) ;
 	// Z5 = (~I0&~I1&I2&~I4)|(~I0&~I1&I2&~I3)|(~I0&I1&~I2) ;
@@ -6438,7 +6460,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* N654_4 */ #(
             .INIT(64'b1111111111111111111111111111101111111111111111111111111111110000))
         N654_4 (
-            .Z (_N1604),
+            .Z (_N1605),
             .I0 (N95),
             .I1 (N443),
             .I2 (rxlane_rst_fsm_reg[1]),
@@ -6446,21 +6468,6 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I4 (rxlane_rst_fsm_reg[4]),
             .I5 (rxlane_rst_fsm_reg[7]));
 	// LUT = (I2)|(I3)|(I4)|(~I1&I5)|(I0&I5) ;
-
-    GTP_LUT6D /* N658 */ #(
-            .INIT(64'b0000000000000000001000101111111111111111111100001111111111110000))
-        N658_vname (
-            .Z (N658),
-            .Z5 (_N78),
-            .I0 (N247),
-            .I1 (N243),
-            .I2 (rxlane_rst_fsm_reg[0]),
-            .I3 (rxlane_rst_fsm_reg[5]),
-            .I4 (_N1604),
-            .I5 (1'b1));
-    // defparam N658_vname.orig_name = N658;
-	// LUT = (~I3&~I4)|(I0&~I1&~I4) ;
-	// Z5 = (I3)|(I2) ;
 
     GTP_DFF_P /* P_PCS_RX_RST */ #(
             .GRS_EN("TRUE"), 
@@ -7072,7 +7079,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I2 (cntr1[0]),
             .I3 (cntr1[4]),
             .I4 (rxlane_rst_fsm_reg[3]),
-            .I5 (_N1563));
+            .I5 (_N1564));
 	// LUT = (~I0&I4)|(I1&~I2&I3&I5) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rxlane_rst_fsm_v1_6.v:169
 
@@ -7103,7 +7110,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
     GTP_LUT6 /* \rxlane_rst_fsm_fsm[3:0]_51_2  */ #(
             .INIT(64'b0111011111110111011101111111011101110111111101110000000011110000))
         \rxlane_rst_fsm_fsm[3:0]_51_2  (
-            .Z (_N1590),
+            .Z (_N1591),
             .I0 (sigdet),
             .I1 (cdr_align),
             .I2 (rxlane_rst_fsm_reg[2]),
@@ -7120,7 +7127,7 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (rxlane_rst_fsm_reg[1]),
             .I2 (N673[7]),
             .I3 (rxlane_rst_fsm_reg[4]),
-            .I4 (_N1590));
+            .I4 (_N1591));
 	// LUT = (I4)|(I0&I3)|(I1&I2) ;
 
     GTP_LUT6 /* \rxlane_rst_fsm_fsm[3:0]_57  */ #(
@@ -7131,8 +7138,8 @@ module ipm2l_hsstlp_rxlane_rst_fsm_v1_6
             .I1 (cdr_align),
             .I2 (rxlane_rst_fsm_reg[5]),
             .I3 (rxlane_rst_fsm_reg[7]),
-            .I4 (_N1535),
-            .I5 (_N1536));
+            .I4 (_N1536),
+            .I5 (_N1537));
 	// LUT = (I0&I1&I3)|(I0&I1&I2&I4&I5) ;
 
 (* syn_encoding="onehot" *)    GTP_DFF_P /* \rxlane_rst_fsm_reg[0]  */ #(
@@ -7232,21 +7239,11 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     wire _N246;
     wire _N247;
     wire _N1461;
-    wire _N1556;
     wire _N1557;
+    wire _N1558;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -7449,7 +7446,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1556),
+            .Z (_N1557),
             .I0 (rise_cnt[5]),
             .I1 (rise_cnt[6]),
             .I2 (rise_cnt[7]),
@@ -7459,7 +7456,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
     GTP_LUT4 /* N36_10 */ #(
             .INIT(16'b0000000100000000))
         N36_10 (
-            .Z (_N1557),
+            .Z (_N1558),
             .I0 (rise_cnt[0]),
             .I1 (rise_cnt[9]),
             .I2 (rise_cnt[10]),
@@ -7474,24 +7471,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
             .I1 (rise_cnt[2]),
             .I2 (rise_cnt[3]),
             .I3 (rise_cnt[4]),
-            .I4 (_N1556),
-            .I5 (_N1557));
+            .I4 (_N1557),
+            .I5 (_N1558));
 	// LUT = ~I0&~I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111111111010111111111111101000001111000011000000111100001100))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (_N1461),
+            .Z5 (N2),
             .I0 (signal_b),
-            .I1 (signal_deb),
-            .I2 (signal_b_neg),
+            .I1 (signal_b_neg),
+            .I2 (signal_b_ff),
             .I3 (N36),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I3)|(I2)|(I0) ;
-	// Z5 = (~I2&I3)|(I1&~I2) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[0]  */ #(
@@ -7737,6 +7734,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0_unq26
             .D (_N1461));
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:60
 
+    GTP_LUT3 /* signal_deb_pre_ce_mux */ #(
+            .INIT(8'b00110010))
+        signal_deb_pre_ce_mux (
+            .Z (_N1461),
+            .I0 (signal_deb),
+            .I1 (signal_b_neg),
+            .I2 (N36));
+	// LUT = (I0&~I1)|(~I1&I2) ;
+
 
 endmodule
 
@@ -7799,21 +7805,11 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     wire _N258;
     wire _N259;
     wire _N1460;
-    wire _N1544;
     wire _N1545;
+    wire _N1546;
     wire [11:0] rise_cnt;
     wire signal_b_ff;
     wire signal_b_neg;
-
-    GTP_LUT2 /* N2 */ #(
-            .INIT(4'b0100))
-        N2_vname (
-            .Z (N2),
-            .I0 (signal_b),
-            .I1 (signal_b_ff));
-    // defparam N2_vname.orig_name = N2;
-	// LUT = ~I0&I1 ;
-	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:44
 
     GTP_LUT6CARRY /* N13_1_1 */ #(
             .INIT(64'b0110011001100110011001100110011000000000000000000000000000000000), 
@@ -8016,7 +8012,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     GTP_LUT4 /* N36_8 */ #(
             .INIT(16'b0000000000000001))
         N36_8 (
-            .Z (_N1544),
+            .Z (_N1545),
             .I0 (rise_cnt[1]),
             .I1 (rise_cnt[3]),
             .I2 (rise_cnt[4]),
@@ -8026,7 +8022,7 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
     GTP_LUT4 /* N36_9 */ #(
             .INIT(16'b0000000000000001))
         N36_9 (
-            .Z (_N1545),
+            .Z (_N1546),
             .I0 (rise_cnt[6]),
             .I1 (rise_cnt[7]),
             .I2 (rise_cnt[8]),
@@ -8041,24 +8037,24 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
             .I1 (rise_cnt[2]),
             .I2 (rise_cnt[10]),
             .I3 (rise_cnt[11]),
-            .I4 (_N1544),
-            .I5 (_N1545));
+            .I4 (_N1545),
+            .I5 (_N1546));
 	// LUT = ~I0&I1&~I2&~I3&I4&I5 ;
 
     GTP_LUT6D /* N40 */ #(
-            .INIT(64'b1111111011111110111111101111111000110011001100000011001100110000))
+            .INIT(64'b1111111111101110111111111110111001010000010100000101000001010000))
         N40_vname (
             .Z (N40),
-            .Z5 (N41[2]),
+            .Z5 (N2),
             .I0 (signal_b),
             .I1 (signal_b_neg),
-            .I2 (N36),
-            .I3 (N13[2]),
+            .I2 (signal_b_ff),
+            .I3 (N36),
             .I4 (),
             .I5 (1'b1));
     // defparam N40_vname.orig_name = N40;
-	// LUT = (I2)|(I1)|(I0) ;
-	// Z5 = (~I1&I3)|(~I1&I2) ;
+	// LUT = (I3)|(I1)|(I0) ;
+	// Z5 = ~I0&I2 ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_rst_debounce_v1_0.v:48
 
     GTP_LUT6D /* \N41_3[1]  */ #(
@@ -8074,6 +8070,15 @@ module ipm2l_hsstlp_rst_debounce_v1_0_1
             .I5 (1'b1));
 	// LUT = ~I0&~I1&I3 ;
 	// Z5 = ~I0&~I1&~I2 ;
+
+    GTP_LUT3 /* \N41_3[2]  */ #(
+            .INIT(8'b01010100))
+        \N41_3[2]  (
+            .Z (N41[2]),
+            .I0 (signal_b_neg),
+            .I1 (N36),
+            .I2 (N13[2]));
+	// LUT = (~I0&I1)|(~I0&I2) ;
 
     GTP_DFF_CE /* \rise_cnt[0]  */ #(
             .GRS_EN("TRUE"), 
@@ -8394,8 +8399,8 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     wire _N1467;
     wire _N1468;
     wire _N1469;
-    wire _N1477;
-    wire _N1610;
+    wire _N1478;
+    wire _N1611;
     wire [8:0] cntr;
     wire [5:0] txlane_rst_fsm_reg_alias;
     assign txlane_rst_fsm_reg_alias[0] = txlane_rst_fsm_reg[0];
@@ -8509,7 +8514,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I1 (txlane_rst_fsm_reg_alias[1]),
             .I2 (txlane_rst_fsm_reg_alias[2]),
             .I3 (_N1266),
-            .I4 (_N1477),
+            .I4 (_N1478),
             .I5 (1'b1));
 	// LUT = (I1&~I4)|(I1&~I3)|(~I0&I2) ;
 	// Z5 = (I1&I3&I4)|(~I0&I2) ;
@@ -8518,7 +8523,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     GTP_LUT6D /* N298_9 */ #(
             .INIT(64'b0001000000010000000100000001000000001000000000000000100000000000))
         N298_9 (
-            .Z (_N1477),
+            .Z (_N1478),
             .Z5 (N315),
             .I0 (cntr[1]),
             .I1 (cntr[3]),
@@ -8560,7 +8565,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
     GTP_LUT5 /* N314_10 */ #(
             .INIT(32'b00000000000000000000000000001000))
         N314_10 (
-            .Z (_N1610),
+            .Z (_N1611),
             .I0 (cntr[1]),
             .I1 (cntr[4]),
             .I2 (cntr[6]),
@@ -8577,7 +8582,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I2 (cntr[3]),
             .I3 (cntr[5]),
             .I4 (txlane_rst_fsm_reg_alias[1]),
-            .I5 (_N1610));
+            .I5 (_N1611));
     // defparam N468_vname.orig_name = N468;
 	// LUT = (I4&~I5)|(~I3&I4)|(~I1&I4)|(I0&I4)|(I2&I4) ;
 	// ../ipcore/hsst/rtl/ipm2l_hsstlp_rst/ipm2l_hsstlp_txlane_rst_fsm_v1_6.v:221
@@ -8639,7 +8644,7 @@ module ipm2l_hsstlp_txlane_rst_fsm_v1_6
             .I1 (txlane_rst_fsm_reg_alias[0]),
             .I2 (txlane_rst_fsm_reg_alias[1]),
             .I3 (_N1266),
-            .I4 (_N1477));
+            .I4 (_N1478));
 	// LUT = (I1&~I4)|(I1&~I3)|(I0&~I2)|(I1&~I2)|(I0&I3&I4) ;
 
     GTP_DFF_P /* P_TX_LANE_PD_DRIVER */ #(
@@ -8907,13 +8912,13 @@ module ipm2l_hsstlp_rst_v1_8
     output P_TX_LANE_PD_DRIVER_3,
     output P_TX_LANE_PD_PISO_3,
     output P_TX_PMA_RST_3,
-    output o_pll_done_0,
     output o_rxlane_done_3,
     output o_txlane_done_3
 );
     wire \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/N17 ;
     wire [9:0] \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg ;
     wire \AUTO_MODE.hsstlp_rst_rx/RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[0]_inv ;
+    wire o_pll_done_0;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[1]_floating ;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[2]_floating ;
     wire \AUTO_MODE.hsstlp_rst_rx_RXLANE3_ENABLE.rxlane_fsm3/rxlane_rst_fsm_reg[3]_floating ;
@@ -8976,8 +8981,6 @@ module hsst
     output [3:0] o_rxk_3,
     output i_p_rx3_clk_fr_core,
     output i_p_tx3_clk_fr_core,
-    output o_p_pll_lock_0,
-    output o_pll_done_0,
     output o_rxlane_done_3,
     output o_txlane_done_3
 );
@@ -8992,6 +8995,7 @@ module hsst
     wire P_TX_LANE_PD_PISO_3;
     wire P_TX_PMA_RST_3;
     wire o_p_lx_cdr_align_3;
+    wire o_p_pll_lock_0;
     wire o_p_rx_sigdet_sta_3;
     wire \U_GTP_HSSTLP_WRAPPER_P_RDATA_3[8]_floating ;
     wire \U_GTP_HSSTLP_WRAPPER_P_RDATA_3[9]_floating ;
@@ -9038,7 +9042,6 @@ module hsst
             .P_TX_LANE_PD_DRIVER_3 (P_TX_LANE_PD_DRIVER_3),
             .P_TX_LANE_PD_PISO_3 (P_TX_LANE_PD_PISO_3),
             .P_TX_PMA_RST_3 (P_TX_PMA_RST_3),
-            .o_pll_done_0 (o_pll_done_0),
             .o_rxlane_done_3 (o_rxlane_done_3),
             .o_txlane_done_3 (o_txlane_done_3),
             .P_PLL_READY_0 (o_p_pll_lock_0),
@@ -9196,6 +9199,7 @@ module hsst_top
     wire [31:0] data_af_Alignment_judge;
     wire [31:0] data_af_align;
     wire [31:0] data_bf_Alignment_judge;
+(* PAP_MARK_DEBUG="1" *)    wire data_last;
 (* PAP_MARK_DEBUG="1" *)    wire data_valid;
     wire i_pll_rst_0;
     wire [31:0] i_txd_3;
@@ -9207,7 +9211,7 @@ module hsst_top
     wire nt_rstn;
     wire [31:0] o_rxd_3;
     wire [3:0] o_rxk_3;
-    wire rxclk;
+(* PAP_MARK_DEBUG="1" *)    wire rxclk;
     wire [2:0] tx_state_next;
     wire [2:0] tx_state_reg;
     wire txclk;
@@ -9256,8 +9260,8 @@ module hsst_top
         N18_vname (
             .Z (N18),
             .I0 (nt_rstn),
-            .I1 (nt_led[4]),
-            .I2 (nt_led[5]));
+            .I1 (nt_led[2]),
+            .I2 (nt_led[3]));
     // defparam N18_vname.orig_name = N18;
 	// LUT = (~I2)|(~I1)|(~I0) ;
 
@@ -11759,6 +11763,20 @@ module hsst_top
 	// LUT = (I1)|(I0) ;
 	// Z5 = ~I0&~I1&~I2&~I3 ;
 
+    GTP_LUT6D /* \N153_and[0][2]  */ #(
+            .INIT(64'b0011001100000000001100110000000011110101111100001111010111110000))
+        \N153_and[0][2]  (
+            .Z (N153[0]),
+            .Z5 (tx_state_next[2]),
+            .I0 (N175[0]),
+            .I1 (i_txd_3[0]),
+            .I2 (tx_state_reg[1]),
+            .I3 (tx_state_reg[2]),
+            .I4 (),
+            .I5 (1'b1));
+	// LUT = ~I1&I3 ;
+	// Z5 = (~I0&I3)|(I2) ;
+
     GTP_LUT6D /* \N153_or[2]  */ #(
             .INIT(64'b1110111011101110111011101110111011111010111110101111101011111010))
         \N153_or[2]  (
@@ -11942,6 +11960,7 @@ module hsst_top
             .data_bf_Alignment_judge ({1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, 1'bx, data_bf_Alignment_judge[0]}),
             .data_bf_align (o_rxd_3),
             .rxk (o_rxk_3),
+            .data_done (data_last),
             .data_valid (data_valid),
             .N0 (N18),
             .N259 (\Word_Alignment_32bit_inst/N259_rnmt ),
@@ -12604,10 +12623,8 @@ module hsst_top
             .i_txk_3 ({1'bx, 1'bx, 1'bx, i_txk_3[0]}),
             .i_p_rx3_clk_fr_core (rxclk),
             .i_p_tx3_clk_fr_core (txclk),
-            .o_p_pll_lock_0 (nt_led[6]),
-            .o_pll_done_0 (nt_led[7]),
-            .o_rxlane_done_3 (nt_led[4]),
-            .o_txlane_done_3 (nt_led[5]),
+            .o_rxlane_done_3 (nt_led[2]),
+            .o_txlane_done_3 (nt_led[3]),
             .i_free_clk (nt_clk),
             .i_p_refckn_0 (nt_i_p_refckn_0),
             .i_p_refckp_0 (nt_i_p_refckp_0),
@@ -12984,7 +13001,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[2]  (
             .O (led[2]),
-            .I (1'b0));
+            .I (nt_led[2]));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="E18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[3]  */ #(
@@ -12993,7 +13010,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[3]  (
             .O (led[3]),
-            .I (1'b0));
+            .I (nt_led[3]));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[4]  */ #(
@@ -13002,7 +13019,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[4]  (
             .O (led[4]),
-            .I (nt_led[4]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="A18", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[5]  */ #(
@@ -13011,7 +13028,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[5]  (
             .O (led[5]),
-            .I (nt_led[5]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="C17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[6]  */ #(
@@ -13020,7 +13037,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[6]  (
             .O (led[6]),
-            .I (nt_led[6]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="OUTPUT", PAP_IO_LOC="B17", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_DRIVE="8", PAP_IO_NONE="TRUE", PAP_IO_SLEW="SLOW" *)    GTP_OUTBUF /* \led_obuf[7]  */ #(
@@ -13029,7 +13046,7 @@ module hsst_top
             .DRIVE_STRENGTH("8"))
         \led_obuf[7]  (
             .O (led[7]),
-            .I (nt_led[7]));
+            .I (1'b1));
 	// ../../../rtl/hsst_top.v:6
 
 (* PAP_IO_DIRECTION="INPUT", PAP_IO_LOC="C22", PAP_IO_VCCIO="3.3", PAP_IO_STANDARD="LVCMOS33", PAP_IO_NONE="TRUE" *)    GTP_INBUF /* rstn_ibuf */ #(
@@ -13053,21 +13070,6 @@ module hsst_top
             .I5 (1'b1));
 	// LUT = I1&I2 ;
 	// Z5 = (I0&I4)|(I0&~I3)|(~I1&I2) ;
-	// ../../../rtl/hsst_top.v:96
-
-    GTP_LUT6D /* \tx_state_fsm[2:0]_9  */ #(
-            .INIT(64'b1111010111110000111101011111000000110011000000000011001100000000))
-        \tx_state_fsm[2:0]_9  (
-            .Z (tx_state_next[2]),
-            .Z5 (N153[0]),
-            .I0 (N175[0]),
-            .I1 (i_txd_3[0]),
-            .I2 (tx_state_reg[1]),
-            .I3 (tx_state_reg[2]),
-            .I4 (),
-            .I5 (1'b1));
-	// LUT = (~I0&I3)|(I2) ;
-	// Z5 = ~I1&I3 ;
 	// ../../../rtl/hsst_top.v:96
 
 (* syn_encoding="onehot" *)    GTP_DFF_P /* \tx_state_reg[0]  */ #(

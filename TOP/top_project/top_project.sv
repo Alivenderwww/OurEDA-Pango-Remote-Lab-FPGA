@@ -247,6 +247,7 @@ wire udp_in_rstn = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire led_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire ddr_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire jtag_rstn   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire lab_fpga_power_rstn = (external_rstn) && (clk_lock);
 wire ru_rstn     = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 
 // wire OV_ccd_rstn;
@@ -587,6 +588,7 @@ JTAG_SLAVE #(
 )S1(
     .clk                      (clk_25M           ),
     .rstn                     (jtag_rstn         ),
+	.lab_fpga_power_rstn      (lab_fpga_power_rstn),
     .tck                      (tck               ),
     .tdi                      (tdi               ),
     .tms                      (tms               ),

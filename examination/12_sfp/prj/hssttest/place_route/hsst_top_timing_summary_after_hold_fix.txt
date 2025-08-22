@@ -5,7 +5,10 @@ Setup Summary(Slow Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk               996.206       0.000              0            630
+ hsst_top|clk           hsst_top|clk               995.800       0.000              0            634
+ DebugCore_JCLK         DebugCore_JCLK              21.993       0.000              0           2022
+ DebugCore_CAPTURE      DebugCore_JCLK              19.406       0.000              0             98
+ DebugCore_JCLK         DebugCore_CAPTURE           46.133       0.000              0             16
 ====================================================================================================
 
 Hold Summary(Slow Corner):
@@ -13,7 +16,10 @@ Hold Summary(Slow Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk                 0.237       0.000              0            630
+ hsst_top|clk           hsst_top|clk                 0.232       0.000              0            634
+ DebugCore_JCLK         DebugCore_JCLK               0.312       0.000              0           2022
+ DebugCore_CAPTURE      DebugCore_JCLK              22.784       0.000              0             98
+ DebugCore_JCLK         DebugCore_CAPTURE            0.568       0.000              0             16
 ====================================================================================================
 
 Recovery Summary(Slow Corner):
@@ -21,7 +27,7 @@ Recovery Summary(Slow Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk               997.177       0.000              0            106
+ hsst_top|clk           hsst_top|clk               998.190       0.000              0            106
 ====================================================================================================
 
 Removal Summary(Slow Corner):
@@ -29,7 +35,7 @@ Removal Summary(Slow Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk                 0.470       0.000              0            106
+ hsst_top|clk           hsst_top|clk                 0.424       0.000              0            106
 ====================================================================================================
 
 Minimum Pulse Width Summary(Slow Corner):
@@ -44,7 +50,10 @@ Setup Summary(Fast Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk               997.738       0.000              0            630
+ hsst_top|clk           hsst_top|clk               997.494       0.000              0            634
+ DebugCore_JCLK         DebugCore_JCLK              23.184       0.000              0           2022
+ DebugCore_CAPTURE      DebugCore_JCLK              21.756       0.000              0             98
+ DebugCore_JCLK         DebugCore_CAPTURE           47.398       0.000              0             16
 ====================================================================================================
 
 Hold Summary(Fast Corner):
@@ -52,7 +61,10 @@ Hold Summary(Fast Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk                 0.158       0.000              0            630
+ hsst_top|clk           hsst_top|clk                 0.155       0.000              0            634
+ DebugCore_JCLK         DebugCore_JCLK               0.251       0.000              0           2022
+ DebugCore_CAPTURE      DebugCore_JCLK              23.669       0.000              0             98
+ DebugCore_JCLK         DebugCore_CAPTURE            0.730       0.000              0             16
 ====================================================================================================
 
 Recovery Summary(Fast Corner):
@@ -60,7 +72,7 @@ Recovery Summary(Fast Corner):
                                                                           TNS Failing      TNS Total
  Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk               998.212       0.000              0            106
+ hsst_top|clk           hsst_top|clk               998.951       0.000              0            106
 ====================================================================================================
 
 Removal Summary(Fast Corner):
@@ -68,7 +80,7 @@ Removal Summary(Fast Corner):
                                                                           THS Failing      THS Total
  Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
 ----------------------------------------------------------------------------------------------------
- hsst_top|clk           hsst_top|clk                 0.333       0.000              0            106
+ hsst_top|clk           hsst_top|clk                 0.291       0.000              0            106
 ====================================================================================================
 
 Minimum Pulse Width Summary(Fast Corner):

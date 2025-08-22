@@ -1,0 +1,124 @@
+# ----------------------------------------
+# Create compilation libraries
+vlib usim
+vmap usim "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/usim"
+vlib vsim
+vmap vsim "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/vsim"
+vlib adc
+vmap adc "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/adc"
+vlib adc_e2
+vmap adc_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/adc_e2"
+vlib ddc_e2
+vmap ddc_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddc_e2"
+vlib ddrc
+vmap ddrc "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddrc"
+vlib ddrphy
+vmap ddrphy "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddrphy"
+vlib dll_e2
+vmap dll_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/dll_e2"
+vlib hsst
+vmap hsst "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsst"
+vlib hsst_e2
+vmap hsst_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsst_e2"
+vlib hssthp_bufds
+vmap hssthp_bufds "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_bufds"
+vlib hssthp_hpll
+vmap hssthp_hpll "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_hpll"
+vlib hssthp_lane
+vmap hssthp_lane "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_lane"
+vlib hsstlp_lane
+vmap hsstlp_lane "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsstlp_lane"
+vlib hsstlp_pll
+vmap hsstlp_pll "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsstlp_pll"
+vlib iolhp_fifo
+vmap iolhp_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iolhp_fifo"
+vlib iolhr_dft
+vmap iolhr_dft "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iolhr_dft"
+vlib ipal_e1
+vmap ipal_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ipal_e1"
+vlib ipal_e2
+vmap ipal_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ipal_e2"
+vlib iserdes_e1
+vmap iserdes_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_e1"
+vlib iserdes_e2
+vmap iserdes_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_e2"
+vlib iserdes_fifo
+vmap iserdes_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_fifo"
+vlib oserdes_e1
+vmap oserdes_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_e1"
+vlib oserdes_e2
+vmap oserdes_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_e2"
+vlib oserdes_fifo
+vmap oserdes_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_fifo"
+vlib pciegen2
+vmap pciegen2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/pciegen2"
+vlib pciegen3
+vmap pciegen3 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/pciegen3"
+
+
+#compile basic library
+vlog -incr "C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/*.v" -work usim
+vlog -incr "C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/modelsim10.2c/*.vp" -work usim
+
+
+#compile basic library
+vlog -incr "C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/bsim/*.v" -work vsim
+vlog -incr "C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/bsim/modelsim10.2c/*.vp" -work vsim
+
+
+#compile common library
+cd "C:/pango/PDS_2022.2-SP6.4/arch/vendor/pango/verilog/simulation/modelsim10.2c"
+vmap adc "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/adc"
+vlog -incr -f ./filelist_adc_gtp.f -work adc
+vmap adc_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/adc_e2"
+vlog -incr -f ./filelist_adc_e2_gtp.f -work adc_e2
+vmap ddc_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddc_e2"
+vlog -incr -f ./filelist_ddc_e2_gtp.f -work ddc_e2
+vmap ddrc "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddrc"
+vlog -incr -f ./filelist_ddrc_gtp.f -work ddrc -sv -mfcu
+vmap ddrphy "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ddrphy"
+vlog -incr -f ./filelist_ddrphy_gtp.f -work ddrphy
+vmap dll_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/dll_e2"
+vlog -incr -f ./filelist_dll_e2_gtp.f -work dll_e2
+vmap hsst "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsst"
+vlog -incr -f ./filelist_hsst_gtp.f -work hsst
+vmap hsst_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsst_e2"
+vlog -incr -f ./filelist_hsst_e2_gtp.f -work hsst_e2
+vmap hssthp_bufds "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_bufds"
+vlog -incr -f ./filelist_hssthp_bufds_gtp.f -work hssthp_bufds
+vmap hssthp_hpll "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_hpll"
+vlog -incr -f ./filelist_hssthp_hpll_gtp.f -work hssthp_hpll
+vmap hssthp_lane "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hssthp_lane"
+vlog -incr -f ./filelist_hssthp_lane_gtp.f -work hssthp_lane
+vmap hsstlp_lane "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsstlp_lane"
+vlog -incr -f ./filelist_hsstlp_lane_gtp.f -work hsstlp_lane
+vmap hsstlp_pll "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/hsstlp_pll"
+vlog -incr -f ./filelist_hsstlp_pll_gtp.f -work hsstlp_pll
+vmap iolhp_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iolhp_fifo"
+vlog -incr -f ./filelist_iolhp_fifo_gtp.f -work iolhp_fifo
+vmap iolhr_dft "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iolhr_dft"
+vlog -incr -f ./filelist_iolhr_dft_gtp.f -work iolhr_dft
+vmap ipal_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ipal_e1"
+vlog -incr -f ./filelist_ipal_e1_gtp.f -work ipal_e1
+vmap ipal_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/ipal_e2"
+vlog -incr -f ./filelist_ipal_e2_gtp.f -work ipal_e2
+vmap iserdes_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_e1"
+vlog -incr -f ./filelist_iserdes_e1_gtp.f -work iserdes_e1
+vmap iserdes_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_e2"
+vlog -incr -f ./filelist_iserdes_e2_gtp.f -work iserdes_e2
+vmap iserdes_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/iserdes_fifo"
+vlog -incr -f ./filelist_iserdes_fifo_gtp.f -work iserdes_fifo
+vmap oserdes_e1 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_e1"
+vlog -incr -f ./filelist_oserdes_e1_gtp.f -work oserdes_e1
+vmap oserdes_e2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_e2"
+vlog -incr -f ./filelist_oserdes_e2_gtp.f -work oserdes_e2
+vmap oserdes_fifo "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/oserdes_fifo"
+vlog -incr -f ./filelist_oserdes_fifo_gtp.f -work oserdes_fifo
+vmap pciegen2 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/pciegen2"
+vlog -incr -f ./filelist_pciegen2_gtp.f -work pciegen2 -sv -mfcu
+vmap pciegen3 "E:/JiChuang_2025/PDS_Project/axi_udp_ddr/pangu_-remote_-lab/examination/show_1_led_matrix/sim/pciegen3"
+vlog -incr -f ./filelist_pciegen3_gtp.f -work pciegen3 -sv -mfcu
+
+quit -force
+
+# ----------------------------------------

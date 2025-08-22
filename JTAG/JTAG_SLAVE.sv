@@ -4,6 +4,8 @@ module JTAG_SLAVE #(
     input wire clk,
     input wire rstn,
 
+    input wire lab_fpga_power_rstn,
+
     output wire tck,
     output wire tdi,
     output wire tms,
@@ -66,6 +68,9 @@ wire jtag_rstn_sync;
 rstn_sync rstn_sync_jtag(clk, rstn, jtag_rstn_sync);
 assign JTAG_SLAVE_CLK  = clk;
 assign JTAG_SLAVE_RSTN = jtag_rstn_sync;
+
+wire lab_fpga_power_rstn_sync;
+rstn_sync rstn_sync_labpower(clk, lab_fpga_power_rstn, lab_fpga_power_rstn_sync);
 
 wire [3:0] cmd;
 wire [27:0] cycle_num;
@@ -473,8 +478,8 @@ always @(posedge clk or negedge jtag_rstn_sync) begin
 end
 
 //_______32'h10000007_______//
-always @(posedge clk or negedge jtag_rstn_sync) begin
-    if(~jtag_rstn_sync) begin
+always @(posedge clk or negedge lab_fpga_power_rstn_sync) begin
+    if(~lab_fpga_power_rstn_sync) begin
         lab_fpga_power_on <= 0;
     end else if(JTAG_SLAVE_WR_DATA_VALID && JTAG_SLAVE_WR_DATA_READY && (wr_addr == LAB_FPGA_POWER_ADDR)) begin
         lab_fpga_power_on <= (JTAG_SLAVE_WR_STRB[0])?(JTAG_SLAVE_WR_DATA[0]):(lab_fpga_power_on);
