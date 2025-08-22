@@ -1823,193 +1823,193 @@ define_attribute {p:hdmi_in_vsync} {PAP_IO_DIRECTION} {INPUT}
 define_attribute {p:hdmi_in_vsync} {PAP_IO_LOC} {N22}
 define_attribute {p:hdmi_in_vsync} {PAP_IO_VCCIO} {3.3}
 define_attribute {p:hdmi_in_vsync} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_clk} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_clk} {PAP_IO_LOC} {K16}
-define_attribute {p:hdmi_out_clk} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_clk} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_clk} {PAP_IO_DRIVE} {12}
-define_attribute {p:hdmi_out_clk} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_de} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_de} {PAP_IO_LOC} {K17}
-define_attribute {p:hdmi_out_de} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_de} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_de} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_de} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_LOC} {L17}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_hsync} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rstn} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rstn} {PAP_IO_LOC} {L19}
-define_attribute {p:hdmi_out_rstn} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rstn} {PAP_IO_STANDARD} {LVCMOS33}
-# define_attribute {p:hdmi_out_rstn} {PAP_IO_DRIVE} {4}
-# define_attribute {p:hdmi_out_rstn} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_LOC} {L18}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_vsync} {PAP_IO_SLEW} {FAST}
-define_attribute {p:ddc_sda} {PAP_IO_DIRECTION} {INOUT}
-define_attribute {p:ddc_sda} {PAP_IO_LOC} {L23}
-define_attribute {p:ddc_sda} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:ddc_sda} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:ddc_sda} {PAP_IO_DRIVE} {4}
-define_attribute {p:ddc_sda} {PAP_IO_SLEW} {FAST}
-define_attribute {p:ddc_scl} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:ddc_scl} {PAP_IO_LOC} {L22}
-define_attribute {p:ddc_scl} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:ddc_scl} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:ddc_scl} {PAP_IO_DRIVE} {4}
-define_attribute {p:ddc_scl} {PAP_IO_SLEW} {FAST}
-
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_LOC} {A25}
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_LOC} {B25}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_LOC} {B26}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_LOC} {C26}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_LOC} {D25}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_LOC} {E25}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_LOC} {D26}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_LOC} {E26}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_LOC} {F24}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_LOC} {G24}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_LOC} {G26}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_LOC} {H26}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_LOC} {J25}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_LOC} {J26}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_LOC} {H24}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_LOC} {J24}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_LOC} {H23}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_LOC} {J23}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_LOC} {K23}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_LOC} {K22}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_LOC} {M15}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_LOC} {L15}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_LOC} {M14}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_SLEW} {FAST}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_DIRECTION} {OUTPUT}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_LOC} {L14}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_VCCIO} {3.3}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_STANDARD} {LVCMOS33}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_DRIVE} {8}
-define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_LOC} {K16}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_DRIVE} {12}
+# define_attribute {p:hdmi_out_clk} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_de} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_de} {PAP_IO_LOC} {K17}
+# define_attribute {p:hdmi_out_de} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_de} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_de} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_de} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_LOC} {L17}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_hsync} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rstn} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rstn} {PAP_IO_LOC} {L19}
+# define_attribute {p:hdmi_out_rstn} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rstn} {PAP_IO_STANDARD} {LVCMOS33}
+# # define_attribute {p:hdmi_out_rstn} {PAP_IO_DRIVE} {4}
+# # define_attribute {p:hdmi_out_rstn} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_LOC} {L18}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_vsync} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:ddc_sda} {PAP_IO_DIRECTION} {INOUT}
+# define_attribute {p:ddc_sda} {PAP_IO_LOC} {L23}
+# define_attribute {p:ddc_sda} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:ddc_sda} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:ddc_sda} {PAP_IO_DRIVE} {4}
+# define_attribute {p:ddc_sda} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:ddc_scl} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:ddc_scl} {PAP_IO_LOC} {L22}
+# define_attribute {p:ddc_scl} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:ddc_scl} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:ddc_scl} {PAP_IO_DRIVE} {4}
+# define_attribute {p:ddc_scl} {PAP_IO_SLEW} {FAST}
+# 
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_LOC} {A25}
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[23]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_LOC} {B25}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[22]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_LOC} {B26}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[21]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_LOC} {C26}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[20]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_LOC} {D25}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[19]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_LOC} {E25}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[18]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_LOC} {D26}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[17]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_LOC} {E26}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[16]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_LOC} {F24}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[15]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_LOC} {G24}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[14]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_LOC} {G26}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[13]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_LOC} {H26}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[12]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_LOC} {J25}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[11]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_LOC} {J26}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[10]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_LOC} {H24}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[9]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_LOC} {J24}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[8]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_LOC} {H23}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[7]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_LOC} {J23}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[6]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_LOC} {K23}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[5]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_LOC} {K22}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[4]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_LOC} {M15}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[3]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_LOC} {L15}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[2]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_LOC} {M14}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[1]} {PAP_IO_SLEW} {FAST}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_DIRECTION} {OUTPUT}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_LOC} {L14}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_VCCIO} {3.3}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_STANDARD} {LVCMOS33}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_DRIVE} {8}
+# define_attribute {p:hdmi_out_rgb[0]} {PAP_IO_SLEW} {FAST}
 
 #led_display
 define_attribute {p:ser} {PAP_IO_DIRECTION} {INPUT}
