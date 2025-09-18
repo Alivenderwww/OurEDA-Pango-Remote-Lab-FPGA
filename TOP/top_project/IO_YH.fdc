@@ -2121,3 +2121,10 @@ define_attribute {p:encoder_key[1]} {PAP_IO_VCCIO} {3.3}
 define_attribute {p:encoder_key[1]} {PAP_IO_STANDARD} {LVCMOS33}
 define_attribute {p:encoder_key[1]} {PAP_IO_SLEW} {FAST}
 define_attribute {p:encoder_key[1]} {PAP_IO_NONE} {TRUE}
+
+define_attribute {p:ws_data_stream_out} {PAP_IO_DIRECTION} {OUTPUT}
+define_attribute {p:ws_data_stream_out} {PAP_IO_LOC} {B24}
+define_attribute {p:ws_data_stream_out} {PAP_IO_VCCIO} {3.3}
+define_attribute {p:ws_data_stream_out} {PAP_IO_STANDARD} {LVCMOS33}
+define_attribute {p:ws_data_stream_out} {PAP_IO_SLEW} {FAST}
+define_attribute {p:ws_data_stream_out} {PAP_IO_NONE} {TRUE}

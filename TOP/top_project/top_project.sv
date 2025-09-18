@@ -84,6 +84,8 @@ inout  wire [4:0]  sw       ,
 inout  wire [2:0]  encoder_A,
 inout  wire [2:0]  encoder_B,
 inout  wire [1:0]  encoder_key,
+
+output wire        ws_data_stream_out,
 //digital io
 // input  wire [7:0]  digital_input,
 //ddrmem io
@@ -981,6 +983,9 @@ Analazer #(
 );
 
 led_display_in_axi_slave #(
+	
+    .WS_NUM					 (128),
+    .CLK_FREQ				 (32'd50_000_000),
 	.ID_WIDTH                (S_ID)
 )S11(
 	.clk 				(clk_50M          	),
@@ -992,6 +997,7 @@ led_display_in_axi_slave #(
     .A             		(encoder_A			),
     .B             		(encoder_B			),
     .key           		(encoder_key		),
+	.ws_data_stream		(sw[4]				),
 	.SLAVE_CLK          (S_CLK          [11]),
 	.SLAVE_RSTN         (S_RSTN         [11]),
 	.SLAVE_WR_ADDR_ID   (S_WR_ADDR_ID   [11]),
@@ -1242,5 +1248,10 @@ btn_led_boot_ctrl u_btn_led_boot_ctrl(
 	.led        	( led4        )
 );
 
+ws_ctrl_top  ws_top(
+    .external_clk		(external_clk	),
+    .external_rstn		(external_rstn	),
+    .dataout			(ws_data_stream_out		)
+);
 
 endmodule

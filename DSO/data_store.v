@@ -32,7 +32,6 @@ reg [ADDR_WIDTH-1:0] trig_addr1;    //触发地址
 reg [7:0]            pre_data;
 reg [7:0]            pre_data1;
 reg [7:0]            pre_data2;
-reg [7:0]            pre_data3;
 reg [ADDR_WIDTH-1:0] data_cnt;
 reg [1:0]            wr_pp_ptr;
 reg [1:0]            rd_pp_ptr;
@@ -52,8 +51,8 @@ wire                      ram_refresh_pos;
 assign wr_en = deci_valid && (data_cnt <= HORIZONTAL-1) && wave_run && (~pingpang_full);
 
 //满足触发条件时输出脉冲信号
-assign trig_pulse = trig_edge ? ((pre_data3<trig_level) && (pre_data2<trig_level) && (pre_data1>=trig_level) && (pre_data>trig_level)) :
-                                ((pre_data3>trig_level) && (pre_data2>trig_level) && (pre_data1<=trig_level) && (pre_data<trig_level));        
+assign trig_pulse = trig_edge ? ((pre_data2<trig_level) && (pre_data1>=trig_level) && (pre_data>trig_level)) :
+                                ((pre_data2>trig_level) && (pre_data1<=trig_level) && (pre_data<trig_level));        
 
 //写RAM地址累加
 always @(posedge ad_clk or negedge rstn)begin
@@ -94,17 +93,14 @@ always @(posedge ad_clk or negedge rstn)begin
         pre_data  <= 8'd0;
         pre_data1 <= 8'd0;
         pre_data2 <= 8'd0;
-        pre_data3 <= 8'd0;
     end else if(~wave_run) begin
         pre_data  <= 8'd0;
         pre_data1 <= 8'd0;
         pre_data2 <= 8'd0;
-        pre_data3 <= 8'd0;
     end else if(deci_valid) begin
         pre_data  <= ad_data;
         pre_data1 <= pre_data;
         pre_data2 <= pre_data1;
-        pre_data3 <= pre_data2;
     end
 end
 
