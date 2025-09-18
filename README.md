@@ -6,11 +6,11 @@
 
 ![总览图](asstes/image1.png)
 
-[初赛视频](bilibili.com/video/BV125JezzELP/)（该视频是很早期的设计，部分功能和界面有很大改动。欢迎来b站一键三连+关注）
+[初赛视频](https://bilibili.com/video/BV125JezzELP/)（该视频是很早期的设计，部分功能和界面有很大改动。欢迎来b站一键三连+关注）
 
 有时间可能会录赛后总结，但是紫光已经把借的板子收回了。这byd紫光连板子都不肯送，岂可修（
 
-- 整体架构采用双FPGA架构，参考了[清华数字电路试验箱](bilibili.com/video/BV125JezzELP/)的设计方案；
+- 整体架构采用双FPGA架构，参考了[清华数字电路试验箱](https://dl.acm.org/doi/10.1145/3063955.3063958)的设计方案；
 - Ctrl_FPAG使用的是**野火的PG2L100H开发板**；Lab_FPGA使用的是**小眼睛的PG2L100H开发板**。本工程绝大部分代码在Ctrl_FPGA上运行，只有`/examination`文件夹内实验工程是运行在Lab_FPGA上的。
 - Ctrl_FPGA端使用AXI-4互联，接了**3个Master，12个Slave**，支持跨时钟域、超前传输、乱序等特性；
 - 通过**以太网UDP自定义协议 - AXI_MASTER**实现与服务器的通信。
