@@ -4,7 +4,7 @@
 
 除此以外还有服务器端的工程，暂时没有上传。
 
-![总览图](asstes\image1.png)
+![总览图](asstes/image1.png)
 
 [初赛视频](bilibili.com/video/BV125JezzELP/)（该视频是很早期的设计，部分功能和界面有很大改动。欢迎来b站一键三连+关注）
 
