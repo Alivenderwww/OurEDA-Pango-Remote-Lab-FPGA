@@ -1,0 +1,188 @@
+Design Summary : All Constraints Met.
+
+Setup Summary(Slow Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk           996.388       0.000              0            650
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                   996.335       0.000              0            530
+ PLL_2|pll_inst/u_gpll/CLKOUT1
+                        PLL_2|pll_inst/u_gpll/CLKOUT1
+                                                   997.632       0.000              0            153
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                   997.220       0.000              0            426
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                   993.581       0.000              0          12394
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                   992.719       0.000              0           1152
+====================================================================================================
+
+Hold Summary(Slow Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk             0.237       0.000              0            650
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                     0.159       0.000              0            530
+ PLL_2|pll_inst/u_gpll/CLKOUT1
+                        PLL_2|pll_inst/u_gpll/CLKOUT1
+                                                     0.350       0.000              0            153
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                     0.255       0.000              0            426
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                     0.135       0.000              0          12394
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                     0.270       0.000              0           1152
+====================================================================================================
+
+Recovery Summary(Slow Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk           998.125       0.000              0            109
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                   997.883       0.000              0              3
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                   997.936       0.000              0            100
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                   996.498       0.000              0           2832
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                   995.823       0.000              0             27
+====================================================================================================
+
+Removal Summary(Slow Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk             0.350       0.000              0            109
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                     0.126       0.000              0              3
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                     0.334       0.000              0            100
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                     0.335       0.000              0           2832
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                     0.712       0.000              0             27
+====================================================================================================
+
+Minimum Pulse Width Summary(Slow Corner):
+****************************************************************************************************
+                                                                         WPWS Failing     WPWS Total
+ Clock                                            WPWS(ns)    TPWS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+
+Setup Summary(Fast Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk           997.853       0.000              0            650
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                   997.811       0.000              0            530
+ PLL_2|pll_inst/u_gpll/CLKOUT1
+                        PLL_2|pll_inst/u_gpll/CLKOUT1
+                                                   998.488       0.000              0            153
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                   998.318       0.000              0            426
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                   996.069       0.000              0          12394
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                   995.463       0.000              0           1152
+====================================================================================================
+
+Hold Summary(Fast Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk             0.158       0.000              0            650
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                     0.116       0.000              0            530
+ PLL_2|pll_inst/u_gpll/CLKOUT1
+                        PLL_2|pll_inst/u_gpll/CLKOUT1
+                                                     0.250       0.000              0            153
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                     0.164       0.000              0            426
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                     0.100       0.000              0          12394
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                     0.250       0.000              0           1152
+====================================================================================================
+
+Recovery Summary(Fast Corner):
+****************************************************************************************************
+                                                                          TNS Failing      TNS Total
+ Launch Clock           Capture Clock              WNS(ns)     TNS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk           998.878       0.000              0            109
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                   998.712       0.000              0              3
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                   998.719       0.000              0            100
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                   997.683       0.000              0           2832
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                   997.412       0.000              0             27
+====================================================================================================
+
+Removal Summary(Fast Corner):
+****************************************************************************************************
+                                                                          THS Failing      THS Total
+ Launch Clock           Capture Clock              WHS(ns)     THS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+ hdmi_top|sys_clk       hdmi_top|sys_clk             0.248       0.000              0            109
+ PLL|u_pll/u_gpll/CLKOUT0
+                        PLL|u_pll/u_gpll/CLKOUT0
+                                                     0.126       0.000              0              3
+ ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/rst_clk_gpll/u_gpll/CLKOUT0
+                                                     0.226       0.000              0            100
+ ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                        ips2l_ddrphy_gpll_v1_3_1|ddr_rw_inst/axi_ddr_inst/u_ddrphy_top/ddrphy_gpll/u_gpll/CLKOUT0
+                                                     0.230       0.000              0           2832
+ PLL_2|pll_inst/u_gpll/CLKOUT0
+                        PLL_2|pll_inst/u_gpll/CLKOUT0
+                                                     0.585       0.000              0             27
+====================================================================================================
+
+Minimum Pulse Width Summary(Fast Corner):
+****************************************************************************************************
+                                                                         WPWS Failing     WPWS Total
+ Clock                                            WPWS(ns)    TPWS(ns)      Endpoints      Endpoints
+----------------------------------------------------------------------------------------------------
+====================================================================================================
+

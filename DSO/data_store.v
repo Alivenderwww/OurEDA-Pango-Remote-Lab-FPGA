@@ -32,7 +32,8 @@ reg [ADDR_WIDTH-1:0] trig_addr1;    //触发地址
 reg [7:0]            pre_data;
 reg [7:0]            pre_data1;
 reg [7:0]            pre_data2;
-reg [ADDR_WIDTH-1:0] data_cnt;
+reg [7:0]            pre_data3;
+reg [31:0]           data_cnt;
 reg [1:0]            wr_pp_ptr;
 reg [1:0]            rd_pp_ptr;
 reg                  ram_refresh_d;

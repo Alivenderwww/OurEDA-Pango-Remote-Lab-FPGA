@@ -27,11 +27,11 @@ wire [2:0] o_rxstatus_3;
 wire [3:0] o_rdisper_3;
 wire [3:0] o_rdecer_3;
 wire txclk;
-reg [31:0] i_txd_3;
-reg [ 3:0] i_txk_3;
-wire rxclk;
-wire [31:0] o_rxd_3;
-wire [ 3:0] o_rxk_3;
+reg [31:0] i_txd_3/* synthesis PAP_MARK_DEBUG="1" */;
+reg [ 3:0] i_txk_3/* synthesis PAP_MARK_DEBUG="1" */;
+wire rxclk/* synthesis PAP_MARK_DEBUG="1" */;
+wire [31:0] o_rxd_3/* synthesis PAP_MARK_DEBUG="1" */;
+wire [ 3:0] o_rxk_3/* synthesis PAP_MARK_DEBUG="1" */;
 assign i_free_clk                = clk;
 assign i_pll_rst_0               = ~rstn;
 assign i_p_tx3_clk_fr_core       = o_p_clk2core_tx_3; 
@@ -122,9 +122,9 @@ always @(posedge txclk or negedge tx_rstn)begin
         txcnt <= txcnt + 1;
 end
 wire Word_Alignment_rstn = rstn && o_txlane_done_3 && o_rxlane_done_3;
-wire data_valid;
-wire [31:0] data_af_align;
-wire data_last;
+wire data_valid/* synthesis PAP_MARK_DEBUG="1" */;
+wire [31:0] data_af_align/* synthesis PAP_MARK_DEBUG="1" */;
+wire data_last/* synthesis PAP_MARK_DEBUG="1" */;
 Word_Alignment_32bit  Word_Alignment_32bit_inst (
     .clk            (rxclk              ),
     .rstn           (Word_Alignment_rstn),
@@ -136,8 +136,8 @@ Word_Alignment_32bit  Word_Alignment_32bit_inst (
   );
 //**********************************//
 
-reg [31:0] data_bf_Alignment_judge;
-reg [31:0] data_af_Alignment_judge;
+reg [31:0] data_bf_Alignment_judge/* synthesis PAP_MARK_DEBUG="1" */;
+reg [31:0] data_af_Alignment_judge/* synthesis PAP_MARK_DEBUG="1" */;
 
 always@(posedge rxclk or negedge Word_Alignment_rstn)begin
     if(~Word_Alignment_rstn)data_bf_Alignment_judge <= 0;
@@ -150,5 +150,5 @@ always@(posedge rxclk or negedge Word_Alignment_rstn)begin
     else data_af_Alignment_judge <= 0;
 end
 
-assign led = {o_pll_done_0,o_p_pll_lock_0,o_txlane_done_3,o_rxlane_done_3,1'b0,1'b0,data_af_Alignment_judge == data_af_align,data_bf_Alignment_judge == o_rxd_3};
+assign led = {1'b1,1'b1,1'b1,1'b1,o_txlane_done_3,o_rxlane_done_3,data_af_Alignment_judge == data_af_align,data_bf_Alignment_judge == o_rxd_3};
 endmodule

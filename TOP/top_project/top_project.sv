@@ -54,15 +54,15 @@ input  wire        hdmi_in_vsync,
 input  wire[23:0]  hdmi_in_rgb,
 input  wire        hdmi_in_de,
 //hdmi out io
-output wire        hdmi_out_clk,
-output wire        hdmi_out_rstn,
-output wire        hdmi_out_hsync,
-output wire        hdmi_out_vsync,
-output wire[23:0]  hdmi_out_rgb,
-output wire        hdmi_out_de,
+// output wire        hdmi_out_clk,
+// output wire        hdmi_out_rstn,
+// output wire        hdmi_out_hsync,
+// output wire        hdmi_out_vsync,
+// output wire[23:0]  hdmi_out_rgb,
+// output wire        hdmi_out_de,
 //hdmi control iic io
-output  wire       ddc_scl,
-inout   wire       ddc_sda,
+// output  wire       ddc_scl,
+// inout   wire       ddc_sda,
 //eth io
 input  wire        rgmii_rxc    ,
 input  wire        rgmii_rx_ctl ,
@@ -249,26 +249,27 @@ wire udp_in_rstn = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire led_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire ddr_rst_n   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 wire jtag_rstn   = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
+wire lab_fpga_power_rstn = (external_rstn) && (clk_lock);
 wire ru_rstn     = (external_rstn) && (clk_lock) && (~SYSTEM_RESET);
 
 // wire OV_ccd_rstn;
 // assign CCD_RSTN = (sys_rstn) && OV_ccd_rstn;
 
-assign  hdmi_out_clk   = hdmi_in_clk;
-assign  hdmi_out_hsync = hdmi_in_hsync;
-assign  hdmi_out_vsync = hdmi_in_vsync;
-assign  hdmi_out_rgb   = hdmi_in_rgb;
-assign  hdmi_out_de    = hdmi_in_de;
+// assign  hdmi_out_clk   = hdmi_in_clk;
+// assign  hdmi_out_hsync = hdmi_in_hsync;
+// assign  hdmi_out_vsync = hdmi_in_vsync;
+// assign  hdmi_out_rgb   = hdmi_in_rgb;
+// assign  hdmi_out_de    = hdmi_in_de;
 assign  hdmi_in_rstn  = sys_rstn;
 assign  hdmi_out_rstn = sys_rstn;
 
-hdmi_i2c hdmi_i2c_inst(
- .sys_clk   (external_clk), //系统时钟
- .sys_rst_n (sys_rstn    ), //复位信号
- .cfg_done  (            ), //寄存器配置完成
- .sccb_scl  (ddc_scl     ), //SCL
- .sccb_sda  (ddc_sda     )  //SDA
-);
+// hdmi_i2c hdmi_i2c_inst(
+//  .sys_clk   (external_clk), //系统时钟
+//  .sys_rst_n (sys_rstn    ), //复位信号
+//  .cfg_done  (            ), //寄存器配置完成
+//  .sccb_scl  (ddc_scl     ), //SCL
+//  .sccb_sda  (ddc_sda     )  //SDA
+// );
 
 reg [31:0] digital_in;
 always @(*) begin
@@ -589,6 +590,7 @@ JTAG_SLAVE #(
 )S1(
     .clk                      (clk_25M           ),
     .rstn                     (jtag_rstn         ),
+	.lab_fpga_power_rstn      (lab_fpga_power_rstn),
     .tck                      (tck               ),
     .tdi                      (tdi               ),
     .tms                      (tms               ),
